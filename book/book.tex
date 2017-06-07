@@ -1,0 +1,1025 @@
+% LaTeX source for ``Modeling and Simulation in Python''
+% Copyright 2017  Allen B. Downey.
+
+% License: Creative Commons Attribution-NonCommercial 3.0 Unported License.
+% http://creativecommons.org/licenses/by-nc/4.0/
+%
+
+\documentclass[12pt]{book}
+
+\title{Modeling and Simulation in Python}
+\author{Allen B. Downey}
+
+\newcommand{\thetitle}{Modeling and Simulation in Python}
+\newcommand{\thesubtitle}{}
+\newcommand{\theauthors}{Allen B. Downey}
+\newcommand{\theversion}{0.0.1}
+
+
+%%%% Both LATEX and PLASTEX
+
+\usepackage{graphicx}
+\usepackage{hevea}
+\usepackage{makeidx}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{upquote}
+\usepackage[listings]{tcolorbox}
+
+\definecolor{light-gray}{gray}{0.95}
+
+\newtcblisting{python}{
+  skin=standard,
+  boxrule=0.4pt,
+  colback=light-gray,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  left=0pt,
+  right=0pt,
+  boxsep=2pt,
+  listing options={
+    basicstyle=\ttfamily,
+    language=python,
+    showstringspaces=false,
+  },
+}
+ 
+\makeindex
+
+% automatically index glossary terms
+\newcommand{\term}[1]{%
+\item[#1:]\index{#1}}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% format end of chapter excercises
+\newtheoremstyle{exercise}
+  {12pt}        % space above
+  {12pt}        % space below
+  {}            % body font
+  {}            % indent amount
+  {\bfseries}   % head font
+  {}            % punctuation
+  {12pt}        % head space
+  {}            % custom head
+\theoremstyle{exercise}
+\newtheorem{exercise}{Exercise}[chapter]
+
+\newif\ifplastex
+\plastexfalse
+
+%%%% PLASTEX ONLY
+\ifplastex
+
+\usepackage{localdef}
+
+\usepackage{url}
+
+\newcount\anchorcnt
+\newcommand*{\Anchor}[1]{%
+  \@bsphack%
+    \Hy@GlobalStepCount\anchorcnt%
+    \edef\@currentHref{anchor.\the\anchorcnt}%
+    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+    \M@gettitle{}\label{#1}%
+    \@esphack%
+}
+
+% code listing environments:
+% we don't need these for plastex because they get replaced
+% by preprocess.py
+%\newenvironment{code}{\begin{code}}{\end{code}}
+%\newenvironment{stdout}{\begin{code}}{\end{code}}
+
+% inline syntax formatting
+\newcommand{\py}{\verb}%}
+
+%%%% LATEX ONLY
+\else
+
+\input{latexonly}
+
+\fi
+
+%%%% END OF PREAMBLE
+\begin{document}
+
+\frontmatter
+
+%%%% PLASTEX ONLY
+\ifplastex
+
+\maketitle
+
+%%%% LATEX ONLY
+\else
+
+\begin{latexonly}
+
+%-half title--------------------------------------------------
+\thispagestyle{empty}
+
+\begin{flushright}
+\vspace*{2.0in}
+
+\begin{spacing}{3}
+{\huge \thetitle}
+\end{spacing}
+
+\vspace{0.25in}
+
+Version \theversion
+
+\vfill
+
+\end{flushright}
+
+%--verso------------------------------------------------------
+
+\newpage
+\newpage
+%\clearemptydoublepage
+%\pagebreak
+%\thispagestyle{empty}
+%\vspace*{6in}
+
+%--title page--------------------------------------------------
+\pagebreak
+\thispagestyle{empty}
+
+\begin{flushright}
+\vspace*{2.0in}
+
+\begin{spacing}{3}
+{\huge \thetitle}
+\end{spacing}
+
+\vspace{0.25in}
+
+Version \theversion
+
+\vspace{1in}
+
+
+{\Large
+\theauthors \\
+}
+
+
+\vspace{0.5in}
+
+{\Large Green Tea Press}
+
+{\small Needham, Massachusetts}
+
+%\includegraphics[width=1in]{figs/logo1.eps}
+\vfill
+
+\end{flushright}
+
+
+%--copyright--------------------------------------------------
+\pagebreak
+\thispagestyle{empty}
+
+Copyright \copyright ~2016 \theauthors.
+
+
+
+\vspace{0.2in}
+
+\begin{flushleft}
+Green Tea Press       \\
+9 Washburn Ave \\
+Needham MA 02492
+\end{flushleft}
+
+Permission is granted to copy, distribute, transmit and adapt this work under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+
+If you are interested in distributing a commercial version of this
+work, please contact the author.
+
+The \LaTeX\ source for this book is available from
+
+\begin{code}
+      http://greenteapress.com/complexity
+\end{code}
+
+%--table of contents------------------------------------------
+
+\cleardoublepage
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\end{latexonly}
+
+
+% HTML title page------------------------------------------
+
+\begin{htmlonly}
+
+\vspace{1em}
+
+{\Large \thetitle}
+
+{\large \theauthors}
+
+Version \theversion
+
+\vspace{1em}
+
+Copyright \copyright ~2017 \theauthors.
+
+Permission is granted to copy, distribute, and/or modify this work
+under the terms of the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License, which is
+available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+
+\vspace{1em}
+
+\setcounter{chapter}{-1}
+
+\end{htmlonly}
+
+% END OF THE PART WE SKIP FOR PLASTEX
+\fi
+
+\chapter{Preface}
+\label{preface}
+
+Usual rant about freshman physics.
+
+\section{Who is this book for?}
+
+No Python.
+
+High school physics and high school calc, but not really.
+
+
+\section{Using the code}
+\label{code}
+
+The code and sound samples used in this book are available from
+\url{https://github.com/AllenDowney/ModSimPy}.  Git is a version
+control system that allows you to keep track of the files that
+make up a project.  A collection of files under Git's control is
+called a ``repository''.  GitHub is a hosting service that provides
+storage for Git repositories and a convenient web interface.
+\index{repository}
+\index{Git}
+\index{GitHub}
+
+The GitHub homepage for my repository provides several ways to
+work with the code:
+
+\begin{itemize}
+
+\item You can create a copy of my repository
+on GitHub by pressing the {\sf Fork} button.  If you don't already
+have a GitHub account, you'll need to create one.  After forking, you'll
+have your own repository on GitHub that you can use to keep track
+of code you write while working on this book.  Then you can
+clone the repo, which means that you copy the files
+to your computer.
+\index{fork}
+
+\item Or you could clone
+my repository.  You don't need a GitHub account to do this, but you
+won't be able to write your changes back to GitHub.
+\index{clone}
+
+\item If you don't want to use Git at all, you can download the files
+in a Zip file using the button in the lower-right corner of the
+GitHub page.
+
+\end{itemize}
+
+All of the code is written to work in both Python 2 and Python 3
+with no translation.
+
+I developed this book using Anaconda from
+Continuum Analytics, which is a free Python distribution that includes
+all the packages you'll need to run the code (and lots more).
+I found Anaconda easy to install.  By default it does a user-level
+installation, not system-level, so you don't need administrative
+privileges.  And it supports both Python 2 and Python 3.  You can
+download Anaconda from \url{http://continuum.io/downloads}.
+\index{Anaconda}
+
+If you don't want to use Anaconda, you will need the following
+packages:
+
+\begin{itemize}
+
+\item NumPy for basic numerical computation, \url{http://www.numpy.org/};
+\index{NumPy}
+
+\item SciPy for scientific computation,
+  \url{http://www.scipy.org/};
+\index{SciPy}
+
+\item matplotlib for visualization, \url{http://matplotlib.org/}.
+\index{matplotlib}
+
+%TODO: what else
+
+\end{itemize}
+
+Although these are commonly used packages, they are not included with
+all Python installations, and they can be hard to install in some
+environments.  If you have trouble installing them, I
+recommend using Anaconda or one of the other Python distributions
+that include these packages.
+\index{installation}
+
+The code for each chapter, and starter code for the exercises, is in
+Jupyter notebooks.  If you have not used Jupyter before, you can read
+about it at \url{http://jupyter.org}.  \index{Jupyter}
+
+There are three ways you can work with the Jupyter notebooks:
+
+\begin{description}
+
+\item[Run Jupyter on your computer]
+
+If you installed Anaconda, you
+  probably got Jupyter by default.  To check, start the server from
+the command line, like this:
+
+\begin{verbatim}
+$ jupyter notebook
+\end{verbatim}
+
+If it's not installed, you can install it in Anaconda like this
+
+\begin{verbatim}
+$ conda install jupyter
+\end{verbatim}
+
+When you start the server, it should launch your default web browser
+or create a new tab in an open browser window.
+
+\item[Run Jupyter on Binder]
+
+Binder is a service that runs Jupyter in a virtual machine.  If you
+follow this link, \url{http://mybinder.org/repo/AllenDowney/ModSimPy},
+you should get a Jupyter home page with the notebooks for this book
+and the supporting data and scripts.
+
+You can run the scripts and modify them to run your own code, but the
+virtual machine you run in is temporary.  Any changes you make will
+disappear, along with the virtual machine, if you leave it idle for
+more than about an hour.
+
+\item[View notebooks on nbviewer]
+
+When we refer to notebooks later in the book, we will provide links to
+nbviewer, which provides a static view of the code and results.  You
+can use these links to read the notebooks and listen to the examples,
+but you won't be able to modify or run the code, or use the
+interactive widgets.
+
+\end{description}
+
+Good luck, and have fun!
+
+
+
+\section*{Contributor List}
+
+If you have a suggestion or correction, please send email to 
+{\tt downey@allendowney.com}.  If I make a change based on your
+feedback, I will add you to the contributor list
+(unless you ask to be omitted).
+\index{contributors}
+
+If you include at least part of the sentence the
+error appears in, that makes it easy for me to search.  Page and
+section numbers are fine, too, but not as easy to work with.
+Thanks!
+
+\small
+
+\begin{itemize}
+
+\item My early work on this book benefited from conversations with
+my amazing colleagues at Olin College, including John Geddes, Alison
+Wood, Chris Lee, and Jason Woodard.
+
+% ENDCONTRIB
+
+\end{itemize}
+
+
+
+\normalsize
+
+\cleardoublepage
+
+% TABLE OF CONTENTS
+\begin{latexonly}
+
+\tableofcontents
+
+\cleardoublepage
+
+\end{latexonly}
+
+% START THE BOOK
+\mainmatter
+
+
+\chapter{Modeling}
+\label{sounds}
+
+Intro
+
+\section{What is a model?}
+
+
+
+\section{Modeling a bikeshare system}
+
+As a first example, let's imagine a bike sharing system for students
+travelling between Olin College and Wellesley College, which are about
+3 miles apart in eastern Massachusetts.
+
+I'll use this example to demonstrate the features of Python we'll use
+to develop computational simulations of systems like this.  Along the
+way, I will make decisions about how to model the system and implement
+the simulation.  At the end of Chapter~\ref{simulation} we'll review
+these decisions.
+
+Suppose the system contains 12 bikes
+and two bike racks, one at Olin and one at Wellesley, each with the
+capacity to hold 12 bikes.
+
+As students arrive, check out a bike, and ride to the other campus,
+the number of bikes in each location changes.  In the simulation,
+we'll need to keep track of where the bikes are.  To do that, I'll
+create a {\bf state object}:
+
+\begin{python}
+from modsim import *
+
+bikeshare = State(olin=10, wellesley=2)
+\end{python}
+
+The first line is an {\bf import statement} that tells Python
+to read {\tt modsim.py}, which defines the functions we'll use
+throughout this book.
+
+One of those functions is \py{State}, which creates a state object.
+In this example, the state object has {\bf attributes} called
+\py{olin} and \py{wellesley} that represent the number of bikes at
+Olin and Wellesley.  The initial values of these attributes
+are 10 and 2, indicating that there are 10 bikes at Olin and
+2 at Wellesley.
+
+The result from \py{State} is assigned to a new {\bf variable}
+named \py{bikeshare}.  We can use the name of the variable to access
+its attributes.  For example, to read the current value of
+\py{olin}, we can use ``dot notation'' like this:
+
+\begin{python}
+bikeshare.olin
+\end{python}
+
+The result is 10.  Similarly, for:
+
+\begin{python}
+bikeshare.wellesley
+\end{python}
+
+The result is 2.  If you ever forget what attributes a state
+object has, you can use \py{print_state}, which is defined in
+{\tt modsim.py}:
+
+\begin{python}
+print_state(bikeshare)
+\end{python}
+
+\py{print_state} is a function, like \py{State}.  The name in
+parentheses is a function {\bf argument}, which specifies which
+state object we want to print.
+
+The result looks like this:
+
+\begin{python}
+wellesley = 2
+olin = 10
+\end{python}
+
+We can update the state of the system by assigning new values to
+the attributes.  For example, if a student moves a bike from Olin
+to Wellesley, we can figure out the new values and assign them:
+
+\begin{python}
+bikeshare.olin = 9
+bikeshare.wellesley = 3
+\end{python}
+
+Or we could use {\bf update operators} to subtract 1 from
+\py{olin} and add 1 to \py{wellesley}:
+
+\begin{python}
+bikeshare.olin -= 1
+bikeshare.wellesley += 1
+\end{python}
+
+The result is the same either way.
+
+
+\section{Plotting}
+
+As the state of the system changes, it is often useful to plot the
+values of the attributes over time.  {\tt modsim.py} provides functions
+to create figures and plot values.
+
+\begin{python}
+newfig()
+plot(bikeshare.olin, 'rs-')
+plot(bikeshare.wellesley, 'bo-')
+\end{python}
+
+The first function, \py{newfig}, creates a new figure.  In Jupyter, the
+behavior of this function depends on the ``magic command'' in the
+first cell.
+
+If you want the figures to appear in the notebook, use
+
+\begin{python}
+%matplotlib notebook
+\end{python}
+
+If you want the figures to appear in separate windows, use
+
+\begin{python}
+%matplotlib qt
+\end{python}
+
+For more about magic commands, see
+\url{http://ipython.readthedocs.io/en/stable/interactive/magics.html}.
+
+The next two lines plot the attributes of the state object.  The
+\py{plot} function takes two arguments: the first is the attribute to plot;
+the second is a ``style string''.  In general, a {\bf string} is a sequence
+of letters, numbers, and punctuation that appear in quotation marks.
+
+A style string contains information about what the plot should
+look like.  The string \py{'rs-'} means we want red squares with
+lines between them; \py{'bo-'} means we want blue circles with
+lines.
+
+For more information about style strings, see
+\url{https://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot}.
+
+The plotting functions in {\tt modsim.py} are based on Pyplot, which
+is part of Matplotlib, which is a Python {\bf library} for generating
+figures.  To learn more about how to use these function, you can read
+the Matplotlib/Pyplot documentation.
+
+
+\section{Functions}
+
+When you are developing code in Jupyter, it is often efficient to
+write 1--2 lines in each cell, test them to confirm they so what
+you intend, and then use them to define a new function.  For
+example, these lines move a bike from Olin to Wellesley:
+
+\begin{python}
+bikeshare.olin -= 1
+bikeshare.wellesley += 1
+\end{python}
+
+Rather than repeat them every time a bike moves, we can define a
+new function:
+
+\begin{python}
+def bike_to_wellesley():
+    bikeshare.olin -= 1
+    bikeshare.wellesley += 1
+\end{python}
+
+\py{def} is a {\bf keyword} that tells Python we are defining a new
+function.  The name of the function is \py{bike_to_wellesley}.
+The empty parentheses indicate that this function takes no
+arguments.  The colon indicates the beginning of an indented
+{\bf code block}.
+
+The next two lines are the {\bf body} of the function.  They have
+to be indented; by convention, the indentation is 4 spaces.
+
+When you define a function, it has no immediate effect.  The body
+of the function doesn't run until you {\bf call} the function.
+Here's how to call this function:
+
+\begin{python}
+bike_to_wellesley()
+\end{python}
+
+When you call this function, it updates the attributes of the
+{\tt bikeshare} state object, which you can confirm by printing
+or plotting the new state.
+
+When you call a function that takes no arguments, you have to
+include the empty parentheses.  If you leave them out, like this:
+
+\begin{python}
+bike_to_wellesley
+\end{python}
+
+Python looks up the name of the function and displays:
+
+\begin{python}
+<function __main__.bike_to_wellesley>
+\end{python}
+
+This result indicates that \py{bike_to_wellesley} is a function
+that belongs to a namespace called \py{__main__}.  You don't
+need to know what that means, but if you see something like this,
+it probably means that you looked up a function but you didn't
+actually run it.  So don't forget the parentheses.
+
+
+\section{Parameters}
+
+Similarly, we can define a function that moves a bike from
+Wellesley to Olin:
+
+\begin{python}
+def bike_to_olin():
+    bikeshare.wellesley -= 1
+    bikeshare.olin += 1
+\end{python}
+
+And run it like this:
+
+\begin{python}
+bike_to_olin()
+\end{python}
+
+One benefit of defining functions is that you avoid repeating chunks
+of code, which makes programs smaller.  Another benefit is that the
+name you give the function documents what it does, which makes programs
+more readable.
+
+In this example, there is one other benefit that might be even
+more important.  Putting these lines in a function makes the program
+more reliable because it guarantees that when we decrease the number
+of bikes at Olin, we increase the number of bikes at Wellesley.
+That way, we can guarantee that bikes are neither created nor
+destroyed!
+
+However, now we have two functions that are nearly identical except
+for a change of sign.  Repeated code makes programs harder to work with, because if we make a change, we have to make it in several places.
+
+We can avoid that by defining a more general function that moves any number of bikes in either direction:
+
+\begin{python}
+def move_bike(n):
+    bikeshare.olin -= n
+    bikeshare.wellesley += n
+\end{python}
+
+The name in parentheses, \py{n}, is a {\bf parameter} of the function.
+When we run the function, the argument we provide gets assigned to
+the parameter.  So if we run \py{move_bike} like this:
+
+\begin{python}
+move_bike(1)
+\end{python}
+
+It assigns the value of the argument, \py{1}, to the parameter, \py{n}, and then runs the body of the function.  So the effect is the same as:
+
+\begin{python}
+n = 1
+bikeshare.olin -= n
+bikeshare.wellesley += n
+\end{python}
+
+Which moves a bike from Olin to Wellesley.  Similarly, if we call
+\py{move_bike} like this:
+
+\begin{python}
+move_bike(-1)
+\end{python}
+
+The effect is the same as:
+
+\begin{python}
+n = -1
+bikeshare.olin -= n
+bikeshare.wellesley += n
+\end{python}
+
+Which moves a bike from Wellesley to Olin.  Now that we have
+\py{move_bike}, we can rewrite the other two functions to use it: 
+
+\begin{python}
+def bike_to_wellesley():
+    move_bike(1)
+    
+def bike_to_olin():
+    move_bike(-1)
+\end{python}
+
+If you define the same function name more than once, the new definition
+replaces the old one.
+
+
+\section{Print statements}
+
+As you write more complicated programs, it is easy to lose track of what is going on.  One of the most useful tools for debugging is the {\bf print statement}, which displays text in the Jupyter notebook.
+
+Normally when Jupyter runs the code in a cell, it displays the value of the last line of code.  For example, if you run:
+
+\begin{python}
+bikeshare.olin
+bikeshare.wellesley
+\end{python}
+
+Jupyter runs both lines of code, but it only displays the value of the second line.
+
+If you want to display more than one value, you can use print statements:
+
+\begin{python}
+print(bikeshare.olin)
+print(bikeshare.wellesley)
+\end{python}
+
+\py{print} is a function, so it takes an argument in parentheses.  It can also take a list of arguments separated by commas, like this:
+
+\begin{python}
+print(bikeshare.olin, bikeshare.wellesley)
+\end{python}
+
+In this example, the two values appear on the same line, separated by a space.
+
+Print statements are also useful for debugging functions.  For example, if you add a print statement to \py{move_bike}, like this:
+
+\begin{python}
+def move_bike(n):
+    print('Running move_bike with n =', n)
+    bikeshare.olin -= n
+    bikeshare.wellesley += n
+\end{python}
+
+Each time you run \py{move_bike}, it will display a message and the value of the parameter, \py{n}.
+
+
+
+\section{If statements}
+
+{\tt modsim.py} provides a function called \py{flip} that takes
+as an argument a probability between 0 and 1:
+
+\begin{python}
+flip(0.5)
+\end{python}
+
+The result is either \py{True} or \py{False}, each with probability 0.5.
+If you run this function a few times, you should see about the same number of \py{True} and \py{False} values.
+
+\py{True} and \py{False} are special values defined by Python.  Note
+that they are not strings.  There is a difference between \py{True},
+which is a special value, and \py{'True'}, which is a string.
+
+\py{True} and \py{False} are called {\bf boolean} values because
+they are related to Boolean algebra (\url{https://en.wikipedia.org/wiki/Boolean_algebra}).
+
+We can use boolean values to control the behavior of programs, using
+an {\bf if statement}:
+
+\begin{python}
+if flip(0.5):
+    print('heads')
+\end{python}
+
+If the result from \py{flip} is \py{True}, the program displays the string \py{'heads'}.  Otherwise it does nothing.
+
+The punctuation for if statements is similar to the punctuation for function definitions: the first line has to end with a colon, and the lines inside the if statement have to be indented.
+
+Optionally, you can add an {\bf else clause} to indicate what should happen if the result is \py{False}:
+
+\begin{python}
+if flip(0.5):
+    print('heads')
+else:
+    print('tails')    
+\end{python}
+
+Now we can use flip to simulate the arrival of students who want to borrow a bike.  Suppose we have data from previous observations about how many students arrive at a particular time of day.  If students arrive every 2 minutes, on average, then during any one-minute period, there is a 50\% chance a student will arrive:
+
+\begin{python}
+if flip(0.5):
+    bike_to_wellesley()
+\end{python}
+
+At the same time, there might be an equal probability that a student at Wellesley wants to ride to Olin:
+
+\begin{python}
+if flip(0.5):
+    bike_to_olin()
+\end{python}
+
+We can combine these snippets of code into a function that simulates a single time step, which might represent one minute in real time:
+
+\begin{python}
+def step():
+    if flip(0.5):
+        bike_to_wellesley()
+    
+    if flip(0.5):
+        bike_to_olin()
+\end{python}
+
+And we can run a time step, and update the plot, like this:
+
+\begin{python}
+step()
+plot_state()
+\end{python}
+
+Of course, the probability of an arrival will vary over the course of a day, and might be higher or lower, at any point in time, at Olin or Wellesley.  So instead of putting the constant value 0.5 in \py{step} we can replace it with a parameter, like this:
+
+\begin{python}
+def step(p1, p2):
+    if flip(p1):
+        bike_to_wellesley()
+    
+    if flip(p2):
+        bike_to_olin()
+\end{python}
+
+Now when you call \py{step}, you have to provide two arguments:
+
+\begin{python}
+step(0.4, 0.2)
+\end{python}
+
+The arguments you provide, \py{0.4} and \py{0.2}, get assigned to the parameters, \py{p1} and \py{p2}, in order.  So running this function has the same effect as:
+
+\begin{python}
+p1 = 0.4
+p2 = 0.2
+
+if flip(p1):
+    bike_to_wellesley()
+    
+if flip(p2):
+    bike_to_olin()
+\end{python}
+
+Adding parameters to a function is called "generalization", because it makes the function more general; that is, less specific.
+
+
+\section{Optional parameters}
+
+When you add parameters to a function, you can provide {\bf default values}, like this:
+
+\begin{python}
+def step(p1=0.5, p2=0.5):
+    if flip(p1):
+        bike_to_wellesley()
+    
+    if flip(p2):
+        bike_to_olin()
+\end{python}
+
+Because they have default values, these parameters are optional; if you can call \py{step} with no arguments (and don't forget the parentheses):
+
+\begin{python}
+step()
+\end{python}
+
+The parameters get the default values, so \py{p1} and \py{p2} are both \py{0.5}.  If you provide one argument, like this:
+
+\begin{python}
+step(0.4)
+\end{python}
+
+The value you provide ``overrides" the default value of \py{p1}, but \py{p2} still gets the default.  If you provide two arguments, it overrides both.
+
+\begin{python}
+step(0.4, 0.2)
+\end{python}
+
+If you want to override \py{p2} only, and accept the default for \py{p1}, you have to provide the name of the parameter explicitly:
+
+\begin{python}
+step(p2=0.2)
+\end{python}
+
+It is always legal to provide parameter names along with the arguments:
+
+\begin{python}
+step(p1=0.4, p2=0.2)
+\end{python}
+
+Providing parameters names makes programs more readable and less error-prone, because you don't have to worry about the order of the arguments.  For example, if you reverse the order, like this:
+
+\begin{python}
+step(p2=0.2, p1=0.4)
+\end{python}
+
+It still assigns the right value to each parameter.
+
+\section{For loops}
+
+At some point you will get sick of running cells over and over. Fortunately, there is an easy way to repeat a chunk of code: the {\bf for loop}.  Here's an example:
+
+\begin{python}
+for i in range(4):
+    bike_to_wellesley()
+    plot_state()
+\end{python}
+
+The punctuation here should look familiar; the first line ends with a colon, and the lines inside the for loop are indented.
+
+\py{range} is a Python function that we're using here to control the number of times the loop runs.  We'll see later that there is more to it, but that's enough for now.
+
+The words \py{for} and \py{in} are Python keywords; that is, they are part of the language.  But \py{i} is just a name we chose according to convention; we don't need it for this example, so it is just a place-holder.
+
+If you run this for loop, it moves 4 bikes from Olin to Wellesley and plots the updated state of the system after each move.
+
+
+\section{Debugging}
+
+The goal of this chapter is to give you the minimal set of tools to get you started.  At this point, you know enough to write simple simulations of systems like the Olin-Wellesley bikeshare.  Along with each chapter, we provide a Jupyter notebook that contains the code from the chapter, so you can run it, see how it works, modify it, and see how it breaks.
+
+When something goes wrong, Python provides error messages with information about the problem.  This information can help with debugging, but error messages are often hard to understand.
+
+When you are learning a programming language, it is a good idea to make as many mistakes as you can, deliberately, so you can see what happens.  You will start to understand the error messages better, which helps when you make errors accidentally.
+
+
+\section{Exercises}
+
+Instructions for the notebooks.
+
+Put exercises in the book, or just the notebooks?
+
+
+
+\chapter{Simulation}
+
+Intro
+
+\section{Iterative modeling}
+
+Negative bikes!
+
+Docstrings
+
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+
+\section{Optional parameters}
+
+
+Later in this chapter, we will modify \py{move_bike} to add more
+features.  Since the other two functions use \py{move_bike}, they
+will take advantage of the new features automatically.
+
+
+
+%\begin{figure}
+% sounds.py
+%\centerline{\includegraphics[height=2.5in]{figs/sounds1.pdf}}
+%\caption{Segment from a recording of a bell.}
+%\label{fig.sounds1}
+%\end{figure}
+
+
+
+\backmatter
+\printindex
+
+\end{document}
+
+\end{itemize}
