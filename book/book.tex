@@ -1157,24 +1157,98 @@ Here are some of the differences on my list, but you probably thought of more:
 
 \begin{itemize}
 
-\item
+\item In the model, a student is equally likely to arrive during any one-minute period.  In reality, this probability varies depending on time of day, day of the week, etc.
 
-\item
+\item The model does not account for travel time from one bike station to another.
 
-\item
-
-\item
-
-\item
-
-\item
-
-\item
+\item The model does not check whether a bike is available, so it's possible for the number of bikes to be negative, as you might have noticed in some of your simulations.
 
 \end{itemize}
 
+Some of these modeling decisions are better than others.  For example, the first assumption might be reasonable if we simulate the system for a relatively short period of time, like one hour.
+
+The second assumption is not very realistic, but it might not affect the results very much, depending on what we use the model for.  We might have to reconsider this one later.
+
+On the other hand, the third assumption seems problematic, and it is relatively easy to fix.  So that's where we'll start.
+
+This process, starting with a simple model, identifying the most important problems, and making gradual improvements, is called {\bf iterative modeling}, and it is one of the most important ideas in this book.
+
+For any physical system, there are many possible models, based on different assumptions and simplifications.  It often takes several iterations to develop a model that is good enough for the intended purpose, but no more complicated than necessary.
 
 
+\section{Negative bikes}
+
+Here's an updated version of \py{move_bike} that checks to make sure a bike is available:
+
+\begin{python}
+def move_bike(state, n):
+    # make sure the number of bikes won't go negative
+    olin = state.olin - n
+    if olin < 0:
+        return
+    
+    wellesley = state.wellesley + n
+    if wellesley < 0:
+        return
+    
+    # update the state
+    state.olin = olin
+    state.wellesley = wellesley
+\end{python}
+
+The comments explain the two sections of this function: the first checks to make sure a bike is available; the second updates the state.
+
+The first line creates a variable named \py{olin} that gets the number of bikes that {\em would} be at Olin if \py{n} bikes were moved.
+
+Then it uses the less-than operator, \py{<}, to compare \py{olin} to \py{0}.  The result of this operator is a boolean.  If it's \py{True}, that means \py{olin} is negative, which means that there are not enough bikes.
+
+In that case we use the {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we "return" without changing the state.
+
+Similarly, if there are not enough bikes at Wellesley, we return without changing state.
+
+If both of these tests pass, we run the last two lines, which store the values we just computed as state variables.
+
+Because \py{olin} and \py{wellesley} are created inside a function, they are {\bf local variables}, which means they only exist inside the function.  At the end of the function, they disappear, and you cannot read or write them from anywhere else in the program.
+
+On the other hand, the state variables \py{olin} and \py{wellesley}, which happen to have the same names, belong to \py{state}, which is a state object that was passed to this function as a parameter.  When we change these state variables inside this function, those changes are visible in other parts of the program.
+
+This new version of \py{move_bike} makes sure we never have negative bikes at either station.  But what about \py{bike_to_wellesley} and \py{bike_to_olin}?  Do we have to update them, too?
+
+Here they are; what do you think?
+
+\begin{python}
+def bike_to_wellesley(state):
+    move_bike(state, 1)
+    
+def bike_to_olin(state):
+    move_bike(state, -1)
+\end{python}
+
+Because these functions use \py{move_bike}, they get take advantage of the new feature automatically.  We only have to make the change in one place.
+
+
+\section{Metrics}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
 \begin{python}
 \end{python}
 
@@ -1198,37 +1272,7 @@ Here are some of the differences on my list, but you probably thought of more:
 
 \begin{python}
 \end{python}
-\begin{python}
-\end{python}
 
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-\begin{python}
-\end{python}
-
-
-\section{Optional parameters}
-
-
-Later in this chapter, we will modify \py{move_bike} to add more
-features.  Since the other two functions use \py{move_bike}, they
-will take advantage of the new features automatically.
 
 
 
