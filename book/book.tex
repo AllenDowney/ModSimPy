@@ -25,6 +25,7 @@
 \usepackage{xcolor}
 \usepackage{upquote}
 \usepackage[listings]{tcolorbox}
+\usepackage{siunitx}
 
 \definecolor{light-gray}{gray}{0.95}
 
@@ -32,6 +33,23 @@
   skin=standard,
   boxrule=0.4pt,
   colback=light-gray,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  left=0pt,
+  right=0pt,
+  boxsep=2pt,
+  listing options={
+    basicstyle=\ttfamily,
+    language=python,
+    showstringspaces=false,
+  },
+}
+ 
+\newtcblisting{result}{
+  skin=standard,
+  boxrule=0.0pt,
+  colback=white,
   listing only,
   top=0pt,
   bottom=0pt,
@@ -434,27 +452,92 @@ Wood, Chris Lee, and Jason Woodard.
 \chapter{Modeling}
 \label{sounds}
 
-Intro
+
 
 \section{What is a model?}
 
+The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.
+
+The word ``model" means different things in different contexts, so it is hard to define, except by example.
+
+Some models are actual objects, like a scale model of a car, which has the same shape as the car, but smaller.  Scale models are often useful for testing properties of mechanical systems, like air resistance.
+
+This book is about {\bf mathematical models}, which are ideas, not objects.  If you studied Newton's laws of motion, what you learned is a mathematical model of how object move in space when forces are applied to them.
+
+For example, you might have heard that a penny dropped from the top of the Empire State Building would be going so fast when it hit the pavement that it would be embedded in the concrete; or if it hit a person, it would break their skull.
+
+One way to test this myth is by making and analyzing a model.  For example, let's assume that the effect of air resistance is small.  This will turn out to be a bad assumption, but bear with me.  If air resistance is negligible, the primary force acting on the penny is gravity, which causes the penny to accelerate at 9.8 meters per second squared (\SI{}{\meter\per\second\squared}).
+
+If the initial velocity is 0, the velocity after $t$ seconds is $at$, and the height the penny has dropped at $t$ is
+
+\[ h = at^2/2 \]
+
+Using algebra, we can solve for $t$:
+
+\[ t = \sqrt{2h/a} \]
+
+Plugging in $a = \SI{9.8}{\meter\per\second\squared}$ and $h=\SI{381}{\meter}$, we get $t = \SI{8.8}{\second}$.  Then computing $v=at$ we get a velocity on impact of $\SI{86}{\meter\per\second}$, which is about 190 miles per hour.  That sounds like it could hurt.
+
+Of course, these results are not exact because the model is based on simplifications.  For example, we assume that gravity is constant.  In fact, the force of gravity is different on different parts of the globe, and gets weaker as you move away from the surface.  But these differences are small, so ignoring them is probably a good decision for this scenario.
+
+On the other hand, ignoring air resistance is not a good decision.  Once the penny gets to about \SI{20}{\meter\per\second}, the upward force of air resistance equals the force of gravity, so the penny stops accelerating.  After that, it doesn't matter how far the penny falls; it will hit the sidewalk (or your head) at about \SI{20}{\meter\per\second}, much less than \SI{86}{\meter\per\second}, as the simple model predicts.
+
+The statistician George Box famously said ``All models are wrong, but some are useful."  He was talking about statistical models, but his wise words apply to all kinds of models.  Our first model, which ignores air resistance, is very wrong, and probably not useful.  The second model is also wrong, but much better, and probably good enough for the purpose.
+
+The television show {\it Mythbusters} has tested the myth of the falling penny more carefully; you can view the results at \url{https://www.youtube.com/watch?v=PHxvMLoKRWg}.  Their work is based on a mathematical model, measurements to determine the force of air resistance on a penny, and a physical model of a human head.
 
 
-\section{Modeling a bikeshare system}
+\section{Computation}
 
-As a first example, let's imagine a bike sharing system for students
-travelling between Olin College and Wellesley College, which are about
-3 miles apart in eastern Massachusetts.
+There are (at least) two ways to work with mathematical models, {\bf analysis} and {\bf simulation}.  Analysis often involves algebra and other kinds of symbolic manipulation.  Simulation often (but not always) involves computers.
 
-I'll use this example to demonstrate the features of Python we'll use
-to develop computational simulations of systems like this.  Along the
-way, I will make decisions about how to model the system and implement
-the simulation.  At the end of Chapter~\ref{simulation} we'll review
-these decisions.
+In this book we do some analysis and a lot of simulation; along the way, we will discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
-Suppose the system contains 12 bikes
-and two bike racks, one at Olin and one at Wellesley, each with the
-capacity to hold 12 bikes.
+As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example, and the other code in this chapter, at \url{FILL THIS IN}.  At the end of the chapter, I'll give you instructions for downloading and running the examples. 
+
+First I'll created a {\bf variable} to represent acceleration.
+
+\begin{python}
+a = 9.8 * meter / second**2
+\end{python}
+
+A variable is a name that corresponds to a value.  In this example, the name is \py{a} and the value is the number \py{9.8} multiplied by the units \py{meter / second**2}.  This example demonstrates the symbols Python uses to perform mathematical operations:
+
+\begin{tabular}{c|c}
+{\bf Operation} & {\bf Symbol} \\ 
+\hline 
+Addition & \py{+} \\ 
+Subtraction & \py{-} \\ 
+Multiplication & \py{*} \\ 
+Division & \py{/} \\ 
+Exponentiation & \py{**}  \\ 
+\end{tabular} 
+
+Next, we can compute time it takes for the penny to drop \SI{381}{\meter}, which is the height of the Empire State Building.
+
+\begin{python}
+h = 381 * meter
+t = sqrt(2 * h / a)
+\end{python}
+
+These lines create two more variables: \py{h} gets the height of the building in meters; \py{t} gets the time, in seconds, for the penny to fall to the sidewalk.  \py{sqrt} is a {\bf function} that computes square roots.  Python keeps track of units, so the result, \py{t}, has the correct units, seconds.
+
+Finally, we can compute the velocity of the penny after $t$ seconds:
+
+\begin{python}
+v = a * t
+\end{python}
+
+The result is about \SI{86}{\meter\per\second}, again with the correct units.  This example demonstrates analysis and computation using Python.  In the next section, we will see an example of simulation.
+
+
+\section{Modeling a bike share system}
+
+Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
+
+This example demonstrates the features of Python we'll use to develop computational simulations of real-world systems.  Along the way, I will make decisions about how to model the system.  In the next chapter we'll review these decisions.
+
+Suppose the system contains 12 bikes and two bike racks, one at Olin and one at Wellesley, each with the capacity to hold 12 bikes.
 
 As students arrive, check out a bike, and ride to the other campus,
 the number of bikes in each location changes.  In the simulation,
@@ -468,34 +551,27 @@ bikeshare = State(olin=10, wellesley=2)
 \end{python}
 
 The first line is an {\bf import statement} that tells Python
-to read {\tt modsim.py}, which defines the functions we'll use
-throughout this book.
+to read {\tt modsim}, which is a collection of functions, including \py{sqrt}, which we used in the previous section, \py{State}, which we are using now, and many more.
 
-One of those functions is \py{State}, which creates a state object.
-In this example, the state object has {\bf attributes} called
-\py{olin} and \py{wellesley} that represent the number of bikes at
-Olin and Wellesley.  The initial values of these attributes
-are 10 and 2, indicating that there are 10 bikes at Olin and
-2 at Wellesley.
+\py{State} creates a {\bf state object} which is a collection of {\bf state variables}.  In this example, the state variables are named \py{olin} and \py{wellesley} and they represent the number of bikes at
+Olin and Wellesley.  The initial values of are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The state object created by \py{State} is assigned to a new variable
+named \py{bikeshare}.
 
-The result from \py{State} is assigned to a new {\bf variable}
-named \py{bikeshare}.  We can use the name of the variable to access
-its attributes.  For example, to read the current value of
-\py{olin}, we can use ``dot notation'' like this:
+We can read the variables inside a state object using ``dot notation'', like this:
 
 \begin{python}
 bikeshare.olin
 \end{python}
 
-The result is 10.  Similarly, for:
+The result is the value 10.  Similarly, for:
 
 \begin{python}
 bikeshare.wellesley
 \end{python}
 
-The result is 2.  If you ever forget what attributes a state
-object has, you can use \py{print_state}, which is defined in
-{\tt modsim.py}:
+The result is 2.  If you ever forget what variables a state
+object has, you can use \py{print_state}, another function from
+\py{modsim}:
 
 \begin{python}
 print_state(bikeshare)
@@ -507,13 +583,13 @@ state object we want to print.
 
 The result looks like this:
 
-\begin{python}
-wellesley = 2
-olin = 10
-\end{python}
+\begin{result}
+wellesley -> 2
+olin -> 10
+\end{result}
 
 We can update the state of the system by assigning new values to
-the attributes.  For example, if a student moves a bike from Olin
+the variables.  For example, if a student moves a bike from Olin
 to Wellesley, we can figure out the new values and assign them:
 
 \begin{python}
@@ -535,8 +611,8 @@ The result is the same either way.
 \section{Plotting}
 
 As the state of the system changes, it is often useful to plot the
-values of the attributes over time.  {\tt modsim.py} provides functions
-to create figures and plot values.
+values of the variables over time.  {\tt modsim} provides functions
+we can use to create figures and plot values.
 
 \begin{python}
 newfig()
@@ -545,28 +621,30 @@ plot(bikeshare.wellesley, 'bo-')
 \end{python}
 
 The first function, \py{newfig}, creates a new figure.  In Jupyter, the
-behavior of this function depends on the ``magic command'' in the
-first cell.
+behavior of this function depends on a command in the
+first cell:
 
-If you want the figures to appear in the notebook, use
+\begin{itemize}
+
+\item If you want the figures to appear in the notebook, use
 
 \begin{python}
 %matplotlib notebook
 \end{python}
 
-If you want the figures to appear in separate windows, use
+\item If you want the figures to appear in separate windows, use
 
 \begin{python}
 %matplotlib qt
 \end{python}
 
-For more about magic commands, see
-\url{http://ipython.readthedocs.io/en/stable/interactive/magics.html}.
+\end{itemize}
 
-The next two lines plot the attributes of the state object.  The
-\py{plot} function takes two arguments: the first is the attribute to plot;
-the second is a ``style string''.  In general, a {\bf string} is a sequence
-of letters, numbers, and punctuation that appear in quotation marks.
+These commands are not actually Python; they are so-called ``magic commands" that control the behavior of Jupyter.
+
+The next two lines plot the variables of the state object.  The
+\py{plot} function takes two arguments: the first is the variable to plot;
+the second is a ``style string''.  In general, a {\bf string} is a sequence of letters, numbers, and punctuation that appear in quotation marks.
 
 A style string contains information about what the plot should
 look like.  The string \py{'rs-'} means we want red squares with
@@ -576,7 +654,7 @@ lines.
 For more information about style strings, see
 \url{https://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot}.
 
-The plotting functions in {\tt modsim.py} are based on Pyplot, which
+The plotting functions in {\tt modsim} are based on Pyplot, which
 is part of Matplotlib, which is a Python {\bf library} for generating
 figures.  To learn more about how to use these function, you can read
 the Matplotlib/Pyplot documentation.
@@ -585,7 +663,7 @@ the Matplotlib/Pyplot documentation.
 \section{Functions}
 
 When you are developing code in Jupyter, it is often efficient to
-write 1--2 lines in each cell, test them to confirm they so what
+write 1--2 lines in each cell, test them to confirm they do what
 you intend, and then use them to define a new function.  For
 example, these lines move a bike from Olin to Wellesley:
 
@@ -620,7 +698,7 @@ Here's how to call this function:
 bike_to_wellesley()
 \end{python}
 
-When you call this function, it updates the attributes of the
+When you call this function, it updates the variables of the
 {\tt bikeshare} state object, which you can confirm by printing
 or plotting the new state.
 
@@ -767,21 +845,20 @@ def move_bike(n):
     bikeshare.wellesley += n
 \end{python}
 
-Each time you run \py{move_bike}, it will display a message and the value of the parameter, \py{n}.
+Each time you run \py{move_bike}, it displays a message and the value of the parameter, \py{n}.
 
 
 
 \section{If statements}
 
-{\tt modsim.py} provides a function called \py{flip} that takes
+{\tt modsim} provides a function called \py{flip} that takes
 as an argument a probability between 0 and 1:
 
 \begin{python}
-flip(0.5)
+flip(0.7)
 \end{python}
 
-The result is either \py{True} or \py{False}, each with probability 0.5.
-If you run this function a few times, you should see about the same number of \py{True} and \py{False} values.
+The result is either \py{True} with probability 0.7 or \py{False} with probability 0.3.  If you ran this function 100 times, you would expect to get \py{True} about 70 times and \py{False} about 30 times.  But the results are random, so they might differ from these expectations.
 
 \py{True} and \py{False} are special values defined by Python.  Note
 that they are not strings.  There is a difference between \py{True},
@@ -889,7 +966,7 @@ def step(p1=0.5, p2=0.5):
         bike_to_olin()
 \end{python}
 
-Because they have default values, these parameters are optional; if you can call \py{step} with no arguments (and don't forget the parentheses):
+Because they have default values, these parameters are optional; if run \py{step} with no arguments (and don't forget the parentheses):
 
 \begin{python}
 step()
@@ -967,13 +1044,160 @@ Put exercises in the book, or just the notebooks?
 
 Intro
 
+\section{More than one state object}
+
+In the previous chapter, we developed a simple model of a bike sharing system, and we wrote functions like \py{move_bike} and \py{plot_state}:
+
+\begin{python}
+def move_bike(n):
+    bikeshare.olin -= n
+    bikeshare.wellesley += n
+
+def plot_state():
+    plot(bikeshare.olin, 'rs-', label='Olin')
+    plot(bikeshare.wellesley, 'bo-', label='Wellesley')
+\end{python}
+
+One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but it is better for if these functions take a state object as a parameter.  Here's what that looks like:
+
+\begin{python}
+def move_bike(state, n):
+    state.olin -= n
+    state.wellesley += n
+
+def plot_state(state):
+    plot(state.olin, 'rs-', label='Olin')
+    plot(state.wellesley, 'bo-', label='Wellesley')
+\end{python}
+
+The name of the parameter is \py{state}, rather than \py{bikeshare} as a reminder that the value of \py{state}, when these functions run, could be any state object, not just \py{bikeshare}.
+
+Now I can create as many state objects as I want:
+
+\begin{python}
+bikeshare1 = State(olin=10, wellesley=2)
+bikeshare2 = State(olin=2, wellesley=10)
+\end{python}
+
+And update them independently:
+
+\begin{python}
+bike_to_olin(bikeshare1)
+bike_to_wellesley(bikeshare2)
+\end{python}
+
+This will be useful later in the chapter when we create a series of state objects to simulate different scenarios.
+
+
+\section{Documentation}
+
+Another problem with the code we have written so far is that it contains no {\bf documentation}.  Documentation is text we add to programs to help other programmers read and understand them.  It has no effect on the program when it runs.
+
+There are two forms of documentation, {\bf docstrings} and {\bf comments}.   
+ A docstring is a string in triple-quotes that appears at the beginning of a function, like this:
+
+\begin{python}
+def run_steps(state, num_steps=1, p1=0.5, p2=0.5):
+    """Simulate the given number of time steps.
+    
+    state: bikeshare State object
+    num_steps: number of time steps
+    p1: probability of an Olin->Wellesley customer arrival
+    p2: probability of a Wellesley->Olin customer arrival
+    """
+    for i in range(num_steps):
+        step(state, p1, p2)
+        plot_state(state)
+\end{python}
+
+Docstrings follow a conventional format:
+
+\begin{itemize}
+
+\item The first line should be a single sentence that describes what the function does.
+
+\item The following lines should explain what each of the parameters means.
+
+\end{itemize}
+
+The docstring should provide the information someone needs to know use {\em use} the function; it should not include details about how the function works -- that's what comments are for.
+
+A comment is a line of code that begins with a hash symbol, \py{#}.  It usually appears inside a function to explain something that would not be obvious to someone reading the program.
+
+For example, here is a version of \py{move_bike} with a docstring and a comment.
+
+\begin{python}
+def move_bike(state, n):
+    """Move a bike.
+    
+    state: bikeshare State object
+    n: +1 to move from Olin to Wellesley or
+       -1 to move from Wellesley to Olin
+    """
+    # Because we decrease one state variable by n
+    # and increase the other by n, the total number
+    # of bikes is unchanged.
+    state.olin -= n
+    state.wellesley += n
+\end{python}
+
+At this point we have more documentation than code, which is not unusual for short functions.
+
+
+
 \section{Iterative modeling}
 
-Negative bikes!
+To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  So far we have developed a simple model of a bike share system, and we can use it to simulate the behavior of the system over time.
 
-Docstrings
+In order to keep the program simple, I had to make some unrealistic assumptions.  Before you go on, take a minute to review the code.  If you open the notebook for this chapter, all of the functions from the previous chapter are there, with appropriate docstrings.
+
+This code represents a model of the bikeshare system.  What assumptions is this model based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
+
+Here are some of the differences on my list, but you probably thought of more:
+
+\begin{itemize}
+
+\item
+
+\item
+
+\item
+
+\item
+
+\item
+
+\item
+
+\item
+
+\end{itemize}
 
 
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
+
+\begin{python}
+\end{python}
 \begin{python}
 \end{python}
 
