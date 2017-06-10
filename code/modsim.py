@@ -21,6 +21,9 @@ from pint import UnitRegistry
 UNITS = UnitRegistry()
 
 
+from numpy import sqrt, sin, cos, linspace, arange
+
+
 def underride(d, **options):
     """Add key-value pairs to d only if key is not in d.
 
@@ -165,7 +168,13 @@ def newfig(**kwargs):
     fig.canvas.draw()
 
 
-savefig = plt.savefig
+def savefig(filename, *args, **kwargs):
+    """Save the current figure.
+
+    filename: string
+    """
+    print('Saving figure to file', filename)
+    return plt.savefig(filename, *args, **kwargs)
 
     
 def label_axes(ylabel, xlabel, title=None, **kwargs):
@@ -199,10 +208,17 @@ class State:
     def __init__(self, **kwargs):
         self.__dict__.update(**kwargs)
 
+    def __repr__(self):
+        t = ['%s -> %s' % (str(name), str(val)) 
+             for name, val in self.__dict__.items()]
+        return '\n'.join(t)
+
+    __str__ = __repr__
+
 
 def print_state(state):
     for name, value in state.__dict__.items():
-        print(name, '=', value)
+        print(name, '->', value)
 
 
 def flip(p=0.5):
