@@ -168,7 +168,15 @@ def newfig(**kwargs):
 savefig = plt.savefig
 
     
-def label_axes(ylabel, xlabel, title=None, **kwargs):
+def label_axes(xlabel=None, ylabel=None, title=None, **kwargs):
+    """Puts labels and title on the axes.
+
+    xlabel: string
+    ylabel: string
+    title: string
+
+    kwargs: options passed to pyplot
+    """
     ax = plt.gca()
     ax.set_ylabel(ylabel, **kwargs)
     ax.set_xlabel(xlabel, **kwargs)
@@ -181,7 +189,8 @@ def label_axes(ylabel, xlabel, title=None, **kwargs):
     #label = getattr(y, 'label', 'y')
     #units = getattr(y, 'units', 'dimensionless')
     #plt.ylabel('%s (%s)' % (label, units))
-    
+
+# make selected pyplot functions available
 xlabel = plt.xlabel
 ylabel = plt.ylabel
 title = plt.title
@@ -199,6 +208,8 @@ class State:
     def __init__(self, **kwargs):
         self.__dict__.update(**kwargs)
 
+
+# TODO: Consider a version of State based on pd.Series
 
 def print_state(state):
     for name, value in state.__dict__.items():
