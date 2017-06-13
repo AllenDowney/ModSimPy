@@ -407,7 +407,7 @@ Good luck, and have fun!
 
 \section*{Contributor List}
 
-If you have a suggestion or correction, please send email to 
+If you have a suggestion or correction, send it to 
 {\tt downey@allendowney.com}.  If I make a change based on your
 feedback, I will add you to the contributor list
 (unless you ask to be omitted).
@@ -452,7 +452,7 @@ Wood, Chris Lee, and Jason Woodard.
 \chapter{Modeling}
 \label{sounds}
 
-
+Intro
 
 \section{What is a model?}
 
@@ -503,7 +503,7 @@ a = 9.8 * meter / second**2
 
 A variable is a name that corresponds to a value.  In this example, the name is \py{a} and the value is the number \py{9.8} multiplied by the units \py{meter / second**2}.  This example demonstrates the symbols Python uses to perform mathematical operations:
 
-\begin{tabular}{c|c}
+\begin{tabular}{l|c}
 {\bf Operation} & {\bf Symbol} \\ 
 \hline 
 Addition & \py{+} \\ 
@@ -1005,6 +1005,7 @@ step(p2=0.2, p1=0.4)
 It still assigns the right value to each parameter.
 
 \section{For loops}
+\label{forloop}
 
 At some point you will get sick of running cells over and over. Fortunately, there is an easy way to repeat a chunk of code: the {\bf for loop}.  Here's an example:
 
@@ -1034,9 +1035,9 @@ When you are learning a programming language, it is a good idea to make as many 
 
 \section{Exercises}
 
-Instructions for the notebooks.
+TODO: Instructions for the notebooks.
 
-Put exercises in the book, or just the notebooks?
+
 
 
 
@@ -1058,7 +1059,7 @@ def plot_state():
     plot(bikeshare.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
-One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but it is better for if these functions take a state object as a parameter.  Here's what that looks like:
+One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but these function would be more flexible if they took a state object as a parameter.  Here's what that looks like:
 
 \begin{python}
 def move_bike(state, n):
@@ -1070,7 +1071,7 @@ def plot_state(state):
     plot(state.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
-The name of the parameter is \py{state}, rather than \py{bikeshare} as a reminder that the value of \py{state}, when these functions run, could be any state object, not just \py{bikeshare}.
+The name of the parameter is \py{state} rather than \py{bikeshare} as a reminder that the value of \py{state} could be any state object, not just \py{bikeshare}.
 
 Now I can create as many state objects as I want:
 
@@ -1114,15 +1115,15 @@ Docstrings follow a conventional format:
 
 \begin{itemize}
 
-\item The first line should be a single sentence that describes what the function does.
+\item The first line is a single sentence that describes what the function does.
 
-\item The following lines should explain what each of the parameters means.
+\item The following lines explain what each of the parameters are.
 
 \end{itemize}
 
-The docstring should provide the information someone needs to know use {\em use} the function; it should not include details about how the function works -- that's what comments are for.
+The docstring provides the information someone needs to know use {\em use} the function; it should not include details about how the function works.  That's what comments are for.
 
-A comment is a line of code that begins with a hash symbol, \py{#}.  It usually appears inside a function to explain something that would not be obvious to someone reading the program.
+A comment is a line of text that begins with a hash symbol, \py{#}.  It usually appears inside a function to explain something that would not be obvious to someone reading the program.
 
 For example, here is a version of \py{move_bike} with a docstring and a comment.
 
@@ -1144,14 +1145,13 @@ def move_bike(state, n):
 At this point we have more documentation than code, which is not unusual for short functions.
 
 
-
 \section{Iterative modeling}
 
-To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  So far we have developed a simple model of a bike share system, and we can use it to simulate the behavior of the system over time.
+To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this section, I describe the process we use to make models less wrong.
 
-In order to keep the program simple, I had to make some unrealistic assumptions.  Before you go on, take a minute to review the code.  If you open the notebook for this chapter, all of the functions from the previous chapter are there, with appropriate docstrings.
+The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the code.  If you open the notebook for this chapter, all of the functions from the previous chapter are there (now with docstrings).
 
-This code represents a model of the bikeshare system.  What assumptions is this model based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
+This code represents a model of the bikeshare system.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
 
 Here are some of the differences on my list, but you probably thought of more:
 
@@ -1161,11 +1161,11 @@ Here are some of the differences on my list, but you probably thought of more:
 
 \item The model does not account for travel time from one bike station to another.
 
-\item The model does not check whether a bike is available, so it's possible for the number of bikes to be negative, as you might have noticed in some of your simulations.
+\item The model does not check whether a bike is available, so it's possible for the number of bikes to be negative (as you might have noticed in some of your simulations).
 
 \end{itemize}
 
-Some of these modeling decisions are better than others.  For example, the first assumption might be reasonable if we simulate the system for a relatively short period of time, like one hour.
+Some of these modeling decisions are better than others.  For example, the first assumption might be reasonable if we simulate the system for a short period of time, like one hour.
 
 The second assumption is not very realistic, but it might not affect the results very much, depending on what we use the model for.  We might have to reconsider this one later.
 
@@ -1200,10 +1200,9 @@ The comments explain the two sections of this function: the first checks to make
 
 The first line creates a variable named \py{olin} that gets the number of bikes that {\em would} be at Olin if \py{n} bikes were moved.
 
-Then it uses the less-than operator, \py{<}, to compare \py{olin} to \py{0}.  The result of this operator is a boolean.  If it's \py{True}, that means \py{olin} is negative, which means that there are not enough bikes.
+It uses the less-than operator, \py{<}, to compare \py{olin} to \py{0}.  The result of this operator is a boolean.  If it's \py{True}, that means \py{olin} is negative, which means that there are not enough bikes.
 
-In that case we use the {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we "return" without changing the state.
-
+In that case we use a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we ``return" without changing the state.
 Similarly, if there are not enough bikes at Wellesley, we return without changing state.
 
 If both of these tests pass, we run the last two lines, which store the values we just computed as state variables.
@@ -1212,9 +1211,7 @@ Because \py{olin} and \py{wellesley} are created inside a function, they are {\b
 
 On the other hand, the state variables \py{olin} and \py{wellesley}, which happen to have the same names, belong to \py{state}, which is a state object that was passed to this function as a parameter.  When we change these state variables inside this function, those changes are visible in other parts of the program.
 
-This new version of \py{move_bike} makes sure we never have negative bikes at either station.  But what about \py{bike_to_wellesley} and \py{bike_to_olin}?  Do we have to update them, too?
-
-Here they are; what do you think?
+This new version of \py{move_bike} makes sure we never have negative bikes at either station.  But what about \py{bike_to_wellesley} and \py{bike_to_olin}; do we have to update them, too?  Here they are:
 
 \begin{python}
 def bike_to_wellesley(state):
@@ -1224,54 +1221,340 @@ def bike_to_olin(state):
     move_bike(state, -1)
 \end{python}
 
-Because these functions use \py{move_bike}, they get take advantage of the new feature automatically.  We only have to make the change in one place.
+Because these functions use \py{move_bike}, they take advantage of the new feature automatically.  We don't have to update them.
+
+
+\section{Comparison operators}
+
+In the previous section, we use the less-than operator to compare a two values.  For completeness, here are the other {\bf comparison operators}:
+
+\begin{tabular}{l|c}
+{\bf Operation} & {\bf Symbol} \\ 
+\hline 
+Less than & \py{<} \\ 
+Greater than & \py{>} \\
+Less than or equal & \py{<=}  \\ 
+Greater than or equal & \py{>=} \\ 
+Equal & \py{==} \\ 
+Not equal & \py{!=} \\ 
+\end{tabular} 
+
+The equals operator, \py{==}, is a common source of confusion for beginners.  The assignment operator, \py{=}, assigns a value to a variable.  For example:
+
+\begin{python}
+x = 5
+\end{python}
+
+This statement creates \py{x} if it doesn't already exist and gives it the value \py{5}.  On the other hand:
+
+\begin{python}
+x == 5
+\end{python}
+
+Checks whether \py{x} is \py{5} and produces \py{True} or \py{False}.  It does not create \py{x} or change its value.  You can use the equals operator in an if statement, like this:
+
+\begin{python}
+if x == 5:
+    print('yes, x is 5')
+\end{python}
+
+If you make a mistake and use \py{=} in the first line of an \py{if} statement, like this:
+
+\begin{python}
+if x = 5:
+    print('yes, x is 5')
+\end{python}
+
+That's a {\bf syntax error}, which means that the structure of the program is invalid.
 
 
 \section{Metrics}
 
-\begin{python}
-\end{python}
+Getting back to the bike share system, at this point we have the ability to simulate the state of the system as it changes over time.  Since the arrival of customers is random, the behavior of the system is different each time we run a simulation.  Models like this are called {\bf stochastic}.  Models that do the same thing every time they run are {\bf deterministic}.
+
+Suppose we want to use our model to predict how well the bike share system will work, or to design a system that works better.  First, we have to decide what we mean by ``how well" and ``better".
+
+From the customer's point of view, we might like to know the probability of finding an available bike.  From the system-owner's point of view, we might want to minimize the number of customers who don't get a bike when they want one, or maximize the number of bikes in use.  Statistics like these that are intended to quantify how well the system works are called {\bf metrics}.
+
+As a simple example, let's measure the number of unhappy customers.  Here's a version of \py{move_bike} that increments a counter if a customer arrives at a station with no bikes:
 
 \begin{python}
+def move_bike(state, n):
+    olin = state.olin - n
+    if olin < 0:
+        state.olin_empty += 1
+        return
+    
+    wellesley = state.wellesley + n
+    if wellesley < 0:
+        state.wellesley_empty += 1
+        return
+    
+    state.olin = olin
+    state.wellesley = wellesley
 \end{python}
 
-\begin{python}
-\end{python}
+This only works if we add two state variables: \py{olin_empty}, which is the number of times a customer finds the Olin station empty, and \py{wellesley_empty}, which is the number of unhappy customers at Wellesley.
+
+Here's the updated line of code that initializes the state variables:
 
 \begin{python}
+bikeshare = State(olin=10, wellesley=2, 
+                  olin_empty=0, wellesley_empty=0)
 \end{python}
 
-\begin{python}
-\end{python}
+Now we can run a simulation like this:
 
 \begin{python}
+run_steps(bikeshare, 60, 0.4, 0.2)
 \end{python}
 
-\begin{python}
-\end{python}
-\begin{python}
-\end{python}
+And then check the metrics:
 
 \begin{python}
+print(bikeshare.olin_empty, bikeshare.wellesley_empty)
 \end{python}
 
-\begin{python}
-\end{python}
+Because the simulation is stochastic, the results will be different each time it runs.
+
+
+\section{Functions that return values}
+
+We have used several functions that return values; for example, run \py{sqrt}, it returns a number you can assign to a variable.
 
 \begin{python}
+t = sqrt(2 * h / a)
 \end{python}
 
+When you run \py{State}, it returns a new state object:
+ 
 \begin{python}
+bikeshare = State(olin=10, wellesley=2)
 \end{python}
 
-\begin{python}
-\end{python}
+Not all function have return values.  For example, when you run \py{plot}, it adds a point to the current graph, but it doesn't return a value.  If you assign the result to a variable, like this:
 
 \begin{python}
+result = plot(x, 'rs-')
 \end{python}
 
+The value of \py{result} is \py{None}.  The functions we wrote so far are like \py{plot}; they have an effect, like changing the state of the system, but they don't return values.
+
+To write functions that return values, we can use a second form of the \py{return} statement, like this:
+
 \begin{python}
+def add_five(x):
+    return x + 5
 \end{python}
+
+\py{add_five} takes a parameter, \py{x}, which could be any number.  It computes \py{x + 5} and returns the result.  So if we run it like this:
+
+\begin{python}
+add_five(3)
+\end{python}
+
+The result is \py{8}.  As a more useful example, here's a new function that creates a state object, runs a simulation, and then returns the state object as a result:
+
+\begin{python}
+def run_simulation():
+    bikeshare = State(olin=10, wellesley=2, 
+                      olin_empty=0, wellesley_empty=0)
+    run_steps(bikeshare, 60, 0.4, 0.2, plot=False)
+    return bikeshare
+\end{python}
+
+If we run \py{run_simulation} like this:
+
+\begin{python}
+state = run_simulation()
+\end{python}
+
+It assigns to \py{state} a new state object, which we can use to check the metrics we are interested in:
+
+\begin{python}
+print(bikeshare.olin_empty, bikeshare.wellesley_empty)
+\end{python}
+
+
+\section{Parameters}
+
+This version of \py{run_simulation} always starts with the same initial condition, 10 bikes at Olin and 2 bikes at Wellesley, and the same values of \py{p1}, \py{2}, and \py{num_steps}.
+
+Taken together, these five values are the {\bf parameters of the model}.  It is easy to get these parameters, which are values that determine the behavior of the model, with the parameters of a function, which determine the behavior of the function.
+
+They are closely related ideas; in fact, it is common for the parameters of the model to appear as parameters in functions.  For example, we can write a more general version of \py{run_simulation} that takes \py{p1} and \py{p2} as function parameters.
+
+\begin{python}
+def run_simulation(p1=0.4, p2=0.2):
+    bikeshare = State(olin=10, wellesley=2, 
+                  olin_empty=0, wellesley_empty=0)
+    run_steps(bikeshare, 60, p1, p2, plot=False)
+    return bikeshare
+\end{python}
+
+Now we can run it with different arrival rates, this this.
+
+\begin{python}
+state = run_simulation(p1=0.6, p2=0.3)
+\end{python}
+
+And get an idea of how the metrics, like the number of unhappy customers, depend on the parameters of the model.
+
+
+\section{Loops and arrays}
+
+Before we go forward, we have to go back.  In Section\ref{forloop}, we saw a loop like this:
+
+\begin{python}
+for i in range(4):
+    bike_to_wellesley()
+    plot_state()
+\end{python}
+
+At the time I said I would explain \py{i} later; well, now is the time.  In this loop, \py{i} is the {\bf loop variable}.  When the loop runs, it:
+
+\begin{enumerate}
+
+\item Runs the \py{range} function.
+
+\item Gets the first value from the range and assigns it to \py{i}.
+
+\item Runs the body of the loop.
+
+\item Gets the next value from the range and assigns it to \py{i}.
+
+\item Runs the body of the loop.
+
+\end{enumerate}
+
+And so on, until it gets to the end of the range.  We can see this process in action by printing the loop variable:
+
+\begin{python}
+for i in range(4):
+    print(i)
+\end{python}
+
+The result is:
+
+\begin{result}
+0
+1
+2
+3
+\end{result}
+
+The loop runs four time.  The first time through, the value of \py{i} is \py{0}, because range starts at \py{0} by default.
+
+\py{range} is useful if we want to loop through a sequence of integers, but the values of \py{p1} are between 0 and 1, so we'll use \py{linspace} instead.  \py{linspace} takes three arguments, \py{start}, \py{stop}, and \py{num}:
+
+\begin{python}
+linspace(start=0, stop=1, num=11)
+\end{python}
+
+The result is an {\bf array}, which is a new kind of object we have not seen before.  An array is a container for a sequence of numbers.  In this case, it contains 11 numbers, equally spaced between 0 and 1.
+
+We'll learn more about what arrays can do later; for now, we will use them in for loops like this:
+
+\begin{python}
+p1_array = linspace(0, 1, 11)
+
+for p1 in p1_array:
+    print(p1)
+\end{python}
+
+The first time through the loop \py{p1} gets the first value from \py{p1_array}, which is \py{0}.  The second time through, the value of \py{p1} is \py{0.1}.  And so on, until the last time through, when \py{p1} is \py{0.1}.
+
+
+\section{Sweeping parameters}
+
+If we know the actual values of parameters like \py{p1} and \py{p2}, we can use them to make specific predictions, like how many bikes will be at Olin after one hour.  If that's the goal, we'll probably have to collect data and estimate \py{p1} and \py{p2}.
+
+But prediction is not the only goal; models like this are also used to explain why systems behave as they do and to evaluate alternative designs.  For example, if we observe the system and notice that we often run out of bikes at a particular time, we could use the model to figure out why that happens.  And if we are considering adding more bike, or another station, we could evaluate the effect of various ``what if" scenarios.
+
+As an example, suppose we have enough data to estimate that \py{p2} is about \py{0.2}, but we don't have any information about \py{p1}.  We could run simulations with a range of values for \py{p1} and see how the results vary.
+
+Now that we know about loops and arrays, we can combine them like this:
+
+\begin{python}
+p1_array = linspace(0, 1, 11)
+
+for p1 in p1_array:
+    state = run_simulation(p1=p1)
+    print(p1, state.olin_empty)
+\end{python}
+
+Each time through the loop, we run a simulation with a different value of \py{p1} and the default value of \py{p2}.  After each simulation, we print the value of \py{p1} and the number of unhappy customers at Olin.
+
+To visualize the results, we can run the same loop and replace \py{print} with \py{plot}:
+
+\begin{python}
+newfig()
+for p1 in p1_array:
+    state = run_simulation(p1=p1)
+    plot(p1, state.olin_empty, 'rs', label='olin')
+\end{python}
+
+When you run the notebook for this chapter, you will have a chance to see the results and try out some additional experiments.
+
+
+\section{Debugging}
+
+When you start writing programs that are more than a few lines, you
+might find yourself spending more and more time debugging.  The more
+code you write before you start debugging, the harder it is to find
+the problem.
+
+{\bf Incremental development} is a way of programming that tries
+to minimize the pain of debugging.  The fundamental steps are
+
+\begin{enumerate}
+
+\item Always start with a working program.  If you have an
+example from a book or a program you wrote that is similar to
+what you are working on, start with that.  Otherwise, start with
+something you {\em know} is correct, like {\tt x=5}.  Run the program
+and confirm that it does what you expect.
+
+\item Make one small, testable change at a time.  A ``testable''
+change is one that displays something, or has some
+other effect, that you can check.  Ideally, you should know what
+the correct answer is, or be able to check it by performing another
+computation. 
+
+\item Run the program and see if the change worked.  If so, go back
+to Step 2.  If not, you will have to do some debugging, but if the
+change you made was small, it shouldn't take long to find the problem.
+
+\end{enumerate}
+
+When this process works, you will find that your changes usually
+work the first time, or the problem is obvious.  That's a good thing,
+and it brings us to the First Theorem of Debugging:
+
+\begin{quote}
+The best kind of debugging is the kind you don't have to do.
+\end{quote}
+
+In practice, there are two problems with incremental development:
+
+\begin{itemize}
+
+\item Sometimes you have to write extra code to
+generate visible output that you can check.  This extra code is
+called {\bf scaffolding} because you use it to build the program
+and then remove it when you are done.  But time you save on
+debugging is almost always worth the time you spend on
+scaffolding.
+
+\item When you are getting started, it is usually not obvious how to
+choose the steps that get from {\tt x=5} to the program you are trying
+to write.  You will see more examples of this process as we go along, and you will get better with experience.
+
+\end{itemize}
+
+If you find yourself writing more than a few lines of code before
+you start testing, and you are spending a lot of time debugging,
+you should try incremental development.
 
 
 
