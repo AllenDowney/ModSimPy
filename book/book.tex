@@ -1059,7 +1059,7 @@ def plot_state():
     plot(bikeshare.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
-One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but these function would be more flexible if they took a state object as a parameter.  Here's what that looks like:
+One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but these functions would be more flexible if they took a state object as a parameter.  Here's what that looks like:
 
 \begin{python}
 def move_bike(state, n):
@@ -1121,7 +1121,7 @@ Docstrings follow a conventional format:
 
 \end{itemize}
 
-The docstring provides the information someone needs to know use {\em use} the function; it should not include details about how the function works.  That's what comments are for.
+The docstring provides the information someone needs to know to {\em use} the function; it should not include details about how the function works.  That's what comments are for.
 
 A comment is a line of text that begins with a hash symbol, \py{#}.  It usually appears inside a function to explain something that would not be obvious to someone reading the program.
 
@@ -1226,7 +1226,7 @@ Because these functions use \py{move_bike}, they take advantage of the new featu
 
 \section{Comparison operators}
 
-In the previous section, we use the less-than operator to compare a two values.  For completeness, here are the other {\bf comparison operators}:
+In the previous section, we use the less-than operator to compare two values.  For completeness, here are the other {\bf comparison operators}:
 
 \begin{tabular}{l|c}
 {\bf Operation} & {\bf Symbol} \\ 
@@ -1357,10 +1357,10 @@ The result is \py{8}.  As a more useful example, here's a new function that crea
 
 \begin{python}
 def run_simulation():
-    bikeshare = State(olin=10, wellesley=2, 
-                      olin_empty=0, wellesley_empty=0)
-    run_steps(bikeshare, 60, 0.4, 0.2, plot=False)
-    return bikeshare
+    state = State(olin=10, wellesley=2, 
+                  olin_empty=0, wellesley_empty=0)
+    run_steps(state, 60, 0.4, 0.2, plot=False)
+    return state
 \end{python}
 
 If we run \py{run_simulation} like this:
@@ -1372,7 +1372,7 @@ state = run_simulation()
 It assigns to \py{state} a new state object, which we can use to check the metrics we are interested in:
 
 \begin{python}
-print(bikeshare.olin_empty, bikeshare.wellesley_empty)
+print(state.olin_empty, state.wellesley_empty)
 \end{python}
 
 
@@ -1380,7 +1380,7 @@ print(bikeshare.olin_empty, bikeshare.wellesley_empty)
 
 This version of \py{run_simulation} always starts with the same initial condition, 10 bikes at Olin and 2 bikes at Wellesley, and the same values of \py{p1}, \py{2}, and \py{num_steps}.
 
-Taken together, these five values are the {\bf parameters of the model}.  It is easy to get these parameters, which are values that determine the behavior of the model, with the parameters of a function, which determine the behavior of the function.
+Taken together, these five values are the {\bf parameters of the model}.  It is easy to get these parameters, which are values that determine the behavior of the model, confused with the parameters of a function, which determine the behavior of the function.
 
 They are closely related ideas; in fact, it is common for the parameters of the model to appear as parameters in functions.  For example, we can write a more general version of \py{run_simulation} that takes \py{p1} and \py{p2} as function parameters.
 
@@ -1392,7 +1392,7 @@ def run_simulation(p1=0.4, p2=0.2):
     return bikeshare
 \end{python}
 
-Now we can run it with different arrival rates, this this.
+Now we can run it with different arrival rates, like this.
 
 \begin{python}
 state = run_simulation(p1=0.6, p2=0.3)
@@ -1443,7 +1443,7 @@ The result is:
 3
 \end{result}
 
-The loop runs four time.  The first time through, the value of \py{i} is \py{0}, because range starts at \py{0} by default.
+The loop runs four times.  The first time through, the value of \py{i} is \py{0}, because range starts at \py{0} by default.
 
 \py{range} is useful if we want to loop through a sequence of integers, but the values of \py{p1} are between 0 and 1, so we'll use \py{linspace} instead.  \py{linspace} takes three arguments, \py{start}, \py{stop}, and \py{num}:
 
@@ -1462,16 +1462,16 @@ for p1 in p1_array:
     print(p1)
 \end{python}
 
-The first time through the loop \py{p1} gets the first value from \py{p1_array}, which is \py{0}.  The second time through, the value of \py{p1} is \py{0.1}.  And so on, until the last time through, when \py{p1} is \py{0.1}.
+The first time through the loop \py{p1} gets the first value from \py{p1_array}, which is \py{0}.  The second time through, the value of \py{p1} is \py{0.1}.  And so on, until the last time through, when \py{p1} is \py{1.0}.
 
 
 \section{Sweeping parameters}
 
 If we know the actual values of parameters like \py{p1} and \py{p2}, we can use them to make specific predictions, like how many bikes will be at Olin after one hour.  If that's the goal, we'll probably have to collect data and estimate \py{p1} and \py{p2}.
 
-But prediction is not the only goal; models like this are also used to explain why systems behave as they do and to evaluate alternative designs.  For example, if we observe the system and notice that we often run out of bikes at a particular time, we could use the model to figure out why that happens.  And if we are considering adding more bike, or another station, we could evaluate the effect of various ``what if" scenarios.
+But prediction is not the only goal; models like this are also used to explain why systems behave as they do and to evaluate alternative designs.  For example, if we observe the system and notice that we often run out of bikes at a particular time, we could use the model to figure out why that happens.  And if we are considering adding more bikes, or another station, we could evaluate the effect of various ``what if" scenarios.
 
-As an example, suppose we have enough data to estimate that \py{p2} is about \py{0.2}, but we don't have any information about \py{p1}.  We could run simulations with a range of values for \py{p1} and see how the results vary.
+As an example, suppose we have enough data to estimate that \py{p2} is about \py{0.2}, but we don't have any information about \py{p1}.  We could run simulations with a range of values for \py{p1} and see how the results vary.  This process is called {\bf sweeping} a parameter, in the sense that the value of the parameter ``sweeps" through a range of possible values.
 
 Now that we know about loops and arrays, we can combine them like this:
 

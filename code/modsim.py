@@ -21,7 +21,9 @@ from pint import UnitRegistry
 UNITS = UnitRegistry()
 
 
-from numpy import sqrt, sin, cos, linspace, arange
+from numpy import array, sqrt, sin, cos, linspace, arange
+
+from pandas import DataFrame, Series
 
 
 def underride(d, **options):
@@ -93,7 +95,7 @@ class FigureState:
             return line
     
     def make_line(self, style, kwargs):
-        underride(kwargs, linewidth=2, alpha=0.6)
+        underride(kwargs, linewidth=3, alpha=0.6)
         lines = plt.plot([], style, **kwargs)
         return lines[0]
 
@@ -132,23 +134,33 @@ def plot(*args, **kwargs):
     elif len(args) == 3:
         x, y, style = args
 
-    #print(type(x))
-    #print(type(y))
-        
+    # get the current line, based on style and kwargs,
+    # or create a new empty line
     figure = plt.gcf()
     figure_state = SIMPLOT.get_figure_state(figure)
     line = figure_state.get_line(style, kwargs)
     
+    # append y to ydata
     ys = line.get_ydata()
     ys = np.append(ys, y)
     line.set_ydata(ys)
 
+    # update xdata
+    xs = line.get_xdata()
+
     if x is None:
-        xs = np.arange(len(ys))
-    else:
-        xs = line.get_xdata()
-        xs = np.append(xs, x)
-    
+        # see if y is something like a Series that has an index
+        if hasattr(y, 'index'):
+            x = y.index
+
+    # if we still don't have an x, increment the last element of xs  
+    if x is None:
+        try:
+            x = xs[-1] + 1
+        except IndexError:
+            x = 0
+
+    xs = np.append(xs, x)
     line.set_xdata(xs)
     
     #print(line.get_xdata())
@@ -202,12 +214,26 @@ def label_axes(xlabel=None, ylabel=None, title=None, **kwargs):
 # make selected pyplot functions available
 xlabel = plt.xlabel
 ylabel = plt.ylabel
+xscale = plt.xscale
+yscale = plt.yscale
+xlim = plt.xlim
+ylim = plt.ylim
 title = plt.title
 legend = plt.legend
 
 def nolegend():
     # TODO
     pass
+
+def annotate(**kwargs):
+    """Annotate the current axes.
+
+    kwargs: can be any axis property
+
+    To see the list, run plt.getp(plt.gca())
+    """
+    plt.gca().set(**kwargs)
+
 
 class Array(np.ndarray):
     pass
