@@ -1557,6 +1557,106 @@ you start testing, and you are spending a lot of time debugging,
 you should try incremental development.
 
 
+\chapter{Predict}
+
+In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{https://en.wikipedia.org/wiki/The_Population_Bomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.  
+
+But world population growth is still a topic of concern, and it is an open question how many people the earth can sustain while maintaining and improving our quality of life.
+
+In this chapter we apply tools from the previous chapters to the problem of modeling world population growth since 1950, and generating predictions for the next 50--100 years.
+
+
+
+\section{World population data}
+
+The Wikipedia article  \url{https://en.wikipedia.org/wiki/World_population_estimates}
+contains tables with estimates of world population from prehistory to the present, and projections for the future.
+
+To work with this data in Python, we will use functions from the Pandas module, including \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to {\bf import} it.  You have already seen this import statement:
+
+\begin{python}
+from modsim import *
+\end{python}
+
+which imports all functions from the \py{modsim} module.  To import \py{read_html}, the statement we need is:
+
+\begin{python}
+from pandas import read_html
+\end{python}
+
+Now we can use it like this:
+
+\begin{python}
+filename = 'data/World_population_estimates.html'
+dfs = read_html(filename, header=0, index_col=0, decimal='M')
+\end{python}
+
+The arguments are:
+
+\begin{itemize}
+
+
+\item \py{filename}: The name of the file (including the directory it's in) as a string.  This argument can also be a URL starting with \py{http}.
+
+\item \py{header}: Indicates which row of each table should be considered the header, that is, the row that contains the column headings.  In this case it is the first row, which is numbered 0.
+
+\item \py{index_col}: Indicates which column of each table should be considered the index, that is, the labels that identify the rows.  In this case it is the first column, which contains the years.
+
+\item \py{decimal}: Normally this argument is used to indicate which character should be considered a decimal point, since some conventions use a period and some use a comma.  In this case I am abusing the feature by treating \py{M} as a decimal point, which allows some of the estimates, which are expressed in millions, to be read in as numbers.
+
+\end{itemize}
+
+The result, which is assigned to \py{dfs} is a sequence that contains one \py{DataFrame} for each table.  A \py{DataFrame} is an object that represents tabular data and provides functions for accessing and manipulating it.
+
+To select one of the \py{DataFrame}s in \py{dfs}, we can use the bracket operator like this:
+
+\begin{python}
+df1 = dfs[2]
+\end{python}
+
+The number in brackets indicates which \py{DataFrame} we want, starting from 0.  So this line selects the third table, which contains population estimates from 1950 to 2016.
+
+We can display the first few lines like this:
+
+\begin{python}
+df1.head()
+\end{python}
+
+The headings at the tops of the columns are long strings, which makes them hard to refer to.  We can replace them with shorter strings like this:
+
+\begin{python}
+df2.columns = ['census', 'prb', 'un', 'maddison', 
+               'hyde', 'tanton', 'biraben', 'mj', 
+               'thomlinson', 'durand', 'clark']
+\end{python}
+
+
+\section{Series}
+
+Now we can select a column from the \py{DataFrame} using dot notation, like selecting a state variable from a state object:
+
+\begin{python}
+census = df2.census
+\end{python}
+
+The result is a \py{Series}, which is another object defined by the \py{pandas} module.  A \py{Series} contains two variables called \py{index} and \py{values}.  In this example, the \py{index} is a sequence of years, from 1950 to 2016, and \py{values} contains the population estimates.
+
+
+
+\begin{python}
+def plot_estimates(df):
+    un = df.un / 1e9
+    census = df.census / 1e9
+    plot(un, '-', color='blue', label='UN DESA')
+    plot(census, '-', color='green', label='US Census')
+\end{python}
+
+United Nations Department of Economic and Social Affairs 
+
+Unites States Census Bureau
+
+
+
 
 
 %\begin{figure}
@@ -1567,6 +1667,11 @@ you should try incremental development.
 %\end{figure}
 
 
+\chapter{Explain}
+
+
+
+\chapter{Design}
 
 \backmatter
 \printindex
