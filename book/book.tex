@@ -1845,8 +1845,176 @@ plot_model(state)
 \label{chap03-fig03}
 \end{figure}
 
-Figure~\ref{chap03-fig03} shows the result.
+Figure~\ref{chap03-fig03} shows the result.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
 
+There are a few things we can try to improve the model:
+
+\begin{itemize}
+
+\item Maybe the growth rate, \py{alpha}, varies over time.
+
+\item Maybe the net growth from one year to the next depends on the current population, but the relationship is quadratic, not linear.
+
+\end{itemize}
+
+We will try out these variations, but first, let's clean up the code one more time.
+
+\section{Factoring out the update function}
+
+If you compare \py{run_model1} and \py{run_model2}, you will see that they are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
+
+Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull the body of the loop out and make it a function:
+
+\begin{python}
+def update_func1(year, pop, state):
+    births = state.birth_rate * pop
+    deaths = state.death_rate * pop
+    return pop + births - deaths
+\end{python}
+
+This function takes as arguments the current year, current population, and a state object, and returns the computed population for the next year.
+
+Now we can write a function that runs any model:
+
+\begin{python}
+def run_any_model(state, update_func):
+    model = Series([])
+    model[state.t0] = state.init
+    for year in arange(state.t0+1, state.t_end+1):
+        pop = model[year-1]
+        model[year] = update_func(year, pop, state)
+    state.model = model
+\end{python}
+
+This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we run \py{run_any_model}, we provide a state object that contains the parameters of the model and a function, like \py{update_func1} that computes the population for the next year.
+
+Here's how we call it:
+
+\begin{python}
+run_any_model(state, update_func1)
+\end{python}
+
+Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_any_model}, we can run \py{update_func} just like any other function.
+
+When you run \py{run_any_model}, it runs \py{update_func1} once for each year between \py{t0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
+
+
+\section{Combining birth and death}
+
+While we are at it, we can also simplify the code by combining births and deaths to compute the net growth rate.  Instead of two parameters, \py{birth_rate} and \py{death_rate}, we can write the update function in terms of a single parameter that represents the difference
+
+\begin{python}
+state.alpha = state.birth_rate - state.death_rate
+\end{python}
+
+Here's the modified version of \py{update_func1}:
+
+\begin{python}
+def update_func1b(year, pop, state):
+    net_growth = state.alpha  * pop
+    return pop + net_growth
+\end{python}
+
+And here's how we run it:
+
+\begin{python}
+run_any_model(state, update_func1b)
+\end{python}
+
+Again, the result is the same as Figure~\ref{chap03-fig03}.
+
+
+\section{Quadratic growth}
+
+It makes sense that net growth should depend on the current population, but maybe it's not a linear relationship, like this:
+
+\begin{python}
+    net_growth = state.alpha * pop
+\end{python}
+
+Maybe it's a quadratic relationship, like this:
+
+\begin{python}
+    net_growth = state.alpha * pop + state.beta * pop**2
+\end{python}
+
+We can test that conjecture with a new update function:
+
+\begin{python}
+def update_func3(year, pop, state):
+    net_growth = state.alpha * pop + state.beta * pop**2
+    return pop + net_growth
+\end{python}
+
+Now we need two parameters.  I chose these values by trial and error, but we will see better ways to do it later.
+
+\begin{python}
+state.alpha = 0.025
+state.beta = -0.0018
+\end{python}
+
+And here's how we run it:
+
+\begin{python}
+run_any_model(state, update_func3)
+\end{python}
+
+\begin{figure}
+% chap03.ipynb.py
+\centerline{\includegraphics[height=3in]{figs/chap03-fig04.pdf}}
+\caption{Estimates of world population, 1950--2015, and a quadratic model.}
+\label{chap03-fig04}
+\end{figure}
+
+Figure~\ref{chap03-fig04} shows the result.  The model and the data go together well over the whole range, with just a bit of daylight between them, in the 1960s.
+
+Of course, we should expect the quadratic model to fit better than the linear or proportional model because it has two parameters we can choose to improve the fit, where the other models have only one.  In general, the more parameters you have to play with, the better you should expect the fit to be.
+
+But there is another reason to think the quadratic model might be a good choice: there is a plausible mechanism to explain it.  To understand it, let's look at net growth as a function of population.  Here's how we compute it:
+
+\begin{python}
+pop_array = linspace(0.001, 15, 100)
+net_growth_array = (state.alpha * pop_array + 
+                    state.beta * pop_array**2)
+\end{python}
+
+\py{pop_array} contains 100 equally spaced values from near 0 to 15.  \py{net_growth_array} contains the corresponding 100 values of net growth.  We can plot the results like this: 
+
+\begin{python}
+plot(pop_array, net_growth_array, '-')
+\end{python}
+
+\begin{figure}
+% chap03.ipynb.py
+\centerline{\includegraphics[height=3in]{figs/chap03-fig05.pdf}}
+\caption{Net growth as a function of population.}
+\label{chap03-fig05}
+\end{figure}
+
+Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  We can divide this curve in terms of four regimes of behavior:
+
+\begin{itemize}
+
+\item When the population is less than 3-4 billion, net growth is proportional to population, as in the proportional model.  In this regime,  the population grows slowly because the population is small.
+
+\item Between 4 billion and 10 billion, the population grows quickly because there are a lot of people, and there are enough resources, like food, water, and space, to sustain high birth rates and low death rates.
+
+\item Above 10 billion, population grows more slowly because resource limits start to decrease birth rates, increase death rates, or both.
+
+\item Above 14 billion, resources are so limited that the death rate exceeds the birth rate and net growth becomes negative.
+
+\end{itemize}
+
+Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the population is in {\bf equilibrium}.
+
+To find this equilibrium point, we can find the roots, or zeros, of this equation:
+
+\[ \Delta p = \alpha p + \beta p^2 \]
+
+where $\Delta p$ is net growth, $p$ is current population, and $\alpha$ and $\beta$ are the parameters of the model. 
+
+
+\section{Reparameterizing}
 
 
 
