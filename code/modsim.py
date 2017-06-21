@@ -219,19 +219,47 @@ yscale = plt.yscale
 xlim = plt.xlim
 ylim = plt.ylim
 title = plt.title
-legend = plt.legend
+hlines = plt.hlines
+vlines = plt.vlines
+fill_between = plt.fill_between
+
+
+def legend(**kwargs):
+    underride(kwargs, loc='best')
+    plt.legend(**kwargs)
+
 
 def nolegend():
     # TODO
     pass
 
-def annotate(**kwargs):
-    """Annotate the current axes.
+
+def remove_from_legend(bad_labels):
+    """Removes some labels from the legend.
+
+    bad_labels: sequence of strings
+    """
+    ax = plt.gca()
+    handles, labels = ax.get_legend_handles_labels()
+    handle_list, label_list = [], []
+    for handle, label in zip(handles, labels):
+        if label not in bad_labels:
+            handle_list.append(handle)
+            label_list.append(label)
+    plt.legend(handle_list, label_list)
+
+
+def decorate(**kwargs):
+    """Decorate the current axes.
 
     kwargs: can be any axis property
 
     To see the list, run plt.getp(plt.gca())
     """
+    if kwargs.pop('legend', True):
+        loc = kwargs.pop('loc', 'best')
+        legend(loc=loc)
+    
     plt.gca().set(**kwargs)
 
 
