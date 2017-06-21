@@ -1033,17 +1033,42 @@ When something goes wrong, Python provides error messages with information about
 When you are learning a programming language, it is a good idea to make as many mistakes as you can, deliberately, so you can see what happens.  You will start to understand the error messages better, which helps when you make errors accidentally.
 
 
-\section{Exercises}
-
-TODO: Instructions for the notebooks.
-
-
-
-
 
 \chapter{Simulation}
 
 Intro
+
+
+\section{Iterative modeling}
+
+To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this section, I describe the process we use to make models less wrong.
+
+The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the code.  If you open the notebook for this chapter, all of the functions from the previous chapter are there (now with docstrings).
+
+This code represents a model of the bikeshare system.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
+
+Here are some of the differences on my list, but you probably thought of more:
+
+\begin{itemize}
+
+\item In the model, a student is equally likely to arrive during any one-minute period.  In reality, this probability varies depending on time of day, day of the week, etc.
+
+\item The model does not account for travel time from one bike station to another.
+
+\item The model does not check whether a bike is available, so it's possible for the number of bikes to be negative (as you might have noticed in some of your simulations).
+
+\end{itemize}
+
+Some of these modeling decisions are better than others.  For example, the first assumption might be reasonable if we simulate the system for a short period of time, like one hour.
+
+The second assumption is not very realistic, but it might not affect the results very much, depending on what we use the model for.  We might have to reconsider this one later.
+
+On the other hand, the third assumption seems problematic, and it is relatively easy to fix.  And in Section~\ref{negativebikes}, we will.
+
+This process, starting with a simple model, identifying the most important problems, and making gradual improvements, is called {\bf iterative modeling}, and it is one of the most important ideas in this book.
+
+For any physical system, there are many possible models, based on different assumptions and simplifications.  It often takes several iterations to develop a model that is good enough for the intended purpose, but no more complicated than necessary.
+
 
 \section{More than one state object}
 
@@ -1145,38 +1170,10 @@ def move_bike(state, n):
 At this point we have more documentation than code, which is not unusual for short functions.
 
 
-\section{Iterative modeling}
-
-To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this section, I describe the process we use to make models less wrong.
-
-The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the code.  If you open the notebook for this chapter, all of the functions from the previous chapter are there (now with docstrings).
-
-This code represents a model of the bikeshare system.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
-
-Here are some of the differences on my list, but you probably thought of more:
-
-\begin{itemize}
-
-\item In the model, a student is equally likely to arrive during any one-minute period.  In reality, this probability varies depending on time of day, day of the week, etc.
-
-\item The model does not account for travel time from one bike station to another.
-
-\item The model does not check whether a bike is available, so it's possible for the number of bikes to be negative (as you might have noticed in some of your simulations).
-
-\end{itemize}
-
-Some of these modeling decisions are better than others.  For example, the first assumption might be reasonable if we simulate the system for a short period of time, like one hour.
-
-The second assumption is not very realistic, but it might not affect the results very much, depending on what we use the model for.  We might have to reconsider this one later.
-
-On the other hand, the third assumption seems problematic, and it is relatively easy to fix.  So that's where we'll start.
-
-This process, starting with a simple model, identifying the most important problems, and making gradual improvements, is called {\bf iterative modeling}, and it is one of the most important ideas in this book.
-
-For any physical system, there are many possible models, based on different assumptions and simplifications.  It often takes several iterations to develop a model that is good enough for the intended purpose, but no more complicated than necessary.
 
 
 \section{Negative bikes}
+\label{negativebikes}
 
 Here's an updated version of \py{move_bike} that checks to make sure a bike is available:
 
@@ -1402,6 +1399,7 @@ And get an idea of how the metrics, like the number of unhappy customers, depend
 
 
 \section{Loops and arrays}
+\label{array}
 
 Before we go forward, we have to go back.  In Section\ref{forloop}, we saw a loop like this:
 
@@ -1539,11 +1537,7 @@ In practice, there are two problems with incremental development:
 
 \begin{itemize}
 
-\item Sometimes you have to write extra code to
-generate visible output that you can check.  This extra code is
-called {\bf scaffolding} because you use it to build the program
-and then remove it when you are done.  But time you save on
-debugging is almost always worth the time you spend on
+\item Sometimes you have to write extra code to generate visible output that you can check.  This extra code is called {\bf scaffolding} because you use it to build the program and then remove it when you are done.  But time you save on debugging is almost always worth the time you spend on
 scaffolding.
 
 \item When you are getting started, it is usually not obvious how to
@@ -1557,14 +1551,13 @@ you start testing, and you are spending a lot of time debugging,
 you should try incremental development.
 
 
-\chapter{Predict}
+\chapter{Explain}
 
 In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{https://en.wikipedia.org/wiki/The_Population_Bomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.  
 
 But world population growth is still a topic of concern, and it is an open question how many people the earth can sustain while maintaining and improving our quality of life.
 
-In this chapter we apply tools from the previous chapters to the problem of modeling world population growth since 1950, and generating predictions for the next 50--100 years.
-
+In this chapter and the next we apply tools from the previous chapters to the problem of modeling world population growth since 1950 and generating predictions for the next 50--100 years.
 
 
 \section{World population data}
@@ -1733,8 +1726,8 @@ model[1950] = census[1950]
 Then we can set the rest of the values by simulating annual growth:
 
 \begin{python}
-for year in arange(1951, 2016):
-    model[year] = model[year-1] + annual_growth
+for year in arange(1950, 2015):
+    model[year+1] = model[year] + annual_growth
 \end{python}
 
 The result from \py{arange} is an array of years from 1951 to 2015 (the second argument, 2016, is not included in the range).  In the model, the population each year is the number of the population during the previous year and \py{annual_growth}.
@@ -1777,8 +1770,8 @@ Next we'll wrap the code from the previous section in a function:
 def run_model1(state):
     model = Series([])
     model[state.t0] = state.init
-    for year in arange(state.t0+1, state.t_end+1):
-        model[year] = model[year-1] + state.annual_growth
+    for year in arange(state.t0, state.t_end):
+        model[year+1] = model[year] + state.annual_growth
     state.model = model
 \end{python}
 
@@ -1817,10 +1810,10 @@ On the order hand, if some fraction of the population dies each year, and some f
 def run_model2(state):
     model = Series([])
     model[state.t0] = state.init
-    for year in arange(state.t0+1, state.t_end+1):
-        births = state.birth_rate * model[year-1]
-        deaths = state.death_rate * model[year-1]
-        model[year] = model[year-1] + births - deaths
+    for year in arange(state.t0, state.t_end):
+        births = state.birth_rate * model[year]
+        deaths = state.death_rate * model[year]
+        model[year+1] = model[year] + births - deaths
     state.model = model
 \end{python}
 
@@ -1880,9 +1873,8 @@ Now we can write a function that runs any model:
 def run_any_model(state, update_func):
     model = Series([])
     model[state.t0] = state.init
-    for year in arange(state.t0+1, state.t_end+1):
-        pop = model[year-1]
-        model[year] = update_func(year, pop, state)
+    for year in arange(state.t0, state.t_end):
+        model[year+1] = update_func(year, model[year], state)
     state.model = model
 \end{python}
 
@@ -1991,7 +1983,13 @@ plot(pop_array, net_growth_array, '-')
 \label{chap03-fig05}
 \end{figure}
 
-Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  We can divide this curve in terms of four regimes of behavior:
+Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  
+
+
+\section{Equilibrium}
+\label{equilibrium}
+
+We can divide this curve into four regimes of behavior:
 
 \begin{itemize}
 
@@ -2005,21 +2003,285 @@ Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, a
 
 \end{itemize}
 
-Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the population is in {\bf equilibrium}.
+Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the birth and death rates are equal, so the population is in {\bf equilibrium}.
 
 To find this equilibrium point, we can find the roots, or zeros, of this equation:
+%
+\[ \Delta p = \alpha p + \beta p^2 = 0 \]
+%
+where $\Delta p$ is net growth, $p$ is current population, and $\alpha$ and $\beta$ are the parameters of the model.  We can rewrite the right hand side like this:
+%
+\[ \Delta p = p (\alpha + \beta p) = 0 \]
+%
+which is $0$ when $p=0$ or $p=-\alpha/\beta$.  In this example, $\alpha = 0.025$, $\beta = -0.0018$, and $-\alpha/\beta = 13.9$.
 
-\[ \Delta p = \alpha p + \beta p^2 \]
+In the context of population modeling, the quadratic model is more conventionally written like this:
+%
+\[ \Delta p = r p (1 - p / K) \]
+%
+This is the same model; it's just a different way {\bf parameterize} it.  Given $\alpha$ and $\beta$, we can compute $r=\alpha$ and $K=-\alpha/\beta$.
 
-where $\Delta p$ is net growth, $p$ is current population, and $\alpha$ and $\beta$ are the parameters of the model. 
+In this version, it is easier to interpret the parameters: $\alpha$ is the maximum growth rate, observed when $p$ is small, and $K$ is the equilibrium point.  $K$ is also called the {\bf carrying capacity}, since it indicates the maximum population the environment can sustain.
+
+\chapter{Predict}
+
+\section{Generating projections}
+
+At this point we have a model that is simple but plausible, and it fits the data well.  Now we can use it to generate predictions.  In the code, the only thing we have to change is \py{t_end}:
+
+\begin{python}
+state.t_end = 2250
+run_any_model(state, update_func3)
+\end{python}
+
+\begin{figure}
+% chap03.ipynb.py
+\centerline{\includegraphics[height=3in]{figs/chap03-fig06.pdf}}
+\caption{Quadratic model of world population growth, with projection from 2016 to 2250.}
+\label{chap03-fig06}
+\end{figure}
+
+Figure~\ref{chap03-fig06} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
+
+I am deliberately using the word ``projection" rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
+
+But ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model, or even if the model is good, that the parameters might change.
+
+In this example, the model is based on the assumption that population growth is limited by the availability of resources, so as the population approaches the carrying capacity, birth rates fall and death rates rise because resources become scarce.
+
+If that's assumption is true, it might be possible to use data to estimate the carrying capacity, especially if we have observed the transition into the regime where the growth rate starts to fall.
+
+But in the case of world population growth, none of these conditions apply:
+
+\begin{itemize}
+
+\item Over the last 50 years, the net growth rate has leveled off, but not yet started to fall, so we don't have enough data to estimate carrying capacity accurately.
+
+\item Resource limitations are probably {\em not} the primary reason the growth rate has slowed. 
+
+\end{itemize} 
+
+First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{https://en.wikipedia.org/wiki/Mortality_rate}).
+
+So the decrease in net growth is due entirely to declining birth rates.  And there are many reasons birth rates are falling, but resource limitations are not among them; in fact, it's almost the opposite.  As nations develop and people become more wealthy, birth rates tend to fall.  
 
 
-\section{Reparameterizing}
+\section{Comparing projections}
+
+If recent changes in birth and death rates are not caused by resource limitations, we should not expect the long-term predictions of this model to be accurate.
+
+However, the same agencies and researchers that produce population estimates also produce projections, and we can compare theirs to ours.  Table 3 from \url{https://en.wikipedia.org/wiki/World_population_estimates} contains projections from the U.S. Census and the United Nations DESA:
+
+\begin{python}
+table3 = tables[3]
+\end{python}
+
+We can plot their projections like this:
+
+\begin{python}
+def plot_projections(table):
+    census = table.census / 1e9
+    un = table.un / 1e9
+    
+    plot(census, ':', color='darkblue', label='US Census')
+    plot(un.dropna(), '--', color='green', label='UN DESA')
+\end{python}
+
+When we plot the UN data, we use \py{dropna}; it removes from the \py{Series} any elements that contain the special value \py{NaN}, which indicates missing data (in this case, years where the UN did not produce an estimate).
+
+We can run our model over the same interval:
+
+\begin{python}
+state.t_end = 2100
+run_any_model(state, update_func3)
+\end{python}
+
+
+\begin{figure}
+% chap03.ipynb.py
+\centerline{\includegraphics[height=3in]{figs/chap03-fig07.pdf}}
+\caption{Projections of world population generated by the U.S. Census Bureau, the United Nations, and our quadratic model.}
+\label{chap03-fig07}
+\end{figure}
+
+And compare our projections to theirs.  Figure~\ref{chap03-fig07} shows the results.  People who know what they are doing expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+
+Nevertheless, their projects are qualitatively similar to ours, and they differ from each other almost as much as they differ from us.  So the result from this model, simple as it is, are not entirely crazy.
+
+\section{Difference equations}
+
+The population models in the previous chapter and this one are simple enough that we didn't really need to run simulations.  We could have solved them mathematically.  For example, we wrote the constant growth model like this:
+
+\begin{python}
+model[1950] = census[1950]
+for year in arange(1950, 2015):
+    model[year+1] = model[year] + annual_growth
+\end{python}
+
+In mathematical notation, we would write the same model like this:
+%
+\[ x_{n+1} = x_n + c \]
+%
+where $x_n$ is the population during year $n$, $x_0$ is a given initial population, $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence}; see \url{https://en.wikipedia.org/wiki/Recurrence_relation}.
+
+Often it is possible to solve a recurrence relation, which means to write an equation that computes $x_n$, for a given value of $n$, directly; that is, without computing the intervening values from $x_1$ through $x_{n-1}$.
+
+In the case of constant growth we can see that $x_1 = x_0 + c$, and $x_2 = x_1 + c$.  Combining these, we get $x_2 = x_0 + 2c$, and $x_3 = x_0 + 3c$.  And it is not hard to conclude that in general
+%
+\[ x_n = x_0 + nc \]
+%
+So if we want to know $x_100$ and we don't care about the other values, we can compute it with one multiplication and one addition.
+
+We can also write the proportional model as a recurrence relation:
+%
+\[ x_{n+1} = x_n + \alpha x_n \]
+%
+Or more conventionally as:
+%
+\[ x_{n+1} = x_n (1 + \alpha) \]
+%
+Now we can see that $x_1 = x_0 (1 + \alpha)$, and $x_2 = x_0 (1 + \alpha)^2$, and in general
+%
+\[ x_n = x_0 (1 + \alpha)^n \]
+%
+This result is an example of a {\bf geometric progression}; see \url{https://en.wikipedia.org/wiki/Geometric_progression}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
+
+Finally, we can write the quadratic model like this:
+%
+\[ x_{n+1} = x_n + \alpha x_n + \beta x_n^2 \]
+%
+or with the more conventional parameterization like this:
+%
+\[ x_{n+1} = x_n + r x_n (1 - x_n / K) \]
+%
+There is no analytic solution to this equation, but we can approximate it with a differential equation and solve that, which is what we'll do in the next section.
+
+\section{Differential equations}
+
+Starting again with the constant growth model
+%
+\[ x_{n+1} = x_n + c \]
+%
+We can define to be the change in $x$ from one time step to the next, we can write:
+%
+\[ \Delta x = x_{n+1} - x_n = c \]
+%
+If we define $\Delta t$ to be the time step, which is one year in the example, we can write the rate of change per unit of time, like this:
+%
+\[ \frac{\Delta x}{\Delta t} = c \]
+%
+This model is {\bf discrete}, which means it is only defined at the time steps and not in between.  But in reality, people are born and die all the time, not once a year, so a {\bf continuous} model might be more realistic.
+
+We can make this model continuous by writing the rate of change in the form of a derivative:
+%
+\[ \frac{dx}{dt} = c \]
+%
+This way of representing the model is a {\bf differential equation}; see \url{https://en.wikipedia.org/wiki/Differential_equation}.  We can solve this differential equation by integrating both sides, which yields:
+%
+\[ x(t) = \int c~dt = c t + x_0 \]
+%
+Similarly, we can rewrite the proportional growth model like this:
+%
+\[ \frac{\Delta x}{\Delta t} = \alpha x \]
+%
+And as a differential equation like this:
+%
+\[ \frac{dx}{dt} = \alpha x \]
+%
+If we multiply both sides by $dt$ and divide by $x$, we get
+
+\[ \frac{1}{x} dx = \alpha dt \] 
+
+Now we can take the antiderivative of both sides, yielding:
+
+\[ \ln x = \alpha t + const \]
+
+where $\ln$ is the natural logarithm and $const$ is the constant of integration.  Raising $e$ to both sides, we have
+
+\[ x = e^{\alpha t + const} \]
+
+which we can rewrite
+
+\[ x = e^{\alpha t} e^{const} \]
+
+Since $e$ raised to an arbitrary constant is just another arbitrary constant, we can write
+
+\[ x = Ae^{\alpha t} \]
+
+where $A = e^{const}$.  Or using an alternative notation I prefer:
+%
+\[ x(t) = A \exp(\alpha t) \]
+%
+So there are many solutions to this differential equation, with different values of $A$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = A$, so $A = x_0$ and the solution we want is
+
+\[ x(t) = x_0 \exp(\alpha t) \]
 
 
 
-\chapter{Explain}
+If you would like to see this derivation done a little more carefully, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/exponential-solution-to-differential-equation}.
 
+Finally, we can write the quadratic growth model as a differential equation like this:
+
+\[ \frac{dx}{dt} = r x (1 - x/K) \]
+
+If we multiply through by $dt$ and divide through by most of the right-hand side, we get:
+
+\[ \frac{1}{x(1 - x/K)} dx = r dt \]
+
+And again we can take the antiderivative of both sides.
+
+\url{https://www.khanacademy.org/math/ap-calculus-bc/diff-equations-bc/logistic-diff-eq-bc/v/solving-logistic-differential-equation-part-1}
+
+
+The right-hand side has the form of a line, which is why what we call the constant growth model is more commonly called a ``linear growth model".
+
+
+
+The form of this solution is an exponential function, which is why what we have called the proportional growth
+
+
+\section{The modeling framework}
+
+
+
+
+
+
+\section{Analysis}
+
+Once you have designed a model, there are generally two ways to proceed: simulation and analysis.  Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place.  Analysis often comes in the form of algebra; that is, symbolic manipulation using mathematical notation.
+
+Analysis and simulation have different capabilities and limitations.  Simulation is generally more versatile; it is easy to add and remove parts of a program and test many versions of a model, as we have done in the previous examples.
+
+But there are several things we can do with analysis that are harder or impossible with simulations:
+
+\begin{itemize}
+
+\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{equilibrum}, we get the general result that $K=-\alpha/\beta$.
+
+\item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
+
+\item We can use analysis to state and prove generalizations about models; for example, we might certain results will always or never occur.  With simulations, we can show examples and sometimes find counterexamples, but it is hard to write proofs.
+
+\item And analysis can provide insight into models and the systems they describe; for example, sometimes we can identify regimes of qualitatively different behavior and key parameters that control those behaviors.
+
+\end{itemize}
+
+When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and glimpse the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is mere shadow of a world of pure, ideal mathematical entities.  I am not making this up; see \url{https://en.wikipedia.org/wiki/Allegory_of_the_Cave}.
+
+This is, of course, nonsense.  Mathematical notation is a language designed by humans for a purpose, specifically to facilitate symbolic manipulations like algebra.  Similarly, programming languages are designed  for a purpose, specifically to represent computational ideas and run programs.
+
+Each of these languages is generally good for the purposes it was designed for, and less good for other purposes.  But they are often complementary, and one of the goals of this book is to show how they can be used, to best advantage, together.
+
+
+
+Exercise: are geometric and exponential the same thing?
+
+Suppose three banks offer the same interest rate, but one compounds monthly, one daily, and one continuously.  What's the difference?
+
+What interest rate, compounded monthly, is equivalent to 3\% compounded continuously?  (Or is there an equivalence?)
+
+What if Polynomial Bank comes along and offers a better return at the end of the first year.  What happens during the second year?
 
 
 \chapter{Design}
