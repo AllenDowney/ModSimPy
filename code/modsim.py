@@ -85,8 +85,16 @@ class FigureState:
 
         returns: maplotlib.lines.Lines2D
         """
-        key = style, kwargs.get('color')
-        
+        color = kwargs.get('color')
+        key = style, color
+
+        # if there's no style or color, make a new line,
+        # and don't store it for future updating.
+        if key == (None, None):
+            return self.make_line(style, kwargs)
+
+        # otherwise try to look it up, and if it's
+        # not there, make a new line and store it.
         try:
             return self.lines[key]
         except KeyError:
@@ -96,7 +104,10 @@ class FigureState:
     
     def make_line(self, style, kwargs):
         underride(kwargs, linewidth=3, alpha=0.6)
-        lines = plt.plot([], style, **kwargs)
+        if style is None:
+            lines = plt.plot([], **kwargs)
+        else:
+            lines = plt.plot([], style, **kwargs)
         return lines[0]
 
     def clear_lines(self):
@@ -120,7 +131,7 @@ def plot(*args, **kwargs):
     """
     x = None
     y = None
-    style = 'bo-'
+    style = None
     
     # parse the args the same way plt.plot does:
     # 
@@ -211,7 +222,6 @@ def label_axes(xlabel=None, ylabel=None, title=None, **kwargs):
     #units = getattr(y, 'units', 'dimensionless')
     #plt.ylabel('%s (%s)' % (label, units))
 
-# make selected pyplot functions available
 xlabel = plt.xlabel
 ylabel = plt.ylabel
 xscale = plt.xscale
