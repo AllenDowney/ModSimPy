@@ -1758,18 +1758,18 @@ First, let's put all the information we need to run the model into a state objec
 
 \begin{python}
 state = State(t0=first_year, t_end=last_year,
-              init=census[first_year],
+              p0=census[first_year],
               annual_growth=annual_growth)
 \end{python}
 
-\py{t0} and \py{t_end} are the first and last years; \py{init} is the initial population, and \py{annual_growth} is the estimated annual growth.
+\py{t0} and \py{t_end} are the first and last years; \py{p0} is the initial population, and \py{annual_growth} is the estimated annual growth.
 
 Next we'll wrap the code from the previous section in a function:
 
 \begin{python}
 def run_model1(state):
     model = Series([])
-    model[state.t0] = state.init
+    model[state.t0] = state.p0
     for year in arange(state.t0, state.t_end):
         model[year+1] = model[year] + state.annual_growth
     state.model = model
@@ -1809,7 +1809,7 @@ On the order hand, if some fraction of the population dies each year, and some f
 \begin{python}
 def run_model2(state):
     model = Series([])
-    model[state.t0] = state.init
+    model[state.t0] = state.p0
     for year in arange(state.t0, state.t_end):
         births = state.birth_rate * model[year]
         deaths = state.death_rate * model[year]
@@ -1844,9 +1844,9 @@ There are a few things we can try to improve the model:
 
 \begin{itemize}
 
-\item Maybe the growth rate, \py{alpha}, varies over time.
+\item Maybe the birth rate and death rate vary over time.
 
-\item Maybe the net growth from one year to the next depends on the current population, but the relationship is quadratic, not linear.
+\item Maybe net growth depends on the current population, but the relationship is quadratic, not linear.
 
 \end{itemize}
 
@@ -1854,7 +1854,7 @@ We will try out these variations, but first, let's clean up the code one more ti
 
 \section{Factoring out the update function}
 
-If you compare \py{run_model1} and \py{run_model2}, you will see that they are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
+\py{run_model1} and \py{run_model2} are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
 
 Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull the body of the loop out and make it a function:
 
@@ -1872,13 +1872,13 @@ Now we can write a function that runs any model:
 \begin{python}
 def run_any_model(state, update_func):
     model = Series([])
-    model[state.t0] = state.init
+    model[state.t0] = state.p0
     for year in arange(state.t0, state.t_end):
         model[year+1] = update_func(year, model[year], state)
     state.model = model
 \end{python}
 
-This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we run \py{run_any_model}, we provide a state object that contains the parameters of the model and a function, like \py{update_func1} that computes the population for the next year.
+This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we run \py{run_any_model}, the second parameter is a function, like \py{update_func1}, that computes the population for the next year.
 
 Here's how we call it:
 
@@ -1917,6 +1917,7 @@ Again, the result is the same as Figure~\ref{chap03-fig03}.
 
 
 \section{Quadratic growth}
+\label{quadratic}
 
 It makes sense that net growth should depend on the current population, but maybe it's not a linear relationship, like this:
 
@@ -1938,7 +1939,7 @@ def update_func3(year, pop, state):
     return pop + net_growth
 \end{python}
 
-Now we need two parameters.  I chose these values by trial and error, but we will see better ways to do it later.
+Now we need two parameters.  I chose these values by trial and error; we will see better ways to do it later.
 
 \begin{python}
 state.alpha = 0.025
@@ -1958,11 +1959,13 @@ run_any_model(state, update_func3)
 \label{chap03-fig04}
 \end{figure}
 
-Figure~\ref{chap03-fig04} shows the result.  The model and the data go together well over the whole range, with just a bit of daylight between them, in the 1960s.
+Figure~\ref{chap03-fig04} shows the result.  The model fits the data well over the whole range, with just a bit of daylight between them, in the 1960s.
 
-Of course, we should expect the quadratic model to fit better than the linear or proportional model because it has two parameters we can choose to improve the fit, where the other models have only one.  In general, the more parameters you have to play with, the better you should expect the fit to be.
+Of course, we should expect the quadratic model to fit better than the linear or proportional model because it has two parameters we can choose, where the other models have only one.  In general, the more parameters you have to play with, the better you should expect the model to fit.
 
-But there is another reason to think the quadratic model might be a good choice: there is a plausible mechanism to explain it.  To understand it, let's look at net growth as a function of population.  Here's how we compute it:
+But fitting the data is not the only reason to think the quadratic model might be a good choice; it also makes sense, that is, there is a legitimate reason to expect the relationship between growth and population to have this form.
+
+To understand it, let's look at net growth as a function of population.  Here's how we compute it:
 
 \begin{python}
 pop_array = linspace(0.001, 15, 100)
@@ -1983,13 +1986,7 @@ plot(pop_array, net_growth_array, '-')
 \label{chap03-fig05}
 \end{figure}
 
-Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  
-
-
-\section{Equilibrium}
-\label{equilibrium}
-
-We can divide this curve into four regimes of behavior:
+Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
 
 \begin{itemize}
 
@@ -2004,6 +2001,9 @@ We can divide this curve into four regimes of behavior:
 \end{itemize}
 
 Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the birth and death rates are equal, so the population is in {\bf equilibrium}.
+
+\section{Equilibrium}
+\label{equilibrium}
 
 To find this equilibrium point, we can find the roots, or zeros, of this equation:
 %
@@ -2023,11 +2023,58 @@ This is the same model; it's just a different way {\bf parameterize} it.  Given 
 
 In this version, it is easier to interpret the parameters: $\alpha$ is the maximum growth rate, observed when $p$ is small, and $K$ is the equilibrium point.  $K$ is also called the {\bf carrying capacity}, since it indicates the maximum population the environment can sustain.
 
+In the next chapter we will use the models we have developed to generate predictions.  But first, a few more thoughts about debugging.
+
+\section{Debugging}
+
+Coming soon.
+
+
+
 \chapter{Predict}
+
+Intro
 
 \section{Generating projections}
 
-At this point we have a model that is simple but plausible, and it fits the data well.  Now we can use it to generate predictions.  In the code, the only thing we have to change is \py{t_end}:
+In the previous chapter we developed a model of world population growth from 1950 to 2016.  The is simple, but it fits the data well and the mechanisms it is based on are plausible.  Now we can use it to generate projections.
+
+We'll start with the quadratic model from Section~\ref{???}, which is based on this update function:
+
+\begin{python}
+def update_func3(year, pop, state):
+    net_growth = state.alpha * pop + state.beta * pop**2
+    return pop + net_growth
+\end{python}
+
+As we saw in the previous chapter, we can get the start date, end date, and initial population from \py{census}, which is a series that contains world population estimates generated by the U.S. Census:
+
+\begin{python}
+t0 = census.index[0]
+t_end = census.index[-1]
+p0 = census[t0]
+\end{python}
+
+Now we can initialize a state object:
+
+\begin{python}
+state = State(t0=t0, 
+              t_end=t_end,
+              p0=p0,
+              alpha = 0.025,
+              beta = -0.0018)
+\end{python}
+
+And run the model:
+
+\begin{python}
+run_any_model(state, update_func3)
+\end{python}
+
+We have already seen the results in Figure~\ref{chap03-fig04}.
+
+
+Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 state.t_end = 2250
@@ -2036,22 +2083,22 @@ run_any_model(state, update_func3)
 
 \begin{figure}
 % chap03.ipynb.py
-\centerline{\includegraphics[height=3in]{figs/chap03-fig06.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap04-fig01.pdf}}
 \caption{Quadratic model of world population growth, with projection from 2016 to 2250.}
-\label{chap03-fig06}
+\label{chap04-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig06} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
+Figure~\ref{chap04-fig01} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
 
-I am deliberately using the word ``projection" rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
+I am using the word ``projection" deliberately, rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
 
-But ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model, or even if the model is good, that the parameters might change.
+Using ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model, and even if the model is good, that the parameters might change.
 
-In this example, the model is based on the assumption that population growth is limited by the availability of resources, so as the population approaches the carrying capacity, birth rates fall and death rates rise because resources become scarce.
+In this example, the model is based on the assumption that population growth is limited by the availability of resources; in that scenario, as the population approaches the carrying capacity, birth rates fall and death rates rise because resources become scarce.
 
-If that's assumption is true, it might be possible to use data to estimate the carrying capacity, especially if we have observed the transition into the regime where the growth rate starts to fall.
+And if that's the case, it might be possible to use actual population growth to estimate carrying capacity, especially if we observe the transition into the regime where the growth rate starts to fall.
 
-But in the case of world population growth, none of these conditions apply:
+But in the case of world population growth, these conditions don't apply:
 
 \begin{itemize}
 
@@ -2098,35 +2145,33 @@ run_any_model(state, update_func3)
 
 
 \begin{figure}
-% chap03.ipynb.py
-\centerline{\includegraphics[height=3in]{figs/chap03-fig07.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap04-fig02.pdf}}
 \caption{Projections of world population generated by the U.S. Census Bureau, the United Nations, and our quadratic model.}
-\label{chap03-fig07}
+\label{chap04-fig02}
 \end{figure}
 
-And compare our projections to theirs.  Figure~\ref{chap03-fig07} shows the results.  People who know what they are doing expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  People who know what they are doing expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
 
-Nevertheless, their projects are qualitatively similar to ours, and they differ from each other almost as much as they differ from us.  So the result from this model, simple as it is, are not entirely crazy.
+Nevertheless, their projections are qualitatively similar to ours, and theirs differ with each other almost as much as they differ with ours.  So the result from this model, simple as it is, are not entirely crazy.
+
 
 \section{Difference equations}
 
 The population models in the previous chapter and this one are simple enough that we didn't really need to run simulations.  We could have solved them mathematically.  For example, we wrote the constant growth model like this:
 
 \begin{python}
-model[1950] = census[1950]
-for year in arange(1950, 2015):
-    model[year+1] = model[year] + annual_growth
+model[year+1] = model[year] + annual_growth
 \end{python}
 
 In mathematical notation, we would write the same model like this:
 %
 \[ x_{n+1} = x_n + c \]
 %
-where $x_n$ is the population during year $n$, $x_0$ is a given initial population, $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence}; see \url{https://en.wikipedia.org/wiki/Recurrence_relation}.
+where $x_n$ is the population during year $n$, $x_0$ is a given initial population, and $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence relation}; see \url{https://en.wikipedia.org/wiki/Recurrence_relation}.
 
-Often it is possible to solve a recurrence relation, which means to write an equation that computes $x_n$, for a given value of $n$, directly; that is, without computing the intervening values from $x_1$ through $x_{n-1}$.
+Often it is possible to solve a recurrence relation by writing an equation that computes $x_n$, for a given value of $n$, directly; that is, without computing the intervening values from $x_1$ through $x_{n-1}$.
 
-In the case of constant growth we can see that $x_1 = x_0 + c$, and $x_2 = x_1 + c$.  Combining these, we get $x_2 = x_0 + 2c$, and $x_3 = x_0 + 3c$.  And it is not hard to conclude that in general
+In the case of constant growth we can see that $x_1 = x_0 + c$, and $x_2 = x_1 + c$.  Combining these, we get $x_2 = x_0 + 2c$, then $x_3 = x_0 + 3c$, and it is not hard to conclude that in general
 %
 \[ x_n = x_0 + nc \]
 %
@@ -2144,7 +2189,7 @@ Now we can see that $x_1 = x_0 (1 + \alpha)$, and $x_2 = x_0 (1 + \alpha)^2$, an
 %
 \[ x_n = x_0 (1 + \alpha)^n \]
 %
-This result is an example of a {\bf geometric progression}; see \url{https://en.wikipedia.org/wiki/Geometric_progression}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
+This result is a {\bf geometric progression}; see \url{https://en.wikipedia.org/wiki/Geometric_progression}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
 
 Finally, we can write the quadratic model like this:
 %
@@ -2156,21 +2201,22 @@ or with the more conventional parameterization like this:
 %
 There is no analytic solution to this equation, but we can approximate it with a differential equation and solve that, which is what we'll do in the next section.
 
+
 \section{Differential equations}
 
 Starting again with the constant growth model
 %
 \[ x_{n+1} = x_n + c \]
 %
-We can define to be the change in $x$ from one time step to the next, we can write:
+If we define $\Delta x$ to be the change in $x$ from one time step to the next, we can write:
 %
 \[ \Delta x = x_{n+1} - x_n = c \]
 %
-If we define $\Delta t$ to be the time step, which is one year in the example, we can write the rate of change per unit of time, like this:
+If we define $\Delta t$ to be the time step, which is one year in the example, we can write the rate of change per unit of time like this:
 %
 \[ \frac{\Delta x}{\Delta t} = c \]
 %
-This model is {\bf discrete}, which means it is only defined at the time steps and not in between.  But in reality, people are born and die all the time, not once a year, so a {\bf continuous} model might be more realistic.
+This model is {\bf discrete}, which means it is only defined at integer values of $n$ and not in between.  But in reality, people are born and die all the time, not once a year, so a {\bf continuous} model might be more realistic.
 
 We can make this model continuous by writing the rate of change in the form of a derivative:
 %
@@ -2189,65 +2235,37 @@ And as a differential equation like this:
 \[ \frac{dx}{dt} = \alpha x \]
 %
 If we multiply both sides by $dt$ and divide by $x$, we get
-
-\[ \frac{1}{x} dx = \alpha dt \] 
-
+%
+\[ \frac{1}{x} dx = \alpha~dt \] 
+%
 Now we can take the antiderivative of both sides, yielding:
-
+%
 \[ \ln x = \alpha t + const \]
-
+%
 where $\ln$ is the natural logarithm and $const$ is the constant of integration.  Raising $e$ to both sides, we have
-
+%
 \[ x = e^{\alpha t + const} \]
-
+%
 which we can rewrite
-
+%
 \[ x = e^{\alpha t} e^{const} \]
-
+%
 Since $e$ raised to an arbitrary constant is just another arbitrary constant, we can write
-
-\[ x = Ae^{\alpha t} \]
-
+%
+\[ x = Ce^{\alpha t} \]
+%
 where $A = e^{const}$.  Or using an alternative notation I prefer:
 %
-\[ x(t) = A \exp(\alpha t) \]
+\[ x(t) = C \exp(\alpha t) \]
 %
-So there are many solutions to this differential equation, with different values of $A$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = A$, so $A = x_0$ and the solution we want is
+So there are many solutions to this differential equation, with different values of $C$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
 
 \[ x(t) = x_0 \exp(\alpha t) \]
 
-
-
 If you would like to see this derivation done a little more carefully, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/exponential-solution-to-differential-equation}.
 
-Finally, we can write the quadratic growth model as a differential equation like this:
 
-\[ \frac{dx}{dt} = r x (1 - x/K) \]
-
-If we multiply through by $dt$ and divide through by most of the right-hand side, we get:
-
-\[ \frac{1}{x(1 - x/K)} dx = r dt \]
-
-And again we can take the antiderivative of both sides.
-
-\url{https://www.khanacademy.org/math/ap-calculus-bc/diff-equations-bc/logistic-diff-eq-bc/v/solving-logistic-differential-equation-part-1}
-
-
-The right-hand side has the form of a line, which is why what we call the constant growth model is more commonly called a ``linear growth model".
-
-
-
-The form of this solution is an exponential function, which is why what we have called the proportional growth
-
-
-\section{The modeling framework}
-
-
-
-
-
-
-\section{Analysis}
+\section{Analysis and simulation}
 
 Once you have designed a model, there are generally two ways to proceed: simulation and analysis.  Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place.  Analysis often comes in the form of algebra; that is, symbolic manipulation using mathematical notation.
 
@@ -2261,27 +2279,184 @@ But there are several things we can do with analysis that are harder or impossib
 
 \item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
 
-\item We can use analysis to state and prove generalizations about models; for example, we might certain results will always or never occur.  With simulations, we can show examples and sometimes find counterexamples, but it is hard to write proofs.
+\item We can use analysis to state and prove generalizations about models; for example, we might prove that certain results will always or never occur.  With simulations, we can show examples and sometimes find counterexamples, but it is hard to write proofs.
 
 \item And analysis can provide insight into models and the systems they describe; for example, sometimes we can identify regimes of qualitatively different behavior and key parameters that control those behaviors.
 
 \end{itemize}
 
-When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and glimpse the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is mere shadow of a world of pure, ideal mathematical entities.  I am not making this up; see \url{https://en.wikipedia.org/wiki/Allegory_of_the_Cave}.
+When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and glimpse the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{https://en.wikipedia.org/wiki/Allegory_of_the_Cave}.}.
 
 This is, of course, nonsense.  Mathematical notation is a language designed by humans for a purpose, specifically to facilitate symbolic manipulations like algebra.  Similarly, programming languages are designed  for a purpose, specifically to represent computational ideas and run programs.
 
-Each of these languages is generally good for the purposes it was designed for, and less good for other purposes.  But they are often complementary, and one of the goals of this book is to show how they can be used, to best advantage, together.
+Each of these languages is good for the purposes it was designed for and less good for other purposes.  But they are often complementary, and one of the goals of this book is to show how they can be used together.
 
 
+\section{Analysis with WolframAlpha}
 
-Exercise: are geometric and exponential the same thing?
+Traditionally most analysis was done by dragging sticks of graphite across wood pulp, a process that is laborious an error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
 
-Suppose three banks offer the same interest rate, but one compounds monthly, one daily, and one continuously.  What's the difference?
+For example, if you go to \url{https://www.wolframalpha.com/} and type
 
-What interest rate, compounded monthly, is equivalent to 3\% compounded continuously?  (Or is there an equivalence?)
+\begin{python}
+df(t) / dt = alpha f(t)
+\end{python}
 
-What if Polynomial Bank comes along and offers a better return at the end of the first year.  What happens during the second year?
+WolframAlpha infers that $f(t)$ is a function of $t$ and $alpha$ is a parameter, it classifies the query as a ``first-order linear ordinary differential equation", and reports the general solution:
+
+\[ f(t) = c_1 e^{\alpha t} \]
+
+If you add a second equation to specify the initial condition:
+
+\begin{python}
+df(t) / dt = alpha x(t),  f(0) = p0
+\end{python}
+
+WolframAlpha provides the particular solution:
+
+\[ f(t) = p0 e^{\alpha t} \]
+
+As an exercise, use WolframAlpha to solve the quadratic model, using either or both forms of parameterization.
+
+WolframAlpha is based on Mathematica, a powerful programming language designed specifically for symbolic computation.
+
+
+\section{Analysis with SymPy}
+
+Python has a module called SymPy that provides symbolic computation tools similar to Mathematica.  They are not as easy to use as WolframAlpha, but they have some other advantages.
+
+First, we have to import the tools we plan to use:
+
+\begin{python}
+from sympy import symbols, Function, diff, dsolve
+\end{python}
+
+Because SymPy is integrated into Python, we have to distinguish between normal Python variables and SymPy symbols.  \py{symbols} takes a string and returns a symbol object.  So if we run this assignment:
+
+\begin{python}
+t = symbols('t')
+\end{python}
+
+Python understands that \py{t} should be treated as a symbol, rather than a number.  If we now run
+
+\begin{python}
+expr = t + 1
+\end{python}
+
+Python doesn't try to perform addition; rather, it creates a new symbol object that represents the sum of \py{t} and \py{1}.  Later we can evaluate this sum using \py{subs}, which substitutes a value for a symbol.  This example substitutes 2 for \py{t}:
+
+\begin{python}
+expr.subs(t, 2)
+\end{python}
+
+The result is 3.
+
+Functions in SymPy are represented by a special class of symbol:
+
+\begin{python}
+f = symbols('f', cls=Function)
+\end{python}
+
+Now if we write \py{f(t)}, we get an object that represents the evaluation of a function, $f$, at a value, $t$.  But again it doesn't actually try to evaluate it.
+
+\section{Differential equations in SymPy}
+
+SymPy provides a function, \py{diff}, that performs differentiation.  We can apply it to \py{f(t)} like this:
+
+\begin{python}
+dfdt = diff(f(t), t)
+\end{python}
+
+The result is (you guessed it) an object that represents the derivative of \py{f} with respect to \py{t}.  But again, it doesn't try to compute the derivative yet.
+
+To represent a differential equation, we use \py{Eq}:
+
+\begin{python}
+alpha = symbols('alpha')
+eq1 = Eq(dfdt, alpha*f(t))
+\end{python}
+
+The result is an object that represents an equation, which is displayed like this:
+%
+\[ \frac{d}{d t} f{\left (t \right )} = \alpha f{\left (t \right )} \]
+%
+Now we can use \py{dsolve} to solve this differential equation:
+
+\begin{python}
+solution_eq = dsolve(eq1)
+\end{python}
+
+The result is the equation
+%
+\[ f{\left (t \right )} = C_{1} e^{\alpha t} \]
+%
+which should look familiar.  This is the general solution, which still contains an unspecified constant, $C_1$.  
+
+To get the particular solution where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
+
+\begin{python}
+C1, p0 = symbols(['C1', 'p0'])
+\end{python}
+
+Now we can perform the substitution:
+
+\begin{python}
+particular = solution_eq.subs(C1, p0)
+\end{python}
+
+The result is 
+%
+\[ f{\left (t \right )} = p_{0} e^{\alpha t} \]
+%
+This function is called the {\bf exponential growth curve}; see \url{https://en.wikipedia.org/wiki/Exponential_growth}.
+
+
+\section{Solving the quadratic growth model}
+
+In the notebook for this chapter, you will see how to use the same tools to solve the quadratic growth model with parameters $r$ and $K$.  The general solution is
+%
+\[ f{\left (t \right )} = \frac{K e^{C_{1} K + r t}}{e^{C_{1} K + r t} - 1} \]
+%
+To get the particular solution where $f(0) = p_0$, we evaluate the general solution at $t=0$, which yields:
+%
+\[ f(0) = \frac{K e^{C_{1} K}}{e^{C_{1} K} - 1} \]
+%
+Then we set this expression equal to $p_0$ and solve for $C_1$.  The result is:
+%
+\[ C_1 = \frac{1}{K} \log{\left (- \frac{p_{0}}{K - p_{0}} \right )} \]
+%
+Finally, we substitute this value of $C_1$ into the general solution, which yields:
+%
+\[ f(t) = \frac{K p_{0} e^{r t}}{K + p_{0} e^{r t} - p_{0}} \]
+%
+This function is called the {\bf logistic growth curve}; see \url{https://en.wikipedia.org/wiki/Logistic_function}.  In the context of growth models, the logistic function is often written
+%
+\[ f(t) = \frac{K}{1 + A e^{-rt}} \]
+%
+where $A = (K - p_0) / p_0$.  In the notebook, you'll see how to use SymPy to confirm that the two ways to write the solution are equivalent.
+
+If you would like to see this differential equation solved by hand, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-bc/diff-equations-bc/logistic-diff-eq-bc/v/solving-logistic-differential-equation-part-1}
+
+
+\section{Summary}
+
+The following table summarizes the results so far:
+
+\begin{tabular}{l|l|l} 
+         & Discrete & Continuous \\ 
+\hline 
+Constant & linear: $x_n = p_0 + \alpha n$ & linear: $x(t) = p_0 + \alpha t$ \\ 
+ 
+Proportional & geometric: $x_n = p_0(1+\alpha)^n$ & exponential: $x(t) = p_0 \exp(\alpha t)$ \\ 
+ 
+Quadratic &  & logistic: $x(t) = \frac{K p_0 \exp(rt)}{K + \exp(rt) - p_0}$ \\ 
+\end{tabular} 
+
+What we've been calling the constant growth model is more commonly called ``linear growth" because the solution is a line.  Similarly, what's we've called proportion is commonly called ``exponential growth", and what we've called quadratic is commonly called ``logistic".
+
+I avoided the more common terms because I thought it would seem strange to use them before we solved the equations and discovered the functional form of the solutions.
+
+
 
 
 \chapter{Design}
