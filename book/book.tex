@@ -1561,6 +1561,7 @@ In this chapter and the next we apply tools from the previous chapters to the pr
 
 
 \section{World population data}
+\label{worldpopdata}
 
 The Wikipedia article  \url{https://en.wikipedia.org/wiki/World_population_estimates}
 contains tables with estimates of world population from prehistory to the present, and projections for the future.
@@ -1624,6 +1625,7 @@ table2.columns = ['census', 'prb', 'un', 'maddison',
 
 
 \section{Series}
+\label{series}
 
 Now we can select a column from the \py{DataFrame} using dot notation, like selecting a state variable from a state object:
 
@@ -1753,6 +1755,7 @@ We'll try out some different models in the next few sections, but first let's cl
 
 
 \section{Now with state objects}
+\label{nowwithstate}
 
 First, let's put all the information we need to run the model into a state object:
 
@@ -2039,7 +2042,7 @@ Intro
 
 In the previous chapter we developed a model of world population growth from 1950 to 2016.  The is simple, but it fits the data well and the mechanisms it is based on are plausible.  Now we can use it to generate projections.
 
-We'll start with the quadratic model from Section~\ref{???}, which is based on this update function:
+We'll start with the quadratic model from Section~\ref{quadratic}, which is based on this update function:
 
 \begin{python}
 def update_func3(year, pop, state):
@@ -2203,6 +2206,7 @@ There is no analytic solution to this equation, but we can approximate it with a
 
 
 \section{Differential equations}
+\label{diffeq}
 
 Starting again with the constant growth model
 %
@@ -2303,20 +2307,18 @@ df(t) / dt = alpha f(t)
 \end{python}
 
 WolframAlpha infers that $f(t)$ is a function of $t$ and $alpha$ is a parameter, it classifies the query as a ``first-order linear ordinary differential equation", and reports the general solution:
-
+%
 \[ f(t) = c_1 e^{\alpha t} \]
-
+%
 If you add a second equation to specify the initial condition:
 
 \begin{python}
-df(t) / dt = alpha x(t),  f(0) = p0
+df(t) / dt = alpha f(t),  f(0) = p0
 \end{python}
 
-WolframAlpha provides the particular solution:
+WolframAlpha reports the particular solution:
 
 \[ f(t) = p0 e^{\alpha t} \]
-
-As an exercise, use WolframAlpha to solve the quadratic model, using either or both forms of parameterization.
 
 WolframAlpha is based on Mathematica, a powerful programming language designed specifically for symbolic computation.
 
@@ -2460,6 +2462,416 @@ I avoided the more common terms because I thought it would seem strange to use t
 
 
 \chapter{Design}
+
+Intro
+
+\section{The Freshman Plague}
+
+Every year at Olin College, a new group of about 90 students come to campus for the first time from around the country and the world.  Most of them arrive healthy and happy, but we should expect at least one, by happenstance, to bring with them some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
+
+In this chapter we introduce a well-known model of infectious disease, the Kermack-McKendrick model, and use it to explain the progression of the disease over the course of the semester, predict the effect of possible interventions (like immunization) and design the most effective intervention campaign.
+
+Normally we like to do our own modeling; that is, we start with a physical system, identify factors that seem likely to be important, and think about how to represent them in a model.  In this chapter we start with an existing model and reverse-engineer it.  Along the way, we will think about the modeling decisions that went into it and identify its capabilities and limitations.
+
+\section{The SIR model}
+
+The Kermack-McKendrick model is a simple version of an ``SIR model", so-named because it considers three categories of people:
+
+\begin{itemize}
+
+\item {\bf S}: People who are ``susceptible", that is, capable of contracting the disease if they come into contact with someone who is infected.
+
+\item {\bf I}: People who are ``infected" or, more specifically, capable of passing along the disease if they come into contact with someone susceptible.
+
+\item {\bf R}: People who have ``recovered".
+
+\end{itemize}
+  
+In the basic version of the model, people who have recovered are considered to be immune to reinfection.  That is a reasonable model for some diseases, but not for others, so it should be on the list of assumptions we should consider when we evaluate the model.
+
+Now let's think about how we should expect the number of people in each of these categories to change over time.  Suppose we know that people with the disease are infectious for a period of 4 days on average.  If 100 people are infected at a particular point in time, if we ignore the particular time each one became infected, we would expect about 1 out of 4 to recover on any particular day.
+
+Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 1 recovery per 4 days, which we'll denote with the parameter $\gamma$ (which is the Greek letter gamma).  If the total number of people in the population is $N$, and the fraction currently infected is $i$, the total number of recoveries we expect per day is $\gamma i N$.
+
+Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every three days, on average, in such a way that they would contract the disease if the other person is infected.  We'll denote this contact rate with the parameter $\beta$ (which is the Greek letter beta).
+
+It's probably not reasonable to assume that we know $\beta$ ahead of time, but later in the chapter we'll see how we could estimate this value based on data from previous semesters.
+
+If $s$ is the fraction of the population that's susceptible, $s N$ is the number of susceptible people, $\beta s N$ is the number of contacts per day, and $\beta s i N$ is the number of those contacts where the other person is infectious.
+
+In summary:
+
+\begin{itemize}
+
+\item The number of recoveries we expect per day is $\gamma i N$; dividing by $N$ yields the fraction of the population that recovers in a day, which is $\gamma i$.
+
+\item The number of new infections we expect per day is $\beta s i N$; dividing by $N$ yields the fraction of the population that gets infected in a day, which is $\beta s i$.
+
+\end{itemize}
+
+
+\section{The SIR equations}
+
+If we treat time as a continuous quantity, we can write differential equations that describe the rates of change for $s$, $i$, and $r$, where $r$ is the fraction of the population that has recovered:
+%
+\begin{align*}
+\frac{ds}{dt} &= -\beta s i \\
+\frac{di}{dt} &= \beta s i - \gamma i\\
+\frac{dr}{dt} &= \gamma i
+\end{align*}
+%
+To avoid cluttering the equations, I leave it implied that $s$ is a function of time, $s(t)$, and likewise for $i$ and $r$.
+
+This model assumes that the population is closed, that is, that no one arrives or departs.  So the size of the population, $N$, is constant.  If the total of $s$, $i$, and $r$ is initially 1, it will always be 1.
+
+SIR models are examples of {\bf compartment models}, so-called because they divide the world into discrete categories, or compartments, and describe transitions from one compartment to another.  Compartments are also sometimes called {\bf stocks} and transitions between them are called {\bf flows}.
+
+In this example, there are three stocks, susceptible, infected, and recovered, and two flows, new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{https://en.wikipedia.org/wiki/Stock_and_flow}.
+
+Figure~\ref{???} shows the stock and flow diagram for an SIR model.
+
+DIAGRAM COMING SOON 
+
+
+\section{Implementation}
+
+For a given physical system, there are many possible models.  And once we have chosen a model, there are many ways to represent it; for example, as a stock-and-flow diagram, as a set of differential equations, or as a Python program.
+
+The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
+
+As a first step, I'll represent the initial state of the system using a Series object.  As we've seen in previous examples, we can start with an empty Series and add elements:
+
+\begin{python}
+init = Series([])
+init['S'] = 90
+init['I'] = 1
+init['R'] = 0
+\end{python}
+
+Or we can do the same thing more concisely:
+
+\begin{python}
+init = Series([90, 1, 0], index=['S', 'I', 'R'])
+\end{python}
+
+This series represents the number of people in each compartment.  To convert to fractions, we can divide through by the total:
+
+\begin{python}
+init /= np.sum(init)
+\end{python}
+
+To get started, we'll assume we know the time time between contacts and recovery times:
+
+\begin{python}
+tc = 3             # time between contacts in days 
+tr = 4             # recovery time in days
+\end{python}
+
+So we can compute the parameters of the model:
+
+\begin{python}
+beta = 1 / tc      # contact rate in per day
+gamma = 1 / tr     # recovery rate in per day
+\end{python}
+
+Now we need a System object to contain the parameters and initial conditions:
+
+\begin{python}
+def make_system(beta, gamma, init=init):
+    t0 = 0
+    t_end = 7 * 14
+
+    return System(init=init, t0=t0, t_end=t_end,
+                  beta=beta, gamma=gamma)
+\end{python}
+
+This function takes the parameters and initial conditions as parameters and returns a new System object.  The default value for \py{t_end} is 14 weeks, about the length of a semester.
+
+
+\section{The update function}
+
+At any point in time, the state of the system is represented by a Series object with three values, \py{s}, \py{i} and \py{r}.  The update function takes this series as a parameter, along with the System object that contains the parameters, and computes the state of the system during the next time step:
+
+\begin{python}
+def update1(system, state):
+    s, i, r = state
+
+    infected = system.beta * i * s    
+    recovered = system.gamma * i
+    
+    s -= infected
+    i += infected - recovered
+    r += recovered
+    
+    return Series([s, i, r], index=state.index)
+\end{python}
+
+The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a Series that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the Series to the three variables, in order.
+
+The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a Series that contains the updated values and the same index as \py{state}.
+
+When we call \py{update1} like this:
+
+\begin{python}
+state = update1(sir, init)
+\end{python}
+
+The result is the Series
+
+\begin{result}
+S    0.985388
+I    0.011865
+R    0.002747
+dtype: float64
+\end{result}
+
+\py{dtype} indicates the type of the data in the Series; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point} can represent a number with a decimal or fractional part, as opposed to an integer.
+
+
+\section{Running the model}
+
+Now we can run the model over a sequence of time steps:
+
+\begin{python}
+def run_model(system, update_func):
+    state = system.init
+    for i in range(system.t0, system.t_end):
+        state = update_func(system, state)
+    return state
+\end{python}
+
+The parameters of \py{run_model} are the System object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is simular to the function we used for the population model in Section~\ref{nowwithstate}.
+
+We can call \py{run_model} like this:
+
+\begin{python}
+run_model(sir, update1)
+\end{python}
+
+The result is the final state of the system:
+
+\begin{result}
+S    0.520819
+I    0.000676
+R    0.478505
+dtype: float64
+\end{result}
+
+This result indicates that after 14 weeks (98 days), about 52\% of the population is still susceptible, which means they were never infected, less than 1\% are actively infected, and 48\% have recovered, which means they were infected at some point.
+
+
+\section{Collecting the results}
+
+The previous version of \py{run_model} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll see two ways to do that: first, using three Series objects, then using one DataFrame.
+
+Here's the first version:
+
+\begin{python}
+def run_model(system, update_func):
+    S = Series([])
+    I = Series([])
+    R = Series([])
+
+    state = system.init
+    S[0], I[0], R[0] = state
+    
+    for i in range(sir.t0, sir.t_end):
+        state = update_func(system, state)
+        S[i+1], I[i+1], R[i+1] = state
+    
+    system.results = S, I, R
+\end{python}
+
+First, we create the Series objects that will contain the results.  I'll use capital letters \py{S}, \py{I} and \py{R} to indicate that each of these objects is a Series that represents the values of \py{s}, \py{i} and \py{r} as they change over time.  A Series of values like this is called a {\bf time series} (see \url{https://en.wikipedia.org/wiki/Time_series}).
+
+The initial value of \py{state} is a copy of \py{system.init}, which is a Series that contains the initial values of \py{s}, \py{i} and \py{r}.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
+
+It might be confusing, at first, that we are using the same kind of object, a Series, to represent both a time series and a state vector.  You might have to think about it, at first, but you'll get used to it.
+
+Inside the loop, we use \py{update_func} to compute the state vector for the next time step, then use multiple assignment to unpack the three elements of the state vector and assign each of them to the corresponding time series.
+
+At the end of the function, we store the Series objects, \py{S}, \py{I} and \py{R}, as a new attribute of the System object, \py{system}.
+
+Now we can call the function like this:
+
+\begin{python}
+run_model(sir, update1)
+\end{python}
+
+And then use multiple assignment to unpack the results.
+
+\begin{python}
+run_model(sir, update1)
+S, I, R = sir.results
+\end{python}
+
+\py{S}, \py{I} and \py{R} are Series object that represent time series, which we can plot like this:
+
+\begin{python}
+def plot_results(S, I, R):
+    plot(S, '--', color='blue', label='Susceptible')
+    plot(I, '-', color='red', label='Infected')
+    plot(R, ':', color='green', label='Resistant')
+    decorate(xlabel='Time (days)',
+             ylabel='Fraction of population')
+\end{python}
+
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig01.pdf}}
+\caption{Time series for \py{S}, \py{I} and \py{R} over the course of 98 days.}
+\label{chap05-fig01}
+\end{figure}
+
+Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  Eventually, almost half the population gets sick. 
+
+
+\section{Now with a DataFrame}
+
+If the number of state variables is small, like three, keeping track of three time series objects might not be so bad.  But if there are more, a better alternative is to use a DataFrame.  In Section~\ref{worldpopdata} we got a DataFrame as a result from \py{read_html}.  In this section we'll create a DataFrame and use it to store state variables.
+
+Here's a more concise version of \py{run_model}:
+
+\begin{python}
+def run_model(system, update_func):
+    df = DataFrame(columns=['S', 'I', 'R'])
+    df.loc[0] = system.init
+    
+    for i in range(system.t0, system.t_end):
+        df.loc[i+1] = update_func(system, df.loc[i])
+    
+    system.results = df
+\end{python}
+
+The first line creates an empty DataFrame with one column for each of the state variables.
+
+Before the loop starts, we want to store the initial conditions in the DataFrame with the time index 0.  Based on the way we've been using Series objects, it might be tempting to write:
+
+\begin{python}
+df[0] = system.init
+\end{python}
+
+The problem is that when you use the bracket operator with a DataFrame, it selects a column, not a row.  For example, to select the first column, we could write
+
+\begin{python}
+df['S']
+\end{python}
+
+The result would be a Series.  To read or write a single row, we have use use \py{loc}, which stands for ``location".  So \py{df.loc[0]} reads a row from a DataFrame and 
+
+\begin{python}
+df.loc[0] = system.init
+\end{python}
+
+assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a Series, the assignment matches up the index from the Series with the columns of the DataFrame, assigning the \py{S} value from \py{system.init} to the \py{S} column of the DataFrame, and so on.
+
+We can use the same feature to write the loop more concisely, writing the results from \py{update_func} directly into \py{df}.
+
+Finally, we store \py{df} as a new attribute of \py{system} named \py{results}.
+
+We can call this version of \py{run_model} like this:
+
+\begin{python}
+run_model(sir, update1)
+\end{python}
+
+And plot the results like this:
+
+\begin{python}
+df = sir.results
+plot_results(df.S, df.I, df.R)
+\end{python}
+
+As we saw in Section~\ref{series}, we can use dot notation to select columns from the DataFrame.
+
+
+\section{Metrics}
+
+When we plot time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a small set of numbers, often one, that summarizes the outcome.  These summary statistics are called {\bf metrics}.
+
+In this example, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students who will be sick at any point.
+
+As an example, I will focus on the last one -- the total number of sick students -- and we will consider interventions intended to minimize it.
+
+When a person gets infected, they move from \py{S} to \py{I}, so we can compute the total number of infections like this:
+
+\begin{python}
+def calc_total_infected(system):
+    df = system.results
+    return df.S[system.t0] - df.S[system.t_end]
+\end{python}
+
+
+
+\section{Sweeping beta}
+
+Now we can run the model for any values of the parameters and display the results:
+
+\begin{python}
+sir.beta = 0.333
+sir.gamma = 0.25
+run_model(sir, update1)
+print(calc_total_infected(sir))
+\end{python}
+
+We can create a array with a range of values for \py{beta}:
+
+\begin{python}
+beta_array = linspace(0.1, 0.9, 11)
+\end{python}
+
+Then run the model for each value, printing the results as we go.
+
+\begin{python}
+for beta in beta_array:
+    sir = make_system(beta, gamma)
+    run_model(sir, update1)
+    print(sir.beta, calc_total_infected(sir))
+\end{python}
+
+Even better, we can encapsulate that code in a function and store the results in a Series:
+
+\begin{python}
+def sweep_beta(beta_array, gamma):
+    series = Series()
+    for beta in beta_array:
+        system = make_system(beta, gamma)
+        run_model(system, update1)
+        series[system.beta] = calc_total_infected(system)
+    return series
+\end{python}
+
+We can call \py{sweep_beta} like this:
+
+\begin{python}
+infected_series = sweep_beta(beta_array, gamma)
+\end{python}
+
+And plot the results like this:
+
+\begin{python}
+label = 'gamma = ' + str(gamma)
+plot(infected_series, label=label)
+\end{python}
+
+The first line uses string operations to assemble a label for the plotted line.  If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
+
+When the \py{+} operator is applied to strings, it joins them end-to-end, which is called {\bf concatenation}.  The function \py{str} converts any type of object to a String representation.  In this case, \py{gamma} is a floating-point number, so we have to convert it to a string before trying to concatenate it.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
+\caption{Total number of infected students as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
+\label{chap05-fig02}
+\end{figure}
+
+Figure~\ref{chap05-fig02} shows the results.  Notice that the x-axis is the parameter \py{beta}, not time.  This figure is a parameter sweep, not a time series.
+
+When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.
+
+As \py{beta} increases...
+
+
+
 
 \backmatter
 \printindex
