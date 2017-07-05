@@ -2539,11 +2539,11 @@ For a given physical system, there are many possible models, and for a given mod
 
 The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
 
-As a first step, I'll represent the initial state of the system using a Series object.  As we've seen in previous examples, we can start with an empty Series and add elements:
+As a first step, I'll represent the initial state of the system using a \py{StateVector} object.  As we've seen in previous examples, we can start with an empty \py{StateVector} and add elements:
 
 \begin{python}
-init = Series([])
-init['S'] = 90
+init = StateVector([])
+init['S'] = 89
 init['I'] = 1
 init['R'] = 0
 \end{python}
@@ -2551,7 +2551,7 @@ init['R'] = 0
 Or we can do the same thing more concisely:
 
 \begin{python}
-init = Series([90, 1, 0], index=['S', 'I', 'R'])
+init = StateVector([89, 1, 0], index=['S', 'I', 'R'])
 \end{python}
 
 This series represents the number of people in each compartment.  To convert to fractions, we can divide through by the total:
@@ -2577,7 +2577,10 @@ gamma = 1 / tr     # recovery rate in per day
 Now we need a \py{System} object to store the parameters and initial conditions:
 
 \begin{python}
-def make_system(beta, gamma, init=init):
+def make_system(beta, gamma):
+    init = StateVector([89, 1, 0], index=['S', 'I', 'R'])
+    init /= np.sum(init)
+
     t0 = 0
     t_end = 7 * 14
 
@@ -2585,12 +2588,12 @@ def make_system(beta, gamma, init=init):
                   beta=beta, gamma=gamma)
 \end{python}
 
-This function takes the parameters and initial conditions as parameters and returns a new \py{System} object.  The default value for \py{t_end} is 14 weeks, about the length of a semester.
+This function takes the model parameters as function parameters and returns a new \py{System} object.  The default value for \py{t_end} is 14 weeks, about the length of a semester.
 
 
 \section{The update function}
 
-At any point in time, the state of the system is represented by a \py{Series} object with three values, \py{s}, \py{i} and \py{r}.  The update function takes this series as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
+At any point in time, the state of the system is represented by a \py{StateVector} object with three values, \py{S}, \py{I} and \py{R}.  The update function takes this series as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
 
 \begin{python}
 def update1(system, state):
@@ -2603,12 +2606,12 @@ def update1(system, state):
     i += infected - recovered
     r += recovered
     
-    return Series([s, i, r], index=state.index)
+    return StateVector([s, i, r], index=state.index)
 \end{python}
 
-The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{Series} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{Series} to the three variables, in order.
+The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{StateVector} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{StateVector} to the three variables, in order.
 
-The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a Series that contains the updated values and the same index as \py{state}.
+The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{StateVector} that contains the updated values and the same index as \py{state}.
 
 When we call \py{update1} like this:
 
@@ -2616,7 +2619,7 @@ When we call \py{update1} like this:
 state = update1(sir, init)
 \end{python}
 
-The result is the Series
+The result is the \py{StateVector}
 
 \begin{result}
 S    0.985388
@@ -2625,7 +2628,7 @@ R    0.002747
 dtype: float64
 \end{result}
 
-\py{dtype} indicates the type of the data in the \py{Series}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
+\py{dtype} indicates the type of the data in the \py{StateVector}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
 
 
 \section{Running the model}
@@ -2640,7 +2643,7 @@ def run_model(system, update_func):
     return state
 \end{python}
 
-The parameters of \py{run_model} are the \py{System} object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is simular to the function we used for the population model in Section~\ref{nowwithstate}.
+The parameters of \py{run_model} are the \py{System} object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithstate}.
 
 We can call \py{run_model} like this:
 
@@ -2662,15 +2665,15 @@ This result indicates that after 14 weeks (98 days), about 52\% of the populatio
 
 \section{Collecting the results}
 
-The previous version of \py{run_model} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{Series} objects, then using one \py{DataFrame}.
+The previous version of \py{run_model} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using one \py{DataFrame}.
 
 Here's the first version:
 
 \begin{python}
 def run_model(system, update_func):
-    S = Series([])
-    I = Series([])
-    R = Series([])
+    S = TimeSeries([])
+    I = TimeSeries([])
+    R = TimeSeries([])
 
     state = system.init
     S[0], I[0], R[0] = state
@@ -2684,13 +2687,15 @@ def run_model(system, update_func):
     system.R = R
 \end{python}
 
-First, we create the Series objects that will contain the results.  I'll use capital letters \py{S}, \py{I} and \py{R} to indicate that each of these objects is a \py{Series} that represents the values of \py{s}, \py{i} and \py{r} as they change over time.  A \py{Series} of values like this is called a {\bf time series} (see \url{https://en.wikipedia.org/wiki/Time_series}).
+First, we create \py{TimeSeries} objects that will store the results.  
 
-The initial value of \py{state} is a copy of \py{system.init}, which is a \py{Series} that contains the initial values of \py{s}, \py{i} and \py{r}.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
+TODO: Go back and introduce TimeSeries in Chapter 3.  A \py{Series} of values like this is called a {\bf time series} (see \url{https://en.wikipedia.org/wiki/Time_series}).
 
-It might be confusing, at first, that we are using the same kind of object, \py{Series}, to represent both a time series and a state vector.  You'll get used to it.
+The initial value of \py{state} is a copy of \py{system.init}, which is the \py{StateVector} that contains the initial values of \py{S}, \py{I} and \py{R}.  
 
-Inside the loop, we use \py{update_func} to compute the state vector for the next time step, then use multiple assignment to unpack the three elements of the state vector and assign each of them to the corresponding time series.
+TODO: Go back and introduce StateVector in Chapter 3.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
+
+Inside the loop, we use \py{update_func} to compute the state of the next time step, then use multiple assignment to unpack the three elements of \py{state} and assign each to the corresponding \py{TimeSeries}.
 
 At the end of the function, we store \py{S}, \py{I}, and \py{R} as attributes of the \py{System} object.
 
@@ -2735,7 +2740,7 @@ Here's a more concise version of \py{run_model}:
 \begin{python}
 def run_model(system, update_func):
     df = DataFrame(columns=['S', 'I', 'R'])
-    df.loc[0] = system.init
+    df.loc[system.t0] = system.init
     
     for i in range(system.t0, system.t_end):
         df.loc[i+1] = update_func(system, df.loc[i])
@@ -2743,12 +2748,12 @@ def run_model(system, update_func):
     system.results = df
 \end{python}
 
-The first line creates an empty \py{DataFrame} with one column for each of the state variables.
+The first line creates an empty \py{DataFrame} with one column for each state variables.
 
-Before the loop starts, we want to store the initial conditions in the \py{DataFrame} at time index 0.  Based on the way we've been using \py{Series} objects, it might be tempting to write:
+Before the loop starts, we want to store the initial conditions in the \py{DataFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it might be tempting to write:
 
 \begin{python}
-df[0] = system.init
+df[system.t0] = system.init
 \end{python}
 
 The problem is that when you use the bracket operator with a \py{DataFrame}, it selects a column, not a row.  For example, to select the first column, we could write
@@ -2760,14 +2765,14 @@ df['S']
 The result would be a time series.  To read or write a single row, we have to use \py{loc}, which stands for ``location".  So \py{df.loc[0]} reads a row from a \py{DataFrame} and 
 
 \begin{python}
-df.loc[0] = system.init
+df.loc[system.t0] = system.init
 \end{python}
 
-assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{Series}, the assignment matches up the index from the \py{Series} with the columns of the \py{DataFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{DataFrame}, and likewise with \py{I} and \py{R}.
+assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{StateVector}, the assignment matches up the index from the \py{StateVector} with the columns of the \py{DataFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{DataFrame}, and likewise with \py{I} and \py{R}.
 
-This version of \py{run_model} uses the same feature to write the loop more concisely, writing the results from \py{update_func} directly into \py{df}.  Finally, we store \py{df} as a new attribute of \py{system}.
+We can use the same feature to write the loop more concisely, assigning the \py{StateVector} we get from \py{update_func} directly to the next row of \py{df}.  
 
-We can call this version of \py{run_model} like this:
+Finally, we store \py{df} as a new attribute of \py{system}.  We can call this version of \py{run_model} like this:
 
 \begin{python}
 run_model(sir, update1)
@@ -2799,15 +2804,216 @@ def calc_total_infected(system):
     return df.S[system.t0] - df.S[system.t_end]
 \end{python}
 
-As an exercise, consider writing functions to compute other metrics.
+In the notebook that accompanies this chapter, you will have a chance to write functions that compute other metrics.
 
 
 \section{Immunization}
 
+Models like this are useful for testing ``what if?" scenarios.  As an example, we'll consider the effect of immunization.
+
+Suppose there is a vaccine that causes a patient to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
+
+One option is to treat immunization as a short cut from \py{S} to \py{R}, that is, from susceptible to removed (or resistant).  We can implement this feature like this:
+
+\begin{python}
+def add_immunization(system, fraction):
+    system.init.S -= fraction
+    system.init.R += fraction
+\end{python}
+
+\py{add_immunization} moves the given fraction of the population from \py{S} to \py{R}.  If we assume that 10\% of students are vaccinated at the beginning of the semester, and the vaccine is 100\% effective, we can simulate the effect like this:
+
+\begin{python}
+sir2 = make_system(beta, gamma)
+add_immunization(sir2, 0.1)
+run_model(sir2, update1)
+\end{python}
+
+For comparison, we ran the same model without immunization and plot the results.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
+\caption{Time series for \py{S}, with and without immunization.}
+\label{chap05-fig02}
+\end{figure}
+
+Figure~\ref{chap05-fig02} shows the results, plotting \py{S} as a function of time, with and without immunization.  
+
+Without immunization, almost 47\% of the population is infected at some point.  With 10\% immunization, only 31\% are infected.  That's pretty good.
+
+So let's see what happens if we administer more vaccines.  This function sweeps a range of immunization rates:
+
+\begin{python}
+def sweep_immunity(immunize_array):
+    sweep = Sweep([])
+    for fraction in immunize_array:
+        sir = make_system(beta, gamma)
+        add_immunization(sir, fraction)
+        run_model(sir, update1)
+        sweep[fraction] = calc_total_infected(sir)
+    return sweep
+\end{python}
+
+The result is a \py{Sweep} object, shown in Figure~\ref{chap05-fig03}.  As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
+\caption{Fraction of the population infected as a function of immunization rate.}
+\label{chap05-fig03}
+\end{figure} 
+
+Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.
+
+This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{https://en.wikipedia.org/wiki/Herd_immunity}).
+
+The steepness of the curve in Figure~\ref{chap05-fig03} is a blessing and a curse.  It's a blessing because it means we don't have to immunize everyone, and vaccines can protect the ``herd" even if they are not 100\% effective.
+
+But it's a curse because a small decrease in immunization can cause a big increase in infections.  In this example, if we drop from 80\% immunization to 60\%, that might not be too bad.  But if we drop from 40\% to 20\%, that would trigger a major outbreak, affecting more than 15\% of the population.  For a serious disease like measles, just to name one, that would be a public health catastrophe.
+
+One use of models like this is to demonstrate phenomena like herd immunity and to predict the effect of interventions like vaccination.  Another use for models is to evaluate alternatives and guide decision making.  We'll see an example in the next section.
+
+
+\section{Hand washing}
+
+Suppose you are the Dean of Student Affairs, and you have a budget of just \$1200 to try to combat the Freshman Plague.  You have two options for spending this money:
+
+\begin{enumerate}
+
+\item You can pay for vaccinations, at a rate of \$100 per dose.
+
+\item You can spend money on a campaign to remind students to wash hands frequently.
+
+\end{enumerate}
+
+We have already seen how we can model the effect of vaccination.  Now let's think about the hand-washing campaign.  We'll have to answer two questions:
+
+\begin{enumerate}
+
+\item How should we incorporate the effect of hand washing in the model?
+
+\item How should we quantify the effect of the money we spend on a hand-washing campaign?
+
+\end{enumerate}
+
+For the sake of simplicity, let's assume that we have data from a similar campaign at another school, showing that a well-funded campaign can change student behavior enough to reduce the infection rate by 20\%.  
+
+In terms of the model, hand washing has the effect of reducing \py{beta}.  That's not the only way we could incorporate the effect, but it seems reasonable and it's easy to implement.
+
+Now we have to model the relationship between the money we spend and the effectiveness of the campaign.  Again, let's suppose we have data from another school that suggests:
+
+\begin{itemize}
+
+\item If we spend \$500 on posters, materials, and staff time, we can change student behavior in a way that decreases the effective value of \py{beta} by 10\%.
+
+\item If we spend \$1000, the total decrease in \py{beta} is almost 20\%.
+
+\item Above \$1000, the extra spending has little additional benefit.
+
+\end{itemize}
+
+In the notebook for this chapter you will see how I used a logistic curve to fit this data.  The result is this function, which takes spending as a parameter and returns \py{factor}, which is the factor by which \py{beta} is reduced.
+
+\begin{python}
+def compute_factor(spending):
+    max_reduction = 0.2
+    factor = max_reduction * logistic(spending, a=0.01, b=500)
+    return factor
+\end{python}
+
+We use \py{compute_factor} to write \py{add_hand_washing}, which takes a \py{System} object and a budget, and modifies \py{system.beta} to model the effect of hand washing:
+
+\begin{python}
+def add_hand_washing(system, spending):
+    factor = compute_factor(spending)
+    system.beta *= (1 - factor)
+\end{python}
+
+Now we can sweep a range of values for \py{spending} and use the simulation to compute the effect.
+
+\begin{python}
+def sweep_hand_washing(spending_array):
+    sweep = Sweep([])
+    for spending in spending_array:
+        sir = make_system(beta, gamma)
+        add_hand_washing(sir, spending)
+        run_model(sir, update1)
+        sweep[spending] = calc_total_infected(sir)
+    return sweep
+\end{python}
+
+Here's how we run it:
+
+\begin{python}
+spending_array = linspace(0, 1200, 20)
+infected_sweep = sweep_hand_washing(spending_array)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig05.pdf}}
+\caption{Fraction of the population infected as a function of hand-washing campaign spending.}
+\label{chap05-fig05}
+\end{figure} 
+
+Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
+
+\section{Optimization} 
+
+Now we can put it altogether.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy, at \$100 each, and how much to spend on the hand-washing campaign.
+
+Here are the parameters:
+
+\begin{python}
+num_students = 90
+budget = 1200
+price_per_dose = 100
+max_doses = int(budget / price_per_dose)
+\end{python}
+
+We'll sweep the range of possible doses:
+
+\begin{python}
+dose_array = arange(max_doses+1)
+\end{python}
+
+And run the simulation for each dose:
+
+\begin{python}
+def sweep_doses(dose_array):
+    sweep = Sweep([])
+    for doses in dose_array:
+        fraction = doses / num_students
+        spending = budget - doses * price_per_dose
+        
+        sir = make_system(beta, gamma)
+        add_immunization(sir, fraction)
+        add_hand_washing(sir, spending)
+        
+        run_model(sir, update1)
+        sweep[doses] = calc_total_infected(sir)
+
+    return sweep
+\end{python}
+
+For each number of doses, we compute the fraction of students we can immunize, \py{fraction} and the remaining budget we can spend on the campaign, \py{spending}.  Then we run the simulation with those quantities and store the number of infections.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig06.pdf}}
+\caption{Fraction of the population infected as a function of the number of doses.}
+\label{chap05-fig06}
+\end{figure} 
+
+Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
+
+As we increase the number of doses, we have to cut campaign spending, which turns out to make things worse.  But interestingly, when we get above 10 doses, the effect of herd immunity starts to kick in, and the number of sick students goes down again.
+
+In the notebook for this chapter, you'll have a chance to run this optimization for different scenarios.
 
 
 
 \chapter{Analysis}
+
+NOT DONE, BUT KEEP GOING IF YOU WANT A PREVIEW
+
 
 \section{Sweeping beta}
 
