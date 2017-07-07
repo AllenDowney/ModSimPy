@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.0.5}
+\newcommand{\theversion}{0.0.6}
 
 
 %%%% Both LATEX and PLASTEX
@@ -542,22 +542,20 @@ Suppose the system contains 12 bikes and two bike racks, one at Olin and one at 
 As students arrive, check out a bike, and ride to the other campus,
 the number of bikes in each location changes.  In the simulation,
 we'll need to keep track of where the bikes are.  To do that, I'll
-create a {\bf state object}:
+create a {\bf system object}:
 
 \begin{python}
 from modsim import *
 
-bikeshare = State(olin=10, wellesley=2)
+bikeshare = System(olin=10, wellesley=2)
 \end{python}
 
 The first line is an {\bf import statement} that tells Python
-to read {\tt modsim}, which is a collection of functions, including \py{sqrt}, which we used in the previous section, \py{State}, which we are using now, and many more.
+to read {\tt modsim}, which is a collection of functions, including \py{sqrt}, which we used in the previous section, \py{System}, which we are using now, and many more.
 
-\py{State} creates a {\bf state object} which is a collection of {\bf state variables}.  In this example, the state variables are named \py{olin} and \py{wellesley} and they represent the number of bikes at
-Olin and Wellesley.  The initial values of are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The state object created by \py{State} is assigned to a new variable
-named \py{bikeshare}.
+\py{System} creates a {\bf system object} which is a collection of {\bf ??? variables}.  In this example, the system variables are named \py{olin} and \py{wellesley} and they represent the number of bikes at Olin and Wellesley.  The initial values of are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The system object created by \py{System} is assigned to a new variable named \py{bikeshare}.
 
-We can read the variables inside a state object using ``dot notation'', like this:
+We can read the variables inside a system object using ``dot notation'', like this:
 
 \begin{python}
 bikeshare.olin
@@ -569,17 +567,19 @@ The result is the value 10.  Similarly, for:
 bikeshare.wellesley
 \end{python}
 
-The result is 2.  If you ever forget what variables a state
-object has, you can use \py{print_state}, another function from
+The result is 2.  If you ever forget what variables a system
+object has, you can use \py{print_system}, another function from
 \py{modsim}:
 
+%TODO: get rid of this function
+
 \begin{python}
-print_state(bikeshare)
+print_system(bikeshare)
 \end{python}
 
-\py{print_state} is a function, like \py{State}.  The name in
+\py{print_system} is a function, like \py{System}.  The name in
 parentheses is a function {\bf argument}, which specifies which
-state object we want to print.
+system object we want to print.
 
 The result looks like this:
 
@@ -587,6 +587,8 @@ The result looks like this:
 wellesley -> 2
 olin -> 10
 \end{result}
+
+%TODO: define ``state of the system''
 
 We can update the state of the system by assigning new values to
 the variables.  For example, if a student moves a bike from Olin
@@ -642,7 +644,7 @@ first cell:
 
 These commands are not actually Python; they are so-called ``magic commands" that control the behavior of Jupyter.
 
-The next two lines plot the variables of the state object.  The
+The next two lines plot the variables of the system object.  The
 \py{plot} function takes two arguments: the first is the variable to plot;
 the second is a ``style string''.  In general, a {\bf string} is a sequence of letters, numbers, and punctuation that appear in quotation marks.
 
@@ -699,7 +701,7 @@ bike_to_wellesley()
 \end{python}
 
 When you call this function, it updates the variables of the
-{\tt bikeshare} state object, which you can confirm by printing
+{\tt bikeshare} system object, which you can confirm by printing
 or plotting the new state.
 
 When you call a function that takes no arguments, you have to
@@ -1070,7 +1072,7 @@ This process, starting with a simple model, identifying the most important probl
 For any physical system, there are many possible models, based on different assumptions and simplifications.  It often takes several iterations to develop a model that is good enough for the intended purpose, but no more complicated than necessary.
 
 
-\section{More than one state object}
+\section{More than one system object}
 
 In the previous chapter, we developed a simple model of a bike sharing system, and we wrote functions like \py{move_bike} and \py{plot_state}:
 
@@ -1084,25 +1086,25 @@ def plot_state():
     plot(bikeshare.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
-One problem with these function is that they always use \py{bikeshare}, which is a state object.  As long as there is only one state object, that's not a problem, but these functions would be more flexible if they took a state object as a parameter.  Here's what that looks like:
+One problem with these function is that they always use \py{bikeshare}, which is a system object.  As long as there is only one system object, that's not a problem, but these functions would be more flexible if they took a system object as a parameter.  Here's what that looks like:
 
 \begin{python}
-def move_bike(state, n):
-    state.olin -= n
-    state.wellesley += n
+def move_bike(system, n):
+    system.olin -= n
+    system.wellesley += n
 
-def plot_state(state):
-    plot(state.olin, 'rs-', label='Olin')
-    plot(state.wellesley, 'bo-', label='Wellesley')
+def plot_state(system):
+    plot(system.olin, 'rs-', label='Olin')
+    plot(system.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
-The name of the parameter is \py{state} rather than \py{bikeshare} as a reminder that the value of \py{state} could be any state object, not just \py{bikeshare}.
+The name of the parameter is \py{system} rather than \py{bikeshare} as a reminder that the value of \py{system} could be any system object, not just \py{bikeshare}.
 
-Now I can create as many state objects as I want:
+Now I can create as many system objects as I want:
 
 \begin{python}
-bikeshare1 = State(olin=10, wellesley=2)
-bikeshare2 = State(olin=2, wellesley=10)
+bikeshare1 = System(olin=10, wellesley=2)
+bikeshare2 = System(olin=2, wellesley=10)
 \end{python}
 
 And update them independently:
@@ -1112,7 +1114,7 @@ bike_to_olin(bikeshare1)
 bike_to_wellesley(bikeshare2)
 \end{python}
 
-This will be useful later in the chapter when we create a series of state objects to simulate different scenarios.
+This will be useful later in the chapter when we create a series of system objects to simulate different scenarios.
 
 
 \section{Documentation}
@@ -1123,17 +1125,17 @@ There are two forms of documentation, {\bf docstrings} and {\bf comments}.
  A docstring is a string in triple-quotes that appears at the beginning of a function, like this:
 
 \begin{python}
-def run_steps(state, num_steps=1, p1=0.5, p2=0.5):
+def run_steps(system, num_steps=1, p1=0.5, p2=0.5):
     """Simulate the given number of time steps.
     
-    state: bikeshare State object
+    system: bikeshare System object
     num_steps: number of time steps
     p1: probability of an Olin->Wellesley customer arrival
     p2: probability of a Wellesley->Olin customer arrival
     """
     for i in range(num_steps):
-        step(state, p1, p2)
-        plot_state(state)
+        step(system, p1, p2)
+        plot_state(system)
 \end{python}
 
 Docstrings follow a conventional format:
@@ -1153,18 +1155,18 @@ A comment is a line of text that begins with a hash symbol, \py{#}.  It usually 
 For example, here is a version of \py{move_bike} with a docstring and a comment.
 
 \begin{python}
-def move_bike(state, n):
+def move_bike(system, n):
     """Move a bike.
     
-    state: bikeshare State object
+    system: bikeshare System object
     n: +1 to move from Olin to Wellesley or
        -1 to move from Wellesley to Olin
     """
-    # Because we decrease one state variable by n
+    # Because we decrease one system variable by n
     # and increase the other by n, the total number
     # of bikes is unchanged.
-    state.olin -= n
-    state.wellesley += n
+    system.olin -= n
+    system.wellesley += n
 \end{python}
 
 At this point we have more documentation than code, which is not unusual for short functions.
@@ -1178,19 +1180,19 @@ At this point we have more documentation than code, which is not unusual for sho
 Here's an updated version of \py{move_bike} that checks to make sure a bike is available:
 
 \begin{python}
-def move_bike(state, n):
+def move_bike(system, n):
     # make sure the number of bikes won't go negative
-    olin = state.olin - n
+    olin = system.olin - n
     if olin < 0:
         return
     
-    wellesley = state.wellesley + n
+    wellesley = system.wellesley + n
     if wellesley < 0:
         return
     
-    # update the state
-    state.olin = olin
-    state.wellesley = wellesley
+    # update the system
+    system.olin = olin
+    system.wellesley = wellesley
 \end{python}
 
 The comments explain the two sections of this function: the first checks to make sure a bike is available; the second updates the state.
@@ -1202,20 +1204,20 @@ It uses the less-than operator, \py{<}, to compare \py{olin} to \py{0}.  The res
 In that case we use a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we ``return" without changing the state.
 Similarly, if there are not enough bikes at Wellesley, we return without changing state.
 
-If both of these tests pass, we run the last two lines, which store the values we just computed as state variables.
+If both of these tests pass, we run the last two lines, which store the values we just computed as system variables.
 
 Because \py{olin} and \py{wellesley} are created inside a function, they are {\bf local variables}, which means they only exist inside the function.  At the end of the function, they disappear, and you cannot read or write them from anywhere else in the program.
 
-On the other hand, the state variables \py{olin} and \py{wellesley}, which happen to have the same names, belong to \py{state}, which is a state object that was passed to this function as a parameter.  When we change these state variables inside this function, those changes are visible in other parts of the program.
+On the other hand, the system variables \py{olin} and \py{wellesley}, which happen to have the same names, belong to \py{system}, which is a system object that was passed to this function as a parameter.  When we change these system variables inside this function, those changes are visible in other parts of the program.
 
 This new version of \py{move_bike} makes sure we never have negative bikes at either station.  But what about \py{bike_to_wellesley} and \py{bike_to_olin}; do we have to update them, too?  Here they are:
 
 \begin{python}
-def bike_to_wellesley(state):
-    move_bike(state, 1)
+def bike_to_wellesley(system):
+    move_bike(system, 1)
     
-def bike_to_olin(state):
-    move_bike(state, -1)
+def bike_to_olin(system):
+    move_bike(system, -1)
 \end{python}
 
 Because these functions use \py{move_bike}, they take advantage of the new feature automatically.  We don't have to update them.
@@ -1276,27 +1278,27 @@ From the customer's point of view, we might like to know the probability of find
 As a simple example, let's measure the number of unhappy customers.  Here's a version of \py{move_bike} that increments a counter if a customer arrives at a station with no bikes:
 
 \begin{python}
-def move_bike(state, n):
-    olin = state.olin - n
+def move_bike(system, n):
+    olin = system.olin - n
     if olin < 0:
-        state.olin_empty += 1
+        system.olin_empty += 1
         return
     
-    wellesley = state.wellesley + n
+    wellesley = system.wellesley + n
     if wellesley < 0:
-        state.wellesley_empty += 1
+        system.wellesley_empty += 1
         return
     
-    state.olin = olin
-    state.wellesley = wellesley
+    system.olin = olin
+    system.wellesley = wellesley
 \end{python}
 
-This only works if we add two state variables: \py{olin_empty}, which is the number of times a customer finds the Olin station empty, and \py{wellesley_empty}, which is the number of unhappy customers at Wellesley.
+This only works if we add two system variables: \py{olin_empty}, which is the number of times a customer finds the Olin station empty, and \py{wellesley_empty}, which is the number of unhappy customers at Wellesley.
 
-Here's the updated line of code that initializes the state variables:
+Here's the updated line of code that initializes the system variables:
 
 \begin{python}
-bikeshare = State(olin=10, wellesley=2, 
+bikeshare = System(olin=10, wellesley=2, 
                   olin_empty=0, wellesley_empty=0)
 \end{python}
 
@@ -1323,10 +1325,10 @@ We have used several functions that return values; for example, run \py{sqrt}, i
 t = sqrt(2 * h / a)
 \end{python}
 
-When you run \py{State}, it returns a new state object:
+When you run \py{System}, it returns a new system object:
  
 \begin{python}
-bikeshare = State(olin=10, wellesley=2)
+bikeshare = System(olin=10, wellesley=2)
 \end{python}
 
 Not all function have return values.  For example, when you run \py{plot}, it adds a point to the current graph, but it doesn't return a value.  If you assign the result to a variable, like this:
@@ -1350,26 +1352,26 @@ def add_five(x):
 add_five(3)
 \end{python}
 
-The result is \py{8}.  As a more useful example, here's a new function that creates a state object, runs a simulation, and then returns the state object as a result:
+The result is \py{8}.  As a more useful example, here's a new function that creates a system object, runs a simulation, and then returns the system object as a result:
 
 \begin{python}
 def run_simulation():
-    state = State(olin=10, wellesley=2, 
+    system = System(olin=10, wellesley=2, 
                   olin_empty=0, wellesley_empty=0)
-    run_steps(state, 60, 0.4, 0.2, plot=False)
-    return state
+    run_steps(system, 60, 0.4, 0.2, plot=False)
+    return system
 \end{python}
 
 If we run \py{run_simulation} like this:
 
 \begin{python}
-state = run_simulation()
+system = run_simulation()
 \end{python}
 
-It assigns to \py{state} a new state object, which we can use to check the metrics we are interested in:
+It assigns to \py{system} a new system object, which we can use to check the metrics we are interested in:
 
 \begin{python}
-print(state.olin_empty, state.wellesley_empty)
+print(system.olin_empty, system.wellesley_empty)
 \end{python}
 
 
@@ -1383,7 +1385,7 @@ They are closely related ideas; in fact, it is common for the parameters of the 
 
 \begin{python}
 def run_simulation(p1=0.4, p2=0.2):
-    bikeshare = State(olin=10, wellesley=2, 
+    bikeshare = System(olin=10, wellesley=2, 
                   olin_empty=0, wellesley_empty=0)
     run_steps(bikeshare, 60, p1, p2, plot=False)
     return bikeshare
@@ -1392,7 +1394,7 @@ def run_simulation(p1=0.4, p2=0.2):
 Now we can run it with different arrival rates, like this.
 
 \begin{python}
-state = run_simulation(p1=0.6, p2=0.3)
+system = run_simulation(p1=0.6, p2=0.3)
 \end{python}
 
 And get an idea of how the metrics, like the number of unhappy customers, depend on the parameters of the model.
@@ -1477,8 +1479,8 @@ Now that we know about loops and arrays, we can combine them like this:
 p1_array = linspace(0, 1, 11)
 
 for p1 in p1_array:
-    state = run_simulation(p1=p1)
-    print(p1, state.olin_empty)
+    system = run_simulation(p1=p1)
+    print(p1, system.olin_empty)
 \end{python}
 
 Each time through the loop, we run a simulation with a different value of \py{p1} and the default value of \py{p2}.  After each simulation, we print the value of \py{p1} and the number of unhappy customers at Olin.
@@ -1488,8 +1490,8 @@ To visualize the results, we can run the same loop and replace \py{print} with \
 \begin{python}
 newfig()
 for p1 in p1_array:
-    state = run_simulation(p1=p1)
-    plot(p1, state.olin_empty, 'rs', label='olin')
+    system = run_simulation(p1=p1)
+    plot(p1, system.olin_empty, 'rs', label='olin')
 \end{python}
 
 When you run the notebook for this chapter, you will have a chance to see the results and try out some additional experiments.
@@ -1627,7 +1629,7 @@ table2.columns = ['census', 'prb', 'un', 'maddison',
 \section{Series}
 \label{series}
 
-Now we can select a column from the \py{DataFrame} using dot notation, like selecting a state variable from a state object:
+Now we can select a column from the \py{DataFrame} using dot notation, like selecting a system variable from a system object:
 
 \begin{python}
 census = table2.census
@@ -1754,13 +1756,13 @@ Figure~\ref{chap03-fig02} shows the result. The model does not fit the data part
 We'll try out some different models in the next few sections, but first let's clean up the code.
 
 
-\section{Now with state objects}
-\label{nowwithstate}
+\section{Now with system objects}
+\label{nowwithsystem}
 
-First, let's put all the information we need to run the model into a state object:
+First, let's put all the information we need to run the model into a \py{System} object:
 
 \begin{python}
-state = State(t0=first_year, t_end=last_year,
+system = System(t0=first_year, t_end=last_year,
               p0=census[first_year],
               annual_growth=annual_growth)
 \end{python}
@@ -1770,23 +1772,23 @@ state = State(t0=first_year, t_end=last_year,
 Next we'll wrap the code from the previous section in a function:
 
 \begin{python}
-def run_model1(state):
+def run_model1(system):
     model = Series([])
-    model[state.t0] = state.p0
-    for year in arange(state.t0, state.t_end):
-        model[year+1] = model[year] + state.annual_growth
-    state.model = model
+    model[system.t0] = system.p0
+    for year in arange(system.t0, system.t_end):
+        model[year+1] = model[year] + system.annual_growth
+    system.model = model
 \end{python}
 
-When \py{run_model1} runs, it creates a new series that contains the result of the simulation, and stores it as a new state variable, \py{model}. 
+When \py{run_model1} runs, it creates a new series that contains the result of the simulation, and stores it as a new system variable, \py{model}. 
 
 To plot the results, we define a new function:
 
 \begin{python}
-def plot_model(state):
+def plot_model(system):
     newfig()
     plot_estimates()
-    plot(state.model, '--', color='gray', label='model')
+    plot(system.model, '--', color='gray', label='model')
     decorate(xlabel='Year', 
              ylabel='World population (billion)',
              ylim=[0, 8])
@@ -1797,8 +1799,8 @@ There's nothing new there except \py{ylim}, which specifies the limits of the $y
 Finally, we can run it like this.
 
 \begin{python}
-run_model1(state)
-plot_model(state)
+run_model1(system)
+plot_model(system)
 \end{python}
 
 The results are the same as Figure~\ref{chap03-fig02}.
@@ -1810,28 +1812,28 @@ The biggest problem with the constant growth model is that it doesn't make any s
 On the order hand, if some fraction of the population dies each year, and some fraction gives birth, we can compute the net change in the population like this:
 
 \begin{python}
-def run_model2(state):
+def run_model2(system):
     model = Series([])
-    model[state.t0] = state.p0
-    for year in arange(state.t0, state.t_end):
-        births = state.birth_rate * model[year]
-        deaths = state.death_rate * model[year]
+    model[system.t0] = system.p0
+    for year in arange(system.t0, system.t_end):
+        births = system.birth_rate * model[year]
+        deaths = system.death_rate * model[year]
         model[year+1] = model[year] + births - deaths
-    state.model = model
+    system.model = model
 \end{python}
 
 Now we can choose the values of \py{birth_rate} and \py{death_rate} that best fit the data.  Without trying too hard, I chose:
 
 \begin{python}
-state.death_rate = 0.01
-state.birth_rate = 0.027
+system.death_rate = 0.01
+system.birth_rate = 0.027
 \end{python}
 
 Then I ran and plotted the model:
 
 \begin{python}
-run_model2(state)
-plot_model(state)
+run_model2(system)
+plot_model(system)
 \end{python}
 
 \begin{figure}
@@ -1862,23 +1864,23 @@ We will try out these variations, but first, let's clean up the code one more ti
 Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull the body of the loop out and make it a function:
 
 \begin{python}
-def update_func1(year, pop, state):
-    births = state.birth_rate * pop
-    deaths = state.death_rate * pop
+def update_func1(year, pop, system):
+    births = system.birth_rate * pop
+    deaths = system.death_rate * pop
     return pop + births - deaths
 \end{python}
 
-This function takes as arguments the current year, current population, and a state object, and returns the computed population for the next year.
+This function takes as arguments the current year, current population, and a system object, and returns the computed population for the next year.
 
 Now we can write a function that runs any model:
 
 \begin{python}
-def run_any_model(state, update_func):
+def run_any_model(system, update_func):
     model = Series([])
-    model[state.t0] = state.p0
-    for year in arange(state.t0, state.t_end):
-        model[year+1] = update_func(year, model[year], state)
-    state.model = model
+    model[system.t0] = system.p0
+    for year in arange(system.t0, system.t_end):
+        model[year+1] = update_func(year, model[year], system)
+    system.model = model
 \end{python}
 
 This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we run \py{run_any_model}, the second parameter is a function, like \py{update_func1}, that computes the population for the next year.
@@ -1886,7 +1888,7 @@ This function demonstrates a feature we have not seen before: it takes a functio
 Here's how we call it:
 
 \begin{python}
-run_any_model(state, update_func1)
+run_any_model(system, update_func1)
 \end{python}
 
 Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_any_model}, we can run \py{update_func} just like any other function.
@@ -1899,21 +1901,21 @@ When you run \py{run_any_model}, it runs \py{update_func1} once for each year be
 While we are at it, we can also simplify the code by combining births and deaths to compute the net growth rate.  Instead of two parameters, \py{birth_rate} and \py{death_rate}, we can write the update function in terms of a single parameter that represents the difference
 
 \begin{python}
-state.alpha = state.birth_rate - state.death_rate
+system.alpha = system.birth_rate - system.death_rate
 \end{python}
 
 Here's the modified version of \py{update_func1}:
 
 \begin{python}
-def update_func1b(year, pop, state):
-    net_growth = state.alpha  * pop
+def update_func1b(year, pop, system):
+    net_growth = system.alpha  * pop
     return pop + net_growth
 \end{python}
 
 And here's how we run it:
 
 \begin{python}
-run_any_model(state, update_func1b)
+run_any_model(system, update_func1b)
 \end{python}
 
 Again, the result is the same as Figure~\ref{chap03-fig03}.
@@ -1925,34 +1927,34 @@ Again, the result is the same as Figure~\ref{chap03-fig03}.
 It makes sense that net growth should depend on the current population, but maybe it's not a linear relationship, like this:
 
 \begin{python}
-    net_growth = state.alpha * pop
+    net_growth = system.alpha * pop
 \end{python}
 
 Maybe it's a quadratic relationship, like this:
 
 \begin{python}
-    net_growth = state.alpha * pop + state.beta * pop**2
+    net_growth = system.alpha * pop + system.beta * pop**2
 \end{python}
 
 We can test that conjecture with a new update function:
 
 \begin{python}
-def update_func3(year, pop, state):
-    net_growth = state.alpha * pop + state.beta * pop**2
+def update_func3(year, pop, system):
+    net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
 
 Now we need two parameters.  I chose these values by trial and error; we will see better ways to do it later.
 
 \begin{python}
-state.alpha = 0.025
-state.beta = -0.0018
+system.alpha = 0.025
+system.beta = -0.0018
 \end{python}
 
 And here's how we run it:
 
 \begin{python}
-run_any_model(state, update_func3)
+run_any_model(system, update_func3)
 \end{python}
 
 \begin{figure}
@@ -1972,8 +1974,8 @@ To understand it, let's look at net growth as a function of population.  Here's 
 
 \begin{python}
 pop_array = linspace(0.001, 15, 100)
-net_growth_array = (state.alpha * pop_array + 
-                    state.beta * pop_array**2)
+net_growth_array = (system.alpha * pop_array + 
+                    system.beta * pop_array**2)
 \end{python}
 
 \py{pop_array} contains 100 equally spaced values from near 0 to 15.  \py{net_growth_array} contains the corresponding 100 values of net growth.  We can plot the results like this: 
@@ -2045,8 +2047,8 @@ In the previous chapter we developed a model of world population growth from 195
 We'll start with the quadratic model from Section~\ref{quadratic}, which is based on this update function:
 
 \begin{python}
-def update_func3(year, pop, state):
-    net_growth = state.alpha * pop + state.beta * pop**2
+def update_func3(year, pop, system):
+    net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
 
@@ -2058,10 +2060,10 @@ t_end = census.index[-1]
 p0 = census[t0]
 \end{python}
 
-Now we can initialize a state object:
+Now we can initialize a system object:
 
 \begin{python}
-state = State(t0=t0, 
+system = System(t0=t0, 
               t_end=t_end,
               p0=p0,
               alpha = 0.025,
@@ -2071,7 +2073,7 @@ state = State(t0=t0,
 And run the model:
 
 \begin{python}
-run_any_model(state, update_func3)
+run_any_model(system, update_func3)
 \end{python}
 
 We have already seen the results in Figure~\ref{chap03-fig04}.
@@ -2080,8 +2082,8 @@ We have already seen the results in Figure~\ref{chap03-fig04}.
 Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
-state.t_end = 2250
-run_any_model(state, update_func3)
+system.t_end = 2250
+run_any_model(system, update_func3)
 \end{python}
 
 \begin{figure}
@@ -2142,8 +2144,8 @@ When we plot the UN data, we use \py{dropna}; it removes from the \py{Series} an
 We can run our model over the same interval:
 
 \begin{python}
-state.t_end = 2100
-run_any_model(state, update_func3)
+system.t_end = 2100
+run_any_model(system, update_func3)
 \end{python}
 
 
@@ -2545,10 +2547,10 @@ For a given physical system, there are many possible models, and for a given mod
 
 The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
 
-As a first step, I'll represent the initial state of the system using a \py{StateVector} object.  As we've seen in previous examples, we can start with an empty \py{StateVector} and add elements:
+As a first step, I'll represent the initial state of the system using a \py{State} object.  As we've seen in previous examples, we can start with an empty \py{State} and add elements:
 
 \begin{python}
-init = StateVector([])
+init = State([])
 init['S'] = 89
 init['I'] = 1
 init['R'] = 0
@@ -2557,7 +2559,7 @@ init['R'] = 0
 Or we can do the same thing more concisely:
 
 \begin{python}
-init = StateVector([89, 1, 0], index=['S', 'I', 'R'])
+init = State([89, 1, 0], index=['S', 'I', 'R'])
 \end{python}
 
 This series represents the number of people in each compartment.  To convert to fractions, we can divide through by the total:
@@ -2584,7 +2586,7 @@ Now we need a \py{System} object to store the parameters and initial conditions:
 
 \begin{python}
 def make_system(beta, gamma):
-    init = StateVector([89, 1, 0], index=['S', 'I', 'R'])
+    init = State([89, 1, 0], index=['S', 'I', 'R'])
     init /= np.sum(init)
 
     t0 = 0
@@ -2599,7 +2601,7 @@ This function takes the model parameters as function parameters and returns a ne
 
 \section{The update function}
 
-At any point in time, the state of the system is represented by a \py{StateVector} object with three values, \py{S}, \py{I} and \py{R}.  The update function takes this series as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
+At any point in time, the state of the system is represented by a \py{State} object with three values, \py{S}, \py{I} and \py{R}.  The update function takes this series as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
 
 \begin{python}
 def update1(system, state):
@@ -2612,12 +2614,12 @@ def update1(system, state):
     i += infected - recovered
     r += recovered
     
-    return StateVector([s, i, r], index=state.index)
+    return State([s, i, r], index=state.index)
 \end{python}
 
-The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{StateVector} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{StateVector} to the three variables, in order.
+The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{State} to the three variables, in order.
 
-The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{StateVector} that contains the updated values and the same index as \py{state}.
+The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values and the same index as \py{state}.
 
 When we call \py{update1} like this:
 
@@ -2625,7 +2627,7 @@ When we call \py{update1} like this:
 state = update1(sir, init)
 \end{python}
 
-The result is the \py{StateVector}
+The result is the \py{State}
 
 \begin{result}
 S    0.985388
@@ -2634,7 +2636,7 @@ R    0.002747
 dtype: float64
 \end{result}
 
-\py{dtype} indicates the type of the data in the \py{StateVector}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
+\py{dtype} indicates the type of the data in the \py{State}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
 
 
 \section{Running the model}
@@ -2697,9 +2699,9 @@ First, we create \py{TimeSeries} objects that will store the results.
 
 TODO: Go back and introduce TimeSeries in Chapter 3.  A \py{Series} of values like this is called a {\bf time series} (see \url{https://en.wikipedia.org/wiki/Time_series}).
 
-The initial value of \py{state} is a copy of \py{system.init}, which is the \py{StateVector} that contains the initial values of \py{S}, \py{I} and \py{R}.  
+The initial value of \py{state} is a copy of \py{system.init}, which is the \py{State} that contains the initial values of \py{S}, \py{I} and \py{R}.  
 
-TODO: Go back and introduce StateVector in Chapter 3.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
+TODO: Go back and introduce State in Chapter 3.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
 
 Inside the loop, we use \py{update_func} to compute the state of the next time step, then use multiple assignment to unpack the three elements of \py{state} and assign each to the corresponding \py{TimeSeries}.
 
@@ -2774,9 +2776,9 @@ The result would be a time series.  To read or write a single row, we have to us
 df.loc[system.t0] = system.init
 \end{python}
 
-assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{StateVector}, the assignment matches up the index from the \py{StateVector} with the columns of the \py{DataFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{DataFrame}, and likewise with \py{I} and \py{R}.
+assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{State}, the assignment matches up the index from the \py{State} with the columns of the \py{DataFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{DataFrame}, and likewise with \py{I} and \py{R}.
 
-We can use the same feature to write the loop more concisely, assigning the \py{StateVector} we get from \py{update_func} directly to the next row of \py{df}.  
+We can use the same feature to write the loop more concisely, assigning the \py{State} we get from \py{update_func} directly to the next row of \py{df}.  
 
 Finally, we store \py{df} as a new attribute of \py{system}.  We can call this version of \py{run_model} like this:
 
