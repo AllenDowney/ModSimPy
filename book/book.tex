@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.0.1}
+\newcommand{\theversion}{0.0.5}
 
 
 %%%% Both LATEX and PLASTEX
@@ -2279,7 +2279,7 @@ But there are several things we can do with analysis that are harder or impossib
 
 \begin{itemize}
 
-\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{equilibrum}, we get the general result that $K=-\alpha/\beta$.
+\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{quadratic}, we get the general result that $K=-\alpha/\beta$.
 
 \item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
 
@@ -2528,9 +2528,15 @@ SIR models are examples of {\bf compartment models}, so-called because they divi
 
 In this example, there are three stocks --- susceptible, infected, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{https://en.wikipedia.org/wiki/Stock_and_flow}.
 
-Figure~\ref{???} shows the stock and flow diagram for an SIR model.
+\begin{figure}
+%http://yuml.me/edit/3de9c163
+\centerline{\includegraphics[width=4.5in]{figs/stock_flow1.pdf}}
+\caption{Stock and flow diagram for an SIR model.}
+\label{stock_flow1}
+\end{figure}
 
-DIAGRAM COMING SOON 
+Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
+
 
 
 \section{Implementation}
@@ -2915,9 +2921,7 @@ In the notebook for this chapter you will see how I used a logistic curve to fit
 
 \begin{python}
 def compute_factor(spending):
-    max_reduction = 0.2
-    factor = max_reduction * logistic(spending, a=0.01, b=500)
-    return factor
+    return logistic(spending, M=500, K=0.2, B=0.01)
 \end{python}
 
 We use \py{compute_factor} to write \py{add_hand_washing}, which takes a \py{System} object and a budget, and modifies \py{system.beta} to model the effect of hand washing:
@@ -3079,12 +3083,12 @@ The first line uses string operations to assemble a label for the plotted line.
 If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig01.pdf}}
 \caption{Total number of infected students as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
-\label{chap05-fig02}
+\label{chap06-fig01}
 \end{figure}
 
-Figure~\ref{chap05-fig02} shows the results.  Notice that the x-axis is the parameter \py{beta}, not time.  This figure is a parameter sweep, not a time series.
+Figure~\ref{chap06-fig01} shows the results.  Notice that the x-axis is the parameter \py{beta}, not time.  This figure is a parameter sweep, not a time series.
 
 When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.
 
@@ -3109,12 +3113,12 @@ for gamma in gamma_array:
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig02.pdf}}
 \caption{Total number of infected students as a function of the parameter \py{beta}, for several values of \py{gamma}.}
-\label{chap05-fig03}
+\label{chap06-fig02}
 \end{figure}
 
-Figure~\ref{chap05-fig03} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even low a contact rate (\py{beta}) results in an epidemic.
+Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even low a contact rate (\py{beta}) results in an epidemic.
 
 When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  
 
@@ -3187,12 +3191,12 @@ def plot_sweep_df(df):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig04.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig03.pdf}}
 \caption{Total number of infected students as a function of the contact number, \py{beta/gamma}.}
-\label{chap05-fig04}
+\label{chap06-fig03}
 \end{figure}
 
-Figure~\ref{chap05-fig04} shows that the results fall neatly on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
+Figure~\ref{chap06-fig03} shows that the results fall neatly on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
 
 
  is called the ``contact number"

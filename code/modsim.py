@@ -184,6 +184,20 @@ def plot(*args, **kwargs):
     figure.canvas.draw()
     
 
+def contour(df, **options):
+    """Makes a contour plot from a DataFrame.
+
+    Note: columns and index must be numerical
+
+    df: DataFrame
+    """
+    x = results.columns
+    y = results.index
+    X, Y = np.meshgrid(x, y)
+    cs = plt.contour(X, Y, results, **options)
+    plt.clabel(cs, inline=1, fontsize=10)
+
+
 def newfig(**kwargs):
     """Creates a new figure."""
     fig = plt.figure()
@@ -277,6 +291,31 @@ class Array(np.ndarray):
     pass
 
 
+class MySeries(pd.Series):
+
+    def __init__(self, *args, **kwargs):
+        """Initialize a Series.
+
+        Note: this cleans up a weird Series behavior, which is
+        that Series() and Series([]) yield different behavior.
+        See: https://github.com/pandas-dev/pandas/issues/16737
+        """
+        if args or kwargs:
+            super().__init__(*args, **kwargs)
+        else:
+            super().__init__([])
+
+
+class Sweep(MySeries):
+    pass
+
+class StateVector(MySeries):
+    pass
+
+class TimeSeries(MySeries):
+    pass
+
+
 class State:
     def __init__(self, **kwargs):
         self.__dict__.update(**kwargs)
@@ -289,7 +328,14 @@ class State:
     __str__ = __repr__
 
 
-# TODO: Consider a version of State based on pd.Series
+class System(pd.Series):
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+
+    def _repr_html_(self):
+        df = pd.DataFrame(self, columns=['value'])
+        return df._repr_html_()
+
 
 def print_state(state):
     for name, value in state.__dict__.items():
@@ -298,3 +344,10 @@ def print_state(state):
 
 def flip(p=0.5):
     return np.random.random() < p
+
+
+# abs, min, max, pow, sum, round
+
+def sum(*args):
+    # TODO: warn about using the built in
+    return sum(*args)

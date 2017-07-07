@@ -19,8 +19,7 @@ PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
 all:	book.tex
 	pdflatex --shell-escape book
 	makeindex book.idx
-	mv book.pdf ModSimPy.pdf
-	evince ModSimPy.pdf
+	evince book.pdf
 
 hevea:
 	#sed 's/\(figs\/[^.]*\).\(pdf\|png\)/\1.eps/' 
@@ -38,18 +37,13 @@ hevea:
 	mv index.html ModSimPy.css ModSimPy*.html  html
 	mv ModSimPy*.png *motif.gif html
 
-DEST = /home/downey/public_html/greent/ModSimPy
+DEST = /home/downey/public_html/greent/ModSimPy/
+DIST_FILES = ModSimPy.pdf
 
 distrib:
-	rm -rf dist
-	mkdir dist dist/tex dist/tex/figs
-	rsync -a ModSimPy.pdf html dist
-	rsync -a Makefile book.tex latexonly htmlonly dist/tex
-	# rsync -a figs/*.fig figs/*.eps dist/tex/figs
-	cd dist; zip -r ModSimPy.tex.zip tex
-	cd dist; zip -r ModSimPy.html.zip html
-	rsync -a dist/* $(DEST)
-	chmod -R o+r $(DEST)/*
+	cp book.pdf ModSimPy.pdf
+	rsync -a $(DIST_FILES) $(DEST)
+	#chmod -R o+r $(DEST)/*
 	cd /home/downey/public_html/greent; sh back
 
 plastex:
