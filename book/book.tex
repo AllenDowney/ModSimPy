@@ -25,6 +25,9 @@
 \usepackage{xcolor}
 \usepackage{upquote}
 \usepackage[listings]{tcolorbox}
+
+% to get siunitx
+% sudo apt-get install texlive-science
 \usepackage{siunitx}
 
 \definecolor{light-gray}{gray}{0.95}
@@ -202,7 +205,7 @@ Version \theversion
 \pagebreak
 \thispagestyle{empty}
 
-Copyright \copyright ~2016 \theauthors.
++Copyright \copyright ~2016 \theauthors.
 
 
 
@@ -1713,15 +1716,15 @@ The next step is to use this estimate to simulate population growth since 1950.
 
 \section{Simulation}
 
-First, we'll make a new \py{Series} object:
+First, we'll make a new \py{TimeSeries} object:
 
 \begin{python}
-model = Series([])
+model = TimeSeries()
 \end{python}
 
-\py{Series} is a function that creates a new \py{Series} object.  The argument is a pair of empty brackets, \py{[]}, so initially the \py{Series} contains no values.
+A \py{TimeSeries} object contains {\bf time series}, which is a sequence of times and a corresponding sequence of values (see \url{https://en.wikipedia.org/wiki/Time_series}).  In this example the times are years and the values are populations.  
 
-We can set the first value in the new \py{Series} by copying the first value from \py{census} (we'll get rid of the hard-coded dates soon):
+We can set the first value in the new \py{TimeSeries} by copying the first value from \py{census} (we'll get rid of the hard-coded dates soon):
 
 \begin{python}
 model[1950] = census[1950]
@@ -1763,8 +1766,8 @@ First, let's put all the information we need to run the model into a \py{System}
 
 \begin{python}
 system = System(t0=first_year, t_end=last_year,
-              p0=census[first_year],
-              annual_growth=annual_growth)
+                p0=census[first_year],
+                annual_growth=annual_growth)
 \end{python}
 
 \py{t0} and \py{t_end} are the first and last years; \py{p0} is the initial population, and \py{annual_growth} is the estimated annual growth.
@@ -1773,7 +1776,7 @@ Next we'll wrap the code from the previous section in a function:
 
 \begin{python}
 def run_model1(system):
-    model = Series([])
+    model = TimeSeries()
     model[system.t0] = system.p0
     for year in arange(system.t0, system.t_end):
         model[year+1] = model[year] + system.annual_growth
@@ -1813,7 +1816,7 @@ On the order hand, if some fraction of the population dies each year, and some f
 
 \begin{python}
 def run_model2(system):
-    model = Series([])
+    model = TimeSeries()
     model[system.t0] = system.p0
     for year in arange(system.t0, system.t_end):
         births = system.birth_rate * model[year]
@@ -1876,7 +1879,7 @@ Now we can write a function that runs any model:
 
 \begin{python}
 def run_any_model(system, update_func):
-    model = Series([])
+    model = TimeSeries()
     model[system.t0] = system.p0
     for year in arange(system.t0, system.t_end):
         model[year+1] = update_func(year, model[year], system)
@@ -2547,22 +2550,17 @@ For a given physical system, there are many possible models, and for a given mod
 
 The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
 
-As a first step, I'll represent the initial state of the system using a \py{State} object.  As we've seen in previous examples, we can start with an empty \py{State} and add elements:
+As a first step, I'll represent the initial state of the system using a \py{State} object, which represents a {\bf state vector}, which is a collection of {\bf state variables}.  Each state variable represents information about the system that changes over time (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  
+
+In this example, there are three state variables that represent the fraction of the population in each compartment, \py{S}, \py{I}, and \py{R}.
+
+Creating a \py{State} object is similar to creating a \py{System} object.  We can initialize the \py{State} object with the {\em number} of people in each compartment:
 
 \begin{python}
-init = State([])
-init['S'] = 89
-init['I'] = 1
-init['R'] = 0
+init = State(S=89, I=1, R=0)
 \end{python}
 
-Or we can do the same thing more concisely:
-
-\begin{python}
-init = State([89, 1, 0], index=['S', 'I', 'R'])
-\end{python}
-
-This series represents the number of people in each compartment.  To convert to fractions, we can divide through by the total:
+And the convert the numbers to fractions by dividing through by the total:
 
 \begin{python}
 init /= np.sum(init)
@@ -2575,7 +2573,7 @@ tc = 3             # time between contacts in days
 tr = 4             # recovery time in days
 \end{python}
 
-So we can compute the parameters of the model:
+In that case we can compute the parameters of the model:
 
 \begin{python}
 beta = 1 / tc      # contact rate in per day
@@ -2586,7 +2584,7 @@ Now we need a \py{System} object to store the parameters and initial conditions:
 
 \begin{python}
 def make_system(beta, gamma):
-    init = State([89, 1, 0], index=['S', 'I', 'R'])
+    init = State(S=89, I=1, R=0)
     init /= np.sum(init)
 
     t0 = 0
@@ -2614,7 +2612,7 @@ def update1(system, state):
     i += infected - recovered
     r += recovered
     
-    return State([s, i, r], index=state.index)
+    return State(S=s, I=i, R=r)
 \end{python}
 
 The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{State} to the three variables, in order.
@@ -2679,9 +2677,9 @@ Here's the first version:
 
 \begin{python}
 def run_model(system, update_func):
-    S = TimeSeries([])
-    I = TimeSeries([])
-    R = TimeSeries([])
+    S = TimeSeries()
+    I = TimeSeries()
+    R = TimeSeries()
 
     state = system.init
     S[0], I[0], R[0] = state
@@ -2697,11 +2695,7 @@ def run_model(system, update_func):
 
 First, we create \py{TimeSeries} objects that will store the results.  
 
-TODO: Go back and introduce TimeSeries in Chapter 3.  A \py{Series} of values like this is called a {\bf time series} (see \url{https://en.wikipedia.org/wiki/Time_series}).
-
 The initial value of \py{state} is a copy of \py{system.init}, which is the \py{State} that contains the initial values of \py{S}, \py{I} and \py{R}.  
-
-TODO: Go back and introduce State in Chapter 3.  A variable like \py{state}, which represents the condition of the system at a point in time, is called a {\bf state vector} (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  The values in the state vector are called {\bf state variables}.
 
 Inside the loop, we use \py{update_func} to compute the state of the next time step, then use multiple assignment to unpack the three elements of \py{state} and assign each to the corresponding \py{TimeSeries}.
 

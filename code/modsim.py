@@ -305,41 +305,23 @@ class MySeries(pd.Series):
         else:
             super().__init__([])
 
-
-class Sweep(MySeries):
-    pass
-
-class StateVector(MySeries):
-    pass
-
-class TimeSeries(MySeries):
-    pass
-
-
-class State:
-    def __init__(self, **kwargs):
-        self.__dict__.update(**kwargs)
-
-    def __repr__(self):
-        t = ['%s -> %s' % (str(name), str(val)) 
-             for name, val in self.__dict__.items()]
-        return '\n'.join(t)
-
-    __str__ = __repr__
-
-
-class System(pd.Series):
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-
     def _repr_html_(self):
         df = pd.DataFrame(self, columns=['value'])
         return df._repr_html_()
 
 
-def print_state(state):
-    for name, value in state.__dict__.items():
-        print(name, '->', value)
+class Sweep(MySeries):
+    pass
+
+class TimeSeries(MySeries):
+    pass
+
+class System(MySeries):
+    def __init__(self, **kwargs):
+        super().__init__(list(kwargs.values()), index=kwargs)
+
+class State(System):
+    pass
 
 
 def flip(p=0.5):
