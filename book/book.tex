@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.0.6}
+\newcommand{\theversion}{0.0.7}
 
 
 %%%% Both LATEX and PLASTEX
@@ -2470,6 +2470,8 @@ I avoided the more common terms because I thought it would seem strange to use t
 
 Intro
 
+My presentation of the SIR model in this chapter, and the analysis in the next chapter, is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease}.}.
+
 \section{The Freshman Plague}
 
 Every year at Olin College, about 90 new students come to campus from around the country and the world.  Most of them arrive healthy and happy, but we should expect at least one, by chance, to come with some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
@@ -2518,6 +2520,7 @@ This model assumes that the population is closed, that is, no one arrives or dep
 
 
 \section{The SIR equations}
+\label{sireqn}
 
 If we treat time as a continuous quantity, we can write differential equations that describe the rates of change for $s$, $i$, and $r$ (where $r$ is the fraction of the population that has recovered):
 %
@@ -2617,7 +2620,7 @@ def update1(system, state):
 
 The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{State} to the three variables, in order.
 
-The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values and the same index as \py{state}.
+The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values.
 
 When we call \py{update1} like this:
 
@@ -2847,7 +2850,7 @@ So let's see what happens if we administer more vaccines.  This function sweeps 
 
 \begin{python}
 def sweep_immunity(immunize_array):
-    sweep = Sweep([])
+    sweep = Sweep()
     for fraction in immunize_array:
         sir = make_system(beta, gamma)
         add_immunization(sir, fraction)
@@ -2856,7 +2859,11 @@ def sweep_immunity(immunize_array):
     return sweep
 \end{python}
 
-The result is a \py{Sweep} object, shown in Figure~\ref{chap05-fig03}.  As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
+The result is a \py{Sweep} object, which is similar to a \py{TimeSeries}; the difference is that the index of the \py{Sweep} contains parameter values, not times.  
+
+Figure~\ref{chap05-fig03} shows a plot of the \py{Sweep}.  Again, notice that the x-axis is the immunization rate, not time.
+
+As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
@@ -3012,27 +3019,33 @@ In the notebook for this chapter, you'll have a chance to run this optimization 
 
 \chapter{Analysis}
 
-NOT DONE, BUT KEEP GOING IF YOU WANT A PREVIEW
+In the previous chapter I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model.  We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.
 
+But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
 
-\section{Sweeping beta}
+We will use the following functions as defined in the previous chapter:
+\py{make_system}, \py{run_simulation}, \py{update1}, and \py{plot_results}, and \py{calc_total_infected}.
 
-Now we can run the model for any values of the parameters and display the outcome:
+For example, here's the code to create a \py{System} object with given values of \py{beta} and \py{gamma}, run the simulation, and compute the fraction of the population that are infected.
 
 \begin{python}
-sir.beta = 0.333
-sir.gamma = 0.25
+sir = make_system(0.33, 0.25)
 run_model(sir, update1)
 print(calc_total_infected(sir))
 \end{python}
 
-To see how the outcome depends on the first parameter, \py{beta}, we'll create an array with a range of values:
+
+\section{Sweeping beta}
+
+Recall that $\beta$ is the contact rate, which captures both the frequency of interaction between people and the fraction of those interactions that result in a new infection.  If $N$ is the size of the population and $s$ is the fraction that's susceptible, $s N$ is the number of susceptibles, $\beta s N$ is the number of contacts per day between susceptibles and other people, and $\beta s i N$ is the number of those contacts where the other person is infectious.
+
+As $\beta$ increases, we expect the total number of infections to increase.  To quantify that relationship, I'll create a range of values for $\beta$:
 
 \begin{python}
 beta_array = linspace(0.1, 0.9, 11)
 \end{python}
 
-Then run the model for each value, printing the results as we go.
+Then run the simulation for each value and print the results.
 
 \begin{python}
 for beta in beta_array:
@@ -3041,19 +3054,19 @@ for beta in beta_array:
     print(sir.beta, calc_total_infected(sir))
 \end{python}
 
-Even better, we can encapsulate that code in a function and store the results in a \py{Sweep} object:
+We can encapsulate that code in a function and store the results in a \py{Sweep} object:
 
 \begin{python}
 def sweep_beta(beta_array, gamma):
     sweep = Sweep()
     for beta in beta_array:
         system = make_system(beta, gamma)
-        run_model(system, update1)
+        run_simulation(system, update1)
         sweep[system.beta] = calc_total_infected(system)
     return sweep
 \end{python}
 
-We can run \py{sweep_beta} like this:
+Now we can run \py{sweep_beta} like this:
 
 \begin{python}
 infected_sweep = sweep_beta(beta_array, gamma)
@@ -3066,7 +3079,7 @@ label = 'gamma = ' + str(gamma)
 plot(infected_sweep, label=label)
 \end{python}
 
-The first line uses string operations to assemble a label for the plotted line.  
+The first line uses string operations to assemble a label for the plotted line:
 
 \begin{itemize}
 
@@ -3084,11 +3097,9 @@ If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \
 \label{chap06-fig01}
 \end{figure}
 
-Figure~\ref{chap06-fig01} shows the results.  Notice that the x-axis is the parameter \py{beta}, not time.  This figure is a parameter sweep, not a time series.
+Figure~\ref{chap06-fig01} shows the results.  Remember that this figure is a parameter sweep, not a time series, so the x-axis is the parameter \py{beta}, not time.  
 
-When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.
-
-As \py{beta} increases, it reaches a threshold near 0.3 and the fraction of infected students increases quickly.  When \py{beta} exceeds 0.5, more than 80\% of the population gets sick.
+When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.  As \py{beta} increases, it reaches a threshold near 0.3 where the fraction of infected students increases quickly.  When \py{beta} exceeds 0.5, more than 80\% of the population gets sick.
 
 
 \section{Sweeping gamma}
@@ -3121,7 +3132,7 @@ When \py{gamma} is high, \py{beta} has to be even higher to get things going.  T
 In fact, there is.  I will demonstrate it first by running simulations, then derive it by analysis.
 
 
-\section{The contact number}
+\section{Nondimensionalization}
 
 Before we go on, let's encapsulate the code from the previous section in a function:
 
@@ -3135,9 +3146,15 @@ def sweep_parameters(beta_array, gamma_array):
 
 \py{sweep_parameters} takes as parameters two arrays: a range of values for \py{beta} and a range of values for \py{gamma}.
 
-It creates a \py{DataFrame} to store the results; it starts with one column for each value of \py{gamma}, then we will add one row for each value of \py{beta}.
+It creates a \py{DataFrame} to store the results, with one column for each value of \py{gamma} and one row for each value of \py{beta}.
 
-Each time through the loop, we run \py{sweep_beta}.  The result is a \py{Sweep} object with one element for each value of \py{gamma}.  Because the index of the \py{Sweep} matches the columns of the \py{DataFrame}, we can store the values from the \py{Sweep} as a new row in the \py{DataFrame}.
+Each time through the loop, we run \py{sweep_beta}.  The result is a \py{Sweep} object with one element for each value of \py{gamma}.  The assignment
+
+\begin{python}
+df[gamma] = sweep_beta(beta_array, gamma)
+\end{python}
+
+stores the values from the \py{Sweep} object as a new column in the \py{DataFrame}, corresponding to the current value of \py{gamma}.
 
 At the end, the \py{DataFrame} stores the fraction of students infected for each pair of parameters, \py{beta} and \py{gamma}.
 
@@ -3157,7 +3174,9 @@ for gamma in df.columns:
         print(beta, gamma, frac_infected)
 \end{python}
 
-This is the first example we've seen with one \py{for} loop inside another.  But there's nothing about it that should be too surprising.  Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding \py{Sweep} object.  Each time the inner loop runs, it selects a value of \py{beta} from the \py{Sweep} and selects the corresponding element, which is the fraction of student infected.
+This is the first example we've seen with one \py{for} loop inside another.  But there's nothing about it that should be too surprising.  Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column.
+
+Each time the inner loop runs, it selects a value of \py{beta} from the \py{Sweep} and selects the corresponding element, which is the fraction of student infected.
 
 In this example, \py{sweep_df} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
 
@@ -3171,7 +3190,7 @@ Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
 \end{itemize}
 
-Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  In fact, it is so useful it has a name: nondimensionalization (see \url{https://en.wikipedia.org/wiki/Nondimensionalization#First_order_system}).
+Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: nondimensionalization (see \url{https://en.wikipedia.org/wiki/Nondimensionalization#First_order_system}).
 
 So we'll try the second option first.  In the notebook for this chapter, you will explore the first option as an exercise.
 
@@ -3188,15 +3207,110 @@ def plot_sweep_df(df):
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap06-fig03.pdf}}
-\caption{Total number of infected students as a function of the contact number, \py{beta/gamma}.}
+\caption{Total fraction infected as a function of contact number.}
 \label{chap06-fig03}
 \end{figure}
 
 Figure~\ref{chap06-fig03} shows that the results fall neatly on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
 
 
- is called the ``contact number"
+\section{Contact number}
 
+Recall that the number of new infections in a given day is $\beta s i N$, and the number of recoveries is $\gamma i N$.  If we divide these quantities, the result is $\beta / \gamma s$, which is the number of new infections per recovery (as a fraction of the population).
+
+When a new disease is introduced to a susceptible population, $s$ is approximately 1, so the number of people infected by each sick person is $\beta / \gamma$.  This ratio is called the ``contact number" or ``basic reproduction number" (see \url{https://en.wikipedia.org/wiki/Basic_reproduction_number}).  By convention it is usually denoted $R_0$, but in the context of an SIR model, this notation is confusing, so we'll use $c$ instead.
+
+The results in the previous section suggest that there is a relationship between $c$ and the total number of infections.  We can derive this relationship by analyzing the differential equations from Section~\ref{sireqn}:
+%
+\begin{align*}
+\frac{ds}{dt} &= -\beta s i \\
+\frac{di}{dt} &= \beta s i - \gamma i\\
+\frac{dr}{dt} &= \gamma i
+\end{align*}
+%
+In the same way we divided the contact rate by the infection rate to get the dimensionless quantity $c$, now we'll divide $di/dt$ by $ds/dt$ to get an equation that does not depend on time:
+%
+\[ \frac{di}{ds} = -1 + \frac{1}{cs} \]
+%
+Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  We can multiply both sides by $ds$:
+%
+\[ di = -1 + \frac{1}{cs} ds \]
+%
+And then integrate both sides:
+%
+\[ i = -s + \frac{1}{c} \log s + q \]
+%
+Where $q$ is a constant of integration.  Rearranging terms yields:
+%
+\[ q = i + s - \frac{1}{c} \log s \]
+%
+At the beginning of an epidemic, if the fraction infected is small and nearly everyone is susceptible, we can use the approximations $i(0) = 0$ and $s(0) = 1$ to compute $q$:
+%
+\[ q = 0 + 1 + \frac{1}{c} \log 1 \]
+%
+Since $\log 1 = 0$, we have $q = 1$.
+
+\newcommand{\sinf}{s_{\infty}}
+
+Now, at the end of the epidemic, let's assume that $i_{\infty} = 0$ again and $s(\infty)$ is an unknown quantity $\sinf$.  Now we have:
+%
+\[ q = 1 = 0 + \sinf - \frac{1}{c} \log \sinf \]
+%
+Solving for $c$, we have
+%
+\[ c = \frac{\log \sinf}{\sinf - 1} \]
+%
+If we create a range of values for $\sinf$
+
+\begin{python}
+s_inf_array = linspace(0.0001, 0.9999, 31)
+\end{python}
+
+we can compute the corresponding values of $c$:
+
+\begin{python}
+c_array = np.log(s_inf_array) / (s_inf_array - 1)
+\end{python}
+
+To get the total infected, we compute the difference between $s(0)$ and $s(\infty)$, then store the results in a \py{Series}:
+
+\begin{python}
+total_infected = 1 - s_inf_array
+frac_infected_analysis = Series(total_infected, index=c_array)
+\end{python}
+
+Recall from Section~\ref{series} that a \py{Series} object contains an index, which is \py{c_array} in this example, and a corresponding sequence of values, which is \py{total_infected}.
+
+
+\section{Analysis and simulation}
+
+Now we can plot the results:
+
+\begin{python}
+plot(frac_infected_analysis)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig04.pdf}}
+\caption{Total fraction infected as a function of contact number, results from simulation and analysis.}
+\label{chap06-fig04}
+\end{figure}
+
+Figure~\ref{chap06-fig04} compare the analytic results from this section with the simulation results from the previous section.  Over most of the range they are consistent with each other, but when the contact number is less than 1, the analysis suggests that there will be virtually no infections; in the simulations a new infection can affect a small part of the population, even when $c<1$.
+
+The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity.  In other words, the two methods are actually based on different models.
+
+So which model is better?  Probably neither.  When the contact number is small, the early progress of the epidemic will depend on details of the scenario.  If we are lucky, the original infected person, ``patient zero",  infects no one and there is no epidemic.  If we are unlucky, patient zero might have a large number of close friends, or might work in the dining hall (and fail to observe safe food handling procedures).
+
+For contact numbers near or less than 1, we might need a more detailed model.  But for higher contact numbers the SIR model might be good enough.
+
+Figure~\ref{chap06-fig04} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
+
+Well, at least in theory.  In practice, it might not work very well, because of the shape of the curve.  When the contact number is near 2, the curve is quite steep, which means that small changes in $c$ yield big changes in the number of infections.  If we observe that the total fraction infected is anywhere from 20\% to 80\%, we would conclude that $c$ is near 2.
+
+On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is quite flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything like 90\% of the population.
+
+In summary, the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
 
 
 \backmatter
