@@ -8,6 +8,10 @@ License: https://creativecommons.org/licenses/by/4.0)
 
 from __future__ import print_function, division
 
+import logging
+logger = logging.getLogger(name='modsim.py')
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -16,15 +20,45 @@ import seaborn as sns
 sns.set(style='white', font_scale=1.5)
 
 from scipy.integrate import odeint
+import scipy
+import sympy
 
 from pint import UnitRegistry
 UNITS = UnitRegistry()
 
 
-from numpy import array, sqrt, sin, cos, linspace, arange
+
+from numpy import sqrt, array, linspace, arange
 
 from pandas import DataFrame, Series
 
+def fsolve(func, x0, *args, **kwdargs):
+    """Return the roots of the (non-linear) equations
+    defined by func(x) = 0 given a starting estimate.
+    
+    Uses scipy.optimize.fsolve, with extra error-checking.
+    
+    func: function to find the roots of
+    x0: scalar or array, initial guess
+    
+    returns: solution as an array
+    """
+    # make sure we can run the given function with x0
+    try:
+        func(x0)
+    except Exception as e:
+        msg = """Before running scipy.optimize.fsolve, I tried
+                 running the function you provided with the x0
+                 you provided, and I got the following error:"""
+        logger.error(msg)
+        raise(e)
+    
+    # make the tolerance more forgiving than the default
+    underride(kwdargs, xtol=1e-7)
+
+    # run fsolve
+    result = scipy.optimize.fsolve(func, x0, *args, **kwdargs)
+    return result
 
 def underride(d, **options):
     """Add key-value pairs to d only if key is not in d.
@@ -320,6 +354,26 @@ class System(MySeries):
     def __init__(self, **kwargs):
         super().__init__(list(kwargs.values()), index=kwargs)
 
+    @property
+    def dt(self):
+        """Intercept the Series accessor object so we can use `dt`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/
+        pandas.Series.dt.html
+        """
+        return self.loc['dt']
+
+    @property
+    def T(self):
+        """Intercept the Series accessor object so we can use `T`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/
+        pandas.Series.T.html#pandas.Series.T     """
+        return self.loc['T']
+
+
 class State(System):
     pass
 
@@ -333,3 +387,45 @@ def flip(p=0.5):
 def sum(*args):
     # TODO: warn about using the built in
     return sum(*args)
+
+
+
+class MyDataFrame(pd.DataFrame):
+    """MyTimeFrame is a modified version of a Pandas DataFrame,
+    with a few changes to make it more suited to our purpose.
+
+    In particular, DataFrame provides two special variables called
+    `dt` and `T` that cause problems if we try to use those names
+    as state variables.
+
+    So I added new definitions that override the special variables
+    and make these names useable as row labels.
+    """
+
+
+    @property
+    def dt(self):
+        """Intercept the Series accessor object so we can use `dt`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/
+        pandas.DataFrame.dt.html
+        """
+        return self.loc['dt']
+
+    @property
+    def T(self):
+        """Intercept the Series accessor object so we can use `T`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/
+        pandas.DataFrame.T.html#pandas.DataFrame.T     """
+        return self.loc['T']
+
+
+class TimeFrame(MyDataFrame):
+    pass
+
+class SweepFrame(MyDataFrame):
+    pass
+
