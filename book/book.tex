@@ -2634,10 +2634,10 @@ The result is the \py{State}
 S    0.985388
 I    0.011865
 R    0.002747
-dtype: float64
 \end{result}
 
-\py{dtype} indicates the type of the data in the \py{State}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
+%TODO: figure out when to talk about integers and floats
+%\py{dtype} indicates the type of the data in the \py{State}; \py{float64} %indicates that it contains 64-bit floating-point numbers.  A {\bf %floating-point number} can represent a number with a decimal or %fractional part, as opposed to an integer.
 
 
 \section{Running the model}
@@ -2647,7 +2647,7 @@ Now we can run the model over a sequence of time steps:
 \begin{python}
 def run_simulation(system, update_func):
     state = system.init
-    for i in range(system.t0, system.t_end):
+    for i in arange(system.t0, system.t_end):
         state = update_func(system, state)
     return state
 \end{python}
@@ -2666,7 +2666,6 @@ The result is the final state of the system:
 S    0.520819
 I    0.000676
 R    0.478505
-dtype: float64
 \end{result}
 
 This result indicates that after 14 weeks (98 days), about 52\% of the population is still susceptible, which means they were never infected, less than 1\% are actively infected, and 48\% have recovered, which means they were infected at some point.
@@ -2688,7 +2687,7 @@ def run_simulation(system, update_func):
     t0 = system.t0
     S[t0], I[t0], R[t0] = state
     
-    for i in range(system.t0, system.t_end):
+    for i in arange(system.t0, system.t_end):
         state = update_func(system, state)
         S[i+1], I[i+1], R[i+1] = state
     
@@ -2738,6 +2737,7 @@ Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three we
 
 
 \section{Now with a TimeFrame}
+\label{timeframe}
 
 If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}.  
 
@@ -2752,7 +2752,7 @@ def run_simulation(system, update_func):
     df = TimeFrame(columns=system.init.index)
     df.loc[system.t0] = system.init
     
-    for i in range(system.t0, system.t_end):
+    for i in arange(system.t0, system.t_end):
         df.loc[i+1] = update_func(system, df.loc[i])
     
     system.results = df
@@ -3084,13 +3084,15 @@ label = 'gamma = ' + str(gamma)
 plot(infected_sweep, label=label)
 \end{python}
 
+%TODO: figure out when to introduce strings
+
 The first line uses string operations to assemble a label for the plotted line:
 
 \begin{itemize}
 
 \item When the \py{+} operator is applied to strings, it joins them end-to-end, which is called {\bf concatenation}.  
 
-\item The function \py{str} converts any type of object to a String representation.  In this case, \py{gamma} is a floating-point number, so we have to convert it to a string before trying to concatenate it.
+\item The function \py{str} converts any type of object to a String representation.  In this case, \py{gamma} is a number, so we have to convert it to a string before trying to concatenate it.
 
 \end{itemize}
 
@@ -3339,11 +3341,11 @@ To help answer this question, I made a trial run with the milk and coffee in sep
 
 \item When served, the temperature of the coffee is \SI{90}{\celsius}.  The volume is \SI{300}{mL}.
 
-\item The milk is at an initial temperature of \SI{5}{\celsius}, and I use about \SI{50}{mL}.
+\item The milk is at an initial temperature of \SI{5}{\celsius}, and I take about \SI{50}{mL}.
 
 \item The ambient temperature in my car is \SI{22}{\celsius}.
 
-\item The coffee is served in a moderately well insulated cup.  When I arrive at work after 30 minutes, the temperature of the coffee has fallen to \SI{70}{\celsius}.
+\item The coffee is served in a well insulated cup.  When I arrive at work after 30 minutes, the temperature of the coffee has fallen to \SI{70}{\celsius}.
 
 \item The milk container is not as well insulated.  After 15 minutes, it warms up to \SI{20}{\celsius}, nearly the ambient temperature.
 
@@ -3362,7 +3364,7 @@ Heat is related to temperature by the following equation (see \url{https://en.wi
 %
 \[ Q = C \Delta T \]
 %
-where $Q$ is the amount of heat transferred to an object, usually measured in joules (\si{J}), $\Delta T$ is the change in temperature of the object, measured in degrees Celsius (\si{\celsius}), and $C$ is the {\bf thermal mass} which quantifies how much energy it takes to heat or cool it, in joules per degree Celsius (\si{J/\celsius}).
+where $Q$ is the amount of heat transferred to an object, usually measured in joules (\si{J}), $\Delta T$ is the change in temperature of the object, measured in degrees Celsius (\si{\celsius}), and $C$ is the {\bf thermal mass} of the object which quantifies how much energy it takes to heat or cool it, in joules per degree Celsius (\si{J/\celsius}).
 
 For objects made primarily from one material, thermal mass can be computed like this:
 %
@@ -3372,13 +3374,11 @@ where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity
 
 The specific heat capacity of coffee is probably close to that of water, which is \SI{4.2}{J/g/\celsius}.
 
-Assuming that the density of coffee is close to that of water, which is \SI{1}{g/ml}, the mass of \SI{300}{mL} of coffee is \SI{300}{g}, and the thermal mass is \SI{1260}{J/\celsius}.  So when the coffee cooled from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ was \SI{20}{\celsius}, which means that \SI{25200}{J} of heat energy were transferred from the coffee to the surrounding environment, presumably the cup holder and air in my car.
+Assuming that the density of coffee is close to that of water, which is \SI{1}{g/ml}, the mass of \SI{300}{mL} of coffee is \SI{300}{g}, and the thermal mass is \SI{1260}{J/\celsius}.  So when the coffee cooled from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ was \SI{20}{\celsius}, which means that \SI{25200}{J} of heat energy was transferred from the coffee to the surrounding environment, presumably the cup holder and air in my car.
 
 To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot), you could use it to lift a cup of coffee from sea level to \SI{8571}{m}, just shy of the height of Mount Everest, \SI{8848}{m}.
 
-NOTE: That seems crazy to me.  I need to double-check that I have not messed this up somehow.
-
-Assuming that the cup has less mass than the coffee, and it made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
+Assuming that the cup has less mass than the coffee, and is made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
 
 
 \section{Heat transfer}
@@ -3387,11 +3387,11 @@ In a situation like the coffee cooling problem, there are three ways heat flows 
 
 \begin{itemize}
 
-\item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.  The energy transfer is a form of heat flow.
+\item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.  This energy transfer is a form of heat flow.
 
 \item Convection: When particles in a gas or liquid flow from place to place, they carry heat energy with them.  Fluid flows can be caused by external action, like stirring, or by internal differences in temperature.  For example, you might have heard that hot air rises, which is a form of ``natural convection".
 
-\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The heat energy carried by this radiation depends on properties of the surface of the object, including its {\bf emissivity}, and on its temperature.  See \url{https://en.wikipedia.org/wiki/Thermal_radiation}.
+\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The heat energy carried by this radiation depends on the object's temperature and surface properties, including its {\bf emissivity} (see \url{https://en.wikipedia.org/wiki/Thermal_radiation}).
 
 \end{itemize}
 
@@ -3407,17 +3407,17 @@ Newton's law of cooling asserts that the temperature rate of change for an objec
 %
 \[ \frac{dT}{dt} = -r (T - T_{env}) \]
 %
-where $T$, the temperature of the object, is a function of time, $t$; $T_env$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves between across the boundary between the system and the environment.
+where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves between across the boundary between the system and the environment.
 
-Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in some.
+Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
 
 For example, if the primary mechanism of heat transfer is conduction, Newton's law is ``true", which is to say that $r$ is constant over a wide range of temperatures.  And sometimes we can estimate $r$ based on the material properties and shape of the object.
 
-When convection contributes a non-negligible fraction of heat transfer, $r$ might depend on temperature, but Newton's law is often accurate enough, at least over a narrow range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
+When convection contributes a non-negligible fraction of heat transfer, $r$ might depend on temperature, but Newton's law is often accurate enough, at least over some range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
 
-When radiation make up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures, more than a few hundred degrees Celsius, say.
+When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures, more than a few hundred degrees Celsius, say.
 
-However, for a situation like the coffee cooling problem, we expect this model to be quite good.
+However, for a situation like the coffee cooling problem, we expect Newton's model to be quite good.
 
 
 \section{Implementation}
@@ -3431,31 +3431,29 @@ init = State(temp=90)
 And a \py{System} object to contain the parameters of the system:
 
 \begin{python}
-coffee = System(init=init, T_env=22, r=0.01, t0=0, t_end=30)
+coffee = System(init=init, T_env=22, r=0.01,
+                t0=0, t_end=30, dt=1)
 \end{python}
 
 The values of \py{T_env}, \py{t0}, and \py{t_end} come from the statement of the problem.  I chose the value of \py{r} arbitrarily for now; we will figure out how to estimate it soon.
 
+\py{dt} is the time step we'll use to simulate the cooling process.
 Strictly speaking, Newton's law is a differential equation, but over a short period of time we can approximate it with a difference equation:
 %
 \[ \Delta T = -r (T - T_{env}) \Delta t \]
 %
-where $\Delta t$ is a small time step, which will be \SI{1}{\minute} in our simulations, and $\Delta T$ is the change in temperature during that time step.
+where $\Delta t$ is a small time step and $\Delta T$ is the change in temperature during that time step.
 
-One note: in other contexts, you might see $\Delta T$ used to denote the difference in temperature between the object and the environment, so don't get confused.
+One note: I use $\Delta T$ to denote a change in temperature over time, but in the context of heat transfer, you might also see $\Delta T$ used to denote the difference in temperature between an object and its environment, $T - T_{env}$.  To minimize confusion, I will avoid this second use.
 
 Now we can write an update function:
 
 \begin{python}
 def update(system, state):
     T = state.temp
-    T = T - system.r * (T - system.T_env)
-    return State(temp=T)
+    dT = - system.r * (T - system.T_env) * system.dt
+    return State(temp=T+dT)
 \end{python}
-
-Because the time step is \SI{1}{\minute}, I have left it out of the calculation.
-
-% TODO: Revisit that decision.  Include the time step throughout?
 
 Now if we run 
 
@@ -3463,9 +3461,9 @@ Now if we run
 update(coffee, init)
 \end{python}
 
-we see that the temperature after one time step is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
+we see that the temperature after one minute is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
 
-Now we can use \py{run_simulation}, as defined in Section~\ref{???}, to simulate a series of time steps from \py{t0} to \py{t_end}:
+Now we can use \py{run_simulation}, as defined in Section~\ref{timeframe}, to simulate a series of time steps from \py{t0} to \py{t_end}:
 
 \begin{python}
 def run_simulation(system, update_func):
@@ -3484,12 +3482,38 @@ and run it like this:
 run_simulation(coffee, update)
 \end{python}
 
-The result is a \py{TimeFrame} object with one row per time step and just one column, \py{temp}.  The temperature after 30 minutes is \SI{72.3}{\celsius}, which is a little higher than stated in the problem, \SI{70}{\celsius}.  We could adjust \py{r} by hand and find the right value by trial and error, but we can do better.
+The result is a \py{TimeFrame} object with one row per time step and just one column, \py{temp}.  The temperature after 30 minutes is \SI{72.3}{\celsius}, which is a little higher than stated in the problem, \SI{70}{\celsius}.  We could adjust \py{r} by hand and find the right value by trial and error, but we can do better, as we'll see in the next section.
+
+First I want to encapsulate what we have so far in a function:
+
+\begin{python}
+def run(T_init, **kwdargs):
+    init = State(temp=T_init)
+    system = System(init=init, T_env=22, t0=0, 
+                    dt=1, **kwdargs)
+    run_simulation(system, update)
+    return system
+\end{python}
+
+\py{run} uses a feature we have not seen before: the parameter \py{**kwargs} gathers any keyword arguments provided when the function runs and stores them in an object (specifically, it's a Python dictionary).
+
+In this example, it passes the arguments along to \py{System}, so they become variables in the new \py{System} object.
+
+If we call it like this:
+
+\begin{python}
+coffee = run(T_init=90, t_end=30, r=0.01)
+\end{python}
+
+\py{coffee} contains \py{t_end} and \py{r} as system variables, along with
+\py{init}, \py{T_env}, \py{t0}, and \py{dt}.
+
+Now let's see a better was to estimate \py{r}.
 
 
 \section{Using fsolve}
 
-SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a silly example, suppose you want to find the roots of the polynomial
+SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
 %
 \[ f(x) = (x - 1)(x - 2)(x - 3) \]
 %
@@ -3508,30 +3532,21 @@ Now we call \py{fsolve} like this:
 fsolve(func, x0=0)
 \end{python}
 
-The first argument is the function whose roots we want.  The second argument, \py{x0}, is an initial guess about where a root might be.  Generally, the closer the initial guess is to an actual root, the faster \py{fsolve} will run.  In this case, with the initial guess \py{x0=0}, the result is 1.
+The first argument is the function whose roots we want.  The second argument, \py{x0}, is an initial guess about where a root might be.  Generally, the closer the initial guess is to an actual root, the faster \py{fsolve} runs.  In this case, with the initial guess \py{x0=0}, the result is 1.
 
-Often \py{fsolve} finds the root that's closest to the initial guess.  In this example, when \py{x0=1.9}, \py{fsolve} returns 2, and when \py{x0=2.9}, \py{fsolve} returns 3.  But this behavior can be unpredictable: with \py{x0=1.5}, \py{fsolve} returns 3.
+Often \py{fsolve} finds the root that's closest to the initial guess.  In this example, when \py{x0=1.9}, \py{fsolve} returns 2, and when \py{x0=2.9}, \py{fsolve} returns 3.  But this behavior can be unpredictable; with \py{x0=1.5}, \py{fsolve} returns 3.
 
-So how can we use \py{fsolve} to estimate \py{r}?  First we'll make a function that takes the parameters of the system, including \py{r}, runs the simulation, and returns a \py{System} object:
-
-\begin{python}
-def run(volume, temp_init, r, t_end):
-    init = State(temp=temp_init)
-    system = System(volume=volume, init=init, T_env=22, 
-                    r=r, t0=0, t_end=t_end)
-    run_simulation(system, update)
-    return system
-\end{python}
+So how can we use \py{fsolve} to estimate \py{r}?  
 
 Now, we want to find the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
 
 \begin{python}
 def error_func1(r):
-    system = run(volume=300, temp_init=90, r=r, t_end=30)
+    system = run(T_init=90, t_end=30, r=r)
     return final_temp(system) - 70
 \end{python}
 
-I call a function like this an ``error function" because the return value is the difference between what we got and what we wanted, that is, the error.
+I call a function like this an ``error function" because it returns the difference between what we got and what we wanted, that is, the error.  When we find the right value of \py{r}, this error will be 0.
 
 We can test \py{error_func1} like this, using our initial guess for \py{r}:
 
@@ -3550,16 +3565,22 @@ r_coffee = solution[0]
 
 The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute}.
 
-As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
+\caption{Temperature of the coffee and milk over time.}
+\label{chap07-fig01}
+\end{figure}
+
+As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  The result should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time, with the estimated values of \py{r_coffee} and \py{r_milk}.
 
 
 \section{Mixing liquids}
 
-When we mix two liquids, the temperature of the mixture depends on the temperatures of the temperatures of the ingredients, but it might not be obvious how to compute it.
+When we mix two liquids, the temperature of the mixture depends on the temperatures of the ingredients, but it might not be obvious how to compute it.
 
 Assuming there are no chemical reactions between the liquids that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is {\bf conserved}.
 
-If the temperature of the first liquid is $T_1$, the temperature of the second liquid is $T_2$, and the final temperature of the mixture is $T$, the heat transfer into the first liquid is $C_1 (T - T_1)$ and the heat transfer into the second liquid is $C_2 (T - T2)$, where $C_1$ and $C_2$ are the thermal masses of the liquids.
+If the temperature of the first liquid is $T_1$, the temperature of the second liquid is $T_2$, and the final temperature of the mixture is $T$, the heat transfer into the first liquid is $C_1 (T - T_1)$ and the heat transfer into the second liquid is $C_2 (T - T_2)$, where $C_1$ and $C_2$ are the thermal masses of the liquids.
 
 In order to conserve energy, these heat transfers must add up to 0:
 %
@@ -3567,9 +3588,9 @@ In order to conserve energy, these heat transfers must add up to 0:
 %
 We can solve this equation for T:
 %
-\[ (C_1 T_1 + C_2 T_2) / (C_1 + C_2) \]
+\[ T = \frac{C_1 T_1 + C_2 T_2}{C_1 + C_2} \]
 %
-For the coffee cooling problem, we have the volumes of the liquids; to get their thermal masses, recall that thermal mass is related to mass, $m$, by specific heat, $c_p$:
+For the coffee cooling problem, we have the volumes of the liquids; to get their thermal masses, recall that thermal mass is related to mass, $m$, by specific heat capacity, $c_p$:
 %
 \[ C = m c_p \]
 %
@@ -3583,14 +3604,14 @@ So the thermal mass of each ingredient is
 %
 If we assume that the density and specific heat of the milk and coffee are equal, they drop out of the equation, and we can write:
 %
-\[ (V_1 T_1 + V_2 T_2) / (V_1 + V_2) \]
+\[ T = \frac{V_1 T_1 + V_2 T_2}{V_1 + V_2} \]
 %
-where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk and see how good this approximation is.
+where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk to see how good this approximation is.
 
-The following function takes two \py{System} objects that represent the coffee and milk, and returns a new \py{System} object that represents the mixture.
+The following function takes two \py{System} objects that represent the coffee and milk, creates a new \py{System} to represent the mixture, then runs a simulation of the mixture until \py{t_end}.  The return value is the new \py{System}.
 
 \begin{python}
-def mix(s1, s2):
+def mix(s1, s2, t_end):
     assert s1.t_end == s2.t_end
     
     volume = s1.volume + s2.volume
@@ -3598,14 +3619,135 @@ def mix(s1, s2):
     temp = (s1.volume * final_temp(s1) + 
             s2.volume * final_temp(s2)) / volume
     
-    init = State(temp=temp)
-    mixture = System(volume=volume, init=init, T_env=22, 
-                    r=s1.r, t0=s1.t_end, t_end=30)
-    
+    mixture = run(T_init=temp, t_end=t_end, 
+                  r=s1.r, volume=volume)
     return mixture
 \end{python}
 
+The first line is an \py{assert} statement, which is a way of checking for errors.  It compares \py{t_end} for the two systems to confirm that they have been cooling for the same time.  If not, \py{assert} displays an error message and stops the program.
 
+The next two statements compute the total volume of the mixture and its temperature.  Then we use \py{run} to make a new \py{System} and simulate it.
+
+This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption to revisit when we consider sources of error.
+
+
+\section{Mix first or last?}
+
+Now we have everything we need to solve the problem.  First I'll create objects to represent the coffee and cream:
+
+\begin{python}
+coffee = run(T_init=90, t_end=30, r=r_coffee, volume=300)
+milk = run(T_init=5, t_end=30, r=r_milk, volume=50)
+\end{python}
+
+The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.7}{\celsius}.  Then we mix them:
+
+\begin{python}
+mix_last = mix(coffee, milk)
+\end{python}
+
+After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough to be enjoyable.  Would we do any better if we added the milk first?
+
+I'll create new objects for the coffee and milk, with \py{t_end=0}
+
+\begin{python}
+coffee = run(T_init=90, t_end=0, r=r_coffee, volume=300)
+milk = run(T_init=5, t_end=0, r=r_milk, volume=50)
+\end{python}
+
+Then mix them and simulate 30 minutes:
+
+\begin{python}
+mix_first = mix(coffee, milk, t_end=30)
+\end{python}
+
+The final temperature is only \SI{61.6}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.5}{\celsius}.  But is that the best we can do?
+
+
+\section{Optimization}
+
+Adding the milk after 30 minutes is better than adding it after one minute, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
+
+\begin{python}
+def run_and_mix(t_add):
+    coffee = run(T_init=90, t_end=t_add, 
+                 r=r_coffee, volume=300)
+    milk = run(T_init=5, t_end=t_add, 
+               r=r_milk, volume=50)
+    mixture = mix(coffee, milk, t_end=30-t_add)
+    return final_temp(mixture)
+\end{python}
+
+When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at the end.  Now we can sweep the range of values in between:
+
+\begin{python}
+sweep = Sweep()
+for t_add in arange(0, 30):
+    temp = run_and_mix(t_add)
+    sweep[t_add] = temp
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
+\caption{Final temperature as a function of when we add the milk.}
+\label{chap07-fig02}
+\end{figure}
+
+Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the time index of a \py{TimeSeries}.
+
+The final temperature is maximized when \py{t_add=30}, so adding the milk at the end is optimal.
+
+In the notebook for this chapter you will have a chance to explore this solution and try some variations.  For example, suppose the coffee shop won't let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?
+
+
+\section{Analysis}
+
+Simulating Newton's law of cooling is almost silly, because we can solve the differential equation analytically.  If
+%
+\[ \frac{dT}{dt} = -r (T - T_{env}) \]
+%
+the general solution is
+%
+\[ T{\left (t \right )} = C_{1} e^{- r t} + T_{env} \]
+%
+and the particular solution where $T(0) = T_init$ is
+%
+\[ T_{env} + \left(- T_{env} + T_{init}\right) e^{- r t} \]
+%
+In the notebook for this chapter, you'll see how I got this solution using SymPy, and if you would like to see it done by hand, you can watch this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/newtons-law-of-cooling}
+
+Now we can use the observed data to estimate the parameter $r$.  If we observe $T(t_{end}) = T_{end}$, we can plug $t_{end}$ and $T_{end}$ into the particular solution and solve for $r$.  The result is:
+%
+\[ r = \frac{1}{t_{end}} \log{\left (\frac{T_{init} + T_{env}}{T_{end} - T_{env}} \right )} \]
+%
+Plugging in $t_{end}=30$ and $T_{end}=70$ (and again with $T_{init}=90$ and $T_{env}=22$), the estimate for $r$ is 0.0116.
+
+We can use this function to compute the time series:
+
+\begin{python}
+def run_analysis(system):
+    T_init = system.init.temp
+    T_env = system.T_env
+    
+    ts = arange(system.t0, system.t_end+1)
+    Ts = T_env + (T_init - T_env) * np.exp(-system.r * ts)
+    series = TimeSeries(Ts, index=ts)
+    
+    system.results = TimeFrame(series, columns=['temp'])
+\end{python}
+
+The interface for this function is similar to \py{run_simulation}: it takes a \py{System} as a parameter, and stores a \py{TimeFrame} as a result.
+
+We can run it like this, using the computed value for \py{r_coffee2}
+
+\begin{python}
+init = State(temp=90)
+coffee2 = System(init=init, T_env=22, r=r_coffee2, 
+                 t0=0, t_end=30)
+run_analysis(coffee2)
+\end{python}
+
+The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with very small differences due to round off errors.
 
 
 \backmatter
