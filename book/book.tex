@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.0.6}
+\newcommand{\theversion}{0.7.1}
 
 
 %%%% Both LATEX and PLASTEX
@@ -556,7 +556,7 @@ bikeshare = System(olin=10, wellesley=2)
 The first line is an {\bf import statement} that tells Python
 to read {\tt modsim}, which is a collection of functions, including \py{sqrt}, which we used in the previous section, \py{System}, which we are using now, and many more.
 
-\py{System} creates a {\bf system object} which is a collection of {\bf ??? variables}.  In this example, the system variables are named \py{olin} and \py{wellesley} and they represent the number of bikes at Olin and Wellesley.  The initial values of are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The system object created by \py{System} is assigned to a new variable named \py{bikeshare}.
+\py{System} creates a {\bf system object} which is a collection of {\bf system variables}.  In this example, the system variables are named \py{olin} and \py{wellesley} and they represent the number of bikes at Olin and Wellesley.  The initial values of are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The system object created by \py{System} is assigned to a new variable named \py{bikeshare}.
 
 We can read the variables inside a system object using ``dot notation'', like this:
 
@@ -1775,7 +1775,7 @@ system = System(t0=first_year, t_end=last_year,
 Next we'll wrap the code from the previous section in a function:
 
 \begin{python}
-def run_model1(system):
+def run_simulation1(system):
     model = TimeSeries()
     model[system.t0] = system.p0
     for year in arange(system.t0, system.t_end):
@@ -1783,7 +1783,7 @@ def run_model1(system):
     system.model = model
 \end{python}
 
-When \py{run_model1} runs, it creates a new series that contains the result of the simulation, and stores it as a new system variable, \py{model}. 
+When \py{run_simulation1} runs, it creates a new series that contains the result of the simulation, and stores it as a new system variable, \py{model}. 
 
 To plot the results, we define a new function:
 
@@ -1802,7 +1802,7 @@ There's nothing new there except \py{ylim}, which specifies the limits of the $y
 Finally, we can run it like this.
 
 \begin{python}
-run_model1(system)
+run_simulation1(system)
 plot_model(system)
 \end{python}
 
@@ -1815,7 +1815,7 @@ The biggest problem with the constant growth model is that it doesn't make any s
 On the order hand, if some fraction of the population dies each year, and some fraction gives birth, we can compute the net change in the population like this:
 
 \begin{python}
-def run_model2(system):
+def run_simulation2(system):
     model = TimeSeries()
     model[system.t0] = system.p0
     for year in arange(system.t0, system.t_end):
@@ -1835,7 +1835,7 @@ system.birth_rate = 0.027
 Then I ran and plotted the model:
 
 \begin{python}
-run_model2(system)
+run_simulation2(system)
 plot_model(system)
 \end{python}
 
@@ -1862,7 +1862,7 @@ We will try out these variations, but first, let's clean up the code one more ti
 
 \section{Factoring out the update function}
 
-\py{run_model1} and \py{run_model2} are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
+\py{run_simulation1} and \py{run_simulation2} are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
 
 Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull the body of the loop out and make it a function:
 
@@ -2470,6 +2470,8 @@ I avoided the more common terms because I thought it would seem strange to use t
 
 Intro
 
+My presentation of the SIR model in this chapter, and the analysis in the next chapter, is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease}.}.
+
 \section{The Freshman Plague}
 
 Every year at Olin College, about 90 new students come to campus from around the country and the world.  Most of them arrive healthy and happy, but we should expect at least one, by chance, to come with some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
@@ -2518,6 +2520,7 @@ This model assumes that the population is closed, that is, no one arrives or dep
 
 
 \section{The SIR equations}
+\label{sireqn}
 
 If we treat time as a continuous quantity, we can write differential equations that describe the rates of change for $s$, $i$, and $r$ (where $r$ is the fraction of the population that has recovered):
 %
@@ -2617,7 +2620,7 @@ def update1(system, state):
 
 The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{State} to the three variables, in order.
 
-The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values and the same index as \py{state}.
+The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values.
 
 When we call \py{update1} like this:
 
@@ -2631,10 +2634,10 @@ The result is the \py{State}
 S    0.985388
 I    0.011865
 R    0.002747
-dtype: float64
 \end{result}
 
-\py{dtype} indicates the type of the data in the \py{State}; \py{float64} indicates that it contains 64-bit floating-point numbers.  A {\bf floating-point number} can represent a number with a decimal or fractional part, as opposed to an integer.
+%TODO: figure out when to talk about integers and floats
+%\py{dtype} indicates the type of the data in the \py{State}; \py{float64} %indicates that it contains 64-bit floating-point numbers.  A {\bf %floating-point number} can represent a number with a decimal or %fractional part, as opposed to an integer.
 
 
 \section{Running the model}
@@ -2642,19 +2645,19 @@ dtype: float64
 Now we can run the model over a sequence of time steps:
 
 \begin{python}
-def run_model(system, update_func):
+def run_simulation(system, update_func):
     state = system.init
-    for i in range(system.t0, system.t_end):
+    for i in arange(system.t0, system.t_end):
         state = update_func(system, state)
     return state
 \end{python}
 
-The parameters of \py{run_model} are the \py{System} object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithstate}.
+The parameters of \py{run_simulation} are the \py{System} object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithstate}.
 
-We can call \py{run_model} like this:
+We can call \py{run_simulation} like this:
 
 \begin{python}
-run_model(sir, update1)
+run_simulation(sir, update1)
 \end{python}
 
 The result is the final state of the system:
@@ -2663,7 +2666,6 @@ The result is the final state of the system:
 S    0.520819
 I    0.000676
 R    0.478505
-dtype: float64
 \end{result}
 
 This result indicates that after 14 weeks (98 days), about 52\% of the population is still susceptible, which means they were never infected, less than 1\% are actively infected, and 48\% have recovered, which means they were infected at some point.
@@ -2671,20 +2673,21 @@ This result indicates that after 14 weeks (98 days), about 52\% of the populatio
 
 \section{Collecting the results}
 
-The previous version of \py{run_model} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using one \py{DataFrame}.
+The previous version of \py{run_simulation} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using one \py{DataFrame}.
 
 Here's the first version:
 
 \begin{python}
-def run_model(system, update_func):
+def run_simulation(system, update_func):
     S = TimeSeries()
     I = TimeSeries()
     R = TimeSeries()
 
     state = system.init
-    S[0], I[0], R[0] = state
+    t0 = system.t0
+    S[t0], I[t0], R[t0] = state
     
-    for i in range(sir.t0, sir.t_end):
+    for i in arange(system.t0, system.t_end):
         state = update_func(system, state)
         S[i+1], I[i+1], R[i+1] = state
     
@@ -2704,7 +2707,7 @@ At the end of the function, we store \py{S}, \py{I}, and \py{R} as attributes of
 Now we can run the function like this:
 
 \begin{python}
-run_model(sir, update1)
+run_simulation(sir, update1)
 \end{python}
 
 We'll use the following function to plot the results:
@@ -2733,51 +2736,56 @@ plot_results(sir.S, sir.I, sir.R)
 Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  In total, almost half the population gets sick. 
 
 
-\section{Now with a DataFrame}
+\section{Now with a TimeFrame}
+\label{timeframe}
 
-If the number of state variables is small, storing them as separate \py{Series} objects might not be so bad.  But a better alternative is to use a \py{DataFrame}.  In Section~\ref{worldpopdata} we worked with \py{DataFrame} objects we got from \py{read_html}.  In this section we'll create a \py{DataFrame} and use it to store state variables.
+If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}.  
 
-Here's a more concise version of \py{run_model}:
+\py{TimeFrame} objects are defined in \py{modsim.py}.  They are almost identical to the \py{DataFrame} objects we used in Section~\ref{worldpopdata}, with just a few changes I made to make them easier to use for our purposes.  If you want to know the details, you can read about it in \py{modsim.py}.
+
+we worked with \py{DataFrame} objects we got from \py{read_html}.  In this section we'll create a \py{DataFrame} and use it to store state variables.
+
+Here's a more concise version of \py{run_simulation}:
 
 \begin{python}
-def run_model(system, update_func):
-    df = DataFrame(columns=['S', 'I', 'R'])
+def run_simulation(system, update_func):
+    df = TimeFrame(columns=system.init.index)
     df.loc[system.t0] = system.init
     
-    for i in range(system.t0, system.t_end):
+    for i in arange(system.t0, system.t_end):
         df.loc[i+1] = update_func(system, df.loc[i])
     
     system.results = df
 \end{python}
 
-The first line creates an empty \py{DataFrame} with one column for each state variables.
+The first line creates an empty \py{TimeFrame} with one column for each state variables.
 
-Before the loop starts, we want to store the initial conditions in the \py{DataFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it might be tempting to write:
+Before the loop starts, we want to store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it might be tempting to write:
 
 \begin{python}
 df[system.t0] = system.init
 \end{python}
 
-The problem is that when you use the bracket operator with a \py{DataFrame}, it selects a column, not a row.  For example, to select the first column, we could write
+The problem is that when you use the bracket operator with a \py{TimeFrame}, it selects a column, not a row.  For example, to select the first column, we could write
 
 \begin{python}
 df['S']
 \end{python}
 
-The result would be a time series.  To read or write a single row, we have to use \py{loc}, which stands for ``location".  So \py{df.loc[0]} reads a row from a \py{DataFrame} and 
+The result would be a time series.  To read or write a single row, we have to use \py{loc}, which stands for ``location".  So \py{df.loc[0]} reads a row from a \py{TimeFrame} and 
 
 \begin{python}
 df.loc[system.t0] = system.init
 \end{python}
 
-assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{State}, the assignment matches up the index from the \py{State} with the columns of the \py{DataFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{DataFrame}, and likewise with \py{I} and \py{R}.
+assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{State}, the assignment matches up the index from the \py{State} with the columns of the \py{TimeFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{TimeFrame}, and likewise with \py{I} and \py{R}.
 
 We can use the same feature to write the loop more concisely, assigning the \py{State} we get from \py{update_func} directly to the next row of \py{df}.  
 
-Finally, we store \py{df} as a new attribute of \py{system}.  We can call this version of \py{run_model} like this:
+Finally, we store \py{df} as a new attribute of \py{system}.  We can call this version of \py{run_simulation} like this:
 
 \begin{python}
-run_model(sir, update1)
+run_simulation(sir, update1)
 \end{python}
 
 And plot the results like this:
@@ -2787,7 +2795,7 @@ df = sir.results
 plot_results(df.S, df.I, df.R)
 \end{python}
 
-As we saw in Section~\ref{series}, we can use dot notation to select columns from the \py{DataFrame}.
+As we saw in Section~\ref{series}, we can use dot notation to select columns from the \py{TimeFrame}.
 
 
 \section{Metrics}
@@ -2828,7 +2836,7 @@ def add_immunization(system, fraction):
 \begin{python}
 sir2 = make_system(beta, gamma)
 add_immunization(sir2, 0.1)
-run_model(sir2, update1)
+run_simulation(sir2, update1)
 \end{python}
 
 For comparison, we ran the same model without immunization and plot the results.
@@ -2847,16 +2855,20 @@ So let's see what happens if we administer more vaccines.  This function sweeps 
 
 \begin{python}
 def sweep_immunity(immunize_array):
-    sweep = Sweep([])
+    sweep = Sweep()
     for fraction in immunize_array:
         sir = make_system(beta, gamma)
         add_immunization(sir, fraction)
-        run_model(sir, update1)
+        run_simulation(sir, update1)
         sweep[fraction] = calc_total_infected(sir)
     return sweep
 \end{python}
 
-The result is a \py{Sweep} object, shown in Figure~\ref{chap05-fig03}.  As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
+The result is a \py{Sweep} object, which is similar to a \py{TimeSeries}; the difference is that the index of the \py{Sweep} contains parameter values, not times.  
+
+Figure~\ref{chap05-fig03} shows a plot of the \py{Sweep}.  Again, notice that the x-axis is the immunization rate, not time.
+
+As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
@@ -2932,11 +2944,11 @@ Now we can sweep a range of values for \py{spending} and use the simulation to c
 
 \begin{python}
 def sweep_hand_washing(spending_array):
-    sweep = Sweep([])
+    sweep = Sweep()
     for spending in spending_array:
         sir = make_system(beta, gamma)
         add_hand_washing(sir, spending)
-        run_model(sir, update1)
+        run_simulation(sir, update1)
         sweep[spending] = calc_total_infected(sir)
     return sweep
 \end{python}
@@ -2979,7 +2991,7 @@ And run the simulation for each dose:
 
 \begin{python}
 def sweep_doses(dose_array):
-    sweep = Sweep([])
+    sweep = Sweep()
     for doses in dose_array:
         fraction = doses / num_students
         spending = budget - doses * price_per_dose
@@ -2988,7 +3000,7 @@ def sweep_doses(dose_array):
         add_immunization(sir, fraction)
         add_hand_washing(sir, spending)
         
-        run_model(sir, update1)
+        run_simulation(sir, update1)
         sweep[doses] = calc_total_infected(sir)
 
     return sweep
@@ -3012,48 +3024,54 @@ In the notebook for this chapter, you'll have a chance to run this optimization 
 
 \chapter{Analysis}
 
-NOT DONE, BUT KEEP GOING IF YOU WANT A PREVIEW
+In the previous chapter I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model.  We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.
+
+But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
+
+We will use the following functions as defined in the previous chapter:
+\py{make_system}, \py{run_simulation}, \py{update1}, and \py{plot_results}, and \py{calc_total_infected}.
+
+For example, here's the code to create a \py{System} object with given values of \py{beta} and \py{gamma}, run the simulation, and compute the fraction of the population that are infected.
+
+\begin{python}
+sir = make_system(0.33, 0.25)
+run_simulation(sir, update1)
+print(calc_total_infected(sir))
+\end{python}
 
 
 \section{Sweeping beta}
 
-Now we can run the model for any values of the parameters and display the outcome:
+Recall that $\beta$ is the contact rate, which captures both the frequency of interaction between people and the fraction of those interactions that result in a new infection.  If $N$ is the size of the population and $s$ is the fraction that's susceptible, $s N$ is the number of susceptibles, $\beta s N$ is the number of contacts per day between susceptibles and other people, and $\beta s i N$ is the number of those contacts where the other person is infectious.
 
-\begin{python}
-sir.beta = 0.333
-sir.gamma = 0.25
-run_model(sir, update1)
-print(calc_total_infected(sir))
-\end{python}
-
-To see how the outcome depends on the first parameter, \py{beta}, we'll create an array with a range of values:
+As $\beta$ increases, we expect the total number of infections to increase.  To quantify that relationship, I'll create a range of values for $\beta$:
 
 \begin{python}
 beta_array = linspace(0.1, 0.9, 11)
 \end{python}
 
-Then run the model for each value, printing the results as we go.
+Then run the simulation for each value and print the results.
 
 \begin{python}
 for beta in beta_array:
     sir = make_system(beta, gamma)
-    run_model(sir, update1)
+    run_simulation(sir, update1)
     print(sir.beta, calc_total_infected(sir))
 \end{python}
 
-Even better, we can encapsulate that code in a function and store the results in a \py{Sweep} object:
+We can encapsulate that code in a function and store the results in a \py{Sweep} object:
 
 \begin{python}
 def sweep_beta(beta_array, gamma):
     sweep = Sweep()
     for beta in beta_array:
         system = make_system(beta, gamma)
-        run_model(system, update1)
+        run_simulation(system, update1)
         sweep[system.beta] = calc_total_infected(system)
     return sweep
 \end{python}
 
-We can run \py{sweep_beta} like this:
+Now we can run \py{sweep_beta} like this:
 
 \begin{python}
 infected_sweep = sweep_beta(beta_array, gamma)
@@ -3066,13 +3084,15 @@ label = 'gamma = ' + str(gamma)
 plot(infected_sweep, label=label)
 \end{python}
 
-The first line uses string operations to assemble a label for the plotted line.  
+%TODO: figure out when to introduce strings
+
+The first line uses string operations to assemble a label for the plotted line:
 
 \begin{itemize}
 
 \item When the \py{+} operator is applied to strings, it joins them end-to-end, which is called {\bf concatenation}.  
 
-\item The function \py{str} converts any type of object to a String representation.  In this case, \py{gamma} is a floating-point number, so we have to convert it to a string before trying to concatenate it.
+\item The function \py{str} converts any type of object to a String representation.  In this case, \py{gamma} is a number, so we have to convert it to a string before trying to concatenate it.
 
 \end{itemize}
 
@@ -3084,11 +3104,9 @@ If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \
 \label{chap06-fig01}
 \end{figure}
 
-Figure~\ref{chap06-fig01} shows the results.  Notice that the x-axis is the parameter \py{beta}, not time.  This figure is a parameter sweep, not a time series.
+Figure~\ref{chap06-fig01} shows the results.  Remember that this figure is a parameter sweep, not a time series, so the x-axis is the parameter \py{beta}, not time.  
 
-When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.
-
-As \py{beta} increases, it reaches a threshold near 0.3 and the fraction of infected students increases quickly.  When \py{beta} exceeds 0.5, more than 80\% of the population gets sick.
+When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.  As \py{beta} increases, it reaches a threshold near 0.3 where the fraction of infected students increases quickly.  When \py{beta} exceeds 0.5, more than 80\% of the population gets sick.
 
 
 \section{Sweeping gamma}
@@ -3121,7 +3139,7 @@ When \py{gamma} is high, \py{beta} has to be even higher to get things going.  T
 In fact, there is.  I will demonstrate it first by running simulations, then derive it by analysis.
 
 
-\section{The contact number}
+\section{Nondimensionalization}
 
 Before we go on, let's encapsulate the code from the previous section in a function:
 
@@ -3135,9 +3153,15 @@ def sweep_parameters(beta_array, gamma_array):
 
 \py{sweep_parameters} takes as parameters two arrays: a range of values for \py{beta} and a range of values for \py{gamma}.
 
-It creates a \py{DataFrame} to store the results; it starts with one column for each value of \py{gamma}, then we will add one row for each value of \py{beta}.
+It creates a \py{DataFrame} to store the results, with one column for each value of \py{gamma} and one row for each value of \py{beta}.
 
-Each time through the loop, we run \py{sweep_beta}.  The result is a \py{Sweep} object with one element for each value of \py{gamma}.  Because the index of the \py{Sweep} matches the columns of the \py{DataFrame}, we can store the values from the \py{Sweep} as a new row in the \py{DataFrame}.
+Each time through the loop, we run \py{sweep_beta}.  The result is a \py{Sweep} object with one element for each value of \py{gamma}.  The assignment
+
+\begin{python}
+df[gamma] = sweep_beta(beta_array, gamma)
+\end{python}
+
+stores the values from the \py{Sweep} object as a new column in the \py{DataFrame}, corresponding to the current value of \py{gamma}.
 
 At the end, the \py{DataFrame} stores the fraction of students infected for each pair of parameters, \py{beta} and \py{gamma}.
 
@@ -3157,7 +3181,9 @@ for gamma in df.columns:
         print(beta, gamma, frac_infected)
 \end{python}
 
-This is the first example we've seen with one \py{for} loop inside another.  But there's nothing about it that should be too surprising.  Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding \py{Sweep} object.  Each time the inner loop runs, it selects a value of \py{beta} from the \py{Sweep} and selects the corresponding element, which is the fraction of student infected.
+This is the first example we've seen with one \py{for} loop inside another.  But there's nothing about it that should be too surprising.  Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column.
+
+Each time the inner loop runs, it selects a value of \py{beta} from the \py{Sweep} and selects the corresponding element, which is the fraction of student infected.
 
 In this example, \py{sweep_df} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
 
@@ -3171,7 +3197,7 @@ Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
 \end{itemize}
 
-Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  In fact, it is so useful it has a name: nondimensionalization (see \url{https://en.wikipedia.org/wiki/Nondimensionalization#First_order_system}).
+Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: nondimensionalization (see \url{https://en.wikipedia.org/wiki/Nondimensionalization#First_order_system}).
 
 So we'll try the second option first.  In the notebook for this chapter, you will explore the first option as an exercise.
 
@@ -3188,15 +3214,540 @@ def plot_sweep_df(df):
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap06-fig03.pdf}}
-\caption{Total number of infected students as a function of the contact number, \py{beta/gamma}.}
+\caption{Total fraction infected as a function of contact number.}
 \label{chap06-fig03}
 \end{figure}
 
 Figure~\ref{chap06-fig03} shows that the results fall neatly on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
 
 
- is called the ``contact number"
+\section{Contact number}
 
+Recall that the number of new infections in a given day is $\beta s i N$, and the number of recoveries is $\gamma i N$.  If we divide these quantities, the result is $\beta / \gamma s$, which is the number of new infections per recovery (as a fraction of the population).
+
+When a new disease is introduced to a susceptible population, $s$ is approximately 1, so the number of people infected by each sick person is $\beta / \gamma$.  This ratio is called the ``contact number" or ``basic reproduction number" (see \url{https://en.wikipedia.org/wiki/Basic_reproduction_number}).  By convention it is usually denoted $R_0$, but in the context of an SIR model, this notation is confusing, so we'll use $c$ instead.
+
+The results in the previous section suggest that there is a relationship between $c$ and the total number of infections.  We can derive this relationship by analyzing the differential equations from Section~\ref{sireqn}:
+%
+\begin{align*}
+\frac{ds}{dt} &= -\beta s i \\
+\frac{di}{dt} &= \beta s i - \gamma i\\
+\frac{dr}{dt} &= \gamma i
+\end{align*}
+%
+In the same way we divided the contact rate by the infection rate to get the dimensionless quantity $c$, now we'll divide $di/dt$ by $ds/dt$ to get an equation that does not depend on time:
+%
+\[ \frac{di}{ds} = -1 + \frac{1}{cs} \]
+%
+Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  We can multiply both sides by $ds$:
+%
+\[ di = -1 + \frac{1}{cs} ds \]
+%
+And then integrate both sides:
+%
+\[ i = -s + \frac{1}{c} \log s + q \]
+%
+Where $q$ is a constant of integration.  Rearranging terms yields:
+%
+\[ q = i + s - \frac{1}{c} \log s \]
+%
+At the beginning of an epidemic, if the fraction infected is small and nearly everyone is susceptible, we can use the approximations $i(0) = 0$ and $s(0) = 1$ to compute $q$:
+%
+\[ q = 0 + 1 + \frac{1}{c} \log 1 \]
+%
+Since $\log 1 = 0$, we have $q = 1$.
+
+\newcommand{\sinf}{s_{\infty}}
+
+Now, at the end of the epidemic, let's assume that $i_{\infty} = 0$ again and $s(\infty)$ is an unknown quantity $\sinf$.  Now we have:
+%
+\[ q = 1 = 0 + \sinf - \frac{1}{c} \log \sinf \]
+%
+Solving for $c$, we have
+%
+\[ c = \frac{\log \sinf}{\sinf - 1} \]
+%
+If we create a range of values for $\sinf$
+
+\begin{python}
+s_inf_array = linspace(0.0001, 0.9999, 31)
+\end{python}
+
+we can compute the corresponding values of $c$:
+
+\begin{python}
+c_array = np.log(s_inf_array) / (s_inf_array - 1)
+\end{python}
+
+To get the total infected, we compute the difference between $s(0)$ and $s(\infty)$, then store the results in a \py{Series}:
+
+\begin{python}
+frac_infected = 1 - s_inf_array
+frac_infected_series = Series(frac_infected, index=c_array)
+\end{python}
+
+Recall from Section~\ref{series} that a \py{Series} object contains an index, which is \py{c_array} in this example, and a corresponding sequence of values, which is \py{frac_infected}.
+
+
+\section{Analysis and simulation}
+
+Now we can plot the results:
+
+\begin{python}
+plot(frac_infected_series)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig04.pdf}}
+\caption{Total fraction infected as a function of contact number, results from simulation and analysis.}
+\label{chap06-fig04}
+\end{figure}
+
+Figure~\ref{chap06-fig04} compare the analytic results from this section with the simulation results from the previous section.  Over most of the range they are consistent with each other, but when the contact number is less than 1, the analysis suggests that there will be virtually no infections; in the simulations a new infection can affect a small part of the population, even when $c<1$.
+
+The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity.  In other words, the two methods are actually based on different models.
+
+So which model is better?  Probably neither.  When the contact number is small, the early progress of the epidemic will depend on details of the scenario.  If we are lucky, the original infected person, ``patient zero",  infects no one and there is no epidemic.  If we are unlucky, patient zero might have a large number of close friends, or might work in the dining hall (and fail to observe safe food handling procedures).
+
+For contact numbers near or less than 1, we might need a more detailed model.  But for higher contact numbers the SIR model might be good enough.
+
+Figure~\ref{chap06-fig04} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
+
+Well, at least in theory.  In practice, it might not work very well, because of the shape of the curve.  When the contact number is near 2, the curve is quite steep, which means that small changes in $c$ yield big changes in the number of infections.  If we observe that the total fraction infected is anywhere from 20\% to 80\%, we would conclude that $c$ is near 2.
+
+On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is quite flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything like 90\% of the population.
+
+In summary, the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
+
+
+
+\chapter{Thermal systems}
+
+Intro
+
+\section{The coffee cooling problem}
+
+The coffee cooling problem was discussed by Jearl Walker in Scientific American in 1977\footnote{Walker, ``The Amateur Scientist", Scientific American, Volume 237, Issue 5, November 1977.}, and since then it has become a standard example of modeling and simulation.
+
+Here is my version of the problem:
+
+\begin{quote}
+Suppose I stop on the way to work to pick up a cup of coffee, which I take with milk.  Assuming that I want the coffee to be as hot as possible when I arrive at work, should I add the milk at the coffee shop, wait until I get to work, or add the milk at some point in between?
+\end{quote}
+
+To help answer this question, I made a trial run with the milk and coffee in separate containers and took some measurements:
+
+\begin{itemize}
+
+\item When served, the temperature of the coffee is \SI{90}{\celsius}.  The volume is \SI{300}{mL}.
+
+\item The milk is at an initial temperature of \SI{5}{\celsius}, and I take about \SI{50}{mL}.
+
+\item The ambient temperature in my car is \SI{22}{\celsius}.
+
+\item The coffee is served in a well insulated cup.  When I arrive at work after 30 minutes, the temperature of the coffee has fallen to \SI{70}{\celsius}.
+
+\item The milk container is not as well insulated.  After 15 minutes, it warms up to \SI{20}{\celsius}, nearly the ambient temperature.
+
+\end{itemize}
+
+To use this data and answer the question, we'll need to know something about temperature and heat, and we'll have to make some modeling decisions.
+
+
+\section{Temperature and heat}
+
+To understand how coffee cools (and milk warms), we need a model of temperature and heat.  {\bf Temperature} is a property of an object or a system; it quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.  As an object cools, its particles slow down.
+
+{\bf Heat} is a flow of energy from one object to another.  As the coffee cools, heat flows from the coffee, through the container, and into the surrounding environment.
+
+Heat is related to temperature by the following equation (see \url{https://en.wikipedia.org/wiki/Thermal_mass}):
+%
+\[ Q = C \Delta T \]
+%
+where $Q$ is the amount of heat transferred to an object, usually measured in joules (\si{J}), $\Delta T$ is the change in temperature of the object, measured in degrees Celsius (\si{\celsius}), and $C$ is the {\bf thermal mass} of the object which quantifies how much energy it takes to heat or cool it, in joules per degree Celsius (\si{J/\celsius}).
+
+For objects made primarily from one material, thermal mass can be computed like this:
+%
+\[ C = m c_p \]
+%
+where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity} of the material (see \url{https://en.wikipedia.org/wiki/Heat_capacity#Specific_heat_capacity}).
+
+The specific heat capacity of coffee is probably close to that of water, which is \SI{4.2}{J/g/\celsius}.
+
+Assuming that the density of coffee is close to that of water, which is \SI{1}{g/ml}, the mass of \SI{300}{mL} of coffee is \SI{300}{g}, and the thermal mass is \SI{1260}{J/\celsius}.  So when the coffee cooled from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ was \SI{20}{\celsius}, which means that \SI{25200}{J} of heat energy was transferred from the coffee to the surrounding environment, presumably the cup holder and air in my car.
+
+To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot), you could use it to lift a cup of coffee from sea level to \SI{8571}{m}, just shy of the height of Mount Everest, \SI{8848}{m}.
+
+Assuming that the cup has less mass than the coffee, and is made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
+
+
+\section{Heat transfer}
+
+In a situation like the coffee cooling problem, there are three ways heat flows from one object to another (see \url{https://en.wikipedia.org/wiki/Heat_transfer}):
+
+\begin{itemize}
+
+\item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.  This energy transfer is a form of heat flow.
+
+\item Convection: When particles in a gas or liquid flow from place to place, they carry heat energy with them.  Fluid flows can be caused by external action, like stirring, or by internal differences in temperature.  For example, you might have heard that hot air rises, which is a form of ``natural convection".
+
+\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The heat energy carried by this radiation depends on the object's temperature and surface properties, including its {\bf emissivity} (see \url{https://en.wikipedia.org/wiki/Thermal_radiation}).
+
+\end{itemize}
+
+For objects like coffee in a car, thermal radiation is much smaller than 
+heat transfer due to conduction and convection, so we will ignore it.
+
+Convection can be a complex topic, since it often depends on details of fluid flow in three dimensions.  But for this problem we will be able to get away with a simple model called ``Newton's law of cooling".
+
+
+\section{Newton's law of cooling}
+
+Newton's law of cooling asserts that the temperature rate of change for an object is proportional to the difference in temperature between the object and the surrounding environment:
+%
+\[ \frac{dT}{dt} = -r (T - T_{env}) \]
+%
+where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves between across the boundary between the system and the environment.
+
+Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
+
+For example, if the primary mechanism of heat transfer is conduction, Newton's law is ``true", which is to say that $r$ is constant over a wide range of temperatures.  And sometimes we can estimate $r$ based on the material properties and shape of the object.
+
+When convection contributes a non-negligible fraction of heat transfer, $r$ might depend on temperature, but Newton's law is often accurate enough, at least over some range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
+
+When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures, more than a few hundred degrees Celsius, say.
+
+However, for a situation like the coffee cooling problem, we expect Newton's model to be quite good.
+
+
+\section{Implementation}
+
+To get started, let's forget about the milk temporarily and focus on the coffee.  I'll create a \py{State} object to represent the initial temperature:
+
+\begin{python}
+init = State(temp=90)
+\end{python}
+
+And a \py{System} object to contain the parameters of the system:
+
+\begin{python}
+coffee = System(init=init, T_env=22, r=0.01,
+                t0=0, t_end=30, dt=1)
+\end{python}
+
+The values of \py{T_env}, \py{t0}, and \py{t_end} come from the statement of the problem.  I chose the value of \py{r} arbitrarily for now; we will figure out how to estimate it soon.
+
+\py{dt} is the time step we'll use to simulate the cooling process.
+Strictly speaking, Newton's law is a differential equation, but over a short period of time we can approximate it with a difference equation:
+%
+\[ \Delta T = -r (T - T_{env}) \Delta t \]
+%
+where $\Delta t$ is a small time step and $\Delta T$ is the change in temperature during that time step.
+
+One note: I use $\Delta T$ to denote a change in temperature over time, but in the context of heat transfer, you might also see $\Delta T$ used to denote the difference in temperature between an object and its environment, $T - T_{env}$.  To minimize confusion, I will avoid this second use.
+
+Now we can write an update function:
+
+\begin{python}
+def update(system, state):
+    T = state.temp
+    dT = - system.r * (T - system.T_env) * system.dt
+    return State(temp=T+dT)
+\end{python}
+
+Now if we run 
+
+\begin{python}
+update(coffee, init)
+\end{python}
+
+we see that the temperature after one minute is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
+
+Now we can use \py{run_simulation}, as defined in Section~\ref{timeframe}, to simulate a series of time steps from \py{t0} to \py{t_end}:
+
+\begin{python}
+def run_simulation(system, update_func):
+    df = TimeFrame(columns=system.init.index)
+    df.loc[system.t0] = system.init
+    
+    for i in range(system.t0, system.t_end):
+        df.loc[i+1] = update_func(system, df.loc[i])
+    
+    system.results = df
+\end{python}
+
+and run it like this:
+
+\begin{python}
+run_simulation(coffee, update)
+\end{python}
+
+The result is a \py{TimeFrame} object with one row per time step and just one column, \py{temp}.  The temperature after 30 minutes is \SI{72.3}{\celsius}, which is a little higher than stated in the problem, \SI{70}{\celsius}.  We could adjust \py{r} by hand and find the right value by trial and error, but we can do better, as we'll see in the next section.
+
+First I want to encapsulate what we have so far in a function:
+
+\begin{python}
+def run(T_init, **kwdargs):
+    init = State(temp=T_init)
+    system = System(init=init, T_env=22, t0=0, 
+                    dt=1, **kwdargs)
+    run_simulation(system, update)
+    return system
+\end{python}
+
+\py{run} uses a feature we have not seen before: the parameter \py{**kwargs} gathers any keyword arguments provided when the function runs and stores them in an object (specifically, it's a Python dictionary).
+
+In this example, it passes the arguments along to \py{System}, so they become variables in the new \py{System} object.
+
+If we call it like this:
+
+\begin{python}
+coffee = run(T_init=90, t_end=30, r=0.01)
+\end{python}
+
+\py{coffee} contains \py{t_end} and \py{r} as system variables, along with
+\py{init}, \py{T_env}, \py{t0}, and \py{dt}.
+
+Now let's see a better was to estimate \py{r}.
+
+
+\section{Using fsolve}
+
+SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
+%
+\[ f(x) = (x - 1)(x - 2)(x - 3) \]
+%
+where ``root" means a value of $x$ that makes $f(x)=0$.  Because of the way I wrote the polynomial, we can see that if $x=1$, the first factor is 0; if $x=2$, the second factor is 0; and if $x=3$, the third factor is 0, so those are the roots.
+
+But usually it's not that easy.  In that case \py{fsolve} can help.  First, we have to write a function that evaluates $f$:
+
+\begin{python}
+def func(x):
+    return (x-1) * (x-2) * (x-3)
+\end{python}
+
+Now we call \py{fsolve} like this:
+
+\begin{python}
+fsolve(func, x0=0)
+\end{python}
+
+The first argument is the function whose roots we want.  The second argument, \py{x0}, is an initial guess about where a root might be.  Generally, the closer the initial guess is to an actual root, the faster \py{fsolve} runs.  In this case, with the initial guess \py{x0=0}, the result is 1.
+
+Often \py{fsolve} finds the root that's closest to the initial guess.  In this example, when \py{x0=1.9}, \py{fsolve} returns 2, and when \py{x0=2.9}, \py{fsolve} returns 3.  But this behavior can be unpredictable; with \py{x0=1.5}, \py{fsolve} returns 3.
+
+So how can we use \py{fsolve} to estimate \py{r}?  
+
+Now, we want to find the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
+
+\begin{python}
+def error_func1(r):
+    system = run(T_init=90, t_end=30, r=r)
+    return final_temp(system) - 70
+\end{python}
+
+I call a function like this an ``error function" because it returns the difference between what we got and what we wanted, that is, the error.  When we find the right value of \py{r}, this error will be 0.
+
+We can test \py{error_func1} like this, using our initial guess for \py{r}:
+
+\begin{python}
+error_func1(r=0.01)
+\end{python}
+
+The result is an error of \SI{2.3}{\celsius}, because the final temperature with this value of \py{r} is too high.
+
+Now we can call \py{fsolve} like this:
+
+\begin{python}
+solution = fsolve(error_func1, 0.01)
+r_coffee = solution[0]
+\end{python}
+
+The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute}.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
+\caption{Temperature of the coffee and milk over time.}
+\label{chap07-fig01}
+\end{figure}
+
+As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  The result should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time, with the estimated values of \py{r_coffee} and \py{r_milk}.
+
+
+\section{Mixing liquids}
+
+When we mix two liquids, the temperature of the mixture depends on the temperatures of the ingredients, but it might not be obvious how to compute it.
+
+Assuming there are no chemical reactions between the liquids that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is {\bf conserved}.
+
+If the temperature of the first liquid is $T_1$, the temperature of the second liquid is $T_2$, and the final temperature of the mixture is $T$, the heat transfer into the first liquid is $C_1 (T - T_1)$ and the heat transfer into the second liquid is $C_2 (T - T_2)$, where $C_1$ and $C_2$ are the thermal masses of the liquids.
+
+In order to conserve energy, these heat transfers must add up to 0:
+%
+\[ C_1 (T - T_1) + C_2 (T - T_2) = 0 \]
+%
+We can solve this equation for T:
+%
+\[ T = \frac{C_1 T_1 + C_2 T_2}{C_1 + C_2} \]
+%
+For the coffee cooling problem, we have the volumes of the liquids; to get their thermal masses, recall that thermal mass is related to mass, $m$, by specific heat capacity, $c_p$:
+%
+\[ C = m c_p \]
+%
+And mass is related to volume $V$, by density, $\rho$ (see \url{https://en.wikipedia.org/wiki/Density}):
+%
+\[ m = \rho V \]
+%
+So the thermal mass of each ingredient is
+%
+\[ C = \rho V c_p \]
+%
+If we assume that the density and specific heat of the milk and coffee are equal, they drop out of the equation, and we can write:
+%
+\[ T = \frac{V_1 T_1 + V_2 T_2}{V_1 + V_2} \]
+%
+where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk to see how good this approximation is.
+
+The following function takes two \py{System} objects that represent the coffee and milk, creates a new \py{System} to represent the mixture, then runs a simulation of the mixture until \py{t_end}.  The return value is the new \py{System}.
+
+\begin{python}
+def mix(s1, s2, t_end):
+    assert s1.t_end == s2.t_end
+    
+    volume = s1.volume + s2.volume
+    
+    temp = (s1.volume * final_temp(s1) + 
+            s2.volume * final_temp(s2)) / volume
+    
+    mixture = run(T_init=temp, t_end=t_end, 
+                  r=s1.r, volume=volume)
+    return mixture
+\end{python}
+
+The first line is an \py{assert} statement, which is a way of checking for errors.  It compares \py{t_end} for the two systems to confirm that they have been cooling for the same time.  If not, \py{assert} displays an error message and stops the program.
+
+The next two statements compute the total volume of the mixture and its temperature.  Then we use \py{run} to make a new \py{System} and simulate it.
+
+This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption to revisit when we consider sources of error.
+
+
+\section{Mix first or last?}
+
+Now we have everything we need to solve the problem.  First I'll create objects to represent the coffee and cream:
+
+\begin{python}
+coffee = run(T_init=90, t_end=30, r=r_coffee, volume=300)
+milk = run(T_init=5, t_end=30, r=r_milk, volume=50)
+\end{python}
+
+The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.7}{\celsius}.  Then we mix them:
+
+\begin{python}
+mix_last = mix(coffee, milk)
+\end{python}
+
+After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough to be enjoyable.  Would we do any better if we added the milk first?
+
+I'll create new objects for the coffee and milk, with \py{t_end=0}
+
+\begin{python}
+coffee = run(T_init=90, t_end=0, r=r_coffee, volume=300)
+milk = run(T_init=5, t_end=0, r=r_milk, volume=50)
+\end{python}
+
+Then mix them and simulate 30 minutes:
+
+\begin{python}
+mix_first = mix(coffee, milk, t_end=30)
+\end{python}
+
+The final temperature is only \SI{61.6}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.5}{\celsius}.  But is that the best we can do?
+
+
+\section{Optimization}
+
+Adding the milk after 30 minutes is better than adding it after one minute, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
+
+\begin{python}
+def run_and_mix(t_add):
+    coffee = run(T_init=90, t_end=t_add, 
+                 r=r_coffee, volume=300)
+    milk = run(T_init=5, t_end=t_add, 
+               r=r_milk, volume=50)
+    mixture = mix(coffee, milk, t_end=30-t_add)
+    return final_temp(mixture)
+\end{python}
+
+When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at the end.  Now we can sweep the range of values in between:
+
+\begin{python}
+sweep = Sweep()
+for t_add in arange(0, 30):
+    temp = run_and_mix(t_add)
+    sweep[t_add] = temp
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
+\caption{Final temperature as a function of when we add the milk.}
+\label{chap07-fig02}
+\end{figure}
+
+Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the time index of a \py{TimeSeries}.
+
+The final temperature is maximized when \py{t_add=30}, so adding the milk at the end is optimal.
+
+In the notebook for this chapter you will have a chance to explore this solution and try some variations.  For example, suppose the coffee shop won't let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?
+
+
+\section{Analysis}
+
+Simulating Newton's law of cooling is almost silly, because we can solve the differential equation analytically.  If
+%
+\[ \frac{dT}{dt} = -r (T - T_{env}) \]
+%
+the general solution is
+%
+\[ T{\left (t \right )} = C_{1} e^{- r t} + T_{env} \]
+%
+and the particular solution where $T(0) = T_init$ is
+%
+\[ T_{env} + \left(- T_{env} + T_{init}\right) e^{- r t} \]
+%
+In the notebook for this chapter, you'll see how I got this solution using SymPy, and if you would like to see it done by hand, you can watch this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/newtons-law-of-cooling}
+
+Now we can use the observed data to estimate the parameter $r$.  If we observe $T(t_{end}) = T_{end}$, we can plug $t_{end}$ and $T_{end}$ into the particular solution and solve for $r$.  The result is:
+%
+\[ r = \frac{1}{t_{end}} \log{\left (\frac{T_{init} + T_{env}}{T_{end} - T_{env}} \right )} \]
+%
+Plugging in $t_{end}=30$ and $T_{end}=70$ (and again with $T_{init}=90$ and $T_{env}=22$), the estimate for $r$ is 0.0116.
+
+We can use this function to compute the time series:
+
+\begin{python}
+def run_analysis(system):
+    T_init = system.init.temp
+    T_env = system.T_env
+    
+    ts = arange(system.t0, system.t_end+1)
+    Ts = T_env + (T_init - T_env) * np.exp(-system.r * ts)
+    series = TimeSeries(Ts, index=ts)
+    
+    system.results = TimeFrame(series, columns=['temp'])
+\end{python}
+
+The interface for this function is similar to \py{run_simulation}: it takes a \py{System} as a parameter, and stores a \py{TimeFrame} as a result.
+
+We can run it like this, using the computed value for \py{r_coffee2}
+
+\begin{python}
+init = State(temp=90)
+coffee2 = System(init=init, T_env=22, r=r_coffee2, 
+                 t0=0, t_end=30)
+run_analysis(coffee2)
+\end{python}
+
+The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with very small differences due to round off errors.
 
 
 \backmatter
