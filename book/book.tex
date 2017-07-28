@@ -3860,9 +3860,7 @@ The dataset is in a file in the repository for this book, which we can read into
 df = pd.read_csv('glucose_insulin.csv', index_col='time')
 \end{python}
 
-\py{df} has two columns: \py{glucose} is the concentration of blood glucose in \si{\milli\gram/\deci l}; \py{insulin} is concentration of insulin in the blood in \si{\micro U\per\milli l}
-
-The index is time in \si{\minute}.
+\py{df} has two columns: \py{glucose} is the concentration of blood glucose in \si{\milli\gram/\deci l}; \py{insulin} is concentration of insulin in the blood in \si{\micro U\per\milli l}.  The index is time in \si{\minute}.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-fig01.pdf}}
@@ -3872,23 +3870,365 @@ The index is time in \si{\minute}.
 
 Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}{\minute} for a subject with normal insulin production and sensitivity.
 
+%TODO: consider siunitx settings for \per (as a fraction or negative power).
+
 
 
 \section{Interpolation}
 
-Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.
+Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.  But in the \py{DataFrame}, we only have measurements at discreet times.  This is a job for interpolation!
 
-We are treating $I(t)$ as an input to the model
+\py{modsim.py} provides a function named \py{interpolate}, which is a wrapper for \py{scipy.interpolate.interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{Sweep}, and returns a function.  That's right, I said it returns a {\em function}.
+
+So we can call it like this:
+
+\begin{python}
+I = interpolate(df.insulin)
+\end{python}
+
+And now we can call the new function, \py{I}, like this:
+
+\begin{python}
+I(18)
+\end{python}
+
+The result is 31.66, which is a linear interpolation between the actual measurements at \py{t=16} and \py{t=19}.  We can also run \py{I} with an array:
+
+\begin{python}
+ts = arange(0, 182, 2)
+I(ts)
+\end{python}
+
+The result is an array of interpolated values for equally-spaced values of \py{t} between 0 and 182.
+
+\py{interpolate} can take additional options as parameters, which it passed along to \py{scipy.interpolate.interp1d}.  You can read about these options at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html}.
 
 
 
+\section{Implementating the model}
 
-\section{Implementation}
+To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find parameter values that generate series that best fit the data.
 
-Based on previous examples, translating these differential equations into code is straightforward.
+Taking advantage of estimates from prior work, I'll start with these values:
+
+\begin{python}
+k1 = 0.03
+k2 = 0.02
+k3 = 1e-05
+G0 = 290
+\end{python}
+
+And I'll use the measurements at \py{t=0} as the basal levels:
+
+\begin{python}
+Gb = df.glucose[0]
+Ib = df.insulin[0]
+\end{python}
+
+Now we can create the initial state:
+
+\begin{python}
+init = State(G=G0, X=0)
+\end{python}
+
+And the \py{System} object:
+
+\begin{python}
+system = System(init=init, 
+                k1=k1, k2=k2, k3=k3,
+                I=I, Gb=Gb, Ib=Ib,
+                t0=0, t_end=182, dt=2)
+\end{python}
+
+%TODO: Consider making System take a string argument like
+%      System('init k1 k2 k3...')
+
+Now here's the update function:
+
+\begin{python}
+def update_func(state, t, system):
+    G, X = state
+    unpack(system)
+        
+    dGdt = -k1 * (G - Gb) - X*G
+    dXdt = k3 * (I(t) - Ib) - k2 * X
+    
+    G += dGdt * dt
+    X += dXdt * dt
+
+    return State(G=G, X=X)
+\end{python}
+
+As usual, the parameters include a \py{State} object with the current state and a \py{System} object with the system parameters.  But there's  one difference from previous examples: this update function also takes \py{t} as a parameter, because this system of differential equations is {\bf time-dependent}; that is, time appears in the right-hand side of at least one equation.  Specifically, we have to evaluate \py{I} at \py{t}.  
+
+The first line uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} to make the system variables available as if they were global variables, as we saw in Section~\ref{xxx}.  %TODO: add that section
+
+Computing the derivatives \py{dGdt} and \py{dXdt} is straightforward; we just have to translate the equations from math notation to Python.
+
+Then, to perform the update, we multiply each derivative by the discrete time step \py{dt}, which is \SI{2}{\minute} in this example.  The return value is a \py{State} object with the new values of \py{G} and \py{X}.
+
+Before running the simulation, it is always a good idea to run the update function with the initial conditions:
+
+\begin{python}
+update_func(init, 0, system)
+\end{python}
+
+If there are no errors, and the results seem reasonable, we are ready to run the simulation.  Here's one more version of \py{run_simulation}.  It is almost the same as in Section~\ref{xxx}, with one change: it passes \py{t} as a parameter to \py{update_func}.
+
+%TODO: Make this version consistent with Chapter 7
+
+\begin{python}
+def run_simulation(system, update_func):
+    unpack(system)
+    
+    df = TimeFrame(columns=init.index)
+    df.loc[t0] = init
+    
+    for t in arange(t0, t_end, dt):
+        df.loc[t+dt] = update_func(df.loc[t], t, system)
+    
+    system.results = df
+\end{python}
+
+And we can run it like this:
+
+\begin{python}
+run_simulation(system, update_func)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig03.pdf}}
+\caption{Results from simulation of the glucose minimal model.}
+\label{chap08-fig03}
+\end{figure}
+
+The results are shown in Figure~\ref{chap08-fig03}.  The top plot shows simulated glucose levels from the model along with the measured data.  The bottom plot shows simulated insulin levels in tissue fluid, which is in unspecified units, and not to be confused with measured concentration of insulin in the blood.
+
+With the parameters I chose, the model fits the data reasonably well.  We can do better, but first, I want to replace \py{run_simulation} with a better differential equation solver.
+
+
+\section{Numerical solution of differential equations}
+\label{slopefunc}
+
+So far we have been solving differential equations by rewriting them as difference equations.  In the current example, the differential equations are:
+%
+\[ \frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)  \]
+%
+\[ \frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t) \]
+%
+If we multiply both sides by $dt$, we have:
+%
+\[ dG = dt \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] \]
+%
+\[ dX = dt \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] \]
+%
+When $dt$ is very small, or more precisely infinitesimal, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
+
+This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{https://en.wikipedia.org/wiki/Euler_method}).
+
+Euler's method can be good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called linear multistep methods (see \url{https://en.wikipedia.org/wiki/Linear_multistep_method}).
+
+Rather than implement these methods ourselves, we will use functions from SciPy.  \py{modsim.py} provides a function called \py{run_odeint}, which is a wrapper for \py{scipy.integrate.odeint}.  The name \py{odeint} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable, time in this case; there are no partial derivatives.  And the solver is called an integrator because solving differential equations is considered a form of integration.
+
+\py{scipy.integrate.odeint} is a wrapper for \py{LSODA}, which is from ODEPACK, a venerable collection of ODE solvers written in Fortran (for some of the history of ODEPACK, see \url{http://history.siam.org/oralhistories/hindmarsh.htm}).
+
+To use \py{odeint}, we have to provide a ``slope function":
+
+\begin{python}
+def slope_func(state, t, system):
+    G, X = state
+    unpack(system)
+    
+    dGdt = -k1 * (G - Gb) - X*G
+    dXdt = k3 * (I(t) - Ib) - k2 * X
+    
+    return dGdt, dXdt
+\end{python}
+
+\py{slope_func} is similar to \py{update_func}; in fact, it takes the same parameters.  But \py{slope_func} is simpler, because all we have to do is compute the derivatives, that is, the slopes.  We don't have to do the updates; \py{odeint} does them for us.
+
+Before we call \py{run_odeint}, we have to create a \py{System} object:
+
+\begin{python}
+system2 = System(init=init, 
+                k1=k1, k2=k2, k3=k3,
+                I=I, Gb=Gb, Ib=Ib,
+                ts=df.index)
+\end{python}
+
+When we were using \py{run_simulation}, we created a \py{System} object with variables \py{t0}, \py{t_end}, and \py{dt}.  When we use \py{run_odeint}, we don't need those variables, but we do have to provide \py{ts}, which is an array or \py{Series} that contains the times where we want the solver to evaluate $G$ and $X$.
+
+Now we can call \py{run_odeint} like this:
+
+\begin{python}
+run_odeint(system2, slope_func)
+\end{python}
+
+Like \py{run_simulation}, \py{run_odeint} puts the results in a \py{DataFrame} and stores it as a system variable named \py{results}.  The columns of \py{results} match the state variables in \py{init}.  The index of results match the values from \py{ts}; in this example, \py{ts} contains the timestamps of the measurements.
+
+The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The difference is about 1\% on average and never more than 2\%.
+
+
+\section{Optimization}
+
+So far we have been taking the parameters as given, but in general we don't have that luxury.  Normally we are given the data and we have to search for the parameters that yield a time series that best matches the data.
+
+We will do that now, in two steps:
+
+\begin{enumerate}
+
+\item First we'll define an {\bf error function} that takes a set of possible parameters, simulates the system with the given parameters, and computes the difference between the simulation results and the data.
+
+\item Then we'll use a library function from SciPy, \py{leastsq}, to search for the parameters that minimize the mean squared errors (MSE).
+
+\end{enumerate}
+
+Here's an outline of the functions we'll use:
+
+\begin{itemize}
+
+\item \py{modsim.py} provides \py{fit_leastsq}, which takes a function called \py{error_func} as a parameter.  It does some error-checking, then calls \py{scipy.optimize.leastsq}, which does the real work.
+
+\item \py{scipy.optimize.leastsq} uses functions called \py{lmdif} and \py{lmdir}, which implement the Levenberg-Marquardt algorithm for non-linear least squares problems (see \url{https://en.wikipedia.org/wiki/Levenberg-Marquardt_algorithm}).  These functions are provided by another venerable FORTRAN library called MINPACK (see \url{https://en.wikipedia.org/wiki/MINPACK}).
+
+\item When \py{scipy.optimize.leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the set of parameters that minimizes MSE.
+
+\end{itemize}
+
+Each time the error function runs, it creates a \py{System} object with the given parameters, so let's wrap that operation in a function:
+
+\begin{python}
+def make_system(G0, k1, k2, k3, data):
+    init = State(G=G0, X=0)
+    system = System(init=init, 
+                    k1=k1, k2=k2, k3=k3,
+                    Gb=Gb, Ib=Ib, 
+                    I=interpolate(data.insulin),
+                    ts=data.index)
+    return system
+\end{python}
+
+\py{make_system} takes \py{G0} and the rate constants as parameters, as well as \py{data}, which is the \py{DataFrame} containing the measurements.  It creates and returns a \py{System} object.
+
+Now here's the error function:
+
+\begin{python}
+def error_func(params, data):
+    system = make_system(*params, data)
+    run_odeint(system, slope_func)
+    error = system.results.G - data.glucose
+    return error
+\end{python}
+
+The parameters of \py{error_func} are
+
+\begin{itemize}
+
+\item \py{params}, which is a sequence of four system parameters, and
+
+\item \py{data}, which is the \py{DataFrame} containing the measurements.
+
+\end{itemize}
+
+It uses \py{make_system} to create the \py{System} object.  This line demonstrates a feature we have not seen before, the {\bf scatter operator}, \py{*}.  Applied to \py{params}, the scatter operator unpacks the sequence, so instead of being considered a single value, it is treated as four separate values.
+
+\py{error_func} calls \py{run_odeint} using the same slope function we saw in Section~\ref{slopefunc}.  Then it computes the difference between the simulation results and the data.  Since \py{system.results.G} and \py{data.glucose} are both \py{Series} objects, the result of subtraction is also a \py{Series}.
+
+Now to do the actual minimization, we run \py{fit_leastsq}:
+
+\begin{python}
+k1 = 0.03
+k2 = 0.02
+k3 = 1e-05
+G0 = 290
+params = G0, k1, k2, k3
+best_params = fit_leastsq(error_func, params, df)
+\end{python}
+
+\py{error_func} is the function we just defined.  \py{params} is a sequence containing an initial guess for the four system parameters.  And \py{df} is the \py{DataFrame} containing the measurements.
+
+Actually, the third parameter can be any object we like.  \py{fit_leastsq} and \py{leastsq} don't do anything with this parameter except to pass it along to \py{error_func}, so in general it contains whatever information \py{error_func} needs to do its job.
+
+
+\section{Interpreting parameters}
+
+The return value from \py{fit_leastsq} is \py{best_params}, which we can pass along to \py{make_system}, again using the scatter operator, and then run the simulation:
+
+\begin{python}
+system = make_system(*best_params, df)
+run_odeint(system, slope_func)
+\end{python}
+
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig04.pdf}}
+\caption{Simulation of the glucose minimal model with parameters that minimize MSE.}
+\label{chap08-fig04}
+\end{figure}
+
+Figure~\ref{chap08-fig04} shows the results.  The simulation matches the measurements well, except during the first few minutes after the injection.  But we don't expect the model to do well in this regime.
+
+The reason is that the model is {\bf non-spatial}; that is, it does not take into account differences in concentrations in different places in the body.  Instead, it assumes that the concentration of glucose and insulin in blood, and insulin in tissue fluid, is the same throughout the body.
+
+Immediately after injection, it takes time for the injected glucose to circulate.  During that time, we don't expect a non-spatial model to be accurate.  For this reason, we should not take the estimated value of \py{G0} too seriously; it is useful for fitting the model, but not meant to correspond to a physical, measurable quantity.
+
+On the other hand, the other parameters are meaningful; in fact, they are the reason the model is useful.  Using the best-fit parameters, we can estimate two quantities of interest:
+
+\begin{itemize}
+
+\item ``Glucose effectiveness", which is the tendency of elevated glucose to cause depletion of glucose.  
+
+\item ``Insulin sensitivity", which is the ability of elevated blood insulin to enhance glucose effectiveness.
+
+\end{itemize}
+
+We can use the differential equations to compute these quantities.
+%
+\[ \frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \]
+%
+\[ \frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t) \]
+%
+Glucose effectiveness is defined as the change in $dG/dt$ as we vary $G$:
+%
+\[ E \equiv - \frac{\delta \dot{G}}{\delta G} \]
+%
+where $\dot{G}$ is shorthand for $dG/dt$.  Taking the derivative of $dG/dt$ with respect to $G$, we get
+%
+\[ E = k_1 + X \]
+%
+The glucose effectiveness index, $S_G$, is defined to be the value of $E$ in when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
+
+The insulin sensitivity index, $S_I$, is defined to be the value of $S$ when $E$ and $I$ are at steady state:
+%
+\[ S_I \equiv \frac{\delta E_{SS}}{\delta I_{SS}} \]
+%
+$E$ and $I$ are at steady state when $dG/dt$ and $dX/dt$ are 0, but we don't actually have to solve those equations to find $S_I$.
+
+If we set $dX/dt = 0$ and solve for $X$, we find the relation:
+%
+\[ X_{SS} = \frac{k_3}{k_2} I_{SS} \]
+%
+And since $E = k_1 + X$, we have:  
+%
+\[ S_I = \frac{\delta E_{SS}}{\delta I_{SS}} = \frac{\delta X_{SS}}{\delta I_{SS}} \]
+%
+Taking the derivative of $X_{SS}$ with respect to $I_{SS}$, we have:
+%
+\[ S_I = k3 / k2 \]
+%
+So if we find parameters that make the model fit the data, we can use $k_3 / k_2$ as an estimate of $S_I$.  
+
+For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and for $8.9 \times 10^{-4}$.
+
+Normal?
+
+Units?
 
 
 
+\section{The insulin minimal model}
+
+Introduce the exercise
 
 
 
