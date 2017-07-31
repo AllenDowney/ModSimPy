@@ -3852,7 +3852,7 @@ The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is 
 
 \section{Data}
 
-To develop and test the model, I'll use data from Pacini and Bergman\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122.}.
+To develop and test the model, I'll use data from Pacini and Bergman (1986)\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122.}.
 
 The dataset is in a file in the repository for this book, which we can read into a DataFrame:
 
@@ -4218,17 +4218,45 @@ Taking the derivative of $X_{SS}$ with respect to $I_{SS}$, we have:
 %
 So if we find parameters that make the model fit the data, we can use $k_3 / k_2$ as an estimate of $S_I$.  
 
-For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and for $8.9 \times 10^{-4}$.
-
-Normal?
-
-Units?
-
+For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and for $8.9 \times 10^{-4}$.  According to Pacini and Bergman, these values are within the normal range.
 
 
 \section{The insulin minimal model}
 
-Introduce the exercise
+In addition to the glucose minimal mode, Pacini and Bergman present an insulin minimal model, in which the concentration of insulin, $I$, is governed by this differential equation:
+%
+\[ \frac{dI}{dt} = -k I(t) + \gamma \left[ G(t) - G_T \right] t \]
+%
+where
+
+\begin{itemize}
+
+\item $k$ is a parameter that controls the rate of insulin disappearance independent of blood glucose.   
+
+\item $G(t)$ is the measured concentration of blood glucose at time $t$.
+
+\item $G_T$ is the glucose threshold; when blood glucose is above this level, it triggers an increase in blood insulin. 
+
+\item $\gamma$ is a parameter that controls the rate of increase (or decrease) in blood insulin when glucose is above (or below) $G_T$.
+
+% TODO: explain why t is there
+
+\end{itemize}
+
+The initial condition is $I(0) = I_0$.  As in the glucose minimal model, we treat the initial condition as a parameter which we'll choose to fit the data.
+
+The parameters of this model can be used to estimate, $\phi_1$ and $\phi_2$, which are values that ``describe the sensitivity to glucose of the first and second phase pancreatic responsivity".  They are related to the parameters as follows:
+%
+\[ \phi_1 = \frac{I_{max} - I_b}{k (G_0 - G_b)}\]
+%
+\[ \phi_2 = \gamma \times 10^4 \]
+%
+where $I_{max}$ is the maximum measured insulin level, and $I_b$ and $G_b$ are the basal levels of insulin and glucose.
+
+In the notebook for this chapter, you will have a chance to implement this model, find the parameters that best fit the data, and estimate these values.
+
+
+\chapter{Projectiles}
 
 
 
