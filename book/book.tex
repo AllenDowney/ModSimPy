@@ -458,6 +458,7 @@ Wood, Chris Lee, and Jason Woodard.
 Intro
 
 \section{What is a model?}
+\label{penny}
 
 The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.
 
@@ -465,25 +466,25 @@ The word ``model" means different things in different contexts, so it is hard to
 
 Some models are actual objects, like a scale model of a car, which has the same shape as the car, but smaller.  Scale models are often useful for testing properties of mechanical systems, like air resistance.
 
-This book is about {\bf mathematical models}, which are ideas, not objects.  If you studied Newton's laws of motion, what you learned is a mathematical model of how object move in space when forces are applied to them.
+This book is about {\bf mathematical models}, which are ideas, not objects.  If you studied Newton's laws of motion, what you learned is a mathematical model of how objects move in space when forces are applied to them.
 
-For example, you might have heard that a penny dropped from the top of the Empire State Building would be going so fast when it hit the pavement that it would be embedded in the concrete; or if it hit a person, it would break their skull.
+Let's see an example of how models are used.  You might have heard that a penny dropped from the top of the Empire State Building would be going so fast when it hit the pavement that it would be embedded in the concrete; or if it hit a person, it would break their skull.
 
-One way to test this myth is by making and analyzing a model.  For example, let's assume that the effect of air resistance is small.  This will turn out to be a bad assumption, but bear with me.  If air resistance is negligible, the primary force acting on the penny is gravity, which causes the penny to accelerate at 9.8 meters per second squared (\SI{}{\meter\per\second\squared}).
+We can test this myth by making and analyzing a model.  To get started, I'll assume that the effect of air resistance is small.  This will turn out to be a bad assumption, but bear with me.  If air resistance is negligible, the primary force acting on the penny is gravity, which causes the penny to accelerate at $a = 9.8$ meters per second squared (\si{\meter\per\second\squared}).
 
 If the initial velocity is 0, the velocity after $t$ seconds is $at$, and the height the penny has dropped at $t$ is
-
+%
 \[ h = at^2/2 \]
-
+%
 Using algebra, we can solve for $t$:
-
+%
 \[ t = \sqrt{2h/a} \]
-
+%
 Plugging in $a = \SI{9.8}{\meter\per\second\squared}$ and $h=\SI{381}{\meter}$, we get $t = \SI{8.8}{\second}$.  Then computing $v=at$ we get a velocity on impact of $\SI{86}{\meter\per\second}$, which is about 190 miles per hour.  That sounds like it could hurt.
 
-Of course, these results are not exact because the model is based on simplifications.  For example, we assume that gravity is constant.  In fact, the force of gravity is different on different parts of the globe, and gets weaker as you move away from the surface.  But these differences are small, so ignoring them is probably a good decision for this scenario.
+Of course, these results are not exact because the model is based on simplifications.  For example, we assume that gravity is constant.  In fact, the force of gravity is different on different parts of the globe, and gets weaker as you move away from the surface.  But these differences are small, so ignoring them is probably a good choice for this scenario.
 
-On the other hand, ignoring air resistance is not a good decision.  Once the penny gets to about \SI{20}{\meter\per\second}, the upward force of air resistance equals the force of gravity, so the penny stops accelerating.  After that, it doesn't matter how far the penny falls; it will hit the sidewalk (or your head) at about \SI{20}{\meter\per\second}, much less than \SI{86}{\meter\per\second}, as the simple model predicts.
+On the other hand, ignoring air resistance is not a good choice.  Once the penny gets to about \SI{20}{\meter\per\second}, the upward force of air resistance equals the downward force of gravity, so the penny stops accelerating.  After that, it doesn't matter how far the penny falls; it will hit the sidewalk (or your head) at about \SI{20}{\meter\per\second}, much less than \SI{86}{\meter\per\second}, as the simple model predicts.
 
 The statistician George Box famously said ``All models are wrong, but some are useful."  He was talking about statistical models, but his wise words apply to all kinds of models.  Our first model, which ignores air resistance, is very wrong, and probably not useful.  The second model is also wrong, but much better, and probably good enough for the purpose.
 
@@ -497,6 +498,8 @@ There are (at least) two ways to work with mathematical models, {\bf analysis} a
 In this book we do some analysis and a lot of simulation; along the way, we will discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
 As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example, and the other code in this chapter, at \url{FILL THIS IN}.  At the end of the chapter, I'll give you instructions for downloading and running the examples. 
+
+%TODO: fill in that URL
 
 First I'll created a {\bf variable} to represent acceleration.
 
@@ -602,8 +605,7 @@ bikeshare.olin = 9
 bikeshare.wellesley = 3
 \end{python}
 
-Or we could use {\bf update operators} to subtract 1 from
-\py{olin} and add 1 to \py{wellesley}:
+Or we could use {\bf update operators}, \py{-=} and \py{+=} to subtract 1 from \py{olin} and add 1 to \py{wellesley}:
 
 \begin{python}
 bikeshare.olin -= 1
@@ -3905,7 +3907,8 @@ The result is an array of interpolated values for equally-spaced values of \py{t
 
 
 
-\section{Implementating the model}
+\section{Implementing the model}
+\section{glucose}
 
 To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find parameter values that generate series that best fit the data.
 
@@ -4028,7 +4031,7 @@ This method, evaluating derivatives at discrete time steps and assuming that the
 
 Euler's method can be good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called linear multistep methods (see \url{https://en.wikipedia.org/wiki/Linear_multistep_method}).
 
-Rather than implement these methods ourselves, we will use functions from SciPy.  \py{modsim.py} provides a function called \py{run_odeint}, which is a wrapper for \py{scipy.integrate.odeint}.  The name \py{odeint} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable, time in this case; there are no partial derivatives.  And the solver is called an integrator because solving differential equations is considered a form of integration.
+Rather than implement these methods ourselves, we will use functions from SciPy.  \py{modsim.py} provides a function called \py{run_odeint}, which is a wrapper for \py{scipy.integrate.odeint}.  The name \py{odeint} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  And the solver is called an integrator because solving differential equations is considered a form of integration.
 
 \py{scipy.integrate.odeint} is a wrapper for \py{LSODA}, which is from ODEPACK, a venerable collection of ODE solvers written in Fortran (for some of the history of ODEPACK, see \url{http://history.siam.org/oralhistories/hindmarsh.htm}).
 
@@ -4257,6 +4260,336 @@ In the notebook for this chapter, you will have a chance to implement this model
 
 
 \chapter{Projectiles}
+
+So far the differential equations we've worked with have been {\bf first order}, which means they involve only first derivatives (see \url{https://en.wikipedia.org/wiki/Ordinary_differential_equation#General_definition}).  First order ODEs can be written
+%
+\[ \frac{dy}{dx} = F(x, y) \]
+%
+where $F$ is some function of $x$ and $y$.
+
+In this chapter, we turn our attention to second order ODEs, which can involve both first and second derivatives.  Second order ODEs can be written
+%
+\[ \frac{d^2y}{dx^2} = G(x, y, y') \]
+%
+where $y'$ is shorthand for $dy/dx$.  In particular, we will work with one of the most famous, useful, and possibly the first second order ODE, Newton's second law of motion:
+%
+\[ F = m a \]
+%
+where $F$ is a force or the total of a set of forces, $m$ is the mass of a moving object, and $a$ is acceleration.
+
+Newton's law might not look like a differential equation, until we realize that acceleration, $a$, is the second derivative of position, $y$, with respect to time, $t$.  With the substitution
+%
+\[ a = \frac{d^2y}{dt^2} \]
+%
+Newton's law can be written
+%
+\[ \frac{d^2y}{dt^2} = F / m \]
+%
+And that's definitely a second order ODE.  In general, $F$ can be a function of time, position, and velocity.  Mass is often constant, but can also depend on time, position, and velocity.
+
+Of course, this ``law" is really a model, in the sense that it is a simplification of the real world.  Although it is often approximately true, it is not a good model for very small things, which are better described by another model, quantum mechanics.  And it is not a good model for things moving very fast, which are better described by relativistic mechanics.
+
+But for things that are medium to large, moving at speeds that are medium to slow, Newton's model is a phenomenally useful.  In general, if we know what forces act on an object, we can figure out how it will move.
+
+\section{Dropping pennies}
+
+As a first example, let's get back to the penny falling from the Empire State Building, which we considered in Section~\ref{penny}.  We will implement two models of this system, first without air resistance, so the only force acting on the penny is gravity.  Then we'll add air resistance.
+
+Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped with 0 velocity, the initial conditions are:
+
+\begin{python}
+init = State(y=381 * m, 
+             v=0 * m/s)
+\end{python}
+
+where \py{y} is height above the sidewalk and \py{v} is velocity.  The units \py{m} and \py{s} are from the \py{UNITS} object provided by Pint:
+
+\begin{python}
+m = UNITS.meter
+s = UNITS.second
+\end{python}
+
+The only system parameter is the acceleration of gravity:
+
+\begin{python}
+g = 9.8 * m/s**2
+\end{python}
+
+In addition, we'll specify the sequence of times where we want to solve the differential equation:
+
+\begin{python}
+duration = 10 * s
+ts = linspace(0, duration, 11)
+\end{python}
+
+\py{ts} contains 11 points between 0 and \SI{10}{\second}, including both endpoints.
+
+%TODO: make linspace work with units?
+
+Next we need a \py{System} object to contains the system parameters:
+
+\begin{python}
+system = System(init=init, g=g, ts=ts)
+\end{python}
+
+Now we need a slope function, and here's where things get tricky.  As we have seen, \py{odeint} can solve systems of first order ODEs, but Newton's law is a second order ODE.
+
+However, if we recognize that
+
+\begin{enumerate}
+
+\item Velocity, $v$, is the derivative of position, $dy/dt$, and
+
+\item Acceleration, $a$, is the derivative of velocity, $dv/dt$
+
+\end{enumerate}
+
+we can rewrite Newton's law as a system of first order ODEs:
+%
+\[ \frac{dy}{dt} = v \]
+%
+\[ \frac{dv}{dt} = a \]
+%
+And we can translate those equations into a slope function:
+
+\begin{python}
+def slope_func(state, t, system):
+    y, v = state
+    unpack(system)    
+
+    dydt = v
+    dvdt = -g
+    
+    return dydt, dvdt
+\end{python}
+
+The first parameter, \py{state}, contains the position and velocity of the penny.  The last parameter, \py{system}, contains the system parameter \py{g}, which is the magnitude of acceleration due to gravity.
+
+The second parameter, \py{t}, is time.  It is not used in this slope function because none of the factors of the model are time-dependent (see Section~\ref{glucose}).  I include \py{t} as a parameter anyway because this function will be called by \py{odeint}, and \py{odeint} always provides the same arguments, whether they are needed or not.
+
+The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.
+
+The return value is a sequence containing the two derivatives.
+
+Before calling \py{odeint}, it is always a good idea to test the slope function with the initial conditions:
+
+\begin{python}
+slope_func(init, 0, system)
+\end{python}
+
+The result is a sequence containing \SI{0}{\meter\per\second} for velocity and \SI{-9.8}{\meter\per\second\squared} for acceleration.
+
+Now we can run \py{odeint} like this:
+
+\begin{python}
+run_odeint(system, slope_func)
+\end{python}
+
+\py{run_odeint} stores the results in a \py{DataFrame} with two columns: \py{y} contains the height of the penny as a function of time; \py{v} contains velocity.  \py{plot_results}, which is defined in the notebook for this chapter, plots height versus time:
+
+\begin{python}
+plot_results(system.results)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-fig01.pdf}}
+\caption{Height of the penny versus time, with no air resistance.}
+\label{chap09-fig01}
+\end{figure}
+
+Figure~\ref{chap09-fig01} shows the result.  Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.
+
+In this model, height can be negative, because we have not included the effect of the sidewalk!
+
+
+\section{Onto the sidewalk}
+
+To avoid negative heights, we can use the results from the previous section to estimate when the penny hits the sidewalk, and run the simulation for the estimated time.
+
+From the results, we can extract \py{y}, which is a \py{TimeSeries} that represents height as a function of time.
+
+\begin{python}
+y = system.results.y
+\end{python}
+
+But what we really want is the inverse function, time as a function of height, which we can represent by creating a \py{Series} object with the data and index from \py{y}, but reversed:
+
+%TODO: check previous use of Series and see if we use `data` consistently
+% instead of values
+
+\begin{python}
+inverse = Series(data=y.index, index=y.data)
+\end{python}
+
+Now we can use \py{interpolate}, which returns a function:
+
+\begin{python}
+T = interpolate(inverse, kind='cubic')
+\end{python}
+
+In this case I'm using a cubic spline, rather than linear interpolation, because it should do a better job of filling in the curve correctly (see \url{https://en.wikipedia.org/wiki/Spline_interpolation}).
+
+Now we can evaluate the interpolating function at \py{y=0}
+
+\begin{python}
+T_sidewalk = T(0)
+\end{python}
+
+The result is \SI{8.8179}{\meter}, which agrees with the exact answer to 4 decimal places.
+
+One caution about using \py{interpolate}: the function has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and \py{interpolate} would behave unpredictably.
+
+
+\section{With air resistance}
+
+As an object moves through fluid, including air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{https://en.wikipedia.org/wiki/Newton's_laws_of_motion}).
+
+The direction of this {\bf drag force} is opposite the direction of travel, and its magnitude is given by the drag equation (see \url{https://en.wikipedia.org/wiki/Drag_equation}):
+%
+\[ F_d = \frac{1}{2}~\rho~v^2~C_d~A \]
+%
+where
+
+\begin{itemize}
+
+\item $F_d$ is force due to drag, in \si{\newton} (assuming as are using SI units).
+
+\item $\rho$ is the density of the fluid in \si{\kg\per\meter\cubed}.
+
+\item $v$ is velocity in \si{\meter\per\second}.
+
+\item $A$ is the reference area of the object, in \si{\meter\squared}; in this context the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of travel (and far away).
+
+\item $C_d$ is the {\bf drag coefficient}, a dimensionless quantity that depends on the shape of the object (including length but not frontal area), its surface properties, and how it interacts with the fluid.
+
+\end{itemize}
+
+For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end and streamlined objects at the low end (see \url{https://en.wikipedia.org/wiki/Drag_coefficient}).
+
+For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from the data.
+
+Of course, the drag equation is itself a model, based on the primary assumption that $C_d$ does not depend on the other terms in the equation, density, velocity, and area.  For objects moving in air at moderate speeds (below 45 mph or \SI{20}{\meter\per\second}), this model might be good enough, but we should remember to revisit these assumptions.
+
+%TODO: exercise with C_d(v)
+
+For the falling penny, we can use measurements of falling pennies to estimate $C_d$.  According to Louis Bloomfield at the University of Virginia, the {\bf terminal velocity} of a penny is about 25 mph or \SI{11}{\meter\per\second} (see \url{https://www.scientificamerican.com/article/could-a-penny-dropped-off/}).
+
+Terminal velocity is the speed where drag force equals force due to gravity:
+%
+\[ \frac{1}{2}~\rho~v_{term}^2~C_d~A = m g \]
+%
+where $m$ is the mass of the object and $g$ is acceleration due to gravity.  Solving this equation for $C_d$ yields:
+%
+\[ C_d = \frac{2~m g}{\rho~v_{term}^2~A} \]
+%
+According to Mythbusters, the terminal velocity of a penny is between 35 and 65 mph (see \url{https://en.wikipedia.org/wiki/MythBusters_(2003_season)}.  Using the low end of their range, 40 mph or about \SI{18}{\meter\per\second}, the estimated value of $C_d$ is 0.44, which is close to the drag coefficient of a smooth sphere.
+
+Now we are ready to add air resistance to the model.
+
+
+\section{Implementation}
+
+As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Condition} object to contain the quantities we need to make a \py{System} object.
+
+The way we create a \py{Condition} object is the same as for \py{System} and \py{State} object.  In fact, these three object type have the same capabilities; I have given them different names just to identify their different roles.  Here's the \py{Condition} object for the falling penny:
+
+\begin{python}
+condition = Condition(height = 381 * m,
+                      g = 9.8 * m/s**2,
+                      mass = 2.5e-3 * kg,
+                      diameter = 19e-3 * m,
+                      rho = 1.2 * kg/m**3,
+                      v_term = 22 * m / s,
+                      duration = 30)
+\end{python}
+
+The mass and diameter of a penny are from \url{https://en.wikipedia.org/wiki/Penny_(United_States_coin)}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{https://en.wikipedia.org/wiki/Density_of_air}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
+
+And here's the function that takes a \py{Condition} as a parameter and returns a \py{System}:
+
+\begin{python}
+def make_system(condition):    
+    unpack(condition)
+    
+    init = State(y=height, v=0 * m/s)
+    area = np.pi * (diameter/2)**2
+    C_d = 2 * mass * g / (rho * area * v_term**2)
+    ts = linspace(0, duration, 101)
+    
+    return System(init=init, g=g, mass=mass, rho=rho,
+                  c_d=c_d, area=area, ts=ts)
+\end{python}
+
+It might not be obvious why we need \py{Condition} objects.  One reason is to minimize the number of system parameters.  For example, we use \py{diameter} to compute \py{area} and \py{v_term} to compute \py{C_d}, but then we don't need \py{diameter} and \py{v_term} in the \py{System} object.
+
+Another reason is that the \py{Condition} object will be useful, later in this chapter, because we can modify it, in a loop, to create a sequence of \py{System} objects, each with a different set of conditions.
+
+For now, you might have to take my word that this is a good idea (see \url{https://zen-of-python.info/namespaces-are-one-honking-great-idea--lets-do-more-of-those.html}).
+
+Now we can make a \py{System} like this:
+
+\begin{python}
+system = make_system(condition)
+\end{python}
+
+And write a version of the slope function that includes drag:
+
+\begin{python}
+def slope_func(state, t, system):
+    y, v = state
+    unpack(system)
+    
+    f_drag = rho * v**2 * C_d * area / 2
+    a_drag = f_drag / mass
+    
+    dydt = v
+    dvdt = -g + a_drag
+    
+    return dydt, dvdt
+\end{python}
+
+\py{f_drag} is the force due to drag, based on the drag equation.  \py{a_drag} is acceleration due to drag, based on Newton's second law.
+
+To compute total acceleration, we add accelerations due to gravity and drag, where \py{g} is negated because it is in the direction of decreasing \py{y}, and \py{a_drag} is positive because it is in the direction of increasing \py{y}.  Soon we will see a way to keep track of the direction of forces and add them up in a less error-prone way.
+
+After we test the slope function, we can run the simulation like this:
+
+\begin{python}
+run_odeint(system, slope_func)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-fig02.pdf}}
+\caption{Height of the penny versus time, with air resistance.}
+\label{chap09-fig02}
+\end{figure}
+
+Figure~\ref{chap09-fig02} shows the result.  It only takes a few second for the penny to accelerate up to terminal velocity; after that, velocity is constant, so height as a function of time is a straight line.
+
+Now let's move on to two dimensions, and baseball!
+
+
+\section{The Manny Ramirez problem}
+
+Manny Ramirez is a former member of the Boston Red Sox who was notorious for a work ethic his managers did not always appreciate, which is why is he a former member.  The objective of this problem is to solve the following Manny-inspired problem:
+
+{\it What is the minimum effort required to hit a home run in Fenway Park?}
+
+We'll proceed in the following steps:
+
+\begin{enumerate}
+
+\item
+
+\item
+
+\item
+
+\end{enumerate}
+
+
+The Green Monster in Fenway Park is about \SI{12}{\meter} high and about \SI{97}{\meter} from home plate along the left field line.  What is the minimum speed a ball must leave the bat in order to clear the monster (assuming it goes off at the optimal angle, for some definition of "optimal")?
+
 
 
 
