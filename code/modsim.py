@@ -23,16 +23,184 @@ from scipy.integrate import odeint
 import scipy
 import sympy
 
-from pint import UnitRegistry
-UNITS = UnitRegistry()
+import pint
+UNITS = pint.UnitRegistry()
 
-
-
-from numpy import sqrt, array, linspace, arange
+from numpy import sqrt, array, linspace, pi
 
 from pandas import DataFrame, Series
 
-def fsolve(func, x0, *args, **kwdargs):
+
+import inspect
+from inspect import getsource
+
+from scipy.interpolate import interp1d
+from scipy.integrate import odeint
+from scipy.optimize import leastsq
+
+from time import sleep
+
+
+def linrange(start, stop, step=1, **kwargs):
+    underride(kwargs, endpoint=True, dtype=np.float64)
+    n = np.round((stop - start) / step)
+    if kwargs['endpoint']:
+        n += 1
+
+    # TODO: get this working with units
+    units_off()
+    array = linspace(start, stop, int(n), **kwargs)
+    units_on()
+    return array
+
+
+def fit_leastsq(error_func, params, data, **kwargs):
+    """Find the parameters that yield the best fit for the data.
+    
+    `params` can be a sequence, array, or Series
+    
+    error_func: function that computes a sequence of errors
+    params: initial guess for the best parameters
+    data: the data to be fit; will be passed to min_fun
+    kwargs: any other arguments are passed to leastsq
+    """
+    # to pass `data` to `leastsq`, we have to put it in a tuple
+    args = (data,)
+    
+    # override `full_output` so we get a message if something goes wrong
+    kwargs['full_output'] = True
+    
+    # run leastsq
+    best_params, _, _, mesg, ier = leastsq(error_func, x0=params, args=args, **kwargs)
+
+    #TODO: check why logging.info is not visible
+    
+    # check for errors
+    if ier in [1, 2, 3, 4]:
+        print("""modsim.py: scipy.optimize.leastsq ran successfully
+                 and returned the following message:\n""" + mesg)
+    else:
+        logging.error("""modsim.py: When I ran scipy.optimize.leastsq, something
+                         went wrong, and I got the following message:""")
+        raise Exception(mesg)
+        
+    # return the best parameters
+    return best_params
+
+
+@property
+def dimensionality(self):
+    """Unit's dimensionality (e.g. {length: 1, time: -1})
+
+    This is a simplified version of this method that does no caching.
+
+    returns: dimensionality
+    """
+    dim = self._REGISTRY._get_dimensionality(self._units)
+    return dim
+
+# monkey patch Unit and Quantity so they use the non-caching
+# version of `dimensionality`
+pint.unit._Unit.dimensionality = dimensionality
+pint.quantity._Quantity.dimensionality = dimensionality
+
+
+def units_off():
+    """Make all quantities behave as if they were dimensionless.
+    """
+    global SAVED_PINT_METHOD
+    
+    SAVED_PINT_METHOD = UNITS._get_dimensionality
+    UNITS._get_dimensionality = lambda self: {}
+
+
+def units_on():
+    """Restore the saved behavior of quantities.
+    """
+    UNITS._get_dimensionality = SAVED_PINT_METHOD
+
+
+def run_odeint(system, slope_func, **kwargs):
+    """Runs a simulation of the system.
+    
+    `system` should contain system parameters and `ts`, which
+    is an array or Series that specifies the time when the
+    solution will be computed.
+    
+    Adds a DataFrame to the System: results
+    
+    system: System object
+    slope_func: function that computes slopes
+    """
+    # makes sure `system` contains `ts`
+    if not hasattr(system, 'ts'):
+        msg = """It looks like `system` does not contain `ts`
+                 as a system parameter.  `ts` should be an array
+                 or Series that specifies the times when the
+                 solution will be computed:"""
+        raise ValueError(msg)
+    
+    # make the system parameters available as globals
+    unpack(system)
+    
+    # try running the slope function with the initial conditions
+    try:
+        slope_func(init, ts[0], system)
+    except Exception as e:
+        msg = """Before running scipy.integrate.odeint, I tried
+                 running the slope function you provided with the
+                 initial conditions in system and t=0, and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
+    
+    # when odeint calls slope_func, it should pass `system` as
+    # the third argument.  To make that work, we have to make a
+    # tuple with a single element and pass the tuple to odeint as `args`
+    args = (system,)
+    
+    # now we're ready to run `odeint` with `init` and `ts` from `system`
+    units_off()
+    array = odeint(slope_func, list(init), ts, args, **kwargs)
+    units_on()
+
+    # the return value from odeint is an array, so let's pack it into
+    # a TimeFrame with appropriate columns and index
+    system.results = TimeFrame(array, columns=init.index, index=ts, dtype=np.float64)
+
+
+def interpolate(series, **options):
+    """Creates an interpolation function.
+
+    series: Series object
+    options: any legal options to scipy.interpolate.interp1d
+
+    returns: function that maps from the index of the series to values 
+    """
+    if sum(series.index.isnull()):
+        msg = """The Series you passed to interpolate contains
+                 NaN values in the index, which would result in
+                 undefined behavior.  So I'm putting a stop to that."""
+        raise ValueError(msg)
+    
+    # make the interpolate function extrapolate past the ends of
+    # the range, unless `options` already specifies a value for `fill_value`    
+    underride(options, fill_value='extrapolate')
+
+    # call interp1d, which returns a new function object
+    return interp1d(series.index, series.values, **options)
+
+
+def unpack(series, names=None):
+    """
+    """
+    frame = inspect.currentframe()
+    caller = frame.f_back
+    caller.f_globals.update(series)
+
+
+
+def fsolve(func, x0, *args, **kwargs):
     """Return the roots of the (non-linear) equations
     defined by func(x) = 0 given a starting estimate.
     
@@ -40,12 +208,14 @@ def fsolve(func, x0, *args, **kwdargs):
     
     func: function to find the roots of
     x0: scalar or array, initial guess
+    args: additional positional arguments are passed along to fsolve,
+          which passes them along to func
     
     returns: solution as an array
     """
     # make sure we can run the given function with x0
     try:
-        func(x0)
+        func(x0, *args)
     except Exception as e:
         msg = """Before running scipy.optimize.fsolve, I tried
                  running the function you provided with the x0
@@ -54,11 +224,14 @@ def fsolve(func, x0, *args, **kwdargs):
         raise(e)
     
     # make the tolerance more forgiving than the default
-    underride(kwdargs, xtol=1e-7)
+    underride(kwargs, xtol=1e-7)
 
     # run fsolve
-    result = scipy.optimize.fsolve(func, x0, *args, **kwdargs)
+    units_off()
+    result = scipy.optimize.fsolve(func, x0, args=args, **kwargs)
+    units_on()
     return result
+
 
 def underride(d, **options):
     """Add key-value pairs to d only if key is not in d.
@@ -163,6 +336,8 @@ def plot(*args, **kwargs):
     label the axes accordingly.
     
     """
+    update = kwargs.pop('update', False)
+
     x = None
     y = None
     style = None
@@ -179,6 +354,9 @@ def plot(*args, **kwargs):
     elif len(args) == 3:
         x, y, style = args
 
+    if 'style' in kwargs:
+        style = kwargs.pop('style')
+
     # get the current line, based on style and kwargs,
     # or create a new empty line
     figure = plt.gcf()
@@ -186,8 +364,11 @@ def plot(*args, **kwargs):
     line = figure_state.get_line(style, kwargs)
     
     # append y to ydata
-    ys = line.get_ydata()
-    ys = np.append(ys, y)
+    if update:
+        ys = np.asarray(y)
+    else:
+        ys = line.get_ydata()
+        ys = np.append(ys, y)
     line.set_ydata(ys)
 
     # update xdata
@@ -205,7 +386,10 @@ def plot(*args, **kwargs):
         except IndexError:
             x = 0
 
-    xs = np.append(xs, x)
+    if update:
+        xs = np.asarray(x)
+    else:
+        xs = np.append(xs, x)
     line.set_xdata(xs)
     
     #print(line.get_xdata())
@@ -281,6 +465,31 @@ hlines = plt.hlines
 vlines = plt.vlines
 fill_between = plt.fill_between
 
+class SubPlots:
+
+    def __init__(self, fig, axes_seq):
+        self.fig = fig
+        self.axes_seq = axes_seq
+        self.current_axes_index = 0
+
+    def current_axes():
+        return self.axes_seq(self.current_axes_index)
+
+    # TODO: consider making SubPlots iterable
+    def next_axes(self):
+        self.current_axes_index += 1
+        return current_axes()
+
+
+def subplots(*args, **kwargs):
+    fig, axes_seq = plt.subplots(*args, **kwargs)
+    return SubPlots(fig, axes_seq)
+
+
+def subplot(nrows, ncols, plot_number, **kwargs):
+    #TODO: set figure size based on nrows and ncols
+    plt.subplot(nrows, ncols, plot_number, **kwargs)
+
 
 def legend(**kwargs):
     underride(kwargs, loc='best')
@@ -337,11 +546,23 @@ class MySeries(pd.Series):
         if args or kwargs:
             super().__init__(*args, **kwargs)
         else:
-            super().__init__([])
+            super().__init__([], dtype=np.float64)
 
     def _repr_html_(self):
+        """Returns an HTML representation of the series.
+
+        Mostly used for Jupyter notebooks.
+        """
         df = pd.DataFrame(self, columns=['value'])
         return df._repr_html_()
+
+    def set(self, **kwargs):
+        """Uses keyword arguments to update the Series in place.
+
+        Example: series.update(a=1, b=2)
+        """
+        for name, value in kwargs.items():
+            self[name] = value
 
 
 class Sweep(MySeries):
@@ -377,6 +598,9 @@ class System(MySeries):
 class State(System):
     pass
 
+class Condition(System):
+    pass
+
 
 def flip(p=0.5):
     return np.random.random() < p
@@ -384,9 +608,25 @@ def flip(p=0.5):
 
 # abs, min, max, pow, sum, round
 
+def abs(*args):
+    # TODO: warn about using the built in
+    return np.abs(*args)
+
+def min(*args):
+    # TODO: warn about using the built in
+    return np.min(*args)
+
+def max(*args):
+    # TODO: warn about using the built in
+    return np.max(*args)
+
 def sum(*args):
     # TODO: warn about using the built in
-    return sum(*args)
+    return np.sum(*args)
+
+def round(*args):
+    # TODO: warn about using the built in
+    return np.round(*args)
 
 
 
@@ -401,7 +641,9 @@ class MyDataFrame(pd.DataFrame):
     So I added new definitions that override the special variables
     and make these names useable as row labels.
     """
-
+    def __init__(self, *args, **kwargs):
+        underride(kwargs, dtype=np.float64)
+        super().__init__(*args, **kwargs)
 
     @property
     def dt(self):
@@ -428,4 +670,145 @@ class TimeFrame(MyDataFrame):
 
 class SweepFrame(MyDataFrame):
     pass
+
+
+class _Vector(UNITS.Quantity):
+    """Represented as a Pint Quantity with a NumPy array
+    
+    x, y, z, mag, mag2, and angle are accessible as attributes.
+    
+    Supports vector operations hat, dot, cross, proj, and comp.
+    """
+    
+    @property
+    def x(self):
+        """Returns the x component with units."""
+        return self[0]
+
+    @property
+    def y(self):
+        """Returns the y component with units."""
+        return self[1]
+
+    @property
+    def z(self):
+        """Returns the z component with units."""
+        return self[2]
+
+    @property
+    def mag(self):
+        """Returns the magnitude with units."""
+        return np.sqrt(np.dot(self, self)) * self.units
+
+    @property
+    def mag2(self):
+        """Returns the magnitude squared with units."""
+        return np.dot(self, self) * self.units
+
+    @property
+    def angle(self):
+        """Returns the angle between self and the positive x axis."""
+        return np.arctan2(self.y, self.x)
+
+    def polar(self):
+        """Returns magnitude and angle."""
+        return self.mag, self.angle
+
+    def hat(self):
+        """Returns the unit vector in the direction of self."""
+        """
+        """
+        return self / self.mag * self.units
+
+    def dot(self, other):
+        """Returns the dot product of self and other."""
+        """
+        """
+        return np.dot(self, other) * self.units * other.units
+
+    def cross(self, other):
+        """Returns the cross product of self and other."""
+        """
+        """
+        return np.cross(self, other) * self.units * other.units
+
+    def proj(self, other):
+        """Returns the projection of self onto other."""
+        """
+        """
+        return np.dot(self, other) * other.hat()
+
+    def comp(self, other):
+        """Returns the magnitude of the projection of self onto other."""
+        """
+        """
+        return np.dot(self, other.hat()) * other.units
+
+    def dist(self, other):
+        """Euclidean distance from self to other, with units."""
+        diff = self - other
+        return diff.mag
+
+    def diff_angle(self, other):
+        """
+        """
+        #TODO: see http://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
+        raise NotImplementedError()
+        
+        
+def Vector(*args, units=None):
+    # if there's only one argument, it should be iterable
+    if len(args) == 1:
+        args = args[0]
+        
+        # if it's a series, pull out the values
+        if isinstance(args, Series):
+            args = args.values
+        
+    # see if any of the arguments have unit; if so, save the first one
+    for elt in args:
+        found_units = getattr(elt, 'units', None)
+        if found_units:
+            break
+            
+    if found_units:
+        # if there are units, remove them
+        args = [getattr(elt, 'magnitude', elt) for elt in args]
+    
+    # if the units keyword is provided, it overrides the units in args
+    if units is not None:
+        found_units = units
+    
+    return _Vector(args, found_units)
+
+
+def cart2pol(x, y, z=None):
+    x = np.asarray(x)
+    y = np.asarray(y)
+
+    rho = np.sqrt(x**2 + y**2)
+    theta = np.arctan2(y, x)
+        
+    if z is None:
+        return theta, rho
+    else:
+        return theta, rho, z
+
+
+def pol2cart(theta, rho, z=None):
+    if hasattr(theta, 'units'):
+        if theta.units == UNITS.degree:
+            theta = theta.to(UNITS.radian)
+        if theta.units != UNITS.radian:
+            msg = """In pol2cart, theta must be either a number or
+            a Quantity in degrees or radians."""
+            raise ValueError(msg)
+        
+    x = rho * np.cos(theta)
+    y = rho * np.sin(theta)
+
+    if z is None:
+        return x, y
+    else:
+        return x, y, z
 
