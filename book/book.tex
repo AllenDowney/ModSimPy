@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.7.2}
+\newcommand{\theversion}{0.9.2}
 
 
 %%%% Both LATEX and PLASTEX
@@ -4478,7 +4478,7 @@ where $m$ is the mass of the object and $g$ is acceleration due to gravity.  Sol
 %
 \[ C_d = \frac{2~m g}{\rho~v_{term}^2~A} \]
 %
-According to Mythbusters, the terminal velocity of a penny is between 35 and 65 mph (see \url{https://en.wikipedia.org/wiki/MythBusters_(2003_season)}.  Using the low end of their range, 40 mph or about \SI{18}{\meter\per\second}, the estimated value of $C_d$ is 0.44, which is close to the drag coefficient of a smooth sphere.
+According to Mythbusters, the terminal velocity of a penny is between 35 and 65 mph (see \url{https://en.wikipedia.org/wiki/MythBusters_(2003_season)}).  Using the low end of their range, 40 mph or about \SI{18}{\meter\per\second}, the estimated value of $C_d$ is 0.44, which is close to the drag coefficient of a smooth sphere.
 
 Now we are ready to add air resistance to the model.
 
@@ -4602,7 +4602,9 @@ system = make_system(condition)
 run_odeint(system, slope_func)
 \end{python}
 
-With \py{C_d=0.4}, the height of the quarter after \SI{19.1}{\second} is \SI{-11}{\meter}.  That means the quarter is moving a bit too fast, which means our estimate for the drag coefficient is too low.  We could improve the estimate by trial and error, or we could get \py{fsolve} to do it for us.  As usual, we'll need an error function:
+With \py{C_d=0.4}, the height of the quarter after \SI{19.1}{\second} is \SI{-11}{\meter}.  That means the quarter is moving a bit too fast, which means our estimate for the drag coefficient is too low.  We could improve the estimate by trial and error, or we could get \py{fsolve} to do it for us.  
+
+To use \py{fsolve}, we need an error function, which we can define by encapsulating the previous lines of code:
 
 \begin{python}
 def height_func(C_d, condition):
@@ -4626,6 +4628,8 @@ As we saw in Section~\ref{fsolve}, \py{fsolve} takes the error function and the 
 The result from \py{fsolve} is 0.43, which is very close to the drag coefficient we computed for the penny, 0.44.  Although it is plausible that different coins would have similar drag coefficients, we should not take this agreement too seriously.  Remember that I chose the terminal velocity of the penny arbitrarily from the estimated range.  And I completely fabricated the flight time for the quarter.
 
 Nevertheless, the methods we developed for estimating \py{C_d}, based on terminal velocity or flight time, are valid, subject to the precision of the measurements.
+
+These methods demonstrate two ways to use models to solve problems, sometimes called {\bf forward} and {\bf inverse} problems.  In a forward problem, you are given the parameters of the system and asked to predict how it will behave.  In an inverse problem, you are given the behavior of the system and asked to infer the parameters.  See \url{https://en.wikipedia.org/wiki/Inverse_problem}. 
 
 
 \chapter{Baseball}
