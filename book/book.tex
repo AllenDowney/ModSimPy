@@ -3520,6 +3520,7 @@ Now let's see a better was to estimate \py{r}.
 
 
 \section{Using fsolve}
+\label{fsolve}
 
 SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
 %
@@ -3762,13 +3763,13 @@ The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the resul
 
 {\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we will implement one of the most widely used pharmacokinetic models: the so-called ``minimal model" of glucose and insulin in the blood stream.
 
-{\bf Glucose} is a form of sugar that circulates in the blood of animals; it is used a fuel for muscles, the brain, and other organs.  The concentration of blood sugar is controlled by the hormone system, and especially by {\bf insulin}, which is produced by the pancreas and has the effect of reducing blood sugar.
+{\bf Glucose} is a form of sugar that circulates in the blood of animals; it is used as fuel for muscles, the brain, and other organs.  The concentration of blood sugar is controlled by the hormone system, and especially by {\bf insulin}, which is produced by the pancreas and has the effect of reducing blood sugar.
 
 In people with normal pancreatic function, the hormone system maintains {\bf homeostasis}; that is, it keeps the concentration of blood sugar in a range that is neither too high or too low.
 
 But if the pancreas does not produce enough insulin, or if the cells that should respond to insulin become insensitive to its effect, blood sugar can become elevated, a condition called {\bf hyperglycemia}.  Long term, severe hyperglycemia is the defining symptom of {\bf diabetes mellitus}, a serious disease that affects almost 10\% of the population in the U.S. (see \url{https://www.cdc.gov/diabetes/data/statistics/2014statisticsreport.html}).
 
-One of the most used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIVGTT or FSIGTT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently), and then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentration of glucose and insulin.
+One of the most-used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently), and then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentration of glucose and insulin.
 
 By analyzing these measurements, we can estimate several parameters of the subjects response; the most important is $S_I$, which quantifies the effect of insulin on the rate of reduction in blood sugar.
 
@@ -3780,7 +3781,7 @@ I also found useful a report by Natal van Riel (2004) ``Minimal Models for Gluco
 
 \section{The glucose minimal model}
 
-The minimal model consists of two parts, the glucose model, which takes measurements of insulin levels as inputs, and the insulin model, which takes measurements of glucose as inputs.  I will present an implementation of the glucose model; then in the notebook for this chapter, you will have the chance to implement the insulin model as an exercise.
+The minimal model consists of two parts, the glucose model, which takes measurements of insulin levels as inputs, and the insulin model, which takes measurements of glucose as inputs.  I will present an implementation of the glucose model; then in the notebook for this chapter, you will have the chance to implement the insulin model.
 
 The original version of the minimal model was developed in the 1970s; since then, many variations and extensions have been proposed.  Bergman's comments on the development of the model provide insight into their process:
 
@@ -3810,9 +3811,9 @@ must be sluggish --- that is, that insulin acts slowly because
 insulin must first move from plasma to a remote compartment [...] to exert its action on glucose disposal.
 \end{quote}
 
-To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized the insulin must move, relatively slowly, from the blood to a ``remote compartment" where it has its effect.
+To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized that insulin must move, relatively slowly, from the blood to a ``remote compartment" where it has its effect.
 
-At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid"; that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added models to achieve particular effects, to be found later to correspond to real physical entities.
+At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to real physical entities.
 
 The glucose model consists of two differential equations:
 %
@@ -3836,7 +3837,7 @@ where
 
 \end{itemize}
 
-Now we can interpret the terms in the equations one by one:
+We can interpret the terms in the equations one by one:
 
 \begin{itemize}
 
@@ -3856,7 +3857,7 @@ The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is 
 
 To develop and test the model, I'll use data from Pacini and Bergman (1986)\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122.}.
 
-The dataset is in a file in the repository for this book, which we can read into a DataFrame:
+The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
 
 \begin{python}
 df = pd.read_csv('glucose_insulin.csv', index_col='time')
@@ -3866,7 +3867,7 @@ df = pd.read_csv('glucose_insulin.csv', index_col='time')
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-fig01.pdf}}
-\caption{Glucose and insulin concentrations measured by IVGTT.}
+\caption{Glucose and insulin concentrations measured by FSIGT.}
 \label{chap08-fig01}
 \end{figure}
 
@@ -4307,6 +4308,7 @@ where \py{y} is height above the sidewalk and \py{v} is velocity.  The units \py
 \begin{python}
 m = UNITS.meter
 s = UNITS.second
+kg = UNITS.kilogram
 \end{python}
 
 The only system parameter is the acceleration of gravity:
@@ -4319,12 +4321,13 @@ In addition, we'll specify the sequence of times where we want to solve the diff
 
 \begin{python}
 duration = 10 * s
-ts = linspace(0, duration, 11)
+dt = 1 * s
+ts = linrange(0, duration, dt)
 \end{python}
 
-\py{ts} contains 11 points between 0 and \SI{10}{\second}, including both endpoints.
+%TODO: check prior uses of arange, linspace, and linrange
 
-%TODO: make linspace work with units?
+\py{ts} contains equally spaced points between 0 and \SI{10}{\second}, including both endpoints.
 
 Next we need a \py{System} object to contains the system parameters:
 
@@ -4332,9 +4335,7 @@ Next we need a \py{System} object to contains the system parameters:
 system = System(init=init, g=g, ts=ts)
 \end{python}
 
-Now we need a slope function, and here's where things get tricky.  As we have seen, \py{odeint} can solve systems of first order ODEs, but Newton's law is a second order ODE.
-
-However, if we recognize that
+Now we need a slope function, and here's where things get tricky.  As we have seen, \py{odeint} can solve systems of first order ODEs, but Newton's law is a second order ODE.  However, if we recognize that
 
 \begin{enumerate}
 
@@ -4365,11 +4366,9 @@ def slope_func(state, t, system):
 
 The first parameter, \py{state}, contains the position and velocity of the penny.  The last parameter, \py{system}, contains the system parameter \py{g}, which is the magnitude of acceleration due to gravity.
 
-The second parameter, \py{t}, is time.  It is not used in this slope function because none of the factors of the model are time-dependent (see Section~\ref{glucose}).  I include \py{t} as a parameter anyway because this function will be called by \py{odeint}, and \py{odeint} always provides the same arguments, whether they are needed or not.
+The second parameter, \py{t}, is time.  It is not used in this slope function because none of the factors of the model are time-dependent (see Section~\ref{glucose}).  I include it anyway because this function will be called by \py{odeint}, and \py{odeint} always provides the same arguments, whether they are needed or not.
 
-The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.
-
-The return value is a sequence containing the two derivatives.
+The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.  The return value is a sequence containing the two derivatives.
 
 Before calling \py{odeint}, it is always a good idea to test the slope function with the initial conditions:
 
@@ -4385,10 +4384,12 @@ Now we can run \py{odeint} like this:
 run_odeint(system, slope_func)
 \end{python}
 
-\py{run_odeint} stores the results in a \py{DataFrame} with two columns: \py{y} contains the height of the penny as a function of time; \py{v} contains velocity.  \py{plot_results}, which is defined in the notebook for this chapter, plots height versus time:
+\py{run_odeint} stores the results in a \py{DataFrame} with two columns: \py{y} contains the height of the penny as a function of time; \py{v} contains velocity.  
+
+\py{plot_position}, which is defined in the notebook for this chapter, plots height versus time:
 
 \begin{python}
-plot_results(system.results)
+plot_position(system.results)
 \end{python}
 
 \begin{figure}
@@ -4414,11 +4415,8 @@ y = system.results.y
 
 But what we really want is the inverse function, time as a function of height, which we can represent by creating a \py{Series} object with the data and index from \py{y}, but reversed:
 
-%TODO: check previous use of Series and see if we use `data` consistently
-% instead of values
-
 \begin{python}
-inverse = Series(data=y.index, index=y.data)
+inverse = Series(y.index, index=y.values)
 \end{python}
 
 Now we can use \py{interpolate}, which returns a function:
@@ -4427,7 +4425,7 @@ Now we can use \py{interpolate}, which returns a function:
 T = interpolate(inverse, kind='cubic')
 \end{python}
 
-In this case I'm using a cubic spline, rather than linear interpolation, because it should do a better job of filling in the curve correctly (see \url{https://en.wikipedia.org/wiki/Spline_interpolation}).
+I'm using a cubic spline, rather than linear interpolation, because it should do a better job of filling in the curve correctly (see \url{https://en.wikipedia.org/wiki/Spline_interpolation}).
 
 Now we can evaluate the interpolating function at \py{y=0}
 
@@ -4437,12 +4435,12 @@ T_sidewalk = T(0)
 
 The result is \SI{8.8179}{\meter}, which agrees with the exact answer to 4 decimal places.
 
-One caution about using \py{interpolate}: the function has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and \py{interpolate} would behave unpredictably.
+One caution about using \py{interpolate}: the function you provide has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and \py{interpolate} would behave unpredictably.
 
 
 \section{With air resistance}
 
-As an object moves through fluid, including air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{https://en.wikipedia.org/wiki/Newton's_laws_of_motion}).
+As an object moves through a fluid, like air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{https://en.wikipedia.org/wiki/Newton's_laws_of_motion}).
 
 The direction of this {\bf drag force} is opposite the direction of travel, and its magnitude is given by the drag equation (see \url{https://en.wikipedia.org/wiki/Drag_equation}):
 %
@@ -4458,23 +4456,21 @@ where
 
 \item $v$ is velocity in \si{\meter\per\second}.
 
-\item $A$ is the reference area of the object, in \si{\meter\squared}; in this context the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of travel (and far away).
+\item $A$ is the reference area of the object, in \si{\meter\squared}.  In this context the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of travel (and far away).
 
 \item $C_d$ is the {\bf drag coefficient}, a dimensionless quantity that depends on the shape of the object (including length but not frontal area), its surface properties, and how it interacts with the fluid.
 
 \end{itemize}
 
-For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end and streamlined objects at the low end (see \url{https://en.wikipedia.org/wiki/Drag_coefficient}).
+For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see \url{https://en.wikipedia.org/wiki/Drag_coefficient}).
 
 For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from the data.
 
-Of course, the drag equation is itself a model, based on the primary assumption that $C_d$ does not depend on the other terms in the equation, density, velocity, and area.  For objects moving in air at moderate speeds (below 45 mph or \SI{20}{\meter\per\second}), this model might be good enough, but we should remember to revisit these assumptions.
+Of course, the drag equation is itself a model, based on the assumption that $C_d$ does not depend on the other terms in the equation: density, velocity, and area.  For objects moving in air at moderate speeds (below 45 mph or \SI{20}{\meter\per\second}), this model might be good enough, but we should remember to revisit this assumption.
 
 %TODO: exercise with C_d(v)
 
-For the falling penny, we can use measurements of falling pennies to estimate $C_d$.  According to Louis Bloomfield at the University of Virginia, the {\bf terminal velocity} of a penny is about 25 mph or \SI{11}{\meter\per\second} (see \url{https://www.scientificamerican.com/article/could-a-penny-dropped-off/}).
-
-Terminal velocity is the speed where drag force equals force due to gravity:
+For the falling penny, we can use measurements of falling pennies to estimate $C_d$.   In particular, we are can use a measurement of {\bf terminal velocity}, which is the speed where drag force equals force due to gravity:
 %
 \[ \frac{1}{2}~\rho~v_{term}^2~C_d~A = m g \]
 %
@@ -4491,19 +4487,20 @@ Now we are ready to add air resistance to the model.
 
 As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Condition} object to contain the quantities we need to make a \py{System} object.
 
-The way we create a \py{Condition} object is the same as for \py{System} and \py{State} object.  In fact, these three object type have the same capabilities; I have given them different names just to identify their different roles.  Here's the \py{Condition} object for the falling penny:
+The way we create a \py{Condition} object is the same as for \py{System} and \py{State} objects.  In fact, these three object types have the same capabilities; I have given them different names just to identify their different roles.  Here's the \py{Condition} object for the falling penny:
 
 \begin{python}
 condition = Condition(height = 381 * m,
+                      v_init = 0 * m / s,
                       g = 9.8 * m/s**2,
                       mass = 2.5e-3 * kg,
                       diameter = 19e-3 * m,
                       rho = 1.2 * kg/m**3,
-                      v_term = 22 * m / s,
-                      duration = 30)
+                      v_term = 18 * m / s,
+                      duration = 30 * s)
 \end{python}
 
-The mass and diameter of a penny are from \url{https://en.wikipedia.org/wiki/Penny_(United_States_coin)}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{https://en.wikipedia.org/wiki/Density_of_air}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
+The mass and diameter are from \url{https://en.wikipedia.org/wiki/Penny_(United_States_coin)}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{https://en.wikipedia.org/wiki/Density_of_air}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
 
 And here's the function that takes a \py{Condition} as a parameter and returns a \py{System}:
 
@@ -4511,18 +4508,18 @@ And here's the function that takes a \py{Condition} as a parameter and returns a
 def make_system(condition):    
     unpack(condition)
     
-    init = State(y=height, v=0 * m/s)
+    init = State(y=height, v=v_init)
     area = np.pi * (diameter/2)**2
     C_d = 2 * mass * g / (rho * area * v_term**2)
     ts = linspace(0, duration, 101)
     
     return System(init=init, g=g, mass=mass, rho=rho,
-                  c_d=c_d, area=area, ts=ts)
+                  C_d=C_d, area=area, ts=ts)
 \end{python}
 
-It might not be obvious why we need \py{Condition} objects.  One reason is to minimize the number of system parameters.  For example, we use \py{diameter} to compute \py{area} and \py{v_term} to compute \py{C_d}, but then we don't need \py{diameter} and \py{v_term} in the \py{System} object.
+It might not be obvious why we need \py{Condition} objects.  One reason is to minimize the number of variables in the \py{System} object.  In this example, we use \py{diameter} to compute \py{area} and \py{v_term} to compute \py{C_d}, but then we don't need \py{diameter} and \py{v_term} in the \py{System} object.
 
-Another reason is that the \py{Condition} object will be useful, later in this chapter, because we can modify it, in a loop, to create a sequence of \py{System} objects, each with a different set of conditions.
+Another reason is that the \py{Condition} object will be useful because we can modify it, in a loop, to create a sequence of \py{System} objects, each with a different set of conditions.
 
 For now, you might have to take my word that this is a good idea (see \url{https://zen-of-python.info/namespaces-are-one-honking-great-idea--lets-do-more-of-those.html}).
 
@@ -4550,7 +4547,7 @@ def slope_func(state, t, system):
 
 \py{f_drag} is the force due to drag, based on the drag equation.  \py{a_drag} is acceleration due to drag, based on Newton's second law.
 
-To compute total acceleration, we add accelerations due to gravity and drag, where \py{g} is negated because it is in the direction of decreasing \py{y}, and \py{a_drag} is positive because it is in the direction of increasing \py{y}.  Soon we will see a way to keep track of the direction of forces and add them up in a less error-prone way.
+To compute total acceleration, we add accelerations due to gravity and drag, where \py{g} is negated because it is in the direction of decreasing \py{y}, and \py{a_drag} is positive because it is in the direction of increasing \py{y}.  In the next chapter we will use \py{Vector} objects to keep track of the direction of forces and add them up in a less error-prone way.
 
 After we test the slope function, we can run the simulation like this:
 
@@ -4564,14 +4561,80 @@ run_odeint(system, slope_func)
 \label{chap09-fig02}
 \end{figure}
 
-Figure~\ref{chap09-fig02} shows the result.  It only takes a few second for the penny to accelerate up to terminal velocity; after that, velocity is constant, so height as a function of time is a straight line.
+Figure~\ref{chap09-fig02} shows the result.  It only takes a few seconds for the penny to accelerate up to terminal velocity; after that, velocity is constant, so height as a function of time is a straight line.
 
-Now let's move on to two dimensions, and baseball!
 
+\section{Dropping quarters}
+
+In the previous sections, we were given an estimate of terminal velocity, based on measurements, and we used it to estimate the drag coefficient, $C_d$.  Now suppose that we are given flight time, instead.  Can we use that to estimate $C_d$ and terminal velocity?
+
+Suppose I drop of quarter off the Empire State Building and find that it takes \SI{19.1}{\second} to reach the sidewalk.  Here's a \py{Condition} object with the parameters of a quarter (from \url{https://en.wikipedia.org/wiki/Quarter_(United_States_coin)}) and the measured duration:
+
+\begin{python}
+condition = Condition(height = 381 * m,
+                      v_init = 0 * m / s,
+                      g = 9.8 * m/s**2,
+                      mass = 5.67e-3 * kg,
+                      diameter = 24.26e-3 * m,
+                      rho = 1.2 * kg/m**3,
+                      duration = 19.1 * s)
+\end{python}
+
+And here's a revised version of \py{make_system}:
+
+\begin{python}
+def make_system(condition):
+    unpack(condition)
+    
+    init = State(y=height, v=v_init)
+    area = np.pi * (diameter/2)**2
+    ts = linspace(0, duration, 101)
+    
+    return System(init=init, g=g, mass=mass, rho=rho,
+                  C_d=C_d, area=area, ts=ts)
+\end{python}
+
+This version does not expect the \py{Condition} object to contain \py{v_term}, but it does expect \py{C_d}.  We don't know what \py{C_d} is,  so we'll start with an initial guess and go from there:
+
+\begin{python}
+condition.set(C_d=0.4)
+system = make_system(condition)
+run_odeint(system, slope_func)
+\end{python}
+
+With \py{C_d=0.4}, the height of the quarter after \SI{19.1}{\second} is \SI{-11}{\meter}.  That means the quarter is moving a bit too fast, which means our estimate for the drag coefficient is too low.  We could improve the estimate by trial and error, or we could get \py{fsolve} to do it for us.  As usual, we'll need an error function:
+
+\begin{python}
+def height_func(C_d, condition):
+    condition.set(C_d=C_d)
+    system = make_system(condition)
+    run_odeint(system, slope_func)
+    y, v = final_state(system.results)
+    return y
+\end{python}
+
+\py{height_func} takes a hypothetical value of \py{C_d} as a parameter.  It runs the simulation with the given value of \py{C_d} and returns the final height after \SI{19.1}{\second}.
+
+When we get the value of \py{C_d} right, the result should be 0, so we can use \py{fsolve} to find it:
+
+\begin{python}
+fsolve(height_func, 0.4, condition)
+\end{python}
+
+As we saw in Section~\ref{fsolve}, \py{fsolve} takes the error function and the initial guess as parameters.  Any additional parameters we give to \py{fsolve} are passed along to \py{height_func}.  In this case, we provide \py{condition} as an argument to \py{fsolve} so we can use it inside \py{height_func}.
+
+The result from \py{fsolve} is 0.43, which is very close to the drag coefficient we computed for the penny, 0.44.  Although it is plausible that different coins would have similar drag coefficients, we should not take this agreement too seriously.  Remember that I chose the terminal velocity of the penny arbitrarily from the estimated range.  And I completely fabricated the flight time for the quarter.
+
+Nevertheless, the methods we developed for estimating \py{C_d}, based on terminal velocity or flight time, are valid, subject to the precision of the measurements.
+
+
+\chapter{Baseball}
+
+In the previous chapter we modeled objects moving in one-dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
 \section{The Manny Ramirez problem}
 
-Manny Ramirez is a former member of the Boston Red Sox who was notorious for a work ethic his managers did not always appreciate, which is why is he a former member.  The objective of this problem is to solve the following Manny-inspired problem:
+Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for a work ethic his managers did not always appreciate.  Our objective in this chapter is to solve the following Manny-inspired problem:
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
@@ -4587,6 +4650,10 @@ We'll proceed in the following steps:
 
 \end{enumerate}
 
+Fenway Park is a baseball stadium in Boston, Massachusetts.  One of it's most famous features is the ``Green Monster", which is a wall in left field.  Bec
+
+\url{}
+\url{https://en.wikipedia.org/wiki/Green_Monster}
 
 The Green Monster in Fenway Park is about \SI{12}{\meter} high and about \SI{97}{\meter} from home plate along the left field line.  What is the minimum speed a ball must leave the bat in order to clear the monster (assuming it goes off at the optimal angle, for some definition of "optimal")?
 
