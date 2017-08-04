@@ -41,16 +41,54 @@ from scipy.optimize import leastsq
 from time import sleep
 
 
-def linrange(start, stop, step=1, **kwargs):
+def linspace(start, stop, num=50, **kwargs):
+    """Returns num evenly spaced samples over the interval [start, stop].
+    
+    start: number or Quantity
+    stop: number or Quantity
+    num: integer
+    
+    returns: array or Quantity
+    """
+    underride(kwargs, dtype=np.float64)
+
+    # see if either of the arguments has units
+    units = getattr(start, 'units', None)
+    units = getattr(stop, 'units', units)
+
+    array = np.linspace(start, stop, num, **kwargs)
+    if units:
+        array = array * units
+    return array
+
+
+def linrange(start, stop=None, step=1, **kwargs):
+    """Returns evenly spaced samples over the interval [start, stop].
+    
+    start: number or Quantity
+    stop: number or Quantity
+    step: number or Quantity
+    
+    returns: array or Quantity
+    """
+    if stop is None:
+        stop = start
+        start = 0
+
     underride(kwargs, endpoint=True, dtype=np.float64)
+
+    # see if any of the arguments has units
+    units = getattr(start, 'units', None)
+    units = getattr(stop, 'units', units)
+    units = getattr(step, 'units', units)
+
     n = np.round((stop - start) / step)
     if kwargs['endpoint']:
         n += 1
 
-    # TODO: get this working with units
-    units_off()
-    array = linspace(start, stop, int(n), **kwargs)
-    units_on()
+    array = np.linspace(start, stop, int(n), **kwargs)
+    if units:
+        array = array * units
     return array
 
 
