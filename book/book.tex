@@ -3878,6 +3878,7 @@ Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}
 
 
 \section{Interpolation}
+\label{interpolate}
 
 Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.  But in the \py{DataFrame}, we only have measurements at discreet times.  This is a job for interpolation!
 
@@ -3904,12 +3905,12 @@ I(ts)
 
 The result is an array of interpolated values for equally-spaced values of \py{t} between 0 and 182.
 
-\py{interpolate} can take additional options as parameters, which it passed along to \py{scipy.interpolate.interp1d}.  You can read about these options at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html}.
+\py{interpolate} can take additional options as parameters, which it passes along to \py{scipy.interpolate.interp1d}.  You can read about these options at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html}.
 
 
 
 \section{Implementing the model}
-\section{glucose}
+\label{glucose}
 
 To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find parameter values that generate series that best fit the data.
 
@@ -4404,6 +4405,7 @@ In this model, height can be negative, because we have not included the effect o
 
 
 \section{Onto the sidewalk}
+\label{sidewalk}
 
 To avoid negative heights, we can use the results from the previous section to estimate when the penny hits the sidewalk, and run the simulation for the estimated time.
 
@@ -4413,21 +4415,21 @@ From the results, we can extract \py{y}, which is a \py{TimeSeries} that represe
 y = system.results.y
 \end{python}
 
-But what we really want is the inverse function, time as a function of height, which we can represent by creating a \py{Series} object with the data and index from \py{y}, but reversed:
+To interpolate the values of \py{y}, we could use \py{interpolate}, which we saw in Section~\ref{interpolate}.
 
 \begin{python}
-inverse = Series(y.index, index=y.values)
+Y = interpolate(y)
 \end{python}
 
-Now we can use \py{interpolate}, which returns a function:
+If we do that, we get a function that computes height as a function of time, but that's not what we want.  Rather, we want the inverse function, time as a function of height.   \py{modsim.py} provides a function that computes it:
 
 \begin{python}
-T = interpolate(inverse, kind='cubic')
+T = interp_inverse(y, kind='cubic')
 \end{python}
 
-I'm using a cubic spline, rather than linear interpolation, because it should do a better job of filling in the curve correctly (see \url{https://en.wikipedia.org/wiki/Spline_interpolation}).
+The second parameter, \py{kind}, indicates what kind of interpolation we want: \py{cubic} means we want a cubic spline (see \url{https://en.wikipedia.org/wiki/Spline_(mathematics)}).
 
-Now we can evaluate the interpolating function at \py{y=0}
+The result is a function that maps from height to time.  Now we can evaluate the interpolating function at \py{y=0}
 
 \begin{python}
 T_sidewalk = T(0)
@@ -4435,10 +4437,11 @@ T_sidewalk = T(0)
 
 The result is \SI{8.8179}{\meter}, which agrees with the exact answer to 4 decimal places.
 
-One caution about using \py{interpolate}: the function you provide has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and \py{interpolate} would behave unpredictably.
+One caution about using \py{interpolate} and \py{interp_inverse}: the function you provide has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and the interpolation function would behave unpredictably.
 
 
 \section{With air resistance}
+\label{drag}
 
 As an object moves through a fluid, like air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{https://en.wikipedia.org/wiki/Newton's_laws_of_motion}).
 
@@ -4637,32 +4640,399 @@ These methods demonstrate two ways to use models to solve problems, sometimes ca
 In the previous chapter we modeled objects moving in one-dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
 \section{The Manny Ramirez problem}
+\label{manny}
 
 Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for a work ethic his managers did not always appreciate.  Our objective in this chapter is to solve the following Manny-inspired problem:
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
-We'll proceed in the following steps:
+Fenway Park is a baseball stadium in Boston, Massachusetts.  One of it's most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet along the left field line (see \url{https://en.wikipedia.org/wiki/Green_Monster}).  To compensate for the short distance, the wall is unusually high, at 37 feet.
+
+Our goal is to find the minimum velocity at which a ball can leave home plate and still go over the Green Monster.  We'll proceed in the following steps:
 
 \begin{enumerate}
 
-\item
+\item We'll model the flight of a baseball through air.
 
-\item
+\item For a given velocity, we'll find the optimal ``launch angle", that is, the angle the ball should leave home plate to maximize it's height when it reaches the wall.
 
-\item
+\item Then we'll find the minimal velocity that clears the wall, given that it has the optimal launch angle.
 
 \end{enumerate}
 
-Fenway Park is a baseball stadium in Boston, Massachusetts.  One of it's most famous features is the ``Green Monster", which is a wall in left field.  Bec
+As usual, we'll have to make some modeling decisions.  To get started, we'll ignore any spin that might be on the ball, and the resulting Magnus force (see \url{https://en.wikipedia.org/wiki/Magnus_effect}).
 
-\url{}
-\url{https://en.wikipedia.org/wiki/Green_Monster}
+As a result, we'll assume that the ball travels in the plane above the left field line, so we'll run simulations in two dimensions, rather than three.
 
-The Green Monster in Fenway Park is about \SI{12}{\meter} high and about \SI{97}{\meter} from home plate along the left field line.  What is the minimum speed a ball must leave the bat in order to clear the monster (assuming it goes off at the optimal angle, for some definition of "optimal")?
+But we will take into account air resistance.  Based on what we learned about falling coins, it seems likely that air resistance has a substantial effect on the flight of a baseball.
+
+To model air resistance, we'll need the mass, frontal area, and drag coefficient of a baseball.  Mass and diameter are easy to find (see \url{https://en.wikipedia.org/wiki/Baseball_(ball)}).  Drag coefficient is only a little harder; according to a one-pager from NASA\footnote{``Drag on a Baseball, available from \url{https://www.grc.nasa.gov/www/k-12/airplane/balldrag.html}}, the drag coefficient of a baseball is approximately 0.3.
+
+However, this value {\em does} depend on velocity.  At low velocities it might be as high as 0.5, and at high velocities as low as 0.29.  Furthermore, the transition between these regimes typically happens exactly in the range of velocities we are interested in, around \SI{40}{\meter\per\second}.
+
+To get started, I'll assume that the drag coefficient does not depend on velocity, but we'll note that this is an issue we might want to revisit.
+
+
+\section{Vectors}
+
+Now that we are working in two dimensions, we will find it useful to work with {\bf vector quantities}, that is, quantities that represent both a magnitude and a direction.  We will use vectors to represent positions, velocities, accelerations, and forces in two and three dimensions. 
+
+\py{modsim.py} provides a \py{Vector} object that represents a vector quantity.  A \py{Vector} object is a like a NumPy array; it contains elements that represent the {\bf components} of the vector.  For example, in a \py{Vector} that represents a position in space, the components are the $x$ and $y$ coordinates (and a $z$ coordinate in 3-D).  A \py{Vector} object also has units, like the quantities we've seen in previous chapters.  
+
+You can create a \py{Vector} by specifying its components.  The following \py{Vector} represents a point \SI{3}{\meter} to the right (or east) and \SI{4}{\meter} up (or north) from an implicit origin:
+
+\begin{python}
+A = Vector(3, 4) * m
+\end{python}
+
+You can access the components of a \py{Vector} by name, using dot notation; for example, \py{A.x} or \py{A.y}.  You can also access them by index, using brackets, like \py{A[0]} or \py{A[1]}.
+
+Similarly, you can get the magnitude and angle using dot notation, \py{A.mag} and \py{A.angle}.  {\bf Magnitude} is the length of the vector: if the \py{Vector} represents position, magnitude is the distance from the origin, which is \SI{5}{\meter} in this example; if it represents velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.
+
+The angle of a \py{Vector} is its direction, expressed as the angle in radians from the positive x-axis.  In the Cartesian plane, the angle \SI{0}{\radian} is due east, and the angle \SI{\pi}{\radian} is due west. 
+
+\py{Vector} objects support most mathematical operations, including addition and subtraction:
+
+\begin{python}
+B = Vector(1, 2) * m
+A + B
+A - B
+\end{python}
+
+For the definition and graphical interpretation of these operations, see \url{https://en.wikipedia.org/wiki/Euclidean_vector#Addition_and_subtraction}
+.
+
+When you add and subtract \py{Vector} objects, \py{modsim.py} uses NumPy and Pint to check that the operands have the same number of dimensions and units.  The notebook for this chapter shows examples for working with \py{Vector} objects.
+
+One note on working with angles: in mathematics, we almost always represent angle in radians, and most Python functions expect angles in radians.  But people often think more naturally in degrees.  It can be awkward, and error-prone, to use both units in the same program.  Fortunately, Pint makes it possible to represent angles using quantities with units.
+
+As an example, I'll get the \py{degree} unit from \py{UNITS}, and create a quantity that represents 45 degrees:
+
+\begin{python}
+degree = UNITS.degree
+angle = 45 * degree
+\end{python}
+
+Then if we need to convert to radians we can use the \py{to} function
+
+\begin{python}
+radian = UNITS.radian
+rads = angle.to(radian)
+\end{python}
+
+Alternatively, if we know that a quantity is represented in degrees, we can use \py{np.deg2rad} to convert to radians.  However, unlike the \py{to} function, \py{np.deg2rad} does no error checking!
+
+If you are given an angle and velocity, you can make a \py{Vector} by converting to Cartesian coordinates using \py{pol2cart}.  To demonstrate, I'll extract the angle and magnitude of \py{A}:
+
+\begin{python}
+mag = A.mag
+angle = A.angle
+\end{python}
+
+And then make a new \py{Vector} with the same components:
+
+\begin{python}
+x, y = pol2cart(angle, mag)
+Vector(x, y)
+\end{python}
 
 
 
+\section{Modeling baseball flight}
+
+Now we're ready to simulate the flight of the baseball.  As we did in the previous chapter, we'll create a \py{Condition} object that contains the parameters of the system:
+
+\begin{python}
+condition = Condition(x = 0 * m, 
+                      y = 1 * m,
+                      g = 9.8 * m/s**2,
+                      mass = 145e-3 * kg,
+                      diameter = 73e-3 * m,
+                      rho = 1.2 * kg/m**3,
+                      C_d = 0.3,
+                      angle = 45 * degree,
+                      velocity = 40 * m / s,
+                      duration = 5.1 * s)
+\end{python}
+
+Using the center of home plate as the origin, the initial position is about \SI{1}{\meter} above home plate.  The initial velocity is \SI{40}{\meter\per\second} at a launch angle of \SI{45}{\degree}.  The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{manny}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{https://en.wikipedia.org/wiki/Density_of_air#Temperature_and_pressure}).
+ I chose the value of \py{duration} to run the simulation long enough for the ball to land on the ground.
+
+The following function uses the \py{Condition} object to make a \py{System} object.  Again, this two-step process reduces the number of variables in the \py{System} object, and makes it easier to work with functions like \py{fsolve}.
+
+\begin{python}
+def make_system(condition):
+	unpack(condition)
+	
+    theta = np.deg2rad(angle)
+    vx, vy = pol2cart(theta, velocity)
+    init = State(x=x, y=y, vx=vx, vy=vy)
+    area = np.pi * (diameter/2)**2
+    ts = linspace(0, duration, 101)
+    
+    return System(init=init, g=g, mass=mass, 
+                  area=area, rho=rho, C_d=C_d, ts=ts)
+\end{python}
+
+After unpacking \py{Condition}, we can access the variables it contains without using dot notation.
+
+First convert \py{angle} to radians, using \py{np.deg2rad}.  Next we compute the $x$ and $y$ components of the initial velocity using \py{pol2cart}, and then make the initial \py{State} object.
+
+After computing \py{area} and an array of timestamps, \py{ts}, we create and return the \py{System} object.
+
+Now we're ready for a slope function:
+
+\begin{python}
+def slope_func(state, t, system):
+    x, y, vx, vy = state
+    unpack(system)
+    
+    a_grav = Vector(0, -g)
+
+    v = Vector(vx, vy)
+    f_drag = -rho * v.mag * v * C_d * area / 2
+    a_drag = f_drag / mass
+    
+    a = a_grav + a_drag
+    
+    return v.x, v.y, a.x, a.y
+\end{python}
+
+As usual, the parameters of the slope function are a \py{State} object, time, and a \py{System} object.  In this example, we don't use \py{t}, but we can't leave it out because when \py{odeint} calls the slope function, it always provides the same arguments, whether they are needed or not.
+
+The \py{State} object has four variables: \py{x} and \py{y} are the components of position; \py{vx} and \py{vy} are the components of velocity.
+
+The return values from the slope function are the derivatives of these components.  The derivative of position is velocity, so the first two return values are just \py{vx} and \py{vy}, the values we extracted from the \py{State} object.  The derivative of velocity is acceleration, and that's what we have to compute.
+
+The total acceleration of the baseball is the sum of accelerations due to gravity and drag.  The quantities have both magnitude and direction, so we'll use \py{Vector} objects to represent them.  Here's how it works:
+
+\begin{itemize}
+
+\item \py{a_grav} is the \py{Vector} representation of acceleration due to gravity, with magnitude \py{g} and direction along the negative y-axis.
+
+\item \py{v} is the \py{Vector} representation of velocity, which we create using the components \py{vx} and \py{vy}.  This representation makes it easier to compute the drag force, which I'll explain in more detail below.
+
+\item \py{f_drag} is drag force, which is also a \py{Vector} quantity, with units of \si{\kilogram\meter\per\second\squared}, also known as Newtons (\si{\newton}).
+
+\item \py{a_drag} is acceleration due to drag, which we get by dividing \py{f_drag} by mass.  The result is in units of acceleration \si{\meter\per\second\squared}.
+
+\item \py{a} is total acceleration due to all forces, from which we can extract the components \py{a.x} and \py{a.y}.
+
+\end{itemize}
+
+The last thing I have to explain is the vector form of the drag equation.  In Section~\ref{drag} we saw the scalar form:
+
+\[ F_d = \frac{1}{2}~\rho~v^2~C_d~A \]
+
+This form was sufficient when \py{v} represented the magnitude of velocity and all we wanted was the magnitude of drag force.  But now \py{v} is a \py{Vector} and we want both the magnitude and angle of drag.
+
+We can do that by replacing $v^2$, in the equation, with a vector that has the opposite direction as \py{v} and magnitude \py{v.mag**2}.  In math notation, we can write
+
+\[ \vec{F}_d = -\frac{1}{2}~\rho~|v|~\vec{v}~C_d~A \]
+
+Where $|v|$ indicates the magnitude of $v$ and the arrows on $\vec{F}_d$ and $\vec{v}$ indicate that they are vectors.  Negation reverses the direction of a vector, so $\vec{F}_d$ is in the opposite direction of $\vec{v}$.
+
+Translating to Python we have:
+
+\begin{python}
+f_drag = -rho * v.mag * v * C_d * area / 2
+\end{python}
+
+Using vectors to compute and add up forces and accelerations make the code concise, readable, and less error-prone.  In particular, when we add \py{a_grav} and \py{a_drag}, the directions are likely to be correct, because they are encoded in the \py{Vector} objects.  And the units are certain to be correct, because otherwise Pint would report an error.
+
+As always, we can test the slope function by running it with the initial conditions:
+
+\begin{python}
+slope_func(system.init, 0, system)
+\end{python}
+
+
+
+\section{Trajectories}
+
+Now we're ready to run the simulation:
+
+\begin{python}
+run_odeint(system, slope_func)
+\end{python}
+
+The result is a \py{TimeFrame} object with one column for each of the state variables, \py{x},\py{y}, \py{vx}, and \py{vy}.  We can extract the $x$ and $y$ components like this:
+
+\begin{python}
+xs = system.results.x
+ys = system.results.y
+\end{python}
+
+And plot them like this:
+
+\begin{python}
+plot(xs, label='x')
+plot(ys, label='y')
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap10-fig01.pdf}}
+\caption{Simulated baseball flight, $x$ and $y$ components of position as a function of time.}
+\label{chap10-fig01}
+\end{figure}
+
+Figure~\ref{chap10-fig01} shows the result.  As expected, the $x$ component increases monotonically, with decreasing velocity.  And the $y$ position climbs initially and then descends, falling slightly below 0 after \SI{5.1}{\second}.
+
+Another way to view the same data is to plot the $x$ component on the $x$ axis and the $y$ component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:
+
+\begin{python}
+plot(xs, ys, label='trajectory')
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap10-fig02.pdf}}
+\caption{Simulated baseball flight, trajectory plot.}
+\label{chap10-fig02}
+\end{figure}
+
+Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{https://en.wikipedia.org/wiki/Trajectory}).
+
+A trajectory plot can be easier to interpret than a time series plot, because it shows what the motion of the projectile would look like (at least from one point of view).  Both plot can be useful, but don't get them mixed up!  If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.
+
+Another useful way to visualize the results is animation.  You can create animations using the \py{plot} function from \py{modsim.py}, using the \py{update} keyword, which tells plot that the coordinates you provide should update the old coordinates.  Here's an example:
+
+\begin{python}
+for x, y in zip(xs, ys):
+    plot(x, y, 'bo', update=True)
+    sleep(0.01)
+\end{python}
+
+This example uses two features we have not seen before:
+
+\begin{itemize}
+
+\item \py{zip} takes two sequences (in this case they are \py{Series} objects) and ``zips" them together, that is, it loops through both of them at the same time, selecting corresponding elements from each.  So each time through the loop, \py{x} and \py{y} get the next elements from \py{xs} and \py{ys}.
+
+\item \py{sleep} causes the program to pause for a given duration, in seconds.
+
+\end{itemize}
+
+You can see what the results look like in the notebook for this chapter.
+
+
+\section{Finding the range}
+
+Suppose we want to find the launch angle that maximizes the range, that is, the distance the ball travels in the air before landing.  Assuming that the simulation runs long enough for the ball to land, we can compute the range like this:
+
+\begin{enumerate}
+
+\item Find the time when the height of the ball is maximized and select the part of the trajectory where the ball is falling.  We have to do this in order to avoid problems with interpolation (see Section~\ref{sidewalk}).
+
+\item Then we use \py{interpolate} to find the time when the ball hits the ground, \py{t_land}.
+
+\item Finally, we compute the value of \py{x} component at \py{t_land}.
+
+\end{enumerate}
+
+Here's the function that does all that:
+
+\begin{python}
+def interpolate_range(results):
+    xs = results.x
+    ys = results.y
+
+    t_peak = ys.argmax()
+    
+    descent = ys.loc[t_peak:]
+    T = interp_inverse(descent)
+    t_landing = T(0)
+    
+    X = interpolate(xs, kind='cubic')
+    return X(t_landing)
+\end{python}
+
+\py{argmax} searches for the largest value in \py{ys} and returns its timestamp (see \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.argmax.html}).
+
+Then we use \py{loc} to extract only the points after \py{t_peak}.  The index here is a {\bf slice}.  In general, you can use a slice to select a range of values from a \py{Series}, specifying the start and end indices.  In this example we only specify the beginning, so we get everything from the start index to the end of the \py{Series}.
+
+
+%TODO: Seems like we're breaking out a lot of new things here.
+% Maybe intro argmax and slice indexing earlier.
+
+Next we use \py{interp_inverse}, which we saw in Section~\ref{sidewalk}, to make \py{T}, which is an interpolation function that maps from height to time.  So \py{t_landing} is the time when height is 0.
+
+Finally, we use \py{interpolate} to make \py{X}, which is an interpolation function that maps from time to X.  So \py{X(T_landing)} is the distance from home plate when the ball lands.
+
+We can call \py{interpolate_range} like this:
+
+\begin{python}
+interpolate_range(system.results)
+\end{python}
+
+The result is about \SI{103}{\meter}, which is about 337 feet.
+
+
+\section{Optimization}
+
+To find the angle that optimizes range (distance from home plate when the ball lands), we need a function that takes launch angle as a parameter and returns range:
+
+\begin{python}
+def range_func(angle, condition):    
+    condition.set(angle=angle)
+    system = make_system(condition)
+    run_odeint(system, slope_func)
+    x_range = interpolate_range(system.results)
+    return x_range
+\end{python}
+
+We can call \py{range_func} directly like this:
+
+\begin{python}
+range_func(45, condition)
+\end{python}
+
+And we can sweep a sequence of angles like this:
+
+\begin{python}
+angles = linspace(30, 60, 11)
+sweep = Sweep()
+
+for angle in angles:
+    x_range = range_func(angle, condition)
+    print(angle, x_range)
+    sweep[angle] = x_range
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap10-fig03.pdf}}
+\caption{Distance from home plate as a function of launch angle, with fixed velocity.}
+\label{chap10-fig03}
+\end{figure}
+
+Figure~\ref{chap10-fig03} shows the results.  It looks like the optimal angle is between \SI{40}{\degree} and \SI{45}{\degree} (at least for this definition of ``optimal").
+
+We can find the optimal angle more precisely and more efficiently using \py{max_bounded}, which is a function in \py{modsim.py} that uses \py{scipy.opimize.minimize_scalar} (see \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html}).
+
+Here's how we run it:
+
+\begin{python}
+res = max_bounded(range_func, [0, 90], condition)
+\end{python}
+
+The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument is the \py{Condition} object, which gets passed along as an argument when \py{max_bounded} calls \py{range_func}.
+
+The result from \py{max_bounded} is an \py{OptimizeResult}, which contains several variables.  The ones we want are \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, it's the range when the baseball is launched at the optimal angle.
+
+\section{Finishing off the problem}
+
+In the notebook for this chapter, you'll have to chance to finish off the Manny Ramirez problem.  There are a few things you'll have to do:
+
+\begin{itemize}
+
+\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that might not be what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{max_bounded} to find the revised optimum.
+
+\item Once you can find the optimal angle for any velocity, you have to find the minimum velocity that gets the ball over the wall.  You'll write a function that takes a velocity as a parameter, computes the optimal angle for that velocity, and returns the height of the ball, at the wall, using the optimal angle.
+
+\item Finally, you'll use \py{fsolve} to find the velocity that makes the height, at the wall, just barely 37 feet.  
+
+\end{itemize}
+
+The notebook provides some additional hints, but at this point you should have everything you need.  Good luck!
 
 \backmatter
 \printindex
