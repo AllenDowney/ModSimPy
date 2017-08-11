@@ -25,6 +25,7 @@ import sympy
 
 import pint
 UNITS = pint.UnitRegistry()
+Quantity = UNITS.Quantity
 
 from numpy import sqrt, array, linspace, pi
 
@@ -37,6 +38,7 @@ from inspect import getsource
 from scipy.interpolate import interp1d
 from scipy.integrate import odeint
 from scipy.optimize import leastsq
+from scipy.optimize import minimize_scalar
 
 from time import sleep
 
@@ -62,7 +64,7 @@ def linspace(start, stop, num=50, **kwargs):
     return array
 
 
-def linrange(start, stop=None, step=1, **kwargs):
+def linrange(start=0, stop=None, step=1, **kwargs):
     """Returns evenly spaced samples over the interval [start, stop].
     
     start: number or Quantity
@@ -158,6 +160,67 @@ def units_on():
     UNITS._get_dimensionality = SAVED_PINT_METHOD
 
 
+
+def min_bounded(min_func, bounds, *args, **options):
+    """Finds the input value that minimizes `min_func`.
+    
+    min_func: computes the function to be minimized
+    bounds: sequence of two values, lower and upper bounds of the
+            range to be searched
+    args: any additional positional arguments are passed to min_func
+    options: any keyword arguments are passed as options to minimize_scalar
+    
+    returns: OptimizeResult object 
+             (see https://docs.scipy.org/doc/scipy/
+                  reference/generated/scipy.optimize.minimize_scalar.html)
+    """
+    try:
+        midpoint = np.mean(bounds)
+        min_func(midpoint, *args)
+    except Exception as e:
+        msg = """Before running scipy.integrate.odeint, I tried
+                 running the slope function you provided with the
+                 initial conditions in system and t=0, and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
+        
+    underride(options, xatol=1e-3)
+    
+    res = minimize_scalar(min_func, 
+                          bracket=bounds,
+                          bounds=bounds, 
+                          args=args, 
+                          method='bounded',
+                          options=options)
+
+    if not res.success:
+        msg = """scipy.optimize.minimize_scalar did not succeed.
+                 The message it returns is %s""" % res.message
+        raise Exception(msg)
+
+    return res
+
+
+def max_bounded(max_func, bounds, *args, **options):
+    """Finds the input value that maximizes `max_func`.
+    
+    min_func: computes the function to be maximized
+    bounds: sequence of two values, lower and upper bounds of the
+            range to be searched
+    args: any additional positional arguments are passed to max_func
+    options: any keyword arguments are passed as options to minimize_scalar
+    
+    returns: OptimizeResult object 
+             (see https://docs.scipy.org/doc/scipy/
+                  reference/generated/scipy.optimize.minimize_scalar.html)
+    """
+    def min_func(*args):
+        return -max_func(*args)
+    
+    return min_bounded(min_func, bounds, *args, **options)
+
+
 def run_odeint(system, slope_func, **kwargs):
     """Runs a simulation of the system.
     
@@ -229,8 +292,25 @@ def interpolate(series, **options):
     return interp1d(series.index, series.values, **options)
 
 
-def unpack(series, names=None):
+def interp_inverse(series, **options):
+    """Interpolate the inverse function of a Series.
+    
+    series: Series object, represents a mapping from `a` to `b`
+    kind: string, which kind of iterpolation
+    options: keyword arguments passed to interpolate
+    
+    returns: interpolation object, can be used as a function
+             from `b` to `a`
     """
+    inverse = Series(series.index, index=series.values)
+    T = interpolate(inverse, **options)
+    return T
+
+
+def unpack(series):
+    """Make the names in `series` available as globals.
+
+    series: Series with variables names in the index
     """
     frame = inspect.currentframe()
     caller = frame.f_back
@@ -710,7 +790,7 @@ class SweepFrame(MyDataFrame):
     pass
 
 
-class _Vector(UNITS.Quantity):
+class _Vector(Quantity):
     """Represented as a Pint Quantity with a NumPy array
     
     x, y, z, mag, mag2, and angle are accessible as attributes.
@@ -788,10 +868,13 @@ class _Vector(UNITS.Quantity):
         return diff.mag
 
     def diff_angle(self, other):
+        """Angular difference between two vectors, in radians.
         """
-        """
-        #TODO: see http://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
-        raise NotImplementedError()
+        if len(self) == 2:
+            return self.angle - other.angle
+        else:
+            #TODO: see http://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
+            raise NotImplementedError()
         
         
 def Vector(*args, units=None):
