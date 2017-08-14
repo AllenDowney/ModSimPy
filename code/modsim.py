@@ -218,7 +218,10 @@ def max_bounded(max_func, bounds, *args, **options):
     def min_func(*args):
         return -max_func(*args)
     
-    return min_bounded(min_func, bounds, *args, **options)
+    res = min_bounded(min_func, bounds, *args, **options)
+    # we have to negate the function value before returning res
+    res.fun = -res.fun
+    return res
 
 
 def run_odeint(system, slope_func, **kwargs):
@@ -658,7 +661,7 @@ class MySeries(pd.Series):
         """Initialize a Series.
 
         Note: this cleans up a weird Series behavior, which is
-        that Series() and Series([]) yield different behavior.
+        that Series() and Series([]) yield different results.
         See: https://github.com/pandas-dev/pandas/issues/16737
         """
         if args or kwargs:
@@ -682,16 +685,37 @@ class MySeries(pd.Series):
         for name, value in kwargs.items():
             self[name] = value
 
+    @property
+    def _constructor(self):
+        return self.__class__
+
 
 class Sweep(MySeries):
     pass
 
+
 class TimeSeries(MySeries):
     pass
 
+
 class System(MySeries):
-    def __init__(self, **kwargs):
-        super().__init__(list(kwargs.values()), index=kwargs)
+    def __init__(self, *args, **kwargs):
+        """Initialize the series.
+
+        If there are no positional arguments, use kwargs.
+
+        If there is one positional argument, copy it.
+
+        More than one positional argument is an error. 
+        """
+        if len(args) == 0:
+            super().__init__(list(kwargs.values()), index=kwargs)
+        elif len(args) == 1:
+            super().__init__(*args)
+            # TODO: also copy in the kwargs?
+        else:
+            msg = '__init__() takes at most one positional argument'
+            raise TypeError(msg)
 
     @property
     def dt(self):
@@ -715,6 +739,7 @@ class System(MySeries):
 
 class State(System):
     pass
+
 
 class Condition(System):
     pass
