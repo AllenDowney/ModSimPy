@@ -3228,6 +3228,7 @@ Figure~\ref{chap06-fig03} shows that the results fall neatly on a single curve, 
 
 
 \section{Contact number}
+\label{contact}
 
 Recall that the number of new infections in a given day is $\beta s i N$, and the number of recoveries is $\gamma i N$.  If we divide these quantities, the result is $\beta s / \gamma$, which is the number of new infections per recovery (as a fraction of the population).
 
@@ -4642,13 +4643,13 @@ In the previous chapter we modeled objects moving in one-dimension, with and wit
 \section{The Manny Ramirez problem}
 \label{manny}
 
-Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for a work ethic his managers did not always appreciate.  Our objective in this chapter is to solve the following Manny-inspired problem:
+Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for a relaxed attitude and a taste for practical jokes that his managers did not always appreciate.  Our objective in this chapter is to solve the following Manny-inspired problem:
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
 Fenway Park is a baseball stadium in Boston, Massachusetts.  One of its most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet along the left field line (see \url{https://en.wikipedia.org/wiki/Green_Monster}).  To compensate for the short distance, the wall is unusually high, at 37 feet.
 
-Our goal is to find the minimum velocity at which a ball can leave home plate and still go over the Green Monster.  We'll proceed in the following steps:
+We want to find the minimum velocity at which a ball can leave home plate and still go over the Green Monster.  We'll proceed in the following steps:
 
 \begin{enumerate}
 
@@ -5033,6 +5034,318 @@ In the notebook for this chapter, you'll have to chance to finish off the Manny 
 \end{itemize}
 
 The notebook provides some additional hints, but at this point you should have everything you need.  Good luck!
+
+
+\chapter{Rotation}
+
+
+Let's talk about things that spin.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects can be easier to spin around some axes than others, and stable when spinning around some axes, but not others.  
+
+As the shape of an object changes, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
+
+And when you applying a twisting force to a rotating object, the effect is often contrary to intuition.  See, for example, this video on gyroscopic precession \url{https://www.youtube.com/watch?v=ty9QSiVC2g0}
+
+In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on a simple scenario where all rotation is around a single axis.  In that case, we can treat some vector quantities, like torque, as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
+
+This approach makes it possible to simulate and analyze many interesting systems; but you will also encounter systems that would be better approached with the more general toolkit.
+
+The fundamental ideas in this chapter are angular velocity and angular acceleration, torque, and moment of inertia.  To introduce these ideas, I'll simulate the behavior of a yo-yo (see \url{https://en.wikipedia.org/wiki/Yo-yo}).  We'll work our way up to it gradually, starting with toilet paper.
+
+
+\section{The physics of toilet paper}
+\label{paper}
+
+As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/paper_roll.pdf}}
+\caption{Diagram of a roll of toilet paper, showing change in paper length as a result of a small rotation, $d\theta$.}
+\label{paper_roll}
+\end{figure}
+
+Figure~\ref{paper_roll} shows a diagram of the system: $r$ represents the radius of the roll at a point in time.  Initially, $r$ is the radius of the cardboard core, $R_{min}$.  When the roll is complete, $r$ is $R_{max}$.
+
+I'll use $\theta$ to represent the total rotation of the roll in radians.  In the diagram, $d\theta$ represents a small increase in $\theta$, which corresponds to a distance along the circumference of the roll of $r~d\theta$.
+
+Finally, I'll use $y$ to represent the total length of paper that's been rolled.  Initially, $\theta=0$ and $y=0$.  For each small increase in $\theta$, there is a corresponding increase in $y$:
+%
+\[ dy = r~d\theta \]
+%
+If we divide both sides by a small increase in time, $dt$, we get a differential equation for $y$ as a function of time.
+%
+\[ \frac{dy}{dt} = r \frac{d\theta}{dt} \]
+%
+As we roll up the paper, $r$ increases, too.  Assuming that $r$ increases by a fixed amount per revolution, we can write
+%
+\[ dr = k~d\theta \]
+%
+Where $k$ is an unknown constant we'll have to figure out later.  Again, we can divide both sides by $dt$ to get a differential equation in time:
+%
+\[ \frac{dr}{dt} = k \frac{d\theta}{dt} \]
+%
+Finally, let's assume that $\theta$ increases at a constant rate of \SI{10}{\radian\per\second} (about 95 revolutions per minute):
+%
+\[ \frac{d\theta}{dt} = 10  \]
+%
+This rate of change is called an {\bf angular velocity}.  Now we have a system of three differential equations we can use to simulate the system.
+
+\section{Simulation}
+\label{papersim}
+
+At this point we have a pretty standard process for writing simulations like this.  First, we'll get the units we need from Pint:
+
+\begin{python}
+radian = UNITS.radian
+m = UNITS.meter
+s = UNITS.second
+\end{python}
+
+And define a \py{Condition} object with dimensions from \url{https://en.wikipedia.org/wiki/Toilet_paper}:
+
+\begin{python}
+condition = Condition(Rmin = 0.02 * m,
+                      Rmax = 0.055 * m,
+                      L = 47 * m,
+                      duration = 130 * s)
+\end{python}
+
+\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper, and \py{duration} is the length of the simulation in time.
+
+Then we use the \py{Condition} object to make a \py{System} object:
+
+\begin{python}
+def make_system(condition):
+    unpack(condition)
+    
+    init = State(theta = 0 * radian,
+                 y = 0 * m,
+                 r = Rmin)
+    
+    k = estimate_k(condition)
+    ts = linspace(0, duration, 101)
+    
+    return System(init=init, k=k, ts=ts)
+\end{python}
+
+The initial state contains three variables, \py{theta}, \py{y}, and \py{r}.
+
+To get started, we'll estimate a reasonable value for \py{k}.  In the next section we'll use some analysis to figure it out exactly.  Here's how we compute the estimate:
+
+\begin{python}
+def estimate_k(condition):
+    unpack(condition)
+    
+    Ravg = (Rmax + Rmin) / 2
+    Cavg = 2 * pi * Ravg
+    revs = L / Cavg
+    rads = 2 * pi * revs
+    k = (Rmax - Rmin) / rads
+    return k
+\end{python}
+
+\py{Ravg} is the average radius, half way between \py{Rmin} and \py{Rmax}, so \py{Cavg} is the circumference of the roll when \py{r} is \py{Ravg}.
+
+\py{revs} is the total number of revolutions it would take to roll up length \py{L} if \py{r} were constant at \py{Ravg}.  And \py{rads} is just \py{revs} converted to radians.
+
+Finally, \py{k} is the change in \py{r} for each radian of revolution.  For these parameters, \py{k} is about \py{2.8e-5} \si{\meter\per\radian}.
+
+Now we can use the differential equations from Section~\ref{} to write a slope function:
+
+\begin{python}
+def slope_func(state, t, system):
+    theta, y, r = state
+    unpack(system)
+    
+    omega = 10 * radian / s
+    dydt = r * omega
+    drdt = k * omega
+    
+    return omega, dydt, drdt
+\end{python}
+
+As usual, the slope function takes a \py{State} object, time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at a point in time, \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+
+Now we can run the simulation like this:
+
+\begin{python}
+run_odeint(system, slope_func)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=4in]{figs/chap11-fig01.pdf}}
+\caption{Results from paper rolling simulation, showing rotation, length, and radius over time.}
+\label{chap11-fig01}
+\end{figure}
+
+Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the velocity of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
+
+Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.  In order to get the simulation working, we have to get the units right, which makes it possible to catch conceptual errors early.
+
+And by plugging in realistic parameters, we can detect errors that cause unrealistic results.  For example, in this system we can check:
+
+\begin{itemize}
+
+\item The total time for the simulation is about 2 minutes, which seems plausible for the time it would take to roll \SI{47}{\meter} of paper.
+
+\item The final value of \py{theta} is about \SI{1250}{\radian}, which corresponds to about 200 revolutions, which also seems plausible.
+
+\item The initial and final values for \py{r} are consistent with \py{Rmin} and \py{Rmax}, as we intended when we chose \py{k}.
+
+\end{itemize}
+
+But now that we have a working simulation, it is also useful to do some analysis.
+
+
+\section{Analysis}
+
+The differential equations in Section~\ref{paper} are simple enough that we can just solve them.  Since the angular velocity is constant:
+%
+\[ \frac{d\theta}{dt} = \omega  \]
+%
+We can find $\theta$ as a function of time by integrating both sides:
+%
+\[ \theta(t) = \omega t + C_1 \]
+%
+With the initial condition $\theta(0)=0$,  we find $C_1=0$.  Similarly,
+%
+\begin{equation}
+\frac{dr}{dt} = k \omega                    \label{eqn1}
+\end{equation}
+%
+So
+%
+\[ r(t) = k \omega t + C_2 \]
+%
+With the initial condition $r(0)=R_{min}$,  we find $C_2=R_{min}$.  Then we can plug the solution for $r$ into the equation for $y$:
+%
+\begin{align}
+\frac{dy}{dt} & = r \omega                    \label{eqn2}   \\
+              & = \left[ k \omega t + R_{min} \right] \omega \nonumber
+\end{align}
+%
+%
+Integrating both sides yields:
+%
+\[ y(t) = \left[ k \omega t^2 / 2 + R_{min} t \right] \omega + C_3\]
+%
+So $y$ is a parabola, as you might have guessed.  With initial condition $y(0)=0$, we find $C_3=0$.
+
+We can also use these equations to find the relationship between $y$ and $r$, independent of time, which we can use to compute $k$.  Using a move we saw in Section~\ref{contact}, I'll divide Equations~\ref{eqn1} and \ref{eqn2}, yielding
+%
+\[ \frac{dr}{dl} = \frac{k}{r}\]
+%
+Separating variables yields
+%
+\[ r~dr = k~dy\]
+%
+Integrating both sides yields
+%
+\[ r^2 / 2 = k y + C \]
+%
+When $y=0$, $r=R_{min}$, so
+%
+\[ C = \frac{1}{2} R_{min}^2 \]
+%
+Solving for $y$, we have
+%
+\[ y = \frac{1}{2k} (r^2 - R_{min}^2) \]
+%
+When $y=L$, $r=R_{max}$, so
+%
+\[ L = \frac{1}{2k} (R_{max}^2 - R_{min}^2) \]
+%
+Solving for $k$ yields
+%
+\[ k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2) \]
+%
+Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.
+
+
+\section{Torque}
+
+Now that we've rolled up the paper, let's unroll it.  Specifically, let's simulate the process of a kitten unrolling toilet paper.  As reference material, see this video: \url{https://www.youtube.com/watch?v=1Z9YNmCIscs}.
+
+The interactions of the kitten and the paper roll are complex.  To keep things simple, let's assume that the kitten pulls down on the free end of the roll with constant force.  And for now we will neglect the friction between the roll and the axle.  This will not be a particularly realistic model, but it will allow us to explore two new concepts, angular acceleration and torque.
+
+Just as linear acceleration is the derivative of velocity, {\bf angular acceleration} is the derivative of angular velocity.  And just as linear acceleration is caused by force, $F$, angular acceleration is caused by the rotational version of force, {\ bf torque}.  If you are not familiar with torque, you can read about it at \url{https://en.wikipedia.org/wiki/Torque}.
+
+In general, torque is a vector quantity, defined as the cross product of $\vec{r}$ and $\vec{F}$, where $\vec{r}$ is the vector from the point of rotation to the point where the force is applied, and $\vec{F}$ is the vector that represents the magnitude and direction of the force.
+
+However, for the problems in this chapter, we only need the magnitude of torque; we don't care about the direction.  In that case, we can compute
+%
+\[ \tau = r F \sin \theta \]
+%
+where $\tau$ is the conventional symbol for torque, $r$ is the length of the ``lever arm", $\vec{r}$, $F$ is the magnitude of force, and $\theta$ is the angle between $\vec{r}$ and $\vec{F}$.  In the toilet paper scenario, if the kitten pulls on the loose end of the paper, the force on the roll is always perpendicular to the lever arm, so $\sin \theta = 1$.
+
+Since torque is the product of a length and a force, it is expressed in SI units \si{\newton\meter}.
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/paper_roll2.pdf}}
+\caption{Diagram of a roll of toilet paper, showing a force, lever arm, and the resulting torque.}
+\label{paper_roll2}
+\end{figure}
+
+Figure~\ref{paper_roll2} shows the paper roll with $r$, $F$, and $\tau$.  As a vector quantity, the direction of $\tau$ is down, into the page.  But again, we only care about its magnitude for now.
+
+
+\section{Moment of inertia}
+
+In the same way that linear acceleration is related to force by Newton's second law of motion, $F=ma$, angular acceleration is related to torque by another form of Newton's law:
+%
+\[ \tau = I \alpha \]
+%
+Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to define mass, but its actually one of the fundamental definition.}, moment of inertia is what makes it harder to spin an object.
+
+In the most general case, a 3D object rotating around an arbitrary axis, moment of inertia is a tensor quantity, which is like a function that takes a vector as a parameter and returns a vector as a result.
+
+Fortunately, in a system where all rotation happens around a single axis, we don't have do deal with the most general case.  We can treat moment of inertia as a scalar quantity.
+
+For a small point with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
+
+For most simple shapes, people have already done the calculations; you can just look up the answers.
+
+\section{Unrolling}
+
+Let's work on simulating the kitten unrolling the toilet paper.  Here's the \py{Condition} object with the parameters we'll need:
+
+\begin{python}
+condition = Condition(Rmin = 0.02 * m,
+                      Rmax = 0.055 * m,
+                      L = 47 * m,
+                      Mcore = 15e-3 * kg,
+                      Mroll = 215e-3 * kg,
+                      tension = 2e-4 * N,
+                      duration = 180 * s)
+\end{python}
+
+As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L} is the length of the paper.
+
+\py{Mcore} is the mass of the cardboard tube at the center of the roll; \py{Mroll} is the mass of the paper.
+
+\py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
+
+At \url{https://en.wikipedia.org/wiki/List_of_moments_of_inertia} you can find moment of inertia for simple geometric shapes.  We can model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
+
+The moment of inertia for a thin shell is just $m r^2$, where $m$ is the mass and $r$ is the radius of the shell.
+
+For a thick-walled tube
+
+\[ I = \frac{\pi \rho h}{2} (R_{max}^4 - R_{min}^4) \]
+
+ can compute the moment of inertia for the toilet paper roll:
+
+\begin{python}
+def moment_of_inertia(r, system):
+    unpack(system)
+    Icore = Mcore / 2 * Rmin**2
+    if r < Rmin:
+        Iroll = 0
+    else:
+        Iroll = pi * rho / 2 * (r**4 - Rmin**4)
+    return Icore + Iroll
+\end{python}
+
+
 
 \backmatter
 \printindex
