@@ -29,6 +29,7 @@
 % to get siunitx
 % sudo apt-get install texlive-science
 \usepackage{siunitx}
+\sisetup{per-mode=symbol}
 
 \definecolor{light-gray}{gray}{0.95}
 
@@ -5039,23 +5040,25 @@ The notebook provides some additional hints, but at this point you should have e
 \chapter{Rotation}
 
 
-Let's talk about things that spin.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects can be easier to spin around some axes than others, and stable when spinning around some axes, but not others.  
+Let's talk about things that spin.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others, and stable when spinning around some axes, but not others.  
 
-As the shape of an object changes, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
+If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
 
-And when you applying a twisting force to a rotating object, the effect is often contrary to intuition.  See, for example, this video on gyroscopic precession \url{https://www.youtube.com/watch?v=ty9QSiVC2g0}
+And when you applying a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{https://www.youtube.com/watch?v=ty9QSiVC2g0}.
 
-In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on a simple scenario where all rotation is around a single axis.  In that case, we can treat some vector quantities, like torque, as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
+In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.  In that case, we can treat some vector quantities as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
 
 This approach makes it possible to simulate and analyze many interesting systems; but you will also encounter systems that would be better approached with the more general toolkit.
 
-The fundamental ideas in this chapter are angular velocity and angular acceleration, torque, and moment of inertia.  To introduce these ideas, I'll simulate the behavior of a yo-yo (see \url{https://en.wikipedia.org/wiki/Yo-yo}).  We'll work our way up to it gradually, starting with toilet paper.
+The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
+
+As an exercise at the end of the chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{https://en.wikipedia.org/wiki/Yo-yo}).  But we'll work our way up to it gradually, starting with toilet paper.
 
 
 \section{The physics of toilet paper}
 \label{paper}
 
-As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.
+As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a standard roll of two-ply toilet paper in the U.S. (see \url{https://en.wikipedia.org/wiki/Toilet_paper}).
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/paper_roll.pdf}}
@@ -5089,6 +5092,7 @@ Finally, let's assume that $\theta$ increases at a constant rate of \SI{10}{\rad
 %
 This rate of change is called an {\bf angular velocity}.  Now we have a system of three differential equations we can use to simulate the system.
 
+
 \section{Simulation}
 \label{papersim}
 
@@ -5100,7 +5104,7 @@ m = UNITS.meter
 s = UNITS.second
 \end{python}
 
-And define a \py{Condition} object with dimensions from \url{https://en.wikipedia.org/wiki/Toilet_paper}:
+And define a \py{Condition} object with the parameters of the system:
 
 \begin{python}
 condition = Condition(Rmin = 0.02 * m,
@@ -5163,7 +5167,9 @@ def slope_func(state, t, system):
     return omega, dydt, drdt
 \end{python}
 
-As usual, the slope function takes a \py{State} object, time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at a point in time, \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.
+
+The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
 
 Now we can run the simulation like this:
 
@@ -5177,9 +5183,9 @@ run_odeint(system, slope_func)
 \label{chap11-fig01}
 \end{figure}
 
-Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the velocity of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
+Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
 
-Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.  In order to get the simulation working, we have to get the units right, which makes it possible to catch conceptual errors early.
+Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.  In order to get the simulation working, we have to get the units right, which can help catch conceptual errors early.
 
 And by plugging in realistic parameters, we can detect errors that cause unrealistic results.  For example, in this system we can check:
 
@@ -5198,7 +5204,7 @@ But now that we have a working simulation, it is also useful to do some analysis
 
 \section{Analysis}
 
-The differential equations in Section~\ref{paper} are simple enough that we can just solve them.  Since the angular velocity is constant:
+The differential equations in Section~\ref{paper} are simple enough that we can just solve them.  Since angular velocity is constant:
 %
 \[ \frac{d\theta}{dt} = \omega  \]
 %
@@ -5232,7 +5238,7 @@ So $y$ is a parabola, as you might have guessed.  With initial condition $y(0)=0
 
 We can also use these equations to find the relationship between $y$ and $r$, independent of time, which we can use to compute $k$.  Using a move we saw in Section~\ref{contact}, I'll divide Equations~\ref{eqn1} and \ref{eqn2}, yielding
 %
-\[ \frac{dr}{dl} = \frac{k}{r}\]
+\[ \frac{dr}{dy} = \frac{k}{r}\]
 %
 Separating variables yields
 %
@@ -5248,36 +5254,40 @@ When $y=0$, $r=R_{min}$, so
 %
 Solving for $y$, we have
 %
-\[ y = \frac{1}{2k} (r^2 - R_{min}^2) \]
+\begin{equation}
+y = \frac{1}{2k} (r^2 - R_{min}^2)                 \label{eqn3}
+\end{equation}
 %
-When $y=L$, $r=R_{max}$, so
+When $y=L$, $r=R_{max}$; substituting in those values yields
 %
 \[ L = \frac{1}{2k} (R_{max}^2 - R_{min}^2) \]
 %
 Solving for $k$ yields
 %
-\[ k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2) \]
+\begin{equation}
+k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2)           \label{eqn4}
+\end{equation}
 %
-Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.
+Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.  In this case the estimate turns out to be exact.
 
 
 \section{Torque}
 
-Now that we've rolled up the paper, let's unroll it.  Specifically, let's simulate the process of a kitten unrolling toilet paper.  As reference material, see this video: \url{https://www.youtube.com/watch?v=1Z9YNmCIscs}.
+Now that we've rolled up the paper, let's unroll it.  Specifically, let's simulate a kitten unrolling toilet paper.  As reference material, see this video: \url{https://www.youtube.com/watch?v=1Z9YNmCIscs}.
 
-The interactions of the kitten and the paper roll are complex.  To keep things simple, let's assume that the kitten pulls down on the free end of the roll with constant force.  And for now we will neglect the friction between the roll and the axle.  This will not be a particularly realistic model, but it will allow us to explore two new concepts, angular acceleration and torque.
+The interactions of the kitten and the paper roll are complex.  To keep things simple, let's assume that the kitten pulls down on the free end of the roll with constant force.  Also, we will neglect the friction between the roll and the axle.  This will not be a particularly realistic model, but it will allow us to explore two new concepts, angular acceleration and torque.
 
-Just as linear acceleration is the derivative of velocity, {\bf angular acceleration} is the derivative of angular velocity.  And just as linear acceleration is caused by force, $F$, angular acceleration is caused by the rotational version of force, {\ bf torque}.  If you are not familiar with torque, you can read about it at \url{https://en.wikipedia.org/wiki/Torque}.
+Just as linear acceleration is the derivative of velocity, {\bf angular acceleration} is the derivative of angular velocity.  And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, {\bf torque}.  If you are not familiar with torque, you can read about it at \url{https://en.wikipedia.org/wiki/Torque}.
 
-In general, torque is a vector quantity, defined as the cross product of $\vec{r}$ and $\vec{F}$, where $\vec{r}$ is the vector from the point of rotation to the point where the force is applied, and $\vec{F}$ is the vector that represents the magnitude and direction of the force.
+In general, torque is a vector quantity, defined as the cross product of $\vec{r}$ and $\vec{F}$, where $\vec{r}$ is the {\bf lever arm}, a vector from the point of rotation to the point where the force is applied, and $\vec{F}$ is the vector that represents the magnitude and direction of the force.
 
 However, for the problems in this chapter, we only need the magnitude of torque; we don't care about the direction.  In that case, we can compute
 %
 \[ \tau = r F \sin \theta \]
 %
-where $\tau$ is the conventional symbol for torque, $r$ is the length of the ``lever arm", $\vec{r}$, $F$ is the magnitude of force, and $\theta$ is the angle between $\vec{r}$ and $\vec{F}$.  In the toilet paper scenario, if the kitten pulls on the loose end of the paper, the force on the roll is always perpendicular to the lever arm, so $\sin \theta = 1$.
+where $\tau$ is torque, $r$ is the length of the lever arm, $F$ is the magnitude of force, and $\theta$ is the angle between $\vec{r}$ and $\vec{F}$.  In the toilet paper scenario, if the kitten pulls on the loose end of the paper, the force on the roll is always perpendicular to the lever arm, so $\sin \theta = 1$.
 
-Since torque is the product of a length and a force, it is expressed in SI units \si{\newton\meter}.
+Since torque is the product of a length and a force, it is expressed in SI units as Newton meters (\si{\newton\meter}).
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/paper_roll2.pdf}}
@@ -5285,7 +5295,7 @@ Since torque is the product of a length and a force, it is expressed in SI units
 \label{paper_roll2}
 \end{figure}
 
-Figure~\ref{paper_roll2} shows the paper roll with $r$, $F$, and $\tau$.  As a vector quantity, the direction of $\tau$ is down, into the page.  But again, we only care about its magnitude for now.
+Figure~\ref{paper_roll2} shows the paper roll with $r$, $F$, and $\tau$.  As a vector quantity, the direction of $\tau$ is into the page.  But again, we only care about its magnitude for now.
 
 
 \section{Moment of inertia}
@@ -5294,15 +5304,16 @@ In the same way that linear acceleration is related to force by Newton's second 
 %
 \[ \tau = I \alpha \]
 %
-Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to define mass, but its actually one of the fundamental definition.}, moment of inertia is what makes it harder to spin an object.
+Where $\alpha$ is angular acceleration and $I$ is {\bf moment of inertia}.  Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to define mass, but its actually one of the fundamental definitions.}, moment of inertia is what makes it harder to spin an object.
 
 In the most general case, a 3D object rotating around an arbitrary axis, moment of inertia is a tensor quantity, which is like a function that takes a vector as a parameter and returns a vector as a result.
 
-Fortunately, in a system where all rotation happens around a single axis, we don't have do deal with the most general case.  We can treat moment of inertia as a scalar quantity.
+Fortunately, in a system where all rotation and torque happens around a single axis, we don't have do deal with the most general case.  We can treat moment of inertia as a scalar quantity.
 
 For a small point with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
-For most simple shapes, people have already done the calculations; you can just look up the answers.
+However, for most simple shapes, people have already done the calculations; you can just look up the answers.
+
 
 \section{Unrolling}
 
@@ -5324,26 +5335,170 @@ As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L}
 
 \py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
 
-At \url{https://en.wikipedia.org/wiki/List_of_moments_of_inertia} you can find moment of inertia for simple geometric shapes.  We can model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
+At \url{https://en.wikipedia.org/wiki/List_of_moments_of_inertia} you can find moments of inertia for simple geometric shapes.  I'll model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
 
 The moment of inertia for a thin shell is just $m r^2$, where $m$ is the mass and $r$ is the radius of the shell.
 
-For a thick-walled tube
+For a thick-walled tube the moment of inertia is
+%
+\[ I = \frac{\pi \rho h}{2} (r_2^4 - r_1^4) \]
+%
+where $\rho$ is the density of the material in (mass per volume), $h$ is the height of the tube, $r_2$ is the outer diameter, and $r_1$ is the inner diameter.
 
-\[ I = \frac{\pi \rho h}{2} (R_{max}^4 - R_{min}^4) \]
-
- can compute the moment of inertia for the toilet paper roll:
+Since the outer diameter changes as the kitten unrolls the paper, we have to compute the moment of inertia, at each point in time, as a function of the current radius, \py{r}.  Here's the function that does it:
 
 \begin{python}
 def moment_of_inertia(r, system):
     unpack(system)
     Icore = Mcore / 2 * Rmin**2
-    if r < Rmin:
-        Iroll = 0
-    else:
-        Iroll = pi * rho / 2 * (r**4 - Rmin**4)
+    Iroll = pi * rho_h / 2 * (r**4 - Rmin**4)
     return Icore + Iroll
 \end{python}
+
+\py{rho_h} is the product of density and height, $\rho h$, which is the mass per area.  \py{rho_h} is computed in \py{make_system}:
+
+\begin{python}
+def make_system(condition):
+    unpack(condition)
+    
+    init = State(theta = 0 * radian,
+                 omega = 0 * radian/s,
+                 y = L)
+    
+    area = pi * (Rmax**2 - Rmin**2)
+    rho_h = Mroll / area
+    k = (Rmax**2 - Rmin**2) / 2 / L / radian    
+    ts = linspace(0, duration, 101)
+    
+    return System(init=init, k=k, rho_h=rho_h,
+                  Rmin=Rmin, Rmax=Rmax,
+                  Mcore=Mcore, Mroll=Mroll, 
+                  ts=ts)
+\end{python}
+
+\py{make_system} also computes \py{k}, using Equation~\ref{eqn4}.  Now we can write the slope function:
+
+\begin{python}
+def slope_func(state, t, system):
+    theta, omega, y = state
+    unpack(system)
+    
+    r = sqrt(2*k*y + Rmin**2)
+    I = moment_of_inertia(r, system)
+    tau = r * tension
+    alpha = tau / I
+    dydt = -r * omega
+    
+    return omega, alpha, dydt
+\end{python}
+
+This slope function is similar to the previous one (Section~\ref{papersim}), with a few changes:
+
+\begin{itemize}
+
+\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, using Equation~\ref{eqn3}.
+
+\item Because \py{r} changes over time, we have to compute moment of inertia, \py{I}, at each time step.
+
+\item Angular velocity, \py{omega}, is no longer constant.  Instead, we compute torque, \py{tau}, and angular acceleration, \py{alpha}, at each time step.  \py{odeint} will integrate \py{alpha} to get \py{omega} and integrate \py{omega} to get \py{theta}.
+
+\item I have implicitly changed the definition of \py{theta} so positive values of \py{theta} correspond to clockwise rotation, so $dy/dt = -r \omega$; that is, positive values of \py{omega} yield decreasing values of $y$, the amount of paper still on the roll.
+
+\end{itemize} 
+
+The return value is the sequence \py{omega}, \py{alpha}, and \py{dydt}, which are the derivatives of \py{theta}, \py{omega}, and \py{y}, respectively.
+
+\begin{figure}
+\centerline{\includegraphics[height=4in]{figs/chap11-fig02.pdf}}
+\caption{Simulation results showing rotation, angular velocity, and length over time.}
+\label{chap11-fig02}
+\end{figure}
+
+Now we're ready to run the simulation.  Figure~\ref{chap11-fig02} shows the results.  Again, we can check the results to see if they seem plausible:
+
+\begin{itemize}
+
+\item Angular velocity, \py{omega}, increases almost linearly at first, as constant force yields almost constant torque.  Then, as the radius decreases, the lever arm decreases, yielding lower torque, but moment of inertia decreases even more, yielding higher angular acceleration.
+
+\item The final value of \py{omega} is \SI{7.4}{\radian\per\second}, which is close to one revolution per second, so that seems plausible.
+
+\item The final value of \py{theta} is \SI{555}{\radian}, which is about  
+88 revolutions.  
+
+\item The final value of \py{y} is \SI{21}{\meter} of paper left on the roll, which means the kitten pulled off \SI{26}{\meter} in two minutes.  That doesn't seem impossible, although it is based on a level of consistency and focus that is unlikely in a kitten.
+
+\end{itemize}
+
+This model yields results that seem reasonable, but remember that I chose the force applied by the kitten arbitrarily, and we ignore friction between the paper roll and the axle.  This example is not meant to be particularly serious, but it is good preparation for the next problem, which is a little more interesting.
+
+
+\section{Simulating a yo-yo}
+
+In its initial state, suppose a yo-yo has a length of string wound around its axle, and the yo-yo is released while the end of the string is held stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since the tension force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/yoyo.pdf}}
+\caption{Diagram of a yo-yo showing forces due to gravity and tension in the string, the lever arm of tension, and the resulting torque.}
+\label{yoyo}
+\end{figure}
+
+Figure~\ref{yoyo} is a diagram of the forces on the yo-yo and the resulting torque.  The outer shaded area shows the body of the yo-yo.  The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.
+
+In this model, we can't figure out the linear acceleration and angular acceleration independently; we have to solve a system of equations.  Specifically, the equations are $\sum F = m a$ and $\sum \tau = I \alpha$.
+
+As in the previous examples, linear velocity and angular are related because of the way the paper, or string, unrolls:
+%
+\[ \frac{dy}{dt} = -r \frac{d \theta}{dt} \]
+%
+In this example, the linear and angular accelerations have opposite sign.  As the yo-yo rotates counter-clockwise, $\theta$ increases and $y$, which is the length of the rolled part of the string, decreases.
+
+Taking the derivative of both sides yields a similar relationship between linear acceleration and angular acceleration:
+%
+\[ \frac{d^2 y}{dt^2} = -r \frac{d^2 \theta}{dt^2} \]
+%
+Which we can write more concisely:
+%
+\[ a = -r \alpha \]
+%
+But remember that this relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching in the string or tightening in the coil.
+
+Because of the way we've set up the problem, $y$ actually has two meanings: it is the length of the rolled string, but it is also the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ is both the acceleration in the length of the rolled string and the height of the yo-yo.
+
+And we can compute the acceleration of the yo-yo by adding up the linear forces:
+
+\[ \sum F = T - mg = ma \]
+
+Where tension, $T$ is positive because it points up, and the force of gravity is negative.
+
+Because gravity acts on the center of mass, it creates no torque, so the only torque is due to tension, $T$:
+
+\[ \sum \tau = T r = I \alpha \]
+
+Where positive (upward) tension yields positive (counter-clockwise) angular acceleration.
+
+Now we have three equations in three unknowns, $T$, $a$, and $\alpha$, with $I$, $m$, $g$, and $r$ as known quantities.  It is simple enough to solve these equations by hand, but we can also get SymPy to do it for us:
+
+\begin{python}
+T, a, alpha, I, m, g, r = symbols('T a alpha I m g r')
+eq1 = Eq(a, -r * alpha)
+eq2 = Eq(T - m*g, m * a)
+eq3 = Eq(T * r, I * alpha)
+soln = solve([eq1, eq2, eq3], [T, a, alpha])
+\end{python}
+
+The results are
+%
+\begin{align*}
+T      &= m g I / I^*   \\
+a      &= -m g r^2 / I^* \\
+\alpha &= m g r / I^*    \\
+\end{align*}
+%
+where $I^*$ is the augmented moment of inertia, $I + m r^2$.  To simulate the system, we don't really need $T$, but we can plug $a$ and $\alpha$ directly into the slope function.
+
+At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter you will have a chance to finish off the exercise.
+
+
 
 
 
