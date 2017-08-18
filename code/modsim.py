@@ -608,8 +608,16 @@ def subplots(*args, **kwargs):
 
 
 def subplot(nrows, ncols, plot_number, **kwargs):
-    #TODO: set figure size based on nrows and ncols
+    figsize = {(2, 1): (6, 6)}
+    figsize = {(3, 1): (6, 9)}
+    key = nrows, ncols
+    default = 8, 5.5
+    width, height = figsize.get(key, default)
+    
     plt.subplot(nrows, ncols, plot_number, **kwargs)
+    fig = plt.gcf()
+    fig.set_figwidth(width)
+    fig.set_figheight(height)
 
 
 def legend(**kwargs):
