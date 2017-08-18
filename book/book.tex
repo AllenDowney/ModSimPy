@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.9.2}
+\newcommand{\theversion}{0.12.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -206,7 +206,7 @@ Version \theversion
 \pagebreak
 \thispagestyle{empty}
 
-+Copyright \copyright ~2016 \theauthors.
+Copyright \copyright ~2016 \theauthors.
 
 
 
@@ -271,24 +271,157 @@ available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 \chapter{Preface}
 \label{preface}
 
-Usual rant about freshman physics.
+This book is about modeling and simulation of physical systems.  
+Figure~\ref{framework} shows what I mean by ``modeling":
 
-\section{Who is this book for?}
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/modeling_framework.pdf}}
+\caption{Framework showing the elements of modeling and simulation.}
+\label{framework}
+\end{figure}
 
-No Python.
+\begin{itemize}
 
-High school physics and high school calc, but not really.
+\item The {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be simplified or {\bf abstracted} away.
+
+\item The result of abstraction is a {\bf model} that includes the features we thinks are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
+
+\item The result of analysis and simulation can be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
+
+\item We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
+
+\end{itemize}
+
+This process is almost always iterative: for any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
+
+Sometimes a more detailed model is better.  If we include more features and more detail, the model is more realistic, and we expect its predictions to be more accurate.
+
+But often a simpler model is better.  If we include only the essential features and leave out the rest, we get models that are easier to work with and the explanations they provide can be clearer and more compelling.
+
+As an example, suppose someone asked you why the orbit of the Earth is nearly elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size) and compute the gravitational force between them using Newton's law of universal gravitation, you can show by analysis or simulation that the orbits in the model are ellipses.
+
+Of course, the actual orbit of Earth is not a perfect ellipse, because of the gravitational forces of the Moon, Jupiter, and other objects in the solar system, and because Newton's law is only approximately true (it does not take into account relativistic effects).
+
+But adding these features to the model would not improve the explanation; more detail would only be a distraction from the fundamental cause.  However, if the goal is to predict the position of the Earth with great precision, including more details might be necessary.  
+
+So the best modeling decisions depend on what the model is for.  It is usually a good idea to start with a very simple model, even if it is likely to be too simple, and test whether it is good enough for its purpose.  Then you can add features gradually, starting with the ones you expect to be most essential.
+
+Comparing the results of successive models provides a form of {\bf internal validation}, so you can catch conceptual, mathematical, and software errors.  And by adding and removing features, you can tell which ones have the biggest effect on the results, and which can be ignored.
+
+
+\section{Can modeling be taught?}
+
+These essential modeling skills -- abstraction, analysis, simulation, and validation -- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most programs they are not taught explicitly, and students get little practice.
+
+That's the problem this book is meant to address.  At Olin College, we use this book in a class called Modeling and Simulation, which all students take in their first semester.  My colleagues, John Geddes and Mark Somerville, and I developed this class and taught it for the first time in 2009.
+
+It is based on our belief that modeling can and should be taught explicitly, early, and throughout the curriculum.  It is also based on our conviction that computation is an essential part of this process.
+
+If students are limited to the mathematical analysis they can do by hand, they are restricted to a small number of simple physical systems, like a projectile moving in a vacuum or a block on a frictionless plane.
+
+And they will only work with bad models; that is, models that are too simple for their purpose.  In nearly every interesting physical system, and especially in engineering, air resistance and friction are essential features; if we ignore them, out predictions will be wrong and our designs won't work.
+
+In most freshman Physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach, and for students to practice, the entire modeling process.
+
+
+\section{How much programming experience do I need?}
+
+If you have never programmed before, you should be able to read this book, understand it, and do the exercises.  I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it it used.  If you find that I have used a term without defining it, let me know.
+
+If you have programmed before, you will have an easier time getting started, but you might be uncomfortable in some places.  I take an approach to programming you have probably not seen before.
+
+Most programming classes\footnote{Including many I have taught.} have two big problems:
+
+\begin{enumerate}
+
+\item They go ``bottom up", starting with basic language features and gradually adding more powerful tools.  As a result, it takes a long time before students can do anything more interesting than convert Fahrenheit to Celsius.
+
+\item They have no context.  Students learn to program with no particular goal in mind, so the exercises span an incoherent collection of topics, and the projects tend to be unmotivated.
+
+\end{enumerate}
+
+In this book, you learn to program with an immediate goal in mind: writing simulations of physical systems.  And we proceed ``top down", by which I mean we use professional-strength data structures and language features right away.  In particular, we use the following Python libraries:
+
+\begin{itemize}
+
+\item NumPy for basic numerical computation (see \url{http://www.numpy.org/}).
+\index{NumPy}
+
+\item SciPy for scientific computation (see \url{http://www.scipy.org/}).
+\index{SciPy}
+
+\item matplotlib for visualization (see \url{http://matplotlib.org/}).
+\index{matplotlib}
+
+\item pandas for working with data (see \url{http://pandas.pydata.org/}).
+
+\item SymPy for symbolic computation, \url{http://www.sympy.org}.
+
+\item Pint for units like kilograms and meters (see \url{http://pint.readthedocs.io}).
+
+\item Jupyter for reading, running, and developing code (see \url{http://jupyter.org/}).
+
+\end{itemize}
+
+These tools let you work on more interesting programs more quickly, but there are some drawbacks: they can be hard to use, and it can be challenging to keep track of which library does what and how they interact.
+
+I have tried to mitigate these problems by providing a module, called \py{modsim.py} that makes it easier to get started with these tools, and provides some additional capabilities.
+
+Some features in \py{modsim.py} are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other parts you might find useful the whole time you are working through the book, or even later.
+
+I encourage you to read the \py{modsim.py} source code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse-engineering my designs.
+
+
+\section{How much math and science do I need?} 
+
+I assume that you have studied calculus.  You should know what derivatives and integrals, but that's about all you need to know.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $x dx$, that will do it.
+
+More importantly, though, you should understand what those concepts {\em mean}.  But if you don't, this book might help you figure it out.
+
+You don't have to know anything about differential equations.
+
+As for science, we will cover topics from a variety of fields, including demography, epidemiology, medicine, thermodynamics, and mechanics. For the most part, I don't assume you know anything about these topics.  In fact, one of the skill you need to do modeling is the ability to learn enough about new fields to develop models and simulations.
+
+But when we get to mechanics, I assume you understand the relationship between position, velocity, and acceleration, and that you are familiar with Newton's laws of motion, especially the second law, which is often expressed as $F = ma$ (force equals mass times acceleration).
+
+I think that's everything you need to know, but if you find that I left something out, please let me know.
 
 
 \section{Using the code}
 \label{code}
 
-The code and sound samples used in this book are available from
-\url{https://github.com/AllenDowney/ModSimPy}.  Git is a version
-control system that allows you to keep track of the files that
-make up a project.  A collection of files under Git's control is
-called a ``repository''.  GitHub is a hosting service that provides
-storage for Git repositories and a convenient web interface.
+To run the examples and work on the exercises in this book, you will need to be able to
+
+\begin{enumerate}
+
+\item Install Python and the libraries we need on your computer.
+
+\item Copy my files onto your computer.
+
+\item Run Jupyter, which is a tool for running and writing programs, and load a notebook, which is a file that contains code and text.
+
+\end{enumerate}
+
+I wish there were an easier way to get started; it's really unfortunate that you have to do so much work before you write your first program.  But I will try to provide all the information you need.
+
+
+\section{Installing libraries}
+
+You might already have Python installed on your computer, but you might not have the latest version.  To use the code in this book, you need Python 3.6, or later.  And even if you have the latest version, you probably don't have all of the libraries we need.
+
+You could update Python and install these libraries, but I strongly recommend that you don't go down that road.  I think you will find it easier to use {\bf Anaconda}, which is a free Python distribution that includes all the libraries you'll need (and lots more).
+\index{Anaconda}
+
+Anaconda is available for Linux, macOS, and Windows.  By default, it installs all files in your home directory, so you don't need administrator (root) permission to install it, and if you have a version of Python already installed, Anaconda will not remove or modify it.
+
+Detailed instructions coming soon.
+
+
+
+\section{Copying my files}
+
+The code for this book is available from
+\url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you to keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository.  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
 \index{repository}
 \index{Git}
 \index{GitHub}
@@ -296,117 +429,53 @@ storage for Git repositories and a convenient web interface.
 The GitHub homepage for my repository provides several ways to
 work with the code:
 
-\begin{itemize}
+\begin{enumerate}
 
 \item You can create a copy of my repository
 on GitHub by pressing the {\sf Fork} button.  If you don't already
 have a GitHub account, you'll need to create one.  After forking, you'll
 have your own repository on GitHub that you can use to keep track
 of code you write while working on this book.  Then you can
-clone the repo, which means that you copy the files
+{\bf clone} the repo, which means that you copy the files
 to your computer.
 \index{fork}
 
-\item Or you could clone
-my repository.  You don't need a GitHub account to do this, but you
-won't be able to write your changes back to GitHub.
+\item Or you can clone my repository directly, without forking.  You don't need a GitHub account to do this, but you won't be able to write your changes back to GitHub.
 \index{clone}
 
 \item If you don't want to use Git at all, you can download the files
-in a Zip file using the button in the lower-right corner of the
-GitHub page.
+in a Zip file using the green button in the upper-right corner of the
+GitHub page, or this URL: \url{https://github.com/AllenDowney/ModSimPy/archive/master.zip}.  Then you will need a program like WinZip or gzip to unpack the Zip file.
 
-\end{itemize}
+\end{enumerate}
 
-All of the code is written to work in both Python 2 and Python 3
-with no translation.
+For options 1 and 2, you will need a {\bf git client}, which is a program that manages git repositories.  If you have not used Git before, I recommend GitHub Desktop, which is a simple graphical Git client.  You can download it from \url{https://desktop.github.com/}.
 
-I developed this book using Anaconda from
-Continuum Analytics, which is a free Python distribution that includes
-all the packages you'll need to run the code (and lots more).
-I found Anaconda easy to install.  By default it does a user-level
-installation, not system-level, so you don't need administrative
-privileges.  And it supports both Python 2 and Python 3.  You can
-download Anaconda from \url{http://continuum.io/downloads}.
-\index{Anaconda}
+As I write this, GitHub Desktop is not available for Linux.  On Linux, I suggest using the Git command-line client.  Installation instructions are at \url{https://git-scm.com/download/linux}.  Then to clone my repository, you can open a Terminal and run:
 
-If you don't want to use Anaconda, you will need the following
-packages:
+\begin{python}
+git clone http://github.com/AllenDowney/ModSimPy
+\end{python}
 
-\begin{itemize}
+Or if you forked my repository on GitHub, you can clone {\em your} repository:
 
-\item NumPy for basic numerical computation, \url{http://www.numpy.org/};
-\index{NumPy}
+\begin{python}
+git clone http://github.com/YourGitHubUserName/ModSimPy
+\end{python}
 
-\item SciPy for scientific computation,
-  \url{http://www.scipy.org/};
-\index{SciPy}
+Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.
 
-\item matplotlib for visualization, \url{http://matplotlib.org/}.
-\index{matplotlib}
 
-%TODO: what else
 
-\end{itemize}
 
-Although these are commonly used packages, they are not included with
-all Python installations, and they can be hard to install in some
-environments.  If you have trouble installing them, I
-recommend using Anaconda or one of the other Python distributions
-that include these packages.
-\index{installation}
+\section{Running Jupyter}
 
 The code for each chapter, and starter code for the exercises, is in
 Jupyter notebooks.  If you have not used Jupyter before, you can read
-about it at \url{http://jupyter.org}.  \index{Jupyter}
+about it at \url{http://jupyter.org}.
+\index{Jupyter}
 
-There are three ways you can work with the Jupyter notebooks:
-
-\begin{description}
-
-\item[Run Jupyter on your computer]
-
-If you installed Anaconda, you
-  probably got Jupyter by default.  To check, start the server from
-the command line, like this:
-
-\begin{verbatim}
-$ jupyter notebook
-\end{verbatim}
-
-If it's not installed, you can install it in Anaconda like this
-
-\begin{verbatim}
-$ conda install jupyter
-\end{verbatim}
-
-When you start the server, it should launch your default web browser
-or create a new tab in an open browser window.
-
-\item[Run Jupyter on Binder]
-
-Binder is a service that runs Jupyter in a virtual machine.  If you
-follow this link, \url{http://mybinder.org/repo/AllenDowney/ModSimPy},
-you should get a Jupyter home page with the notebooks for this book
-and the supporting data and scripts.
-
-You can run the scripts and modify them to run your own code, but the
-virtual machine you run in is temporary.  Any changes you make will
-disappear, along with the virtual machine, if you leave it idle for
-more than about an hour.
-
-\item[View notebooks on nbviewer]
-
-When we refer to notebooks later in the book, we will provide links to
-nbviewer, which provides a static view of the code and results.  You
-can use these links to read the notebooks and listen to the examples,
-but you won't be able to modify or run the code, or use the
-interactive widgets.
-
-\end{description}
-
-Good luck, and have fun!
-
+Jupyter instructions coming soon.
 
 
 \section*{Contributor List}
@@ -498,9 +567,7 @@ There are (at least) two ways to work with mathematical models, {\bf analysis} a
 
 In this book we do some analysis and a lot of simulation; along the way, we will discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
-As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example, and the other code in this chapter, at \url{FILL THIS IN}.  At the end of the chapter, I'll give you instructions for downloading and running the examples. 
-
-%TODO: fill in that URL
+As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example, and the other code in this chapter, at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap01.ipynb}.  At the end of the chapter, I'll give you instructions for downloading and running the examples. 
 
 First I'll created a {\bf variable} to represent acceleration.
 
@@ -575,29 +642,28 @@ bikeshare.wellesley
 \end{python}
 
 The result is 2.  If you ever forget what variables a system
-object has, you can use \py{print_system}, another function from
-\py{modsim}:
-
-%TODO: get rid of this function
+object has, you can print it:
 
 \begin{python}
-print_system(bikeshare)
+print(bikeshare)
 \end{python}
 
-\py{print_system} is a function, like \py{System}.  The name in
-parentheses is a function {\bf argument}, which specifies which
-system object we want to print.
+Or in a Jupyter notebook, just type the name:
 
-The result looks like this:
+\begin{python}
+bikeshare
+\end{python}
 
-\begin{result}
-wellesley -> 2
-olin -> 10
-\end{result}
+The result looks like a table with the system variable names and their values:
 
-%TODO: define ``state of the system''
+\begin{tabular}{lr}
+ & {\bf \sf value} \\ 
+\hline 
+{\bf \sf olin} & 10 \\ 
+{\bf \sf wellesley} & 2 \\ 
+\end{tabular} 
 
-We can update the state of the system by assigning new values to
+The system variables and their values make up the {\bf state} of the system.  We can update the state by assigning new values to
 the variables.  For example, if a student moves a bike from Olin
 to Wellesley, we can figure out the new values and assign them:
 
@@ -606,7 +672,7 @@ bikeshare.olin = 9
 bikeshare.wellesley = 3
 \end{python}
 
-Or we could use {\bf update operators}, \py{-=} and \py{+=} to subtract 1 from \py{olin} and add 1 to \py{wellesley}:
+Or we can use {\bf update operators}, \py{-=} and \py{+=} to subtract 1 from \py{olin} and add 1 to \py{wellesley}:
 
 \begin{python}
 bikeshare.olin -= 1
@@ -620,7 +686,7 @@ The result is the same either way.
 
 As the state of the system changes, it is often useful to plot the
 values of the variables over time.  {\tt modsim} provides functions
-we can use to create figures and plot values.
+that create figures and plot values.
 
 \begin{python}
 newfig()
@@ -1574,7 +1640,9 @@ In this chapter and the next we apply tools from the previous chapters to the pr
 The Wikipedia article  \url{https://en.wikipedia.org/wiki/World_population_estimates}
 contains tables with estimates of world population from prehistory to the present, and projections for the future.
 
-To work with this data in Python, we will use functions from the Pandas module, including \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to {\bf import} it.  You have already seen this import statement:
+To work with this data in Python, we will use functions from the Pandas, which is a library that provides functions for working with data.  It also defines the \py{Series} and \py{DataFrame} object we've been working with.
+
+The Pandas function we'll use is \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to {\bf import} it.  You have already seen this import statement:
 
 \begin{python}
 from modsim import *
@@ -1590,7 +1658,9 @@ Now we can use it like this:
 
 \begin{python}
 filename = 'data/World_population_estimates.html'
-tables = read_html(filename, header=0, index_col=0, decimal='M')
+tables = read_html(filename,
+                   header=0, index_col=0,
+                   decimal='M')
 \end{python}
 
 The arguments are:
@@ -1663,7 +1733,6 @@ At the same time we divide through by one billion, in order to display the estim
 The next two lines use \py{plot}, which knows how to plot a \py{Series}.  The strings \py{':'} and \py{'--'} indicate dotted and dashed lines.  The \py{color} argument can be any of the color strings described at \url{https://matplotlib.org/users/colors.html}.  The \py{label} argument indicates the string that should appear in the legend.
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap03-fig01.pdf}}
 \caption{Estimates of world population, 1950--2015.}
 \label{chap03-fig01}
@@ -1753,7 +1822,7 @@ Figure~\ref{chap03-fig02} shows the result. The model does not fit the data part
 
 \begin{itemize}
 
-\item There is no plausible mechanism that could cause population growth to be constant from year to year.  Changes in population are determined the fraction of people who die and the fraction of people who give birth, so they should depend on the current population.
+\item There is no obvious mechanism that could cause population growth to be constant from year to year.  Changes in population are determined the fraction of people who die and the fraction of people who give birth, so they should depend on the current population.
 
 \item According to this model, we would expect the population to keep growing at the same rate forever, and that does not seem reasonable.
 
@@ -2186,7 +2255,7 @@ In the case of constant growth we can see that $x_1 = x_0 + c$, and $x_2 = x_1 +
 %
 \[ x_n = x_0 + nc \]
 %
-So if we want to know $x_100$ and we don't care about the other values, we can compute it with one multiplication and one addition.
+So if we want to know $x_{100}$ and we don't care about the other values, we can compute it with one multiplication and one addition.
 
 We can also write the proportional model as a recurrence relation:
 %
@@ -2631,13 +2700,16 @@ When we call \py{update1} like this:
 state = update1(sir, init)
 \end{python}
 
-The result is the \py{State}
+The result is a \py{State} object with these values:
 
-\begin{result}
-S    0.985388
-I    0.011865
-R    0.002747
-\end{result}
+\begin{tabular}{lr}
+ & {\bf \sf value} \\ 
+\hline 
+{\bf \sf S} & 0.985388 \\ 
+{\bf \sf I} & 0.011865 \\ 
+{\bf \sf R} & 0.002747 \\ 
+\end{tabular} 
+
 
 %TODO: figure out when to talk about integers and floats
 %\py{dtype} indicates the type of the data in the \py{State}; \py{float64} %indicates that it contains 64-bit floating-point numbers.  A {\bf %floating-point number} can represent a number with a decimal or %fractional part, as opposed to an integer.
@@ -3875,7 +3947,6 @@ df = pd.read_csv('glucose_insulin.csv', index_col='time')
 
 Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}{\minute} for a subject with normal insulin production and sensitivity.
 
-%TODO: consider siunitx settings for \per (as a fraction or negative power).
 
 
 
@@ -5396,7 +5467,7 @@ This slope function is similar to the previous one (Section~\ref{papersim}), wit
 
 \begin{itemize}
 
-\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, using Equation~\ref{eqn3}.
+\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, by Equation~\ref{eqn3} for $r$.
 
 \item Because \py{r} changes over time, we have to compute moment of inertia, \py{I}, at each time step.
 
