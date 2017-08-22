@@ -285,23 +285,16 @@ available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 This book is about modeling and simulation of physical systems.  
 The following diagram shows what I mean by ``modeling":
 
-\begin{figure}
+\vspace{0.2in}
 \centerline{\includegraphics[height=3in]{figs/modeling_framework.pdf}}
-\caption{Framework showing the elements of modeling and simulation.}
-\label{framework}
-\end{figure}
 
-\begin{itemize}
+Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be simplified or {\bf abstracted} away.
 
-\item Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be simplified or {\bf abstracted} away.
+The result of abstraction is a {\bf model} that includes the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
 
-\item The result of abstraction is a {\bf model} that includes the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
+The result of analysis and simulation can be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
 
-\item The result of analysis and simulation can be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
-
-\item We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
-
-\end{itemize}
+We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
 
 This process is almost always iterative: for any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
 
@@ -558,7 +551,7 @@ The television show {\it Mythbusters} has tested the myth of the falling penny m
 
 \section{Computation}
 
-There are (at least) two ways to work with mathematical models, {\bf analysis} and {\bf simulation}.  Analysis often involves algebra and other kinds of symbolic manipulation.  Simulation often involves computers (but not always).
+There are (at least) two ways to work with mathematical models, {\bf analysis} and {\bf simulation}.  Analysis often involves algebra and other kinds of symbolic manipulation.  Simulation often involves computers.
 
 In this book we do some analysis and a lot of simulation; along the way, I discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
@@ -1117,7 +1110,7 @@ To paraphrase two Georges, ``All models are wrong, but some models are more wron
 
 As an example, we'll review the bikeshare model from the previous chapter, consider its strengths and weaknesses, and gradually improve it.  We'll also see ways to use the model to understand the behavior of the system and evaluate designed intended to make it work better.
 
-You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap01.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap02.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 
 \section{Iterative modeling}
@@ -1604,6 +1597,8 @@ But world population growth is still a topic of concern, and it is an open quest
 
 In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50--100 years.
 
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap03.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
 
 \section{World population data}
 \label{worldpopdata}
@@ -1796,7 +1791,6 @@ In this example, the result from \py{linrange} is an array of values from \py{19
 Each time through the loop, the loop variable \py{year} gets the next value from the array.  Inside the loop, we compute the population for each year by adding the population for the previous year and \py{annual_growth}.
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap03-fig02.pdf}}
 \caption{Estimates of world population, 1950--2015, and a constant growth model.}
 \label{chap03-fig02}
@@ -1854,7 +1848,7 @@ def plot_results(system):
              ylim=[0, 8])
 \end{python}
 
-This function uses \py{decorate}, which is defined in the \py{modsim} library.  \py{decorate} takes arguments that specify the title of the figure, labels for the $x$ and $y$ axis, and limits for the axes.  The notebook for this chapter provides more details.
+This function uses \py{decorate}, which is defined in the \py{modsim} library.  \py{decorate} takes arguments that specify the title of the figure, labels for the x-axis and y-axis, and limits for the axes.  The notebook for this chapter provides more details.
 
 Finally, we can run it like this.
 
@@ -1898,7 +1892,6 @@ plot_results(system)
 \end{python}
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap03-fig03.pdf}}
 \caption{Estimates of world population, 1950--2015, and a proportional model.}
 \label{chap03-fig03}
@@ -2019,7 +2012,6 @@ run_any_model(system, update_func3)
 \end{python}
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap03-fig04.pdf}}
 \caption{Estimates of world population, 1950--2015, and a quadratic model.}
 \label{chap03-fig04}
@@ -2046,13 +2038,12 @@ plot(pop_array, net_growth_array, '-')
 \end{python}
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap03-fig05.pdf}}
 \caption{Net growth as a function of population.}
 \label{chap03-fig05}
 \end{figure}
 
-Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
+Figure~\ref{chap03-fig05} shows the result.  Note that the x-axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
 
 \begin{itemize}
 
@@ -2067,6 +2058,7 @@ Figure~\ref{chap03-fig05} shows the result.  Note that the x axis is not time, a
 \end{itemize}
 
 Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the birth and death rates are equal, so the population is in {\bf equilibrium}.
+
 
 \section{Equilibrium}
 \label{equilibrium}
@@ -2096,16 +2088,18 @@ In the next chapter we use the models we have developed to generate predictions.
 
 \chapter{Prediction}
 
-Intro
+In the previous chapter we developed a quadratic model of world population growth from 1950 to 2015.  It is a simple model, but it fits the data well and the mechanisms it's based on are plausible.  
+
+In this chapter we'll use the quadratic model to generate projections of future growth, and compare our results to projections from actual demographers.  Also, we'll represent the models from the previous chapters as differential equations and solve them analytically.
+
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap04.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 \section{Generating projections}
-
-In the previous chapter we developed a model of world population growth from 1950 to 2016.  The is simple, but it fits the data well and the mechanisms it is based on are plausible.  Now we can use it to generate projections.
 
 We'll start with the quadratic model from Section~\ref{quadratic}, which is based on this update function:
 
 \begin{python}
-def update_func3(year, pop, system):
+def update_func3(pop, year, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2118,14 +2112,14 @@ t_end = census.index[-1]
 p0 = census[t0]
 \end{python}
 
-Now we can initialize a \py{System} object:
+Now we can create a \py{System} object:
 
 \begin{python}
 system = System(t0=t0, 
-              t_end=t_end,
-              p0=p0,
-              alpha = 0.025,
-              beta = -0.0018)
+                t_end=t_end,
+                p0=p0,
+                alpha = 0.025,
+                beta = -0.0018)
 \end{python}
 
 And run the model:
@@ -2134,10 +2128,7 @@ And run the model:
 run_any_model(system, update_func3)
 \end{python}
 
-We have already seen the results in Figure~\ref{chap03-fig04}.
-
-
-Now, to generate a projection, the only thing we have to change is \py{t_end}:
+We have already seen the results in Figure~\ref{chap03-fig04}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 system.t_end = 2250
@@ -2157,47 +2148,45 @@ I am using the word ``projection" deliberately, rather than ``prediction", with 
 
 Using ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model, and even if the model is good, that the parameters might change.
 
-In this example, the model is based on the assumption that population growth is limited by the availability of resources; in that scenario, as the population approaches the carrying capacity, birth rates fall and death rates rise because resources become scarce.
+The quadratic model we've been working with is based on the assumption that population growth is limited by the availability of resources; in that scenario, as the population approaches carrying capacity, birth rates fall and death rates rise because resources become scarce.
 
-And if that's the case, it might be possible to use actual population growth to estimate carrying capacity, especially if we observe the transition into the regime where the growth rate starts to fall.
+If that assumption is valid, we might be able to use actual population growth to estimate carrying capacity, especially if we observe the transition into the regime where the growth rate starts to fall.
 
-But in the case of world population growth, these conditions don't apply:
+But in the case of world population growth, those conditions don't apply.  Over the last 50 years, the net growth rate has leveled off, but not yet started to fall, so we don't have enough data to make a credible estimate of carrying capacity.  And resource limitations are probably {\em not} the primary reason growth has slowed.  As evidence, consider:
 
 \begin{itemize}
 
-\item Over the last 50 years, the net growth rate has leveled off, but not yet started to fall, so we don't have enough data to estimate carrying capacity accurately.
+\item First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{https://en.wikipedia.org/wiki/Mortality_rate}).  So the decrease in net growth is due entirely to declining birth rates.
 
-\item Resource limitations are probably {\em not} the primary reason the growth rate has slowed. 
+\item Second, the relationship between resources and birth rate is the opposite of what the model assumes; as nations develop and people become more wealthy, birth rates tend to fall.  
 
 \end{itemize} 
 
-First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{https://en.wikipedia.org/wiki/Mortality_rate}).
+We should not take too seriously the idea that this model can estimate carrying capacity.  But the predictions of a model can be credible even if the assumptions of the model are not strictly true.  For example, population growth might behave {\em as if} it is resource limited, even if the actual mechanism is something else.
 
-So the decrease in net growth is due entirely to declining birth rates.  And there are many reasons birth rates are falling, but resource limitations are not among them; in fact, it's almost the opposite.  As nations develop and people become more wealthy, birth rates tend to fall.  
+In fact, demographers who study population growth often use models similar to ours.  In the next section, we'll compare our projections to theirs.
 
 
 \section{Comparing projections}
 
-If recent changes in birth and death rates are not caused by resource limitations, we should not expect the long-term predictions of this model to be accurate.
-
-However, the same agencies and researchers that produce population estimates also produce projections, and we can compare theirs to ours.  Table 3 from \url{https://en.wikipedia.org/wiki/World_population_estimates} contains projections from the U.S. Census and the United Nations DESA:
+Table 3 from \url{https://en.wikipedia.org/wiki/World_population_estimates} contains projections from the U.S. Census and the United Nations DESA:
 
 \begin{python}
 table3 = tables[3]
 \end{python}
 
-We can plot their projections like this:
+For some years, one agency or the other has not published a projection, so some elements of \py{table3} contain the special value \py{NaN}, stands for ``not a number".  \py{NaN} is often used to indicate missing data.
+
+Pandas provides functions that deal with missing data, including \py{dropna}, which removes any elements in a series that contain \py{NaN}.  Using \py{dropna}, we can plot the projections like this:
 
 \begin{python}
 def plot_projections(table):
     census = table.census / 1e9
     un = table.un / 1e9
     
-    plot(census, ':', color='darkblue', label='US Census')
+    plot(census.dropna(), ':', color='darkblue', label='US Census')
     plot(un.dropna(), '--', color='green', label='UN DESA')
 \end{python}
-
-When we plot the UN data, we use \py{dropna}; it removes from the \py{Series} any elements that contain the special value \py{NaN}, which indicates missing data (in this case, years where the UN did not produce an estimate).
 
 We can run our model over the same interval:
 
@@ -2213,9 +2202,9 @@ run_any_model(system, update_func3)
 \label{chap04-fig02}
 \end{figure}
 
-And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  People who know what they are doing expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
 
-Nevertheless, their projections are qualitatively similar to ours, and theirs differ with each other almost as much as they differ with ours.  So the result from this model, simple as it is, are not entirely crazy.
+Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the result from this model, simple as it is, are not entirely crazy.
 
 
 \section{Difference equations}
@@ -2286,11 +2275,17 @@ We can make this model continuous by writing the rate of change in the form of a
 %
 \[ \frac{dx}{dt} = c \]
 %
-This way of representing the model is a {\bf differential equation}; see \url{https://en.wikipedia.org/wiki/Differential_equation}.  We can solve this differential equation by integrating both sides, which yields:
+This way of representing the model is a {\bf differential equation}; see \url{https://en.wikipedia.org/wiki/Differential_equation}.
+
+We can solve this differential equation if we multiply both sides by $dt$:
 %
-\[ x(t) = \int c~dt = c t + x_0 \]
+\[ dx = c dt \]
 %
-Similarly, we can rewrite the proportional growth model like this:
+And then integrate both sides:
+%
+\[ x(t) = c t + x_0 \]
+%
+Similarly, we can write the proportional growth model like this:
 %
 \[ \frac{\Delta x}{\Delta t} = \alpha x \]
 %
@@ -2302,31 +2297,27 @@ If we multiply both sides by $dt$ and divide by $x$, we get
 %
 \[ \frac{1}{x} dx = \alpha~dt \] 
 %
-Now we can take the antiderivative of both sides, yielding:
+Now we integrate both sides, yielding:
 %
-\[ \ln x = \alpha t + const \]
+\[ \ln x = \alpha t + K \]
 %
-where $\ln$ is the natural logarithm and $const$ is the constant of integration.  Raising $e$ to both sides, we have
+where $\ln$ is the natural logarithm and $K$ is the constant of integration.  Exponentiating both sides, we have
 %
-\[ x = e^{\alpha t + const} \]
+\[ \exp(\log(x)) = x = \exp(\alpha t + K) \]
 %
 which we can rewrite
 %
-\[ x = e^{\alpha t} e^{const} \]
+\[ x = \exp(\alpha t) \exp(K) \]
 %
-Since $e$ raised to an arbitrary constant is just another arbitrary constant, we can write
+Since $K$ is an arbitrary constant, $\exp(K)$ is also an arbitrary constant, so we can write
 %
-\[ x = Ce^{\alpha t} \]
+\[ x = C \exp(\alpha t) \]
 %
-where $A = e^{const}$.  Or using an alternative notation I prefer:
+where $C = \exp(K)$.  There are many solutions to this differential equation, with different values of $C$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
 %
-\[ x(t) = C \exp(\alpha t) \]
-%
-So there are many solutions to this differential equation, with different values of $C$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
-
 \[ x(t) = x_0 \exp(\alpha t) \]
-
-If you would like to see this derivation done a little more carefully, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/exponential-solution-to-differential-equation}.
+%
+If you would like to see this derivation done more carefully, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/exponential-solution-to-differential-equation}.
 
 
 \section{Analysis and simulation}
@@ -2345,11 +2336,11 @@ But there are several things we can do with analysis that are harder or impossib
 
 \item We can use analysis to state and prove generalizations about models; for example, we might prove that certain results will always or never occur.  With simulations, we can show examples and sometimes find counterexamples, but it is hard to write proofs.
 
-\item And analysis can provide insight into models and the systems they describe; for example, sometimes we can identify regimes of qualitatively different behavior and key parameters that control those behaviors.
+\item Analysis can provide insight into models and the systems they describe; for example, sometimes we can identify regimes of qualitatively different behavior and key parameters that control those behaviors.
 
 \end{itemize}
 
-When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and glimpse the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{https://en.wikipedia.org/wiki/Allegory_of_the_Cave}.}.
+When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{https://en.wikipedia.org/wiki/Allegory_of_the_Cave}.}.
 
 This is, of course, nonsense.  Mathematical notation is a language designed by humans for a purpose, specifically to facilitate symbolic manipulations like algebra.  Similarly, programming languages are designed  for a purpose, specifically to represent computational ideas and run programs.
 
@@ -2358,7 +2349,7 @@ Each of these languages is good for the purposes it was designed for and less go
 
 \section{Analysis with WolframAlpha}
 
-Traditionally most analysis was done by dragging sticks of graphite across wood pulp, a process that is laborious an error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
+Until recently, most analysis was done by dragging sticks of graphite across wood pulp\footnote{Or ``rubbing the white rock on the black rock", a line I got from Woodie Flowers, who got it from Stephen Jacobsen.}, a process that is laborious and error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
 
 For example, if you go to \url{https://www.wolframalpha.com/} and type
 
@@ -2366,9 +2357,9 @@ For example, if you go to \url{https://www.wolframalpha.com/} and type
 df(t) / dt = alpha f(t)
 \end{python}
 
-WolframAlpha infers that $f(t)$ is a function of $t$ and $alpha$ is a parameter, it classifies the query as a ``first-order linear ordinary differential equation", and reports the general solution:
+WolframAlpha infers that \py{f(t)} is a function of \py{t} and \py{alpha} is a parameter; it classifies the query as a ``first-order linear ordinary differential equation", and reports the general solution:
 %
-\[ f(t) = c_1 e^{\alpha t} \]
+\[ f(t) = c_1 \exp(\alpha t) \]
 %
 If you add a second equation to specify the initial condition:
 
@@ -2378,7 +2369,7 @@ df(t) / dt = alpha f(t),  f(0) = p0
 
 WolframAlpha reports the particular solution:
 
-\[ f(t) = p0 e^{\alpha t} \]
+\[ f(t) = p_0 \exp(\alpha t) \]
 
 WolframAlpha is based on Mathematica, a powerful programming language designed specifically for symbolic computation.
 
@@ -2387,49 +2378,54 @@ WolframAlpha is based on Mathematica, a powerful programming language designed s
 
 Python has a library called SymPy that provides symbolic computation tools similar to Mathematica.  They are not as easy to use as WolframAlpha, but they have some other advantages.
 
-First, we have to import the tools we plan to use:
+Before we can use SymPy, we have to import it:
 
 \begin{python}
-from sympy import symbols, Function, diff, dsolve
+from sympy import *
 \end{python}
 
-Because SymPy is integrated into Python, we have to distinguish between normal Python variables and SymPy symbols.  \py{symbols} takes a string and returns a symbol object.  So if we run this assignment:
+SymPy defines many functions, and some of them conflict with functions defined in \py{modsim} and the other libraries we're using, I suggest that you do symbolic computation with SymPy in a separate notebook.
+
+The code for this section and the next is in this notebook: \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap04sympy.ipynb}.  
+
+SymPy defines a \py{Symbol} object that represents symbolic variable names, functions, and other mathematical entities.
+
+SymPy provides a function called \py{symbols} that takes a string and returns a \py{Symbol} object.  So if we run this assignment:
 
 \begin{python}
 t = symbols('t')
 \end{python}
 
-Python understands that \py{t} should be treated as a symbol, rather than a number.  If we now run
+Python understands that \py{t} is a symbol, not a numerical value.  If we now run
 
 \begin{python}
 expr = t + 1
 \end{python}
 
-Python doesn't try to perform addition; rather, it creates a new symbol object that represents the sum of \py{t} and \py{1}.  Later we can evaluate this sum using \py{subs}, which substitutes a value for a symbol.  This example substitutes 2 for \py{t}:
+Python doesn't try to perform numerical addition; rather, it creates a new \py{Symbol} that represents the sum of \py{t} and \py{1}.  We can evaluate the sum using \py{subs}, which substitutes a value for a symbol.  This example substitutes 2 for \py{t}:
 
 \begin{python}
 expr.subs(t, 2)
 \end{python}
 
-The result is 3.
-
-Functions in SymPy are represented by a special class of symbol:
+The result is 3.  Functions in SymPy are represented by a special kind of \py{Symbol}:
 
 \begin{python}
-f = symbols('f', cls=Function)
+f = Function('f')
 \end{python}
 
 Now if we write \py{f(t)}, we get an object that represents the evaluation of a function, $f$, at a value, $t$.  But again it doesn't actually try to evaluate it.
 
+
 \section{Differential equations in SymPy}
 
-SymPy provides a function, \py{diff}, that performs differentiation.  We can apply it to \py{f(t)} like this:
+SymPy provides a function, \py{diff}, that can differentiate a function.  We can apply it to \py{f(t)} like this:
 
 \begin{python}
 dfdt = diff(f(t), t)
 \end{python}
 
-The result is (you guessed it) an object that represents the derivative of \py{f} with respect to \py{t}.  But again, it doesn't try to compute the derivative yet.
+The result is a \py{Symbol} that represents the derivative of \py{f} with respect to \py{t}.  But again, SymPy doesn't try to compute the derivative yet.
 
 To represent a differential equation, we use \py{Eq}:
 
@@ -2450,14 +2446,12 @@ solution_eq = dsolve(eq1)
 
 The result is the equation
 %
-\[ f{\left (t \right )} = C_{1} e^{\alpha t} \]
+\[ f{\left (t \right )} = C_{1} \exp(\alpha t) \]
 %
-which should look familiar.  This is the general solution, which still contains an unspecified constant, $C_1$.  
-
-To get the particular solution where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
+This is the general solution, which still contains an unspecified constant, $C_1$.  To get the particular solution where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
 
 \begin{python}
-C1, p0 = symbols(['C1', 'p0'])
+C1, p0 = symbols('C1 p0')
 \end{python}
 
 Now we can perform the substitution:
@@ -2468,7 +2462,7 @@ particular = solution_eq.subs(C1, p0)
 
 The result is 
 %
-\[ f{\left (t \right )} = p_{0} e^{\alpha t} \]
+\[ f{\left (t \right )} = p_{0} \exp(\alpha t) \]
 %
 This function is called the {\bf exponential growth curve}; see \url{https://en.wikipedia.org/wiki/Exponential_growth}.
 
@@ -2477,11 +2471,11 @@ This function is called the {\bf exponential growth curve}; see \url{https://en.
 
 In the notebook for this chapter, you will see how to use the same tools to solve the quadratic growth model with parameters $r$ and $K$.  The general solution is
 %
-\[ f{\left (t \right )} = \frac{K e^{C_{1} K + r t}}{e^{C_{1} K + r t} - 1} \]
+\[ f{\left (t \right )} = \frac{K \exp(C_{1} K + r t)}{\exp(C_{1} K + r t) - 1} \]
 %
 To get the particular solution where $f(0) = p_0$, we evaluate the general solution at $t=0$, which yields:
 %
-\[ f(0) = \frac{K e^{C_{1} K}}{e^{C_{1} K} - 1} \]
+\[ f(0) = \frac{K \exp(C_{1} K)}{\exp(C_{1} K) - 1} \]
 %
 Then we set this expression equal to $p_0$ and solve for $C_1$.  The result is:
 %
@@ -2489,55 +2483,67 @@ Then we set this expression equal to $p_0$ and solve for $C_1$.  The result is:
 %
 Finally, we substitute this value of $C_1$ into the general solution, which yields:
 %
-\[ f(t) = \frac{K p_{0} e^{r t}}{K + p_{0} e^{r t} - p_{0}} \]
+\[ f(t) = \frac{K p_{0} \exp(r t)}{K + p_{0} \exp(r t) - p_{0}} \]
 %
-This function is called the {\bf logistic growth curve}; see \url{https://en.wikipedia.org/wiki/Logistic_function}.  In the context of growth models, the logistic function is often written
+This function is called the {\bf logistic growth curve}; see \url{https://en.wikipedia.org/wiki/Logistic_function}.  In the context of growth models, the logistic function is often written, equivalently,
 %
-\[ f(t) = \frac{K}{1 + A e^{-rt}} \]
+\[ f(t) = \frac{K}{1 + A \exp(-rt)} \]
 %
-where $A = (K - p_0) / p_0$.  In the notebook, you'll see how to use SymPy to confirm that the two ways to write the solution are equivalent.
+where $A = (K - p_0) / p_0$.
 
 If you would like to see this differential equation solved by hand, you might like this video: \url{https://www.khanacademy.org/math/ap-calculus-bc/diff-equations-bc/logistic-diff-eq-bc/v/solving-logistic-differential-equation-part-1}
 
 
 \section{Summary}
 
-The following table summarizes the results so far:
+The following tables summarize the results so far:
 
-\begin{tabular}{l|l|l} 
-         & Discrete & Continuous \\ 
+\begin{tabular}{l|l} 
+\hline
+Growth type         & Discrete (difference equation) \\ 
 \hline 
-Constant & linear: $x_n = p_0 + \alpha n$ & linear: $x(t) = p_0 + \alpha t$ \\ 
+Constant & linear: $x_n = p_0 + \alpha n$  \\ 
  
-Proportional & geometric: $x_n = p_0(1+\alpha)^n$ & exponential: $x(t) = p_0 \exp(\alpha t)$ \\ 
+Proportional & geometric: $x_n = p_0(1+\alpha)^n$  \\ 
+
+\end{tabular} 
+
+\begin{tabular}{l|l} 
+\hline
+        & Continuous (differential equation) \\ 
+\hline 
+Constant & linear: $x(t) = p_0 + \alpha t$ \\ 
  
-Quadratic &  & logistic: $x(t) = \frac{K p_0 \exp(rt)}{K + \exp(rt) - p_0}$ \\ 
+Proportional & exponential: $x(t) = p_0 \exp(\alpha t)$ \\ 
+ 
+Quadratic & logistic: $x(t) = K / (1 + A\exp(-rt))$ \\ 
 \end{tabular} 
 
 What we've been calling the constant growth model is more commonly called ``linear growth" because the solution is a line.  Similarly, what's we've called proportion is commonly called ``exponential growth", and what we've called quadratic is commonly called ``logistic".
 
-I avoided the more common terms because I thought it would seem strange to use them before we solved the equations and discovered the functional form of the solutions.
-
-
+I avoided the more common terms until now because I thought it would be strange to use them before we solved the equations and discovered the functional form of the solutions.
 
 
 \chapter{Design}
 
-Intro
+In the previous chapter, we developed a model of world population growth and used it to generate projections for the next 100 years.  In this chapter, we develop a model of an epidemic as it spreads in a susceptible population, and use it to evaluate the effectiveness of possible interventions.
 
 My presentation of the SIR model in this chapter, and the analysis in the next chapter, is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease}.}.
 
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap05.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
+
 \section{The Freshman Plague}
 
-Every year at Olin College, about 90 new students come to campus from around the country and the world.  Most of them arrive healthy and happy, but we should expect at least one, by chance, to come with some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
+Every year at Olin College, about 90 new students come to campus from around the country and the world.  Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
 
 In this chapter we introduce a well-known model of infectious disease, the Kermack-McKendrick model, and use it to explain the progression of the disease over the course of the semester, predict the effect of possible interventions (like immunization) and design the most effective intervention campaign.
 
-Normally we like to do our own modeling; that is, we start with a physical system, identify factors that seem likely to be important, and think about how to represent them in a model.  In this chapter we start with an existing model and reverse-engineer it.  Along the way, we will think about the modeling decisions that went into it and identify its capabilities and limitations.
+So far we have done our own modeling; that is, we've chosen physical systems, identified factors that seem important, and made decisions about how to represent them.  In this chapter we start with an existing model and reverse-engineer it.  Along the way, we consider the modeling decisions that went into it and identify its capabilities and limitations.
 
 \section{The SIR model}
 
-The Kermack-McKendrick model is a simple version of an ``SIR model", so-named because it considers three categories of people:
+The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named because it considers three categories of people:
 
 \begin{itemize}
 
@@ -2551,13 +2557,13 @@ The Kermack-McKendrick model is a simple version of an ``SIR model", so-named be
   
 In the basic version of the model, people who have recovered are considered to be immune to reinfection.  That is a reasonable model for some diseases, but not for others, so it should be on the list of assumptions to reconsider later.
 
-Let's think about how we should expect the number of people in each of these categories to change over time.  Suppose we know that people with the disease are infectious for a period of 4 days, on average.  If 100 people are infectious at a particular point in time, and we ignore the particular time each one became infected, we expect about 1 out of 4 to recover on any particular day.
+Let's think about how the number of people in each category changes over time.  Suppose we know that people with the disease are infectious for a period of 4 days, on average.  If 100 people are infectious at a particular point in time, and we ignore the particular time each one became infected, we expect about 1 out of 4 to recover on any particular day.
 
 Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the parameter $\gamma$ (the Greek letter gamma).  If the total number of people in the population is $N$, and the fraction currently infected is $i$, the total number of recoveries we expect per day is $\gamma i N$.
 
 Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in such a way that they would contract the disease if the other person is infected.  We'll denote this contact rate with the parameter $\beta$ (the Greek letter beta).
 
-It's probably not reasonable to assume that we know $\beta$ ahead of time, but later we'll see how we could estimate it based on data from previous semesters.
+It's probably not reasonable to assume that we know $\beta$ ahead of time, but later we'll see how to estimate it based on data from previous semesters.
 
 If $s$ is the fraction of the population that's susceptible, $s N$ is the number of susceptible people, $\beta s N$ is the number of contacts per day, and $\beta s i N$ is the number of those contacts where the other person is infectious.
 
@@ -2590,6 +2596,7 @@ To avoid cluttering the equations, I leave it implied that $s$ is a function of 
 SIR models are examples of {\bf compartment models}, so-called because they divide the world into discrete categories, or compartments, and describe transitions from one compartment to another.  Compartments are also called {\bf stocks} and transitions between them are called {\bf flows}.
 
 In this example, there are three stocks --- susceptible, infected, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{https://en.wikipedia.org/wiki/Stock_and_flow}.
+Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
 %http://yuml.me/edit/3de9c163
@@ -2598,19 +2605,14 @@ In this example, there are three stocks --- susceptible, infected, and recovered
 \label{stock_flow1}
 \end{figure}
 
-Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 
 
 \section{Implementation}
 
-For a given physical system, there are many possible models, and for a given model, there are many ways to represent it.  For example, we can represent an SIR model as a stock-and-flow diagram, as a set of differential equations, or as a Python program.
+For a given physical system, there are many possible models, and for a given model, there are many ways to represent it.  For example, we can represent an SIR model as a stock-and-flow diagram, as a set of differential equations, or as a Python program.  The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
 
-The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
-
-As a first step, I'll represent the initial state of the system using a \py{State} object, which represents a {\bf state vector}, which is a collection of {\bf state variables}.  Each state variable represents information about the system that changes over time (see \url{https://en.wikipedia.org/wiki/State-space_representation}).  
-
-In this example, there are three state variables that represent the fraction of the population in each compartment, \py{S}, \py{I}, and \py{R}.
+As a first step, I'll represent the initial state of the system using a \py{State} object, which is defined in the \py{modsim} library.  A \py{State} object is a collection of {\bf state variables}; each state variable represents information about the system that changes over time.  In this example, the state variables are \py{S}, \py{I}, and \py{R}; they represent the fraction of the population in each compartment.
 
 Creating a \py{State} object is similar to creating a \py{System} object.  We can initialize the \py{State} object with the {\em number} of people in each compartment:
 
@@ -2618,10 +2620,10 @@ Creating a \py{State} object is similar to creating a \py{System} object.  We ca
 init = State(S=89, I=1, R=0)
 \end{python}
 
-And the convert the numbers to fractions by dividing through by the total:
+And then convert the numbers to fractions by dividing by the total:
 
 \begin{python}
-init /= np.sum(init)
+init /= sum(init)
 \end{python}
 
 For now, let's assume we know the time between contacts and time between recoveries:
@@ -2638,12 +2640,12 @@ beta = 1 / tc      # contact rate in per day
 gamma = 1 / tr     # recovery rate in per day
 \end{python}
 
-Now we need a \py{System} object to store the parameters and initial conditions:
+Now we need a \py{System} object to store the parameters and initial conditions.  The following function takes the model parameters as function parameters and returns a new \py{System} object:
 
 \begin{python}
 def make_system(beta, gamma):
     init = State(S=89, I=1, R=0)
-    init /= np.sum(init)
+    init /= sum(init)
 
     t0 = 0
     t_end = 7 * 14
@@ -2652,15 +2654,15 @@ def make_system(beta, gamma):
                   beta=beta, gamma=gamma)
 \end{python}
 
-This function takes the model parameters as function parameters and returns a new \py{System} object.  The default value for \py{t_end} is 14 weeks, about the length of a semester.
+The default value for \py{t_end} is 14 weeks, about the length of a semester.
 
 
 \section{The update function}
 
-At any point in time, the state of the system is represented by a \py{State} object with three values, \py{S}, \py{I} and \py{R}.  The update function takes this series as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
+At any point in time, the state of the system is represented by a \py{State} object with three variables, \py{S}, \py{I} and \py{R}.  Next we'll define an update function that takes the \py{State} object as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
 
 \begin{python}
-def update1(system, state):
+def update1(state, system):
     s, i, r = state
 
     infected = system.beta * i * s    
@@ -2673,14 +2675,14 @@ def update1(system, state):
     return State(S=s, I=i, R=r)
 \end{python}
 
-The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} that contains three values.  The left hand side is a sequence of three variable names.  The assignment does just what you would want: it assigns the three values from the \py{State} to the three variables, in order.
+The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} object that contains three values.  The left side is a sequence of three variable names.  The assignment does just what we want: it assigns the three values from the \py{State} object to the three variables, in order.
 
 The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values.
 
 When we call \py{update1} like this:
 
 \begin{python}
-state = update1(sir, init)
+state = update1(init, sir)
 \end{python}
 
 The result is a \py{State} object with these values:
@@ -2693,9 +2695,7 @@ The result is a \py{State} object with these values:
 {\bf \sf R} & 0.002747 \\ 
 \end{tabular} 
 
-
 %TODO: figure out when to talk about integers and floats
-%\py{dtype} indicates the type of the data in the \py{State}; \py{float64} %indicates that it contains 64-bit floating-point numbers.  A {\bf %floating-point number} can represent a number with a decimal or %fractional part, as opposed to an integer.
 
 
 \section{Running the model}
@@ -2706,32 +2706,35 @@ Now we can run the model over a sequence of time steps:
 def run_simulation(system, update_func):
     state = system.init
     for i in linrange(system.t0, system.t_end):
-        state = update_func(system, state)
+        state = update_func(state, system)
     return state
 \end{python}
 
-The parameters of \py{run_simulation} are the \py{System} object, which contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}, and the update function.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithstate}.
+The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithsystem}.
 
 We can call \py{run_simulation} like this:
 
 \begin{python}
-run_simulation(sir, update1)
+system = make_system(beta, gamma)
+run_simulation(system, update1)
 \end{python}
 
 The result is the final state of the system:
 
-\begin{result}
-S    0.520819
-I    0.000676
-R    0.478505
-\end{result}
+\begin{tabular}{lr}
+ & {\bf \sf value} \\ 
+\hline 
+{\bf \sf S} & 0.520819 \\ 
+{\bf \sf I} & 0.000676 \\ 
+{\bf \sf R} & 0.478505 \\ 
+\end{tabular} 
 
 This result indicates that after 14 weeks (98 days), about 52\% of the population is still susceptible, which means they were never infected, less than 1\% are actively infected, and 48\% have recovered, which means they were infected at some point.
 
 
 \section{Collecting the results}
 
-The previous version of \py{run_simulation} only returns the state of the system at the end of the simulation, \py{t_end}, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using one \py{DataFrame}.
+The previous version of \py{run_simulation} only returns the final state, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using a new object called a \py{TimeFrame}.
 
 Here's the first version:
 
@@ -2754,18 +2757,19 @@ def run_simulation(system, update_func):
     system.R = R
 \end{python}
 
-First, we create \py{TimeSeries} objects that will store the results.  
+First, we create \py{TimeSeries} objects to store the results.  Notice that the variables \py{S}, \py{I}, and \py{R} are \py{TimeSeries} objects now.
 
-The initial value of \py{state} is a copy of \py{system.init}, which is the \py{State} that contains the initial values of \py{S}, \py{I} and \py{R}.  
+Next we initialize \py{state}, \py{t0}, and the first elements of \py{S}, \py{I} and \py{R}.  
 
-Inside the loop, we use \py{update_func} to compute the state of the next time step, then use multiple assignment to unpack the three elements of \py{state} and assign each to the corresponding \py{TimeSeries}.
+Inside the loop, we use \py{update_func} to compute the state of the system at the next time step, then use multiple assignment to unpack the elements of \py{state}, assigning each to the corresponding \py{TimeSeries}.
 
-At the end of the function, we store \py{S}, \py{I}, and \py{R} as attributes of the \py{System} object.
+At the end of the function, we store \py{S}, \py{I}, and \py{R} as system variables.
 
 Now we can run the function like this:
 
 \begin{python}
-run_simulation(sir, update1)
+system = make_system(beta, gamma)
+run_simulation(system, update1)
 \end{python}
 
 We'll use the following function to plot the results:
@@ -2782,7 +2786,7 @@ def plot_results(S, I, R):
 And run it like this:
 
 \begin{python}
-plot_results(sir.S, sir.I, sir.R)
+plot_results(system.S, system.I, system.R)
 \end{python}
 
 \begin{figure}
@@ -2797,68 +2801,67 @@ Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three we
 \section{Now with a TimeFrame}
 \label{timeframe}
 
-If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}.  
+If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}, which is another object are defined in the \py{modsim} library.
 
-\py{TimeFrame} objects are defined in the \py{modsim} library.  They are almost identical to the \py{DataFrame} objects we used in Section~\ref{worldpopdata}, with just a few changes I made to make them easier to use for our purposes.  If you want to know the details, you can read about it in the \py{modsim} library source code.
+A \py{TimeFrame} is almost identical to a \py{DataFrame}, which we used in Section~\ref{worldpopdata}, with just a few changes I made to make them easier to use for our purposes.  For more details, you can read the \py{modsim} library source code.
 
-Here's a more concise version of \py{run_simulation}:
+Here's a more concise version of \py{run_simulation} using a \py{TimeFrame}:
 
 \begin{python}
 def run_simulation(system, update_func):
-    df = TimeFrame(columns=system.init.index)
-    df.loc[system.t0] = system.init
+    frame = TimeFrame(columns=system.init.index)
+    frame.loc[system.t0] = system.init
     
     for i in arange(system.t0, system.t_end):
-        df.loc[i+1] = update_func(system, df.loc[i])
+        frame.loc[i+1] = update_func(system, frame.loc[i])
     
-    system.results = df
+    system.results = frame
 \end{python}
 
-The first line creates an empty \py{TimeFrame} with one column for each state variables.
-
-Before the loop starts, we want to store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it might be tempting to write:
+The first line creates an empty \py{TimeFrame} with one column for each state variables.  Then, before the loop starts, we store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it is tempting to write:
 
 \begin{python}
-df[system.t0] = system.init
+frame[system.t0] = system.init
 \end{python}
 
-The problem is that when you use the bracket operator with a \py{TimeFrame}, it selects a column, not a row.  For example, to select the first column, we could write
+But when you use the bracket operator with a \py{TimeFrame} or \py{DataFrame}, it selects a column, not a row.  For example, to select a column, we could write
 
 \begin{python}
-df['S']
+frame['S']
 \end{python}
 
-The result would be a time series.  To read or write a single row, we have to use \py{loc}, which stands for ``location".  So \py{df.loc[0]} reads a row from a \py{TimeFrame} and 
+To select a row, we have to use \py{loc}, which stands for ``location". \py{frame.loc[0]} reads a row from a \py{TimeFrame} and 
 
 \begin{python}
-df.loc[system.t0] = system.init
+frame.loc[system.t0] = system.init
 \end{python}
 
-assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right-hand side is a \py{State}, the assignment matches up the index from the \py{State} with the columns of the \py{TimeFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{TimeFrame}, and likewise with \py{I} and \py{R}.
+assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right side is a \py{State}, the assignment matches up the index of the \py{State} with the columns of the \py{TimeFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{TimeFrame}, and likewise with \py{I} and \py{R}.
 
 We can use the same feature to write the loop more concisely, assigning the \py{State} we get from \py{update_func} directly to the next row of \py{df}.  
 
-Finally, we store \py{df} as a new attribute of \py{system}.  We can call this version of \py{run_simulation} like this:
+Finally, we store \py{frame} as a new system variable.  We can call this version of \py{run_simulation} like this:
 
 \begin{python}
-run_simulation(sir, update1)
+run_simulation(system, update1)
 \end{python}
 
 And plot the results like this:
 
 \begin{python}
-df = sir.results
-plot_results(df.S, df.I, df.R)
+frame = system.results
+plot_results(frame.S, frame.I, frame.R)
 \end{python}
 
-As we saw in Section~\ref{series}, we can use dot notation to select columns from the \py{TimeFrame}.
+As with a \py{DataFrame}, we can use dot notation to select columns from a \py{TimeFrame}.
 
 
 \section{Metrics}
+\label{metrics}
 
 When we plot a time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a few numbers, ideally one, that summarize the outcome.  These summary statistics are called {\bf metrics}.
 
-In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students who will be sick at any point.
+In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students get sick at any point.
 
 As an example I will focus on the last one --- the total number of sick students --- and we will consider interventions intended to minimize it.
 
@@ -2866,11 +2869,25 @@ When a person gets infected, they move from \py{S} to \py{I}, so we can compute 
 
 \begin{python}
 def calc_total_infected(system):
-    df = system.results
-    return df.S[system.t0] - df.S[system.t_end]
+    frame = system.results
+    return frame.S[system.t0] - frame.S[system.t_end]
 \end{python}
 
-In the notebook that accompanies this chapter, you will have a chance to write functions that compute other metrics.
+In the notebook that accompanies this chapter, you will have a chance to write functions that compute other metrics.  Two functions you might find useful are \py{max} and \py{idxmax}.
+ 
+If you have a \py{Series} called \py{s}, you can compute the largest value of the series like this:
+
+\begin{python}
+largest_value = s.max()
+\end{python}
+
+And the label of the largest value like this:
+
+\begin{python}
+time_of_largest_value = s.idxmax()
+\end{python}
+
+If the \py{Series} is a \py{TimeSeries}, the label you get from \py{idxmax} is a time or date.  You can read more about these functions in the \py{Series} documentation at \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html}.
 
 
 \section{Immunization}
@@ -2890,12 +2907,12 @@ def add_immunization(system, fraction):
 \py{add_immunization} moves the given fraction of the population from \py{S} to \py{R}.  If we assume that 10\% of students are vaccinated at the beginning of the semester, and the vaccine is 100\% effective, we can simulate the effect like this:
 
 \begin{python}
-sir2 = make_system(beta, gamma)
-add_immunization(sir2, 0.1)
-run_simulation(sir2, update1)
+system2 = make_system(beta, gamma)
+add_immunization(system2, 0.1)
+run_simulation(system2, update1)
 \end{python}
 
-For comparison, we ran the same model without immunization and plot the results.
+For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap05-fig02} shows the results, plotting \py{S} as a function of time, with and without immunization.  
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
@@ -2903,15 +2920,13 @@ For comparison, we ran the same model without immunization and plot the results.
 \label{chap05-fig02}
 \end{figure}
 
-Figure~\ref{chap05-fig02} shows the results, plotting \py{S} as a function of time, with and without immunization.  
+Without immunization, almost 47\% of the population gets infected at some point.  With 10\% immunization, only 31\% gets infected.  That's pretty good.
 
-Without immunization, almost 47\% of the population is infected at some point.  With 10\% immunization, only 31\% are infected.  That's pretty good.
-
-So let's see what happens if we administer more vaccines.  This function sweeps a range of immunization rates:
+So let's see what happens if we administer more vaccines.  This following function sweeps a range of immunization rates:
 
 \begin{python}
 def sweep_immunity(immunize_array):
-    sweep = Sweep()
+    sweep = SweepSeries()
     for fraction in immunize_array:
         sir = make_system(beta, gamma)
         add_immunization(sir, fraction)
@@ -2920,11 +2935,11 @@ def sweep_immunity(immunize_array):
     return sweep
 \end{python}
 
-The result is a \py{Sweep} object, which is similar to a \py{TimeSeries}; the difference is that the index of the \py{Sweep} contains parameter values, not times.  
+The parameter of \py{sweep_immunity} is an array of immunization rates.  The result is a \py{SweepSeries} object, which is defined in the \py{modsim} library.  \py{SweepSeries} is similar to \py{TimeSeries}; the difference is that the index of a \py{SweepSeries} contains parameter values, not times.  
 
-Figure~\ref{chap05-fig03} shows a plot of the \py{Sweep}.  Again, notice that the x-axis is the immunization rate, not time.
+Figure~\ref{chap05-fig03} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
 
-As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: if protects the people who get immunized, of course, but it also protects the rest of the population. 
+As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized, of course, but it also protects the rest of the population. 
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
@@ -2932,20 +2947,18 @@ As the immunization rate increases, the number of infections drops steeply.  If 
 \label{chap05-fig03}
 \end{figure} 
 
-Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.
-
-This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{https://en.wikipedia.org/wiki/Herd_immunity}).
+Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{https://en.wikipedia.org/wiki/Herd_immunity}).
 
 The steepness of the curve in Figure~\ref{chap05-fig03} is a blessing and a curse.  It's a blessing because it means we don't have to immunize everyone, and vaccines can protect the ``herd" even if they are not 100\% effective.
 
 But it's a curse because a small decrease in immunization can cause a big increase in infections.  In this example, if we drop from 80\% immunization to 60\%, that might not be too bad.  But if we drop from 40\% to 20\%, that would trigger a major outbreak, affecting more than 15\% of the population.  For a serious disease like measles, just to name one, that would be a public health catastrophe.
 
-One use of models like this is to demonstrate phenomena like herd immunity and to predict the effect of interventions like vaccination.  Another use for models is to evaluate alternatives and guide decision making.  We'll see an example in the next section.
+One use of models like this is to demonstrate phenomena like herd immunity and to predict the effect of interventions like vaccination.  Another use is to evaluate alternatives and guide decision making.  We'll see an example in the next section.
 
 
 \section{Hand washing}
 
-Suppose you are the Dean of Student Affairs, and you have a budget of just \$1200 to try to combat the Freshman Plague.  You have two options for spending this money:
+Suppose you are the Dean of Student Affairs, and you have a budget of just \$1200 to combat the Freshman Plague.  You have two options for spending this money:
 
 \begin{enumerate}
 
@@ -2977,11 +2990,11 @@ Now we have to model the relationship between the money we spend and the effecti
 
 \item If we spend \$1000, the total decrease in \py{beta} is almost 20\%.
 
-\item Above \$1000, the extra spending has little additional benefit.
+\item Above \$1000, additional spending has little additional benefit.
 
 \end{itemize}
 
-In the notebook for this chapter you will see how I used a logistic curve to fit this data.  The result is this function, which takes spending as a parameter and returns \py{factor}, which is the factor by which \py{beta} is reduced.
+In the notebook for this chapter you will see how I used a logistic curve to fit this data.  The result is the following function, which takes spending as a parameter and returns \py{factor}, which is the factor by which \py{beta} is reduced:
 
 \begin{python}
 def compute_factor(spending):
@@ -2996,11 +3009,11 @@ def add_hand_washing(system, spending):
     system.beta *= (1 - factor)
 \end{python}
 
-Now we can sweep a range of values for \py{spending} and use the simulation to compute the effect.
+Now we can sweep a range of values for \py{spending} and use the simulation to compute the effect:
 
 \begin{python}
 def sweep_hand_washing(spending_array):
-    sweep = Sweep()
+    sweep = SweepSeries()
     for spending in spending_array:
         sir = make_system(beta, gamma)
         add_hand_washing(sir, spending)
@@ -3026,7 +3039,7 @@ Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has littl
 
 \section{Optimization} 
 
-Now we can put it altogether.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy, at \$100 each, and how much to spend on the hand-washing campaign.
+Now we can put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
 
 Here are the parameters:
 
@@ -3040,14 +3053,14 @@ max_doses = int(budget / price_per_dose)
 We'll sweep the range of possible doses:
 
 \begin{python}
-dose_array = arange(max_doses+1)
+dose_array = linrange(max_doses)
 \end{python}
 
-And run the simulation for each dose:
+And run the simulation for each element of \py{dose_array}:
 
 \begin{python}
 def sweep_doses(dose_array):
-    sweep = Sweep()
+    sweep = SweepSeries()
     for doses in dose_array:
         fraction = doses / num_students
         spending = budget - doses * price_per_dose
@@ -3074,7 +3087,7 @@ Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and s
 
 As we increase the number of doses, we have to cut campaign spending, which turns out to make things worse.  But interestingly, when we get above 10 doses, the effect of herd immunity starts to kick in, and the number of sick students goes down again.
 
-In the notebook for this chapter, you'll have a chance to run this optimization for different scenarios.
+In the notebook for this chapter, you'll have a chance to run this optimization for a few other scenarios.
 
 
 
@@ -3084,16 +3097,41 @@ In the previous chapter I presented an SIR model of infectious disease, specific
 
 But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
 
-We will use the following functions as defined in the previous chapter:
-\py{make_system}, \py{run_simulation}, \py{update1}, \py{plot_results}, and \py{calc_total_infected}.
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap06.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
-For example, here's the code to create a \py{System} object with given values of \py{beta} and \py{gamma}, run the simulation, and compute the fraction of the population that are infected.
+
+\section{Unpack}
+\label{unpack}
+
+Before we analyze the SIR model, I want to make a few improvements to the code.  In the previous chapter, we used this version of \py{run_simulation}:
 
 \begin{python}
-sir = make_system(0.33, 0.25)
-run_simulation(sir, update1)
-print(calc_total_infected(sir))
+def run_simulation(system, update_func):
+    frame = DataFrame(columns=system.init.index)
+    frame.loc[system.t0] = system.init
+    
+    for i in linrange(system.t0, system.t_end):
+        frame.loc[i+1] = update_func(frame.loc[i], system)
+    
+    system.results = frame
 \end{python}
+
+Because we read so many variables from \py{system}, this code is a bit cluttered.  We can clean it up using \py{unpack}, which is defined in the \py{modsim} library.  \py{unpack} takes a \py{System} object as a parameter and makes the system variables available without using dot notation.  So we can rewrite \py{run_simulation} like this:
+
+\begin{python}
+def run_simulation(system, update_func):
+    unpack(system)
+    
+    frame = TimeFrame(columns=init.index)
+    frame.loc[t0] = init
+    
+    for i in linrange(t0, t_end):
+        frame.loc[i+1] = update_func(frame.loc[i], system)
+    
+    system.results = frame
+\end{python}
+
+I think that makes the code easier to read.  In the notebook for this chapter, you can use \py{unpack} to clean up \py{update1}.
 
 
 \section{Sweeping beta}
@@ -3115,11 +3153,11 @@ for beta in beta_array:
     print(sir.beta, calc_total_infected(sir))
 \end{python}
 
-We can encapsulate that code in a function and store the results in a \py{Sweep} object:
+We can encapsulate that code in a function and store the results in a \py{SweepSeries} object:
 
 \begin{python}
 def sweep_beta(beta_array, gamma):
-    sweep = Sweep()
+    sweep = SweepSeries()
     for beta in beta_array:
         system = make_system(beta, gamma)
         run_simulation(system, update1)
@@ -3190,50 +3228,49 @@ for gamma in gamma_array:
 
 Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even low a contact rate (\py{beta}) results in an epidemic.
 
-When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  
-
-In fact, there is.  I will demonstrate it first by running simulations, then derive it by analysis.
+When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  In fact, there is.  I will demonstrate it first by running simulations, then derive it by analysis.
 
 
 \section{Nondimensionalization}
+\label{nondim}
 
 Before we go on, let's encapsulate the code from the previous section in a function:
 
 \begin{python}
 def sweep_parameters(beta_array, gamma_array):
-    sf = SweepFrame(columns=gamma_array)
+    frame = SweepFrame(columns=gamma_array)
     for gamma in gamma_array:
-        sf[gamma] = sweep_beta(beta_array, gamma)
-    return sf
+        frame[gamma] = sweep_beta(beta_array, gamma)
+    return frame
 \end{python}
 
 \py{sweep_parameters} takes as parameters two arrays: a range of values for \py{beta} and a range of values for \py{gamma}.
 
 It creates a \py{SweepFrame} to store the results, with one column for each value of \py{gamma} and one row for each value of \py{beta}.  A \py{SweepFrame} is a kind of \py{DataFrame}, defined in the \py{modsim} library.  Its purpose is to store results from a two-dimensional parameter sweep.
 
-Each time through the loop, we run \py{sweep_beta}.  The result is a \py{Sweep} object with one element for each value of \py{gamma}.  The assignment
+Each time through the loop, we run \py{sweep_beta}.  The result is a \py{SweepSeries} object with one element for each value of \py{gamma}.  The assignment
 
 \begin{python}
-sf[gamma] = sweep_beta(beta_array, gamma)
+frame[gamma] = sweep_beta(beta_array, gamma)
 \end{python}
 
-stores the values from the \py{Sweep} object as a new column in the \py{SweepFrame}, corresponding to the current value of \py{gamma}.
+stores the values from the \py{SweepSeries} object as a new column in the \py{SweepFrame}, corresponding to the current value of \py{gamma}.
 
 At the end, the \py{SweepFrame} stores the fraction of students infected for each pair of parameters, \py{beta} and \py{gamma}.
 
-We can run it like this:
+We can run \py{sweep_parameters} like this:
 
 \begin{python}
-sf = sweep_parameters(beta_array, gamma_array)
+frame = sweep_parameters(beta_array, gamma_array)
 \end{python}
 
 Then we can loop through the results like this:
 
 \begin{python}
-for gamma in sf.columns:
-    sweep = sf[gamma]
-    for beta in sweep.index:
-        frac_infected = sweep[beta]
+for gamma in frame.columns:
+    series = frame[gamma]
+    for beta in series.index:
+        frac_infected = series[beta]
         print(beta, gamma, frac_infected)
 \end{python}
 
@@ -3241,13 +3278,13 @@ This is the first example we've seen with one \py{for} loop inside another:
 
 \begin{itemize}
 
-\item Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column.
+\item Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column as a \py{Series}.
 
-\item Each time the inner loop runs, it selects a value of \py{beta} from the \py{Sweep} and selects the corresponding element, which is the fraction of student infected.
+\item Each time the inner loop runs, it selects a value of \py{beta} from the \py{Series} and selects the corresponding element, which is the fraction of student infected.
 
 \end{itemize}  
 
-In this example, \py{sf} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
+In this example, \py{frame} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
 
 Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
@@ -3261,17 +3298,17 @@ Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
 Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: nondimensionalization (see \url{https://en.wikipedia.org/wiki/Nondimensionalization#First_order_system}).
 
-So we'll try the second option first.  In the notebook for this chapter, you will explore the first option as an exercise.
+So we'll try the second option first.  In the notebook for this chapter, you can explore the first option as an exercise.
 
 The following function encapsulates the previous loops and plots the fraction infected as a function of the ratio \py{beta/gamma}:
 
 \begin{python}
-def plot_sweep_frame(sf):
-    for gamma in sf.columns:
-        sweep = sf[gamma]
-        for beta in sweep.index:
-            frac_infected = sweep[beta]
-            plot(beta / gamma, frac_infected, 'ro')
+def plot_sweep_frame(frame):
+    for gamma in frame.columns:
+        series = frame[gamma]
+        for beta in series.index:
+            frac_infected = series[beta]
+            plot(beta/gamma, frac_infected, 'ro')
 \end{python}
 
 \begin{figure}
@@ -3298,11 +3335,11 @@ The results in the previous section suggest that there is a relationship between
 \frac{dr}{dt} &= \gamma i
 \end{align*}
 %
-In the same way we divided the contact rate by the infection rate to get the dimensionless quantity $c$, now we'll divide $di/dt$ by $ds/dt$ to get an equation that does not depend on time:
+In the same way we divided the contact rate by the infection rate to get the dimensionless quantity $c$, now we'll divide $di/dt$ by $ds/dt$ to get a ratio of rates:
 %
 \[ \frac{di}{ds} = -1 + \frac{1}{cs} \]
 %
-Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  We can multiply both sides by $ds$:
+Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  We can multiply both sides of the equation by $ds$:
 %
 \[ di = \left( -1 + \frac{1}{cs} \right) ds \]
 %
@@ -3322,7 +3359,7 @@ Since $\log 1 = 0$, we get $q = 1$.
 
 \newcommand{\sinf}{s_{\infty}}
 
-Now, at the end of the epidemic, let's assume that $i_{\infty} = 0$ and $s(\infty)$ is an unknown quantity $\sinf$.  Now we have:
+Now, at the end of the epidemic, let's assume that $i(\infty) = 0$ and $s(\infty)$ is an unknown quantity $\sinf$.  Now we have:
 %
 \[ q = 1 = 0 + \sinf - \frac{1}{c} \log \sinf \]
 %
@@ -3339,7 +3376,7 @@ s_inf_array = linspace(0.0001, 0.9999, 31)
 we can compute the corresponding values of $c$:
 
 \begin{python}
-c_array = np.log(s_inf_array) / (s_inf_array - 1)
+c_array = log(s_inf_array) / (s_inf_array - 1)
 \end{python}
 
 To get the total infected, we compute the difference between $s(0)$ and $s(\infty)$, then store the results in a \py{Series}:
@@ -3349,7 +3386,7 @@ frac_infected = 1 - s_inf_array
 frac_infected_series = Series(frac_infected, index=c_array)
 \end{python}
 
-Recall from Section~\ref{series} that a \py{Series} object contains an index, which is \py{c_array} in this example, and a corresponding sequence of values, which is \py{frac_infected}.
+Recall from Section~\ref{series} that a \py{Series} object contains an index and a corresponding sequence of values.  In this case, the index is \py{c_array} and the values are from \py{frac_infected}.
 
 
 \section{Analysis and simulation}
@@ -3362,15 +3399,15 @@ plot(frac_infected_series)
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap06-fig04.pdf}}
-\caption{Total fraction infected as a function of contact number, results from simulation and analysis.}
+\caption{Total fraction infected as a function of contact number, showing results from simulation and analysis.}
 \label{chap06-fig04}
 \end{figure}
 
-Figure~\ref{chap06-fig04} compares the analytic results from this section with the simulation results from the previous section.  Over most of the range they are consistent with each other, but when the contact number is less than 1, the analysis suggests that there will be virtually no infections; in the simulations a new infection can affect a small part of the population, even when $c<1$.
+Figure~\ref{chap06-fig04} compares the analytic results from this section with the simulation results from Section~\ref{nondim}.  Over most of the range they are consistent with each other, with one discrepancy: when the contact number is less than 1, analysis indicates there should be no infections; but in the simulations a small part of the population is affected even when $c<1$.
 
-The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity.  In other words, the two methods are actually based on different models.
+The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity.  In other words, the two methods are actually based on different models.  So which model is better?
 
-So which model is better?  Probably neither.  When the contact number is small, the early progress of the epidemic will depend on details of the scenario.  If we are lucky, the original infected person, ``patient zero",  infects no one and there is no epidemic.  If we are unlucky, patient zero might have a large number of close friends, or might work in the dining hall (and fail to observe safe food handling procedures).
+Probably neither.  When the contact number is small, the early progress of the epidemic depends on details of the scenario.  If we are lucky, the original infected person, ``patient zero",  infects no one and there is no epidemic.  If we are unlucky, patient zero might have a large number of close friends, or might work in the dining hall (and fail to observe safe food handling procedures).
 
 For contact numbers near or less than 1, we might need a more detailed model.  But for higher contact numbers the SIR model might be good enough.
 
@@ -3386,11 +3423,13 @@ In summary, the SIR model has limitations; nevertheless, it provides insight int
 
 \chapter{Thermal systems}
 
-Intro
+So far the systems we have studied have been physical, in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In this chapter, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
+
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap07.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 \section{The coffee cooling problem}
 
-The coffee cooling problem was discussed by Jearl Walker in Scientific American in 1977\footnote{Walker, ``The Amateur Scientist", Scientific American, Volume 237, Issue 5, November 1977.}, and since then it has become a standard example of modeling and simulation.
+The coffee cooling problem was discussed by Jearl Walker in {\it Scientific American} in 1977\footnote{Walker, ``The Amateur Scientist", {\it Scientific American}, Volume 237, Issue 5, November 1977.}; since then it has become a standard example of modeling and simulation.
 
 Here is my version of the problem:
 
@@ -3414,20 +3453,20 @@ To help answer this question, I made a trial run with the milk and coffee in sep
 
 \end{itemize}
 
-To use this data and answer the question, we'll need to know something about temperature and heat, and we'll have to make some modeling decisions.
+To use this data and answer the question, we have to know something about temperature and heat, and we have to make some modeling decisions.
 
 
 \section{Temperature and heat}
 
-To understand how coffee cools (and milk warms), we need a model of temperature and heat.  {\bf Temperature} is a property of an object or a system; it quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.  As an object cools, its particles slow down.
+To understand how coffee cools (and milk warms), we need a model of temperature and heat.  {\bf Temperature} is a property of an object or a system; in SI units it is measured in degrees Celsius (\si{\celsius}).  Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.
 
-{\bf Heat} is a flow of energy from one object to another.  As the coffee cools, heat flows from the coffee, through the container, and into the surrounding environment.
+When particles in a hot object contact particles in a cold object, the hot object gets cooler and the cold object gets warmer, as energy is transferred from one to the other.  The transferred energy is called {\bf heat}; in SI units it is measured in joules (\si{\joule}).
 
 Heat is related to temperature by the following equation (see \url{https://en.wikipedia.org/wiki/Thermal_mass}):
 %
 \[ Q = C \Delta T \]
 %
-where $Q$ is the amount of heat transferred to an object, usually measured in joules (\si{J}), $\Delta T$ is the change in temperature of the object, measured in degrees Celsius (\si{\celsius}), and $C$ is the {\bf thermal mass} of the object which quantifies how much energy it takes to heat or cool it, in joules per degree Celsius (\si{J/\celsius}).
+where $Q$ is the amount of heat transferred to an object, $\Delta T$ is resulting change in temperature, and $C$ is the {\bf thermal mass} of the object, which quantifies how much energy it takes to heat or cool it.  In SI units, thermal mass is measured in joules per degree Celsius (\si{\joule\per\celsius}).
 
 For objects made primarily from one material, thermal mass can be computed like this:
 %
@@ -3435,26 +3474,26 @@ For objects made primarily from one material, thermal mass can be computed like 
 %
 where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity} of the material (see \url{https://en.wikipedia.org/wiki/Heat_capacity#Specific_heat_capacity}).
 
-The specific heat capacity of coffee is probably close to that of water, which is \SI{4.2}{J/g/\celsius}.
+We can use these equations to estimate the thermal mass of a cup of coffee.  The specific heat capacity of coffee is probably close to that of water, which is \SI{4.2}{\joule\per\gram\per\celsius}.  Assuming that the density of coffee is close to that of water, which is \SI{1}{\gram\per\milli\liter}, the mass of \SI{300}{\milli\liter} of coffee is \SI{300}{\gram}, and the thermal mass is \SI{1260}{\joule\per\celsius}.
 
-Assuming that the density of coffee is close to that of water, which is \SI{1}{g/ml}, the mass of \SI{300}{mL} of coffee is \SI{300}{g}, and the thermal mass is \SI{1260}{J/\celsius}.  So when the coffee cooled from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ was \SI{20}{\celsius}, which means that \SI{25200}{J} of heat energy was transferred from the coffee to the surrounding environment, presumably the cup holder and air in my car.
+So when a cup of coffee cools from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ is \SI{20}{\celsius}, which means that \SI{25200}{\joule} of heat energy was transferred from the coffee to the surrounding environment (the cup holder and air in my car).
 
-To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot), you could use it to lift a cup of coffee from sea level to \SI{8571}{m}, just shy of the height of Mount Everest, \SI{8848}{m}.
+To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot\footnote{See \url{https://en.wikipedia.org/wiki/Second_law_of_thermodynamics}.}), you could use it to lift a cup of coffee from sea level to \SI{8571}{\meter}, just shy of the height of Mount Everest, \SI{8848}{\meter}.
 
 Assuming that the cup has less mass than the coffee, and is made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
 
 
 \section{Heat transfer}
 
-In a situation like the coffee cooling problem, there are three ways heat flows from one object to another (see \url{https://en.wikipedia.org/wiki/Heat_transfer}):
+In a situation like the coffee cooling problem, there are three ways heat transfers from one object to another (see \url{https://en.wikipedia.org/wiki/Heat_transfer}):
 
 \begin{itemize}
 
-\item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.  This energy transfer is a form of heat flow.
+\item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.
 
 \item Convection: When particles in a gas or liquid flow from place to place, they carry heat energy with them.  Fluid flows can be caused by external action, like stirring, or by internal differences in temperature.  For example, you might have heard that hot air rises, which is a form of ``natural convection".
 
-\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The heat energy carried by this radiation depends on the object's temperature and surface properties, including its {\bf emissivity} (see \url{https://en.wikipedia.org/wiki/Thermal_radiation}).
+\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The energy carried by this radiation depends on the object's temperature and surface properties (see \url{https://en.wikipedia.org/wiki/Thermal_radiation}).
 
 \end{itemize}
 
@@ -3470,15 +3509,15 @@ Newton's law of cooling asserts that the temperature rate of change for an objec
 %
 \[ \frac{dT}{dt} = -r (T - T_{env}) \]
 %
-where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves between across the boundary between the system and the environment.
+where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves across the boundary between the system and the environment.
 
 Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
 
 For example, if the primary mechanism of heat transfer is conduction, Newton's law is ``true", which is to say that $r$ is constant over a wide range of temperatures.  And sometimes we can estimate $r$ based on the material properties and shape of the object.
 
-When convection contributes a non-negligible fraction of heat transfer, $r$ might depend on temperature, but Newton's law is often accurate enough, at least over some range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
+When convection contributes a non-negligible fraction of heat transfer, $r$  depends on temperature, but Newton's law is often accurate enough, at least over a narrow range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
 
-When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures, more than a few hundred degrees Celsius, say.
+When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures (more than a few hundred degrees Celsius, say).
 
 However, for a situation like the coffee cooling problem, we expect Newton's model to be quite good.
 
@@ -3532,13 +3571,13 @@ Now we can use \py{run_simulation}, as defined in Section~\ref{timeframe}, to si
 
 \begin{python}
 def run_simulation(system, update_func):
-    df = TimeFrame(columns=system.init.index)
-    df.loc[system.t0] = system.init
+    frame = TimeFrame(columns=system.init.index)
+    frame.loc[system.t0] = system.init
     
     for i in range(system.t0, system.t_end):
-        df.loc[i+1] = update_func(system, df.loc[i])
+        frame.loc[i+1] = update_func(system, frame.loc[i])
     
-    system.results = df
+    system.results = frame
 \end{python}
 
 and run it like this:
@@ -3747,7 +3786,7 @@ def run_and_mix(t_add):
 When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at the end.  Now we can sweep the range of values in between:
 
 \begin{python}
-sweep = Sweep()
+sweep = SweepSeries()
 for t_add in arange(0, 30):
     temp = run_and_mix(t_add)
     sweep[t_add] = temp
@@ -3774,11 +3813,11 @@ Simulating Newton's law of cooling is almost silly, because we can solve the dif
 %
 the general solution is
 %
-\[ T{\left (t \right )} = C_{1} e^{- r t} + T_{env} \]
+\[ T{\left (t \right )} = C_{1} \exp(-r t) + T_{env} \]
 %
 and the particular solution where $T(0) = T_init$ is
 %
-\[ T_{env} + \left(- T_{env} + T_{init}\right) e^{- r t} \]
+\[ T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t) \]
 %
 In the notebook for this chapter, you'll see how I got this solution using SymPy, and if you would like to see it done by hand, you can watch this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/newtons-law-of-cooling}
 
@@ -3817,6 +3856,11 @@ The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the resul
 
 
 \chapter{Pharmacokinetics}
+
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap08.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
+
+\section{The glucose-insulin system}
 
 {\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we will implement one of the most widely used pharmacokinetic models: the so-called ``minimal model" of glucose and insulin in the blood stream.
 
@@ -3938,7 +3982,7 @@ Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}
 
 Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.  But in the \py{DataFrame}, we only have measurements at discreet times.  This is a job for interpolation!
 
-The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for \py{scipy.interpolate.interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{Sweep}, and returns a function.  That's right, I said it returns a {\em function}.
+The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for \py{scipy.interpolate.interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
 
 So we can call it like this:
 
@@ -4319,6 +4363,9 @@ In the notebook for this chapter, you will have a chance to implement this model
 
 \chapter{Projectiles}
 
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap09.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
+
 So far the differential equations we've worked with have been {\bf first order}, which means they involve only first derivatives (see \url{https://en.wikipedia.org/wiki/Ordinary_differential_equation#General_definition}).  First order ODEs can be written
 %
 \[ \frac{dy}{dx} = F(x, y) \]
@@ -4695,6 +4742,9 @@ These methods demonstrate two ways to use models to solve problems, sometimes ca
 
 In the previous chapter we modeled objects moving in one-dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap10.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
+
 \section{The Manny Ramirez problem}
 \label{manny}
 
@@ -4934,7 +4984,7 @@ plot(ys, label='y')
 
 Figure~\ref{chap10-fig01} shows the result.  As expected, the $x$ component increases monotonically, with decreasing velocity.  And the $y$ position climbs initially and then descends, falling slightly below 0 after \SI{5.1}{\second}.
 
-Another way to view the same data is to plot the $x$ component on the $x$ axis and the $y$ component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:
+Another way to view the same data is to plot the $x$ component on the x-axis and the $y$ component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:
 
 \begin{python}
 plot(xs, ys, label='trajectory')
@@ -4992,7 +5042,7 @@ def interpolate_range(results):
     xs = results.x
     ys = results.y
 
-    t_peak = ys.argmax()
+    t_peak = ys.idxmax()
     
     descent = ys.loc[t_peak:]
     T = interp_inverse(descent)
@@ -5002,13 +5052,13 @@ def interpolate_range(results):
     return X(t_landing)
 \end{python}
 
-\py{argmax} searches for the largest value in \py{ys} and returns its timestamp (see \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.argmax.html}).
+To find the time when the ball hits its peak, we use \py{idxmax}, which searches for the largest value in \py{ys} and returns its label (see \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.idxmax.html#pandas.Series.idxmax}).
 
 Then we use \py{loc} to extract only the points after \py{t_peak}.  The index here is a {\bf slice}.  In general, you can use a slice to select a range of values from a \py{Series}, specifying the start and end indices.  In this example we only specify the beginning, so we get everything from the start index to the end of the \py{Series}.
 
 
 %TODO: Seems like we're breaking out a lot of new things here.
-% Maybe intro argmax and slice indexing earlier.
+% Maybe intro slice indexing earlier.
 
 Next we use \py{interp_inverse}, which we saw in Section~\ref{sidewalk}, to make \py{T}, which is an interpolation function that maps from height to time.  So \py{t_landing} is the time when height is 0.
 
@@ -5046,7 +5096,7 @@ And we can sweep a sequence of angles like this:
 
 \begin{python}
 angles = linspace(30, 60, 11)
-sweep = Sweep()
+sweep = SweepSeries()
 
 for angle in angles:
     x_range = range_func(angle, condition)
@@ -5093,7 +5143,6 @@ The notebook provides some additional hints, but at this point you should have e
 
 \chapter{Rotation}
 
-
 Let's talk about things that spin.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others, and stable when spinning around some axes, but not others.  
 
 If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
@@ -5107,6 +5156,8 @@ This approach makes it possible to simulate and analyze many interesting systems
 The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
 
 As an exercise at the end of the chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{https://en.wikipedia.org/wiki/Yo-yo}).  But we'll work our way up to it gradually, starting with toilet paper.
+
+You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap11.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 
 \section{The physics of toilet paper}
