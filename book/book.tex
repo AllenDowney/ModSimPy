@@ -325,7 +325,7 @@ If students are limited to the mathematical analysis they can do by hand, they a
 
 And they will only work with bad models; that is, models that are too simple for their purpose.  In nearly every mechanical system, air resistance and friction are essential features; if we ignore them, our predictions will be wrong and our designs won't work.
 
-In most freshman Physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach, and for students to practice, the entire modeling process.
+In most freshman physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach, and for students to practice, the entire modeling process.
 
 
 \section{How much programming do I need?}
@@ -348,7 +348,7 @@ In this book, you learn to program with an immediate goal in mind: writing simul
 
 \begin{itemize}
 
-\item NumPy for basic numerical computation (see \url{http://www.numpy.org/}). \index{NumPy}
+\item NumPy for basic numerical computation (see \url{http://www.numpy.org/}).\index{NumPy}
 
 \item SciPy for scientific computation (see \url{http://www.scipy.org/}).
 \index{SciPy}
@@ -356,13 +356,13 @@ In this book, you learn to program with an immediate goal in mind: writing simul
 \item matplotlib for visualization (see \url{http://matplotlib.org/}).
 \index{matplotlib}
 
-\item pandas for working with data (see \url{http://pandas.pydata.org/}).
+\item pandas for working with data (see \url{http://pandas.pydata.org/}).\index{pandas}
 
-\item SymPy for symbolic computation, (see \url{http://www.sympy.org}).
+\item SymPy for symbolic computation, (see \url{http://www.sympy.org}).\index{sympy}
 
-\item Pint for units like kilograms and meters (see \url{http://pint.readthedocs.io}).
+\item Pint for units like kilograms and meters (see \url{http://pint.readthedocs.io}).\index{pint}
 
-\item Jupyter for reading, running, and developing code (see \url{http://jupyter.org}).
+\item Jupyter for reading, running, and developing code (see \url{http://jupyter.org}).\index{jupyter}
 
 \end{itemize}
 
@@ -377,7 +377,7 @@ I encourage you to read the the \py{modsim} library code.  Most of it is not com
 
 \section{How much math and science do I need?} 
 
-I assume that you have studied calculus.  You should know what derivatives and integrals are, but that's about all you.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.
+I assume that you have studied calculus.  You should know what derivatives and integrals are, but that's about all.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.
 
 More importantly you should understand what those concepts {\em mean};  but if you don't, this book might help you figure it out.
 
@@ -393,7 +393,7 @@ I think that's everything you need, but if you find that I left something out, p
 \section{Getting started}
 \label{code}
 
-To run the examples and work on the exercises in this book, you will need to be able to
+To run the examples and work on the exercises in this book, you will need to be able to:
 
 \begin{enumerate}
 
@@ -424,7 +424,7 @@ Anaconda is available for Linux, macOS, and Windows.  By default, it puts all fi
 \section{Copying my files}
 
 The code for this book is available from
-\url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository.  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
+\url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository\footnote{The really cool kids call it a ``repo".}.  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
 \index{repository}
 \index{Git}
 \index{GitHub}
@@ -469,15 +469,12 @@ about it at \url{http://jupyter.org}.
 \section*{Contributor List}
 
 If you have a suggestion or correction, send it to 
-{\tt downey@allendowney.com}.  If I make a change based on your
-feedback, I will add you to the contributor list
-(unless you ask to be omitted).
+{\tt downey@allendowney.com}.  Or if you are a Git use, send me a pull request!
+
+If I make a change based on your feedback, I will add you to the contributor list, unless you ask to be omitted.
 \index{contributors}
 
-If you include at least part of the sentence the
-error appears in, that makes it easy for me to search.  Page and
-section numbers are fine, too, but not as easy to work with.
-Thanks!
+If you include at least part of the sentence the error appears in, that makes it easy for me to search.  Page and section numbers are fine, too, but not as easy to work with.  Thanks!
 
 \begin{itemize}
 
@@ -487,7 +484,9 @@ Thanks!
 my amazing colleagues at Olin College, including John Geddes, Alison
 Wood, Chris Lee, and Jason Woodard.
 
-\item I am grateful to Lisa Downey for her thoughtful and careful copy editing.
+\item I am grateful to Lisa Downey and Jason Woodard for their thoughtful and careful copy editing.
+
+
 
 % ENDCONTRIB
 
@@ -502,7 +501,7 @@ Wood, Chris Lee, and Jason Woodard.
 % TABLE OF CONTENTS
 \begin{latexonly}
 
-\tableofcontents
+% \tableofcontents
 
 \cleardoublepage
 
@@ -513,11 +512,9 @@ Wood, Chris Lee, and Jason Woodard.
 
 
 \chapter{Modeling}
+\label{chap01}
 
-
-The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.
-
-The word ``model" means different things in different contexts, so it is hard to define, except by example.
+The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.  The word ``model" means different things in different contexts, so it is hard to define except by example.
 
 Some models are actual objects, like a scale model of a car, which has the same shape as the car, but smaller.  Scale models are often useful for testing properties of mechanical systems, like air resistance.
 
@@ -1059,13 +1056,12 @@ It is always legal to provide parameter names along with the arguments:
 step(p1=0.4, p2=0.2)
 \end{python}
 
-Providing parameters names makes programs more readable and less error-prone, because you don't have to worry about the order of the arguments.  For example, if you reverse the order, like this:
+Providing parameters names makes programs more readable and less error-prone, because you don't have to worry about the order of the arguments.  For example, if you reverse the order, it still assigns the right value to each parameter:
 
 \begin{python}
 step(p2=0.2, p1=0.4)
 \end{python}
 
-It still assigns the right value to each parameter.
 
 \section{For loops}
 \label{forloop}
@@ -1271,7 +1267,7 @@ The first line creates a variable named \py{olin_temp} that gets the number of b
 
 \py{move_bike} uses the less-than operator, \py{<}, to compare \py{olin_temp} to \py{0}.  The result of this operator is a boolean.  If it's \py{True}, that means \py{olin_temp} is negative, which means that there are not enough bikes.
 
-In that case I use a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we ``return" from \py{move_bike} without changing state.  Similarly, if there are not enough bikes at Wellesley, we return without changing state.
+In that case I use a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we ``return" from \py{move_bike} without changing the state.  We do the same if there are not enough bikes at Wellesley.
 
 If both of these tests pass, we run the last two lines, which assigns the values from the temporary variables to the corresponding system variables.
 
@@ -1409,13 +1405,13 @@ def add_five(x):
     return x + 5
 \end{python}
 
-\py{add_five} takes a parameter, \py{x}, which could be any number.  It computes \py{x + 5} and returns the result.  So if we run it like this:
+\py{add_five} takes a parameter, \py{x}, which could be any number.  It computes \py{x + 5} and returns the result.  So if we run it like this, the result is \py{8}:
 
 \begin{python}
 add_five(3)
 \end{python}
 
-The result is \py{8}.  As a more useful example, here's a new function that creates a \py{System} object, runs a simulation, and then returns the \py{System} object as a result:
+As a more useful example, here's a new function that creates a \py{System} object, runs a simulation, and then returns the \py{System} object as a result:
 
 \begin{python}
 def run_simulation():
@@ -1425,7 +1421,7 @@ def run_simulation():
     return system
 \end{python}
 
-If we run \py{run_simulation} like this:
+If we call \py{run_simulation} like this:
 
 \begin{python}
 system = run_simulation()
@@ -1595,7 +1591,7 @@ In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted t
 
 But world population growth is still a topic of concern, and it is an open question how many people the earth can sustain while maintaining and improving our quality of life.
 
-In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50--100 years.
+In this chapter and the next, we use tools from the previous chapters to explain world population growth since 1950 and generate predictions for the next 50--100 years.
 
 You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap03.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
@@ -1712,7 +1708,7 @@ Figure~\ref{chap03-fig01} shows the result.  The lines overlap almost completely
 
 Suppose we want to predict world population growth over the next 50 or 100 years.  We can do that by developing a model that describes how population grows, fitting the model to the data we have so far, and then using the model to generate predictions.
 
-In the next few sections I demonstrate this process, starting with simple models, which turn out to be unrealistic, and gradually improving them.
+In the next few sections I demonstrate this process starting with simple models, which turn out to be unrealistic, and gradually improving them.
 
 Although there is some curvature in the plotted estimates, it looks like world population growth has been close to linear since 1960 or so.  As a starting place, we'll build a model with constant growth.
 
@@ -1784,7 +1780,7 @@ It returns a NumPy array of values from \py{start} to \py{stop}, where \py{step}
 
 This function works best if the space between \py{start} and \py{stop} is divisible by \py{step}; otherwise the results might be surprising.
 
-By default, the last value in the array is \py{stop} (at least approximately).  If you provide the keyword argument \py{endpoint=False}, the last value in the array is \py{stop-step}. 
+By default, the last value in the array is \py{stop} (at least approximately).  If you provide the argument \py{endpoint=False}, the last value in the array is \py{stop-step}. 
 
 In this example, the result from \py{linrange} is an array of values from \py{1950} to \py{2015} (including both).  
 
@@ -1796,7 +1792,7 @@ Each time through the loop, the loop variable \py{year} gets the next value from
 \label{chap03-fig02}
 \end{figure}
 
-Figure~\ref{chap03-fig02} shows the result. The model does not fit the data particularly well from 1950 to the 1990, but after that, it's pretty good.  Nevertheless, there are problems:
+Figure~\ref{chap03-fig02} shows the result. The model does not fit the data particularly well from 1950 to 1990, but after that, it's pretty good.  Nevertheless, there are problems:
 
 \begin{itemize}
 
@@ -1929,7 +1925,7 @@ This function takes as arguments the current population, current year, and a \py
 Now we can write a function that runs any model:
 
 \begin{python}
-def run_any_model(system, update_func):
+def run_simulation(system, update_func):
     results = TimeSeries()
     results[system.t0] = system.p0
     for year in linrange(system.t0, system.t_end):
@@ -1937,17 +1933,17 @@ def run_any_model(system, update_func):
     system.results = results
 \end{python}
 
-This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we call \py{run_any_model}, the second parameter is a function, like \py{update_func1}, that computes the population for the next year.
+This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we call \py{run_simulation}, the second parameter is a function, like \py{update_func1}, that computes the population for the next year.
 
 Here's how we call it:
 
 \begin{python}
-run_any_model(system, update_func1)
+run_simulation(system, update_func1)
 \end{python}
 
-Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_any_model}, we can run \py{update_func} just like any other function.
+Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_simulation}, we can run \py{update_func} just like any other function.
 
-When you run \py{run_any_model}, it runs \py{update_func1} once for each year between \py{t0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
+When you calls \py{run_simulation}, it calls \py{update_func1} once for each year between \py{t0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
 
 
 \section{Combining birth and death}
@@ -1969,7 +1965,7 @@ def update_func1b(pop, year, system):
 And here's how we run it:
 
 \begin{python}
-run_any_model(system, update_func1b)
+run_simulation(system, update_func1b)
 \end{python}
 
 Again, the result is the same as Figure~\ref{chap03-fig03}.
@@ -1993,7 +1989,7 @@ Maybe it's a quadratic relationship, like this:
 We can test that conjecture with a new update function:
 
 \begin{python}
-def update_func3(pop, year, system):
+def update_func2(pop, year, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2008,7 +2004,7 @@ system.beta = -0.0018
 And here's how we run it:
 
 \begin{python}
-run_any_model(system, update_func3)
+run_simulation(system, update_func2)
 \end{python}
 
 \begin{figure}
@@ -2084,8 +2080,6 @@ In this version, it is easier to interpret the parameters: $\alpha$ is the maxim
 In the next chapter we use the models we have developed to generate predictions.
 
 
-
-
 \chapter{Prediction}
 
 In the previous chapter we developed a quadratic model of world population growth from 1950 to 2015.  It is a simple model, but it fits the data well and the mechanisms it's based on are plausible.  
@@ -2099,7 +2093,7 @@ You can view the code for this chapter at \url{https://github.com/AllenDowney/Mo
 We'll start with the quadratic model from Section~\ref{quadratic}, which is based on this update function:
 
 \begin{python}
-def update_func3(pop, year, system):
+def update_func2(pop, year, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2118,25 +2112,24 @@ Now we can create a \py{System} object:
 system = System(t0=t0, 
                 t_end=t_end,
                 p0=p0,
-                alpha = 0.025,
-                beta = -0.0018)
+                alpha=0.025,
+                beta=-0.0018)
 \end{python}
 
 And run the model:
 
 \begin{python}
-run_any_model(system, update_func3)
+run_simulation(system, update_func2)
 \end{python}
 
 We have already seen the results in Figure~\ref{chap03-fig04}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 system.t_end = 2250
-run_any_model(system, update_func3)
+run_simulation(system, update_func2)
 \end{python}
 
 \begin{figure}
-% chap03.ipynb.py
 \centerline{\includegraphics[height=3in]{figs/chap04-fig01.pdf}}
 \caption{Quadratic model of world population growth, with projection from 2016 to 2250.}
 \label{chap04-fig01}
@@ -2192,7 +2185,7 @@ We can run our model over the same interval:
 
 \begin{python}
 system.t_end = 2100
-run_any_model(system, update_func3)
+run_simulation(system, update_func2)
 \end{python}
 
 
@@ -2204,7 +2197,7 @@ run_any_model(system, update_func3)
 
 And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
 
-Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the result from this model, simple as it is, are not entirely crazy.
+Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the results from this model, simple as it is, are not entirely crazy.
 
 
 \section{Difference equations}
@@ -2295,7 +2288,7 @@ And as a differential equation like this:
 %
 If we multiply both sides by $dt$ and divide by $x$, we get
 %
-\[ \frac{1}{x} dx = \alpha~dt \] 
+\[ \frac{1}{x}~dx = \alpha~dt \] 
 %
 Now we integrate both sides, yielding:
 %
@@ -2519,7 +2512,7 @@ Proportional & exponential: $x(t) = p_0 \exp(\alpha t)$ \\
 Quadratic & logistic: $x(t) = K / (1 + A\exp(-rt))$ \\ 
 \end{tabular} 
 
-What we've been calling the constant growth model is more commonly called ``linear growth" because the solution is a line.  Similarly, what's we've called proportion is commonly called ``exponential growth", and what we've called quadratic is commonly called ``logistic".
+What I've been calling the constant growth model is more commonly called ``linear growth" because the solution is a line.  Similarly, what I've called proportional is commonly called ``exponential", and what I've called quadratic is commonly called ``logistic".
 
 I avoided the more common terms until now because I thought it would be strange to use them before we solved the equations and discovered the functional form of the solutions.
 
@@ -2551,7 +2544,7 @@ The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named
 
 \item {\bf I}: People who are ``infected" or, more specifically, capable of passing along the disease if they come into contact with someone susceptible.
 
-\item {\bf R}: People who have ``recovered".
+\item {\bf R}: People who are ``recovered" or, for deadly diseases, ``removed".
 
 \end{itemize}
   
@@ -2695,12 +2688,12 @@ The result is a \py{State} object with these values:
 {\bf \sf R} & 0.002747 \\ 
 \end{tabular} 
 
-%TODO: figure out when to talk about integers and floats
+%TODO: figure out when to talk about integers and floats (or never)
 
 
 \section{Running the model}
 
-Now we can run the model over a sequence of time steps:
+Now we can simulate the model over a sequence of time steps:
 
 \begin{python}
 def run_simulation(system, update_func):
@@ -2710,7 +2703,9 @@ def run_simulation(system, update_func):
     return state
 \end{python}
 
-The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}.  The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithsystem}.
+The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}.
+
+The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithsystem}.
 
 We can call \py{run_simulation} like this:
 
@@ -2748,7 +2743,7 @@ def run_simulation(system, update_func):
     t0 = system.t0
     S[t0], I[t0], R[t0] = state
     
-    for i in arange(system.t0, system.t_end):
+    for i in linrange(system.t0, system.t_end):
         state = update_func(system, state)
         S[i+1], I[i+1], R[i+1] = state
     
@@ -2812,7 +2807,7 @@ def run_simulation(system, update_func):
     frame = TimeFrame(columns=system.init.index)
     frame.loc[system.t0] = system.init
     
-    for i in arange(system.t0, system.t_end):
+    for i in linrange(system.t0, system.t_end):
         frame.loc[i+1] = update_func(system, frame.loc[i])
     
     system.results = frame
@@ -3523,6 +3518,7 @@ However, for a situation like the coffee cooling problem, we expect Newton's mod
 
 
 \section{Implementation}
+\label{coffee_impl}
 
 To get started, let's forget about the milk temporarily and focus on the coffee.  I'll create a \py{State} object to represent the initial temperature:
 
@@ -3539,30 +3535,31 @@ coffee = System(init=init, T_env=22, r=0.01,
 
 The values of \py{T_env}, \py{t0}, and \py{t_end} come from the statement of the problem.  I chose the value of \py{r} arbitrarily for now; we will figure out how to estimate it soon.
 
-\py{dt} is the time step we'll use to simulate the cooling process.
+\py{dt} is the time step we use to simulate the cooling process.
 Strictly speaking, Newton's law is a differential equation, but over a short period of time we can approximate it with a difference equation:
 %
 \[ \Delta T = -r (T - T_{env}) \Delta t \]
 %
 where $\Delta t$ is a small time step and $\Delta T$ is the change in temperature during that time step.
 
-One note: I use $\Delta T$ to denote a change in temperature over time, but in the context of heat transfer, you might also see $\Delta T$ used to denote the difference in temperature between an object and its environment, $T - T_{env}$.  To minimize confusion, I will avoid this second use.
-
-%TODO: introduce unpack()
+Note: I use $\Delta T$ to denote a change in temperature over time, but in the context of heat transfer, you might also see $\Delta T$ used to denote the difference in temperature between an object and its environment, $T - T_{env}$.  To minimize confusion, I will avoid this second use.
 
 Now we can write an update function:
 
 \begin{python}
-def update(system, state):
+def update(state, system):
+    unpack(system)
+    
     T = state.temp
-    dT = - system.r * (T - system.T_env) * system.dt
-    return State(temp=T+dT)
+    T += -r * (T - T_env) * dt
+
+    return State(temp=T)
 \end{python}
 
 Now if we run 
 
 \begin{python}
-update(coffee, init)
+update(init, coffee)
 \end{python}
 
 we see that the temperature after one minute is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
@@ -3571,11 +3568,14 @@ Now we can use \py{run_simulation}, as defined in Section~\ref{timeframe}, to si
 
 \begin{python}
 def run_simulation(system, update_func):
-    frame = TimeFrame(columns=system.init.index)
-    frame.loc[system.t0] = system.init
+    unpack(system)
     
-    for i in range(system.t0, system.t_end):
-        frame.loc[i+1] = update_func(system, frame.loc[i])
+    frame = TimeFrame(columns=init.index)
+    frame.loc[t0] = init
+    ts = linrange(t0, t_end-dt, dt)
+    
+    for t in ts:
+        frame.loc[t+dt] = update_func(frame.loc[t], system)
     
     system.results = frame
 \end{python}
@@ -3591,26 +3591,25 @@ The result is a \py{TimeFrame} object with one row per time step and just one co
 First I want to encapsulate what we have so far in a function:
 
 \begin{python}
-def run(T_init, **kwargs):
+def make_system(T_init=90, r=0.01, volume=300, t_end=30):
     init = State(temp=T_init)
-    system = System(init=init, T_env=22, t0=0, 
-                    dt=1, **kwargs)
-    run_simulation(system, update)
+    
+    system = System(init=init,
+                    volume=volume,
+                    r=r,
+                    T_env=22, 
+                    t0=0,
+                    t_end=t_end,
+                    dt=1)
     return system
 \end{python}
 
-\py{run} uses a feature we have not seen before: the parameter \py{**kwargs} gathers any keyword arguments provided when the function runs and stores them in an object (specifically, it's a Python dictionary).
-
-In this example, it passes the arguments along to \py{System}, so they become variables in the new \py{System} object.
-
-If we call it like this:
+\py{make_system} takes the system parameters and packs them into a \py{System} object.  Now we can simulate the coffee like this:
 
 \begin{python}
-coffee = run(T_init=90, t_end=30, r=0.01)
+coffee = make_system()
+run_simulation(coffee, update)
 \end{python}
-
-\py{coffee} contains \py{t_end} and \py{r} as system variables, along with
-\py{init}, \py{T_env}, \py{t0}, and \py{dt}.
 
 Now let's see a better was to estimate \py{r}.
 
@@ -3647,7 +3646,8 @@ Now, we want to find the value of \py{r} that yields a final temperature of \SI{
 
 \begin{python}
 def error_func1(r):
-    system = run(T_init=90, t_end=30, r=r)
+    system = make_system(r=r)
+    run_simulation(system, update)
     return final_temp(system) - 70
 \end{python}
 
@@ -3676,7 +3676,9 @@ The return value from \py{fsolve} is an array with a single element, which is th
 \label{chap07-fig01}
 \end{figure}
 
-As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  The result should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time, with the estimated values of \py{r_coffee} and \py{r_milk}.
+As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  
+
+With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time.
 
 
 \section{Mixing liquids}
@@ -3684,6 +3686,7 @@ As one of the exercises for this chapter, you will use the same process to estim
 When we mix two liquids, the temperature of the mixture depends on the temperatures of the ingredients, but it might not be obvious how to compute it.
 
 Assuming there are no chemical reactions between the liquids that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is {\bf conserved}.
+\index{conservation of thermal energy}
 
 If the temperature of the first liquid is $T_1$, the temperature of the second liquid is $T_2$, and the final temperature of the mixture is $T$, the heat transfer into the first liquid is $C_1 (T - T_1)$ and the heat transfer into the second liquid is $C_2 (T - T_2)$, where $C_1$ and $C_2$ are the thermal masses of the liquids.
 
@@ -3695,15 +3698,7 @@ We can solve this equation for T:
 %
 \[ T = \frac{C_1 T_1 + C_2 T_2}{C_1 + C_2} \]
 %
-For the coffee cooling problem, we have the volumes of the liquids; to get their thermal masses, recall that thermal mass is related to mass, $m$, by specific heat capacity, $c_p$:
-%
-\[ C = m c_p \]
-%
-And mass is related to volume $V$, by density, $\rho$ (see \url{https://en.wikipedia.org/wiki/Density}):
-%
-\[ m = \rho V \]
-%
-So the thermal mass of each ingredient is
+For the coffee cooling problem, we have the volume of each liquid; if we also know the density, $\rho$, and the specific heat capacity, $c_p$, we can compute thermal mass:
 %
 \[ C = \rho V c_p \]
 %
@@ -3713,10 +3708,10 @@ If we assume that the density and specific heat of the milk and coffee are equal
 %
 where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk to see how good this approximation is.
 
-The following function takes two \py{System} objects that represent the coffee and milk, creates a new \py{System} to represent the mixture, then runs a simulation of the mixture until \py{t_end}.  The return value is the new \py{System}.
+The following function takes two \py{System} objects that represent the coffee and milk, and creates a new \py{System} to represent the mixture:
 
 \begin{python}
-def mix(s1, s2, t_end):
+def mix(s1, s2):
     assert s1.t_end == s2.t_end
     
     volume = s1.volume + s2.volume
@@ -3724,8 +3719,10 @@ def mix(s1, s2, t_end):
     temp = (s1.volume * final_temp(s1) + 
             s2.volume * final_temp(s2)) / volume
     
-    mixture = run(T_init=temp, t_end=t_end, 
-                  r=s1.r, volume=volume)
+    mixture = make_system(T_init=temp,
+                          volume=volume,
+                          r=s1.r)
+    
     return mixture
 \end{python}
 
@@ -3741,8 +3738,13 @@ This function uses the value of \py{r} from \py{s1} as the value of \py{r} for t
 Now we have everything we need to solve the problem.  First I'll create objects to represent the coffee and cream, and run for 30 minutes.
 
 \begin{python}
-coffee = run(T_init=90, t_end=30, r=r_coffee, volume=300)
-milk = run(T_init=5, t_end=30, r=r_milk, volume=50)
+coffee = make_system(T_init=90, t_end=30, 
+                     r=r_coffee, volume=300)
+run_simulation(coffee, update)
+
+milk = make_system(T_init=5, t_end=30, 
+                   r=r_milk, volume=50)
+run_simulation(milk, update)
 \end{python}
 
 The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.7}{\celsius}.  Then we mix them:
@@ -3753,17 +3755,19 @@ mix_last = mix(coffee, milk)
 
 After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough to be enjoyable.  Would we do any better if we added the milk first?
 
-I'll create new objects for the coffee and milk, with \py{t_end=0}
+To find out, I'll create new objects for the coffee and milk:
 
 \begin{python}
-coffee = run(T_init=90, t_end=0, r=r_coffee, volume=300)
-milk = run(T_init=5, t_end=0, r=r_milk, volume=50)
+coffee = run(T_init=90, r=r_coffee, volume=300)
+milk = run(T_init=5, r=r_milk, volume=50)
 \end{python}
 
 Then mix them and simulate 30 minutes:
 
 \begin{python}
-mix_first = mix(coffee, milk, t_end=30)
+mix_first = mix(coffee, milk)
+mix_first.t_end = 30
+run_simulation(mix_first, update)
 \end{python}
 
 The final temperature is only \SI{61.6}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.5}{\celsius}.  But is that the best we can do?
@@ -3771,15 +3775,22 @@ The final temperature is only \SI{61.6}{\celsius}.  So it looks like adding the 
 
 \section{Optimization}
 
-Adding the milk after 30 minutes is better than adding it after one minute, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
+Adding the milk after 30 minutes is better than adding immediately, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
 
 \begin{python}
-def run_and_mix(t_add):
-    coffee = run(T_init=90, t_end=t_add, 
-                 r=r_coffee, volume=300)
-    milk = run(T_init=5, t_end=t_add, 
-               r=r_milk, volume=50)
-    mixture = mix(coffee, milk, t_end=30-t_add)
+def run_and_mix(t_add, t_total=30):
+    coffee = make_system(T_init=90, t_end=t_add, 
+                         r=r_coffee, volume=300)
+    run_simulation(coffee, update)
+
+    milk = make_system(T_init=5, t_end=t_add, 
+                       r=r_milk, volume=50)
+    run_simulation(milk, update)
+    
+    mixture = mix(coffee, milk)
+    mixture.t_end = t_total - t_add
+    run_simulation(mixture, update)
+
     return final_temp(mixture)
 \end{python}
 
@@ -3787,7 +3798,7 @@ When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at
 
 \begin{python}
 sweep = SweepSeries()
-for t_add in arange(0, 30):
+for t_add in linrange(0, 30, 2):
     temp = run_and_mix(t_add)
     sweep[t_add] = temp
 \end{python}
@@ -3798,7 +3809,7 @@ for t_add in arange(0, 30):
 \label{chap07-fig02}
 \end{figure}
 
-Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the time index of a \py{TimeSeries}.
+Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the index of a \py{TimeSeries}.
 
 The final temperature is maximized when \py{t_add=30}, so adding the milk at the end is optimal.
 
@@ -3819,7 +3830,7 @@ and the particular solution where $T(0) = T_init$ is
 %
 \[ T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t) \]
 %
-In the notebook for this chapter, you'll see how I got this solution using SymPy, and if you would like to see it done by hand, you can watch this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/newtons-law-of-cooling}
+You can see how I got this solution using SymPy at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap07sympy.ipynb}; if you would like to see it done by hand, you can watch this video: \url{https://www.khanacademy.org/math/ap-calculus-ab/diff-equations-ab/exponential-models-ab/v/newtons-law-of-cooling}.
 
 Now we can use the observed data to estimate the parameter $r$.  If we observe $T(t_{end}) = T_{end}$, we can plug $t_{end}$ and $T_{end}$ into the particular solution and solve for $r$.  The result is:
 %
@@ -3827,23 +3838,22 @@ Now we can use the observed data to estimate the parameter $r$.  If we observe $
 %
 Plugging in $t_{end}=30$ and $T_{end}=70$ (and again with $T_{init}=90$ and $T_{env}=22$), the estimate for $r$ is 0.0116.
 
-We can use this function to compute the time series:
+We can use the following function to compute the time series:
 
 \begin{python}
 def run_analysis(system):
-    T_init = system.init.temp
-    T_env = system.T_env
+    unpack(system)
     
-    ts = arange(system.t0, system.t_end+1)
-    Ts = T_env + (T_init - T_env) * np.exp(-system.r * ts)
-    series = TimeSeries(Ts, index=ts)
+    T_init = init.temp    
+    ts = linrange(t0, t_end, dt)
     
-    system.results = TimeFrame(series, columns=['temp'])
+    temp_array = T_env + (T_init - T_env) * exp(-r * ts)
+    temp_series = TimeSeries(temp_array, index=ts)
+    
+    system.results = TimeFrame(temp_series, columns=['temp'])
 \end{python}
 
-The interface for this function is similar to \py{run_simulation}: it takes a \py{System} as a parameter, and stores a \py{TimeFrame} as a result.
-
-We can run it like this, using the computed value for \py{r_coffee2}
+This function is similar to \py{run_simulation}; it takes a \py{System} as a parameter, and stores a \py{TimeFrame} as a result.  We can run it like this, with \py{r_coffee2=0.0116}:
 
 \begin{python}
 init = State(temp=90)
@@ -3857,12 +3867,16 @@ The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the resul
 
 \chapter{Pharmacokinetics}
 
+{\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we will implement one of the most widely used pharmacokinetic models: the so-called {\bf minimal model} of glucose and insulin in the blood stream.
+
+We will use this model to fit data collected from a patient, and use the parameters of the fitted model to quantify the patient's ability to produce insulin and process glucose.
+
+My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{https://www.karger.com/Article/Abstract/89312}, PDF at \url{http://faculty.washington.edu/gennari/teaching/591-BioSimSem/Bergman-minmodel05.pdf}).
+
 You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap08.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 
 \section{The glucose-insulin system}
-
-{\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we will implement one of the most widely used pharmacokinetic models: the so-called ``minimal model" of glucose and insulin in the blood stream.
 
 {\bf Glucose} is a form of sugar that circulates in the blood of animals; it is used as fuel for muscles, the brain, and other organs.  The concentration of blood sugar is controlled by the hormone system, and especially by {\bf insulin}, which is produced by the pancreas and has the effect of reducing blood sugar.
 
@@ -3870,24 +3884,20 @@ In people with normal pancreatic function, the hormone system maintains {\bf hom
 
 But if the pancreas does not produce enough insulin, or if the cells that should respond to insulin become insensitive to its effect, blood sugar can become elevated, a condition called {\bf hyperglycemia}.  Long term, severe hyperglycemia is the defining symptom of {\bf diabetes mellitus}, a serious disease that affects almost 10\% of the population in the U.S. (see \url{https://www.cdc.gov/diabetes/data/statistics/2014statisticsreport.html}).
 
-One of the most-used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently), and then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentration of glucose and insulin.
+One of the most-used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently), and then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentrations of glucose and insulin.
 
-By analyzing these measurements, we can estimate several parameters of the subjects response; the most important is $S_I$, which quantifies the effect of insulin on the rate of reduction in blood sugar.
-
-My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{https://www.karger.com/Article/Abstract/89312}, PDF at \url{http://faculty.washington.edu/gennari/teaching/591-BioSimSem/Bergman-minmodel05.pdf}).
-
-I also found useful a report by Natal van Riel (2004) ``Minimal Models for Glucose and Insulin Kinetics" (PDF at \url{https://pdfs.semanticscholar.org/3071/79e20d80ffa4a810e943aa7f737caf6517ca.pdf}).
-
+By analyzing these measurements, we can estimate several parameters of the subject's response; the most important is a parameter denoted $S_I$, which quantifies the effect of insulin on the rate of reduction in blood sugar.
 
 
 \section{The glucose minimal model}
 
-The minimal model consists of two parts, the glucose model, which takes measurements of insulin levels as inputs, and the insulin model, which takes measurements of glucose as inputs.  I will present an implementation of the glucose model; then in the notebook for this chapter, you will have the chance to implement the insulin model.
+The ``minimal model" was proposed by Bergman, Ider, Bowden, and Cobelli\footnote{Bergman RN, Ider YZ, Bowden CR, Cobelli C., ``Quantitative estimation of insulin sensitivity", Am J Physiol. 1979 Jun;236(6):E667-77.  Abstract at \url{https://www.ncbi.nlm.nih.gov/pubmed/443421}.}.
+It consists of two parts: the glucose model and the insulin model.  I will present an implementation of the glucose model; in the notebook for this chapter, you will have the chance to implement the insulin model.
 
-The original version of the minimal model was developed in the 1970s; since then, many variations and extensions have been proposed.  Bergman's comments on the development of the model provide insight into their process:
+The original model was developed in the 1970s; since then, many variations and extensions have been proposed.  Bergman's comments on the development of the model provide insight into their process:
 
 \begin{quote}
-We applied the principle of Occam’s Razor, i.e. by asking
+We applied the principle of Occam's Razor, i.e.~by asking
 what was the simplest model based upon known physiology
 that could account for the insulin-glucose relationship
 revealed in the data. Such a model must be simple
@@ -3898,7 +3908,7 @@ of the model from a single data set (thus avoiding
 unverifiable assumptions).
 \end{quote}
 
-The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system, without too much complexity to be practical.  In this case the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.
+The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system without too much complexity to be practical.  In this case the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.
 
 Berman discusses the features he and his colleagues thought were essential:
 
@@ -3914,7 +3924,7 @@ insulin must first move from plasma to a remote compartment [...] to exert its a
 
 To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized that insulin must move, relatively slowly, from the blood to a ``remote compartment" where it has its effect.
 
-At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to real physical entities.
+At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.
 
 The glucose model consists of two differential equations:
 %
@@ -3932,7 +3942,7 @@ where
 
 \item $G_b$ is the basal concentration of blood glucose and $I_b$ is the basal concentration of blood insulin, that is, the concentrations at equilibrium.  Both are constants estimated from measurements at the beginning or end of the test.
 
-\item $X$ is the concentration of insulin in the tissue fluid as a function of time and $dX/dt$ is its rate of change.
+\item $X$ is the concentration of insulin in the tissue fluid as a function of time, and $dX/dt$ is its rate of change.
 
 \item $k_1$, $k_2$, and $k_3$ are positive-valued parameters that control the rates of appearance and disappearance for glucose and insulin. 
 
@@ -3944,7 +3954,7 @@ We can interpret the terms in the equations one by one:
 
 \item $-k_1 \left[ G(t) - G_b \right]$ is the rate of glucose disappearance due to the effect of glucose itself.  When $G(t)$ is above basal level, $G_b$, this term is negative; when $G(t)$ is below basal level this term is positive.  So in the absence of insulin, this term tends to restore blood glucose to basal level.
 
-\item $-X(t) G(t)$ models the interaction of glucose and insulin in tissue fluid, so the rate increases as either $X$ or $G$ increases.  This term does not require a parameter because the units of $X$ are unspecified; we can consider $X$ to be in whatever units would make the rate parameter of this term 1.
+\item $-X(t) G(t)$ models the interaction of glucose and insulin in tissue fluid, so the rate increases as either $X$ or $G$ increases.  This term does not require a rate parameter because the units of $X$ are unspecified; we can consider $X$ to be in whatever units would make the parameter of this term 1.
 
 \item $k_3 \left[ I(t) - I_b \right]$ is the rate at which insulin diffuses between blood and tissue fluid.  When $I(t)$ is above basal level, insulin diffuses from the blood into the tissue fluid.  When $I(t)$ is below basal level, insulin diffuses from tissue to the blood.
 
@@ -3956,15 +3966,13 @@ The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is 
 
 \section{Data}
 
-To develop and test the model, I'll use data from Pacini and Bergman (1986)\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122.}.
-
-The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
+To develop and test the model, I'll use data from Pacini and Bergman\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122, 1986.}.  The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
 
 \begin{python}
-df = pd.read_csv('glucose_insulin.csv', index_col='time')
+data = pd.read_csv('glucose_insulin.csv', index_col='time')
 \end{python}
 
-\py{df} has two columns: \py{glucose} is the concentration of blood glucose in \si{\milli\gram/\deci l}; \py{insulin} is concentration of insulin in the blood in \si{\micro U\per\milli l}.  The index is time in \si{\minute}.
+\py{data} has two columns: \py{glucose} is the concentration of blood glucose in \si{\milli\gram/\deci\liter}; \py{insulin} is concentration of insulin in the blood in \si{\micro U\per\milli\liter} (a medical ``unit", denoted \si{U}, is an amount defined by convention in context).  The index is time in \si{\minute}.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-fig01.pdf}}
@@ -3980,36 +3988,36 @@ Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}
 \section{Interpolation}
 \label{interpolate}
 
-Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.  But in the \py{DataFrame}, we only have measurements at discreet times.  This is a job for interpolation!
+Before we are ready to implement the model, there's one problem we have to solve.  In the differential equations, $I$ is a function that can be evaluated at any time, $t$.  But in the \py{DataFrame}, we only have measurements at discrete times.  This is a job for interpolation!
 
 The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for \py{scipy.interpolate.interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
 
-So we can call it like this:
+So we can call \py{interpolate} like this:
 
 \begin{python}
-I = interpolate(df.insulin)
+I = interpolate(data.insulin)
 \end{python}
 
-And now we can call the new function, \py{I}, like this:
+Then we can call the new function, \py{I}, like this:
 
 \begin{python}
 I(18)
 \end{python}
 
-The result is 31.66, which is a linear interpolation between the actual measurements at \py{t=16} and \py{t=19}.  We can also run \py{I} with an array:
+The result is 31.66, which is a linear interpolation between the actual measurements at \py{t=16} and \py{t=19}.  We can also pass an array as an argument to \py{I}:
 
 \begin{python}
-ts = arange(0, 182, 2)
+ts = linrange(0, 182, 2)
 I(ts)
 \end{python}
 
 The result is an array of interpolated values for equally-spaced values of \py{t} between 0 and 182.
 
-\py{interpolate} can take additional options as parameters, which it passes along to \py{scipy.interpolate.interp1d}.  You can read about these options at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html}.
+\py{interpolate} can take additional arguments, which it passes along to \py{scipy.interpolate.interp1d}.  You can read about these options at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html}.
 
 
 
-\section{Implementing the model}
+\section{Implementation}
 \label{glucose}
 
 To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find parameter values that generate series that best fit the data.
@@ -4026,8 +4034,8 @@ G0 = 290
 And I'll use the measurements at \py{t=0} as the basal levels:
 
 \begin{python}
-Gb = df.glucose[0]
-Ib = df.insulin[0]
+Gb = data.glucose[0]
+Ib = data.insulin[0]
 \end{python}
 
 Now we can create the initial state:
@@ -4045,9 +4053,6 @@ system = System(init=init,
                 t0=0, t_end=182, dt=2)
 \end{python}
 
-%TODO: Consider making System take a string argument like
-%      System('init k1 k2 k3...')
-
 Now here's the update function:
 
 \begin{python}
@@ -4064,9 +4069,9 @@ def update_func(state, t, system):
     return State(G=G, X=X)
 \end{python}
 
-As usual, the parameters include a \py{State} object with the current state and a \py{System} object with the system parameters.  But there's  one difference from previous examples: this update function also takes \py{t} as a parameter, because this system of differential equations is {\bf time-dependent}; that is, time appears in the right-hand side of at least one equation.  Specifically, we have to evaluate \py{I} at \py{t}.  
+As usual, the update function takes a \py{State} object and a \py{System} as parameters, but there's  one difference from previous examples: this update function also takes \py{t}.  That's because this system of differential equations is {\bf time-dependent}; that is, time appears in the right-hand side of at least one equation.
 
-The first line uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} to make the system variables available as if they were global variables, as we saw in Section~\ref{xxx}.  %TODO: add that section
+The first line of \py{update} uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} so we can read the system variables without using dot notation.
 
 Computing the derivatives \py{dGdt} and \py{dXdt} is straightforward; we just have to translate the equations from math notation to Python.
 
@@ -4078,21 +4083,20 @@ Before running the simulation, it is always a good idea to run the update functi
 update_func(init, 0, system)
 \end{python}
 
-If there are no errors, and the results seem reasonable, we are ready to run the simulation.  Here's one more version of \py{run_simulation}.  It is almost the same as in Section~\ref{xxx}, with one change: it passes \py{t} as a parameter to \py{update_func}.
-
-%TODO: Make this version consistent with Chapter 7
+If there are no errors, and the results seem reasonable, we are ready to run the simulation.  Here's one more version of \py{run_simulation}.  It is almost the same as in Section~\ref{coffee_impl}, with one change: it passes \py{t} as an argument to \py{update_func}.
 
 \begin{python}
 def run_simulation(system, update_func):
     unpack(system)
     
-    df = TimeFrame(columns=init.index)
-    df.loc[t0] = init
+    frame = TimeFrame(columns=init.index)
+    frame.loc[t0] = init
+    ts = linrange(t0, t_end-dt, dt)
     
-    for t in arange(t0, t_end, dt):
-        df.loc[t+dt] = update_func(df.loc[t], t, system)
+    for t in ts:
+        frame.loc[t+dt] = update_func(frame.loc[t], t, system)
     
-    system.results = df
+    system.results = frame
 \end{python}
 
 And we can run it like this:
@@ -4123,15 +4127,15 @@ So far we have been solving differential equations by rewriting them as differen
 %
 If we multiply both sides by $dt$, we have:
 %
-\[ dG = dt \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] \]
+\[ dG = \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] dt  \]
 %
-\[ dX = dt \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] \]
+\[ dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt \]
 %
-When $dt$ is very small, or more precisely infinitesimal, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
+When $dt$ is very small, or more precisely {\ bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
 
 This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{https://en.wikipedia.org/wiki/Euler_method}).
 
-Euler's method can be good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called linear multistep methods (see \url{https://en.wikipedia.org/wiki/Linear_multistep_method}).
+Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called linear multistep methods (see \url{https://en.wikipedia.org/wiki/Linear_multistep_method}).
 
 Rather than implement these methods ourselves, we will use functions from SciPy.  The \py{modsim} library provides a function called \py{run_odeint}, which is a wrapper for \py{scipy.integrate.odeint}.  The name \py{odeint} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  And the solver is called an integrator because solving differential equations is considered a form of integration.
 
@@ -4150,7 +4154,7 @@ def slope_func(state, t, system):
     return dGdt, dXdt
 \end{python}
 
-\py{slope_func} is similar to \py{update_func}; in fact, it takes the same parameters.  But \py{slope_func} is simpler, because all we have to do is compute the derivatives, that is, the slopes.  We don't have to do the updates; \py{odeint} does them for us.
+\py{slope_func} is similar to \py{update_func}; in fact, it takes the same parameters in the same order.  But \py{slope_func} is simpler, because all we have to do is compute the derivatives, that is, the slopes.  We don't have to do the updates; \py{odeint} does them for us.
 
 Before we call \py{run_odeint}, we have to create a \py{System} object:
 
@@ -4158,7 +4162,7 @@ Before we call \py{run_odeint}, we have to create a \py{System} object:
 system2 = System(init=init, 
                 k1=k1, k2=k2, k3=k3,
                 I=I, Gb=Gb, Ib=Ib,
-                ts=df.index)
+                ts=data.index)
 \end{python}
 
 When we were using \py{run_simulation}, we created a \py{System} object with variables \py{t0}, \py{t_end}, and \py{dt}.  When we use \py{run_odeint}, we don't need those variables, but we do have to provide \py{ts}, which is an array or \py{Series} that contains the times where we want the solver to evaluate $G$ and $X$.
@@ -4169,12 +4173,12 @@ Now we can call \py{run_odeint} like this:
 run_odeint(system2, slope_func)
 \end{python}
 
-Like \py{run_simulation}, \py{run_odeint} puts the results in a \py{DataFrame} and stores it as a system variable named \py{results}.  The columns of \py{results} match the state variables in \py{init}.  The index of results match the values from \py{ts}; in this example, \py{ts} contains the timestamps of the measurements.
+Like \py{run_simulation}, \py{run_odeint} puts the results in a \py{TimeFrame} and stores it as a system variable named \py{results}.  The columns of \py{results} match the state variables in \py{init}, \py{G} and \py{X}.  The index of \py{results} matches the values from \py{ts}; in this example, \py{ts} contains the timestamps of the measurements.
 
 The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The difference is about 1\% on average and never more than 2\%.
 
 
-\section{Optimization}
+\section{Least squares}
 
 So far we have been taking the parameters as given, but in general we don't have that luxury.  Normally we are given the data and we have to search for the parameters that yield a time series that best matches the data.
 
@@ -4182,9 +4186,9 @@ We will do that now, in two steps:
 
 \begin{enumerate}
 
-\item First we'll define an {\bf error function} that takes a set of possible parameters, simulates the system with the given parameters, and computes the difference between the simulation results and the data.
+\item First we'll define an {\bf error function} that takes a set of possible parameters, simulates the system with the given parameters, and computes the errors, that is, the differences between the simulation results and the data.
 
-\item Then we'll use a library function from SciPy, \py{leastsq}, to search for the parameters that minimize the mean squared errors (MSE).
+\item Then we'll use a SciPy function, \py{leastsq}, to search for the parameters that minimize mean squared error (MSE).
 
 \end{enumerate}
 
@@ -4235,11 +4239,11 @@ The parameters of \py{error_func} are
 
 \end{itemize}
 
-It uses \py{make_system} to create the \py{System} object.  This line demonstrates a feature we have not seen before, the {\bf scatter operator}, \py{*}.  Applied to \py{params}, the scatter operator unpacks the sequence, so instead of being considered a single value, it is treated as four separate values.
+\py{error_func} uses \py{make_system} to create the \py{System} object.  This line demonstrates a feature we have not seen before, the {\bf scatter operator}, \py{*}.  Applied to \py{params}, the scatter operator unpacks the sequence, so instead of being considered a single value, it is treated as four separate values.
 
 \py{error_func} calls \py{run_odeint} using the same slope function we saw in Section~\ref{slopefunc}.  Then it computes the difference between the simulation results and the data.  Since \py{system.results.G} and \py{data.glucose} are both \py{Series} objects, the result of subtraction is also a \py{Series}.
 
-Now to do the actual minimization, we run \py{fit_leastsq}:
+Now, to do the actual minimization, we run \py{fit_leastsq}:
 
 \begin{python}
 k1 = 0.03
@@ -4247,10 +4251,10 @@ k2 = 0.02
 k3 = 1e-05
 G0 = 290
 params = G0, k1, k2, k3
-best_params = fit_leastsq(error_func, params, df)
+best_params = fit_leastsq(error_func, params, data)
 \end{python}
 
-\py{error_func} is the function we just defined.  \py{params} is a sequence containing an initial guess for the four system parameters.  And \py{df} is the \py{DataFrame} containing the measurements.
+\py{error_func} is the function we just defined.  \py{params} is a sequence containing an initial guess for the four system parameters, and \py{data} is the \py{DataFrame} containing the measurements.
 
 Actually, the third parameter can be any object we like.  \py{fit_leastsq} and \py{leastsq} don't do anything with this parameter except to pass it along to \py{error_func}, so in general it contains whatever information \py{error_func} needs to do its job.
 
@@ -4260,7 +4264,7 @@ Actually, the third parameter can be any object we like.  \py{fit_leastsq} and \
 The return value from \py{fit_leastsq} is \py{best_params}, which we can pass along to \py{make_system}, again using the scatter operator, and then run the simulation:
 
 \begin{python}
-system = make_system(*best_params, df)
+system = make_system(*best_params, data)
 run_odeint(system, slope_func)
 \end{python}
 
@@ -4273,7 +4277,7 @@ run_odeint(system, slope_func)
 
 Figure~\ref{chap08-fig04} shows the results.  The simulation matches the measurements well, except during the first few minutes after the injection.  But we don't expect the model to do well in this regime.
 
-The reason is that the model is {\bf non-spatial}; that is, it does not take into account differences in concentrations in different places in the body.  Instead, it assumes that the concentration of glucose and insulin in blood, and insulin in tissue fluid, is the same throughout the body.
+The reason is that the model is {\bf non-spatial}; that is, it does not take into account different concentrations in different parts of the body.  Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body.  This way of representing the body is known among experts as the ``bag of blood" model.
 
 Immediately after injection, it takes time for the injected glucose to circulate.  During that time, we don't expect a non-spatial model to be accurate.  For this reason, we should not take the estimated value of \py{G0} too seriously; it is useful for fitting the model, but not meant to correspond to a physical, measurable quantity.
 
@@ -4281,18 +4285,12 @@ On the other hand, the other parameters are meaningful; in fact, they are the re
 
 \begin{itemize}
 
-\item ``Glucose effectiveness", which is the tendency of elevated glucose to cause depletion of glucose.  
+\item ``Glucose effectiveness", $E$, which is the tendency of elevated glucose to cause depletion of glucose.  
 
-\item ``Insulin sensitivity", which is the ability of elevated blood insulin to enhance glucose effectiveness.
+\item ``Insulin sensitivity", $S$, which is the ability of elevated blood insulin to enhance glucose effectiveness.
 
 \end{itemize}
 
-We can use the differential equations to compute these quantities.
-%
-\[ \frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \]
-%
-\[ \frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t) \]
-%
 Glucose effectiveness is defined as the change in $dG/dt$ as we vary $G$:
 %
 \[ E \equiv - \frac{\delta \dot{G}}{\delta G} \]
@@ -4301,25 +4299,27 @@ where $\dot{G}$ is shorthand for $dG/dt$.  Taking the derivative of $dG/dt$ with
 %
 \[ E = k_1 + X \]
 %
-The glucose effectiveness index, $S_G$, is defined to be the value of $E$ in when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
+The {\bf glucose effectiveness index}, $S_G$, is the value of $E$ in when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
 
-The insulin sensitivity index, $S_I$, is defined to be the value of $S$ when $E$ and $I$ are at steady state:
+Insulin sensitivity is defined as the change in $E$ as we vary $I$:
+%
+\[ S \equiv - \frac{\delta E}{\delta I} \]
+%
+The {\bf insulin sensitivity index}, $S_I$, is the value of $S$ when $E$ and $I$ are at steady state:
 %
 \[ S_I \equiv \frac{\delta E_{SS}}{\delta I_{SS}} \]
 %
-$E$ and $I$ are at steady state when $dG/dt$ and $dX/dt$ are 0, but we don't actually have to solve those equations to find $S_I$.
-
-If we set $dX/dt = 0$ and solve for $X$, we find the relation:
+$E$ and $I$ are at steady state when $dG/dt$ and $dX/dt$ are 0, but we don't actually have to solve those equations to find $S_I$.  If we set $dX/dt = 0$ and solve for $X$, we find the relation:
 %
 \[ X_{SS} = \frac{k_3}{k_2} I_{SS} \]
 %
-And since $E = k_1 + X$, we have:  
+And since $E = k_1 + X$, we have:
 %
 \[ S_I = \frac{\delta E_{SS}}{\delta I_{SS}} = \frac{\delta X_{SS}}{\delta I_{SS}} \]
 %
 Taking the derivative of $X_{SS}$ with respect to $I_{SS}$, we have:
 %
-\[ S_I = k3 / k2 \]
+\[ S_I = k_3 / k_2 \]
 %
 So if we find parameters that make the model fit the data, we can use $k_3 / k_2$ as an estimate of $S_I$.  
 
@@ -4328,7 +4328,7 @@ For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and fo
 
 \section{The insulin minimal model}
 
-In addition to the glucose minimal mode, Pacini and Bergman present an insulin minimal model, in which the concentration of insulin, $I$, is governed by this differential equation:
+Along with the glucose minimal mode, Berman et al.~developed an insulin minimal model, in which the concentration of insulin, $I$, is governed by this differential equation:
 %
 \[ \frac{dI}{dt} = -k I(t) + \gamma \left[ G(t) - G_T \right] t \]
 %
@@ -4363,20 +4363,24 @@ In the notebook for this chapter, you will have a chance to implement this model
 
 \chapter{Projectiles}
 
+So far the differential equations we've worked with have been {\bf first order}, which means they involve only first derivatives.   In this chapter, we turn our attention to second order ODEs, which can involve both first and second derivatives.  
+
+We'll revisit the falling penny example from Chapter~\ref{chap01}, and use \py{odeint} to find the position and velocity of the penny as it falls, with and without air resistance.
+
 You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap09.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 
-So far the differential equations we've worked with have been {\bf first order}, which means they involve only first derivatives (see \url{https://en.wikipedia.org/wiki/Ordinary_differential_equation#General_definition}).  First order ODEs can be written
-%
-\[ \frac{dy}{dx} = F(x, y) \]
-%
-where $F$ is some function of $x$ and $y$.
+\section{Newton's second law of motion}
 
-In this chapter, we turn our attention to second order ODEs, which can involve both first and second derivatives.  Second order ODEs can be written
+First order ODEs can be written
 %
-\[ \frac{d^2y}{dx^2} = G(x, y, y') \]
+\[ \frac{dy}{dx} = G(x, y) \]
 %
-where $y'$ is shorthand for $dy/dx$.  In particular, we will work with one of the most famous, useful, and possibly the first second order ODE, Newton's second law of motion:
+where $G$ is some function of $x$ and $y$ (see \url{https://en.wikipedia.org/wiki/Ordinary_differential_equation#General_definition}).  Second order ODEs can be written
+%
+\[ \frac{d^2y}{dx^2} = H(x, y, y') \]
+%
+where $H$ is another function and $y'$ is shorthand for $dy/dx$.  In particular, we will work with one of the most famous, useful, and possibly the first second order ODE, Newton's second law of motion:
 %
 \[ F = m a \]
 %
@@ -4390,15 +4394,26 @@ Newton's law can be written
 %
 \[ \frac{d^2y}{dt^2} = F / m \]
 %
-And that's definitely a second order ODE.  In general, $F$ can be a function of time, position, and velocity.  Mass is often constant, but can also depend on time, position, and velocity.
+And that's definitely a second order ODE.  In general, $F$ can be a function of time, position, and velocity.
 
-Of course, this ``law" is really a model, in the sense that it is a simplification of the real world.  Although it is often approximately true, it is not a good model for very small things, which are better described by another model, quantum mechanics.  And it is not a good model for things moving very fast, which are better described by relativistic mechanics.
+Of course, this ``law" is really a model, in the sense that it is a simplification of the real world.  Although it is often approximately true:
 
-But for things that are medium to large, moving at speeds that are medium to slow, Newton's model is a phenomenally useful.  In general, if we know what forces act on an object, we can figure out how it will move.
+\begin{itemize}
+
+\item It only applies if $m$ is constant.  If mass depends on time, position, or velocity, we have to use a more general form of Newton's law (see \url{https://en.wikipedia.org/wiki/Newton's_laws_of_motion#Variable-mass_systems}).
+
+\item It is not a good model for very small things, which are better described by another model, quantum mechanics.
+
+\item And it is not a good model for things moving very fast, which are better described by relativistic mechanics.
+
+\end{itemize}
+
+But for medium to large things with constant mass, moving at speeds that are medium to slow, Newton's model is a phenomenally useful.  If we can quantify the forces that act on such an object, we can figure out how it will move.
+
 
 \section{Dropping pennies}
 
-As a first example, let's get back to the penny falling from the Empire State Building, which we considered in Section~\ref{penny}.  We will implement two models of this system, first without air resistance, so the only force acting on the penny is gravity.  Then we'll add air resistance.
+As a first example, let's get back to the penny falling from the Empire State Building, which we considered in Section~\ref{penny}.  We will implement two models of this system: first without air resistance, then with.
 
 Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped with 0 velocity, the initial conditions are:
 
@@ -4431,7 +4446,7 @@ ts = linrange(0, duration, dt)
 
 %TODO: check prior uses of arange, linspace, and linrange
 
-\py{ts} contains equally spaced points between 0 and \SI{10}{\second}, including both endpoints.
+\py{ts} contains equally spaced points between \SI{0}{\second} and \SI{10}{\second}, including both endpoints.
 
 Next we need a \py{System} object to contains the system parameters:
 
@@ -4445,7 +4460,7 @@ Now we need a slope function, and here's where things get tricky.  As we have se
 
 \item Velocity, $v$, is the derivative of position, $dy/dt$, and
 
-\item Acceleration, $a$, is the derivative of velocity, $dv/dt$
+\item Acceleration, $a$, is the derivative of velocity, $dv/dt$,
 
 \end{enumerate}
 
@@ -4472,7 +4487,7 @@ The first parameter, \py{state}, contains the position and velocity of the penny
 
 The second parameter, \py{t}, is time.  It is not used in this slope function because none of the factors of the model are time-dependent (see Section~\ref{glucose}).  I include it anyway because this function will be called by \py{odeint}, and \py{odeint} always provides the same arguments, whether they are needed or not.
 
-The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.  The return value is a sequence containing the two derivatives.
+The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.  \py{slope_func} returns a sequence containing the two derivatives.
 
 Before calling \py{odeint}, it is always a good idea to test the slope function with the initial conditions:
 
@@ -4480,15 +4495,13 @@ Before calling \py{odeint}, it is always a good idea to test the slope function 
 slope_func(init, 0, system)
 \end{python}
 
-The result is a sequence containing \SI{0}{\meter\per\second} for velocity and \SI{-9.8}{\meter\per\second\squared} for acceleration.
-
-Now we can run \py{odeint} like this:
+The result is a sequence containing \SI{0}{\meter\per\second} for velocity and \SI{-9.8}{\meter\per\second\squared} for acceleration.  Now we can run \py{odeint} like this:
 
 \begin{python}
 run_odeint(system, slope_func)
 \end{python}
 
-\py{run_odeint} stores the results in a \py{DataFrame} with two columns: \py{y} contains the height of the penny as a function of time; \py{v} contains velocity.  
+\py{run_odeint} stores the results in a \py{TimeFrame} with two columns: \py{y} contains the height of the penny; \py{v} contains its velocity.  
 
 \py{plot_position}, which is defined in the notebook for this chapter, plots height versus time:
 
@@ -4512,7 +4525,7 @@ In this model, height can be negative, because we have not included the effect o
 
 To avoid negative heights, we can use the results from the previous section to estimate when the penny hits the sidewalk, and run the simulation for the estimated time.
 
-From the results, we can extract \py{y}, which is a \py{TimeSeries} that represents height as a function of time.
+From the results, we can extract \py{y}, which is a \py{Series} that represents height as a function of time.
 
 \begin{python}
 y = system.results.y
@@ -4540,7 +4553,9 @@ T_sidewalk = T(0)
 
 The result is \SI{8.8179}{\meter}, which agrees with the exact answer to 4 decimal places.
 
-One caution about using \py{interpolate} and \py{interp_inverse}: the function you provide has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}.  In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and the interpolation function would behave unpredictably.
+One caution about \py{interpolate} and \py{interp_inverse}: the function you provide has to be single valued (see \url{https://en.wikipedia.org/wiki/Single-valued_function}).
+
+In this example, height decreases monotonically, so for every height there is only one corresponding time.  But if we threw the penny upward and then it fell down, the penny would pass through some heights more than once.  In that case the inverse function represented by \py{T} would not be single valued, and the interpolation function would behave unpredictably.
 
 
 \section{With air resistance}
@@ -4556,13 +4571,13 @@ where
 
 \begin{itemize}
 
-\item $F_d$ is force due to drag, in \si{\newton} (assuming as are using SI units).
+\item $F_d$ is force due to drag, in newtons (\si{\newton}).
 
 \item $\rho$ is the density of the fluid in \si{\kg\per\meter\cubed}.
 
 \item $v$ is velocity in \si{\meter\per\second}.
 
-\item $A$ is the reference area of the object, in \si{\meter\squared}.  In this context the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of travel (and far away).
+\item $A$ is the {\bf reference area} of the object, in \si{\meter\squared}.  In this context, the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of travel (and far away).
 
 \item $C_d$ is the {\bf drag coefficient}, a dimensionless quantity that depends on the shape of the object (including length but not frontal area), its surface properties, and how it interacts with the fluid.
 
@@ -4576,7 +4591,7 @@ Of course, the drag equation is itself a model, based on the assumption that $C_
 
 %TODO: exercise with C_d(v)
 
-For the falling penny, we can use measurements of falling pennies to estimate $C_d$.   In particular, we are can use a measurement of {\bf terminal velocity}, which is the speed where drag force equals force due to gravity:
+For the falling penny, we can use measurements to estimate $C_d$.   In particular, we can measure {\bf terminal velocity}, $v_{term}$, which is the speed where drag force equals force due to gravity:
 %
 \[ \frac{1}{2}~\rho~v_{term}^2~C_d~A = m g \]
 %
@@ -4590,6 +4605,7 @@ Now we are ready to add air resistance to the model.
 
 
 \section{Implementation}
+\label{condition}
 
 As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Condition} object to contain the quantities we need to make a \py{System} object.
 
@@ -4608,7 +4624,7 @@ condition = Condition(height = 381 * m,
 
 The mass and diameter are from \url{https://en.wikipedia.org/wiki/Penny_(United_States_coin)}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{https://en.wikipedia.org/wiki/Density_of_air}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
 
-And here's the function that takes a \py{Condition} as a parameter and returns a \py{System}:
+Here's a version of \py{make_system} that takes a \py{Condition} object and returns a \py{System}:
 
 \begin{python}
 def make_system(condition):    
@@ -4625,11 +4641,11 @@ def make_system(condition):
 
 It might not be obvious why we need \py{Condition} objects.  One reason is to minimize the number of variables in the \py{System} object.  In this example, we use \py{diameter} to compute \py{area} and \py{v_term} to compute \py{C_d}, but then we don't need \py{diameter} and \py{v_term} in the \py{System} object.
 
-Another reason is that the \py{Condition} object will be useful because we can modify it, in a loop, to create a sequence of \py{System} objects, each with a different set of conditions.
+Using a \py{Condition} object is also useful because we can modify it iteratively and create a sequence of \py{System} objects, each with a different set of conditions.
 
-For now, you might have to take my word that this is a good idea (see \url{https://zen-of-python.info/namespaces-are-one-honking-great-idea--lets-do-more-of-those.html}).
+But for now, you might have to take my word that this is a good idea (see \url{https://zen-of-python.info/namespaces-are-one-honking-great-idea--lets-do-more-of-those.html}).
 
-Now we can make a \py{System} like this:
+We can make a \py{System} like this:
 
 \begin{python}
 system = make_system(condition)
@@ -4651,7 +4667,7 @@ def slope_func(state, t, system):
     return dydt, dvdt
 \end{python}
 
-\py{f_drag} is the force due to drag, based on the drag equation.  \py{a_drag} is acceleration due to drag, based on Newton's second law.
+\py{f_drag} is force due to drag, based on the drag equation.  \py{a_drag} is acceleration due to drag, based on Newton's second law.
 
 To compute total acceleration, we add accelerations due to gravity and drag, where \py{g} is negated because it is in the direction of decreasing \py{y}, and \py{a_drag} is positive because it is in the direction of increasing \py{y}.  In the next chapter we will use \py{Vector} objects to keep track of the direction of forces and add them up in a less error-prone way.
 
@@ -4674,7 +4690,7 @@ Figure~\ref{chap09-fig02} shows the result.  It only takes a few seconds for the
 
 In the previous sections, we were given an estimate of terminal velocity, based on measurements, and we used it to estimate the drag coefficient, $C_d$.  Now suppose that we are given flight time, instead.  Can we use that to estimate $C_d$ and terminal velocity?
 
-Suppose I drop of quarter off the Empire State Building and find that it takes \SI{19.1}{\second} to reach the sidewalk.  Here's a \py{Condition} object with the parameters of a quarter (from \url{https://en.wikipedia.org/wiki/Quarter_(United_States_coin)}) and the measured duration:
+Suppose I drop a quarter off the Empire State Building and find that it takes \SI{19.1}{\second} to reach the sidewalk.  Here's a \py{Condition} object with the parameters of a quarter (from \url{https://en.wikipedia.org/wiki/Quarter_(United_States_coin)}) and the measured duration:
 
 \begin{python}
 condition = Condition(height = 381 * m,
@@ -4708,7 +4724,7 @@ system = make_system(condition)
 run_odeint(system, slope_func)
 \end{python}
 
-With \py{C_d=0.4}, the height of the quarter after \SI{19.1}{\second} is \SI{-11}{\meter}.  That means the quarter is moving a bit too fast, which means our estimate for the drag coefficient is too low.  We could improve the estimate by trial and error, or we could get \py{fsolve} to do it for us.  
+\py{Condition} objects provide a function called \py{set} that we can use to modify the condition variables.  With \py{C_d=0.4}, the height of the quarter after \SI{19.1}{\second} is \SI{-11}{\meter}.  That means the quarter is moving a bit too fast, which means our estimate for the drag coefficient is too low.  We could improve the estimate by trial and error, or we could get \py{fsolve} to do it for us.  
 
 To use \py{fsolve}, we need an error function, which we can define by encapsulating the previous lines of code:
 
@@ -4731,16 +4747,16 @@ fsolve(height_func, 0.4, condition)
 
 As we saw in Section~\ref{fsolve}, \py{fsolve} takes the error function and the initial guess as parameters.  Any additional parameters we give to \py{fsolve} are passed along to \py{height_func}.  In this case, we provide \py{condition} as an argument to \py{fsolve} so we can use it inside \py{height_func}.
 
-The result from \py{fsolve} is 0.43, which is very close to the drag coefficient we computed for the penny, 0.44.  Although it is plausible that different coins would have similar drag coefficients, we should not take this agreement too seriously.  Remember that I chose the terminal velocity of the penny arbitrarily from the estimated range.  And I completely fabricated the flight time for the quarter.
+The result from \py{fsolve} is 0.43, which is very close to the drag coefficient we computed for the penny, 0.44.  Although it is plausible that different coins would have similar drag coefficients, we should not take this result too seriously.  Remember that I chose the terminal velocity of the penny arbitrarily from the estimated range.  And I completely fabricated the flight time for the quarter.
 
 Nevertheless, the methods we developed for estimating \py{C_d}, based on terminal velocity or flight time, are valid, subject to the precision of the measurements.
 
 These methods demonstrate two ways to use models to solve problems, sometimes called {\bf forward} and {\bf inverse} problems.  In a forward problem, you are given the parameters of the system and asked to predict how it will behave.  In an inverse problem, you are given the behavior of the system and asked to infer the parameters.  See \url{https://en.wikipedia.org/wiki/Inverse_problem}. 
 
 
-\chapter{Baseball}
+\chapter{Two dimensions}
 
-In the previous chapter we modeled objects moving in one-dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
+In the previous chapter we modeled objects moving in one dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
 You can view the code for this chapter at \url{https://github.com/AllenDowney/ModSimPy/blob/master/code/chap10.ipynb}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
@@ -4752,7 +4768,7 @@ Manny Ramirez is a former member of the Boston Red Sox (an American baseball tea
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
-Fenway Park is a baseball stadium in Boston, Massachusetts.  One of its most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet along the left field line (see \url{https://en.wikipedia.org/wiki/Green_Monster}).  To compensate for the short distance, the wall is unusually high, at 37 feet.
+Fenway Park is a baseball stadium in Boston, Massachusetts.  One of its most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet.  To compensate for the short distance, the wall is unusually high, at 37 feet (see \url{https://en.wikipedia.org/wiki/Green_Monster}).
 
 We want to find the minimum velocity at which a ball can leave home plate and still go over the Green Monster.  We'll proceed in the following steps:
 
@@ -4760,7 +4776,7 @@ We want to find the minimum velocity at which a ball can leave home plate and st
 
 \item We'll model the flight of a baseball through air.
 
-\item For a given velocity, we'll find the optimal ``launch angle", that is, the angle the ball should leave home plate to maximize it's height when it reaches the wall.
+\item For a given velocity, we'll find the optimal ``launch angle", that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.
 
 \item Then we'll find the minimal velocity that clears the wall, given that it has the optimal launch angle.
 
@@ -4772,11 +4788,11 @@ As a result, we'll assume that the ball travels in the plane above the left fiel
 
 But we will take into account air resistance.  Based on what we learned about falling coins, it seems likely that air resistance has a substantial effect on the flight of a baseball.
 
-To model air resistance, we'll need the mass, frontal area, and drag coefficient of a baseball.  Mass and diameter are easy to find (see \url{https://en.wikipedia.org/wiki/Baseball_(ball)}).  Drag coefficient is only a little harder; according to a one-pager from NASA\footnote{``Drag on a Baseball, available from \url{https://www.grc.nasa.gov/www/k-12/airplane/balldrag.html}}, the drag coefficient of a baseball is approximately 0.3.
+To model air resistance, we'll need the mass, frontal area, and drag coefficient of a baseball.  Mass and diameter are easy to find (see \url{https://en.wikipedia.org/wiki/Baseball_(ball)}).  Drag coefficient is only a little harder; according to a one-pager from NASA\footnote{``Drag on a Baseball", available from \url{https://www.grc.nasa.gov/www/k-12/airplane/balldrag.html}}, the drag coefficient of a baseball is approximately 0.3.
 
-However, this value {\em does} depend on velocity.  At low velocities it might be as high as 0.5, and at high velocities as low as 0.29.  Furthermore, the transition between these regimes typically happens exactly in the range of velocities we are interested in, around \SI{40}{\meter\per\second}.
+However, this value {\em does} depend on velocity\footnote{Adair, {\it The Physics of Baseball}, Third Edition, Perennial, 2002}.  At low velocities it might be as high as 0.5, and at high velocities as low as 0.29.  Furthermore, the transition between these regimes typically happens exactly in the range of velocities we are interested in, around \SI{40}{\meter\per\second}.
 
-To get started, I'll assume that the drag coefficient does not depend on velocity, but we'll note that this is an issue we might want to revisit.
+To get started, I'll assume that the drag coefficient does not depend on velocity, but this is an issue we might want to revisit.
 
 
 \section{Vectors}
@@ -4793,9 +4809,9 @@ A = Vector(3, 4) * m
 
 You can access the components of a \py{Vector} by name, using dot notation; for example, \py{A.x} or \py{A.y}.  You can also access them by index, using brackets, like \py{A[0]} or \py{A[1]}.
 
-Similarly, you can get the magnitude and angle using dot notation, \py{A.mag} and \py{A.angle}.  {\bf Magnitude} is the length of the vector: if the \py{Vector} represents position, magnitude is the distance from the origin, which is \SI{5}{\meter} in this example; if it represents velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.
+Similarly, you can get the magnitude and angle using dot notation, \py{A.mag} and \py{A.angle}.  {\bf Magnitude} is the length of the vector: if the \py{Vector} represents position, magnitude is the distance from the origin; if it represents velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.
 
-The angle of a \py{Vector} is its direction, expressed as the angle in radians from the positive x-axis.  In the Cartesian plane, the angle \SI{0}{\radian} is due east, and the angle \SI{\pi}{\radian} is due west. 
+The {\bf angle} of a \py{Vector} is its direction, expressed as the angle in radians from the positive x-axis.  In the Cartesian plane, the angle \SI{0}{\radian} is due east, and the angle \SI{\pi}{\radian} is due west. 
 
 \py{Vector} objects support most mathematical operations, including addition and subtraction:
 
@@ -4846,7 +4862,7 @@ Vector(x, y)
 
 \section{Modeling baseball flight}
 
-Now we're ready to simulate the flight of the baseball.  As we did in the previous chapter, we'll create a \py{Condition} object that contains the parameters of the system:
+Now we're ready to simulate the flight of the baseball.  As in Section~\ref{condition}, I'll create a \py{Condition} object that contains the parameters of the system:
 
 \begin{python}
 condition = Condition(x = 0 * m, 
@@ -4861,14 +4877,14 @@ condition = Condition(x = 0 * m,
                       duration = 5.1 * s)
 \end{python}
 
-Using the center of home plate as the origin, the initial position is about \SI{1}{\meter} above home plate.  The initial velocity is \SI{40}{\meter\per\second} at a launch angle of \SI{45}{\degree}.  The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{manny}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{https://en.wikipedia.org/wiki/Density_of_air#Temperature_and_pressure}).
+Using the center of home plate as the origin, the initial height is about \SI{1}{\meter}.  The initial velocity is \SI{40}{\meter\per\second} at a launch angle of \SI{45}{\degree}.  The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{manny}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{https://en.wikipedia.org/wiki/Density_of_air#Temperature_and_pressure}).
  I chose the value of \py{duration} to run the simulation long enough for the ball to land on the ground.
 
 The following function uses the \py{Condition} object to make a \py{System} object.  Again, this two-step process reduces the number of variables in the \py{System} object, and makes it easier to work with functions like \py{fsolve}.
 
 \begin{python}
 def make_system(condition):
-	unpack(condition)
+    unpack(condition)
 	
     theta = np.deg2rad(angle)
     vx, vy = pol2cart(theta, velocity)
@@ -4882,9 +4898,7 @@ def make_system(condition):
 
 After unpacking \py{Condition}, we can access the variables it contains without using dot notation.
 
-First convert \py{angle} to radians, using \py{np.deg2rad}.  Next we compute the $x$ and $y$ components of the initial velocity using \py{pol2cart}, and then make the initial \py{State} object.
-
-After computing \py{area} and an array of timestamps, \py{ts}, we create and return the \py{System} object.
+\py{make_system} uses \py{np.deg2rad} to convert \py{angle} to radians and \py{pol2cart} to compute the $x$ and $y$ components of the initial velocity.  Then it makes the initial \py{State} object, computes \py{area} and \py{ts}, and creates the \py{System} object.
 
 Now we're ready for a slope function:
 
@@ -4910,17 +4924,17 @@ The \py{State} object has four variables: \py{x} and \py{y} are the components o
 
 The return values from the slope function are the derivatives of these components.  The derivative of position is velocity, so the first two return values are just \py{vx} and \py{vy}, the values we extracted from the \py{State} object.  The derivative of velocity is acceleration, and that's what we have to compute.
 
-The total acceleration of the baseball is the sum of accelerations due to gravity and drag.  The quantities have both magnitude and direction, so we'll use \py{Vector} objects to represent them.  Here's how it works:
+The total acceleration of the baseball is the sum of accelerations due to gravity and drag.  These quantities have both magnitude and direction, so we'll use \py{Vector} objects to represent them.  Here's how it works:
 
 \begin{itemize}
 
 \item \py{a_grav} is the \py{Vector} representation of acceleration due to gravity, with magnitude \py{g} and direction along the negative y-axis.
 
-\item \py{v} is the \py{Vector} representation of velocity, which we create using the components \py{vx} and \py{vy}.  This representation makes it easier to compute the drag force, which I'll explain in more detail below.
+\item \py{v} is the \py{Vector} representation of velocity, which we create using the components \py{vx} and \py{vy}.  This representation makes it easier to compute the drag force, which I explain in more detail below.
 
-\item \py{f_drag} is drag force, which is also a \py{Vector} quantity, with units of \si{\kilogram\meter\per\second\squared}, also known as Newtons (\si{\newton}).
+\item \py{f_drag} is drag force, which is also a \py{Vector} quantity, with units of \si{\kilogram\meter\per\second\squared}, also known as newtons (\si{\newton}).
 
-\item \py{a_drag} is acceleration due to drag, which we get by dividing \py{f_drag} by mass.  The result is in units of acceleration \si{\meter\per\second\squared}.
+\item \py{a_drag} is acceleration due to drag, which we get by dividing \py{f_drag} by mass.  The result is in units of acceleration, \si{\meter\per\second\squared}.
 
 \item \py{a} is total acceleration due to all forces, from which we can extract the components \py{a.x} and \py{a.y}.
 
@@ -4944,7 +4958,7 @@ Translating to Python we have:
 f_drag = -rho * v.mag * v * C_d * area / 2
 \end{python}
 
-Using vectors to compute and add up forces and accelerations make the code concise, readable, and less error-prone.  In particular, when we add \py{a_grav} and \py{a_drag}, the directions are likely to be correct, because they are encoded in the \py{Vector} objects.  And the units are certain to be correct, because otherwise Pint would report an error.
+Using vectors to represent forces and accelerations makes the code concise, readable, and less error-prone.  In particular, when we add \py{a_grav} and \py{a_drag}, the directions are likely to be correct, because they are encoded in the \py{Vector} objects.  And the units are certain to be correct, because otherwise Pint would report an error.
 
 As always, we can test the slope function by running it with the initial conditions:
 
@@ -4962,7 +4976,7 @@ Now we're ready to run the simulation:
 run_odeint(system, slope_func)
 \end{python}
 
-The result is a \py{TimeFrame} object with one column for each of the state variables, \py{x},\py{y}, \py{vx}, and \py{vy}.  We can extract the $x$ and $y$ components like this:
+The result is a \py{TimeFrame} object with one column for each of the state variables, \py{x}, \py{y}, \py{vx}, and \py{vy}.  We can extract the $x$ and $y$ components like this:
 
 \begin{python}
 xs = system.results.x
@@ -4982,7 +4996,7 @@ plot(ys, label='y')
 \label{chap10-fig01}
 \end{figure}
 
-Figure~\ref{chap10-fig01} shows the result.  As expected, the $x$ component increases monotonically, with decreasing velocity.  And the $y$ position climbs initially and then descends, falling slightly below 0 after \SI{5.1}{\second}.
+Figure~\ref{chap10-fig01} shows the result.  As expected, the $x$ component increases monotonically, with decreasing velocity.  And the $y$ position climbs initially and then descends, falling slightly below \SI{0}{\meter} after \SI{5.1}{\second}.
 
 Another way to view the same data is to plot the $x$ component on the x-axis and the $y$ component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:
 
@@ -4998,9 +5012,9 @@ plot(xs, ys, label='trajectory')
 
 Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{https://en.wikipedia.org/wiki/Trajectory}).
 
-A trajectory plot can be easier to interpret than a time series plot, because it shows what the motion of the projectile would look like (at least from one point of view).  Both plot can be useful, but don't get them mixed up!  If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.
+A trajectory plot can be easier to interpret than a time series plot, because it shows what the motion of the projectile would look like (at least from one point of view).  Both plots can be useful, but don't get them mixed up!  If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.
 
-Another useful way to visualize the results is animation.  You can create animations using the \py{plot} function from the \py{modsim} library, with the \py{update} argument, which tells plot that the coordinates you provide should update the old coordinates.  Here's an example:
+Another useful way to visualize the results is animation.  You can create animations using the \py{plot} function from the \py{modsim} library, with the \py{update} argument, which tells \py{plot} that the coordinates you provide should update the old coordinates.  Here's an example:
 
 \begin{python}
 for x, y in zip(xs, ys):
@@ -5012,7 +5026,7 @@ This example uses two features we have not seen before:
 
 \begin{itemize}
 
-\item \py{zip} takes two sequences (in this case they are \py{Series} objects) and ``zips" them together, that is, it loops through both of them at the same time, selecting corresponding elements from each.  So each time through the loop, \py{x} and \py{y} get the next elements from \py{xs} and \py{ys}.
+\item \py{zip} takes two sequences (in this case they are \py{Series} objects) and ``zips" them together; that is, it loops through both of them at the same time, selecting corresponding elements from each.  So each time through the loop, \py{x} and \py{y} get the next elements from \py{xs} and \py{ys}.
 
 \item \py{sleep} causes the program to pause for a given duration, in seconds.
 
@@ -5023,7 +5037,7 @@ You can see what the results look like in the notebook for this chapter.
 
 \section{Finding the range}
 
-Suppose we want to find the launch angle that maximizes the range, that is, the distance the ball travels in the air before landing.  Assuming that the simulation runs long enough for the ball to land, we can compute the range like this:
+Suppose we want to find the launch angle that maximizes {\bf range}, that is, the distance the ball travels in the air before landing.  Assuming that the simulation runs long enough for the ball to land, we can compute the range like this:
 
 \begin{enumerate}
 
@@ -5031,7 +5045,7 @@ Suppose we want to find the launch angle that maximizes the range, that is, the 
 
 \item Then we use \py{interpolate} to find the time when the ball hits the ground, \py{t_land}.
 
-\item Finally, we compute the value of \py{x} component at \py{t_land}.
+\item Finally, we compute the $x$ component at \py{t_land}.
 
 \end{enumerate}
 
@@ -5046,23 +5060,19 @@ def interpolate_range(results):
     
     descent = ys.loc[t_peak:]
     T = interp_inverse(descent)
-    t_landing = T(0)
+    t_land = T(0)
     
     X = interpolate(xs, kind='cubic')
-    return X(t_landing)
+    return X(t_land)
 \end{python}
 
-To find the time when the ball hits its peak, we use \py{idxmax}, which searches for the largest value in \py{ys} and returns its label (see \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.idxmax.html#pandas.Series.idxmax}).
+\py{interpolate_range} uses \py{idxmax} to find the time when the ball hits its peak (see Section~\ref{metrics}).
 
-Then we use \py{loc} to extract only the points after \py{t_peak}.  The index here is a {\bf slice}.  In general, you can use a slice to select a range of values from a \py{Series}, specifying the start and end indices.  In this example we only specify the beginning, so we get everything from the start index to the end of the \py{Series}.
+Then it uses \py{loc} to extract only the points after \py{t_peak}.  The index here is a {\bf slice}.  In general, you can use a slice to select a range of values from a \py{Series}, specifying the start and end indices.  In this example we only specify the beginning, so we get everything from \py{t_peak} the end of the \py{Series}.
 
+Next it uses \py{interp_inverse}, which we saw in Section~\ref{sidewalk}, to make \py{T}, which is an interpolation function that maps from height to time.  So \py{t_land} is the time when height is 0.
 
-%TODO: Seems like we're breaking out a lot of new things here.
-% Maybe intro slice indexing earlier.
-
-Next we use \py{interp_inverse}, which we saw in Section~\ref{sidewalk}, to make \py{T}, which is an interpolation function that maps from height to time.  So \py{t_landing} is the time when height is 0.
-
-Finally, we use \py{interpolate} to make \py{X}, which is an interpolation function that maps from time to X.  So \py{X(T_landing)} is the distance from home plate when the ball lands.
+Finally, it uses \py{interpolate} to make \py{X}, which is an interpolation function that maps from time to $x$ component.  So \py{X(T_land)} is the distance from home plate when the ball lands.
 
 We can call \py{interpolate_range} like this:
 
@@ -5070,12 +5080,12 @@ We can call \py{interpolate_range} like this:
 interpolate_range(system.results)
 \end{python}
 
-The result is about \SI{103}{\meter}, which is about 337 feet.
+The result is \SI{103}{\meter}, which is about 337 feet.
 
 
 \section{Optimization}
 
-To find the angle that optimizes range (distance from home plate when the ball lands), we need a function that takes launch angle as a parameter and returns range:
+To find the angle that optimizes range, we need a function that takes launch angle as a parameter and returns range:
 
 \begin{python}
 def range_func(angle, condition):    
@@ -5122,7 +5132,8 @@ res = max_bounded(range_func, [0, 90], condition)
 
 The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument is the \py{Condition} object, which gets passed along as an argument when \py{max_bounded} calls \py{range_func}.
 
-The result from \py{max_bounded} is an \py{OptimizeResult}, which contains several variables.  The ones we want are \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, it's the range when the baseball is launched at the optimal angle.
+The result from \py{max_bounded} is an \py{OptimizeResult} object, which contains several variables.  The ones we want are \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
+
 
 \section{Finishing off the problem}
 
@@ -5130,7 +5141,7 @@ In the notebook for this chapter, you'll have to chance to finish off the Manny 
 
 \begin{itemize}
 
-\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that might not be what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{max_bounded} to find the revised optimum.
+\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that's not what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{max_bounded} to find the revised optimum.
 
 \item Once you can find the optimal angle for any velocity, you have to find the minimum velocity that gets the ball over the wall.  You'll write a function that takes a velocity as a parameter, computes the optimal angle for that velocity, and returns the height of the ball, at the wall, using the optimal angle.
 
@@ -5143,7 +5154,7 @@ The notebook provides some additional hints, but at this point you should have e
 
 \chapter{Rotation}
 
-Let's talk about things that spin.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others, and stable when spinning around some axes, but not others.  
+In this chapter we model systems that involve rotating objects.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others; and they may be stable when spinning around some axes but not others.  
 
 If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
 
@@ -5151,7 +5162,7 @@ And when you applying a twisting force to a rotating object, the effect is often
 
 In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.  In that case, we can treat some vector quantities as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
 
-This approach makes it possible to simulate and analyze many interesting systems; but you will also encounter systems that would be better approached with the more general toolkit.
+This approach makes it possible to simulate and analyze many interesting systems, but you will also encounter systems that would be better approached with the more general toolkit.
 
 The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
 
@@ -5163,7 +5174,7 @@ You can view the code for this chapter at \url{https://github.com/AllenDowney/Mo
 \section{The physics of toilet paper}
 \label{paper}
 
-As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a standard roll of two-ply toilet paper in the U.S. (see \url{https://en.wikipedia.org/wiki/Toilet_paper}).
+As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a roll of toilet paper in the U.S. (see \url{https://en.wikipedia.org/wiki/Toilet_paper}).
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/paper_roll.pdf}}
@@ -5187,7 +5198,7 @@ As we roll up the paper, $r$ increases, too.  Assuming that $r$ increases by a f
 %
 \[ dr = k~d\theta \]
 %
-Where $k$ is an unknown constant we'll have to figure out later.  Again, we can divide both sides by $dt$ to get a differential equation in time:
+Where $k$ is an unknown constant we'll have to figure out.  Again, we can divide both sides by $dt$ to get a differential equation in time:
 %
 \[ \frac{dr}{dt} = k \frac{d\theta}{dt} \]
 %
@@ -5209,7 +5220,7 @@ m = UNITS.meter
 s = UNITS.second
 \end{python}
 
-And define a \py{Condition} object with the parameters of the system:
+And create a \py{Condition} object with the parameters of the system:
 
 \begin{python}
 condition = Condition(Rmin = 0.02 * m,
@@ -5238,7 +5249,7 @@ def make_system(condition):
 
 The initial state contains three variables, \py{theta}, \py{y}, and \py{r}.
 
-To get started, we'll estimate a reasonable value for \py{k}.  In the next section we'll use some analysis to figure it out exactly.  Here's how we compute the estimate:
+To get started, we'll estimate a reasonable value for \py{k}; then in Section~\ref{paper_analysis} we'll figure it out exactly.  Here's how we compute the estimate:
 
 \begin{python}
 def estimate_k(condition):
@@ -5258,7 +5269,7 @@ def estimate_k(condition):
 
 Finally, \py{k} is the change in \py{r} for each radian of revolution.  For these parameters, \py{k} is about \py{2.8e-5} \si{\meter\per\radian}.
 
-Now we can use the differential equations from Section~\ref{} to write a slope function:
+Now we can use the differential equations from Section~\ref{paper} to write a slope function:
 
 \begin{python}
 def slope_func(state, t, system):
@@ -5272,9 +5283,7 @@ def slope_func(state, t, system):
     return omega, dydt, drdt
 \end{python}
 
-As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.
-
-The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
 
 Now we can run the simulation like this:
 
@@ -5290,9 +5299,9 @@ run_odeint(system, slope_func)
 
 Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
 
-Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.  In order to get the simulation working, we have to get the units right, which can help catch conceptual errors early.
+Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.
 
-And by plugging in realistic parameters, we can detect errors that cause unrealistic results.  For example, in this system we can check:
+In order to get the simulation working, we have to get the units right, which can help catch conceptual errors early.  And by plugging in realistic parameters, we can detect errors that cause unrealistic results.  For example, in this system we can check:
 
 \begin{itemize}
 
@@ -5308,6 +5317,7 @@ But now that we have a working simulation, it is also useful to do some analysis
 
 
 \section{Analysis}
+\label{paper_analysis}
 
 The differential equations in Section~\ref{paper} are simple enough that we can just solve them.  Since angular velocity is constant:
 %
@@ -5386,13 +5396,13 @@ Just as linear acceleration is the derivative of velocity, {\bf angular accelera
 
 In general, torque is a vector quantity, defined as the cross product of $\vec{r}$ and $\vec{F}$, where $\vec{r}$ is the {\bf lever arm}, a vector from the point of rotation to the point where the force is applied, and $\vec{F}$ is the vector that represents the magnitude and direction of the force.
 
-However, for the problems in this chapter, we only need the magnitude of torque; we don't care about the direction.  In that case, we can compute
+However, for the problems in this chapter, we only need the {\em magnitude} of torque; we don't care about the direction.  In that case, we can compute
 %
 \[ \tau = r F \sin \theta \]
 %
 where $\tau$ is torque, $r$ is the length of the lever arm, $F$ is the magnitude of force, and $\theta$ is the angle between $\vec{r}$ and $\vec{F}$.  In the toilet paper scenario, if the kitten pulls on the loose end of the paper, the force on the roll is always perpendicular to the lever arm, so $\sin \theta = 1$.
 
-Since torque is the product of a length and a force, it is expressed in SI units as Newton meters (\si{\newton\meter}).
+Since torque is the product of a length and a force, it is expressed in newton meters (\si{\newton\meter}).
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/paper_roll2.pdf}}
@@ -5400,7 +5410,7 @@ Since torque is the product of a length and a force, it is expressed in SI units
 \label{paper_roll2}
 \end{figure}
 
-Figure~\ref{paper_roll2} shows the paper roll with $r$, $F$, and $\tau$.  As a vector quantity, the direction of $\tau$ is into the page.  But again, we only care about its magnitude for now.
+Figure~\ref{paper_roll2} shows the paper roll with $r$, $F$, and $\tau$.  As a vector quantity, the direction of $\tau$ is into the page, but we only care about its magnitude for now.
 
 
 \section{Moment of inertia}
@@ -5409,11 +5419,11 @@ In the same way that linear acceleration is related to force by Newton's second 
 %
 \[ \tau = I \alpha \]
 %
-Where $\alpha$ is angular acceleration and $I$ is {\bf moment of inertia}.  Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to define mass, but its actually one of the fundamental definitions.}, moment of inertia is what makes it harder to spin an object.
+Where $\alpha$ is angular acceleration and $I$ is {\bf moment of inertia}.  Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to describe mass, but its actually one of the fundamental definitions.}, moment of inertia is what makes it harder to spin an object.
 
 In the most general case, a 3D object rotating around an arbitrary axis, moment of inertia is a tensor quantity, which is like a function that takes a vector as a parameter and returns a vector as a result.
 
-Fortunately, in a system where all rotation and torque happens around a single axis, we don't have do deal with the most general case.  We can treat moment of inertia as a scalar quantity.
+Fortunately, in a system where all rotation and torque happens around a single axis, we don't have to deal with the most general case.  We can treat moment of inertia as a scalar quantity.
 
 For a small point with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
@@ -5434,11 +5444,7 @@ condition = Condition(Rmin = 0.02 * m,
                       duration = 180 * s)
 \end{python}
 
-As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L} is the length of the paper.
-
-\py{Mcore} is the mass of the cardboard tube at the center of the roll; \py{Mroll} is the mass of the paper.
-
-\py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
+As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L} is the length of the paper.  \py{Mcore} is the mass of the cardboard tube at the center of the roll; \py{Mroll} is the mass of the paper.  \py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
 
 At \url{https://en.wikipedia.org/wiki/List_of_moments_of_inertia} you can find moments of inertia for simple geometric shapes.  I'll model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
 
@@ -5448,7 +5454,7 @@ For a thick-walled tube the moment of inertia is
 %
 \[ I = \frac{\pi \rho h}{2} (r_2^4 - r_1^4) \]
 %
-where $\rho$ is the density of the material in (mass per volume), $h$ is the height of the tube, $r_2$ is the outer diameter, and $r_1$ is the inner diameter.
+where $\rho$ is the density of the material, $h$ is the height of the tube, $r_2$ is the outer diameter, and $r_1$ is the inner diameter.
 
 Since the outer diameter changes as the kitten unrolls the paper, we have to compute the moment of inertia, at each point in time, as a function of the current radius, \py{r}.  Here's the function that does it:
 
@@ -5501,17 +5507,17 @@ This slope function is similar to the previous one (Section~\ref{papersim}), wit
 
 \begin{itemize}
 
-\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, by Equation~\ref{eqn3} for $r$.
+\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, by Equation~\ref{eqn3}.
 
-\item Because \py{r} changes over time, we have to compute moment of inertia, \py{I}, at each time step.
+\item Because \py{r} changes over time, we have to compute moment of inertia, \py{I}, at each time step\footnote{Actually, this is more of a problem than I have made it seem.  In the same way that $F = m a$ only applies when $m$ is constant, $\tau = I \alpha$ only applies when $I$ is constant.  When $I$ varies, we usually have to use a more general version of Newton's law.  However, in this example, mass and moment of inertia vary together in a way that makes the simple approach work out.}.
 
-\item Angular velocity, \py{omega}, is no longer constant.  Instead, we compute torque, \py{tau}, and angular acceleration, \py{alpha}, at each time step.  \py{odeint} will integrate \py{alpha} to get \py{omega} and integrate \py{omega} to get \py{theta}.
+\item Angular velocity, \py{omega}, is no longer constant.  Instead, we compute torque, \py{tau}, and angular acceleration, \py{alpha}, at each time step.
 
-\item I have implicitly changed the definition of \py{theta} so positive values of \py{theta} correspond to clockwise rotation, so $dy/dt = -r \omega$; that is, positive values of \py{omega} yield decreasing values of $y$, the amount of paper still on the roll.
+\item I have implicitly changed the definition of \py{theta} so positive values of \py{theta} correspond to clockwise rotation, so \py{dydt = -r * omega}; that is, positive values of \py{omega} yield decreasing values of \py{y}, the amount of paper still on the roll.
 
 \end{itemize} 
 
-The return value is the sequence \py{omega}, \py{alpha}, and \py{dydt}, which are the derivatives of \py{theta}, \py{omega}, and \py{y}, respectively.
+\py{slope_func} returns \py{omega}, \py{alpha}, and \py{dydt}, which are the derivatives of \py{theta}, \py{omega}, and \py{y}, respectively.
 
 \begin{figure}
 \centerline{\includegraphics[height=4in]{figs/chap11-fig02.pdf}}
@@ -5534,12 +5540,12 @@ Now we're ready to run the simulation.  Figure~\ref{chap11-fig02} shows the resu
 
 \end{itemize}
 
-This model yields results that seem reasonable, but remember that I chose the force applied by the kitten arbitrarily, and we ignore friction between the paper roll and the axle.  This example is not meant to be particularly serious, but it is good preparation for the next problem, which is a little more interesting.
+This model yields results that seem reasonable, but remember that I chose the force applied by the kitten arbitrarily, and the model ignores friction between the paper roll and the axle.  This example is not meant to be particularly serious, but it is good preparation for the next problem, which is a little more interesting.
 
 
 \section{Simulating a yo-yo}
 
-In its initial state, suppose a yo-yo has a length of string wound around its axle, and the yo-yo is released while the end of the string is held stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since the tension force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
+Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/yoyo.pdf}}
@@ -5549,15 +5555,22 @@ In its initial state, suppose a yo-yo has a length of string wound around its ax
 
 Figure~\ref{yoyo} is a diagram of the forces on the yo-yo and the resulting torque.  The outer shaded area shows the body of the yo-yo.  The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.
 
-In this model, we can't figure out the linear acceleration and angular acceleration independently; we have to solve a system of equations.  Specifically, the equations are $\sum F = m a$ and $\sum \tau = I \alpha$.
+In this model, we can't figure out the linear and angular acceleration independently; we have to solve a system of equations:
+%
+\begin{align*}
+\sum F &= m a \\
+\sum \tau &= I \alpha
+\end{align*}
+%
+where the summations indicate that we are adding up forces and torques.
 
-As in the previous examples, linear velocity and angular are related because of the way the paper, or string, unrolls:
+As in the previous examples, linear and angular velocity are related because of the way the string unrolls:
 %
 \[ \frac{dy}{dt} = -r \frac{d \theta}{dt} \]
 %
 In this example, the linear and angular accelerations have opposite sign.  As the yo-yo rotates counter-clockwise, $\theta$ increases and $y$, which is the length of the rolled part of the string, decreases.
 
-Taking the derivative of both sides yields a similar relationship between linear acceleration and angular acceleration:
+Taking the derivative of both sides yields a similar relationship between linear and angular acceleration:
 %
 \[ \frac{d^2 y}{dt^2} = -r \frac{d^2 \theta}{dt^2} \]
 %
@@ -5565,21 +5578,21 @@ Which we can write more concisely:
 %
 \[ a = -r \alpha \]
 %
-But remember that this relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching in the string or tightening in the coil.
+This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
 
-Because of the way we've set up the problem, $y$ actually has two meanings: it is the length of the rolled string, but it is also the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ is both the acceleration in the length of the rolled string and the height of the yo-yo.
+Because of the way we've set up the problem, $y$ actually has two meanings: it represents the length of the rolled string and the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ represents acceleration in the length of the rolled string and the height of the yo-yo.
 
-And we can compute the acceleration of the yo-yo by adding up the linear forces:
-
+We can compute the acceleration of the yo-yo by adding up the linear forces:
+%
 \[ \sum F = T - mg = ma \]
+%
+Where $T$ is positive because the tension force points up, and $mg$ is negative because gravity points down.
 
-Where tension, $T$ is positive because it points up, and the force of gravity is negative.
-
-Because gravity acts on the center of mass, it creates no torque, so the only torque is due to tension, $T$:
-
+Because gravity acts on the center of mass, it creates no torque, so the only torque is due to tension:
+%
 \[ \sum \tau = T r = I \alpha \]
-
-Where positive (upward) tension yields positive (counter-clockwise) angular acceleration.
+%
+Positive (upward) tension yields positive (counter-clockwise) angular acceleration.
 
 Now we have three equations in three unknowns, $T$, $a$, and $\alpha$, with $I$, $m$, $g$, and $r$ as known quantities.  It is simple enough to solve these equations by hand, but we can also get SymPy to do it for us:
 
@@ -5599,12 +5612,11 @@ a      &= -m g r^2 / I^* \\
 \alpha &= m g r / I^*    \\
 \end{align*}
 %
-where $I^*$ is the augmented moment of inertia, $I + m r^2$.  To simulate the system, we don't really need $T$, but we can plug $a$ and $\alpha$ directly into the slope function.
+where $I^*$ is the augmented moment of inertia, $I + m r^2$.
+
+To simulate the system, we don't really need $T$; we can plug $a$ and $\alpha$ directly into the slope function.
 
 At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter you will have a chance to finish off the exercise.
-
-
-
 
 
 \backmatter
