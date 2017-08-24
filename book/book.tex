@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{0.13.0}
+\newcommand{\theversion}{0.15.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -2798,7 +2798,7 @@ Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three we
 
 If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}, which is another object are defined in the \py{modsim} library.
 
-A \py{TimeFrame} is almost identical to a \py{DataFrame}, which we used in Section~\ref{worldpopdata}, with just a few changes I made to make them easier to use for our purposes.  For more details, you can read the \py{modsim} library source code.
+A \py{TimeFrame} is almost identical to a \py{DataFrame}, which we used in Section~\ref{worldpopdata}, with just a few changes I made to adapt it for our purposes.  For more details, you can read the \py{modsim} library source code.
 
 Here's a more concise version of \py{run_simulation} using a \py{TimeFrame}:
 
@@ -2813,13 +2813,13 @@ def run_simulation(system, update_func):
     system.results = frame
 \end{python}
 
-The first line creates an empty \py{TimeFrame} with one column for each state variables.  Then, before the loop starts, we store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it is tempting to write:
+The first line creates an empty \py{TimeFrame} with one column for each state variable.  Then, before the loop starts, we store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it is tempting to write:
 
 \begin{python}
 frame[system.t0] = system.init
 \end{python}
 
-But when you use the bracket operator with a \py{TimeFrame} or \py{DataFrame}, it selects a column, not a row.  For example, to select a column, we could write
+But when you use the bracket operator with a \py{TimeFrame} or \py{DataFrame}, it selects a column, not a row.  For example, to select a column, we could write:
 
 \begin{python}
 frame['S']
@@ -2854,7 +2854,7 @@ As with a \py{DataFrame}, we can use dot notation to select columns from a \py{T
 \section{Metrics}
 \label{metrics}
 
-When we plot a time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a few numbers, ideally one, that summarize the outcome.  These summary statistics are called {\bf metrics}.
+When we plot a time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a few numbers that summarize the outcome.  These summary statistics are called {\bf metrics}.
 
 In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students get sick at any point.
 
@@ -2891,7 +2891,7 @@ Models like this are useful for testing ``what if?" scenarios.  As an example, w
 
 Suppose there is a vaccine that causes a patient to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
 
-One option is to treat immunization as a short cut from \py{S} to \py{R}, that is, from susceptible to removed (or resistant).  We can implement this feature like this:
+One option is to treat immunization as a short cut from \py{S} to \py{R}, that is, from susceptible to resistant\footnote{We can be flexible about what \py{R} stands for.}.  We can implement this feature like this:
 
 \begin{python}
 def add_immunization(system, fraction):
@@ -3504,7 +3504,7 @@ Newton's law of cooling asserts that the temperature rate of change for an objec
 %
 \[ \frac{dT}{dt} = -r (T - T_{env}) \]
 %
-where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats moves across the boundary between the system and the environment.
+where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats is transferred between the system and the environment.
 
 Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
 
@@ -3805,7 +3805,7 @@ for t_add in linrange(0, 30, 2):
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
-\caption{Final temperature as a function of when we add the milk.}
+\caption{Final temperature as a function of the time the milk is added.}
 \label{chap07-fig02}
 \end{figure}
 
@@ -3962,11 +3962,11 @@ We can interpret the terms in the equations one by one:
 
 \end{itemize}
 
-The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is a constant that represents the concentration of blood sugar immediately after the injection.  In theory we could estimate $G_0$ based on measurements, but in practice it takes time for the injected glucose to spread through the blood volume.  Since $G_0$ is not measurable, it is treated as a {\bf free parameter} of the model, which means that we are free to chose it to fit the data.
+The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is a constant that represents the concentration of blood sugar immediately after the injection.  In theory we could estimate $G_0$ based on measurements, but in practice it takes time for the injected glucose to spread through the blood volume.  Since $G_0$ is not measurable, it is treated as a {\bf free parameter} of the model, which means that we are free to choose it to fit the data.
 
 \section{Data}
 
-To develop and test the model, I'll use data from Pacini and Bergman\footnote{"MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122, 1986.}.  The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
+To develop and test the model, I'll use data from Pacini and Bergman\footnote{``MINMOD: A computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122, 1986.}.  The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
 
 \begin{python}
 data = pd.read_csv('glucose_insulin.csv', index_col='time')
@@ -4380,11 +4380,11 @@ where $G$ is some function of $x$ and $y$ (see \url{https://en.wikipedia.org/wik
 %
 \[ \frac{d^2y}{dx^2} = H(x, y, y') \]
 %
-where $H$ is another function and $y'$ is shorthand for $dy/dx$.  In particular, we will work with one of the most famous, useful, and possibly the first second order ODE, Newton's second law of motion:
+where $H$ is another function and $y'$ is shorthand for $dy/dx$.  In particular, we will work with one of the most famous and useful second order ODEs, Newton's second law of motion:
 %
 \[ F = m a \]
 %
-where $F$ is a force or the total of a set of forces, $m$ is the mass of a moving object, and $a$ is acceleration.
+where $F$ is a force or the total of a set of forces, $m$ is the mass of a moving object, and $a$ is its acceleration.
 
 Newton's law might not look like a differential equation, until we realize that acceleration, $a$, is the second derivative of position, $y$, with respect to time, $t$.  With the substitution
 %
@@ -4408,14 +4408,14 @@ Of course, this ``law" is really a model, in the sense that it is a simplificati
 
 \end{itemize}
 
-But for medium to large things with constant mass, moving at speeds that are medium to slow, Newton's model is a phenomenally useful.  If we can quantify the forces that act on such an object, we can figure out how it will move.
+But for medium to large things with constant mass, moving at speeds that are medium to slow, Newton's model is phenomenally useful.  If we can quantify the forces that act on such an object, we can figure out how it will move.
 
 
 \section{Dropping pennies}
 
 As a first example, let's get back to the penny falling from the Empire State Building, which we considered in Section~\ref{penny}.  We will implement two models of this system: first without air resistance, then with.
 
-Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped with 0 velocity, the initial conditions are:
+Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped with velocity zero, the initial conditions are:
 
 \begin{python}
 init = State(y=381 * m, 
@@ -4448,7 +4448,7 @@ ts = linrange(0, duration, dt)
 
 \py{ts} contains equally spaced points between \SI{0}{\second} and \SI{10}{\second}, including both endpoints.
 
-Next we need a \py{System} object to contains the system parameters:
+Next we need a \py{System} object to contain the system parameters:
 
 \begin{python}
 system = System(init=init, g=g, ts=ts)
@@ -4495,7 +4495,7 @@ Before calling \py{odeint}, it is always a good idea to test the slope function 
 slope_func(init, 0, system)
 \end{python}
 
-The result is a sequence containing \SI{0}{\meter\per\second} for velocity and \SI{-9.8}{\meter\per\second\squared} for acceleration.  Now we can run \py{odeint} like this:
+The result is a sequence containing \SI{0}{\meter\per\second} for velocity and \SI{9.8}{\meter\per\second\squared} for acceleration.  Now we can run \py{odeint} like this:
 
 \begin{python}
 run_odeint(system, slope_func)
@@ -4607,9 +4607,9 @@ Now we are ready to add air resistance to the model.
 \section{Implementation}
 \label{condition}
 
-As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Condition} object to contain the quantities we need to make a \py{System} object.
+As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Condition} object to contain the quantities we need to make a \py{System} object.  \py{Condition} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
 
-The way we create a \py{Condition} object is the same as for \py{System} and \py{State} objects.  In fact, these three object types have the same capabilities; I have given them different names just to identify their different roles.  Here's the \py{Condition} object for the falling penny:
+Here's the \py{Condition} object for the falling penny:
 
 \begin{python}
 condition = Condition(height = 381 * m,
@@ -5068,11 +5068,23 @@ def interpolate_range(results):
 
 \py{interpolate_range} uses \py{idxmax} to find the time when the ball hits its peak (see Section~\ref{metrics}).
 
-Then it uses \py{loc} to extract only the points after \py{t_peak}.  The index here is a {\bf slice}.  In general, you can use a slice to select a range of values from a \py{Series}, specifying the start and end indices.  In this example we only specify the beginning, so we get everything from \py{t_peak} the end of the \py{Series}.
+Then it uses \py{ys.loc} to extract only the points from \py{t_peak} to the end.  The index in brackets includes a colon (\py{:}), which indicates that it is a {\bf slice index}.  In general, a slice selects a range of elements from a \py{Series}, specifying the start and end indices.  For example, the following slice selects elements from \py{t_peak} to \py{t_land}, including both:
+
+\begin{python}
+ys.loc[t_peak:t_land]
+\end{python}
+
+If we omit the first index, like this:
+
+\begin{python}
+ys.loc[:t_land]
+\end{python}
+
+we get everything from the beginning to \py{t_land}.  If we omit the second index, as in \py{interpolate_range}, we get everything from \py{t_peak} to the end of the \py{Series}.  For more about indexing with \py{loc}, see \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.loc.html}.
 
 Next it uses \py{interp_inverse}, which we saw in Section~\ref{sidewalk}, to make \py{T}, which is an interpolation function that maps from height to time.  So \py{t_land} is the time when height is 0.
 
-Finally, it uses \py{interpolate} to make \py{X}, which is an interpolation function that maps from time to $x$ component.  So \py{X(T_land)} is the distance from home plate when the ball lands.
+Finally, it uses \py{interpolate} to make \py{X}, which is an interpolation function that maps from time to $x$ component.  So \py{X(t_land)} is the distance from home plate when the ball lands.
 
 We can call \py{interpolate_range} like this:
 
@@ -5158,7 +5170,7 @@ In this chapter we model systems that involve rotating objects.  In general, rot
 
 If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
 
-And when you applying a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{https://www.youtube.com/watch?v=ty9QSiVC2g0}.
+And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{https://www.youtube.com/watch?v=ty9QSiVC2g0}.
 
 In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.  In that case, we can treat some vector quantities as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
 
@@ -5421,7 +5433,7 @@ In the same way that linear acceleration is related to force by Newton's second 
 %
 Where $\alpha$ is angular acceleration and $I$ is {\bf moment of inertia}.  Just as mass is what makes it harder to accelerate an object\footnote{That might sound like a dumb way to describe mass, but its actually one of the fundamental definitions.}, moment of inertia is what makes it harder to spin an object.
 
-In the most general case, a 3D object rotating around an arbitrary axis, moment of inertia is a tensor quantity, which is like a function that takes a vector as a parameter and returns a vector as a result.
+In the most general case, a 3-D object rotating around an arbitrary axis, moment of inertia is a tensor, which is a function that takes a vector as a parameter and returns a vector as a result.
 
 Fortunately, in a system where all rotation and torque happens around a single axis, we don't have to deal with the most general case.  We can treat moment of inertia as a scalar quantity.
 
