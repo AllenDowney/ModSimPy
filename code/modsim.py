@@ -6,11 +6,12 @@ Copyright 2017 Allen Downey
 License: https://creativecommons.org/licenses/by/4.0)
 """
 
-from __future__ import print_function, division
+#TODO: check that we have at least version 3.6
+
+import inspect
 
 import logging
 logger = logging.getLogger(name='modsim.py')
-
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -19,36 +20,33 @@ import pandas as pd
 import seaborn as sns
 sns.set(style='white', font_scale=1.5)
 
-from scipy.integrate import odeint
 import scipy
 import sympy
-
 import pint
 UNITS = pint.UnitRegistry()
 Quantity = UNITS.Quantity
 
-from numpy import sqrt, array, linspace, pi
-
+from copy import copy
+from numpy import sqrt, log, exp, pi
 from pandas import DataFrame, Series
-
-
-import inspect
-from inspect import getsource
+from time import sleep
 
 from scipy.interpolate import interp1d
 from scipy.integrate import odeint
 from scipy.optimize import leastsq
 from scipy.optimize import minimize_scalar
 
-from time import sleep
 
 
 def linspace(start, stop, num=50, **kwargs):
-    """Returns num evenly spaced samples over the interval [start, stop].
+    """Returns an array of evenly-spaced values in the interval [start, stop].
     
-    start: number or Quantity
-    stop: number or Quantity
-    num: integer
+    start: first value
+    stop: last value
+    num: number of values
+
+    Also accepts the same keyword arguments as np.linspace.  See
+    https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
     
     returns: array or Quantity
     """
@@ -65,11 +63,21 @@ def linspace(start, stop, num=50, **kwargs):
 
 
 def linrange(start=0, stop=None, step=1, **kwargs):
-    """Returns evenly spaced samples over the interval [start, stop].
+    """Returns an array of evenly-spaced values in the interval [start, stop].
     
-    start: number or Quantity
-    stop: number or Quantity
-    step: number or Quantity
+    This function works best if the space between start and stop
+    is divisible by step; otherwise the results might be surprising.
+
+    By default, the last value in the array is `stop` (at least approximately).
+    If you provide the keyword argument `endpoint=False`, the last value
+    in the array is `stop-step`. 
+
+    start: first value
+    stop: last value
+    step: space between values
+
+    Also accepts the same keyword arguments as np.linspace.  See
+    https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
     
     returns: array or Quantity
     """
@@ -77,7 +85,9 @@ def linrange(start=0, stop=None, step=1, **kwargs):
         stop = start
         start = 0
 
-    underride(kwargs, endpoint=True, dtype=np.float64)
+    # TODO: what breaks if we don't make the dtype float?
+    #underride(kwargs, endpoint=True, dtype=np.float64)
+    underride(kwargs, endpoint=True)
 
     # see if any of the arguments has units
     units = getattr(start, 'units', None)
@@ -608,10 +618,10 @@ def subplots(*args, **kwargs):
 
 
 def subplot(nrows, ncols, plot_number, **kwargs):
-    figsize = {(2, 1): (6, 6)}
-    figsize = {(3, 1): (6, 9)}
+    figsize = {(2, 1): (8, 8),
+               (3, 1): (8, 10)}
     key = nrows, ncols
-    default = 8, 5.5
+    default = (8, 5.5)
     width, height = figsize.get(key, default)
     
     plt.subplot(nrows, ncols, plot_number, **kwargs)
@@ -648,10 +658,21 @@ def remove_from_legend(bad_labels):
 def decorate(**kwargs):
     """Decorate the current axes.
 
-    kwargs: can be any axis property
+    Call decorate with keyword arguments like
 
-    To see the list, run plt.getp(plt.gca())
+    decorate(title='Title',
+             xlabel='x',
+             ylabel='y')
+
+    The keyword arguments can be any of the axis properties
+    defined by Matplotlib.  To see the list, run plt.getp(plt.gca())
+
+    In addition, you can use `legend=False` to suppress the legend.
+
+    And you can use `loc` to indicate the location of the legend
+    (the default value is 'best')
     """
+    # 
     if kwargs.pop('legend', True):
         loc = kwargs.pop('loc', 'best')
         legend(loc=loc)
@@ -673,6 +694,7 @@ class MySeries(pd.Series):
         See: https://github.com/pandas-dev/pandas/issues/16737
         """
         if args or kwargs:
+            #underride(kwargs, dtype=np.float64)
             super().__init__(*args, **kwargs)
         else:
             super().__init__([], dtype=np.float64)
@@ -693,12 +715,10 @@ class MySeries(pd.Series):
         for name, value in kwargs.items():
             self[name] = value
 
-    @property
-    def _constructor(self):
-        return self.__class__
 
-
-class Sweep(MySeries):
+class SweepSeries(MySeries):
+    """Represents a mapping from parameter values to metrics.
+    """
     pass
 
 
