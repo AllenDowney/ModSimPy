@@ -9,7 +9,7 @@ At about 20 meters per second, the force of air resistance equals the force of g
 As a simplification, let's assume that the acceleration of the penny is a until the penny reaches 20 meters per second, and then 0 afterwards.
 What is the total time for the penny to fall 381 meters?
 
-#+BEGIN_SRC python :results output
+#+BEGIN_SRC python :results output :exports both
   a = 9.80665
   termV = 20
   totalDisplacement = 381
@@ -42,7 +42,7 @@ What is the total time for the penny to fall 381 meters?
 What happens if you spell the name of a system variable wrong?
 Edit the previous cell, change the spelling of wellesley, and run the cell again.
 
-#+BEGIN_SRC python :results output :session
+#+BEGIN_SRC python :results output :session :exports both
   from modsim import System
   bikeshare = System(olin = 10, wellesley = 2)
   bikeshare.olin
@@ -61,7 +61,7 @@ Edit the previous cell, change the spelling of wellesley, and run the cell again
 * Exercise 3
 Add a third attribute called babson with initial value 0, and print the state of bikeshare again.
 
-#+BEGIN_SRC python :results output
+#+BEGIN_SRC python :results output :exports both
   from modsim import System
   bikeshare = System(olin=10, wellesley=2, babson=3)
   print(bikeshare)
@@ -77,7 +77,7 @@ Add a third attribute called babson with initial value 0, and print the state of
 In the cell below, write a few lines of code to move a bike from Wellesley to Olin and plot the updated state.
 
 #+name: systemProgress
-#+BEGIN_SRC python :noweb yes
+#+BEGIN_SRC python :noweb yes :exports both
   import pandas as pd
   import matplotlib.pyplot as plt
   plt.style.use('ggplot')
@@ -100,7 +100,7 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
 #+RESULTS: systemProgress
 : None
 
-#+BEGIN_SRC python :results file :noweb yes
+#+BEGIN_SRC python :results file :noweb yes :exports both
   <<systemProgress>> # reference block with SystemProgress
 
   bikeshare = SystemProgress(olin=10, wellesley=9)
@@ -120,7 +120,7 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
 Define a function called =bike_to_olin= that moves a bike from Wellesley to Olin.
 Run the new function and print or plot the results to confirm that it works.
 
-#+BEGIN_SRC python :results output
+#+BEGIN_SRC python :results output :exports both
   from modsim import System
 
 
@@ -153,7 +153,7 @@ Run each of these functions (with appropriate arguments) and confirm that they d
 Adding print statements like this to functions is a useful debugging technique.
 Keep it in mind!
 
-#+BEGIN_SRC python :results output :sesion
+#+BEGIN_SRC python :results output :sesion :exports both
   def move_bike_debug(n):
       print('Running move_bike_debug with argument', n)
       bikeshare.olin -= n
@@ -183,7 +183,7 @@ Keep it in mind!
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_example :exports both
 Running move_bike_debug with argument 2
 olin          8
 wellesley    12
@@ -204,7 +204,7 @@ dtype: int64
 Change the argument of legend to 'random string' and run decorate again.
 You should get an error message that lists the valid location where you can put the legend.
 
-#+BEGIN_SRC python :results file :noweb yes
+#+BEGIN_SRC python :results file :noweb yes :exports both
   <<systemProgress>> # reference code block with class definition
 
   bikeshare = SystemProgress(olin=10, wellesley=9)
@@ -231,7 +231,7 @@ Test your function with different values of loc.
 [[https://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.legend][You can see the list of legal values here]].
 
 #+name: decorate
-#+BEGIN_SRC python :results output
+#+BEGIN_SRC python :results output :exports both
   from matplotlib.pyplot import legend
 
   def decorate(fig, loc=0):
@@ -244,7 +244,7 @@ Test your function with different values of loc.
 
 #+RESULTS: decorate
 
-#+BEGIN_SRC python :noweb yes :results file
+#+BEGIN_SRC python :noweb yes :results file :exports both
   # reference relevant blocks
   <<systemProgress>>
   <<decorate>>
@@ -266,7 +266,7 @@ Test your function with different values of loc.
 #+RESULTS:
 [[file:chap01fig/legendtest1.png]]
 
-#+BEGIN_SRC python :noweb yes :results file
+#+BEGIN_SRC python :noweb yes :results file :exports both
   # reference relevant blocks
   <<systemProgress>>
   <<decorate>>
@@ -295,7 +295,7 @@ It should use a for loop to run step the number of times specified by =num_steps
 After each step, it should plot the updated state.
 Test your function by creating a new System object, creating a new figure, and running =run_steps=.
 
-#+BEGIN_SRC python :results file :noweb yes
+#+BEGIN_SRC python :results file :noweb yes :exports both
   # reference relevant codeblocks
   <<systemProgress>>
   <<decorate>>
