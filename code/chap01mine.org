@@ -110,12 +110,12 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
   bikeshare.add_bikes(olin=-3, wellesley=3)
 
   fig = bikeshare.history.plot()
-  fig.figure.savefig('bikeshareplot')
-  return 'bikeshareplot.png'  # required for figure to show below
+  fig.figure.savefig('chap01fig/bikeshareplot')
+  return 'chap01fig/bikeshareplot.png'  # required for figure to show below
 #+END_SRC
 
 #+RESULTS:
-[[file:bikeshareplot.png]]
+[[file:chap01fig/bikeshareplot.png]]
 
 * Exercise 5
 Define a function called =bike_to_olin= that moves a bike from Wellesley to Olin.
@@ -218,7 +218,7 @@ You should get an error message that lists the valid location where you can put 
   # managed to get the error a different time, I am just unable to
   # replicate it here.
   fig.legend(loc='random')
-  fig.figure.savefig('legendtest.png')
+  fig.figure.savefig('chap01fig/legendtest.png')
   return 'legendtest.png'  # required for figure to show below
 #+END_SRC
 
@@ -260,13 +260,13 @@ Test your function with different values of loc.
 
   fig = bikeshare.history.plot()
   decorate(fig, loc=0)
-  fig.figure.savefig('legendtest1.png')
+  fig.figure.savefig('chap01fig/legendtest1.png')
 
-  return 'legendtest1.png'  # required for figure to show below
+  return 'chap01fig/legendtest1.png'  # required for figure to show below
 #+END_SRC
 
 #+RESULTS:
-[[file:legendtest1.png]]
+[[file:chap01fig/legendtest1.png]]
 
 
 #+BEGIN_SRC python :noweb yes :results file
@@ -284,13 +284,13 @@ Test your function with different values of loc.
   fig = bikeshare.history.plot()
   decorate(fig, loc=10)
 
-  fig.figure.savefig('legendtest2.png')
+  fig.figure.savefig('chap01fig/legendtest2.png')
 
-  return 'legendtest2.png'  # required for figure to show below
+  return 'chap01fig/legendtest2.png'  # required for figure to show below
 #+END_SRC
 
 #+RESULTS:
-[[file:legendtest2.png]]
+[[file:chap01fig/legendtest2.png]]
 
 * Exercise 9
 Combine the examples from the previous two sections to write a function named =run_steps= that takes three parameters, =named num_steps=, p1, and p2.
@@ -324,10 +324,10 @@ Test your function by creating a new System object, creating a new figure, and r
   run_steps(bikeshare, 100, 0.6, 0.2)
   ax = bikeshare.history.plot()
   decorate(ax)
-  ax.figure.savefig('runsteps.png')
+  ax.figure.savefig('chap01fig/runsteps.png')
 
-  return 'runsteps.png'
+  return 'chap01fig/runsteps.png'
 #+END_SRC
 
 #+RESULTS:
-[[file:runsteps.png]]
+[[file:chap01fig/runsteps.png]]
