@@ -117,6 +117,8 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
 #+RESULTS:
 [[file:chap01fig/bikeshareplot.png]]
 
+[[https://github.com/concavegit/ModSimPy/blob/master/code/chap01fig/bikeshareplot.png]]
+
 * Exercise 5
 Define a function called =bike_to_olin= that moves a bike from Wellesley to Olin.
 Run the new function and print or plot the results to confirm that it works.
@@ -225,6 +227,8 @@ You should get an error message that lists the valid location where you can put 
 #+RESULTS:
 [[file:legendtest.png]]
 
+[[https://github.com/concavegit/ModSimPy/blob/master/code/chap01fig/legendtest.png]]
+
 
 * Exercise 8
 Write a version of decorate that takes an optional parameter named loc with default value 'best'.
@@ -267,7 +271,7 @@ Test your function with different values of loc.
 
 #+RESULTS:
 [[file:chap01fig/legendtest1.png]]
-
+[[https://github.com/concavegit/ModSimPy/blob/master/code/chap01fig/legendtest1.png]]
 
 #+BEGIN_SRC python :noweb yes :results file
   # reference relevant blocks
@@ -291,6 +295,8 @@ Test your function with different values of loc.
 
 #+RESULTS:
 [[file:chap01fig/legendtest2.png]]
+
+[[https://github.com/concavegit/ModSimPy/blob/master/code/chap01fig/legendtest2.png]]
 
 * Exercise 9
 Combine the examples from the previous two sections to write a function named =run_steps= that takes three parameters, =named num_steps=, p1, and p2.
@@ -331,3 +337,5 @@ Test your function by creating a new System object, creating a new figure, and r
 
 #+RESULTS:
 [[file:chap01fig/runsteps.png]]
+
+[[https://github.com/concavegit/ModSimPy/blob/master/code/chap01fig/runsteps.png]]
