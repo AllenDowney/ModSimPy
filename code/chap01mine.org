@@ -218,7 +218,7 @@ You should get an error message that lists the valid location where you can put 
   # replicate it here.
   fig.legend(loc='random')
   fig.figure.savefig('chap01fig/legendtest.png')
-  return 'legendtest.png'  # required for figure to show below
+  return 'chap01fig/legendtest.png'  # required for figure to show below
 #+END_SRC
 
 #+RESULTS:
