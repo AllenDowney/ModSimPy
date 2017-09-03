@@ -86,7 +86,7 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
   class SystemProgress:
       def __init__(self, **kwargs):
           self.history = pd.DataFrame({key: [kwargs[key]] for key in kwargs})
-          self.status = self.history.tail()
+          self.status = self.history.tail(0)
 
       def add_bikes(self, **kwargs):
           newStatus = self.status.copy()
