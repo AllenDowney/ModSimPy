@@ -183,7 +183,7 @@ Keep it in mind!
 #+END_SRC
 
 #+RESULTS:
-#+begin_example :exports both
+#+begin_example
 Running move_bike_debug with argument 2
 olin          8
 wellesley    12
