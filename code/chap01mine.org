@@ -222,7 +222,7 @@ You should get an error message that lists the valid location where you can put 
 #+END_SRC
 
 #+RESULTS:
-[[file:legendtest.png]]
+[[file:chap01fig/legendtest.png]]
 
 * Exercise 8
 Write a version of decorate that takes an optional parameter named loc with default value 'best'.
