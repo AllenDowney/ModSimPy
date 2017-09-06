@@ -185,6 +185,12 @@ You should get an error message that lists the valid location where you can put 
 :END:
 
 #+BEGIN_SRC ipython :session :file chap01fig/dec.png :results raw drawer :exports both
+  bikeshare = System(olin=10, wellesley=10)
+  newfig()
+  plot_state()
+  bikeshare.olin -= 1
+  bikeshare.wellesley += 1
+  plot_state()
   decorate()
 #+END_SRC
 
@@ -212,7 +218,13 @@ You can see the list of legal values here.
 :END:
 
 #+BEGIN_SRC ipython :session :file chap01fig/decloc.png :results raw drawer :exports both
-  decorate()
+  bikeshare = System(olin=10, wellesley=10)
+  newfig()
+  plot_state()
+  bikeshare.olin -= 1
+  bikeshare.wellesley += 1
+  plot_state()
+  decorate(1)
 #+END_SRC
 
 #+RESULTS:
