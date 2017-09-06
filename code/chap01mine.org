@@ -67,14 +67,14 @@ Exercise: Add a third attribute called babson with initial value 0, and print th
 #+BEGIN_SRC ipython :session :results output :exports both
   from modsim import System
 
-  bikeshare = System(olin=1, babson=1, wellesley=0)
+  bikeshare = System(olin=1, wellesley=1, babson=0)
   print(bikeshare)
 #+END_SRC
 
 #+RESULTS:
 : olin         1
-: babson       1
-: wellesley    0
+: wellesley    1
+: babson       0
 : dtype: int64
 
 * Exercise 4
