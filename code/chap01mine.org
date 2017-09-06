@@ -101,6 +101,14 @@ In the cell below, write a few lines of code to move a bike from Wellesley to Ol
 :END:
 
 * Exercise 5
+#+BEGIN_SRC ipython :session
+  def plot_state():
+      plot(bikeshare.olin, 'rs-', label='Olin')
+      plot(bikeshare.wellesley, 'bo-', label='Wellesley')
+#+END_SRC
+
+#+RESULTS:
+
 Define a function called =bike_to_olin= that moves a bike from Wellesley to Olin.
 Run the new function and print or plot the results to confirm that it works.
 
