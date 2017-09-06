@@ -17,7 +17,7 @@ At about 20 meters per second, the force of air resistance equals the force of g
 As a simplification, let's assume that the acceleration of the penny is a until the penny reaches 20 meters per second, and then 0 afterwards.
 What is the total time for the penny to fall 381 meters?
 
-#+BEGIN_SRC ipython :session :results output
+#+BEGIN_SRC ipython :session :results output :exports both
   a = 9.80665
   termV = 20
   totalDisplacement = 381
@@ -46,7 +46,7 @@ What is the total time for the penny to fall 381 meters?
 Exercise: What happens if you spell the name of a system variable wrong?
 Edit the previous cell, change the spelling of wellesley, and run the cell again.
 
-#+BEGIN_SRC python :session :results output
+#+BEGIN_SRC python :session :results output :exports both
   from modsim import System
 
   bikeshare = System(olin=10,wellesley=2)
@@ -64,7 +64,7 @@ Edit the previous cell, change the spelling of wellesley, and run the cell again
 * Exercise 3
 Exercise: Add a third attribute called babson with initial value 0, and print the state of bikeshare again.
 
-#+BEGIN_SRC ipython :session :results output
+#+BEGIN_SRC ipython :session :results output :exports both
   from modsim import System
 
   bikeshare = System(olin=1, babson=1, wellesley=0)
@@ -126,7 +126,7 @@ Run the new function and print or plot the results to confirm that it works.
 The following function definitions start with print statements so they display messages when they run.
 Run each of these functions (with appropriate arguments) and confirm that they do what you expect.
 
-#+BEGIN_SRC ipython :session :results raw drawer
+#+BEGIN_SRC ipython :session
 def move_bike_debug(n):
     print('Running move_bike_debug with argument', n)
     bikeshare.olin -= n
@@ -142,17 +142,15 @@ def bike_to_olin_debug():
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-:END:
 
-#+BEGIN_SRC ipython :session :results output
+#+BEGIN_SRC ipython :session :results output :exports both
   move_bike_debug(0)
 #+END_SRC
 
 #+RESULTS:
 : Running move_bike_debug with argument 0
 
-#+BEGIN_SRC ipython :session :results output
+#+BEGIN_SRC ipython :session :results output :exports both
   bike_to_wellesley_debug()
 #+END_SRC
 
@@ -160,7 +158,7 @@ def bike_to_olin_debug():
 : Running bike_to_wellesley_debug
 : Running move_bike_debug with argument 1
 
-#+BEGIN_SRC ipython :session :results output
+#+BEGIN_SRC ipython :session :results output :exports both
   bike_to_olin_debug()
 #+END_SRC
 
@@ -172,7 +170,7 @@ def bike_to_olin_debug():
 Change the argument of legend to 'random string' and run decorate again.
 You should get an error message that lists the valid location where you can put the legend.
 
-#+BEGIN_SRC ipython :session :results raw drawer
+#+BEGIN_SRC ipython :session
   def decorate():
       legend(loc='a random string')
       label_axes(title='Olin-Wellesley Bikeshare',
@@ -181,8 +179,6 @@ You should get an error message that lists the valid location where you can put 
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-:END:
 
 #+BEGIN_SRC ipython :session :file chap01fig/dec.png :results raw drawer :exports both
   bikeshare = System(olin=10, wellesley=10)
@@ -205,7 +201,7 @@ It should pass the value of loc along as an argument to legend.
 Test your function with different values of loc.
 You can see the list of legal values here.
 
-#+BEGIN_SRC ipython :session :results raw drawer
+#+BEGIN_SRC ipython :session
   def decorate(loc=0):
       legend(loc=loc)
       label_axes(title='Olin-Wellesley Bikeshare',
@@ -214,8 +210,6 @@ You can see the list of legal values here.
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-:END:
 
 #+BEGIN_SRC ipython :session :file chap01fig/decloc.png :results raw drawer :exports both
   bikeshare = System(olin=10, wellesley=10)
@@ -234,7 +228,7 @@ You can see the list of legal values here.
 
 * Exercise 9
 
-#+BEGIN_SRC ipython :session :results raw drawer
+#+BEGIN_SRC ipython :session
   def move_bike(n):
       bikeshare.olin -= n
       bikeshare.wellesley += n
@@ -254,10 +248,8 @@ You can see the list of legal values here.
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-:END:
 
-#+BEGIN_SRC ipython :session :results raw drawer
+#+BEGIN_SRC ipython :session
   def run_steps(num_steps, p1, p2):
       for _ in range(num_steps):
           step(p1, p2)
@@ -266,8 +258,6 @@ You can see the list of legal values here.
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-:END:
 
 #+BEGIN_SRC ipython :session :file chap01fig/run_steps1.png :results raw drawer :exports both
   run_steps(100,0.5,0.5)
