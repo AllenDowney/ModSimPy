@@ -203,6 +203,23 @@ You should get an error message that lists the valid location where you can put 
 [[file:chap01fig/dec.png]]
 :END:
 
+#+BEGIN_QUOTE
+  /usr/lib64/python3.6/site-packages/matplotlib/legend.py:326: UserWarning: Unrecognized location "a rand". Falling back on "best"; valid locations are
+          best
+          upper right
+          upper left
+          lower left
+          lower right
+          right
+          center left
+          center right
+          lower center
+          upper center
+          center
+
+    six.iterkeys(self.codes)))
+#+END_QUOTE
+
 * Exercise 8
 Write a version of decorate that takes an optional parameter named loc with default value 'best'.
 It should pass the value of loc along as an argument to legend.
