@@ -205,66 +205,62 @@ Test your code by running a simulation for 60 minutes and checking the metrics.
 
 #+RESULTS:
 #+begin_example
+Time before Wellesley: 0
+Time before Olin: 0
 Time before Wellesley: 1
-Time before Olin: 1
-Time before Olin: 3
+Time before Olin: 2
 Time before Wellesley: 5
+Time before Wellesley: 7
 Time before Wellesley: 9
 Time before Olin: 9
-Time before Wellesley: 10
 Time before Olin: 10
 Time before Wellesley: 11
-Time before Wellesley: 13
+Time before Olin: 11
 Time before Olin: 13
-Time before Wellesley: 14
-Time before Olin: 14
-Time before Wellesley: 15
 Time before Olin: 15
 Time before Wellesley: 16
 Time before Olin: 16
 Time before Wellesley: 17
-Time before Olin: 17
-Time before Olin: 18
+Time before Wellesley: 18
 Time before Olin: 20
-Time before Wellesley: 22
-Time before Olin: 22
-Time before Wellesley: 25
+Time before Olin: 21
+Time before Wellesley: 23
+Time before Wellesley: 24
+Time before Olin: 25
 Time before Olin: 26
 Time before Olin: 27
-Time before Olin: 28
-Time before Wellesley: 29
-Time before Wellesley: 30
-Time before Wellesley: 32
-Time before Olin: 32
+Time before Olin: 29
+Time before Olin: 30
 Time before Wellesley: 34
-Time before Olin: 36
-Time before Wellesley: 38
+Time before Wellesley: 35
+Time before Olin: 35
+Time before Wellesley: 36
+Time before Wellesley: 37
+Time before Olin: 37
+Time before Olin: 38
 Time before Wellesley: 39
 Time before Olin: 39
+Time before Wellesley: 40
 Time before Wellesley: 41
 Time before Wellesley: 42
 Time before Olin: 42
 Time before Olin: 43
-Time before Wellesley: 44
 Time before Olin: 44
-Time before Wellesley: 45
-Time before Olin: 45
 Time before Wellesley: 46
 Time before Wellesley: 47
 Time before Olin: 47
 Time before Wellesley: 48
-Time before Olin: 48
 Time before Wellesley: 49
+Time before Olin: 49
 Time before Olin: 50
-Time before Wellesley: 52
-Time before Olin: 52
+Time before Olin: 51
 Time before Wellesley: 53
-Time before Olin: 53
 Time before Wellesley: 54
 Time before Wellesley: 55
 Time before Olin: 55
-Time before Wellesley: 56
-Time before Olin: 57
+Time before Wellesley: 57
+Time before Wellesley: 58
+Time before Wellesley: 59
 -1
 #+end_example
 
@@ -446,7 +442,7 @@ Looking at the plot, can you estimate a range of values for p1 that minimizes th
 [[file:chap02fig/parameter-wellesley.png]]
 :END:
 
-Looks like p1=0.5 is the optimal p1.
+Looks like p1=0.4 is the optimal p1.
 
 * Exercise 10
 Write a function called =parameter_sweep2= that runs simulations with p1=0.2 and a range of values for p2.
@@ -511,7 +507,7 @@ The code below runs a simulation with the same parameters 10 times and computes 
 
 #+RESULTS:
 :RESULTS:
-3.033333333333333
+3.7666666666666666
 :END:
 
 #+BEGIN_SRC ipython :session
@@ -532,8 +528,8 @@ The code below runs a simulation with the same parameters 10 times and computes 
 #+END_SRC
 
 #+RESULTS:
-: 3.43
-: 2.44555555556
+: 3.79666666667
+: 2.31222222222
 
 It seems that two extra bikes decrease the average number by around 1.
 
