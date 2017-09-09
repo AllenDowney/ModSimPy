@@ -1,0 +1,547 @@
+#+title: ModSim Chapter 2
+
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: toc:nil num:nil
+
+* Preamble
+
+#+BEGIN_SRC ipython :session
+  %matplotlib inline
+  import matplotlib.pyplot as plt
+  plt.style.use('ggplot')
+  from modsim import *
+
+
+  def run_steps(system, num_steps=1, p1=0.5, p2=0.5):
+      """Simulate the given number of time steps.
+
+      system: bikeshare System object
+      num_steps: number of time steps
+      p1: probability of an Olin->Wellesley customer arrival
+      p2: probability of a Wellesley->Olin customer arrival
+      """
+      for i in range(num_steps):
+          step(system, p1, p2)
+          plot_system(system)
+
+
+  def step(system, p1=0.5, p2=0.5):
+      """Simulate one minute of time.
+
+      system: bikeshare System object
+      p1: probability of an Olin->Wellesley customer arrival
+      p2: probability of a Wellesley->Olin customer arrival
+      """
+      if flip(p1):
+          bike_to_wellesley(system)
+
+      if flip(p2):
+          bike_to_olin(system)
+
+
+  def bike_to_wellesley(system):
+      """Move one bike from Olin to Wellesley.
+
+      system: bikeshare System object
+      """
+      move_bike(system, 1)
+
+
+  def bike_to_olin(system):
+      """Move one bike from Wellesley to Olin.
+
+      system: bikeshare System object
+      """
+      move_bike(system, -1)
+
+
+  def move_bike(system, n):
+      """Move a bike.
+
+      system: bikeshare System object
+      n: +1 to move from Olin to Wellesley or
+         -1 to move from Wellesley to Olin
+      """
+      system.olin -= n
+      system.wellesley += n
+
+
+  def plot_system(system):
+      """Plot the current system of the bikeshare system.
+
+      system: bikeshare System object
+      """
+      plot(system.olin, 'rs-', label='Olin')
+      plot(system.wellesley, 'bo-', label='Wellesley')
+
+
+  def decorate_bikeshare():
+      """Add a title and label the axes."""
+      decorate(title='Olin-Wellesley Bikeshare',
+               xlabel='Time step (min)',
+               ylabel='Number of bikes')
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 1
+Add print statements in =move_bike= so it prints a message each time a customer arrives and doesn't find a bike.
+Run the simulation again to confirm that it works as you expect.
+Then you might want to remove the print statements before you go on.
+
+#+BEGIN_SRC ipython :session :exports both
+  def move_bike(system, n):
+      olin_temp = system.olin - n
+      if olin_temp < 0:
+          # print('Sorry, there are no bikes')
+          return
+
+      wellesley_temp = system.wellesley + n
+      if wellesley_temp < 0:
+          return
+
+      # update the system
+      system.olin = olin_temp
+      system.wellesley = wellesley_temp
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 2
+Add an else clause to the if statement above, and print an appropriate message.
+Replace the == operator with one or two of the other comparison operators, and confirm they do what you expect.
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  x = 4
+
+  if x == 5:
+      print('yes, x is 5')
+
+
+  else:
+      print('no, x is not 5')
+#+END_SRC
+
+#+RESULTS:
+: no, x is not 5
+
+* Exercise 3
+Let's add a "clock" to keep track of how many time steps have elapsed:
+1. Add a new system variable named clock to bikeshare, initialized to 0, and
+2. Modify step so it increments (adds one to) clock each time it is invoked.
+
+#+BEGIN_SRC ipython :session
+  bikeshare = System(olin=10, wellesley=10, clock=0)
+
+
+  def step(system, p1=0.5, p2=0.5):
+      """Simulate one minute of time.
+
+      system: bikeshare System object
+      p1: probability of an Olin->Wellesley customer arrival
+      p2: probability of a Wellesley->Olin customer arrival
+      """
+      # print(system.clock)
+      if flip(p1):
+          bike_to_wellesley(system)
+          print('Time before Wellesley:', system.clock)
+
+      if flip(p2):
+          bike_to_olin(system)
+          print('Time before Olin:', system.clock)
+      system.clock += 1
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  step(bikeshare)
+#+END_SRC
+
+#+RESULTS:
+: Time before Wellesley: 0
+: Time before Olin: 0
+
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  print(bikeshare.clock)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+* Exercise 4
+Now suppose we'd like to know how long it takes to run out of bikes at either location.
+Modify =move_bike= so the first time a student arrives at Olin and doesn't find a bike, it records the value of clock in a system variable.
+Hint: create a system variable named =t_first_empty= and initialize it to -1 to indicate that it has not been set yet.
+Test your code by running a simulation for 60 minutes and checking the metrics.
+
+#+BEGIN_SRC ipython :session
+  def move_bike(system, n):
+      olin_temp = system.olin - n
+      if olin_temp < 0:
+          system.olin_empty += 1
+          if system.t_first_empty == -1:
+              system.t_first_empty = system.clock
+          return
+
+      wellesley_temp = system.wellesley + n
+      if wellesley_temp < 0:
+          system.wellesley_empty += 1
+          return
+
+      system.olin = olin_temp
+      system.wellesley = wellesley_temp
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  bikeshare = System(olin=5, wellesley=5, clock=0, olin_empty = 0, wellesley_empty = 0, t_first_empty=-1)
+  for _ in range(60):
+      step(bikeshare)
+
+  print(bikeshare.t_first_empty)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Time before Olin: 0
+Time before Wellesley: 3
+Time before Olin: 3
+Time before Olin: 4
+Time before Wellesley: 5
+Time before Olin: 6
+Time before Wellesley: 8
+Time before Wellesley: 9
+Time before Olin: 10
+Time before Olin: 11
+Time before Olin: 12
+Time before Wellesley: 14
+Time before Olin: 14
+Time before Olin: 16
+Time before Wellesley: 17
+Time before Olin: 17
+Time before Wellesley: 18
+Time before Wellesley: 19
+Time before Olin: 19
+Time before Wellesley: 20
+Time before Olin: 23
+Time before Wellesley: 24
+Time before Wellesley: 25
+Time before Olin: 25
+Time before Olin: 27
+Time before Wellesley: 28
+Time before Wellesley: 31
+Time before Olin: 31
+Time before Wellesley: 32
+Time before Olin: 32
+Time before Olin: 34
+Time before Olin: 37
+Time before Wellesley: 38
+Time before Olin: 39
+Time before Olin: 42
+Time before Wellesley: 43
+Time before Olin: 43
+Time before Wellesley: 44
+Time before Olin: 45
+Time before Olin: 46
+Time before Olin: 47
+Time before Wellesley: 48
+Time before Olin: 48
+Time before Wellesley: 49
+Time before Wellesley: 50
+Time before Olin: 50
+Time before Wellesley: 51
+Time before Olin: 51
+Time before Olin: 52
+Time before Wellesley: 53
+Time before Olin: 53
+Time before Olin: 54
+Time before Olin: 55
+Time before Wellesley: 56
+Time before Olin: 56
+Time before Olin: 57
+Time before Olin: 58
+-1
+#+end_example
+
+#+BEGIN_SRC ipython :session
+  def step(system, p1=0.5, p2=0.5):
+      if flip(p1):
+          bike_to_wellesley(system)
+
+      if flip(p2):
+          bike_to_olin(system)
+
+
+  def move_bike(system, n):
+      olin_temp = system.olin - n
+      if olin_temp < 0:
+          system.olin_empty += 1
+          return
+
+      wellesley_temp = system.wellesley + n
+      if wellesley_temp < 0:
+          system.wellesley_empty += 1
+          return
+
+      system.olin = olin_temp
+      system.wellesley = wellesley_temp
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 5
+Write a function called =make_system= that creates a System object with the system variables olin=10 and wellesley=2, and then returns the new System object.
+Write a line of code that calls =make_system= and assigns the result to a variable.
+
+#+BEGIN_SRC ipython :session
+  def make_system():
+      return System(olin=10, wellesley=2)
+
+  makeSystemTest = make_system()
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 6
+Write a version of =run_simulation= that takes all five model parameters as function parameters.
+
+#+BEGIN_SRC ipython :session
+  def run_simulation(olin=10, wellesley=2, olin_empty=0, wellesley_empty=0, p1=0.4, p2=0.2):
+      bikeshare = System(olin=olin, wellesley=wellesley,
+                         olin_empty=olin_empty, wellesley_empty=wellesley_empty)
+      run_steps(bikeshare, 60, p1, p2, plot_flag=False)
+      return bikeshare
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 7
+The function linspace is part of NumPy.
+[[https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html][You can read the documentation here]].
+Use linspace to make an array of 10 equally spaced numbers from 1 to 10 (including both).
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  linspace(1,10,10)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+array([  1.,   2.,   3.,   4.,   5.,   6.,   7.,   8.,   9.,  10.])
+:END:
+
+* Exercise 8
+The modsim library provides a related function called linrange.
+You can view the documentation by running the following cell:
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  help(linrange)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Help on function linrange in module modsim:
+
+linrange(start=0, stop=None, step=1, **kwargs)
+    Returns an array of evenly-spaced values in the interval [start, stop].
+    
+    This function works best if the space between start and stop
+    is divisible by step; otherwise the results might be surprising.
+    
+    By default, the last value in the array is `stop` (at least approximately).
+    If you provide the keyword argument `endpoint=False`, the last value
+    in the array is `stop-step`. 
+    
+    start: first value
+    stop: last value
+    step: space between values
+    
+    Also accepts the same keyword arguments as np.linspace.  See
+    https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
+    
+    returns: array or Quantity
+
+#+end_example
+
+Use linrange to make an array of numbers from 1 to 11 with a step size of 2.
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  linrange(1,11,2)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+array([  1.,   3.,   5.,   7.,   9.,  11.])
+:END:
+
+* Exercise 9
+Wrap this code in a function named =parameter_sweep= that takes an array called =p1_array= as a parameter.
+It should create a new figure, run a simulation for each value of p1 in =p1_array=, and plot the results.
+Once you have the function working, modify it so it also plots the number of unhappy customers at Wellesley.
+Looking at the plot, can you estimate a range of values for p1 that minimizes the total number of unhappy customers?
+
+** Preamble
+#+BEGIN_SRC ipython :session
+  def run_steps(system, num_steps=1, p1=0.5, p2=0.5, plot_flag=True):
+      """Simulate the given number of time steps.
+
+      `num_steps` should be an integer; if not, it gets rounded down.
+
+      system: bikeshare System object
+      num_steps: number of time steps
+      p1: probability of an Olin->Wellesley customer arrival
+      p2: probability of a Wellesley->Olin customer arrival
+      plot_flag: boolean, whether to plot
+      """
+      for i in range(int(num_steps)):
+          step(system, p1, p2)
+          if plot_flag:
+              plot_system(system)
+#+END_SRC
+
+#+RESULTS:
+
+** Exercise
+
+#+BEGIN_SRC ipython :session
+  def parameter_sweep(p1_array):
+      newfig()
+      for p1 in p1_array:
+          system = run_simulation(p1=p1)
+          plot(p1, system.olin_empty, 'rs', label='olin')
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap02fig/parameter-olin.png :exports both
+  parameter_sweep(linspace(0, 1, 11))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap02fig/parameter-olin.png]]
+:END:
+
+#+BEGIN_SRC ipython :session
+  def parameter_sweep(p1_array):
+      newfig()
+      for p1 in p1_array:
+          system = run_simulation(p1=p1)
+          plot(p1, system.wellesley_empty, 'rs', label='wellesley')
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap02fig/parameter-wellesley.png :exports both
+  parameter_sweep(linspace(0, 1, 11))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap02fig/parameter-wellesley.png]]
+:END:
+
+Looks like p1=0.5 is the optimal p1.
+
+* Exercise 10
+Write a function called =parameter_sweep2= that runs simulations with p1=0.2 and a range of values for p2.
+Note: If you run =parameter_sweep2= a few times without calling newfig, you can plot multiple runs on the same axes, which will give you a sense of how much random variation there is from one run to the next.
+
+#+BEGIN_SRC ipython :session
+  def parameter_sweep2(p2_array):
+      newfig()
+      for p2 in p2_array:
+          system = run_simulation(p1=0.2, p2=p2)
+          plot(p1, system.olin_empty, 'rs', label='olin')
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 11
+Hold p1=0.4 and p2=0.2, and sweep a range of values for =num_steps=.
+Hint: You will need a version of =run_simulation= that takes =num_steps= as a parameter.
+Hint: Because =num_steps= is supposed to be an integer use range rather than linrange.
+
+#+BEGIN_SRC ipython :session
+  def run_simulation(num_steps, olin=10, wellesley=2, olin_empty=0, wellesley_empty=0, p1=0.4, p2=0.2):
+      bikeshare = System(olin=olin, wellesley=wellesley,
+                         olin_empty=olin_empty, wellesley_empty=wellesley_empty)
+      run_steps(bikeshare, num_steps, p1, p2, plot_flag=False)
+      return bikeshare
+
+
+  def parameter_sweep3(num_steps_array):
+      newfig()
+      for num_steps in num_steps_array:
+          system = run_simulation2(num_steps=num_steps, p1=0.4, p2=0.2)
+          plot(num_steps, system.olin_empty, 'rs', label='olin')
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 12
+The code below runs a simulation with the same parameters 10 times and computes the average number of unhappy customers.
+
+1. Wrap this code in a function called =run_simulations= that takes =num_runs= as a parameter.
+2. Test =run_simulations=, and increase =num_runs= until the results are reasonably consistent from one run to the next.
+3. Generalize =run_simulations= so it also takes the initial value of olin as a parameter.
+4. Run the generalized version with olin=12. How much do the two extra bikes decrease the average number of unhappy customers.
+5. Make a plot that shows the average number of unhappy customers as a function of the initial number of bikes at Olin.
+
+   
+#+BEGIN_SRC ipython :session
+  def run_simulations(num_runs=10):
+      total = 0
+      for _ in range(num_runs):
+          system = run_simulation(p1=0.4, p2=0.2, olin=10, wellesley=2, num_steps=60)
+          total += system.olin_empty + system.wellesley_empty
+      return total / num_runs
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  run_simulations(30)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+3.2000000000000002
+:END:
+
+#+BEGIN_SRC ipython :session
+  def run_simulations(num_runs=10, olin=10):
+      total = 0
+      for _ in range(num_runs):
+          system = run_simulation(p1=0.4, p2=0.2, olin=olin,
+                                  wellesley=2, num_steps=60)
+          total += system.olin_empty + system.wellesley_empty
+      return total / num_runs
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  print(np.mean(np.asarray([run_simulations(30,10) for _ in range(30)])))
+  print(np.mean(np.asarray([run_simulations(30,12) for _ in range(30)])))
+#+END_SRC
+
+#+RESULTS:
+: 3.71222222222
+: 2.28888888889
+
+It seems that two extra bikes decrease the average number by around 1.
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap02fig/olinbikes.png :exports both
+  newfig()
+  for bikes in range(30):
+      plot(bikes, run_simulations(num_runs=30,olin=bikes), 'rs-', label='olin bikes')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap02fig/olinbikes.png]]
+:END:
