@@ -448,7 +448,6 @@ Looks like p1=0.4 is the optimal p1.
 Write a function called =parameter_sweep2= that runs simulations with p1=0.2 and a range of values for p2.
 Note: If you run =parameter_sweep2= a few times without calling newfig, you can plot multiple runs on the same axes, which will give you a sense of how much random variation there is from one run to the next.
 
-
 #+BEGIN_SRC ipython :session
   def parameter_sweep2(p2_array):
       newfig()
