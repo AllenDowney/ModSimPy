@@ -159,7 +159,6 @@ Let's add a "clock" to keep track of how many time steps have elapsed:
 #+END_SRC
 
 #+RESULTS:
-: Time before Olin: 0
 
 
 #+BEGIN_SRC ipython :session :results output :exports both
@@ -205,63 +204,71 @@ Test your code by running a simulation for 60 minutes and checking the metrics.
 
 #+RESULTS:
 #+begin_example
-Time before Wellesley: 0
-Time before Olin: 0
 Time before Wellesley: 1
-Time before Olin: 2
-Time before Wellesley: 5
+Time before Olin: 1
+Time before Wellesley: 2
+Time before Olin: 3
+Time before Olin: 4
+Time before Olin: 5
 Time before Wellesley: 7
+Time before Olin: 8
 Time before Wellesley: 9
-Time before Olin: 9
 Time before Olin: 10
 Time before Wellesley: 11
-Time before Olin: 11
-Time before Olin: 13
-Time before Olin: 15
-Time before Wellesley: 16
-Time before Olin: 16
-Time before Wellesley: 17
+Time before Wellesley: 12
+Time before Wellesley: 13
+Time before Olin: 14
+Time before Olin: 17
 Time before Wellesley: 18
-Time before Olin: 20
 Time before Olin: 21
-Time before Wellesley: 23
-Time before Wellesley: 24
+Time before Wellesley: 22
+Time before Wellesley: 25
 Time before Olin: 25
-Time before Olin: 26
+Time before Wellesley: 26
 Time before Olin: 27
-Time before Olin: 29
-Time before Olin: 30
+Time before Wellesley: 28
+Time before Olin: 28
+Time before Wellesley: 29
+Time before Wellesley: 30
+Time before Wellesley: 31
+Time before Wellesley: 32
+Time before Wellesley: 33
 Time before Wellesley: 34
-Time before Wellesley: 35
+Time before Olin: 34
 Time before Olin: 35
 Time before Wellesley: 36
-Time before Wellesley: 37
 Time before Olin: 37
+Time before Wellesley: 38
 Time before Olin: 38
 Time before Wellesley: 39
 Time before Olin: 39
 Time before Wellesley: 40
+Time before Olin: 40
 Time before Wellesley: 41
+Time before Olin: 41
 Time before Wellesley: 42
-Time before Olin: 42
+Time before Wellesley: 43
 Time before Olin: 43
+Time before Wellesley: 44
 Time before Olin: 44
-Time before Wellesley: 46
+Time before Olin: 46
 Time before Wellesley: 47
-Time before Olin: 47
 Time before Wellesley: 48
-Time before Wellesley: 49
-Time before Olin: 49
+Time before Olin: 48
+Time before Wellesley: 50
 Time before Olin: 50
+Time before Wellesley: 51
 Time before Olin: 51
+Time before Wellesley: 52
 Time before Wellesley: 53
-Time before Wellesley: 54
+Time before Olin: 54
 Time before Wellesley: 55
-Time before Olin: 55
-Time before Wellesley: 57
-Time before Wellesley: 58
+Time before Wellesley: 56
+Time before Olin: 57
+Time before Olin: 58
 Time before Wellesley: 59
--1
+Time before Olin: 59
+34
 #+end_example
 
 #+BEGIN_SRC ipython :session
@@ -307,10 +314,10 @@ Write a line of code that calls =make_system= and assigns the result to a variab
 Write a version of =run_simulation= that takes all five model parameters as function parameters.
 
 #+BEGIN_SRC ipython :session
-  def run_simulation(olin=10, wellesley=2, olin_empty=0, wellesley_empty=0, p1=0.4, p2=0.2):
+  def run_simulation(olin=10, wellesley=2, olin_empty=0, wellesley_empty=0, p1=0.4, p2=0.2, num_steps=60):
       bikeshare = System(olin=olin, wellesley=wellesley,
                          olin_empty=olin_empty, wellesley_empty=wellesley_empty)
-      run_steps(bikeshare, 60, p1, p2, plot_flag=False)
+      run_steps(bikeshare, num_steps, p1, p2, plot_flag=False)
       return bikeshare
 #+END_SRC
 
@@ -507,7 +514,7 @@ The code below runs a simulation with the same parameters 10 times and computes 
 
 #+RESULTS:
 :RESULTS:
-3.7666666666666666
+3.6666666666666665
 :END:
 
 #+BEGIN_SRC ipython :session
@@ -528,8 +535,8 @@ The code below runs a simulation with the same parameters 10 times and computes 
 #+END_SRC
 
 #+RESULTS:
-: 3.79666666667
-: 2.31222222222
+: 3.50666666667
+: 2.47444444444
 
 It seems that two extra bikes decrease the average number by around 1.
 
