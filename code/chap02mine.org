@@ -179,7 +179,7 @@ Test your code by running a simulation for 60 minutes and checking the metrics.
       olin_temp = system.olin - n
       if olin_temp < 0:
           system.olin_empty += 1
-          if system.t_first_empty == -1:
+          if system.t_first_empty == None:
               system.t_first_empty = system.clock
           return
 
@@ -195,7 +195,7 @@ Test your code by running a simulation for 60 minutes and checking the metrics.
 #+RESULTS:
 
 #+BEGIN_SRC ipython :session :results output :exports both
-  bikeshare = System(olin=5, wellesley=5, clock=0, olin_empty = 0, wellesley_empty = 0, t_first_empty=-1)
+  bikeshare = System(olin=5, wellesley=5, clock=0, olin_empty = 0, wellesley_empty = 0, t_first_empty=None)
   for _ in range(60):
       step(bikeshare)
 
