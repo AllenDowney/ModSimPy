@@ -346,7 +346,7 @@ The following cells process this table and plot some of the results.
 
 Select table1, which is the second table on the page.
 
-#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/pre.png
+#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/pre.png :exports both
   table1 = wpe[1]
   table1.replace('M', np.nan, regex=True, inplace=True)
   table1.columns = ['prb', 'un', 'maddison', 'hyde', 'tanton',
@@ -361,7 +361,7 @@ Select table1, which is the second table on the page.
 [[file:chap03fig/pre.png]]
 :END:
 
-#+BEGIN_SRC ipython :session :file chap03fig/test.png
+#+BEGIN_SRC ipython :session :file chap03fig/test.png :exports both
   def update_func1b(pop, t, system):
       """Compute the population next year.
 
