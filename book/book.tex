@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{1.0}
+\newcommand{\theversion}{1.0.1}
 
 
 %%%% Both LATEX and PLASTEX
@@ -1417,9 +1417,10 @@ Equal & \py{==} \\
 Not equal & \py{!=} \\ 
 \end{tabular} 
 
-The equals operator, \py{==}, compares two values and returns \py{True} if they are equal and \py{False} otherwise.  It is easy to confuse with the {\bf assignment} operator, \py{=}, which assigns a value to a variable.  For example, the following statement uses the assignment operator, which creates \py{x} if it doesn't already exist and gives it the value \py{5}
+The equals operator, \py{==}, compares two values and returns \py{True} if they are equal and \py{False} otherwise.  It is easy to confuse with the {\bf assignment operator}, \py{=}, which assigns a value to a variable.  For example, the following statement uses the assignment operator, which creates \py{x} if it doesn't already exist and gives it the value \py{5}
 \index{equality}
-\index{assignment}
+\index{assignment operator}
+\index{operator!assignment}
 
 \begin{python}
 x = 5
@@ -1486,7 +1487,7 @@ That will only work if we initialize \py{olin_empty} and \py{wellesley_empty} wh
 
 \begin{python}
 bikeshare = System(olin=10, wellesley=2, 
-                  olin_empty=0, wellesley_empty=0)
+                   olin_empty=0, wellesley_empty=0)
 \end{python}
 
 Now we can run a simulation like this:
@@ -1756,7 +1757,7 @@ To work with this data in Python, we will use functions from Pandas, which is a 
 \index{Series}
 \index{DataFrame}
 
-The Pandas function we'll use is \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to {\bf import} it.  You have already seen this import statement:
+The Pandas function we'll use is \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to import it.  You have already seen this import statement:
 \index{\py{read_html}}
 \index{import statement}
 \index{statement!import}
@@ -2039,6 +2040,8 @@ This function uses \py{decorate}, which is defined in the \py{modsim} library.  
 \index{plot}
 \index{decorate}
 
+%TODO: We actually use decorate in chap01.ipynb, so move this earlier.
+
 Finally, we can run it like this.
 
 \begin{python}
@@ -2284,6 +2287,101 @@ In this version, it is easier to interpret the parameters: $\alpha$ is the maxim
 \index{carrying capacity}
 
 In the next chapter we use the models we have developed to generate predictions.
+
+
+\section{Disfunctions}
+
+When people first learn about functions, there are a few things they often find confusing.  In this section I present and explain some common problems with functions.
+
+As an example, suppose you want a function that takes a \py{System} object with variables \py{alpha} and \py{beta} as a parameter and computes the carrying capacity, \py{-alpha/beta}.  Here's a good solution: 
+
+\begin{python}
+def carrying_capacity(system):
+    K = -system.alpha / system.beta
+    return K
+    
+sys1 = System(alpha=0.025, beta=-0.0018)
+pop = carrying_capacity(sys1)
+print(pop)
+\end{python}
+
+Now let's see all the ways that can go wrong.
+
+Disfunction \#1: Not using parameters.  In the following version, the function doesn't take any parameters; when \py{system} appears inside the function, it refers to the object we created outside the function.
+
+\begin{python}
+# WRONG
+def carrying_capacity():
+    K = -system.alpha / system.beta
+    return K
+    
+system = System(alpha=0.025, beta=-0.0018)
+pop = carrying_capacity()
+print(pop)
+\end{python}
+
+This version actually works, but it is not very versatile.  If there are several \py{System} object, this function can only work with one of them; that is, as long as one of them is named \py{System}.
+
+Disfunction \#2: Clobbering the parameters.  When people first learn about parameters, they often write functions like this:
+
+\begin{python}
+# WRONG
+def carrying_capacity(system):
+    system = System(alpha=0.025, beta=-0.0018)
+    K = -system.alpha / system.beta
+    return K
+    
+sys1 = System(alpha=0.025, beta=-0.0018)
+pop = carrying_capacity(sys1)
+print(pop)
+\end{python}
+
+In this example, we have a \py{System} object named \py{sys1} that gets passed as an argument to \py{carrying_capacity}.  But when the function run, it ignores the argument and immediately replaces it with a new \py{System} object.  As a result, this function always returns the same value, no matter what argument is passed.
+
+When you write a function, you generally don't know what the values of the parameters will be.  Your job is to write a function that works for any valid values.  If you assign your own values to the parameters, you defeat the whole purpose of functions.
+
+
+Disfunction \#3: No return value.  Here's a version that computes the value of \py{K} but doesn't return it.
+
+\begin{python}
+# WRONG
+def carrying_capacity(system):
+    K = -system.alpha / system.beta
+    
+sys1 = System(alpha=0.025, beta=-0.0018)
+pop = carrying_capacity(sys1)
+print(pop)
+\end{python}
+
+A function that doesn't have a return statement always returns \py{None}, so in this example the value of \py{pop} is \py{None}.
+
+
+Disfunction \#4: Ignoring the return value.  Finally, here's a version where the function is correct, but the way it's used is not.
+
+\begin{python}
+# WRONG
+def carrying_capacity(system):
+    K = -system.alpha / system.beta
+    return K
+    
+sys1 = System(alpha=0.025, beta=-0.0018)
+carrying_capacity(sys1)
+print(K)
+\end{python}
+
+If you call a function that returns a value, you should do something with the return value.  Often you assign it to a variable, as in the previous examples, but you can also use it as part of an expression.  For example, you could eliminate the temporary variable \py{pop} like this:
+
+\begin{python}
+print(carrying_capacity(sys1))
+\end{python}
+
+Or if you had more than one system, you could compute the total carrying capacity like this:
+
+\begin{python}
+total = carrying_capacity(sys1) + carrying_capacity(sys2)
+\end{python}
+
+In the notebook for this chapter, you can try out each of these examples and see what happens.
 
 
 \chapter{Prediction}
@@ -2689,7 +2787,7 @@ The result is the equation
 %
 \[ f{\left (t \right )} = C_{1} \exp(\alpha t) \]
 %
-This is the general solution, which still contains an unspecified constant, $C_1$.  To get the particular solution where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
+This is the {\bf general solution}, which still contains an unspecified constant, $C_1$.  To get the {\bf particular solution} where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
 \index{general solution}
 \index{particular solution}
 
@@ -5735,6 +5833,8 @@ In the notebook for this chapter, you'll have to chance to finish off the Manny 
 \end{itemize}
 
 The notebook provides some additional hints, but at this point you should have everything you need.  Good luck!
+
+If you enjoy this exercise, you might be interested in this paper: ``How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories", by Sawicki, Hubbard, and Stronge, at \url{http://aapt.scitation.org/doi/abs/10.1119/1.1604384}.
 
 
 \chapter{Rotation}
