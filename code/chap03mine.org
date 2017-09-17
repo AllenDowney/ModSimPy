@@ -129,9 +129,10 @@ Hint: It probably won't fit very well
 #+RESULTS:
 
 #+BEGIN_SRC ipython :session :results raw drawer :file "chap03fig/sim1b.png" :exports both
-  system = System(t0=t0, t_end=t_end, p0=census[t0], births=100000000,deaths = 0.01)
+  system = System(t0=t0, t_end=t_end, p0=census[t0], births=0.1,deaths = 0.01)
   run_simulation1b(system)
-  system.results.plot()
+  ax = census.plot()
+  system.results.plot(ax=ax)
 #+END_SRC
 
 #+RESULTS:
@@ -161,7 +162,8 @@ Choose the value of alpha that fits the data best.
 #+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/simulation2b.png :exports both
   system = System(t0=t0, t_end=t_end, p0=census[t0])
   run_simulation2b(system, 0.015)
-  system.results.plot()
+  ax = census.plot()
+  system.results.plot(ax=ax)
 #+END_SRC
 
 #+RESULTS:
