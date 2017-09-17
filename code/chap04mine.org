@@ -1,0 +1,35 @@
+#+title: Chapter 04 Notebook
+
+* Preamble
+#+BEGIN_SRC ipython :session :exports both
+  %matplotlib inline
+  from modsim import *
+  import pandas as pd
+
+  filename = 'data/World_population_estimates.html'
+  tables = pd.read_html(filename, header=0, index_col=0, decimal='M')
+  table2 = tables[2]
+  table2.columns = ['census', 'prb', 'un', 'maddison',
+                    'hyde', 'tanton', 'biraben', 'mj',
+                    'thomlinson', 'durand', 'clark']
+
+  census = table2.census / 1e9
+  t0 = census.index[0]
+  p0 = census[t0]
+  t_end = census.index[-1]
+  system = System(t0=t0, 
+                  t_end=t_end,
+                  p0=p0,
+                  alpha=0.025,
+                  beta=-0.0018)
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 1
+What happens if we start with an initial population above the carrying capacity, like 20 billion?
+The the model with initial populations between 1 and 20 billion, and plot the results on the same axes.
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap04fig/abovecap.png
+
+#+END_SRC
