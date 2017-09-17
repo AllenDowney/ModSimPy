@@ -5,6 +5,9 @@
   %matplotlib inline
   from modsim import *
   import pandas as pd
+  import matplotlib.pyplot as plt
+
+  plt.style.use('ggplot')
 
   filename = 'data/World_population_estimates.html'
   tables = pd.read_html(filename, header=0, index_col=0, decimal='M')
@@ -17,11 +20,37 @@
   t0 = census.index[0]
   p0 = census[t0]
   t_end = census.index[-1]
-  system = System(t0=t0, 
+  system = System(t0=t0,
                   t_end=t_end,
                   p0=p0,
                   alpha=0.025,
                   beta=-0.0018)
+
+
+  def run_simulation(system, update_func):
+      """Run a model.
+
+      Adds TimeSeries to `system` as `results`.
+
+      system: System object
+      update_func: function that computes the population next year
+      """
+      results = Series([])
+      results[system.t0] = system.p0
+      for t in linrange(system.t0, system.t_end):
+          results[t + 1] = update_func(results[t], t, system)
+      system.results = results
+
+
+  def update_func2(pop, t, system):
+      """Update population based on a quadratic model.
+
+      pop: current population in billions
+      t: what year it is
+      system: system object with model parameters
+      """
+      net_growth = system.alpha * pop + system.beta * pop**2
+      return pop + net_growth
 #+END_SRC
 
 #+RESULTS:
@@ -31,5 +60,86 @@ What happens if we start with an initial population above the carrying capacity,
 The the model with initial populations between 1 and 20 billion, and plot the results on the same axes.
 
 #+BEGIN_SRC ipython :session :results raw drawer :file chap04fig/abovecap.png
-
+  ax = census.plot()
+  for system.p0 in range(1,20):
+      temp_sys = system.copy()
+      run_simulation(temp_sys, update_func2)
+      temp_sys.results.plot(ax=ax)
 #+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap04fig/abovecap.png]]
+:END:
+
+* Exercise 2
+Suppose there are two banks across the street from each other, The First Geometric Bank (FGB) and Exponential Savings and Loan (ESL).
+They offer the same interest rate on checking accounts, 3%, but at FGB, they compute and pay interest at the end of each year, and at ESL they compound interest continuously.
+
+If you deposit $p_0$ dollars at FGB at the beginning of Year 0, the balanace of your account at the end of Year $n$ is
+
+$ x_n = p_0 (1 + \alpha)^n $
+
+where $\alpha = 0.03$. At ESL, your balance at any time $t$ would be
+
+$ x(t) = p_0 \exp(\alpha t) $
+
+If you deposit \$1000 at each back at the beginning of Year 0, how much would you have in each account after 10 years?
+
+Is there an interest rate FGB could pay so that your balance at the end of each year would be the same at both banks? What is it?
+
+Hint: modsim provides a function called exp, which is a wrapper for the NumPy function exp.
+
+#+BEGIN_SRC ipython :session :results raw drawer
+  import sympy as sp
+  import numpy as np
+
+  p0, a, n, t = sp.symbols('p0 a n t')
+  f = sp.Function('f')
+  fgb = p0 * (1 + a) ** t
+  esl = p0 * sp.exp(a * t)
+  fgbamnt = fgb.subs(a, 0.03).subs(p0, 1000).subs(t,10)
+  eslamnt = esl.subs(a, 0.03).subs(p0, 1000).subs(t, 10)
+  fgbamnt,eslamnt
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+| 1343.91637934412 | 1349.858807576 |
+:END:
+
+Because both equations are fundamentally different, \alpha for FGB would have to change every year to match ESL.
+
+* Exercise 3
+ Suppose a new bank opens called the Polynomial Credit Union (PCU).
+In order to compete with First Geometric Bank and Exponential Savings and Loan, PCU offers a parabolic savings account where the balance is a polynomial function of time:
+
+$ x(t) = p_0 + \beta_1 t + \beta_2 t^2 $
+
+As a special deal, they offer an account with $\beta_1 = 30$ and $\beta_2 = 0.5$, with those parameters guaranteed for life.
+Suppose you deposit \$1000 at all three banks at the beginning of Year 0.
+How much would you have in each account at the end of Year 10?
+How about Year 20?
+And Year 100?
+
+#+BEGIN_SRC ipython :session :results raw drawer
+  b1, b2 = sp.symbols('b1 b2')
+  pcu = p0 + b1 * t + b2 * t ** 2
+  pcuyrs = pcu.subs(p0, 1000).subs(b1, 30).subs(b2, 0.5)
+  fgbyrs = fgb.subs(a, 0.03).subs(p0, 1000)
+  eslyrs = esl.subs(a, 0.03).subs(p0, 1000)
+  yrs = 10, 20, 100
+
+  amnts = pd.DataFrame({'PCU': [pcuyrs.subs(t, y) for y in yrs], 'FGB': [
+                       fgbyrs.subs(t, y) for y in yrs], 'ESL': [eslyrs.subs(t, y) for y in yrs]})
+  amnts = amnts.set_index(pd.Series(yrs))
+  amnts
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+                  ESL               FGB               PCU
+10   1349.85880757600  1343.91637934412  1350.00000000000
+20   1822.11880039051  1806.11123466941  1800.00000000000
+100  20085.5369231877  19218.6319808563  9000.00000000000
+:END:
