@@ -122,7 +122,7 @@ How much would you have in each account at the end of Year 10?
 How about Year 20?
 And Year 100?
 
-#+BEGIN_SRC ipython :session :results raw drawer :exports both
+#+BEGIN_SRC ipython :session :results output :exports both
   b1, b2 = sp.symbols('b1 b2')
   pcu = p0 + b1 * t + b2 * t ** 2
   pcuyrs = pcu.subs(p0, 1000).subs(b1, 30).subs(b2, 0.5)
@@ -133,13 +133,11 @@ And Year 100?
   amnts = pd.DataFrame({'PCU': [pcuyrs.subs(t, y) for y in yrs], 'FGB': [
                        fgbyrs.subs(t, y) for y in yrs], 'ESL': [eslyrs.subs(t, y) for y in yrs]})
   amnts = amnts.set_index(pd.Series(yrs))
-  amnts
+  print(amnts)
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
-                  ESL               FGB               PCU
-10   1349.85880757600  1343.91637934412  1350.00000000000
-20   1822.11880039051  1806.11123466941  1800.00000000000
-100  20085.5369231877  19218.6319808563  9000.00000000000
-:END:
+:                   ESL               FGB               PCU
+: 10   1349.85880757600  1343.91637934412  1350.00000000000
+: 20   1822.11880039051  1806.11123466941  1800.00000000000
+: 100  20085.5369231877  19218.6319808563  9000.00000000000
