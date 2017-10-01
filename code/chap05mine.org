@@ -17,6 +17,10 @@
       return pd.Series({'init': init, 't0': t0, 't_end': t_end, 'beta': beta, 'gamma': gamma})
 #+END_SRC
 
+* Exercise 1
+Suppose the time between contacts is 4 days and the recovery time is 5 days.
+After 14 weeks, how many students, total, have been infected?
+
 #+name: update1
 #+BEGIN_SRC python
   def update1(state, system):
@@ -30,10 +34,6 @@
 
       return pd.Series({'S': s, 'I': i, 'R': r})
 #+END_SRC
-
-* Exercise 1
-Suppose the time between contacts is 4 days and the recovery time is 5 days.
-After 14 weeks, how many students, total, have been infected?
 
 #+BEGIN_SRC python :results output :exports both :noweb yes
   <<pre>>
@@ -93,18 +93,182 @@ Write functions that take a System object as a parameter, extract the results ob
 1. The fraction of students who are sick at the peak of the outbreak.
 2. The day the outbreak peaks.
 3. The fraction of students who are sick at hte end of the semester.
+   
+#+BEGIN_SRC python
+  def most_sick(system):
+      return system.results.I.max()
+
+
+  def most_sick_day(system):
+      return system.results.I.idxmax()
+
+
+  def end_sick(system):
+      return system.results.I.tail(1)
+#+END_SRC
 
 * Exercise 4
 Modify the parameters M, K, and B, and see what effect they have on the shape of the curve.
 Read about the [[https://en.wikipedia.org/wiki/Generalised_logistic_function][generalized logistic function on Wikipedia]].
 Modify the other parameters and see what effect they have.
 
+#+BEGIN_SRC python :exports both :results file :var fname="chap05fig/logistic.png"
+  import matplotlib.pyplot as plt
+  import numpy as np
+
+
+  def logistic(x, A=0, B=1, C=1, M=0, K=1, Q=1, nu=1):
+      exponent = -B * (x - M)
+      denom = C + Q * np.exp(exponent)
+      return A + (K - A) / denom ** (1 / nu)
+
+
+  def compute_factor(spending):
+      return logistic(spending, M=0, K=2, B=0.1)
+
+
+  spending = np.arange(0, 1200, 50)
+  percent_reduction = compute_factor(spending) * 100
+
+  plt.plot(spending, percent_reduction)
+  ax = plt.gca()
+  ax.figure.savefig(fname)
+
+  return(fname)
+#+END_SRC
+
+#+RESULTS:
+[[file:chap05fig/logistic.png]]
+
 * Exercise 5
 Suppose the price of the vaccine drops to $50 per dose.
 How does that affect hte optimal allocation of the spending?
+
+#+BEGIN_SRC python :noweb yes :var fname="chap05fig/budget.png" :results file :exports both
+  <<pre>>
+  <<update1>>
+
+  def run_simulation(system, update_func):
+      """Runs a simulation of the system.
+
+      Add a DataFrame to the System: results
+
+      system: System object
+      update_func: function that updates state
+      """
+      frame = pd.DataFrame(columns=system.init.index)
+      frame.loc[system.t0] = system.init
+
+      for i in np.arange(system.t0, system.t_end):
+          frame.loc[i+1] = update_func(frame.loc[i], system)
+
+      system.results = frame
+
+  def calc_total_infected(system):
+      """Fraction of population infected during the simulation.
+
+      system: System object with results.
+
+      returns: fraction of population
+      """
+      frame = system.results
+      return frame.S[system.t0] - frame.S[system.t_end]
+
+
+  def add_immunization(system, fraction):
+      """Immunize a fraction of the population.
+
+      Moves the given fraction from S to R.
+
+      system: System object
+      fraction: number from 0 to 1
+      """
+      system.init.S -= fraction
+      system.init.R += fraction
+
+
+  def add_hand_washing(system, spending):
+      """Modifies system to model the effect of hand washing.
+
+      system: System object
+      spending: campaign spending in USD
+      """
+      factor = compute_factor(spending)
+      system.beta *= (1 - factor)
+
+
+  def compute_factor(spending):
+      """Reduction factor as a function of spending.
+
+      spending: dollars from 0 to 1200
+
+      returns: fractional reduction in beta
+      """
+      return logistic(spending, M=500, K=0.2, B=0.01)
+
+
+  def logistic(x, A=0, B=1, C=1, M=0, K=1, Q=1, nu=1):
+      """Computes the generalize logistic function.
+
+      A: controls the lower bound
+      B: controls the steepness of the transition 
+      C: not all that useful, AFAIK
+      M: controls the location of the transition
+      K: controls the upper bound
+      Q: shift the transition left or right
+      nu: affects the symmetry of the transition
+
+      returns: float or array
+      """
+      exponent = -B * (x - M)
+      denom = C + Q * np.exp(exponent)
+      return A + (K-A) / denom ** (1/nu)
+
+
+  def sweep_doses(dose_array):
+      sweep = pd.Series()
+      for doses in dose_array:
+          fraction = doses / num_students
+          spending = budget - doses * price_per_dose
+
+          system = make_system(beta, gamma)
+          add_immunization(system, fraction)
+          add_hand_washing(system, spending)
+
+          run_simulation(system, update1)
+          sweep.loc[doses] = calc_total_infected(system)
+      return sweep
+
+
+  beta = 1 / 3
+  gamma = 1 / 4
+  num_students = 90
+  budget = 1200
+  price_per_dose = 50
+  max_doses = _per_dose = budget // price_per_dose
+  dose_array = np.arange(max_doses)
+
+
+  infected_sweep = sweep_doses(dose_array)
+
+  ax = infected_sweep.plot()
+  ax.figure.savefig(fname)
+  return fname
+#+END_SRC
+
+#+RESULTS:
+[[file:chap05fig/budget.png]]
 
 * Exercise 6
 Suppose we have the option to quarantine infected students.
 For example, a students who feels ill might be moved to an infirmary, or a private dorm room, until they are no longer infectious.
 
 How might you incorporate the effect of quarantine in the SIR model?
+
+#+BEGIN_SRC python
+  def quarantine(system, rate, gamma0):
+      system.gamma = gamma0 * (1 - rate)
+#+END_SRC
+
+#+RESULTS:
+: None
