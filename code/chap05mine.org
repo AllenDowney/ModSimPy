@@ -1,0 +1,110 @@
+#+options: toc:nil num:nil
+
+#+title: Chapter 5 Notebook
+
+#+name: pre
+#+BEGIN_SRC python
+  import pandas as pd
+  import numpy as np
+
+
+  def make_system(beta, gamma):
+      init = pd.Series({'S': 89, 'I': 1, 'R': 0})
+      init /= sum(init)
+      t0 = 0
+      t_end = 98
+
+      return pd.Series({'init': init, 't0': t0, 't_end': t_end, 'beta': beta, 'gamma': gamma})
+#+END_SRC
+
+#+name: update1
+#+BEGIN_SRC python
+  def update1(state, system):
+      s, i, r = state['S'], state['I'], state['R']
+      infected = system.beta * i * s
+      recovered = system.gamma * i
+
+      s -= infected
+      i += infected - recovered
+      r += recovered
+
+      return pd.Series({'S': s, 'I': i, 'R': r})
+#+END_SRC
+
+* Exercise 1
+Suppose the time between contacts is 4 days and the recovery time is 5 days.
+After 14 weeks, how many students, total, have been infected?
+
+#+BEGIN_SRC python :results output :exports both :noweb yes
+  <<pre>>
+  <<update1>>
+
+  def run_simulation(system, update_func):
+      state = system.init
+      for t in np.arange(system.t0, system.t_end + 1):
+          state = update_func(state, system)
+      return state
+
+
+  init = pd.Series({'S': 89, 'I': 1, 'R': 0})
+  init /= sum(init)
+
+  state = update1(init, make_system(1 / 3, 1 / 4))
+
+  afterwards = (run_simulation(make_system(1 / 4, 1 / 5), update1))
+  totalInfected = 90 * afterwards.S
+
+  print(totalInfected)
+#+END_SRC
+
+#+RESULTS:
+: 54.8512613091
+
+The amount infected is $89 - 55 = 34$
+
+* Exercise 2
+Suppose the time between contacts is 4 days and the recovery time is 5 days.
+Simulate this scenario for 14 days and plot the results.
+
+#+BEGIN_SRC python :results file :var fname="chap05fig/2.png" :noweb yes :exports both
+  <<pre>>
+  <<update1>>
+
+  def run_simulation(system, update_func):
+      df = pd.DataFrame(columns = system.init.index)
+      df.loc[system.t0] = system.init
+      for i in np.arange(system.t0, system.t_end):
+          df.loc[i + 1] = update_func(df.loc[i], system)
+      system.results = df
+
+  system = make_system(1 / 4, 1 / 5)
+  run_simulation(system, update1)
+  ax = system.results.plot()
+  ax.figure.savefig(fname)
+  return fname
+#+END_SRC
+
+#+RESULTS:
+[[file:chap05fig/2.png]]
+
+* Exercise 3
+Write functions that take a System object as a parameter, extract the results object from it, and compute the other metrics mentioned in the book:
+
+1. The fraction of students who are sick at the peak of the outbreak.
+2. The day the outbreak peaks.
+3. The fraction of students who are sick at hte end of the semester.
+
+* Exercise 4
+Modify the parameters M, K, and B, and see what effect they have on the shape of the curve.
+Read about the [[https://en.wikipedia.org/wiki/Generalised_logistic_function][generalized logistic function on Wikipedia]].
+Modify the other parameters and see what effect they have.
+
+* Exercise 5
+Suppose the price of the vaccine drops to $50 per dose.
+How does that affect hte optimal allocation of the spending?
+
+* Exercise 6
+Suppose we have the option to quarantine infected students.
+For example, a students who feels ill might be moved to an infirmary, or a private dorm room, until they are no longer infectious.
+
+How might you incorporate the effect of quarantine in the SIR model?
