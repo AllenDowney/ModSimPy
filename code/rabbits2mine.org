@@ -1,0 +1,103 @@
+#+BEGIN_SRC ipython :session
+  %matplotlib inline
+  from modsim import *
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results raw drawer
+  system = System(t0=0,
+                  t_end=10,
+                  adult_pop0=10,
+                  birth_rate=0.9,
+                  death_rate=0.5,
+                  juvenile_pop0=0,
+                  mature_rate=0.33)
+
+  system
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+t0                0.00
+t_end            10.00
+adult_pop0       10.00
+birth_rate        0.90
+death_rate        0.50
+juvenile_pop0     0.00
+mature_rate       0.33
+dtype: float64
+:END:
+
+#+BEGIN_SRC ipython :session
+  def run_simulation(system):
+      """Runs a proportional growth model.
+
+      Adds TimeSeries to `system` as `results`.
+
+      system: System object with t0, t_end, p0,
+              birth_rate and death_rate
+      """
+      juveniles = TimeSeries()
+      juveniles[system.t0] = system.juvenile_pop0
+      adults = TimeSeries()
+      adults[system.t0] = system.adult_pop0
+
+      for t in linrange(system.t0, system.t_end):
+          births = system.birth_rate * adults[t]
+          deaths = system.death_rate * adults[t]
+          maturations = juveniles[t] * system.mature_rate
+
+          adults[t + 1] = adults[t] + maturations - deaths
+          juveniles[t + 1] = juveniles[t] + births - maturations
+
+      system.adults = adults
+      system.juveniles = juveniles
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :output raw drawer
+  run_simulation(system)
+  system.adults
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+0     10.000000
+1      5.000000
+2      5.470000
+3      6.209900
+4      7.057723
+5      8.021560
+6      9.117031
+7     10.362107
+8     11.777219
+9     13.385586
+10    15.213601
+11    17.291261
+dtype: float64
+#+end_example
+
+#+BEGIN_SRC ipython :session
+  def plot_results(system, title=None):
+      """Plot the estimates and the model.
+
+      system: System object with `results`
+      """
+      newfig()
+      plot(system.adults, 'bo-', label='adults')
+      plot(system.juveniles, 'rs-', label='juveniles')
+      decorate(xlabel='Season',
+               ylabel='Rabbit population',
+               title=title)
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results file :file rab2fig/rabs.png :exports both
+  plot_results(system, title='Proportional growth model')
+#+END_SRC
+
+#+RESULTS:
+[[file:rab2fig/rabs.png]]
