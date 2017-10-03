@@ -45,7 +45,7 @@
 
 #+RESULTS: run
 
-#+BEGIN_SRC python :results output :noweb yes :results both
+#+BEGIN_SRC python :results output :noweb yes :exports both
   <<run>>
   run_simulation(system)
   print(system.adults)
@@ -79,7 +79,7 @@ dtype: float64
 #+end_example
 
 #+name: frame
-#+BEGIN_SRC python :noweb yes :results output
+#+BEGIN_SRC python :noweb yes :results output :exports both
   <<pre>>
 
   def run_simulation(system):
