@@ -1,0 +1,79 @@
+#+name: pre
+#+BEGIN_SRC python
+  from modsim import *
+
+  init = State(juveniles=0, adults=10)
+  system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
+                   mature_rate=0.33, death_rate=0.5)
+#+END_SRC
+
+#+RESULTS: pre
+
+#+name: run
+#+BEGIN_SRC python
+  <<pre>>
+
+  def run_simulation(system):
+      """Runs a proportional growth model.
+
+      Adds TimeSeries to `system` as `results`.
+
+      system: System object
+      """
+      juveniles = TimeSeries()
+      juveniles[system.t0] = system.init.juveniles
+
+      adults = TimeSeries()
+      adults[system.t0] = system.init.adults
+
+      for t in linrange(system.t0, system.t_end):
+          maturations = system.mature_rate * juveniles[t]
+          births = system.birth_rate * adults[t]
+          deaths = system.death_rate * adults[t]
+
+          if adults[t] > 30:
+              market = adults[t] - 30
+          else:
+              market = 0
+
+          juveniles[t + 1] = juveniles[t] + births - maturations
+          adults[t + 1] = adults[t] + maturations - deaths - market
+
+      system.adults = adults
+      system.juveniles = juveniles
+#+END_SRC
+
+#+RESULTS: run
+
+#+BEGIN_SRC python :results output :noweb yes :results both
+  <<run>>
+  run_simulation(system)
+  print(system.adults)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+0     10.000000
+1      5.000000
+2      5.470000
+3      6.209900
+4      7.057723
+5      8.021560
+6      9.117031
+7     10.362107
+8     11.777219
+9     13.385586
+10    15.213601
+11    17.291261
+12    19.652658
+13    22.336542
+14    25.386953
+15    28.853947
+16    32.794414
+17    34.478600
+18    36.487431
+19    37.893339
+20    39.401924
+21    40.546917
+dtype: float64
+#+end_example
