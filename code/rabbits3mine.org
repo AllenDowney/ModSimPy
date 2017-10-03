@@ -1,6 +1,6 @@
 #+name: pre
 #+BEGIN_SRC python
-  from modsim import *
+  from modsim import (TimeSeries, TimeFrame, System, State, linrange)
 
   init = State(juveniles=0, adults=10)
   system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
@@ -77,3 +77,69 @@
 21    40.546917
 dtype: float64
 #+end_example
+
+#+name: frame
+#+BEGIN_SRC python :noweb yes :results output
+  <<pre>>
+
+  def run_simulation(system):
+      """Runs a proportional growth model.
+
+      Adds TimeSeries to `system` as `results`.
+
+      system: System object
+      """
+      frame = TimeFrame(columns=system.init.index)
+      frame.loc[system.t0] = system.init
+
+      for t in linrange(system.t0, system.t_end):
+          maturations = system.mature_rate * frame['juveniles'][t]
+          births = system.birth_rate * frame['adults'][t]
+          deaths = system.death_rate * frame['adults'][t]
+
+          if frame['adults'][t] > 30:
+              market = frame['adults'][t] - 30
+          else:
+              market = 0
+
+          frame.loc[t + 1] = [frame['juveniles'][t] + births - maturations,
+                              frame['juveniles'][t] + maturations - deaths - market]
+
+      system.results = frame
+  run_simulation(system)
+  print(system.results)
+#+END_SRC
+
+#+RESULTS: frame
+#+begin_example
+      juveniles       adults
+0      0.000000    10.000000
+1      9.000000    -5.000000
+2      1.530000    14.470000
+3     14.048100    -5.200100
+4      4.732137    21.284023
+5     22.326152    -4.348269
+6     11.045080    31.867917
+7     36.081329    -3.111920
+8     21.373763    49.544128
+9     58.910136   -15.889088
+10    25.169612    86.295025
+11    94.529162   -65.966953
+12     3.964281   158.707262
+13   145.492605  -202.788399
+14   -85.029514   294.899364
+15   208.439653  -525.438299
+16  -333.239902   539.943888
+17   262.678765 -1223.124901
+18  -924.817639   960.925208
+19   245.204869 -2641.395271
+20 -2212.968481  1646.820111
+21    -0.550783 -5383.478247
+#+end_example
+
+#+BEGIN_SRC python :noweb yes
+  <<pre>>
+
+  def plot_results(sytsem):
+      system.results.plot()
+#+END_SRC

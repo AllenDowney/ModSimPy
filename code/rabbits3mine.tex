@@ -1,0 +1,157 @@
+% Created 2017-10-03 Tue 19:55
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\author{Kawin Nikomborirak}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Kawin Nikomborirak},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 25.3.1 (Org mode 9.1.1)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\begin{minted}[frame=single]{python}
+from modsim import (TimeSeries, TimeFrame, System, State, linrange)
+
+init = State(juveniles=0, adults=10)
+system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
+		 mature_rate=0.33, death_rate=0.5)
+\end{minted}
+
+\begin{minted}[frame=single]{python}
+<<pre>>
+
+def run_simulation(system):
+    """Runs a proportional growth model.
+
+    Adds TimeSeries to `system` as `results`.
+
+    system: System object
+    """
+    juveniles = TimeSeries()
+    juveniles[system.t0] = system.init.juveniles
+
+    adults = TimeSeries()
+    adults[system.t0] = system.init.adults
+
+    for t in linrange(system.t0, system.t_end):
+	maturations = system.mature_rate * juveniles[t]
+	births = system.birth_rate * adults[t]
+	deaths = system.death_rate * adults[t]
+
+	if adults[t] > 30:
+	    market = adults[t] - 30
+	else:
+	    market = 0
+
+	juveniles[t + 1] = juveniles[t] + births - maturations
+	adults[t + 1] = adults[t] + maturations - deaths - market
+
+    system.adults = adults
+    system.juveniles = juveniles
+\end{minted}
+
+\begin{minted}[frame=single]{python}
+from modsim import (TimeSeries, TimeFrame, System, State, linrange)
+
+init = State(juveniles=0, adults=10)
+system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
+		 mature_rate=0.33, death_rate=0.5)
+
+def run_simulation(system):
+    """Runs a proportional growth model.
+
+    Adds TimeSeries to `system` as `results`.
+
+    system: System object
+    """
+    juveniles = TimeSeries()
+    juveniles[system.t0] = system.init.juveniles
+
+    adults = TimeSeries()
+    adults[system.t0] = system.init.adults
+
+    for t in linrange(system.t0, system.t_end):
+	maturations = system.mature_rate * juveniles[t]
+	births = system.birth_rate * adults[t]
+	deaths = system.death_rate * adults[t]
+
+	if adults[t] > 30:
+	    market = adults[t] - 30
+	else:
+	    market = 0
+
+	juveniles[t + 1] = juveniles[t] + births - maturations
+	adults[t + 1] = adults[t] + maturations - deaths - market
+
+    system.adults = adults
+    system.juveniles = juveniles
+run_simulation(system)
+print(system.adults)
+\end{minted}
+
+\begin{minted}[frame=single]{python}
+from modsim import (TimeSeries, TimeFrame, System, State, linrange)
+
+init = State(juveniles=0, adults=10)
+system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
+		 mature_rate=0.33, death_rate=0.5)
+
+def run_simulation(system):
+    """Runs a proportional growth model.
+
+    Adds TimeSeries to `system` as `results`.
+
+    system: System object
+    """
+    frame = TimeFrame(columns=system.init.index)
+    frame.loc[system.t0] = system.init
+
+    for t in linrange(system.t0, system.t_end):
+	maturations = system.mature_rate * frame['juveniles'][t]
+	births = system.birth_rate * frame['adults'][t]
+	deaths = system.death_rate * frame['adults'][t]
+
+	if frame['adults'][t] > 30:
+	    market = frame['adults'][t] - 30
+	else:
+	    market = 0
+
+	frame.loc[t + 1] = [frame['juveniles'][t] + births - maturations,
+			    frame['juveniles'][t] + maturations - deaths - market]
+
+    system.results = frame
+run_simulation(system)
+print(system.results)
+\end{minted}
+
+\begin{minted}[frame=single]{python}
+from modsim import (TimeSeries, TimeFrame, System, State, linrange)
+
+init = State(juveniles=0, adults=10)
+system = System(init=init, t0 = 0, t_end=20, birth_rate=0.90,
+		 mature_rate=0.33, death_rate=0.5)
+
+def plot_results(sytsem):
+    system.results.plot()
+\end{minted}
+\end{document}
