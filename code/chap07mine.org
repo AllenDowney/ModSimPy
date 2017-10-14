@@ -52,7 +52,7 @@ Simulate the temperature of 50 mL of milk with a starting temperature of 5 \deg 
 When you call =fsolve=, it calls =error_func1= several times.
 To see how this works, add a print statement to =error_func1= and run fsolve again.
 
-#+BEGIN_SRC python :results output :noweb yes
+#+BEGIN_SRC python :results output :noweb yes :exports both
   <<pre>>
 
   def error_func1(r):
@@ -79,7 +79,7 @@ To see how this works, add a print statement to =error_func1= and run fsolve aga
 * Exercise 3
 Repeat this process to estimate =r_milk=, given that it starts at 5 \deg and reaches 20 \deg after 15 minutes.
 
-#+BEGIN_SRC python :noweb yes :results output
+#+BEGIN_SRC python :noweb yes :results output :exports both
   <<pre>>
   def milk_func(r):
       system = make_system(r=r, T0=5, t_end=15)
@@ -99,7 +99,7 @@ In that case is it better to add the milk at the coffee shop, or wait until I ge
 
 - Hint :: Think about the simplest way to represent the behavior of a refrigerator in this model. The change you make to test this variation of the problem should be very small!
 
-#+BEGIN_SRC python :noweb yes :results output
+#+BEGIN_SRC python :noweb yes :results output :exports both
   <<pre>>
 
 
@@ -126,4 +126,4 @@ In that case is it better to add the milk at the coffee shop, or wait until I ge
 : temp    62.685393
 : dtype: float64
 
-It is slightly better to mix first.
+It is slightly better to mix later.
