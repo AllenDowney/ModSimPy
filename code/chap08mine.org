@@ -1,0 +1,87 @@
+#+title: Chapter 8 Notebook
+
+#+name: pre
+#+BEGIN_SRC python
+  import pandas as pd
+  import numpy as np
+  import scipy.interpolate
+  import matplotlib.pyplot as plt
+
+
+  data = pd.read_csv('glucose_insulin.csv', index_col='time')
+#+END_SRC
+
+#+RESULTS: pre
+: None
+
+* Exercise 1
+
+#+BEGIN_SRC python :results file :noweb yes :var fname="chap08fig/interp.png"
+  <<pre>>
+
+  ts = np.arange(2,182,2)
+  plt.plot(ts, scipy.interpolate.interp1d(data.insulin.index, data.insulin.values, kind='quadratic')(ts))
+  ax = plt.gca()
+
+  ax.figure.savefig(fname)
+  return(fname)
+#+END_SRC
+
+#+RESULTS:
+[[file:chap08fig/interp.png]]
+
+* Exercise 2
+What happens to these errors if you run the simulation with a smaller value of dt?
+
+* Exercise 3
+Since we don't expect the first few points to agree, it's probably better not to make them part of the optimization process.
+We can ignore them by leaving them out of the =Series= returned by =error_func=.
+Modify the last line of error_func to return errors.loc[8:], which includes only the elements of the Series from =t=8= and up.
+
+#+BEGIN_SRC python :noweb yes
+  <<pre>>
+  k1 = 0.03
+  k2 = 0.02
+  k3 = 1e-05
+  G0 = 290
+  Gb = data.glucose[0]
+  Ib = data.insulin[0]
+
+
+  def error_func(params, data):
+      """Computes an array of errors to be minimized.
+
+      params: sequence of parameters
+      data: DataFrame of values to be matched
+
+      returns: array of errors
+      """
+      print(params)
+
+      # make a System with the given parameters
+      system = make_system(*params, data)
+
+      # solve the ODE
+      run_odeint(system, slope_func)
+
+      # compute the difference between the model
+      # results and actual data
+      error = system.results.G - data.glucose
+      return error.loc[8:]
+
+
+  def make_system(G0, k1, k2, k3, data):
+      init = pd.Series({'G': G0, 'X': 0})
+      system=  pd.Series({'init': init,
+                          'k1': k1, 'k2': 'k2', 'k3': k3,
+                          'Gb': Gb, 'Ib': Ib,
+                          'I': scipy.interpolate.interp1d(data.insulin),
+                          'ts': data.index})
+      return system
+
+  params = G0, k1, k2, k3
+  best_params = scipy.optimize.leastsq(error_func, x0=params, args=(data,))[0]
+  # system = make_system(*best_params, data)
+#+END_SRC
+
+#+RESULTS:
