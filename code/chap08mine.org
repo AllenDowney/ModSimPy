@@ -9,6 +9,19 @@
 
 
   data = pd.read_csv('glucose_insulin.csv', index_col='time')
+  k1 = 0.03
+  k2 = 0.02
+  k3 = 1e-05
+  G0 = 290
+  I = scipy.interpolate.interp1d(data.insulin.index, data.insulin.values)
+  Gb = data.glucose[0]
+  Ib = data.insulin[0]
+
+  init = pd.Series({'G': G0, 'X': 0})
+
+  def slope_func(state, t, system):
+      G, X = state
+      return -system.k1 * (G - system.Gb) - X * G, system.k3 * (system.I(t) - system.Ib) - system.k2 * X
 #+END_SRC
 
 #+RESULTS: pre
@@ -16,10 +29,10 @@
 
 * Exercise 1
 
-#+BEGIN_SRC python :results file :noweb yes :var fname="chap08fig/interp.png"
+#+BEGIN_SRC python :results file :noweb yes :var fname="chap08fig/interp.png" :exports both
   <<pre>>
 
-  ts = np.arange(2,182,2)
+  ts = np.float64(np.arange(2,182,2))
   plt.plot(ts, scipy.interpolate.interp1d(data.insulin.index, data.insulin.values, kind='quadratic')(ts))
   ax = plt.gca()
 
@@ -33,6 +46,115 @@
 * Exercise 2
 What happens to these errors if you run the simulation with a smaller value of dt?
 
+#+BEGIN_SRC python :noweb yes :results output :exports both
+  <<pre>>
+
+  system = pd.Series({'init': init, 'k1': k1, 'k2': k2, 'k3': k3,
+                      'I': I, 'Gb': Gb, 'Ib': Ib, 't0': 0, 't_end': 182, 'dt': 0.5})
+
+
+  def update_func(state, t, system):
+      G, X = state
+      dGdt = -system.k1 * (G - system.Gb) - X * G
+      dXdt = system.k3 * (I(t) - system.Ib) - system.k2 * X
+      G += dGdt * system['dt']
+      X += dXdt * system['dt']
+      return pd.Series({'G': G, 'X': X})
+
+
+  def run_simulation(system, update_func):
+      frame = pd.DataFrame(columns=system.init.index, dtype=np.float64)
+      frame.loc[system.t0] = system.init
+      ts = np.float64(np.arange(system.t0, system.t_end - system['dt'], system['dt']))
+      for t in ts:
+          frame.loc[t + system['dt']] = update_func(frame.loc[t], t, system)
+      system.results = frame
+
+  run_simulation(system, update_func)
+
+
+  system2 = pd.Series({'init': init, 'k1': k1, 'k2': k2,
+                       'k3': k3, 'I': I, 'Gb': Gb, 'Ib': Ib, 'ts': data.index})
+
+
+  system2.results = pd.DataFrame(scipy.integrate.odeint(slope_func, list(
+      system2.init), system2.ts[:-1], (system,)), columns=system.init.index, index=system2.ts[:-1], dtype=np.float64)
+
+  diff = system.results - system2.results
+  percent_diff = (diff / system2.results * 100).dropna()
+  print(system.results)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+                G         X
+0.0    290.000000  0.000000
+0.5    287.030000  0.000000
+1.0    284.104550  0.000019
+1.5    281.220318  0.000056
+2.0    278.374131  0.000112
+2.5    275.562964  0.000186
+3.0    272.783943  0.000389
+3.5    270.019157  0.000720
+4.0    267.251678  0.001178
+4.5    264.465533  0.001761
+5.0    261.645699  0.002282
+5.5    258.802469  0.002742
+6.0    255.945648  0.003141
+6.5    253.084556  0.003479
+7.0    250.228026  0.003772
+7.5    247.382692  0.004019
+8.0    244.554818  0.004221
+8.5    241.750306  0.004379
+9.0    238.974710  0.004533
+9.5    236.228458  0.004683
+10.0   233.511947  0.004828
+10.5   230.825535  0.004970
+11.0   228.169549  0.005105
+11.5   225.544567  0.005234
+12.0   222.951119  0.005357
+12.5   220.389687  0.005473
+13.0   217.860707  0.005584
+13.5   215.364571  0.005688
+14.0   212.901630  0.005786
+14.5   210.472191  0.005878
+...           ...       ...
+167.0   90.529022 -0.000459
+167.5   90.571856 -0.000470
+168.0   90.614585 -0.000482
+168.5   90.657211 -0.000494
+169.0   90.699738 -0.000506
+169.5   90.742168 -0.000517
+170.0   90.784502 -0.000529
+170.5   90.826744 -0.000541
+171.0   90.868895 -0.000552
+171.5   90.910958 -0.000564
+172.0   90.952934 -0.000576
+172.5   90.994826 -0.000588
+173.0   91.036636 -0.000599
+173.5   91.078366 -0.000611
+174.0   91.120018 -0.000623
+174.5   91.161594 -0.000635
+175.0   91.203096 -0.000646
+175.5   91.244525 -0.000658
+176.0   91.285884 -0.000670
+176.5   91.327175 -0.000682
+177.0   91.368399 -0.000694
+177.5   91.409558 -0.000705
+178.0   91.450654 -0.000717
+178.5   91.491688 -0.000729
+179.0   91.532663 -0.000741
+179.5   91.573580 -0.000753
+180.0   91.614440 -0.000765
+180.5   91.655246 -0.000776
+181.0   91.695998 -0.000788
+181.5   91.736699 -0.000800
+
+[364 rows x 2 columns]
+#+end_example
+
+The errors get smaller.
+
 * Exercise 3
 Since we don't expect the first few points to agree, it's probably better not to make them part of the optimization process.
 We can ignore them by leaving them out of the =Series= returned by =error_func=.
@@ -40,32 +162,11 @@ Modify the last line of error_func to return errors.loc[8:], which includes only
 
 #+BEGIN_SRC python :noweb yes
   <<pre>>
-  k1 = 0.03
-  k2 = 0.02
-  k3 = 1e-05
-  G0 = 290
-  Gb = data.glucose[0]
-  Ib = data.insulin[0]
-
 
   def error_func(params, data):
-      """Computes an array of errors to be minimized.
-
-      params: sequence of parameters
-      data: DataFrame of values to be matched
-
-      returns: array of errors
-      """
       print(params)
-
-      # make a System with the given parameters
       system = make_system(*params, data)
-
-      # solve the ODE
-      run_odeint(system, slope_func)
-
-      # compute the difference between the model
-      # results and actual data
+      system.results = pd.DataFrame(scipy.integrate.odeint(slope_func, list(system.init), system.ts, (system,)), columns = system.init.index,index = system.ts)
       error = system.results.G - data.glucose
       return error.loc[8:]
 
@@ -75,7 +176,7 @@ Modify the last line of error_func to return errors.loc[8:], which includes only
       system=  pd.Series({'init': init,
                           'k1': k1, 'k2': 'k2', 'k3': k3,
                           'Gb': Gb, 'Ib': Ib,
-                          'I': scipy.interpolate.interp1d(data.insulin),
+                          'I': scipy.interpolate.interp1d(data.insulin.index, data.insulin.values),
                           'ts': data.index})
       return system
 
