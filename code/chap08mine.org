@@ -176,7 +176,7 @@ Modify the last line of error_func to return errors.loc[8:], which includes only
       system=  pd.Series({'init': init,
                           'k1': k1, 'k2': 'k2', 'k3': k3,
                           'Gb': Gb, 'Ib': Ib,
-                          'I': scipy.interpolate.interp1d(data.insulin.index, data.insulin.values),
+                          'I': cipy.interpolate.interp1d(data.insulin.index, data.insulin.values),
                           'ts': data.index})
       return system
 
