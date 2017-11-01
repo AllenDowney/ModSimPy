@@ -891,7 +891,7 @@ class _Vector(Quantity):
         """Returns the unit vector in the direction of self."""
         """
         """
-        return self / self.mag * self.units
+        return self / self.mag
 
     def dot(self, other):
         """Returns the dot product of self and other."""
