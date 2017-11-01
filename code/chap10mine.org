@@ -1,0 +1,27 @@
+#+title: Chapter 10 Notebook
+
+#+name: pre
+#+BEGIN_SRC python
+  import pint
+
+  ureg = pint.UnitRegistry()
+  m = ureg.meter
+  s = ureg.second
+  kg = ureg.kilogram
+
+  # condition = pd.Series({'x': 0 * m, 'y': 1 * m, 'g':  9.8 * m / s**2, 'mass': 0.145 * kg, 'diameter': 0.073 * m,
+  #                        'rho': 1.2 * kg / m ** 3, 'C_d': 0.3, 'angle': 45 * degree, 'velocity': 40 * m / s, 'duration': 5.1 * s})
+#+END_SRC
+
+* Exercise
+Create a =Vector= named =a_force= that represents acceleration due to a force of 0.5 Newton applied to an object with mass 0.3 kilograms, in a direction 45 \deg up from the positive x-axis.
+
+Add =a_force= to =a_drag= from the previous exercise.
+If that addition succeeds, that means that the units are compatible.
+Confirm that the total acceleration seems to make sense.
+
+
+#+BEGIN_SRC python :noweb yes
+  <<pre>>
+  a_grav = 
+#+END_SRC
