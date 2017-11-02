@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{1.0.1}
+\newcommand{\theversion}{1.0.2}
 
 
 %%%% Both LATEX and PLASTEX
@@ -2293,7 +2293,7 @@ In the next chapter we use the models we have developed to generate predictions.
 
 When people first learn about functions, there are a few things they often find confusing.  In this section I present and explain some common problems with functions.
 
-As an example, suppose you want a function that takes a \py{System} object with variables \py{alpha} and \py{beta} as a parameter and computes the carrying capacity, \py{-alpha/beta}.  Here's a good solution: 
+As an example, suppose you want a function that takes a \py{System} object, with variables \py{alpha} and \py{beta}, as a parameter and computes the carrying capacity, \py{-alpha/beta}.  Here's a good solution: 
 
 \begin{python}
 def carrying_capacity(system):
@@ -2310,7 +2310,6 @@ Now let's see all the ways that can go wrong.
 Disfunction \#1: Not using parameters.  In the following version, the function doesn't take any parameters; when \py{system} appears inside the function, it refers to the object we created outside the function.
 
 \begin{python}
-# WRONG
 def carrying_capacity():
     K = -system.alpha / system.beta
     return K
@@ -2320,7 +2319,7 @@ pop = carrying_capacity()
 print(pop)
 \end{python}
 
-This version actually works, but it is not very versatile.  If there are several \py{System} object, this function can only work with one of them; that is, as long as one of them is named \py{System}.
+This version actually works, but it is not are versatile as it could be.  If there are several \py{System} objects, this function can only work with one of them, and only if it is named \py{system}.
 
 Disfunction \#2: Clobbering the parameters.  When people first learn about parameters, they often write functions like this:
 
@@ -2331,12 +2330,12 @@ def carrying_capacity(system):
     K = -system.alpha / system.beta
     return K
     
-sys1 = System(alpha=0.025, beta=-0.0018)
+sys1 = System(alpha=0.03, beta=-0.002)
 pop = carrying_capacity(sys1)
 print(pop)
 \end{python}
 
-In this example, we have a \py{System} object named \py{sys1} that gets passed as an argument to \py{carrying_capacity}.  But when the function run, it ignores the argument and immediately replaces it with a new \py{System} object.  As a result, this function always returns the same value, no matter what argument is passed.
+In this example, we have a \py{System} object named \py{sys1} that gets passed as an argument to \py{carrying_capacity}.  But when the function runs, it ignores the argument and immediately replaces it with a new \py{System} object.  As a result, this function always returns the same value, no matter what argument is passed.
 
 When you write a function, you generally don't know what the values of the parameters will be.  Your job is to write a function that works for any valid values.  If you assign your own values to the parameters, you defeat the whole purpose of functions.
 
@@ -2353,7 +2352,7 @@ pop = carrying_capacity(sys1)
 print(pop)
 \end{python}
 
-A function that doesn't have a return statement always returns \py{None}, so in this example the value of \py{pop} is \py{None}.
+A function that doesn't have a return statement always returns \py{None}, so in this example the value of \py{pop} is \py{None}.  If you are debugging a program and find that the value of a variable is \py{None}, when it shouldn't be, a function without a return statement is a likely cause.
 
 
 Disfunction \#4: Ignoring the return value.  Finally, here's a version where the function is correct, but the way it's used is not.
@@ -2369,7 +2368,9 @@ carrying_capacity(sys1)
 print(K)
 \end{python}
 
-If you call a function that returns a value, you should do something with the return value.  Often you assign it to a variable, as in the previous examples, but you can also use it as part of an expression.  For example, you could eliminate the temporary variable \py{pop} like this:
+In this example, \py{carrying_capacity} runs and returns \py{K}, but the return value is dropped.
+
+When you call a function that returns a value, you should do something with the result.  Often you assign it to a variable, as in the previous examples, but you can also use it as part of an expression.  For example, you could eliminate the temporary variable \py{pop} like this:
 
 \begin{python}
 print(carrying_capacity(sys1))
@@ -2447,7 +2448,7 @@ Figure~\ref{chap04-fig01} shows the result, with a projection until 2250.  Accor
 
 I am using the word ``projection" deliberately, rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
 
-Using ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model, and even if the model is good, that the parameters might change.
+Using ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model.  It also suggests that, even if the model is good, the parameters we estimate based on the past might be different in the future.
 
 The quadratic model we've been working with is based on the assumption that population growth is limited by the availability of resources; in that scenario, as the population approaches carrying capacity, birth rates fall and death rates rise because resources become scarce.
 \index{carrying capacity}
@@ -3003,7 +3004,7 @@ beta = 1 / tc      # contact rate in per day
 gamma = 1 / tr     # recovery rate in per day
 \end{python}
 
-Now we need a \py{System} object to store the parameters and initial conditions.  The following function takes the model parameters as function parameters and returns a new \py{System} object:
+Now we need a \py{System} object to store the parameters and initial conditions.  The following function takes the system parameters as function parameters and returns a new \py{System} object:
 \index{\py{make_system}}
 
 \begin{python}
@@ -3080,7 +3081,7 @@ def run_simulation(system, update_func):
     return state
 \end{python}
 
-The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the model parameters, initial conditions, and values of \py{t0} and \py{t_end}.
+The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the parameters, initial conditions, and values of \py{t0} and \py{t_end}.
 \index{\py{run_simulation}}
 
 The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithsystem}.
@@ -3124,7 +3125,7 @@ def run_simulation(system, update_func):
     S[t0], I[t0], R[t0] = state
     
     for t in linrange(system.t0, system.t_end):
-        state = update_func(system, state)
+        state = update_func(state, system)
         S[i+1], I[i+1], R[i+1] = state
     
     system.S = S
@@ -3193,7 +3194,7 @@ def run_simulation(system, update_func):
     frame.loc[system.t0] = system.init
     
     for t in linrange(system.t0, system.t_end):
-        frame.loc[i+1] = update_func(system, frame.loc[i])
+        frame.loc[i+1] = update_func(frame.loc[i], system)
     
     system.results = frame
 \end{python}
@@ -3538,7 +3539,7 @@ def run_simulation(system, update_func):
     system.results = frame
 \end{python}
 
-I think that makes the code easier to read.  In the notebook for this chapter, you can use \py{unpack} to clean up \py{update1}.
+The variables you unpack should be treated as read-only.  Modifying them is not an error, but it might not have the behavior you expect.  In the notebook for this chapter, you can use \py{unpack} to clean up \py{update1}.
 
 
 \section{Sweeping beta}
@@ -3713,7 +3714,7 @@ Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
 \end{itemize}
 
-Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: nondimensionalization (see \url{http://modsimpy.com/nondim}).
+Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: {\bf nondimensionalization} (see \url{http://modsimpy.com/nondim}).
 \index{nondimensionalization}
 
 So we'll try the second option first.  In the notebook for this chapter, you can explore the first option as an exercise.
@@ -4304,7 +4305,7 @@ You can see how I got this solution using SymPy at \url{http://modsimpy.com/symp
 
 Now we can use the observed data to estimate the parameter $r$.  If we observe $T(t_{end}) = T_{end}$, we can plug $t_{end}$ and $T_{end}$ into the particular solution and solve for $r$.  The result is:
 %
-\[ r = \frac{1}{t_{end}} \log{\left (\frac{T_{init} + T_{env}}{T_{end} - T_{env}} \right )} \]
+\[ r = \frac{1}{t_{end}} \log{\left (\frac{T_{init} - T_{env}}{T_{end} - T_{env}} \right )} \]
 %
 Plugging in $t_{end}=30$ and $T_{end}=70$ (and again with $T_{init}=90$ and $T_{env}=22$), the estimate for $r$ is 0.0116.
 
@@ -4636,7 +4637,7 @@ If we multiply both sides by $dt$, we have:
 %
 \[ dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt \]
 %
-When $dt$ is very small, or more precisely {\ bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
+When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
 \index{time step}
 
 This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{http://modsimpy.com/euler}).
@@ -6345,6 +6346,21 @@ where $I^*$ is the augmented moment of inertia, $I + m r^2$.
 To simulate the system, we don't really need $T$; we can plug $a$ and $\alpha$ directly into the slope function.
 
 At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter you will have a chance to finish off the exercise.
+
+
+\chapter{Second order systems}
+
+% Pendulum:
+
+% Springy pendulum
+
+% Stiff problem as k increases
+
+% Add drag
+
+% Rigid pendulum: solve those constraints
+
+% Generalized coordinates
 
 
 \backmatter
