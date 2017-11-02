@@ -6,26 +6,29 @@ Copyright 2017 Allen Downey
 License: https://creativecommons.org/licenses/by/4.0)
 """
 
-#TODO: check that we have at least version 3.6
-
-import inspect
-
 import logging
 logger = logging.getLogger(name='modsim.py')
 
+# make sure we have Python 3.6 or better
+import sys
+if sys.version_info < (3, 6):
+    logger.warn('modsim.py depends on Python 3.6 features.')
+
+import inspect
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import scipy
+import sympy
 
 import seaborn as sns
 sns.set(style='white', font_scale=1.5)
 
-import scipy
-import sympy
 import pint
 UNITS = pint.UnitRegistry()
 Quantity = UNITS.Quantity
 
+# expose some names so we can use them without dot notation
 from copy import copy
 from numpy import sqrt, log, exp, pi
 from pandas import DataFrame, Series
@@ -35,7 +38,6 @@ from scipy.interpolate import interp1d
 from scipy.integrate import odeint
 from scipy.optimize import leastsq
 from scipy.optimize import minimize_scalar
-
 
 
 def linspace(start, stop, num=50, **kwargs):
@@ -889,7 +891,7 @@ class _Vector(Quantity):
         """Returns the unit vector in the direction of self."""
         """
         """
-        return self / self.mag * self.units
+        return self / self.mag
 
     def dot(self, other):
         """Returns the dot product of self and other."""
