@@ -454,6 +454,9 @@ class FigureState:
         self.lines = dict()
 
 
+# TODO: Split plot into simplot(), which adds points to existing lines,
+# and plot(), which does not
+        
 def plot(*args, **kwargs):
     """Makes line plots.
     
@@ -889,32 +892,32 @@ class _Vector(Quantity):
 
     def hat(self):
         """Returns the unit vector in the direction of self."""
-        """
-        """
         return self / self.mag
 
+    def perp(self):
+        """Returns a perpendicular Vector (rotated left).
+
+        Only works with 2-D Vectors.
+
+        returns: Vector
+        """
+        assert len(self) == 2
+        return Vector(-self.y, self.x)
+    
     def dot(self, other):
         """Returns the dot product of self and other."""
-        """
-        """
         return np.dot(self, other) * self.units * other.units
 
     def cross(self, other):
         """Returns the cross product of self and other."""
-        """
-        """
         return np.cross(self, other) * self.units * other.units
 
     def proj(self, other):
         """Returns the projection of self onto other."""
-        """
-        """
         return np.dot(self, other) * other.hat()
 
     def comp(self, other):
         """Returns the magnitude of the projection of self onto other."""
-        """
-        """
         return np.dot(self, other.hat()) * other.units
 
     def dist(self, other):
@@ -958,7 +961,28 @@ def Vector(*args, units=None):
     return _Vector(args, found_units)
 
 
+def plot_segment(A, B, **options):
+    """Plots a line segment between two Vectors.
+
+    Additional options are passed along to plot().
+
+    A: Vector
+    B: Vector
+    """
+    xs = A.x, B.x
+    ys = A.y, B.y
+    plot(xs, ys, **options)
+    
+
 def cart2pol(x, y, z=None):
+    """Convert Cartesian coordinates to polar.
+
+    x: number or sequence
+    y: number or sequence
+    z: number or sequence (optional)
+
+    returns: theta, rho OR theta, rho, z
+    """
     x = np.asarray(x)
     y = np.asarray(y)
 
@@ -972,6 +996,14 @@ def cart2pol(x, y, z=None):
 
 
 def pol2cart(theta, rho, z=None):
+    """Convert polar coordinates to Cartesian.
+
+    theta: number or sequence
+    rho: number or sequence
+    z: number or sequence (optional)
+
+    returns: x, y OR x, y, z
+    """
     if hasattr(theta, 'units'):
         if theta.units == UNITS.degree:
             theta = theta.to(UNITS.radian)
