@@ -347,6 +347,8 @@ def fsolve(func, x0, *args, **kwargs):
     returns: solution as an array
     """
     # make sure we can run the given function with x0
+    x0 = np.asarray(x0).flatten() 
+    
     try:
         func(x0, *args)
     except Exception as e:
