@@ -1,0 +1,37 @@
+#+title: Chapter 9 Notebook
+
+* Exercise 1
+#+BEGIN_SRC python :results output
+  import pint
+  import numpy as np
+  import pandas as pd
+  from modsim import run_odeint, linspace, unpack
+
+  ureg = pint.UnitRegistry()
+  m = ureg.meter
+  s = ureg.second
+  kg = ureg.kilogram
+
+  init = pd.Series({'y': 381 * m, 'v': 0 * m / s})
+
+  g = 9.8 * m / s ** 2
+  duration = 10 * s
+  ts = linspace(0, duration, 11)
+  system = pd.Series({'init': init, 'g': g, 'ts': ts})
+
+
+  def slope_func(state, t, system):
+      y, v = state
+      dydt = v
+      dvdt = -g
+      return dydt, dvdt
+
+
+  dydt, dvdt = slope_func(init, 0, system)
+
+  run_odeint(system, slope_func)
+
+  print(system.results.head())
+#+END_SRC
+
+#+RESULTS:

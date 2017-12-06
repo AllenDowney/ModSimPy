@@ -1,0 +1,129 @@
+#+title: Chapter 7 Notebook
+
+#+name: pre
+#+BEGIN_SRC python
+  import pandas as pd
+  import numpy as np
+  from scipy.optimize import fsolve
+
+
+  def update(state, sys):
+      T = state.temp
+      T += -sys.r * (T - sys.T_env) * sys['dt']
+      return pd.Series({'temp': T})
+
+
+  def final_temp(system):
+      if hasattr(system, 'results'):
+          return system.results.temp[system.t_end]
+      else:
+          return system.init.temp
+
+
+  def run_simulation(sys, update_func):
+      results = pd.DataFrame(columns=sys.init.index)
+      results.loc[sys.t0] = sys.init
+      for t in np.arange(sys.t0, sys.t_end, sys['dt']):
+          results.loc[t + sys['dt']] = update_func(results.loc[t], sys)
+      sys.results = results
+
+
+  def make_system(T0=90, r=0.01, v=300, t_end=30):
+      return pd.Series({'init': pd.Series({'temp': T0}), 'volume': v, 'r': r,
+                        'T_env': 22, 't0': 0, 't_end': t_end, 'dt': 1})
+#+END_SRC
+
+* Exercise 1
+Simulate the temperature of 50 mL of milk with a starting temperature of 5 \deg C, in a vessel with the same insulation, for 15 minutes, and plot the results.
+
+#+BEGIN_SRC python :results file :var fname="chap07fig/milk.png" :noweb yes :exports both
+  <<pre>>
+  milk = make_system(T0=5, v=50, t_end=15, r=0.1)
+  run_simulation(milk, update)
+  ax = milk.results.plot()
+  ax.figure.savefig(fname)
+  return fname
+#+END_SRC
+
+#+RESULTS:
+[[file:chap07fig/milk.png]]
+
+* Exercise 2
+When you call =fsolve=, it calls =error_func1= several times.
+To see how this works, add a print statement to =error_func1= and run fsolve again.
+
+#+BEGIN_SRC python :results output :noweb yes :exports both
+  <<pre>>
+
+  def error_func1(r):
+      print('error_func1 run')
+      system = make_system(r=r)
+      run_simulation(system, update)
+      return final_temp(system) - 70
+
+
+  fsolve(error_func1, 0.01, xtol=1e-8)
+#+END_SRC
+
+#+RESULTS:
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+: error_func1 run
+
+* Exercise 3
+Repeat this process to estimate =r_milk=, given that it starts at 5 \deg and reaches 20 \deg after 15 minutes.
+
+#+BEGIN_SRC python :noweb yes :results output :exports both
+  <<pre>>
+  def milk_func(r):
+      system = make_system(r=r, T0=5, t_end=15)
+      run_simulation(system, update)
+      return final_temp(system) - 20
+
+  r = fsolve(milk_func, 0.1, xtol=1e-8)
+  print(r)
+#+END_SRC
+
+#+RESULTS:
+: [ 0.13296079]
+
+* Exercise 4
+Suppose the coffee shop won't let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.
+In that case is it better to add the milk at the coffee shop, or wait until I get to the office?
+
+- Hint :: Think about the simplest way to represent the behavior of a refrigerator in this model. The change you make to test this variation of the problem should be very small!
+
+#+BEGIN_SRC python :noweb yes :results output :exports both
+  <<pre>>
+
+
+  def mix(s1, s2):
+      assert s1.t_end == s2.t_end
+
+      volume = s1.volume + s2.volume
+
+      temp = (s1.volume * final_temp(s1) +
+              s2.volume * final_temp(s2)) / volume
+
+      return make_system(T0=temp, v=volume, r=s1.r)
+
+
+  refMilk = make_system(T0=5, r=0, v=50, t_end=30)
+  milk = make_system(T0=5, v=50)
+  coffee = make_system(T0=90, t_end=30, r=0.01, v=300)
+
+  run_simulation(coffee, update)
+  print(mix(coffee, refMilk).init)
+#+END_SRC
+
+#+RESULTS:
+: temp    62.685393
+: dtype: float64
+
+It is slightly better to mix later.

@@ -1,0 +1,175 @@
+Exercise: Write a version of update1 that uses unpack.
+#+BEGIN_SRC python
+  def update1(state, system):
+      """Update the SIR model.
+    
+      state: State (s, i, r)
+      system: System object
+    
+      returns: State (sir)
+      """
+      unpack(state)
+
+      infected = system.beta * i * s    
+      recovered = system.gamma * i
+    
+      s -= infected
+      i += infected - recovered
+      r += recovered
+    
+      return State(S=s, I=i, R=r)
+#+END_SRC
+
+
+Exercise: Write a version of =plot_sweep_frame=, called =plot_sweep_frame_difference=, that plots the fraction infected versus the difference beta-gamma.
+
+#+BEGIN_SRC python :results file :var fname="chap06fig/test.png" :exports both
+  from modsim import (SweepSeries, TimeFrame, linspace, SweepFrame, State, np, System, unpack, linrange, plot)
+  import matplotlib.pyplot as plt
+
+
+  gamma_array = linspace(0.1, 0.7, 4)
+  beta_array = linspace(0.1, 0.9, 11)
+
+
+  def calc_total_infected(system):
+      """Fraction of population infected during the simulation.
+
+      system: System object with results.
+
+      returns: fraction of population
+      """
+      frame = system.results
+      return frame.S[system.t0] - frame.S[system.t_end]
+
+
+  def update1(state, system):
+      """Update the SIR model.
+
+      state: State (s, i, r)
+      system: System object
+
+      returns: State (sir)
+      """
+      s, i, r = state
+
+      infected = system.beta * i * s
+      recovered = system.gamma * i
+
+      s -= infected
+      i += infected - recovered
+      r += recovered
+
+      return State(S=s, I=i, R=r)
+
+
+  def run_simulation(system, update_func):
+      """Runs a simulation of the system.
+
+      Add a TimeFrame to the System: results
+
+      system: System object
+      update_func: function that updates state
+      """
+      unpack(system)
+
+      frame = TimeFrame(columns=init.index)
+      frame.loc[t0] = init
+
+      for i in linrange(t0, t_end):
+          frame.loc[i + 1] = update_func(frame.loc[i], system)
+
+      system.results = frame
+
+
+  def make_system(beta, gamma):
+      """Make a system object for the SIR model.
+
+      beta: contact rate in days
+      gamma: recovery rate in days
+
+      returns: System object
+      """
+      init = State(S=89, I=1, R=0)
+      init /= np.sum(init)
+
+      t0 = 0
+      t_end = 7 * 14
+
+      return System(init=init, t0=t0, t_end=t_end,
+                    beta=beta, gamma=gamma)
+
+
+  def sweep_beta(beta_array, gamma):
+      """SweepSeriess a range of values for beta.
+
+      beta_array: array of beta values
+      gamma: recovery rate
+
+      returns: SweepSeries that maps from beta to total infected
+      """
+      sweep = SweepSeries()
+      for beta in beta_array:
+          system = make_system(beta, gamma)
+          run_simulation(system, update1)
+          sweep[system.beta] = calc_total_infected(system)
+      return sweep
+
+
+  def sweep_parameters(beta_array, gamma_array):
+      """SweepSeriess a range of values for beta and gamma.
+
+      beta_array: array of infection rates
+      gamma_array: array of recovery rates
+
+      returns: SweepSeriesFrame with one row for each beta
+               and one column for each gamma
+      """
+      frame = SweepFrame(columns=gamma_array)
+      for gamma in gamma_array:
+          frame[gamma] = sweep_beta(beta_array, gamma)
+      return frame
+
+
+  frame = sweep_parameters(beta_array, gamma_array)
+
+
+  def plot_sweep_frame_difference(frame):
+      for gamma in frame.columns:
+          series = frame[gamma]
+          for beta in series.index:
+              frac_infected = series[beta]
+              plot(beta - gamma, frac_infected, 'ro', label='Simulation')
+
+
+  plot_sweep_frame_difference(frame)
+  ax = plt.gca()
+
+  ax.figure.savefig(fname)
+
+  return fname
+#+END_SRC
+
+#+RESULTS:
+[[file:chap06fig/test.png]]
+
+The plot implies that a larger difference causes a larger fraction infected.
+
+#+BEGIN_SRC python :results output
+  from modsim import *
+
+  s_inf_array = linspace(0.0001, 0.9999, 101)
+  c_array = log(s_inf_array) / (s_inf_array - 1)
+
+  frac_infected = 1 - s_inf_array
+  frac_infected_series = Series(frac_infected, index=c_array)
+
+  frac_infected_series.sort_index(inplace=True)
+  print(np.interp(0.26, frac_infected_series, frac_infected_series.index))
+
+#+END_SRC
+
+#+RESULTS:
+: 1.158096819542062
+
+The estimated c-value is 1.15.

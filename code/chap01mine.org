@@ -1,0 +1,303 @@
+#+title: Chapter 1 Notebook
+#+author: Kawin Nikomborirak
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: toc:nil num:nil
+
+#+BEGIN_SRC ipython :session
+  %matplotlib inline
+  from modsim import *
+  plt.style.use('ggplot')
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 1
+In reality, air resistance prevents the penny from reaching this velocity.
+At about 20 meters per second, the force of air resistance equals the force of gravity and the penny stops accelerating.
+As a simplification, let's assume that the acceleration of the penny is a until the penny reaches 20 meters per second, and then 0 afterwards.
+What is the total time for the penny to fall 381 meters?
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  a = 9.80665
+  termV = 20
+  totalDisplacement = 381
+
+
+  def displacement(a, v0, v1):
+      return (v0 ** 2 + v1 ** 2) / 2 / a
+
+
+  def time(a, v0, v1):
+      return (v1 - v0) / a
+
+
+  dToTerm = displacement(a, 0, termV)
+  tToTerm = time(a, 0, termV)
+  dLeft = totalDisplacement - tToTerm
+  tAfterTerm = dLeft / termV
+  tTot = tToTerm + tAfterTerm
+  print("It will take %f seconds for the coin to fall" % tTot)
+#+END_SRC
+
+#+RESULTS:
+: It will take 20.987461 seconds for the coin to fall
+
+* Exercise 2
+Exercise: What happens if you spell the name of a system variable wrong?
+Edit the previous cell, change the spelling of wellesley, and run the cell again.
+
+#+BEGIN_SRC python :session :results output :exports both
+  from modsim import System
+
+  bikeshare = System(olin=10,wellesley=2)
+  bikeshare.wellesle
+#+END_SRC
+
+#+RESULTS:
+: 
+: >>> >>> Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/usr/lib64/python3.6/site-packages/pandas/core/generic.py", line 3081, in __getattr__
+:     return object.__getattribute__(self, name)
+: AttributeError: 'System' object has no attribute 'wellesle'
+
+* Exercise 3
+Exercise: Add a third attribute called babson with initial value 0, and print the state of bikeshare again.
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  from modsim import System
+
+  bikeshare = System(olin=1, wellesley=1, babson=0)
+  print(bikeshare)
+#+END_SRC
+
+#+RESULTS:
+: olin         1
+: wellesley    1
+: babson       0
+: dtype: int64
+
+* Exercise 4
+In the cell below, write a few lines of code to move a bike from Wellesley to Olin and plot the updated state.
+
+#+BEGIN_SRC ipython :session :exports both :file chap01fig/plot.png :results raw drawer
+  %matplotlib inline
+  from modsim import (System, plot, newfig)
+
+  bikeshare = System(olin=10, wellesley=10)
+
+  newfig()
+  plot(bikeshare.olin, 'r8-')
+  plot(bikeshare.wellesley, 'bo-')
+  bikeshare.olin -= 1
+  bikeshare.wellesley += 1
+  plot(bikeshare.olin, 'r8-')
+  plot(bikeshare.wellesley, 'bo-')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/plot.png]]
+:END:
+
+* Exercise 5
+#+BEGIN_SRC ipython :session
+  def plot_state():
+      plot(bikeshare.olin, 'rs-', label='Olin')
+      plot(bikeshare.wellesley, 'bo-', label='Wellesley')
+#+END_SRC
+
+#+RESULTS:
+
+Define a function called =bike_to_olin= that moves a bike from Wellesley to Olin.
+Run the new function and print or plot the results to confirm that it works.
+
+#+BEGIN_SRC ipython :session :file chap01fig/bike_to_olin.png :results raw drawer :exports both
+  def bike_to_olin():
+      bikeshare.olin += 1
+      bikeshare.wellesley -= 1
+
+  newfig()
+
+  for _ in range(3):
+      plot(bikeshare.olin, 'r8-')
+      plot(bikeshare.wellesley, 'bo-')
+      bike_to_olin()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/bike_to_olin.png]]
+:END:
+
+* Exercise 6
+The following function definitions start with print statements so they display messages when they run.
+Run each of these functions (with appropriate arguments) and confirm that they do what you expect.
+
+#+BEGIN_SRC ipython :session
+def move_bike_debug(n):
+    print('Running move_bike_debug with argument', n)
+    bikeshare.olin -= n
+    bikeshare.wellesley += n
+    
+def bike_to_wellesley_debug():
+    print('Running bike_to_wellesley_debug')
+    move_bike_debug(1)
+    
+def bike_to_olin_debug():
+    print('Running bike_to_olin_debug')
+    move_bike_debug(-1)
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  move_bike_debug(0)
+#+END_SRC
+
+#+RESULTS:
+: Running move_bike_debug with argument 0
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  bike_to_wellesley_debug()
+#+END_SRC
+
+#+RESULTS:
+: Running bike_to_wellesley_debug
+: Running move_bike_debug with argument 1
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  bike_to_olin_debug()
+#+END_SRC
+
+#+RESULTS:
+: Running bike_to_olin_debug
+: Running move_bike_debug with argument -1
+
+* Exercise 7
+Change the argument of legend to 'random string' and run decorate again.
+You should get an error message that lists the valid location where you can put the legend.
+
+#+BEGIN_SRC ipython :session
+  def decorate():
+      legend(loc='a random string')
+      label_axes(title='Olin-Wellesley Bikeshare',
+                 xlabel='Time step (min)',
+                 ylabel='Number of bikes')
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :file chap01fig/dec.png :results raw drawer :exports both
+  bikeshare = System(olin=10, wellesley=10)
+  newfig()
+  plot_state()
+  bikeshare.olin -= 1
+  bikeshare.wellesley += 1
+  plot_state()
+  decorate()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/dec.png]]
+:END:
+
+#+BEGIN_QUOTE
+  /usr/lib64/python3.6/site-packages/matplotlib/legend.py:326: UserWarning: Unrecognized location "a rand". Falling back on "best"; valid locations are
+          best
+          upper right
+          upper left
+          lower left
+          lower right
+          right
+          center left
+          center right
+          lower center
+          upper center
+          center
+
+    six.iterkeys(self.codes)))
+#+END_QUOTE
+
+* Exercise 8
+Write a version of decorate that takes an optional parameter named loc with default value 'best'.
+It should pass the value of loc along as an argument to legend.
+Test your function with different values of loc.
+You can see the list of legal values here.
+
+#+BEGIN_SRC ipython :session
+  def decorate(loc=0):
+      legend(loc=loc)
+      label_axes(title='Olin-Wellesley Bikeshare',
+                 xlabel='Time step (min)',
+                 ylabel='Number of bikes')
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :file chap01fig/decloc.png :results raw drawer :exports both
+  bikeshare = System(olin=10, wellesley=10)
+  newfig()
+  plot_state()
+  bikeshare.olin -= 1
+  bikeshare.wellesley += 1
+  plot_state()
+  decorate(1)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/decloc.png]]
+:END:
+
+* Exercise 9
+
+#+BEGIN_SRC ipython :session
+  def move_bike(n):
+      bikeshare.olin -= n
+      bikeshare.wellesley += n
+
+  def bike_to_wellesley():
+      move_bike(1)
+    
+  def bike_to_olin():
+      move_bike(-1)
+
+  def step(p1=0.5, p2=0.5):
+      if flip(p1):
+          bike_to_wellesley()
+  
+      if flip(p2):
+          bike_to_olin()
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session
+  def run_steps(num_steps, p1, p2):
+      for _ in range(num_steps):
+          step(p1, p2)
+          plot_state()
+
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :file chap01fig/run_steps1.png :results raw drawer :exports both
+  run_steps(100,0.5,0.5)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/run_steps1.png]]
+:END:
+
+#+BEGIN_SRC ipython :session :file chap01fig/run_steps2.png :results raw drawer :exports both
+  run_steps(100, 0.2, 0.8)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap01fig/run_steps2.png]]
+:END:

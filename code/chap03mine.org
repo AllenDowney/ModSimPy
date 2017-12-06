@@ -1,0 +1,390 @@
+#+title: Chapter 3 Notebook
+
+#+options: toc:nil num:nil
+#+latex_header: \usepackage[margin=1in]{geometry}
+
+#+BEGIN_SRC ipython :session
+  %matplotlib inline
+
+  from modsim import *
+  import matplotlib.pyplot as plt
+  import pandas as pd
+
+  plt.style.use('ggplot')
+
+  wpe = pd.read_html('https://en.wikipedia.org/wiki/World_population_estimates',
+                     header=0, index_col=0, decimal='M')
+  toPres = wpe[2]
+  toPres.columns = ['census', 'prb', 'un', 'maddison', 'hyde',
+                    'tanton', 'biraben', 'mj', 'thomlinson', 'durand', 'clark']
+
+  un = toPres.un / 1e9
+  census = toPres.census / 1e9
+
+  t0 = census.index[0]
+  t_end = census.index[-1]
+  total_growth = census[t_end] - census[t0]
+  elapsed_time = t_end - t0
+  annual_growth = total_growth / elapsed_time
+
+  system = System(t0=t0,
+                  t_end=t_end,
+                  p0=census[t0],
+                  annual_growth=annual_growth)
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 1
+Break down that expression into smaller steps and display intermediate results, to make sure you understand how it works.
+
+Where in the series is the largest relative error between two estimates, near the beginning or the end?
+
+When I computed relative errors, I used un as the denominator.
+But that was an arbitrary choice.
+What happens if we use census instead?
+How much difference does it make?
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  diff = abs(census - un) / un
+  maxDiff = diff.max()
+  pctErr = maxDiff * 100
+  pctErr
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+1.2862470293832287
+:END:
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  maxDiffIdx = diff.idxmax()
+  maxDiffIdx
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+1950
+:END:
+
+The largest relative error is towards the beginning in 1950
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  diffs = abs(census - un) / census * 100
+  diffs.max(), diffs.idxmax()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+| 1.2813631502151765 | 2015 |
+:END:
+
+Using census keeps the max diff approximately equal, but the year is now the opposite.
+
+* Exercise 2
+Try fitting the model using data from 1965 to the present, and see if that does a better job.
+
+Hint: Copy the code from above and make a few changes.
+
+Make sure your model starts in 1950, even though the estimated annual growth is based on later data.
+You might have to shift the first value in the series up or down to match the data.
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/1965.png :exports both
+  import statsmodels.formula.api as smf
+
+  ax = census.plot()
+  toPres['Year'] = range(1950, 2016)
+  toPres['census'] = toPres['census'] / 1e9
+  toPres['un'] = toPres['un'] / 1e9
+
+  params = smf.ols(formula='census ~ Year', data=toPres.tail(50)).fit().params
+  ax.plot([1950, 2015], [(lambda x: params[0] + x * params[1])(i)
+                         for i in [1950, 2015]])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap03fig/1965.png]]
+:END:
+
+* Exercise 3
+The constant growth model doesn't make a lot of sense, because it seems like the number of deaths and births should depend on the size of the population.
+As a small improvement, let's write a version of =run_simulation1= where the number of deaths is proportional to the size of the population, but the number of births is constant.
+This model doesn't make a lot of sense, either, but it's a good exercise.
+
+Write a function called =run_simulation1b= that implements a model where the number of births is constant, but the number of deaths is proportional to the current size of the population.
+Set the death rate to 0.01, which means that 1% of the population dies each year; then choose the number of annual births to make the model fit the data as well as you can.
+
+Hint: It probably won't fit very well
+
+#+BEGIN_SRC ipython :session
+  def run_simulation1b(system):
+      results = TimeSeries()
+      results[system.t0] = system.p0
+      for t in linrange(system.t0, system.t_end):
+          results[t + 1] = (results[t] + system.births) * (1 - system.deaths)
+      system.results = results
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results raw drawer :file "chap03fig/sim1b.png" :exports both
+  system = System(t0=t0, t_end=t_end, p0=census[t0], births=0.1,deaths = 0.01)
+  run_simulation1b(system)
+  ax = census.plot()
+  system.results.plot(ax=ax)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap03fig/sim1b.png]]
+:END:
+
+* Exercise 4
+In this implementation, we compute the number of deaths and births separately, but since they are both proportional to the current population, we can combine them.
+
+Write a function called =run_simulation2b= that implements a model with a single parameter, alpha, that represents the net growth rate, which is the difference between the birth and death rates.
+For example, if alpha=0.01, the population should grow by 1% per year.
+
+Choose the value of alpha that fits the data best.
+
+#+BEGIN_SRC ipython :session
+  def run_simulation2b(system, alpha):
+      results = TimeSeries()
+      results[system.t0] = system.p0
+      for t in linrange(system.t0, system.t_end):
+          results[t + 1] = results[t] * (1 + alpha)
+      system.results = results
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/simulation2b.png :exports both
+  system = System(t0=t0, t_end=t_end, p0=census[t0])
+  run_simulation2b(system, 0.015)
+  ax = census.plot()
+  system.results.plot(ax=ax)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap03fig/simulation2b.png]]
+:END:
+
+* Exercise 5
+
+** Preamble
+When you run =run_simulation=, it runs =update_func1= once for each year between =t0= and =t_end=.
+To see that for yourself, add a print statement at the beginning of =update_func1= that prints the values of t and pop, then run =run_simulation= again.
+
+#+BEGIN_SRC ipython :session :results output :exports both
+  def update_func1(pop, t, system):
+      print(t, pop)
+      """Compute the population next year.
+
+      pop: current population
+      t: current year
+      system: system object containing parameters of the model
+
+      returns: population next year
+      """
+      births = system.birth_rate * pop
+      deaths = system.death_rate * pop
+      return pop + births - deaths
+
+
+  def run_simulation(system, update_func):
+      """Simulate the system using any update function.
+
+      Adds TimeSeries to `system` as `results`.
+
+      system: System object
+      update_func: function that computes the population next year
+      """
+      results = TimeSeries()
+      results[system.t0] = system.p0
+      for t in linrange(system.t0, system.t_end):
+          results[t + 1] = update_func(results[t], t, system)
+      system.results = results
+
+
+  system.birth_rate=0.015
+  system.death_rate=0.1
+  run_simulation(system, update_func1)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+1950.0 2.557628654
+1951.0 2.34023021841
+1952.0 2.14131064985
+1953.0 1.95929924461
+1954.0 1.79275880882
+1955.0 1.64037431007
+1956.0 1.50094249371
+1957.0 1.37336238175
+1958.0 1.2566265793
+1959.0 1.14981332006
+1960.0 1.05207918785
+1961.0 0.962652456885
+1962.0 0.88082699805
+1963.0 0.805956703216
+1964.0 0.737450383442
+1965.0 0.67476710085
+1966.0 0.617411897277
+1967.0 0.564931886009
+1968.0 0.516912675698
+1969.0 0.472975098264
+1970.0 0.432772214911
+1971.0 0.395986576644
+1972.0 0.362327717629
+1973.0 0.331529861631
+1974.0 0.303349823392
+1975.0 0.277565088404
+1976.0 0.253972055889
+1977.0 0.232384431139
+1978.0 0.212631754492
+1979.0 0.19455805536
+1980.0 0.178020620655
+1981.0 0.162888867899
+1982.0 0.149043314128
+1983.0 0.136374632427
+1984.0 0.12478278867
+1985.0 0.114176251633
+1986.0 0.104471270245
+1987.0 0.0955912122738
+1988.0 0.0874659592305
+1989.0 0.0800313526959
+1990.0 0.0732286877168
+1991.0 0.0670042492609
+1992.0 0.0613088880737
+1993.0 0.0560976325874
+1994.0 0.0513293338175
+1995.0 0.046966340443
+1996.0 0.0429742015053
+1997.0 0.0393213943774
+1998.0 0.0359790758553
+1999.0 0.0329208544076
+2000.0 0.030122581783
+2001.0 0.0275621623314
+2002.0 0.0252193785332
+2003.0 0.0230757313579
+2004.0 0.0211142941925
+2005.0 0.0193195791861
+2006.0 0.0176774149553
+2007.0 0.0161748346841
+2008.0 0.014799973736
+2009.0 0.0135419759684
+2010.0 0.0123909080111
+2011.0 0.0113376808301
+2012.0 0.0103739779596
+2013.0 0.00949218983302
+2014.0 0.00868535369721
+2015.0 0.00794709863295
+#+end_example
+
+* Exercise 6
+Maybe the reason the proportional model doesn't work very well is that the growth rate, alpha, might be changing over time.
+So let's try a model with different growth rates before and after 1980 (as an arbitrary choice).
+
+Write a function called =update_func1c= that takes pop, t, and system as parameters.
+The system object, system, should contains two parameters:
+the growth rate before 1980, alpha1, and the growth rate after 1980, alpha2.
+It should compute and return the simulated population one year later.
+
+Note: Don't forget the return statement.
+
+#+BEGIN_SRC ipython :session
+  def update_func1c(pop, t, system):
+      if t < 1980:
+          return system.alpha1 * pop + pop
+      else:
+          return pop + pop * system.alpha2
+#+END_SRC
+
+#+RESULTS:
+
+* Exercise 7
+In the book, I presented a different way to parameterize the quadratic model:
+$$
+\Delta p = r p (1 - p / K)
+$$
+where $r=\alpha$ and $K=\alpha/\beta$.
+
+Write a version of =update_func2= that implements this version of the model.
+Test it by computing system variables r and K equivalent to alpha and beta, and confirm that you get the same results.
+
+#+BEGIN_SRC ipython :session :results raw drawer :exports both
+  system.alpha = 0.025
+  system.beta = -0.0018
+  system.K = -system.alpha / system.beta
+  system.beta,system.alpha,system.K
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+| -0.0018 | 0.025 | 13.88888888888889 |
+:END:
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/ab.png :exports both
+  def update_func2b(pop, t, system):
+      return pop + system.alpha * pop * (1 - pop / system.K)
+
+
+  run_simulation(system, update_func2b)
+  system.results.plot()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap03fig/ab.png]]
+:END:
+
+* Exercise 8
+On the Wikipedia page about world population estimates, the first table contains estimates for prehistoric populations.
+The following cells process this table and plot some of the results.
+
+Select table1, which is the second table on the page.
+
+#+BEGIN_SRC ipython :session :results raw drawer :file chap03fig/pre.png :exports both
+  table1 = wpe[1]
+  table1.replace('M', np.nan, regex=True, inplace=True)
+  table1.columns = ['prb', 'un', 'maddison', 'hyde', 'tanton',
+                    'biraben', 'mj', 'thomlinson', 'durand', 'clark']
+  ax = table1.plot()
+  ax.set_xlim(-1000)
+  ax.figure.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+[[file:chap03fig/pre.png]]
+:END:
+
+#+BEGIN_SRC ipython :session :file chap03fig/test.png :exports both
+  def update_func1b(pop, t, system):
+      """Compute the population next year.
+
+      pop: current population
+      t: current year
+      system: system object containing parameters of the model
+
+      returns: population next year
+      """
+      net_growth = system.alpha * pop
+      return pop + net_growth
+
+
+  system = System(p0=table1.mj[-1000], t0=-1000, t_end=1940, alpha=0.00099, beta=-0.0000001)
+  system.K = - system.alpha / system.beta
+  run_simulation(system,update_func2b)
+
+  ax = table1.plot()
+  system.results.plot(ax=ax)
+  ax.set_xlim(-1000)
+#+END_SRC
+
+#+RESULTS:
+[[file:chap03fig/test.png]]
+
+The model does not match at all
