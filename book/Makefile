@@ -17,7 +17,7 @@ PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
 	ps2pdf $(PDFFLAGS) $<
 
 all:	book.tex
-	pdflatex --shell-escape book
+	pdflatex $(PDFFLAGS) --shell-escape book
 	makeindex book.idx
 	evince book.pdf
 
