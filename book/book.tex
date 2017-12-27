@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{1.1}
+\newcommand{\theversion}{1.2.1}
 
 
 %%%% Both LATEX and PLASTEX
@@ -583,6 +583,7 @@ The television show {\it Mythbusters} has tested the myth of the falling penny m
 
 
 \section{Computation}
+\label{computation}
 
 There are (at least) two ways to work with mathematical models, {\bf analysis} and {\bf simulation}.  Analysis often involves algebra and other kinds of symbolic manipulation.  Simulation often involves computers.
 \index{analysis}
@@ -590,7 +591,9 @@ There are (at least) two ways to work with mathematical models, {\bf analysis} a
 
 In this book we do some analysis and a lot of simulation; along the way, I discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
-As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example, and the other code in this chapter, at \url{http://modsimpy.com/chap01}.  For instructions for downloading and running the code, see Section~\ref{code}.
+As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example at \url{http://modsimpy.com/chap00}.  For instructions for downloading and running the code, see Section~\ref{code}.
+
+% TODO: Add a link to the chap00 notebook.
 
 First I'll create a {\bf variable} to represent acceleration.
 \index{variable}
@@ -637,6 +640,9 @@ This example demonstrates analysis and computation using Python.  Next we'll see
 
 
 \section{Modeling a bike share system}
+\label{modeling}
+
+You can view the code for the rest of this chapter at \url{http://modsimpy.com/chap01}.  For instructions for downloading and running the code, see Section~\ref{code}.
 
 Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
 \index{Wellesley College}
@@ -725,9 +731,10 @@ The result is the same either way.
 
 
 \section{Plotting}
+\label{plotting}
 
 As the state of the system changes, it is often useful to plot the
-values of the variables over time.  The \py{modsim} library provides a functions that creates a new figure:
+values of the variables over time.  The \py{modsim} library provides a function that creates a new figure:
 \index{newfig}
 
 \begin{python}
@@ -755,24 +762,23 @@ first cell:
 
 These commands are not actually Python; they are so-called ``magic commands" that control the behavior of Jupyter.
 \index{magic command}
-\index{plot}
+\index{mark}
 
 The following lines plot the state of the system:  
 
 \begin{python}
-plot(bikeshare.olin, 'rs-')
-plot(bikeshare.wellesley, 'bo-')
+mark(bikeshare.olin, 'rs-')
+mark(bikeshare.wellesley, 'bo-')
 \end{python}
 
-The \py{plot} function takes two values, called {\bf arguments}:
+The \py{mark} function takes two values, called {\bf arguments}:
 \index{argument}
 
 \begin{itemize}
 
-\item The first argument is the variable to plot.  In this example, it's a number, but we'll see later that \py{plot} can handle other objects, too.
+\item The first argument is the variable to plot.  In this example, it's a number, but we'll see later that \py{mark} can handle other objects, too.
 
-\item The second argument is a ``style string'' that determines what the plot should look like.  In general, a {\bf string} is a sequence of letters, numbers, and punctuation that appear in quotation marks.  The style string \py{'rs-'} means we want red squares with lines between them; \py{'bo-'} means we want blue circles with
-lines.  
+\item The second argument is a ``style string'' that determines what the plot should look like.  In general, a {\bf string} is a sequence of letters, numbers, and punctuation that appear in quotation marks.  The style string \py{'rs-'} means we want red squares with lines between them; \py{'bo-'} means we want blue circles with lines.  
 \index{style string}
 \index{string!style}
 
@@ -783,6 +789,7 @@ figures.  To learn more about these functions, you can read
 the Matplotlib documentation.  For more about style strings, see
 \url{http://modsimpy.com/plot}.
 \index{Matplotlib}
+
 
 \section{Defining functions}
 
@@ -810,9 +817,7 @@ def bike_to_wellesley():
 \end{python}
 
 \py{def} is a special word in Python that indicates we are defining a new
-function.  The name of the function is \py{bike_to_wellesley}.
-The empty parentheses indicate that this function takes no
-arguments.  The colon indicates the beginning of an indented
+function.  The name of the function is \py{bike_to_wellesley}.  The empty parentheses indicate that this function takes no arguments.  The colon indicates the beginning of an indented
 {\bf code block}.
 \index{def}
 \index{code block}
@@ -856,8 +861,7 @@ actually run it.  So don't forget the parentheses.
 
 \section{Parameters}
 
-Similarly, we can define a function that moves a bike from
-Wellesley to Olin:
+Similarly, we can define a function that moves a bike from Wellesley to Olin:
 
 \begin{python}
 def bike_to_olin():
@@ -953,9 +957,7 @@ bikeshare.olin
 bikeshare.wellesley
 \end{python}
 
-Jupyter runs both lines of code, but it only displays the value of the second line.
-
-If you want to display more than one value, you can use print statements:
+Jupyter runs both lines of code, but it only displays the value of the second line.  If you want to display more than one value, you can use print statements:
 
 \begin{python}
 print(bikeshare.olin)
@@ -1095,59 +1097,7 @@ if flip(p2):
     bike_to_olin()
 \end{python}
 
-
-
-\section{Optional parameters}
-
-When you add parameters to a function, you can provide {\bf default values}, like this:
-\index{parameter!optional}
-\index{optional parameter}
-
-\begin{python}
-def step(p1=0.5, p2=0.5):
-    if flip(p1):
-        bike_to_wellesley()
-    
-    if flip(p2):
-        bike_to_olin()
-\end{python}
-
-Because they have default values, these parameters are optional; if you run \py{step} with no arguments, and don't forget the parentheses, like this:
-
-\begin{python}
-step()
-\end{python}
-
-The parameters get the default values, so \py{p1} and \py{p2} are both \py{0.5}.  If you provide one argument, like this:
-
-\begin{python}
-step(0.4)
-\end{python}
-
-The value you provide {\bf overrides} the default value of \py{p1}, but \py{p2} still gets the default.  If you provide two arguments, it overrides both.
-\index{override}
-
-\begin{python}
-step(0.4, 0.2)
-\end{python}
-
-If you want to override \py{p2} only, and accept the default for \py{p1}, you have to provide the name of the parameter explicitly:
-
-\begin{python}
-step(p2=0.2)
-\end{python}
-
-It is always legal to provide parameter names along with the arguments:
-
-\begin{python}
-step(p1=0.4, p2=0.2)
-\end{python}
-
-Providing parameters names makes programs more readable and less error-prone, because you don't have to worry about the order of the arguments.  For example, if you reverse the order, it still assigns the right value to each parameter:
-
-\begin{python}
-step(p2=0.2, p1=0.4)
-\end{python}
+The advantage of using a function is that you can call the same function many times, providing different values for the parameters each time.
 
 
 \section{For loops}
@@ -1181,16 +1131,35 @@ The punctuation here should look familiar; the first line ends with a colon, and
 When this loop runs, it runs the statements inside the loop four times, 
 which moves one bike at a time from Olin to Wellesley, and plots the updated state of the system after each move.
 
+In the notebook for this chapter, you'll have a chance to run this code and work on some exercises.
 
-\section{Debugging}
 
-The goal of this chapter is to give you the minimal set of tools to get you started.  At this point, you know enough to write simple simulations of systems like the Olin--Wellesley bikeshare.  Along with each chapter, I provide a Jupyter notebook that contains the code from the chapter, so you can run it, see how it works, modify it, and see how it breaks.
+\section{Under the hood}
+
+Throughout this book, we'll use functions defined in \py{modsim.py}.  You will learn how to use these functions, but you don't have to know how they work.  However, you might be curious about what's going on ``under the hood".  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
+
+Most of the functions in \py{modsim.py} are based on functions provided by other Python libraries; the libraries we have used so far include:
+
+\begin{description}
+
+\item[Pint], which provides units like meters and seconds, as we saw in Section~\ref{penny}.
+
+\item[NumPy], which provides mathematical operations like \py{sqrt}, which we saw in Section~\ref{computation}.
+
+\item[Pandas], which provides the \py{Series} object, which is the basis of the \py{System} object in Section~\ref{modeling}.
+
+\item[Matplotlib], which provides plotting functions, as we saw in Section~\ref{plotting}.
+
+\end{description}
+
+You don't really have to use the functions in \py{modsim.py}.  You could use these libraries directly, and when you have more experience, you probably will.  But the functions in \py{modsim.py} are meant to be easier to use; they provide some additional capabilities, including error checking; and by hiding details you don't need to know about, they let you focus on more important things.
+
+However, there is one drawback: when something goes wrong, it can be hard to understand the error messages.  I'll have more to say about this in later chapters, but for now I have a suggestion.  When you are getting started, you should practice making errors.
+
+Along with each chapter, I provide a Jupyter notebook that contains the code from the chapter, so you can run it, see how it works, and modify it, and see how it breaks.
 \index{debugging}
 
-When something goes wrong, Python provides error messages with information about the problem.  This information can help with debugging, but error messages are often hard to understand.
-\index{error message}
-
-When you are learning a programming language, it is a good idea to make as many mistakes as you can, deliberately, so you can see what happens.  You will start to understand the error messages better, which helps when you make errors accidentally.
+For each new function you learn, you should make as many mistakes as you can, deliberately, so you can see what happens.  When you see what the errors messages are, you will understand what they mean.  And that should help later, when you make errors accidentally.
 
 
 
@@ -1238,7 +1207,7 @@ For any physical system, there are many possible models, based on different assu
 
 \section{More than one System object}
 
-Before we go on, I want to make a few changes to the code from the previous chapter.  First, I will generalize the functions we wrote so they take a \py{System} object as a parameter.  Then, we will make the code more readable by adding documentation.
+Before we go on, I want to make a few changes to the code from the previous chapter.  First I'll generalize the functions we wrote so they take a \py{System} object as a parameter.  Then, I'll make the code more readable by adding documentation.
 \index{parameter}
 
 Here are two functions from the previous chapter, \py{move_bike} and \py{plot_state}:
@@ -1249,8 +1218,8 @@ def move_bike(n):
     bikeshare.wellesley += n
 
 def plot_state():
-    plot(bikeshare.olin, 'rs-', label='Olin')
-    plot(bikeshare.wellesley, 'bo-', label='Wellesley')
+    mark(bikeshare.olin, 'rs-', label='Olin')
+    mark(bikeshare.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
 One problem with these functions is that they always use \py{bikeshare}, which is a \py{System} object.  As long as there is only one \py{System} object, that's fine, but these functions would be more flexible if they took a \py{System} object as a parameter.  Here's what that looks like:
@@ -1262,8 +1231,8 @@ def move_bike(system, n):
     system.wellesley += n
 
 def plot_state(system):
-    plot(system.olin, 'rs-', label='Olin')
-    plot(system.wellesley, 'bo-', label='Wellesley')
+    mark(system.olin, 'rs-', label='Olin')
+    mark(system.wellesley, 'bo-', label='Wellesley')
 \end{python}
 
 The name of the parameter is \py{system} rather than \py{bikeshare} as a reminder that the value of \py{system} could be any \py{System} object, not just \py{bikeshare}.
@@ -1350,7 +1319,7 @@ At this point we have more documentation than code, which is not unusual for sho
 The changes we've made so far improve the quality of the code, but we haven't done anything to improve the quality of the model yet.   Let's do that now.
 \index{code quality}
 
-Currently the code does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be negative.  That's not very realistic.  Here's an updated version of \py{move_bike} that fixes the problem:
+Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be negative.  That's not very realistic.  Here's an updated version of \py{move_bike} that fixes the problem:
 
 \begin{python}
 def move_bike(system, n):
@@ -1454,6 +1423,7 @@ That's a {\bf syntax error}, which means that the structure of the program is in
 \index{syntax error}
 \index{error!syntax}
 
+
 \section{Metrics}
 
 Getting back to the bike share system, at this point we have the ability to simulate the behavior of the system.  Since the arrival of customers is random, the state of the system is different each time we run a simulation.  Models like this are called {\bf stochastic}; models that do the same thing every time they run are {\bf deterministic}.
@@ -1462,7 +1432,7 @@ Getting back to the bike share system, at this point we have the ability to simu
 
 Suppose we want to use our model to predict how well the bike share system will work, or to design a system that works better.  First, we have to decide what we mean by ``how well" and ``better".
 
-From the customer's point of view, we might like to know the probability of finding an available bike.  From the system-owner's point of view, we might want to minimize the number of customers who don't get a bike when they want one, or maximize the number of bikes in use.  Statistics like these that are intended to quantify how well the system works are called {\bf metrics}.
+From the customer's point of view, we might like to know the probability of finding an available bike.  From the system-owner's point of view, we might want to minimize the number of customers who don't get a bike when they want one, or maximize the number of bikes in use.  Statistics like these that quantify how well the system works are called {\bf metrics}.
 \index{metric}
 
 As a simple example, let's measure the number of unhappy customers.  Here's a version of \py{move_bike} that keeps track of the number of customers who arrive at a station with no bikes:
@@ -1522,7 +1492,7 @@ When you run \py{System}, it returns a new \py{System} object:
 bikeshare = System(olin=10, wellesley=2)
 \end{python}
 
-Not all functions have return values.  For example, when you run \py{plot}, it adds a point to the current graph, but it doesn't return a value.  The functions we wrote so far are like \py{plot}; they have an effect, like changing the state of the system, but they don't return values.
+Not all functions have return values.  For example, when you run \py{mark}, it adds a point to the current graph, but it doesn't return a value.  The functions we wrote so far are like \py{mark}; they have an effect, like changing the state of the system, but they don't return values.
 
 To write functions that return values, we can use a second form of the \py{return} statement, like this:
 \index{return statement}
@@ -1571,7 +1541,7 @@ This version of \py{run_simulation} always starts with the same initial conditio
 It is easy to get the parameters of a model confused with the parameters of a function.  They are closely related ideas; in fact, it is common for the parameters of the model to appear as parameters in functions.  For example, we can write a more general version of \py{run_simulation} that takes \py{p1} and \py{p2} as function parameters:
 
 \begin{python}
-def run_simulation(p1=0.4, p2=0.2):
+def run_simulation(p1, p2):
     bikeshare = System(olin=10, wellesley=2, 
                   olin_empty=0, wellesley_empty=0)
     run_steps(bikeshare, 60, p1, p2, plot=False)
@@ -1581,11 +1551,14 @@ def run_simulation(p1=0.4, p2=0.2):
 Now we can run it with different arrival rates, like this:
 
 \begin{python}
-system = run_simulation(p1=0.6, p2=0.3)
+system = run_simulation(0.6, 0.3)
 \end{python}
 
-Then we can see how the metrics, like the number of unhappy customers, depend on the parameters of the model.  But before we do that, we need a new version of a for loop.
+In this example, \py{0.6} gets assigned to \py{p1} and \py{0.3} gets assigned to \py{p2}.
+
+Now we can call \py{run_simulation} with different parameters and see how the metrics, like the number of unhappy customers, depend on the parameters.  But before we do that, we need a new version of a for loop.
 \index{metric}
+
 
 \section{Loops and arrays}
 \label{array}
@@ -1604,13 +1577,13 @@ The loop variable, \py{i}, gets created when the loop runs, but it is not used f
 \index{variable!loop}
 
 \begin{python}
-p1_array = linspace(start=0, stop=1, num=5)
+p1_array = linspace(0, 1, 5)
 
 for p1 in p1_array:
     print(p1)
 \end{python}
 
-\py{linspace} is a function defined in the \py{modsim} library.  It takes three arguments, \py{start}, \py{stop}, and \py{num}.  In this example, it creates a sequence of \py{5} equally-spaced numbers, starting at \py{0} and ending at \py{1}. 
+\py{linspace} is a defined in the \py{modsim} library.  It takes three arguments, \py{start}, \py{stop}, and \py{num}.  In this example, it creates a sequence of \py{5} equally-spaced numbers, starting at \py{0} and ending at \py{1}. 
 \index{linspace}
 \index{NumPy}
 \index{array}
@@ -1646,7 +1619,7 @@ This will come in handy in the next section.
 
 \section{Sweeping parameters}
 
-If we know the actual values of parameters like \py{p1} and \py{p2}, we can use them to make specific predictions, like how many bikes will be at Olin after one hour.  If that's the goal, we'll probably have to collect data and estimate \py{p1} and \py{p2}.
+If we know the actual values of parameters like \py{p1} and \py{p2}, we can use them to make specific predictions, like how many bikes will be at Olin after one hour.
 \index{prediction}
 \index{explanation}
 
@@ -1663,25 +1636,25 @@ Now that we know about loops and arrays, we can use them like this:
 p1_array = linspace(0, 1, 11)
 
 for p1 in p1_array:
-    system = run_simulation(p1=p1)
+    system = run_simulation(p1, 0.2)
     print(p1, system.olin_empty)
 \end{python}
 
-Each time through the loop, we run a simulation with a the given value of \py{p1} and the default value of \py{p2}.  Then we print \py{p1} and the number of unhappy customers at Olin.
+Each time through the loop, we run a simulation with a the given value of \py{p1} and the same value of \py{p2}, \py{0.2}.  Then we print \py{p1} and the number of unhappy customers at Olin.
 
 To visualize the results, we can run the same loop, replacing \py{print} with \py{plot}:
 
 \begin{python}
 newfig()
 for p1 in p1_array:
-    system = run_simulation(p1=p1)
-    plot(p1, system.olin_empty, 'rs', label='olin')
+    system = run_simulation(p1, 0.2)
+    mark(p1, system.olin_empty, 'rs', label='olin')
 \end{python}
 
 When you run the notebook for this chapter, you will see the results and have a chance to try additional experiments.
 
 
-\section{Debugging}
+\section{Incremental development}
 
 When you start writing programs that are more than a few lines, you
 might find yourself spending more and more time debugging.  The more
@@ -1753,13 +1726,13 @@ The Wikipedia article  \url{http://modsimpy.com/worldpop}
 contains tables with estimates of world population from prehistory to the present, and projections for the future.
 \index{Wikipedia}
 
-To work with this data in Python, we will use functions from Pandas, which is a library that provides functions for working with data.  It also defines two objects we will use extensively, \py{Series} and \py{DataFrame}.
+To read this data, we will use Pandas, which is a library that provides functions for working with data.  It also defines two objects we will use extensively, \py{Series} and \py{DataFrame}.
 \index{data}
 \index{Pandas}
 \index{Series}
 \index{DataFrame}
 
-The Pandas function we'll use is \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to import it.  You have already seen this import statement:
+The function we'll use is \py{read_html}, which can read a web page and extract data from any tables it contains.  Before we can use it, we have to import it.  You have already seen this import statement:
 \index{\py{read_html}}
 \index{import statement}
 \index{statement!import}
@@ -1819,7 +1792,7 @@ We can display the first few lines like this:
 table2.head()
 \end{python}
 
-The headings at the tops of the columns are long strings, which makes them hard to work.  We can replace them with shorter strings like this:
+The headings at the tops of the columns are long strings, which makes them hard to work with.  We can replace them with shorter strings like this:
 \index{string}
 \index{columns}
 
@@ -1850,7 +1823,20 @@ The result is a \py{Series}, which is another object defined by the Pandas libra
 \index{array}
 \index{Int64Index}
 
-\py{plot} knows how to work with \py{Series} objects, so we can plot the estimates like this:
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/dataframe.pdf}}
+\caption{The elements that make up a \py{DataFrame} and a \py{Series}.}
+\label{fig-dataframe}
+\end{figure}
+
+Figure~\ref{fig-dataframe} shows elements that make up a \py{DataFrame} and a \py{Series}.  A \py{DataFrame} contains \py{index}, which labels the rows, \py{columns}, which labels the columns, and \py{values}, which is an array.
+
+A \py{Series} contains \py{name}, \py{index}, and \py{values}.
+
+
+\section{Plotting}
+
+\py{modsim.py} provides \py{plot}, which can plot arrays and \py{Series} objects, so we can plot the estimates like this:
 \index{plot}
 
 \begin{python}
@@ -1868,7 +1854,7 @@ The first two lines select the estimates generated by the United Nations Departm
 
 At the same time we divide by one billion, in order to display the estimates in terms of billions.  The number \py{1e9} is a shorter (and less error-prone) way to write \py{1000000000} or one billion.  When we divide a \py{Series} by a number, it divides all of the elements of the \py{Series}.
 
-The next two lines plot the \py{Series} objects.  The strings \py{':'} and \py{'--'} indicate dotted and dashed lines.  The \py{color} argument can be any of the color strings described at \url{http://modsimpy.com/color}.  The \py{label} argument provides the string that appears in the legend.
+The next two lines plot the \py{Series} objects.  The style strings \py{':'} and \py{'--'} indicate dotted and dashed lines.  The \py{color} argument can be any of the color strings described at \url{http://modsimpy.com/color}.  The \py{label} argument provides the string that appears in the legend.
 \index{color}
 \index{label}
 \index{legend}
@@ -1887,7 +1873,7 @@ Figure~\ref{chap03-fig01} shows the result.  The lines overlap almost completely
 Suppose we want to predict world population growth over the next 50 or 100 years.  We can do that by developing a model that describes how population grows, fitting the model to the data we have so far, and then using the model to generate predictions.
 \index{constant growth}
 
-In the next few sections I demonstrate this process starting with simple models, which turn out to be unrealistic, and gradually improving them.
+In the next few sections I demonstrate this process starting with simple models and gradually improving them.
 \index{iterative modeling}
 
 Although there is some curvature in the plotted estimates, it looks like world population growth has been close to linear since 1960 or so.  As a starting place, we'll build a model with constant growth.
@@ -1918,11 +1904,11 @@ The values 2015 and 1950 are part of the data, so it would be better not to make
 We can get the first and last year from the index like this:
 
 \begin{python}
-first_year = census.index[0]
-last_year = census.index[-1]
+first_year = get_first_label(census)
+last_year = get_last_label(census)
 \end{python}
 
-In brackets, \py{0} selects the first element from \py{census.index}, and \py{-1} selects the last element.  Now we can compute \py{total_growth} and \py{annual_growth}:
+\py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guesses, they select the first and last labels from the index of \py{census}.  We can use these labels to select the first and last values, then compute \py{total_growth} and \py{annual_growth}:
 
 \begin{python}
 total_growth = census[last_year] - census[first_year]
@@ -1932,9 +1918,10 @@ annual_growth = total_growth / elapsed_time
 
 The next step is to use this estimate to simulate population growth since 1950.
 
+
 \section{Simulation}
 
-The result from the simulation is a time series, which is a sequence of dates or times and an associated series of values (see \url{http://modsimpy.com/timeser}).  In this case, we have a sequence of year and an associated sequence of population estimates with associated year.
+The result from the simulation is a time series, which is a sequence of dates or times and an associated sequence of values (see \url{http://modsimpy.com/timeser}).  In this case, we have a sequence of years and an associated sequence of population estimates.
 \index{time series}
 \index{TimeSeries object}
 \index{simulation}
@@ -1948,16 +1935,16 @@ results = TimeSeries()
 \py{TimeSeries}, which is defined by \py{modsim}, is a specialized version of \py{Series}, which is defined by Pandas. 
 \index{Pandas}
 
-We can set the first value in the new \py{TimeSeries} by copying the first value from \py{census} (we'll get rid of the hard-coded dates soon):
+We can set the first value in the new \py{TimeSeries} by copying the first value from \py{census}:
 
 \begin{python}
-results[1950] = census[1950]
+results[first_year] = census[first_year]
 \end{python}
 
 Then we can set the rest of the values by simulating annual growth:
 
 \begin{python}
-for t in linrange(1950, 2015):
+for t in linrange(first_year, last_year-1):
     results[t+1] = results[t] + annual_growth
 \end{python}
 
@@ -1967,14 +1954,10 @@ for t in linrange(1950, 2015):
 
 It returns a NumPy array of values from \py{start} to \py{stop}, where \py{step} is the difference between successive values.  The default value of \py{step} is 1.
 
-This function works best if the space between \py{start} and \py{stop} is divisible by \py{step}; otherwise the results might be surprising.
-
-By default, the last value in the array is \py{stop} (at least approximately).  If you provide the argument \py{endpoint=False}, the last value in the array is \py{stop-step}. 
-
-In this example, the result from \py{linrange} is an array of values from \py{1950} to \py{2015} (including both).  
+In this example, the result from \py{linrange} is an array of values from \py{1950} to \py{2014} (including both).  
 \index{array}
 
-Each time through the loop, the loop variable \py{t} gets the next value from the array.  Inside the loop, we compute the population for each year by adding the population for the previous year and \py{annual_growth}.
+Each time through the loop, the loop variable \py{t} gets the next value from the array.  Inside the loop, we compute the population for each year by adding the population for the previous year and \py{annual_growth}.  The last time through the loop, the value of \py{t} is 2014, so the last label in \py{results} is 2015, which is what we want.
 \index{loop}
 \index{loop variable}
 
@@ -2004,10 +1987,10 @@ First, let's put all the information we need to run the model into a \py{System}
 \index{System object}
 
 \begin{python}
-system = System(t0=first_year, 
-                t_end=last_year,
-                p0=census[first_year],
-                annual_growth=annual_growth)
+system = System(t0 = first_year, 
+                t_end = last_year,
+                p0 = census[first_year],
+                annual_growth = annual_growth)
 \end{python}
 
 \py{t0} and \py{t_end} are the first and last years; \py{p0} is the initial population, and \py{annual_growth} is the estimated annual growth.
@@ -2018,8 +2001,10 @@ Next we'll wrap the code from the previous section in a function:
 def run_simulation1(system):
     results = TimeSeries()
     results[system.t0] = system.p0
-    for t in linrange(system.t0, system.t_end):
+    
+    for t in linrange(system.t0, system.t_end-1):
         results[t+1] = results[t] + system.annual_growth
+        
     system.results = results
 \end{python}
 
@@ -2029,20 +2014,18 @@ When \py{run_simulation1} runs, it creates a new \py{TimeSeries} that contains t
 To plot the results, we define a new function:
 
 \begin{python}
-def plot_results(system):
+def plot_results(system, title):
     newfig()
-    plot_estimates()
+    plot_estimates(table2)
     plot(system.results, '--', color='gray', label='model')
     decorate(xlabel='Year', 
              ylabel='World population (billion)',
-             ylim=[0, 8])
+             title=title)
 \end{python}
 
-This function uses \py{decorate}, which is defined in the \py{modsim} library.  \py{decorate} takes arguments that specify the title of the figure, labels for the x-axis and y-axis, and limits for the axes.  The notebook for this chapter provides more details.
+This function uses \py{decorate}, which is defined in the \py{modsim} library.  \py{decorate} takes arguments that specify the title of the figure, labels for the x-axis and y-axis, and limits for the axes.
 \index{plot}
 \index{decorate}
-
-%TODO: We actually use decorate in chap01.ipynb, so move this earlier.
 
 Finally, we can run it like this.
 
@@ -2056,7 +2039,7 @@ The results are the same as Figure~\ref{chap03-fig02}.
 
 \section{Proportional growth model}
 
-The biggest problem with the constant growth model is that it doesn't make any sense.    It is hard to imagine how people all over the world could conspire to keep population growth constant from year to year.
+The biggest problem with the constant growth model is that it doesn't make any sense.  It is hard to imagine how people all over the world could conspire to keep population growth constant from year to year.
 \index{proportional growth}
 
 On the other hand, if some fraction of the population dies each year, and some fraction gives birth, we can compute the net change in the population like this:
@@ -2065,10 +2048,12 @@ On the other hand, if some fraction of the population dies each year, and some f
 def run_simulation2(system):
     results = TimeSeries()
     results[system.t0] = system.p0
-    for t in linrange(system.t0, system.t_end):
+    
+    for t in linrange(system.t0, system.t_end-1):
         births = system.birth_rate * results[t]
         deaths = system.death_rate * results[t]
         results[t+1] = results[t] + births - deaths
+        
     system.results = results
 \end{python}
 
@@ -2106,6 +2091,7 @@ There are a few things we could try to improve the model:
 
 We will try out these variations, but first, let's clean up the code one more time.
 
+
 \section{Factoring out the update function}
 
 \py{run_simulation1} and \py{run_simulation2} are nearly identical except for the body of the \py{for} loop, where we compute the population for the next year.
@@ -2115,7 +2101,7 @@ We will try out these variations, but first, let's clean up the code one more ti
 Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull out the body of the loop and make it a function:
 
 \begin{python}
-def update_func1(pop, t, system):
+def update_func(pop, t, system):
     births = system.birth_rate * pop
     deaths = system.death_rate * pop
     return pop + births - deaths
@@ -2134,18 +2120,18 @@ def run_simulation(system, update_func):
     system.results = results
 \end{python}
 
-This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we call \py{run_simulation}, the second parameter is a function, like \py{update_func1}, that computes the population for the next year.
+This function demonstrates a feature we have not seen before: it takes a function as a parameter!  When we call \py{run_simulation}, the second parameter is a function, like \py{update_func}, that computes the population for the next year.
 \index{function!as parameter}
 
 Here's how we call it:
 
 \begin{python}
-run_simulation(system, update_func1)
+run_simulation(system, update_func)
 \end{python}
 
-Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_simulation}, we can run \py{update_func} just like any other function.
+Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func} in this example, gets assigned to the parameter, which is also called \py{update_func}.  Inside \py{run_simulation}, we can run \py{update_func} just like any other function.
 
-When you calls \py{run_simulation}, it calls \py{update_func1} once for each year between \py{t0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
+When you calls \py{run_simulation}, it calls \py{update_func} once for each year between \py{t0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
 
 
 \section{Combining birth and death}
@@ -2156,10 +2142,10 @@ While we are at it, we can also simplify the code by combining births and deaths
 system.alpha = system.birth_rate - system.death_rate
 \end{python}
 
-Here's the modified version of \py{update_func1}:
+Here's the modified version of \py{update_func}:
 
 \begin{python}
-def update_func1b(pop, t, system):
+def update_func(pop, t, system):
     net_growth = system.alpha  * pop
     return pop + net_growth
 \end{python}
@@ -2167,7 +2153,7 @@ def update_func1b(pop, t, system):
 And here's how we run it:
 
 \begin{python}
-run_simulation(system, update_func1b)
+run_simulation(system, update_func)
 \end{python}
 
 Again, the result is the same as Figure~\ref{chap03-fig03}.
@@ -2192,7 +2178,7 @@ Maybe it's a quadratic relationship, like this:
 We can test that conjecture with a new update function:
 
 \begin{python}
-def update_func2(pop, t, system):
+def update_func(pop, t, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2208,7 +2194,7 @@ system.beta = -0.0018
 And here's how we run it:
 
 \begin{python}
-run_simulation(system, update_func2)
+run_simulation(system, update_func)
 \end{python}
 
 \begin{figure}
@@ -2261,7 +2247,7 @@ Figure~\ref{chap03-fig05} shows the result.  Note that the x-axis is not time, a
 
 \end{itemize}
 
-Just below 14 billion, there is a population where net growth is 0, which means that the population does not change.  At this point, the birth and death rates are equal, so the population is in {\bf equilibrium}.
+Just below 14 billion, there is a point where net growth is 0, which means that the population does not change.  At this point, the birth and death rates are equal, so the population is in {\bf equilibrium}.
 \index{equilibrium}
 
 
@@ -2270,13 +2256,13 @@ Just below 14 billion, there is a population where net growth is 0, which means 
 
 To find this equilibrium point, we can find the roots, or zeros, of this equation:
 %
-\[ \Delta p = \alpha p + \beta p^2 = 0 \]
+\[ \Delta p = \alpha p + \beta p^2 \]
 %
 where $\Delta p$ is net growth, $p$ is current population, and $\alpha$ and $\beta$ are the parameters of the model.  We can rewrite the right hand side like this:
 %
-\[ \Delta p = p (\alpha + \beta p) = 0 \]
+\[ \Delta p = p (\alpha + \beta p) \]
 %
-which is $0$ when $p=0$ or $p=-\alpha/\beta$.  In this example, $\alpha = 0.025$, $\beta = -0.0018$, and $-\alpha/\beta = 13.9$.
+which is $0$ when $p=0$ or $p=-\alpha/\beta$.  In this example, $\alpha = 0.025$ and $\beta = -0.0018$, so $-\alpha/\beta = 13.9$.
 
 In the context of population modeling, the quadratic model is more conventionally written like this:
 %
@@ -2321,7 +2307,7 @@ pop = carrying_capacity()
 print(pop)
 \end{python}
 
-This version actually works, but it is not are versatile as it could be.  If there are several \py{System} objects, this function can only work with one of them, and only if it is named \py{system}.
+This version actually works, but it is not as versatile as it could be.  If there are several \py{System} objects, this function can only work with one of them, and only if it is named \py{system}.
 
 Disfunction \#2: Clobbering the parameters.  When people first learn about parameters, they often write functions like this:
 
@@ -2354,8 +2340,8 @@ pop = carrying_capacity(sys1)
 print(pop)
 \end{python}
 
-A function that doesn't have a return statement always returns \py{None}, so in this example the value of \py{pop} is \py{None}.  If you are debugging a program and find that the value of a variable is \py{None}, when it shouldn't be, a function without a return statement is a likely cause.
-
+A function that doesn't have a return statement always returns a special value called \py{None}, so in this example the value of \py{pop} is \py{None}.  If you are debugging a program and find that the value of a variable is \py{None} when it shouldn't be, a function without a return statement is a likely cause.
+\index{None}
 
 Disfunction \#4: Ignoring the return value.  Finally, here's a version where the function is correct, but the way it's used is not.
 
