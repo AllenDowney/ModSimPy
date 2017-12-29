@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{1.2.1}
+\newcommand{\theversion}{1.2.3}
 
 
 %%%% Both LATEX and PLASTEX
@@ -591,7 +591,7 @@ There are (at least) two ways to work with mathematical models, {\bf analysis} a
 
 In this book we do some analysis and a lot of simulation; along the way, I discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
-As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example at \url{http://modsimpy.com/chap00}.  For instructions for downloading and running the code, see Section~\ref{code}.
+As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example at \url{http://modsimpy.com/chap00}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 % TODO: Add a link to the chap00 notebook.
 
@@ -642,7 +642,7 @@ This example demonstrates analysis and computation using Python.  Next we'll see
 \section{Modeling a bike share system}
 \label{modeling}
 
-You can view the code for the rest of this chapter at \url{http://modsimpy.com/chap01}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for the rest of this chapter at \url{http://modsimpy.com/chap01}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
 \index{Wellesley College}
@@ -1172,7 +1172,7 @@ To paraphrase two Georges, ``All models are wrong, but some models are more wron
 As an example, we'll review the bikeshare model from the previous chapter, consider its strengths and weaknesses, and gradually improve it.  We'll also see ways to use the model to understand the behavior of the system and evaluate designed intended to make it work better.
 \index{bikeshare}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap02}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap02}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Iterative modeling}
@@ -1716,10 +1716,10 @@ But world population growth is still a topic of concern, and it is an open quest
 In this chapter and the next, we use tools from the previous chapters to explain world population growth since 1950 and generate predictions for the next 50--100 years.
 \index{prediction}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap03}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap03}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\section{World population data}
+\section{World Population Data}
 \label{worldpopdata}
 
 The Wikipedia article  \url{http://modsimpy.com/worldpop}
@@ -1766,7 +1766,7 @@ The arguments are:
 
 \item \py{header}: Indicates which row of each table should be considered the header, that is, the row that contains the column headings.  In this case it is the first row, which is numbered 0.
 
-\item \py{index_col}: Indicates which column of each table should be considered the index, that is, the labels that identify the rows.  In this case it is the first column, which contains the years.
+\item \py{index_col}: Indicates which column of each table should be considered the {\bf index}, that is, the labels that identify the rows.  In this case it is the first column, which contains the years.
 
 \item \py{decimal}: Normally this argument is used to indicate which character should be considered a decimal point, since some conventions use a period and some use a comma.  In this case I am abusing the feature by treating \py{M} as a decimal point, which allows some of the estimates, which are expressed in millions, to be read as numbers.
 
@@ -1802,10 +1802,6 @@ table2.columns = ['census', 'prb', 'un', 'maddison',
                   'thomlinson', 'durand', 'clark']
 \end{python}
 
-
-\section{Series}
-\label{series}
-
 Now we can select a column from the \py{DataFrame} using the dot operator, like selecting a system variable from a \py{System} object:
 \index{dot operator}
 \index{operator!dot}
@@ -1814,24 +1810,12 @@ Now we can select a column from the \py{DataFrame} using the dot operator, like 
 census = table2.census
 \end{python}
 
-The result is a \py{Series}, which is another object defined by the Pandas library.  Each \py{Series} object contains variables called \py{index} and \py{values}.  In this example, the \py{index} is a sequence of years, from 1950 to 2015; \py{values} is a sequence of population estimates.
-\index{series}
+The result is a \py{Series}, which is another object defined by the Pandas library.  A \py{Series} is like a \py{DataFrame} with just one column.  It contains two variables, \py{index} and \py{values}.  In this example, \py{index} is the sequence of years from 1950 to 2016, and \py{values} is the sequence of corresponding populations.
+\index{Series}
 \index{index}
 \index{values}
 
-\py{values} is an array like the ones we saw in Section~\ref{array}.  \py{index} is an \py{Int64Index}, which is yet another object defined by Pandas, but in all ways we care about for now, it behaves like an array.
-\index{array}
-\index{Int64Index}
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/dataframe.pdf}}
-\caption{The elements that make up a \py{DataFrame} and a \py{Series}.}
-\label{fig-dataframe}
-\end{figure}
-
-Figure~\ref{fig-dataframe} shows elements that make up a \py{DataFrame} and a \py{Series}.  A \py{DataFrame} contains \py{index}, which labels the rows, \py{columns}, which labels the columns, and \py{values}, which is an array.
-
-A \py{Series} contains \py{name}, \py{index}, and \py{values}.
+In this chapter we'll use \py{DataFrame} and \py{Series} objects without knowing much about how they work.  We'll see more details in Section~\ref{dataframes}.
 
 
 \section{Plotting}
@@ -1898,17 +1882,20 @@ So we can get the total growth during the interval like this:
 total_growth = census[2015] - census[1950]
 \end{python}
 
-The values 2015 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data changes in the future, we have to modify the program (see \url{http://modsimpy.com/hardcode}).
+The numbers in brackets are called {\bf labels}, because they label the rows of the \py{Series} (not to be confused with the labels we saw in the previous section, which label lines in a graph).  
+\index{label}
+
+In this example, the labels 2015 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data changes in the future, we have to modify the program (see \url{http://modsimpy.com/hardcode}).
 \index{hard coding}
 
-We can get the first and last year from the index like this:
+It would be better to get the first and last labels from the \py{Series} like this:
 
 \begin{python}
 first_year = get_first_label(census)
 last_year = get_last_label(census)
 \end{python}
 
-\py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guesses, they select the first and last labels from the index of \py{census}.  We can use these labels to select the first and last values, then compute \py{total_growth} and \py{annual_growth}:
+\py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guessed, they select the first and last labels from \py{census}.  We can use these labels to select the first and last values, then compute \py{total_growth} and \py{annual_growth}:
 
 \begin{python}
 total_growth = census[last_year] - census[first_year]
@@ -1921,7 +1908,7 @@ The next step is to use this estimate to simulate population growth since 1950.
 
 \section{Simulation}
 
-The result from the simulation is a time series, which is a sequence of dates or times and an associated sequence of values (see \url{http://modsimpy.com/timeser}).  In this case, we have a sequence of years and an associated sequence of population estimates.
+The result from the simulation is a time series, which is a sequence of times and associated values (see \url{http://modsimpy.com/timeser}).  In this case, we have a sequence of years and associated population estimates.
 \index{time series}
 \index{TimeSeries object}
 \index{simulation}
@@ -1941,7 +1928,7 @@ We can set the first value in the new \py{TimeSeries} by copying the first value
 results[first_year] = census[first_year]
 \end{python}
 
-Then we can set the rest of the values by simulating annual growth:
+Then we set the rest of the values by simulating annual growth:
 
 \begin{python}
 for t in linrange(first_year, last_year-1):
@@ -2381,7 +2368,7 @@ In this chapter we'll use the quadratic model to generate projections of future 
 \index{prediction}
 \index{projection}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap04}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap04}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 \section{Generating projections}
 
@@ -2389,7 +2376,7 @@ We'll start with the quadratic model from Section~\ref{quadratic}, which is base
 \index{quadratic growth}
 
 \begin{python}
-def update_func2(pop, t, system):
+def update_func(pop, t, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2397,18 +2384,17 @@ def update_func2(pop, t, system):
 As we saw in the previous chapter, we can get the start date, end date, and initial population from \py{census}, which is a series that contains world population estimates generated by the U.S. Census:
 
 \begin{python}
-t0 = census.index[0]
-t_end = census.index[-1]
-p0 = census[t0]
+tfirst_year = get_first_label(census)
+last_year = get_last_label(census)
 \end{python}
 
 Now we can create a \py{System} object:
 \index{System object}
 
 \begin{python}
-system = System(t0=t0, 
-                t_end=t_end,
-                p0=p0,
+system = System(t0 = first_year, 
+                t_end = last_year,
+                p0 = census[first_year],
                 alpha=0.025,
                 beta=-0.0018)
 \end{python}
@@ -2416,14 +2402,14 @@ system = System(t0=t0,
 And run the model:
 
 \begin{python}
-run_simulation(system, update_func2)
+run_simulation(system, update_func)
 \end{python}
 
 We have already seen the results in Figure~\ref{chap03-fig04}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 system.t_end = 2250
-run_simulation(system, update_func2)
+run_simulation(system, update_func)
 \end{python}
 
 \begin{figure}
@@ -2468,7 +2454,7 @@ Table 3 from \url{http://modsimpy.com/worldpop} contains projections from the U.
 table3 = tables[3]
 \end{python}
 
-For some years, one agency or the other has not published a projection, so some elements of \py{table3} contain the special value \py{NaN}, stands for ``not a number".  \py{NaN} is often used to indicate missing data.
+For some years, one agency or the other has not published a projection, so some elements of \py{table3} contain the special value \py{NaN}, which stands for ``not a number".  \py{NaN} is often used to indicate missing data.
 \index{not a number}
 \index{NaN}
 \index{missing data}
@@ -2608,7 +2594,7 @@ Now we integrate both sides, yielding:
 %
 \[ \ln x = \alpha t + K \]
 %
-where $\ln$ is the natural logarithm and $K$ is the constant of integration.  Exponentiating both sides, we have
+where $\ln$ is the natural logarithm and $K$ is the constant of integration.  Exponentiating both sides\footnote{The exponential function can be written $\exp(x)$ or $e^x$.  In this book I use the first form because it resembles the Python code. }, we have
 %
 \[ \exp(\log(x)) = x = \exp(\alpha t + K) \]
 %
@@ -2668,7 +2654,7 @@ Each of these languages is good for the purposes it was designed for and less go
 
 \section{Analysis with WolframAlpha}
 
-Until recently, most analysis was done by dragging sticks of graphite across wood pulp\footnote{Or ``rubbing the white rock on the black rock", a line I got from Woodie Flowers, who got it from Stephen Jacobsen.}, a process that is laborious and error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
+Until recently, most analysis was done by rubbing graphite on wood pulp\footnote{Or ``rubbing the white rock on the black rock", a line I got from Woodie Flowers, who got it from Stephen Jacobsen.}, a process that is laborious and error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
 \index{symbolic computation}
 \index{WolframAlpha}
 
@@ -2694,6 +2680,7 @@ WolframAlpha reports the particular solution:
 
 WolframAlpha is based on Mathematica, a powerful programming language designed specifically for symbolic computation.
 \index{Mathematica}
+
 
 \section{Analysis with SymPy}
 
@@ -2739,7 +2726,7 @@ The result is 3.  Functions in SymPy are represented by a special kind of \py{Sy
 f = Function('f')
 \end{python}
 
-Now if we write \py{f(t)}, we get an object that represents the evaluation of a function, $f$, at a value, $t$.  But again it doesn't actually try to evaluate it.
+Now if we write \py{f(t)}, we get an object that represents the evaluation of a function, $f$, at a value, $t$.  But again SymPy doesn't actually try to evaluate it.
 
 
 \section{Differential equations in SymPy}
@@ -2797,6 +2784,7 @@ The result is
 This function is called the {\bf exponential growth curve}; see \url{http://modsimpy.com/expo}.
 \index{exponential growth}
 
+
 \section{Solving the quadratic growth model}
 
 In the notebook for this chapter, you will see how to use the same tools to solve the quadratic growth model with parameters $r$ and $K$.  The general solution is
@@ -2824,6 +2812,7 @@ where $A = (K - p_0) / p_0$.
 If you would like to see this differential equation solved by hand, you might like this video: \url{http://modsimpy.com/khan2}
 \index{quadratic growth}
 \index{logistic function}
+
 
 \section{Summary}
 
@@ -2856,6 +2845,109 @@ What I've been calling the constant growth model is more commonly called ``linea
 I avoided the more common terms until now because I thought it would be strange to use them before we solved the equations and discovered the functional form of the solutions.
 
 
+\section{DataFrames and Series}
+\label{dataframe}
+
+So far we've been using \py{DataFrame} and \py{Series} objects without really understanding how they work.  In this section we'll review what we know so far and get into a little more detail.
+
+Each \py{DataFrame} contains three objects: \py{index} is a sequence of labels for the rows, \py{columns} is a sequence of labels for the columns, and \py{values} is an array that contains the data.
+Figure~\ref{fig-dataframe} shows these elements graphically.
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/dataframe.pdf}}
+\caption{The elements that make up a \py{DataFrame} and a \py{Series}.}
+\label{fig-dataframe}
+\end{figure}
+
+A \py{Series} also contains \py{index} and \py{values}; it does not have \py{columns}, but it does contain \py{name}, which is a string.
+
+To determine the type of these objects, we can use the Python function \py{type}:
+
+\begin{code}
+type(table2)
+type(table2.index)
+type(table2.columns)
+type(table2.values)
+\end{code}
+
+If \py{table2} is a \py{DataFrame}, the type of \py{table2.index} is \py{Int64Index}, which is a defined by Pandas.  The type of \py{table2.columns} is \py{Index}.  These \py{Index} objects are similar to \py{Series} objects.
+
+The type of \py{table2.values} is \py{ndarray}, which is the primary array type provided by NumPy; the name indicates that the array can have an arbitrary number of dimensions (N-dimensional).
+
+In a \py{Series}, the index is an \py{Index} object and the values are stores in an \py{ndarray}.  Figure~\ref{fig-dataframe} shows theses elements graphically.
+
+In the \py{modsim} library, the functions \py{get_first_label} and \py{get_last_label} provide a simple way to access the index of a \py{DataFrame} or \py{Series}:
+
+\begin{code}
+def get_first_label(series):
+    return series.index[0]
+
+def get_last_label(series):
+    return series.index[-1]
+\end{code}
+
+In brackets, the number \py{0} selects the first label; the number \py{-1} selects the last label.
+
+Several of the objects defined in \py{modsim} are modified versions of \py{Series} objects.  A \py{System} object is a \py{Series} where the labels are variables names; a \py{TimeSeries} object is a \py{Series} where the labels are times.
+
+Defining these objects wasn't necessary; we could do all the same things using \py{Series} objects.  But giving them different names makes the code easier to read and understand, and helps avoid certain kinds of errors (like getting two \py{Series} objects mixed up).
+
+If you write simulations in Python in the future, you can continue using the objects in \py{modsim}, if you find them useful, or you can use Pandas objects directly.
+
+
+\section{One queue or two?}
+
+This section presents an exercise where you can apply what you've learned so far to a question related to {\bf queueing theory} (the study of systems that involve waiting in lines, also known as ``queues").  A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
+
+Suppose you are designing the checkout area for a new store.  You have enough room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that serves both counters.
+
+In theory, you might expect a single line to be better, but it has some practical drawbacks: in order to maintain a single line, you would have to install rope barriers, and customers might be put off by what seems to be a longer line, even if it moves faster.
+
+So you'd like to check whether the single line is really better and by how much.  Simulation can help answer this question.
+
+\begin{figure}
+\centerline{\includegraphics[width=4.5in]{figs/queue.pdf}}
+\caption{One queue, one server (left), one queue, two servers (middle), two queues, two servers (right).}
+\label{fig-queue}
+\end{figure}
+
+Figure~\ref{fig-queue} shows the three scenarios we'll consider.  As we did in the bikeshare model, we'll assume that a customer is equally likely to arrive during any timestep.  I'll denote this probability using the Greek letter lambda, $\lambda$, or the variable name \py{lam}.  Since it's a new store, we don't know what the value of $\lambda$ will be, so we'll have to consider a range of possibilities.  
+
+Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are highly variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they have the same probability of finishing up during each time step.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
+
+If we choose $\mu=1/5$, the average number of time steps for each checkout will be 5 minutes, which is consistent with the data.
+
+Now we're ready to get started.  I'll make some suggestions for how to proceed.  As always, you should practice incremental development: write no more than one or two lines of code a time, and test as you go!
+
+\begin{enumerate}
+
+\item Write a function called \py{make_system} that takes \py{lam} and \py{mu} as parameters and returns a \py{System} object with variables \py{lam}, \py{mu}, \py{x}, and \py{duration}.  \py{x} is the number if customers in the system, including customers in line and at the checkout counters; \py{x} should be initialized to \py{0}.  \py{duration} is the number of time steps to simulate; I set it to 8 hours, in minutes.   Test this function by creating a \py{System} object with \py{lam=1/8} and \py{mu=1/5}.
+
+\item Write a function called \py{run_simulation} that takes a \py{System} object and simulates the number of time steps specified by \py{duration}.  Start by simulating a single queue with a single checkout counter, which I'll call a ``server".  During each time step, a customer can finish checking out (but only if there is a customer in the store), and a customer can arrive.
+
+\item In \py{run_simulation}, add a few lines of code to create a \py{TimeSeries} and store the number of customers in the store, \py{x}, at the end of each time step.  After the simulation runs, store the \py{TimeSeries} as a new system variable called \py{results}.  Plot \py{results} and confirm that the simulation behaves as expected.
+
+\item To compute the average number of customers in the store, $L$, you can write \py{system.results.mean()}.  You can use the observed value of $W$ to compute the average time customers spend in the store, $W$, which includes time in queue and time at the counter.  $L$ and $W$ are related by Little's Law (see \url{https://en.wikipedia.org/wiki/Little's_law}):
+%
+\[ L = \lambda W \]
+%
+Modify \py{run_simulation} to compute $L$ and $W$ and store them as system variables.
+
+\item Use \py{linspace} to create an array of values for $\lambda$, from about 10\% to 90\% of $\mu$.  Write a function called \py{sweep_lam} that takes an array of values for $\lambda$ and a single value for $\mu$.  It should call $run_simulation$ once for each value of $\lambda$; after each simulation, it should print $\lambda$ and the resulting value of $W$.  Then modify it to plot the results rather than printing them.  Run \py{sweep_series} with 50 to 100 values of $\lambda$ to get a sense of how much the results vary from one run to the next.  What happens as $\lambda$ gets close to $\mu$?
+
+\item Next, write a version of \py{run_simulation} that models the scenario with one queue and two servers.  Hint: if there are at least two customers in the store, there are two chances for a customer to finish checking out.  Test this version with a wider range of values for $\lambda$, maybe going up to 160\% of $\mu$.
+
+\item You might want to split \py{run_simulation} into two parts: and \py{update_func} that takes a \py{System} object and simulates one time step, and a general version of \py{run_simulation} that takes \py{udpate_func} as a parameter.
+
+\item Write a third version of \py{run_simulation}, or a third \py{update_func}, that models the scenario with two queues and two servers.  You might have to add system variables, \py{q1} and \py{q2}, to keep track of the number of customers in each queue.  When a customer arrives, they should join whichever line is shorter.
+
+\item Which system yields shorter wait times, one queue or two?  Since the results of a single simulation are so variable, it might not be easy to tell.  One option is to run the simulation 50 to 100 times, with a range of values for $\lambda$, to model days with different numbers of customers, and compute the average of the daily averages.
+
+\end{enumerate}
+
+
+
+
 \chapter{Design}
 
 In the previous chapter, we developed a model of world population growth and used it to generate projections for the next 100 years.  In this chapter, we develop a model of an epidemic as it spreads in a susceptible population, and use it to evaluate the effectiveness of possible interventions.
@@ -2864,7 +2956,7 @@ In the previous chapter, we developed a model of world population growth and use
 My presentation of the SIR model in this chapter, and the analysis in the next chapter, is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{http://modsimpy.com/sir}.}.
 \index{SIR model}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap05}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap05}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The Freshman Plague}
@@ -2881,6 +2973,7 @@ In this chapter we introduce a well-known model of infectious disease, the Kerma
 
 So far we have done our own modeling; that is, we've chosen physical systems, identified factors that seem important, and made decisions about how to represent them.  In this chapter we start with an existing model and reverse-engineer it.  Along the way, we consider the modeling decisions that went into it and identify its capabilities and limitations.
 
+
 \section{The SIR model}
 
 The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named because it considers three categories of people:
@@ -2889,23 +2982,23 @@ The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named
 
 \item {\bf S}: People who are ``susceptible", that is, capable of contracting the disease if they come into contact with someone who is infected.
 
-\item {\bf I}: People who are ``infected" or, more specifically, capable of passing along the disease if they come into contact with someone susceptible.
+\item {\bf I}: People who are ``infectious", that is, capable of passing along the disease if they come into contact with someone susceptible.
 
-\item {\bf R}: People who are ``recovered" or, for deadly diseases, ``removed".
+\item {\bf R}: People who are ``recovered".
 
 \end{itemize}
-  
+ 
 In the basic version of the model, people who have recovered are considered to be immune to reinfection.  That is a reasonable model for some diseases, but not for others, so it should be on the list of assumptions to reconsider later.
 
 Let's think about how the number of people in each category changes over time.  Suppose we know that people with the disease are infectious for a period of 4 days, on average.  If 100 people are infectious at a particular point in time, and we ignore the particular time each one became infected, we expect about 1 out of 4 to recover on any particular day.
 
-Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the parameter $\gamma$ (the Greek letter gamma).  If the total number of people in the population is $N$, and the fraction currently infected is $i$, the total number of recoveries we expect per day is $\gamma i N$.
+Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the Greek letter gamma, $\gamma$.  If the total number of people in the population is $N$, and the fraction currently infectious is $i$, the total number of recoveries we expect per day is $\gamma i N$.
 \index{recovery rate}
 
-Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in such a way that they would contract the disease if the other person is infected.  We'll denote this contact rate with the parameter $\beta$ (the Greek letter beta).
+Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in such a way that they would contract the disease if the other person is infected.  We'll denote this contact rate with the Greek letter beta, $\beta$.
 \index{infection rate}
 
-It's probably not reasonable to assume that we know $\beta$ ahead of time, but later we'll see how to estimate it based on data from previous semesters.
+It's probably not reasonable to assume that we know $\beta$ ahead of time, but later we'll see how to estimate it based on data from previous outbreaks.
 
 If $s$ is the fraction of the population that's susceptible, $s N$ is the number of susceptible people, $\beta s N$ is the number of contacts per day, and $\beta s i N$ is the number of those contacts where the other person is infectious.
 \index{susceptible}
@@ -2920,7 +3013,7 @@ In summary:
 
 \end{itemize}
 
-This model assumes that the population is closed, that is, no one arrives or departs.  So the size of the population, $N$, is constant.
+This model assumes that the population is closed; that is, no one arrives or departs, so the size of the population, $N$, is constant.
 
 
 \section{The SIR equations}
@@ -2943,17 +3036,20 @@ SIR models are examples of {\bf compartment models}, so-called because they divi
 \index{flow}
 \index{stock and flow diagram}
 
-In this example, there are three stocks --- susceptible, infected, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{http://modsimpy.com/stock}.
+In this example, there are three stocks --- susceptible, infectious, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{http://modsimpy.com/stock}.
 Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
-%http://yuml.me/edit/3de9c163
-\centerline{\includegraphics[width=4.5in]{figs/stock_flow1.pdf}}
+% first version was on YUML
+% http://yuml.me/edit/3de9c163
+% wget http://yuml.me/2389d485.pdf; mv 2389d485.pdf figs/stock_flow1.pdf
+% current version uses lodraw
+\centerline{\includegraphics[width=4in]{figs/stock_flow1.pdf}}
 \caption{Stock and flow diagram for an SIR model.}
 \label{stock_flow1}
 \end{figure}
 
-
+Stocks are represented by rectangles, flows by arrows.  The widget in the middle of the arrows represents a valve that controls the rate of flow; the diagram shows the parameters that control the valves.
 
 
 \section{Implementation}
@@ -2961,7 +3057,7 @@ Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 For a given physical system, there are many possible models, and for a given model, there are many ways to represent it.  For example, we can represent an SIR model as a stock-and-flow diagram, as a set of differential equations, or as a Python program.  The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
 \index{implementation}
 
-As a first step, I'll represent the initial state of the system using a \py{State} object, which is defined in the \py{modsim} library.  A \py{State} object is a collection of {\bf state variables}; each state variable represents information about the system that changes over time.  In this example, the state variables are \py{S}, \py{I}, and \py{R}; they represent the fraction of the population in each compartment.
+To get started, I'll represent the initial state of the system using a \py{State} object, which is defined in the \py{modsim} library.  A \py{State} object is a collection of {\bf state variables}; each state variable represents information about the system that changes over time.  In this example, the state variables are \py{S}, \py{I}, and \py{R}; they represent the fraction of the population in each compartment.
 \index{System object}
 \index{State object}
 \index{state variable}
@@ -3064,8 +3160,10 @@ Now we can simulate the model over a sequence of time steps:
 \begin{python}
 def run_simulation(system, update_func):
     state = system.init
-    for t in linrange(system.t0, system.t_end):
+
+    for t in linrange(system.t0, system.t_end-1):
         state = update_func(state, system)
+
     return state
 \end{python}
 
@@ -3112,7 +3210,7 @@ def run_simulation(system, update_func):
     t0 = system.t0
     S[t0], I[t0], R[t0] = state
     
-    for t in linrange(system.t0, system.t_end):
+    for t in linrange(system.t0, system.t_end-1):
         state = update_func(state, system)
         S[i+1], I[i+1], R[i+1] = state
     
@@ -3181,7 +3279,7 @@ def run_simulation(system, update_func):
     frame = TimeFrame(columns=system.init.index)
     frame.loc[system.t0] = system.init
     
-    for t in linrange(system.t0, system.t_end):
+    for t in linrange(system.t0, system.t_end-1):
         frame.loc[i+1] = update_func(frame.loc[i], system)
     
     system.results = frame
@@ -3231,6 +3329,7 @@ As with a \py{DataFrame}, we can use the dot operator to select columns from a \
 \index{dot operator}
 \index{operator!dot}
 
+
 \section{Metrics}
 \label{metrics}
 
@@ -3239,11 +3338,11 @@ When we plot a time series, we get a view of everything that happened when the m
 
 % TODO: already defined metrics
 
-In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students get sick at any point.
+In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students who get sick at any point.
 
-As an example I will focus on the last one --- the total number of sick students --- and we will consider interventions intended to minimize it.
+As an example, I will focus on the last one --- the total number of sick students --- and we will consider interventions intended to minimize it.
 
-When a person gets infected, they move from \py{S} to \py{I}, so we can compute the total number of infections like this:
+When a person gets infected, they move from \py{S} to \py{I}, so we can get the total number of infections by computing the difference in \py{S} at the beginning and the end:
 
 \begin{python}
 def calc_total_infected(system):
@@ -3255,20 +3354,21 @@ In the notebook that accompanies this chapter, you will have a chance to write f
 \index{max}
 \index{idxmax}
  
-If you have a \py{Series} called \py{s}, you can compute the largest value of the series like this:
+If you have a \py{Series} called \py{S}, you can compute the largest value of the series like this:
 
 \begin{python}
-largest_value = s.max()
+largest_value = S.max()
 \end{python}
 
 And the label of the largest value like this:
 
 \begin{python}
-time_of_largest_value = s.idxmax()
+time_of_largest_value = S.idxmax()
 \end{python}
 
 If the \py{Series} is a \py{TimeSeries}, the label you get from \py{idxmax} is a time or date.  You can read more about these functions in the \py{Series} documentation at \url{http://modsimpy.com/series}.
 \index{Series}
+
 
 \section{Immunization}
 
@@ -3279,7 +3379,7 @@ Models like this are useful for testing ``what if?" scenarios.  As an example, w
 
 Suppose there is a vaccine that causes a patient to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
 
-One option is to treat immunization as a short cut from \py{S} to \py{R}, that is, from susceptible to resistant\footnote{We can be flexible about what \py{R} stands for.}.  We can implement this feature like this:
+One option is to treat immunization as a short cut from susceptible to recovered without going through infectious.  We can implement this feature like this:
 
 \begin{python}
 def add_immunization(system, fraction):
@@ -3311,11 +3411,13 @@ So let's see what happens if we administer more vaccines.  This following functi
 \begin{python}
 def sweep_immunity(immunize_array):
     sweep = SweepSeries()
+
     for fraction in immunize_array:
         sir = make_system(beta, gamma)
         add_immunization(sir, fraction)
         run_simulation(sir, update1)
         sweep[fraction] = calc_total_infected(sir)
+
     return sweep
 \end{python}
 
@@ -3366,7 +3468,7 @@ We have already seen how we can model the effect of vaccination.  Now let's thin
 
 \end{enumerate}
 
-For the sake of simplicity, let's assume that we have data from a similar campaign at another school, showing that a well-funded campaign can change student behavior enough to reduce the infection rate by 20\%.  
+For the sake of simplicity, let's assume that we have data from a similar campaign at another school showing that a well-funded campaign can change student behavior enough to reduce the infection rate by 20\%.  
 
 In terms of the model, hand washing has the effect of reducing \py{beta}.  That's not the only way we could incorporate the effect, but it seems reasonable and it's easy to implement.
 
@@ -3403,11 +3505,13 @@ Now we can sweep a range of values for \py{spending} and use the simulation to c
 \begin{python}
 def sweep_hand_washing(spending_array):
     sweep = SweepSeries()
+    
     for spending in spending_array:
         sir = make_system(beta, gamma)
         add_hand_washing(sir, spending)
         run_simulation(sir, update1)
         sweep[spending] = calc_total_infected(sir)
+        
     return sweep
 \end{python}
 
@@ -3426,9 +3530,10 @@ infected_sweep = sweep_hand_washing(spending_array)
 
 Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
 
+
 \section{Optimization} 
 
-Now we can put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
+Let's put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
 \index{optimization}
 
 Here are the parameters:
@@ -3451,6 +3556,7 @@ And run the simulation for each element of \py{dose_array}:
 \begin{python}
 def sweep_doses(dose_array):
     sweep = SweepSeries()
+    
     for doses in dose_array:
         fraction = doses / num_students
         spending = budget - doses * price_per_dose
@@ -3481,6 +3587,29 @@ As we increase the number of doses, we have to cut campaign spending, which turn
 In the notebook for this chapter, you'll have a chance to run this optimization for a few other scenarios.
 
 
+\section{Under the hood}
+
+This chapter introduces three new objects, \py{State}, \py{TimeFrame}, and \py{SweepSeries}.
+
+A \py{State} object is similar to a \py{System} object.  The difference is that the variables in a \py{State} object change over time; the variables in a \py{System} object are parameters that usually don't change.  At least, they usually don't change during a simulation --- they often vary from one simulation to the next.
+
+In previous chapters, we used \py{System} objects to store both state variables and parameters.  Now we are using \py{State} objects to partition values that play different roles.
+
+A \py{TimeFrame} is a version of a Pandas \py{DataFrame}; to be honest, the biggest difference in the name, which is intended as a reminder that the index contains a sequence of times.  Usually each row in a \py{TimeFrame} corresponds to a time step in a simulation, and the columns correspond to the state variables. 
+
+Finally, a \py{SweepSeries} is a version of a Pandas \py{Series} where
+
+\begin{itemize}
+
+\item The index contains a range of values for a system parameter, 
+
+\item And the values contain metrics that summarize the results of a simulation.
+
+\end{itemize}
+
+In the next chapter, we'll see a two-dimensional version of a \py{SweepSeries}, called a \py{SweepFrame}, where the index contains one parameter, the columns contain a second parameter, and the values contain metrics.
+
+
 
 \chapter{Analysis}
 
@@ -3490,7 +3619,7 @@ In the previous chapter I presented an SIR model of infectious disease, specific
 
 But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap06}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap06}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Unpack}
@@ -3842,7 +3971,7 @@ In summary, the SIR model has limitations; nevertheless, it provides insight int
 So far the systems we have studied have been physical, in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In this chapter, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
 \index{thermal system}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap07}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap07}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 \section{The coffee cooling problem}
 
@@ -4338,7 +4467,7 @@ We will use this model to fit data collected from a patient, and use the paramet
 My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{http://modsimpy.com/bergman},
 PDF at \url{http://modsimpy.com/minmod}).
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap08}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap08}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The glucose-insulin system}
@@ -4900,7 +5029,7 @@ So far the differential equations we've worked with have been {\bf first order},
 
 We'll revisit the falling penny example from Chapter~\ref{chap01}, and use \py{odeint} to find the position and velocity of the penny as it falls, with and without air resistance.
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap09}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap09}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Newton's second law of motion}
@@ -5352,7 +5481,7 @@ These methods demonstrate two ways to use models to solve problems, sometimes ca
 
 In the previous chapter we modeled objects moving in one dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap10}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap10}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The Manny Ramirez problem}
@@ -5847,7 +5976,7 @@ The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular a
 
 As an exercise at the end of the chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{http://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap11}.  For instructions for downloading and running the code, see Section~\ref{code}.
+You can view the code for this chapter at \url{http://modsimpy.com/chap11}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The physics of toilet paper}
