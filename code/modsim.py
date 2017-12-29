@@ -40,6 +40,87 @@ from scipy.optimize import leastsq
 from scipy.optimize import minimize_scalar
 
 
+def flip(p=0.5):
+    """Flips a coin with the given probability.
+
+    p: float 0-1
+
+    returns: boolean (True or False)
+    """
+    return np.random.random() < p
+
+
+# abs, min, max, pow, sum, round
+
+def abs(*args):
+    # TODO: warn about using the built in
+    return np.abs(*args)
+
+def min(*args):
+    # TODO: warn about using the built in
+    return np.min(*args)
+
+def max(*args):
+    # TODO: warn about using the built in
+    return np.max(*args)
+
+def sum(*args):
+    # TODO: warn about using the built in
+    return np.sum(*args)
+
+def round(*args):
+    # TODO: warn about using the built in
+    return np.round(*args)
+
+
+def cart2pol(x, y, z=None):
+    """Convert Cartesian coordinates to polar.
+
+    x: number or sequence
+    y: number or sequence
+    z: number or sequence (optional)
+
+    returns: theta, rho OR theta, rho, z
+    """
+    x = np.asarray(x)
+    y = np.asarray(y)
+
+    # TODO: use hypot?
+    rho = np.sqrt(x**2 + y**2)
+    theta = np.arctan2(y, x)
+        
+    if z is None:
+        return theta, rho
+    else:
+        return theta, rho, z
+
+
+def pol2cart(theta, rho, z=None):
+    """Convert polar coordinates to Cartesian.
+
+    theta: number or sequence
+    rho: number or sequence
+    z: number or sequence (optional)
+
+    returns: x, y OR x, y, z
+    """
+    if hasattr(theta, 'units'):
+        if theta.units == UNITS.degree:
+            theta = theta.to(UNITS.radian)
+        if theta.units != UNITS.radian:
+            msg = """In pol2cart, theta must be either a number or
+            a Quantity in degrees or radians."""
+            raise ValueError(msg)
+        
+    x = rho * np.cos(theta)
+    y = rho * np.sin(theta)
+
+    if z is None:
+        return x, y
+    else:
+        return x, y, z
+
+
 def linspace(start, stop, num=50, **kwargs):
     """Returns an array of evenly-spaced values in the interval [start, stop].
     
@@ -106,6 +187,7 @@ def linrange(start=0, stop=None, step=1, **kwargs):
     return array
 
 
+
 def fit_leastsq(error_func, params, data, **kwargs):
     """Find the parameters that yield the best fit for the data.
     
@@ -123,7 +205,8 @@ def fit_leastsq(error_func, params, data, **kwargs):
     kwargs['full_output'] = True
     
     # run leastsq
-    best_params, _, _, mesg, ier = leastsq(error_func, x0=params, args=args, **kwargs)
+    best_params, _, _, mesg, ier = leastsq(error_func, x0=params, 
+                                           args=args, **kwargs)
 
     #TODO: check why logging.info is not visible
     
@@ -138,39 +221,6 @@ def fit_leastsq(error_func, params, data, **kwargs):
         
     # return the best parameters
     return best_params
-
-
-@property
-def dimensionality(self):
-    """Unit's dimensionality (e.g. {length: 1, time: -1})
-
-    This is a simplified version of this method that does no caching.
-
-    returns: dimensionality
-    """
-    dim = self._REGISTRY._get_dimensionality(self._units)
-    return dim
-
-# monkey patch Unit and Quantity so they use the non-caching
-# version of `dimensionality`
-pint.unit._Unit.dimensionality = dimensionality
-pint.quantity._Quantity.dimensionality = dimensionality
-
-
-def units_off():
-    """Make all quantities behave as if they were dimensionless.
-    """
-    global SAVED_PINT_METHOD
-    
-    SAVED_PINT_METHOD = UNITS._get_dimensionality
-    UNITS._get_dimensionality = lambda self: {}
-
-
-def units_on():
-    """Restore the saved behavior of quantities.
-    """
-    UNITS._get_dimensionality = SAVED_PINT_METHOD
-
 
 
 def min_bounded(min_func, bounds, *args, **options):
@@ -282,7 +332,43 @@ def run_odeint(system, slope_func, **kwargs):
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
-    system.results = TimeFrame(array, columns=init.index, index=ts, dtype=np.float64)
+    system.results = TimeFrame(array, columns=init.index, index=ts, 
+                               dtype=np.float64)
+
+
+def fsolve(func, x0, *args, **kwargs):
+    """Return the roots of the (non-linear) equations
+    defined by func(x) = 0 given a starting estimate.
+    
+    Uses scipy.optimize.fsolve, with extra error-checking.
+    
+    func: function to find the roots of
+    x0: scalar or array, initial guess
+    args: additional positional arguments are passed along to fsolve,
+          which passes them along to func
+    
+    returns: solution as an array
+    """
+    # make sure we can run the given function with x0
+    x0 = np.asarray(x0).flatten() 
+    
+    try:
+        func(x0, *args)
+    except Exception as e:
+        msg = """Before running scipy.optimize.fsolve, I tried
+                 running the function you provided with the x0
+                 you provided, and I got the following error:"""
+        logger.error(msg)
+        raise(e)
+    
+    # make the tolerance more forgiving than the default
+    underride(kwargs, xtol=1e-7)
+
+    # run fsolve
+    units_off()
+    result = scipy.optimize.fsolve(func, x0, args=args, **kwargs)
+    units_on()
+    return result
 
 
 def interpolate(series, **options):
@@ -293,6 +379,8 @@ def interpolate(series, **options):
 
     returns: function that maps from the index of the series to values 
     """
+    # TODO: add error checking for nonmonotonicity
+
     if sum(series.index.isnull()):
         msg = """The Series you passed to interpolate contains
                  NaN values in the index, which would result in
@@ -330,42 +418,6 @@ def unpack(series):
     frame = inspect.currentframe()
     caller = frame.f_back
     caller.f_globals.update(series)
-
-
-
-def fsolve(func, x0, *args, **kwargs):
-    """Return the roots of the (non-linear) equations
-    defined by func(x) = 0 given a starting estimate.
-    
-    Uses scipy.optimize.fsolve, with extra error-checking.
-    
-    func: function to find the roots of
-    x0: scalar or array, initial guess
-    args: additional positional arguments are passed along to fsolve,
-          which passes them along to func
-    
-    returns: solution as an array
-    """
-    # make sure we can run the given function with x0
-    x0 = np.asarray(x0).flatten() 
-    
-    try:
-        func(x0, *args)
-    except Exception as e:
-        msg = """Before running scipy.optimize.fsolve, I tried
-                 running the function you provided with the x0
-                 you provided, and I got the following error:"""
-        logger.error(msg)
-        raise(e)
-    
-    # make the tolerance more forgiving than the default
-    underride(kwargs, xtol=1e-7)
-
-    # run fsolve
-    units_off()
-    result = scipy.optimize.fsolve(func, x0, args=args, **kwargs)
-    units_on()
-    return result
 
 
 def underride(d, **options):
@@ -431,7 +483,7 @@ class FigureState:
         key = style, color
 
         # if there's no style or color, make a new line,
-        # and don't store it for future updating.
+        # but don't store it for future updating.
         if key == (None, None):
             return self.make_line(style, kwargs)
 
@@ -456,32 +508,13 @@ class FigureState:
         self.lines = dict()
 
 
-# TODO: Split plot into simplot(), which adds points to existing lines,
-# and plot(), which does not
-        
-def plot(*args, **kwargs):
-    """Makes line plots.
-    
-    args can be:
-      plot(y)
-      plot(y, style_string)
-      plot(x, y)
-      plot(x, y, style_string)
-    
-    kwargs are the same as for pyplot.plot
-    
-    If x or y have attributes label and/or units,
-    label the axes accordingly.
-    
-    """
-    update = kwargs.pop('update', False)
 
+def parse_plot_args(*args, **kwargs):
+    """Parse the args the same way plt.plot does."""
     x = None
     y = None
-    style = None
+    style = 'bo-'
     
-    # parse the args the same way plt.plot does:
-    # 
     if len(args) == 1:
         y = args[0]
     elif len(args) == 2:
@@ -492,8 +525,32 @@ def plot(*args, **kwargs):
     elif len(args) == 3:
         x, y, style = args
 
+    # check if style is provided as a kwarg; if so,
+    # it can clobber a positional style argument
     if 'style' in kwargs:
         style = kwargs.pop('style')
+
+    return x, y, style
+
+        
+def mark(*args, **kwargs):
+    """Adds a new marker to an existing line.
+    
+    args can be:
+      plot(y)
+      plot(y, style_string)
+      plot(x, y)
+      plot(x, y, style_string)
+    
+    Keyword arguments are the same as for pyplot.plot()
+
+    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html
+
+    If a line with the same style and color exists, the new point
+    is added to the existing line.
+    
+    """
+    x, y, style = parse_plot_args(*args, **kwargs)
 
     # get the current line, based on style and kwargs,
     # or create a new empty line
@@ -502,32 +559,21 @@ def plot(*args, **kwargs):
     line = figure_state.get_line(style, kwargs)
     
     # append y to ydata
-    if update:
-        ys = np.asarray(y)
-    else:
-        ys = line.get_ydata()
-        ys = np.append(ys, y)
+    ys = line.get_ydata()
+    ys = np.append(ys, y)
     line.set_ydata(ys)
 
     # update xdata
     xs = line.get_xdata()
 
-    if x is None:
-        # see if y is something like a Series that has an index
-        if hasattr(y, 'index'):
-            x = y.index
-
-    # if we still don't have an x, increment the last element of xs  
+    # if we don't have an x, increment the last element of xs  
     if x is None:
         try:
             x = xs[-1] + 1
         except IndexError:
             x = 0
 
-    if update:
-        xs = np.asarray(x)
-    else:
-        xs = np.append(xs, x)
+    xs = np.append(xs, x)
     line.set_xdata(xs)
     
     #print(line.get_xdata())
@@ -537,6 +583,81 @@ def plot(*args, **kwargs):
     axes.relim()
     axes.autoscale_view(True, True, True)
     axes.margins(0.02)
+    figure.canvas.draw()
+    
+
+def plot(*args, **kwargs):
+    """Makes line plots.
+    
+    args can be:
+      plot(y)
+      plot(y, style_string)
+      plot(x, y)
+      plot(x, y, style_string)
+    
+    kwargs are the same as for pyplot.plot
+
+    In addition, update=True causes the new data to replace the old.
+    
+    If x or y have attributes label and/or units, label the axes accordingly.
+    
+    """
+    x, y, style = parse_plot_args(*args, **kwargs)
+
+    if x is None:
+        if isinstance(y, pd.Series):
+            # if y is a Series, use the index
+            x = y.index
+        else:
+            try:
+                # otherwise use numbers from 0 to n-1 
+                x = np.arange(len(y))
+            except TypeError:
+                x = 0
+
+    underride(kwargs, linewidth=3, alpha=0.6)
+    lines = plt.plot(x, y, style, **kwargs)
+    
+
+def replot(*args, **kwargs):
+    """Makes line plots.
+    
+    args can be:
+      plot(y)
+      plot(y, style_string)
+      plot(x, y)
+      plot(x, y, style_string)
+    
+    kwargs are the same as for pyplot.plot
+
+    In addition, update=True causes the new data to replace the old.
+    
+    If x or y have attributes label and/or units, label the axes accordingly.
+    
+    """
+    x, y, style = parse_plot_args(*args, **kwargs)
+
+    if x is None:
+        if isinstance(y, pd.Series):
+            # if y is a Series, use the index
+            x = y.index
+        else:
+            # otherwise use numbers from 0 to n-1 
+            x = np.arange(len(y))
+
+    # get the current line, based on style and kwargs,
+    # or create a new empty line
+    figure = plt.gcf()
+    figure_state = SIMPLOT.get_figure_state(figure)
+    line = figure_state.get_line(style, kwargs)
+    
+    # append y to ydata
+    ys = np.asarray(y)
+    line.set_ydata(ys)
+
+    xs = np.asarray(x)
+    line.set_xdata(xs)
+    
     figure.canvas.draw()
     
 
@@ -555,54 +676,80 @@ def contour(df, **options):
 
 
 def newfig(**kwargs):
-    """Creates a new figure."""
+    """Creates a new figure.
+
+    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html
+
+    Keyword arguments are passed along to Figure.set()
+    """
     fig = plt.figure()
     fig.set(**kwargs)
     fig.canvas.draw()
 
 
-def savefig(filename, *args, **kwargs):
+def savefig(filename, **kwargs):
     """Save the current figure.
+
+    Keyword arguments are passed along to plt.savefig
+
+    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.savefig.html
 
     filename: string
     """
     print('Saving figure to file', filename)
-    return plt.savefig(filename, *args, **kwargs)
+    return plt.savefig(filename, **kwargs)
 
+
+def decorate(**kwargs):
+    """Decorate the current axes.
+
+    Call decorate with keyword arguments like
+
+    decorate(title='Title',
+             xlabel='x',
+             ylabel='y')
+
+    The keyword arguments can be any of the axis properties
+
+    https://matplotlib.org/api/axes_api.html
+
+    In addition, you can use `legend=False` to suppress the legend.
+
+    And you can use `loc` to indicate the location of the legend
+    (the default value is 'best')
+    """
+    # 
+    loc = kwargs.pop('loc', 'best')
+    if kwargs.pop('legend', True):
+        legend(loc=loc)
     
-def label_axes(xlabel=None, ylabel=None, title=None, **kwargs):
-    """Puts labels and title on the axes.
+    plt.gca().set(**kwargs)
 
-    xlabel: string
-    ylabel: string
-    title: string
 
-    kwargs: options passed to pyplot
+def legend(**kwargs):
+    underride(kwargs, loc='best')
+
+    ax = plt.gca()
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels, **kwargs)
+
+
+def remove_from_legend(bad_labels):
+    """Removes some labels from the legend.
+
+    bad_labels: sequence of strings
     """
     ax = plt.gca()
-    ax.set_ylabel(ylabel, **kwargs)
-    ax.set_xlabel(xlabel, **kwargs)
-    if title is not None:
-        ax.set_title(title, **kwargs)
+    handles, labels = ax.get_legend_handles_labels()
+    handle_list, label_list = [], []
+    for handle, label in zip(handles, labels):
+        if label not in bad_labels:
+            handle_list.append(handle)
+            label_list.append(label)
+    ax.legend(handle_list, label_list)
 
-    # TODO: consider setting labels automatically based on
-    # object attributes
-    # label the y axis
-    #label = getattr(y, 'label', 'y')
-    #units = getattr(y, 'units', 'dimensionless')
-    #plt.ylabel('%s (%s)' % (label, units))
 
-xlabel = plt.xlabel
-ylabel = plt.ylabel
-xscale = plt.xscale
-yscale = plt.yscale
-xlim = plt.xlim
-ylim = plt.ylim
-title = plt.title
-hlines = plt.hlines
-vlines = plt.vlines
-fill_between = plt.fill_between
-
+# TODO: Either finish SubPlots or remove it
 class SubPlots:
 
     def __init__(self, fig, axes_seq):
@@ -637,55 +784,6 @@ def subplot(nrows, ncols, plot_number, **kwargs):
     fig.set_figheight(height)
 
 
-def legend(**kwargs):
-    underride(kwargs, loc='best')
-    plt.legend(**kwargs)
-
-
-def nolegend():
-    # TODO
-    pass
-
-
-def remove_from_legend(bad_labels):
-    """Removes some labels from the legend.
-
-    bad_labels: sequence of strings
-    """
-    ax = plt.gca()
-    handles, labels = ax.get_legend_handles_labels()
-    handle_list, label_list = [], []
-    for handle, label in zip(handles, labels):
-        if label not in bad_labels:
-            handle_list.append(handle)
-            label_list.append(label)
-    plt.legend(handle_list, label_list)
-
-
-def decorate(**kwargs):
-    """Decorate the current axes.
-
-    Call decorate with keyword arguments like
-
-    decorate(title='Title',
-             xlabel='x',
-             ylabel='y')
-
-    The keyword arguments can be any of the axis properties
-    defined by Matplotlib.  To see the list, run plt.getp(plt.gca())
-
-    In addition, you can use `legend=False` to suppress the legend.
-
-    And you can use `loc` to indicate the location of the legend
-    (the default value is 'best')
-    """
-    # 
-    if kwargs.pop('legend', True):
-        loc = kwargs.pop('loc', 'best')
-        legend(loc=loc)
-    
-    plt.gca().set(**kwargs)
-
 
 class Array(np.ndarray):
     pass
@@ -717,23 +815,47 @@ class MySeries(pd.Series):
     def set(self, **kwargs):
         """Uses keyword arguments to update the Series in place.
 
-        Example: series.update(a=1, b=2)
+        Example: series.set(a=1, b=2)
         """
         for name, value in kwargs.items():
             self[name] = value
 
 
-class SweepSeries(MySeries):
-    """Represents a mapping from parameter values to metrics.
-    """
-    pass
+def get_first_label(series):
+    """Returns the label of the first element."""
+    return series.index[0]
+
+def get_last_label(series):
+    """Returns the label of the first element."""
+    return series.index[-1]
+
+def get_index_label(series, i):
+    """Returns the ith label in the index."""
+    return series.index[i]
+
+def get_first_value(series):
+    """Returns the value of the first element."""
+    return series.values[0]
+
+def get_last_value(series):
+    """Returns the value of the first element."""
+    return series.values[-1]
+
 
 
 class TimeSeries(MySeries):
+    """Represents a mapping from times to values."""
+    pass
+
+
+class SweepSeries(MySeries):
+    """Represents a mapping from parameter values to metrics."""
     pass
 
 
 class System(MySeries):
+    """Contains the parameters of a system and their values."""
+
     def __init__(self, *args, **kwargs):
         """Initialize the series.
 
@@ -747,7 +869,7 @@ class System(MySeries):
             super().__init__(list(kwargs.values()), index=kwargs)
         elif len(args) == 1:
             super().__init__(*args)
-            # TODO: also copy in the kwargs?
+            # TODO: if there are also kwargs, should we add them in?
         else:
             msg = '__init__() takes at most one positional argument'
             raise TypeError(msg)
@@ -773,38 +895,16 @@ class System(MySeries):
 
 
 class State(System):
+    """Represents the state of a system at a point in time."""
     pass
 
 
 class Condition(System):
+    """Represents the condition of a system.
+    
+    Condition object are often used to construct a System object.
+    """
     pass
-
-
-def flip(p=0.5):
-    return np.random.random() < p
-
-
-# abs, min, max, pow, sum, round
-
-def abs(*args):
-    # TODO: warn about using the built in
-    return np.abs(*args)
-
-def min(*args):
-    # TODO: warn about using the built in
-    return np.min(*args)
-
-def max(*args):
-    # TODO: warn about using the built in
-    return np.max(*args)
-
-def sum(*args):
-    # TODO: warn about using the built in
-    return np.sum(*args)
-
-def round(*args):
-    # TODO: warn about using the built in
-    return np.round(*args)
 
 
 
@@ -820,6 +920,8 @@ class MyDataFrame(pd.DataFrame):
     and make these names useable as row labels.
     """
     def __init__(self, *args, **kwargs):
+        # TODO: currently MyDataFrame underrides to float64 and
+        # MySeries does not.  Does this inconsistency make sense?
         underride(kwargs, dtype=np.float64)
         super().__init__(*args, **kwargs)
 
@@ -933,7 +1035,8 @@ class _Vector(Quantity):
         if len(self) == 2:
             return self.angle - other.angle
         else:
-            #TODO: see http://www.euclideanspace.com/maths/algebra/vectors/angleBetween/
+            #TODO: see http://www.euclideanspace.com/maths/algebra/
+            # vectors/angleBetween/
             raise NotImplementedError()
         
         
@@ -966,6 +1069,8 @@ def Vector(*args, units=None):
 def plot_segment(A, B, **options):
     """Plots a line segment between two Vectors.
 
+    For 3-D vectors, the z axis is ignored.
+
     Additional options are passed along to plot().
 
     A: Vector
@@ -976,49 +1081,34 @@ def plot_segment(A, B, **options):
     plot(xs, ys, **options)
     
 
-def cart2pol(x, y, z=None):
-    """Convert Cartesian coordinates to polar.
+@property
+def dimensionality(self):
+    """Unit's dimensionality (e.g. {length: 1, time: -1})
 
-    x: number or sequence
-    y: number or sequence
-    z: number or sequence (optional)
+    This is a simplified version of this method that does no caching.
 
-    returns: theta, rho OR theta, rho, z
+    returns: dimensionality
     """
-    x = np.asarray(x)
-    y = np.asarray(y)
+    dim = self._REGISTRY._get_dimensionality(self._units)
+    return dim
 
-    rho = np.sqrt(x**2 + y**2)
-    theta = np.arctan2(y, x)
-        
-    if z is None:
-        return theta, rho
-    else:
-        return theta, rho, z
+# monkey patch Unit and Quantity so they use the non-caching
+# version of `dimensionality`
+pint.unit._Unit.dimensionality = dimensionality
+pint.quantity._Quantity.dimensionality = dimensionality
 
 
-def pol2cart(theta, rho, z=None):
-    """Convert polar coordinates to Cartesian.
-
-    theta: number or sequence
-    rho: number or sequence
-    z: number or sequence (optional)
-
-    returns: x, y OR x, y, z
+def units_off():
+    """Make all quantities behave as if they were dimensionless.
     """
-    if hasattr(theta, 'units'):
-        if theta.units == UNITS.degree:
-            theta = theta.to(UNITS.radian)
-        if theta.units != UNITS.radian:
-            msg = """In pol2cart, theta must be either a number or
-            a Quantity in degrees or radians."""
-            raise ValueError(msg)
-        
-    x = rho * np.cos(theta)
-    y = rho * np.sin(theta)
+    global SAVED_PINT_METHOD
+    
+    SAVED_PINT_METHOD = UNITS._get_dimensionality
+    UNITS._get_dimensionality = lambda self: {}
 
-    if z is None:
-        return x, y
-    else:
-        return x, y, z
+
+def units_on():
+    """Restore the saved behavior of quantities.
+    """
+    UNITS._get_dimensionality = SAVED_PINT_METHOD
 
