@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{1.2.3}
+\newcommand{\theversion}{1.2.4}
 
 
 %%%% Both LATEX and PLASTEX
@@ -3212,7 +3212,7 @@ def run_simulation(system, update_func):
     
     for t in linrange(system.t0, system.t_end-1):
         state = update_func(state, system)
-        S[i+1], I[i+1], R[i+1] = state
+        S[t+1], I[t+1], R[t+1] = state
     
     system.S = S
     system.I = I
@@ -3280,7 +3280,7 @@ def run_simulation(system, update_func):
     frame.loc[system.t0] = system.init
     
     for t in linrange(system.t0, system.t_end-1):
-        frame.loc[i+1] = update_func(frame.loc[i], system)
+        frame.loc[t+1] = update_func(frame.loc[t], system)
     
     system.results = frame
 \end{python}
