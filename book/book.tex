@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.3}
+\newcommand{\theversion}{2.0.5}
 
 
 %%%% Both LATEX and PLASTEX
@@ -285,55 +285,70 @@ available at \url{http://modsimpy.com/license}.
 
 This book is about modeling and simulation of physical systems.  
 The following diagram shows what I mean by ``modeling":
+
 \index{modeling}
 
 \vspace{0.2in}
 \centerline{\includegraphics[height=3in]{figs/modeling_framework.pdf}}
 
-Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be simplified or {\bf abstracted} away.
+Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be left out; removing details is called {\bf abstraction}.
+
 \index{system}
 
-The result of abstraction is a {\bf model} that includes the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
+The result of abstraction is a {\bf model}, which is a description of the system that includes only the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
+
 \index{model}
 \index{abstraction}
 \index{analysis}
 
-The result of analysis and simulation can be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
+The result of analysis and simulation might be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
+
 \index{prediction}
 \index{explanation}
 \index{design}
 
 We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
+
 \index{validation}
 \index{data}
 
-This process is almost always iterative: for any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
+For any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
+
 \index{iterative modeling}
 
-
 Sometimes the best model is the most detailed.  If we include more features, the model is more realistic, and we expect its predictions to be more accurate.
+
 \index{realism}
 
 But often a simpler model is better.  If we include only the essential features and leave out the rest, we get models that are easier to work with, and the explanations they provide can be clearer and more compelling.
+
 \index{simplicity}
 
 As an example, suppose someone asked you why the orbit of the Earth is nearly elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size), compute the gravitational force between them using Newton's law of universal gravitation, and compute the resulting orbit using Newton's laws of motion, you can show that the result is an ellipse.
+
 \index{orbit}
 \index{ellipse}
 
 Of course, the actual orbit of Earth is not a perfect ellipse, because of the gravitational forces of the Moon, Jupiter, and other objects in the solar system, and because Newton's laws of motion are only approximately true (they don't take into account relativistic effects).
+
 \index{Newton}
 \index{relativity}
 
 But adding these features to the model would not improve the explanation; more detail would only be a distraction from the fundamental cause.  However, if the goal is to predict the position of the Earth with great precision, including more details might be necessary.  
 
-So choosing the best model depends on what the model is for.  It is usually a good idea to start with a simple model, even if it is likely to be too simple, and test whether it is good enough for its purpose.  Then you can add features gradually, starting with the ones you expect to be most essential.
+Choosing the best model depends on what the model is for.  It is usually a good idea to start with a simple model, even if it is likely to be too simple, and test whether it is good enough for its purpose.  Then you can add features gradually, starting with the ones you expect to be most essential.  This process is called {\bf iterative modeling}.
 
-Comparing the results of successive models provides a form of {\bf internal validation}, so you can catch conceptual, mathematical, and software errors.  And by adding and removing features, you can tell which ones have the biggest effect on the results, and which can be ignored.
+Comparing results of successive models provides a form of {\bf internal validation}, so you can catch conceptual, mathematical, and software errors.  And by adding and removing features, you can tell which ones have the biggest effect on the results, and which can be ignored.
+
 \index{internal validation}
 \index{validation!internal}
+\index{external validation}
+\index{validation!external}
 
-\section{Can modeling be taught?}
+Comparing results to data from the real world provides {\bf external validation}, which is generally the strongest test.
+
+
+\section*{Can modeling be taught?}
 
 These essential modeling skills --- abstraction, analysis, simulation, and validation --- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most schools they are not taught explicitly, and students get little practice.  That's the problem this book is meant to address.  
 
@@ -348,7 +363,7 @@ And they will only work with bad models; that is, models that are too simple for
 In most freshman physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach, and for students to practice, the entire modeling process.
 
 
-\section{How much programming do I need?}
+\section*{How much programming do I need?}
 
 If you have never programmed before, you should be able to read this book, understand it, and do the exercises.  I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it it used.  If you find that I have used a term without defining it, let me know.
 
@@ -359,51 +374,66 @@ Most programming classes\footnote{Including many I have taught.} have two big pr
 \begin{enumerate}
 
 \item They go ``bottom up", starting with basic language features and gradually adding more powerful tools.  As a result, it takes a long time before students can do anything more interesting than convert Fahrenheit to Celsius.
+
 \index{bottom up}
 
-\item They have no context.  Students learn to program with no particular goal in mind, so the exercises span an incoherent collection of topics, and the projects tend to be unmotivated.
+\item They have no context.  Students learn to program with no particular goal in mind, so the exercises span an incoherent collection of topics, and the exercises tend to be unmotivated.
 
 \end{enumerate}
 
 In this book, you learn to program with an immediate goal in mind: writing simulations of physical systems.  And we proceed ``top down", by which I mean we use professional-strength data structures and language features right away.  In particular, we use the following Python {\bf libraries}:
+
 \index{top down}
 
 \begin{itemize}
 
-\item NumPy for basic numerical computation (see \url{http://www.numpy.org/}).\index{NumPy}
+\item NumPy for basic numerical computation (see \url{http://www.numpy.org/}).
+
+\index{NumPy}
 
 \item SciPy for scientific computation (see \url{http://www.scipy.org/}).
+
 \index{SciPy}
 
 \item matplotlib for visualization (see \url{http://matplotlib.org/}).
+
 \index{Matplotlib}
 
-\item pandas for working with data (see \url{http://pandas.pydata.org/}).\index{Pandas}
+\item pandas for working with data (see \url{http://pandas.pydata.org/}).
 
-\item SymPy for symbolic computation, (see \url{http://www.sympy.org}).\index{SymPy}
+\index{Pandas}
 
-\item Pint for units like kilograms and meters (see \url{http://pint.readthedocs.io}).\index{Pint}
+\item SymPy for symbolic computation, (see \url{http://www.sympy.org}).
 
-\item Jupyter for reading, running, and developing code (see \url{http://jupyter.org}).\index{Jupyter}
+\index{SymPy}
+
+\item Pint for units like kilograms and meters (see \url{http://pint.readthedocs.io}).
+
+\index{Pint}
+
+\item Jupyter for reading, running, and developing code (see \url{http://jupyter.org}).
+
+\index{Jupyter}
 
 \end{itemize}
 
 These tools let you work on more interesting programs sooner, but there are some drawbacks: they can be hard to use, and it can be challenging to keep track of which library does what and how they interact.
 
 I have tried to mitigate these problems by providing a library, called \py{modsim}, that makes it easier to get started with these tools, and provides some additional capabilities.
+
 \index{modsim library}
 
-Some features in the \py{modsim} library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, or even later.
+Some features in the \py{modsim} library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, and later.
 
-I encourage you to read the the \py{modsim} library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse-engineering my designs.
+I encourage you to read the the \py{modsim} library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse engineering my designs.
 
 
-\section{How much math and science do I need?} 
+\section*{How much math and science do I need?} 
 
-I assume that you have studied calculus.  You should know what derivatives and integrals are, but that's about all.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.
+I assume that you know what derivatives and integrals are, but that's about all.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.
+More importantly, you should understand what those concepts {\em mean};  but if you don't, this book might help you figure it out.
+
 \index{calculus}
-
-More importantly you should understand what those concepts {\em mean};  but if you don't, this book might help you figure it out.
 
 You don't have to know anything about differential equations.
 
@@ -411,13 +441,16 @@ As for science, we will cover topics from a variety of fields, including demogra
 
 When we get to mechanics, I assume you understand the relationship between position, velocity, and acceleration, and that you are familiar with Newton's laws of motion, especially the second law, which is often expressed as $F = ma$ (force equals mass times acceleration).
 
+\index{science}
+\index{mechanics}
+
 I think that's everything you need, but if you find that I left something out, please let me know.
 
 
-\section{Getting started}
+\section*{Getting started}
 \label{code}
 
-To run the examples and work on the exercises in this book, you will need to be able to:
+To run the examples and work on the exercises in this book, you have to:
 
 \begin{enumerate}
 
@@ -432,24 +465,43 @@ To run the examples and work on the exercises in this book, you will need to be 
 The next three sections provide details for these steps.  I wish there were an easier way to get started; it's regrettable that you have to do so much work before you write your first program.  Be persistent!
 
 
-\section{Installing Python and the libraries}
+\section*{Installing Python}
 
-You might already have Python installed on your computer, but you might not have the latest version.  To use the code in this book, you need Python 3.6, or later.  Even if you have the latest version, you probably don't have all of the libraries we need.
-\index{intalling Python}
+You might already have Python installed on your computer, but you might not have the latest version.  To use the code in this book, you need Python 3.6 or later.  Even if you have the latest version, you probably don't have all of the libraries we need.
 
-You could update Python and install these libraries, but I strongly recommend that you don't go down that road.  I think you will find it easier to use {\bf Anaconda}, which is a free Python distribution that includes all the libraries you need for this book (and lots more).
+\index{installing Python}
+
+You could update Python and install these libraries, but I strongly recommend that you don't go down that road.  I think you will find it easier to use {\bf Anaconda}, which is a free Python distribution that includes all the libraries you need for this book (and more).
+
 \index{Anaconda}
 
 Anaconda is available for Linux, macOS, and Windows.  By default, it puts all files in your home directory, so you don't need administrator (root) permission to install it, and if you have a version of Python already, Anaconda will not remove or modify it.
 
-[Detailed instructions coming soon.]
+Start at \url{https://www.anaconda.com/download}.  Download the installer for your system and run it.  I suggest you accept the recommended options.
+On Windows you have the option to install Visual Studio Code, which is an interactive environment for writing programs.  You won't need it for this book, but you might want it for other projects.
+
+By default, Anaconda installs most of the packages you need, but there are a few more you might have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open the Anaconda Prompt that should be in your Start menu.
+
+Run the following command
+
+\begin{code}
+conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml
+\end{code}
+
+These packages might already be installed.  Then run this command:
+
+\begin{code}
+conda install -c unidata pint
+\end{code}
+
+That should be everything you need.
 
 
-
-\section{Copying my files}
+\section*{Copying my files}
 
 The code for this book is available from
-\url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository\footnote{The really cool kids call it a ``repo".}.  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
+\url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository (the cool kids call it a ``repo").  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
+
 \index{repository}
 \index{Git}
 \index{GitHub}
@@ -457,11 +509,25 @@ The code for this book is available from
 There are several ways you can copy the files from my repository to your computer.
 
 If you don't want to use Git at all, you can download my files
-in a Zip archive from \url{http://modsimpy.com/zip}.  Then you need a program like WinZip or gzip to unpack the Zip file.
+in a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download, and then skip to the next section.
 
-To use Git, you need a {\bf Git client}, which is a program that manages git repositories.  If you have not used Git before, I recommend GitHub Desktop, which is a simple graphical Git client.  You can download it from \url{https://desktop.github.com}.  Currently, GitHub Desktop is not available for Linux.  On Linux, I suggest using the Git command-line client.  Installation instructions are at \url{http://modsimpy.com/git}.
+If you want to use Git, you need a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Linux, macOS, and Windows at \url{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}. 
 
-Once you have a Git client, you can use it to copy files from my repository to your computer, which is called {\bf cloning} in Git's vocabulary.  If you are using a Command-line git client, type
+For Windows, the client I recommend is Git for Windows.  In the installer, I suggest you accept the recommended options, with two exceptions:
+
+\begin{itemize}
+
+\item As the default editor, choose \py{nano} instead of \py{vim}.
+
+\item For ``Configuring line ending conversions", select ``Check out as is, commit as is".
+
+\end{itemize}
+
+Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open Git Bash, which should be in your Start menu.
+
+To find out what directory you are in, type \py{pwd}, which stands for ``print working directory".  On MacOS or Linux, you are probably in your home directory, \py{/home/yourusername}.  One Windows, most likely you are in \py{Users\\yourusername}.
+
+To copy files from my repository to your computer, which is called {\bf cloning} in Git's vocabulary, run this command
 
 \begin{python}
 git clone https://github.com/AllenDowney/ModSimPy
@@ -479,6 +545,7 @@ git clone https://github.com/YourGitHubUserName/ModSimPy
 
 Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.
 
+Whether you clone my repository or yours, you should have a new directory called \py{ModSimPy}.
 
 
 \section{Running Jupyter}
@@ -486,11 +553,26 @@ Of course, you should replace \py{YourGitHubUserName} with your GitHub user name
 The code for each chapter, and starter code for the exercises, is in
 Jupyter notebooks.  If you have not used Jupyter before, you can read
 about it at \url{http://jupyter.org}.
+
 \index{Jupyter}
 
-% TODO: Add Jupyter instructions
+To start Jupyter on macOS or Linux, open a Terminal; on Windows, open Git Bash.  Use \py{cd} to ``change directory" into the repository:
 
-[Jupyter instructions coming soon.]
+\begin{code}
+cd ModSimPy/code
+\end{code}
+
+If you downloaded the code in a Zip file, you might have to navigate to whatever directory you downloaded it into.
+
+Then launch the Jupyter notebook server:
+
+\begin{code}
+jupyter notebook
+\end{code}
+
+Jupyter should open a window in a browser, and you should see the list of notebooks in my repository.  Click on the first notebook, \py{chap_01_a.ipynb} and follow the instructions to run the first few ``cells".  The first time you run a notebook, it might take a minute or two while some Python files get initialized.  After that, it should run faster.
+
+Feel free to read through the notebook, but it might not make sense until you read Chapter~\ref{chap01}.
 
 
 \section*{Contributor List}
@@ -505,7 +587,7 @@ If you include at least part of the sentence the error appears in, that makes it
 
 \begin{itemize}
 
-\item I am grateful to John Geddes and Mark Somerville for their early collaboration with me to create Modeling at Simulation, the class at Olin College this book is based on.
+\item I am grateful to John Geddes and Mark Somerville for their early collaboration with me to create Modeling and Simulation, the class at Olin College this book is based on.
 
 \item My early work on this book benefited from conversations with
 my amazing colleagues at Olin College, including John Geddes, Alison
@@ -547,6 +629,7 @@ The world is a complicated place.  In order to make sense of it, we use {\bf mod
 Some models are actual objects, like a scale model of a car, which has the same shape as the car, but smaller.  Scale models are often useful for testing properties of mechanical systems, like air resistance.
 
 This book is about {\bf mathematical models}, which are ideas, not objects.  If you studied Newton's laws of motion, what you learned is a mathematical model of how objects move in space when forces act on them.
+
 \index{Newton}
 
 
@@ -639,7 +722,7 @@ v = a * t
 
 The result is about \SI{86}{\meter\per\second}, again with the correct units.
 
-This example demonstrates analysis and computation using Python.  Next we'll see an example of simulation.
+This example demonstrates analysis and computation using Python.  Next we'll see an example of simulation.  Before you go on, you might want to read the first notebook for this chapter, \py{chap_01_a.ipynb}, and work on the exercises in it.
 
 
 \section{Modeling a bike share system}
@@ -1168,10 +1251,11 @@ Figure~\ref{chap03-fig01} shows the result.
 %TODO: define library
 %TODO: replace matplotlib with pyplot
 
+Before you go on, you might want to read the second notebook for this chapter, \py{chap_01_b.ipynb}, and work on the exercises in it.
 
 \section{Under the hood}
 
-Throughout this book, we'll use functions defined in the \py{modsim} library.  You don't have to know how these work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
+Throughout this book, we'll use functions defined in the \py{modsim} library.  You don't have to know how they work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
 
 \index{modsim}
 
@@ -1202,6 +1286,7 @@ For each new function you learn, you should deliberately make as many mistakes a
 
 
 \chapter{Simulation}
+\label{chap02}
 
 To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this chapter, I demonstrate the process we use to make models less wrong.
 
@@ -1539,6 +1624,8 @@ print(bikeshare.olin_empty, bikeshare.wellesley_empty)
 
 Because the simulation is stochastic, the results are different each time it runs.
 
+Before you go on, you might want to read the first notebook for this chapter, \py{chap_02_a.ipynb}, and work on the exercises in it.
+
 
 \section{Functions that return values}
 
@@ -1738,6 +1825,7 @@ for p1 in p1_array:
 
 When you run the notebook for this chapter, you will see the results and have a chance to try additional experiments.
 
+Before you go on, you might want to read the second notebook for this chapter, \py{chap_02_b.ipynb}, and work on the exercises in it.
 
 \section{Incremental development}
 
@@ -1789,6 +1877,7 @@ If you find yourself writing more than a few lines of code before you start test
 
 
 \chapter{Explanation}
+\label{chap03}
 
 In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{http://modsimpy.com/popbomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.
   
@@ -1923,7 +2012,12 @@ plot(un, '--', label='UN DESA')
 \end{python}
 
 
-The next two lines plot the \py{Series} objects.  The style strings \py{':'} and \py{'--'} indicate dotted and dashed lines.  The \py{label} argument provides the string that appears in the legend.
+The next two lines plot the \py{Series} objects.  The format strings \py{':'} and \py{'--'} indicate dotted and dashed lines.  For more about format strings in Pyplot, see \url{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html}.
+
+\index{format string}
+\index{Pyplot}
+
+The \py{label} argument provides the string that appears in the legend.
 
 \index{label}
 \index{legend}
@@ -2050,6 +2144,8 @@ Figure~\ref{chap03-fig02} shows the result. The model does not fit the data part
 
 We'll try out some different models in the next few sections, but first let's clean up the code.
 
+Before you go on, you might want to read the first notebook for this chapter, \py{chap_03_a.ipynb}, and work on the exercises in it.
+
 
 \section{Now with System objects}
 \label{nowwithsystem}
@@ -2099,6 +2195,11 @@ def plot_results(census, un, timeseries, title):
 
 \index{plot}
 \index{decorate}
+
+You will not be surprised to learn that the \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://matplotlib.org/users/colors.html}.
+
+\index{Pyplot}
+\index{color}
 
 Finally, we can run it like this.
 
@@ -2163,7 +2264,9 @@ There are a few things we could try to improve the model:
 
 \end{itemize}
 
-We will try out these variations, but first, let's clean up the code one more time.
+We will try out these variations, but first, we'll clean up the code one more time.
+
+Before you go on, you might want to read the second notebook for this chapter, \py{chap_03_b.ipynb}, and work on the exercises in it.
 
 
 \section{Factoring out the update function}
@@ -2362,6 +2465,8 @@ In this version, it is easier to interpret the parameters: $\alpha$ is the maxim
 
 In the next chapter we use the models we have developed to generate predictions.
 
+Before you go on, you might want to read the third notebook for this chapter, \py{chap_03_c.ipynb}, and work on the exercises in it.
+
 
 \section{Disfunctions}
 
@@ -2460,14 +2565,17 @@ In the notebook for this chapter, you can try out each of these examples and see
 
 
 \chapter{Prediction}
+\label{chap04}
 
 In the previous chapter we developed a quadratic model of world population growth from 1950 to 2015.  It is a simple model, but it fits the data well and the mechanisms it's based on are plausible.  
 
 In this chapter we'll use the quadratic model to generate projections of future growth, and compare our results to projections from actual demographers.  Also, we'll represent the models from the previous chapters as differential equations and solve them analytically.
+
 \index{prediction}
 \index{projection}
 
 You can view the code for this chapter at \url{http://modsimpy.com/chap04}.  For instructions on downloading and running the code, see Section~\ref{code}.
+
 
 \section{Generating projections}
 
@@ -2475,7 +2583,7 @@ We'll start with the quadratic model from Section~\ref{quadratic}, which is base
 \index{quadratic growth}
 
 \begin{python}
-def update_func(pop, t, system):
+def update_func_quad(pop, t, system):
     net_growth = system.alpha * pop + system.beta * pop**2
     return pop + net_growth
 \end{python}
@@ -2483,17 +2591,18 @@ def update_func(pop, t, system):
 As we saw in the previous chapter, we can get the start date, end date, and initial population from \py{census}, which is a series that contains world population estimates generated by the U.S. Census:
 
 \begin{python}
-tfirst_year = get_first_label(census)
-last_year = get_last_label(census)
+t_0 = get_first_label(census)
+t_end = get_last_label(census)
+p_0 = census[t_0]
 \end{python}
 
 Now we can create a \py{System} object:
 \index{System object}
 
 \begin{python}
-system = System(t0 = first_year, 
-                t_end = last_year,
-                p0 = census[first_year],
+system = System(t_0=t_0, 
+                t_end=t_end,
+                p_0=p_0,
                 alpha=0.025,
                 beta=-0.0018)
 \end{python}
@@ -2501,14 +2610,14 @@ system = System(t0 = first_year,
 And run the model:
 
 \begin{python}
-run_simulation(system, update_func)
+results = run_simulation(system, update_func_quad)
 \end{python}
 
 We have already seen the results in Figure~\ref{chap03-fig04}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 system.t_end = 2250
-run_simulation(system, update_func)
+results = run_simulation(system, update_func_quad)
 \end{python}
 
 \begin{figure}
@@ -2524,6 +2633,7 @@ I am using the word ``projection" deliberately, rather than ``prediction", with 
 Using ``projection" leaves open the possibility that there are important things in the real world that are not captured in the model.  It also suggests that, even if the model is good, the parameters we estimate based on the past might be different in the future.
 
 The quadratic model we've been working with is based on the assumption that population growth is limited by the availability of resources; in that scenario, as the population approaches carrying capacity, birth rates fall and death rates rise because resources become scarce.
+
 \index{carrying capacity}
 
 If that assumption is valid, we might be able to use actual population growth to estimate carrying capacity, especially if we observe the transition into the regime where the growth rate starts to fall.
@@ -2533,9 +2643,11 @@ But in the case of world population growth, those conditions don't apply.  Over 
 \begin{itemize}
 
 \item First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{http://modsimpy.com/mortality}).  So the decrease in net growth is due entirely to declining birth rates.
+
 \index{mortality rate}
 
 \item Second, the relationship between resources and birth rate is the opposite of what the model assumes; as nations develop and people become more wealthy, birth rates tend to fall.  
+
 \index{birth rate}
 
 \end{itemize} 
@@ -2554,6 +2666,7 @@ table3 = tables[3]
 \end{python}
 
 For some years, one agency or the other has not published a projection, so some elements of \py{table3} contain the special value \py{NaN}, which stands for ``not a number".  \py{NaN} is often used to indicate missing data.
+
 \index{not a number}
 \index{NaN}
 \index{missing data}
@@ -2565,31 +2678,38 @@ For some years, one agency or the other has not published a projection, so some 
 \end{figure}
 
 Pandas provides functions that deal with missing data, including \py{dropna}, which removes any elements in a series that contain \py{NaN}.  Using \py{dropna}, we can plot the projections like this:
+
 \index{Pandas}
 \index{dropna}
 
 \begin{python}
 def plot_projections(table):
-    census = table.census / 1e9
-    un = table.un / 1e9
+    census_proj = table.census / 1e9
+    un_proj = table.un / 1e9
     
-    plot(census.dropna(), ':', 
-         color='darkblue', label='US Census')
-    plot(un.dropna(), '--', 
-         color='green', label='UN DESA')
+    plot(census_proj.dropna(), 'b:', label='US Census')
+    plot(un_proj.dropna(), 'g--', label='UN DESA')
 \end{python}
+
+The format string \py{'b:'} indicates a blue dotted line; \py{g--} indicates a green dashed line.
+
+\index{format string}
+\index{plot}
 
 We can run our model over the same interval:
 
 \begin{python}
 system.t_end = 2100
-run_simulation(system, update_func2)
+results = run_simulation(system, update_func_quad)
 \end{python}
 
 And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+
 \index{demography}
 
 Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the results from this model, simple as it is, are not entirely crazy.
+
+Before you go on, you might want to read the first notebook for this chapter, \py{chap_04_a.ipynb}, and work on the exercises in it.
 
 
 \section{Recurrence relations}
@@ -2605,9 +2725,10 @@ In mathematical notation, we would write the same model like this:
 \[ x_{n+1} = x_n + c \]
 %
 where $x_n$ is the population during year $n$, $x_0$ is a given initial population, and $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence relation}; see \url{http://modsimpy.com/recur}.
+
 \index{recurrence relation}
 
-Often it is possible to solve a recurrence relation by writing an equation that computes $x_n$, for a given value of $n$, directly; that is, without computing the intervening values from $x_1$ through $x_{n-1}$.
+Sometimes it is possible to solve a recurrence relation by writing an equation that computes $x_n$, for a given value of $n$, directly; that is, without computing the intervening values from $x_1$ through $x_{n-1}$.
 
 In the case of constant growth we can see that $x_1 = x_0 + c$, and $x_2 = x_1 + c$.  Combining these, we get $x_2 = x_0 + 2c$, then $x_3 = x_0 + 3c$, and it is not hard to conclude that in general
 %
@@ -2628,6 +2749,7 @@ Now we can see that $x_1 = x_0 (1 + \alpha)$, and $x_2 = x_0 (1 + \alpha)^2$, an
 \[ x_n = x_0 (1 + \alpha)^n \]
 %
 This result is a {\bf geometric progression}; see \url{http://modsimpy.com/geom}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
+
 \index{geometric progression}
 \index{quadratic growth}
 
@@ -2658,6 +2780,7 @@ If we define $\Delta t$ to be the time step, which is one year in the example, w
 \[ \frac{\Delta x}{\Delta t} = c \]
 %
 This model is {\bf discrete}, which means it is only defined at integer values of $n$ and not in between.  But in reality, people are born and die all the time, not once a year, so a {\bf continuous} model might be more realistic.
+
 \index{discrete}
 \index{continuous}
 \index{time step}
@@ -2667,6 +2790,7 @@ We can make this model continuous by writing the rate of change in the form of a
 \[ \frac{dx}{dt} = c \]
 %
 This way of representing the model is a {\bf differential equation}; see \url{http://modsimpy.com/diffeq}.
+
 \index{differential equation}
 
 We can solve this differential equation if we multiply both sides by $dt$:
@@ -2695,7 +2819,7 @@ Now we integrate both sides, yielding:
 %
 where $\ln$ is the natural logarithm and $K$ is the constant of integration.  Exponentiating both sides\footnote{The exponential function can be written $\exp(x)$ or $e^x$.  In this book I use the first form because it resembles the Python code. }, we have
 %
-\[ \exp(\log(x)) = x = \exp(\alpha t + K) \]
+\[ \exp(\log(x)) = \exp(\alpha t + K) \]
 %
 which we can rewrite
 %
@@ -2705,19 +2829,24 @@ Since $K$ is an arbitrary constant, $\exp(K)$ is also an arbitrary constant, so 
 %
 \[ x = C \exp(\alpha t) \]
 %
-where $C = \exp(K)$.  There are many solutions to this differential equation, with different values of $C$.  The particular solution we want is the one that has the value $x_0$ when $t=0$.  Well, when $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
+where $C = \exp(K)$.  There are many solutions to this differential equation, with different values of $C$.  The particular solution we want is the one that has the value $x_0$ when $t=0$. 
+
+When $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
 %
 \[ x(t) = x_0 \exp(\alpha t) \]
 %
 If you would like to see this derivation done more carefully, you might like this video: \url{http://modsimpy.com/khan1}.
+
 \index{logarithm}
 \index{exponentiation}
 \index{integration}
 \index{constant of integration}
 
+
 \section{Analysis and simulation}
 
 Once you have designed a model, there are generally two ways to proceed: simulation and analysis.  Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place.  Analysis often comes in the form of algebra; that is, symbolic manipulation using mathematical notation.
+
 \index{analysis}
 \index{algebra}
 \index{symbolic manipulation}
@@ -2731,20 +2860,25 @@ But there are several things we can do with analysis that are harder or impossib
 \item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{quadratic}, we get the general result that $K=-\alpha/\beta$.
 
 \item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
+
 \index{time step}
 
 \item We can use analysis to state and prove generalizations about models; for example, we might prove that certain results will always or never occur.  With simulations, we can show examples and sometimes find counterexamples, but it is hard to write proofs.
+
 \index{proof}
 
 \item Analysis can provide insight into models and the systems they describe; for example, sometimes we can identify regimes of qualitatively different behavior and key parameters that control those behaviors.
+
 \index{regime}
 
 \end{itemize}
 
 When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{http://modsimpy.com/plato}.}.
+
 \index{Plato}
 
 This is, of course, nonsense.  Mathematical notation is a language designed by humans for a purpose, specifically to facilitate symbolic manipulations like algebra.  Similarly, programming languages are designed  for a purpose, specifically to represent computational ideas and run programs.
+
 \index{math notation}
 \index{programming languages}
 
@@ -2754,6 +2888,7 @@ Each of these languages is good for the purposes it was designed for and less go
 \section{Analysis with WolframAlpha}
 
 Until recently, most analysis was done by rubbing graphite on wood pulp\footnote{Or ``rubbing the white rock on the black rock", a line I got from Woodie Flowers, who got it from Stephen Jacobsen.}, a process that is laborious and error-prone.  A useful alternative is symbolic computation.  If you have used services like WolframAlpha, you have used symbolic computation.
+
 \index{symbolic computation}
 \index{WolframAlpha}
 
@@ -2770,7 +2905,7 @@ WolframAlpha infers that \py{f(t)} is a function of \py{t} and \py{alpha} is a p
 If you add a second equation to specify the initial condition:
 
 \begin{python}
-df(t) / dt = alpha f(t),  f(0) = p0
+df(t) / dt = alpha f(t),  f(0) = p_0
 \end{python}
 
 WolframAlpha reports the particular solution:
@@ -2778,15 +2913,18 @@ WolframAlpha reports the particular solution:
 \[ f(t) = p_0 \exp(\alpha t) \]
 
 WolframAlpha is based on Mathematica, a powerful programming language designed specifically for symbolic computation.
+
 \index{Mathematica}
 
 
 \section{Analysis with SymPy}
 
 Python has a library called SymPy that provides symbolic computation tools similar to Mathematica.  They are not as easy to use as WolframAlpha, but they have some other advantages.
+
 \index{SymPy}
 
 Before we can use SymPy, we have to import it:
+
 \index{import statement}
 \index{statement!import}
 
@@ -2794,11 +2932,12 @@ Before we can use SymPy, we have to import it:
 from sympy import *
 \end{python}
 
-SymPy defines many functions, and some of them conflict with functions defined in \py{modsim} and the other libraries we're using, I suggest that you do symbolic computation with SymPy in a separate notebook.
+SymPy defines many functions, and some of them conflict with functions defined in \py{modsim} and the other libraries we're using.  To avoid these conflicts, I suggest that you do symbolic computation with SymPy in a separate notebook.
 
 The code for this section and the next is in this notebook: \url{http://modsimpy.com/sympy04}.  
 
 SymPy defines a \py{Symbol} object that represents symbolic variable names, functions, and other mathematical entities.
+
 \index{Symbol} object
 
 SymPy provides a function called \py{symbols} that takes a string and returns a \py{Symbol} object.  So if we run this assignment:
@@ -2819,7 +2958,9 @@ Python doesn't try to perform numerical addition; rather, it creates a new \py{S
 expr.subs(t, 2)
 \end{python}
 
-The result is 3.  Functions in SymPy are represented by a special kind of \py{Symbol}:
+The result is 3.
+
+Functions in SymPy are represented by a special kind of \py{Symbol}:
 
 \begin{python}
 f = Function('f')
@@ -2831,6 +2972,7 @@ Now if we write \py{f(t)}, we get an object that represents the evaluation of a 
 \section{Differential equations in SymPy}
 
 SymPy provides a function, \py{diff}, that can differentiate a function.  We can apply it to \py{f(t)} like this:
+
 \index{differential equation}
 \index{SymPy}
 
@@ -2839,6 +2981,7 @@ dfdt = diff(f(t), t)
 \end{python}
 
 The result is a \py{Symbol} that represents the derivative of \py{f} with respect to \py{t}.  But again, SymPy doesn't try to compute the derivative yet.
+
 \index{Symbol object}
 
 To represent a differential equation, we use \py{Eq}:
@@ -2863,17 +3006,18 @@ The result is the equation
 \[ f{\left (t \right )} = C_{1} \exp(\alpha t) \]
 %
 This is the {\bf general solution}, which still contains an unspecified constant, $C_1$.  To get the {\bf particular solution} where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
+
 \index{general solution}
 \index{particular solution}
 
 \begin{python}
-C1, p0 = symbols('C1 p0')
+C1, p_0 = symbols('C1 p_0')
 \end{python}
 
 Now we can perform the substitution:
 
 \begin{python}
-particular = solution_eq.subs(C1, p0)
+particular = solution_eq.subs(C1, p_0)
 \end{python}
 
 The result is 
@@ -2881,6 +3025,7 @@ The result is
 \[ f{\left (t \right )} = p_{0} \exp(\alpha t) \]
 %
 This function is called the {\bf exponential growth curve}; see \url{http://modsimpy.com/expo}.
+
 \index{exponential growth}
 
 
@@ -2939,9 +3084,12 @@ Quadratic & logistic: $x(t) = K / (1 + A\exp(-rt))$ \\
 \end{tabular} 
 
 What I've been calling the constant growth model is more commonly called ``linear growth" because the solution is a line.  Similarly, what I've called proportional is commonly called ``exponential", and what I've called quadratic is commonly called ``logistic".
+
 \index{logistic growth}
 
-I avoided the more common terms until now because I thought it would be strange to use them before we solved the equations and discovered the functional form of the solutions.
+I avoided these terms until now because they are based on the solutions to problems we had not solved yet.
+
+Before you go on, you might want to read the second notebook for this chapter, \py{chap_04_b.ipynb}, and work on the exercises in it.
 
 
 \section{DataFrame and Series}
@@ -2949,8 +3097,10 @@ I avoided the more common terms until now because I thought it would be strange 
 
 So far we've been using \py{DataFrame} and \py{Series} objects without really understanding how they work.  In this section we'll review what we know so far and get into a little more detail.
 
-Each \py{DataFrame} contains three objects: \py{index} is a sequence of labels for the rows, \py{columns} is a sequence of labels for the columns, and \py{values} is an array that contains the data.
+Each \py{DataFrame} contains three objects: \py{index} is a sequence of labels for the rows, \py{columns} is a sequence of labels for the columns, and \py{values} is a NumPy array that contains the data.
 Figure~\ref{fig-dataframe} shows these elements graphically.
+
+In the \py{DataFrame} objects in this chapter, \py{index} contains years from 1950 to 2016, \py{columns} contains names of agencies and people that produce population estimates, and \py{values} is an array of estimates.
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/dataframe.pdf}}
@@ -2958,13 +3108,13 @@ Figure~\ref{fig-dataframe} shows these elements graphically.
 \label{fig-dataframe}
 \end{figure}
 
+A \py{Series} is like a \py{DataFrame} with one column: it contains a string \py{name} that is like a column label, an index, and an array of values.
 
-%TODO: fuse these paragraphs
-Every \py{Series} contains two variables, \py{index} and \py{values}.  In this example, \py{index} is the sequence of years from 1950 to 2016, and \py{values} is the sequence of corresponding populations.
+Figure~\ref{fig-dataframe} shows the elements of a \py{DataFrame} and \py{Series} graphically.
 
-A \py{Series} also contains \py{index} and \py{values}; it does not have \py{columns}, but it does contain \py{name}, which is a string.
+\index{type function}
 
-To determine the type of these objects, we can use the Python function \py{type}:
+To determine the types of these elements, we can use the Python function \py{type}:
 
 \begin{code}
 type(table2)
@@ -2973,11 +3123,11 @@ type(table2.columns)
 type(table2.values)
 \end{code}
 
-If \py{table2} is a \py{DataFrame}, the type of \py{table2.index} is \py{Int64Index}, which is a defined by Pandas.  The type of \py{table2.columns} is \py{Index}.  These \py{Index} objects are similar to \py{Series} objects.
+They type of \py{table2} is \py{DataFrame}.  The type of \py{table2.index} is \py{Int64Index};  The type of \py{table2.columns} is \py{Index}.  \py{Int64Index} and \py{Index} are similar to \py{Series}.
 
 The type of \py{table2.values} is \py{ndarray}, which is the primary array type provided by NumPy; the name indicates that the array can have an arbitrary number of dimensions (N-dimensional).
 
-In a \py{Series}, the index is an \py{Index} object and the values are stores in an \py{ndarray}.  Figure~\ref{fig-dataframe} shows theses elements graphically.
+In \py{census} or \py{un}, the index is an \py{Int64Index} object and the values are stored in an \py{ndarray}.  
 
 In the \py{modsim} library, the functions \py{get_first_label} and \py{get_last_label} provide a simple way to access the index of a \py{DataFrame} or \py{Series}:
 
@@ -2998,13 +3148,178 @@ Defining these objects wasn't necessary; we could do all the same things using \
 If you write simulations in Python in the future, you can continue using the objects in \py{modsim}, if you find them useful, or you can use Pandas objects directly.
 
 
-\section{One queue or two?}
+\chapter*{Case studies}
+\label{case01}
 
-This section presents an exercise where you can apply what you've learned so far to a question related to {\bf queueing theory} (the study of systems that involve waiting in lines, also known as ``queues").  A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
+This chapter reviews the computational patterns we have seen so far and presents two exercises where you can apply them.
 
-Suppose you are designing the checkout area for a new store.  You have enough room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that serves both counters.
+\section*{Computational patterns}
 
-In theory, you might expect a single line to be better, but it has some practical drawbacks: in order to maintain a single line, you would have to install rope barriers, and customers might be put off by what seems to be a longer line, even if it moves faster.
+In Chapter~\ref{chap01} we used Pint to define units and perform calculations with units:
+
+\begin{code}
+meter = UNITS.meter
+second = UNIT.second
+a = 9.8 * meter / second**2
+\end{code}
+
+We defined a \py{State} object that contains state variables, which describe the state of a system, usually changing over time:
+
+\begin{code}
+bikeshare = State(olin=10, wellesley=2)
+\end{code}
+
+We used update operators like \py{+=} and \py{-=} to change state variables.  We used \py{print} statements to display the values of variables.
+
+We used the \py{flip} function to simulate random arrivals, and used \py{if} statements to check the results.
+
+We learned to define new functions that take parameters:
+
+\begin{code}
+def step(p1, p2):
+    if flip(p1):
+        bike_to_wellesley()
+        
+    if flip(p2):
+        bike_to_olin()
+\end{code}
+
+We used a \py{for} loop with the \py{range} function to execute the body of the loop a specified number of times.
+
+\begin{code}
+for i in range(4):
+    step(p1, p2)
+\end{code}
+
+We learned to create a \py{TimeSeries} object and use it to store the value of a state variable as it changes over time:
+
+\begin{code}
+results = TimeSeries()
+
+for i in range(10):
+    step(0.3, 0.2)
+    results[i] = bikeshare.olin
+\end{code}
+
+We used \py{plot} to plot the results, \py{decorate} to label the axes, and \py{savefig} to save the figure.
+
+\begin{code}
+plot(results, label='Olin')
+decorate(xlabel='Time step (min)', 
+         ylabel='Number of bikes')
+savefig('chap01-fig01.pdf)
+\end{code}
+
+In Chapter~\ref{chap02} we used local variables to store intermediate results, comparison operators to check for certain conditions, and the \py{return} statement to end the execution of a function.
+
+\begin{code}
+def move_bike(state, n):
+    olin_temp = state.olin - n
+    if olin_temp < 0:
+        state.olin_empty += 1
+        return
+    
+    wellesley_temp = state.wellesley + n
+    if wellesley_temp < 0:
+        state.wellesley_empty += 1
+        return
+    
+    state.olin = olin_temp
+    state.wellesley = wellesley_temp
+\end{code}
+
+
+And we wrote the first version of \py{run_simulation}, which defines the structure of almost every simulation in this book:
+
+\begin{code}
+def run_simulation(p1, p2, num_steps):
+    state = State(olin=10, wellesley=2, 
+                    olin_empty=0, wellesley_empty=0)
+                    
+    for i in range(num_steps):
+        step(state, p1, p2)
+        
+    return state
+\end{code}
+
+The parameters of \py{run_simulation} are the parameters of the model.  It creates a \py{State} object that represents the initial state of the system, then updates the state over a given number of time steps.  It returns the final value of \py{state}, which contains metrics we can use to measure the performance of the system.
+
+We used \py{linspace} to create a NumPy array of equally-spaced values, and a \py{for} loop to loop through the array.  We used a \py{SweepSeries} to store results from a series of simulation, mapping from the value of a parameter to the value of a resulting metric.
+
+\begin{code}
+p1_array = linspace(0, 1, 11)
+sweep = SweepSeries()
+
+for p1 in p1_array:
+    state = run_simulation(p1, p2, num_steps)
+    sweep[p1] = state.olin_empty
+\end{code}
+
+In Chapter~\ref{chap03} we used Pandas to read data from a web page and store the results in a \py{DataFrame}.  We selected a column from the \py{DataFrame} to get a \py{Series}.
+
+We defined another version of \py{run_simulation} with a few changes:
+
+\begin{itemize}
+
+\item As parameters it takes a \py{System} object, which contains the parameters of the system, and an update function, which updates the state of the system.
+
+\item Instead of returning the final state of the system, it returns a \py{TimeSeries} that contains the state as it changes over time.
+
+\end{itemize}
+
+\begin{code}
+def run_simulation(system, update_func):
+    results = TimeSeries()
+    results[system.t_0] = system.p_0
+    
+    for t in linrange(system.t_0, system.t_end):
+        results[t+1] = update_func(results[t], t, system)
+        
+    return results
+\end{code}
+
+The update functions takes the current state of the system, the time, and the \py{System} object as parameters, and returns the new state.
+
+For example, here's the update function for the quadratic growth model.
+
+\begin{code}
+def update_func_quad(pop, t, system):
+    net_growth = system.alpha * pop + system.beta * pop**2
+    return pop + net_growth
+\end{code}
+
+In this example, the state of the system is a single number, \py{pop}.  Later we'll see examples where state is represented by a \py{State} object with more than one variable.
+
+Chapter~\ref{chap04} introduces SymPy, which we can use to create \py{Symbol} objects:
+
+\begin{code}
+t, alpha = symbols('t alpha')
+f = Function('f')
+\end{code}
+
+Write differential equations:
+
+\begin{code}
+dfdt = diff(f(t), t)
+eq1 = Eq(dfdt, alpha*f(t))
+\end{code}
+
+And solve them:
+
+\begin{code}
+solution_eq = dsolve(eq1)
+\end{code}
+
+That's a brief summary of the computational tools we have seen so far.  The next two sections present examples where we can use these tools to build models and answer questions about systems.
+
+
+\section*{One queue or two?}
+
+The first case study asks you to apply what you've learned to a problem from {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
+
+Suppose you are designing the checkout area for a new store.  You have enough room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that feeds both counters.
+
+In theory, you might expect a single line to be better, but it has some practical drawbacks: in order to maintain a single line, you might have to install barriers, and customers might be put off by what seems to be a longer line, even if it moves faster.
 
 So you'd like to check whether the single line is really better and by how much.  Simulation can help answer this question.
 
@@ -3014,41 +3329,93 @@ So you'd like to check whether the single line is really better and by how much.
 \label{fig-queue}
 \end{figure}
 
-Figure~\ref{fig-queue} shows the three scenarios we'll consider.  As we did in the bikeshare model, we'll assume that a customer is equally likely to arrive during any timestep.  I'll denote this probability using the Greek letter lambda, $\lambda$, or the variable name \py{lam}.  Since it's a new store, we don't know what the value of $\lambda$ will be, so we'll have to consider a range of possibilities.  
+Figure~\ref{fig-queue} shows the three scenarios we'll consider.  As we did in the bike share model, we'll assume that a customer is equally likely to arrive during any time step.  I'll denote this probability using the Greek letter lambda, $\lambda$, or the variable name \py{lam}.  Since it's a new store, we don't know what the value of $\lambda$ will be, so we'll have to consider a range of possibilities.  
 
 Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are highly variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they have the same probability of finishing up during each time step.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
 
-If we choose $\mu=1/5$, the average number of time steps for each checkout will be 5 minutes, which is consistent with the data.
+If we choose $\mu=1/5$ per minute, the average time for each checkout will be 5 minutes, which is consistent with the data.
 
 Now we're ready to get started.  I'll make some suggestions for how to proceed.  As always, you should practice incremental development: write no more than one or two lines of code a time, and test as you go!
 
 \begin{enumerate}
 
-\item Write a function called \py{make_system} that takes \py{lam} and \py{mu} as parameters and returns a \py{System} object with variables \py{lam}, \py{mu}, \py{x}, and \py{duration}.  \py{x} is the number if customers in the system, including customers in line and at the checkout counters; \py{x} should be initialized to \py{0}.  \py{duration} is the number of time steps to simulate; I set it to 8 hours, in minutes.   Test this function by creating a \py{System} object with \py{lam=1/8} and \py{mu=1/5}.
+\item Write a function called \py{make_system} that takes \py{lam} and \py{mu} as parameters and returns a \py{System} object with variables \py{lam}, \py{mu}, and \py{duration}.  Set duration, which is the number of time steps to simulate, to 10 hours, expressed in minutes.   Test this function by creating a \py{System} object with \py{lam=1/8} and \py{mu=1/5}. 
 
-\item Write a function called \py{run_simulation} that takes a \py{System} object and simulates the number of time steps specified by \py{duration}.  Start by simulating a single queue with a single checkout counter, which I'll call a ``server".  During each time step, a customer can finish checking out (but only if there is a customer in the store), and a customer can arrive.
+\item Write a function called \py{run_simulation} that takes a \py{System} object and an update function.  It should simulates the number of time steps specified by \py{duration}.
 
-\item In \py{run_simulation}, add a few lines of code to create a \py{TimeSeries} and store the number of customers in the store, \py{x}, at the end of each time step.  After the simulation runs, store the \py{TimeSeries} as a new system variable called \py{results}.  Plot \py{results} and confirm that the simulation behaves as expected.
+Use a local variable, \py{x}, to represent the number of customers in the store, including the one checking out.
 
-\item To compute the average number of customers in the store, $L$, you can write \py{system.results.mean()}.  You can use the observed value of $W$ to compute the average time customers spend in the store, $W$, which includes time in queue and time at the counter.  $L$ and $W$ are related by Little's Law (see \url{https://en.wikipedia.org/wiki/Little's_law}):
+Start by simulating a single queue with a single checkout counter, which I'll call a ``server".  During each time step, a customer can finish checking out (but only if there is a customer in the store), and a customer can arrive.
+
+\item In \py{run_simulation}, create a \py{TimeSeries} and store the number of customers in the store, \py{x}, at the end of each time step.  After the simulation runs, return the \py{TimeSeries}.  Plot the results and confirm that the simulation behaves as expected.
+
+\item To compute the average number of customers in the store, $L$, you can use the \py{mean} function provided by \py{TimeSeries}.  To compute the average wait time, $W$, you can use Little's Law (see \url{https://en.wikipedia.org/wiki/Little's_law}):
 %
 \[ L = \lambda W \]
 %
-Modify \py{run_simulation} to compute $L$ and $W$ and store them as system variables.
+The following function takes a \py{TimeSeries} and a \py{System} object, computes $L$ and $W$, and returns them:
 
-\item Use \py{linspace} to create an array of values for $\lambda$, from about 10\% to 90\% of $\mu$.  Write a function called \py{sweep_lam} that takes an array of values for $\lambda$ and a single value for $\mu$.  It should call $run_simulation$ once for each value of $\lambda$; after each simulation, it should print $\lambda$ and the resulting value of $W$.  Then modify it to plot the results rather than printing them.  Run \py{sweep_series} with 50 to 100 values of $\lambda$ to get a sense of how much the results vary from one run to the next.  What happens as $\lambda$ gets close to $\mu$?
+\begin{code}
+def compute_metrics(results, system):
+    L = results.mean()
+    W = L / system.lam
+    return L, W
+\end{code}
 
-\item Next, write a version of \py{run_simulation} that models the scenario with one queue and two servers.  Hint: if there are at least two customers in the store, there are two chances for a customer to finish checking out.  Test this version with a wider range of values for $\lambda$, maybe going up to 160\% of $\mu$.
+Test this function using results from your simulations.
 
-\item You might want to split \py{run_simulation} into two parts: and \py{update_func} that takes a \py{System} object and simulates one time step, and a general version of \py{run_simulation} that takes \py{udpate_func} as a parameter.
+\item Use \py{linspace} to create an array of values for $\lambda$, from about 10\% to 90\% of $\mu$.  Write a function called \py{sweep_lam} that takes an array of values for $\lambda$ and a single value for $\mu$.  It should call $run_simulation$ once for each value of $\lambda$; after each simulation, it should print $\lambda$ and the resulting value of $W$.  Encapsulate this code in a function called \py{sweep_lam}.
 
-\item Write a third version of \py{run_simulation}, or a third \py{update_func}, that models the scenario with two queues and two servers.  You might have to add system variables, \py{q1} and \py{q2}, to keep track of the number of customers in each queue.  When a customer arrives, they should join whichever line is shorter.
+\item Modify \py{sweep_lam} so it collects the results in a \py{SweepSeries} that maps from each value of \py{lam} to the resulting wait time, \py{W}.  What happens as $\lambda$ gets close to $\mu$?
+
+\item Next, write a simulation that models the scenario with one queue and two servers.  You might be able to do this just by changing the update function.
+Hint: if there are at least two customers in the store, there are two chances for a customer to finish checking out.  Test this version with a wider range of values for $\lambda$, maybe going up to 160\% of $\mu$.
+
+\item Write a third version of of the simulation to model the scenario with two queues and two servers.  You might need an additional state variable to keep track of the number of customers in each queue.  When a customer arrives, they should join whichever line is shorter.
 
 \item Which system yields shorter wait times, one queue or two?  Since the results of a single simulation are so variable, it might not be easy to tell.  One option is to run the simulation 50 to 100 times, with a range of values for $\lambda$, to model days with different numbers of customers, and compute the average of the daily averages.
 
 \end{enumerate}
 
 
+\section*{Predicting salmon populations}
+
+Each year the U.S. Atlantic Salmon Assessment Committee reports estimates of salmon populations in oceans and rivers in the northeastern United States.  The reports are useful for monitoring changes in these populations, but they generally do not include predictions.
+
+The goal of this case study is to model year-to-year changes in population, evaluate how predictable these changes are, and estimate the probability that a particular population will increase or decrease in the next 10 years.
+
+As an example, I'll use data from page 18 of the 2017 report, which provides population estimates for the Narraguagus and Sheepscot Rivers in Maine.
+
+A solution to this exercise is in \py{salmon_soln.ipynb} in the repository for this book.
+
+Again, I'll make some suggestions for how to proceed, but if you want to try something different, please do!
+
+\begin{enumerate}
+
+\item In the repository for this book, you'll find a notebook called \py{salmon.ipynb}, which contains some data and code to get you started.  Read through the notebook and run it.
+
+\item Create a \py{System} object with the initial time and population, duration of the simulation in years, and \py{rates}, which is the series of observed annual net growth rates.
+
+\item Write an update function that takes the current population, time, and a \py{System} object, and returns the updated population.  It should choose a random growth rate from \py{rates}.
+
+\item Write a version of \py{run_simulation} that uses this update function to simulate the salmon population for 10 years, starting with the 2015 estimate.  It should create and return a \py{TimeSeries} object.
+
+\item Plot the estimated values from 1997 to 2015 and the simulated values from 2015 to 2025.  As always, label the axes!  Each time you run the simulation, you should get different predictions.
+
+\item To get a sense of how the results vary from one run to the next, write a function that runs multiple simulations and plots all of the results.  If you use the plot option \py{alpha=0.1}, it makes the lines semi-transparent, so they are darker where they overlap.
+
+\item Write another function that runs multiple simulations, extracts the final population from each result, and stores it in a \py{SweepSeries} object called \py{last_pops}.  You can get the mean, median, and other summary statistics from this series by calling
+
+\begin{code}
+last_pops.describe()
+\end{code}
+
+
+\item According to the model, what is the probability that the population will increase over the next 10 years?  
+
+\item How credible do you find these results?  What are the biggest limitations of the model, and what could you do to improve it?
+
+\end{enumerate}
 
 
 \chapter{Design}
