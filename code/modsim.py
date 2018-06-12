@@ -22,7 +22,7 @@ import scipy
 import sympy
 
 import seaborn as sns
-sns.set(style='white', font_scale=1.5)
+sns.set(style='white', font_scale=1.2)
 
 import pint
 UNITS = pint.UnitRegistry()
@@ -50,27 +50,35 @@ def flip(p=0.5):
     return np.random.random() < p
 
 
-# abs, min, max, pow, sum, round
+# For all the built-in Python functions that do math,
+# let's use the NumPy version instead.
 
-def abs(*args):
-    # TODO: warn about using the built in
-    return np.abs(*args)
+abs = np.abs
+min = np.min
+max = np.max
+pow = np.power
+sum = np.sum
+round = np.round
 
-def min(*args):
-    # TODO: warn about using the built in
-    return np.min(*args)
-
-def max(*args):
-    # TODO: warn about using the built in
-    return np.max(*args)
-
-def sum(*args):
-    # TODO: warn about using the built in
-    return np.sum(*args)
-
-def round(*args):
-    # TODO: warn about using the built in
-    return np.round(*args)
+# def abs(*args):
+#     # TODO: warn about using the built in
+#     return np.abs(*args)
+#
+# def min(*args):
+#     # TODO: warn about using the built in
+#     return np.min(*args)
+#
+# def max(*args):
+#     # TODO: warn about using the built in
+#     return np.max(*args)
+#
+# def sum(*args):
+#     # TODO: warn about using the built in
+#     return np.sum(*args)
+#
+# def round(*args):
+#     # TODO: warn about using the built in
+#     return np.round(*args)
 
 
 def cart2pol(x, y, z=None):
@@ -88,7 +96,7 @@ def cart2pol(x, y, z=None):
     # TODO: use hypot?
     rho = np.sqrt(x**2 + y**2)
     theta = np.arctan2(y, x)
-        
+
     if z is None:
         return theta, rho
     else:
@@ -111,7 +119,7 @@ def pol2cart(theta, rho, z=None):
             msg = """In pol2cart, theta must be either a number or
             a Quantity in degrees or radians."""
             raise ValueError(msg)
-        
+
     x = rho * np.cos(theta)
     y = rho * np.sin(theta)
 
@@ -121,39 +129,39 @@ def pol2cart(theta, rho, z=None):
         return x, y, z
 
 
-def linspace(start, stop, num=50, **kwargs):
+def linspace(start, stop, num=50, **options):
     """Returns an array of evenly-spaced values in the interval [start, stop].
-    
+
     start: first value
     stop: last value
     num: number of values
 
     Also accepts the same keyword arguments as np.linspace.  See
     https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
-    
+
     returns: array or Quantity
     """
-    underride(kwargs, dtype=np.float64)
+    underride(options, dtype=np.float64)
 
     # see if either of the arguments has units
     units = getattr(start, 'units', None)
     units = getattr(stop, 'units', units)
 
-    array = np.linspace(start, stop, num, **kwargs)
+    array = np.linspace(start, stop, num, **options)
     if units:
         array = array * units
     return array
 
 
-def linrange(start=0, stop=None, step=1, **kwargs):
+def linrange(start=0, stop=None, step=1, **options):
     """Returns an array of evenly-spaced values in the interval [start, stop].
-    
+
     This function works best if the space between start and stop
     is divisible by step; otherwise the results might be surprising.
 
     By default, the last value in the array is `stop` (at least approximately).
     If you provide the keyword argument `endpoint=False`, the last value
-    in the array is `stop-step`. 
+    in the array is `stop-step`.
 
     start: first value
     stop: last value
@@ -161,7 +169,7 @@ def linrange(start=0, stop=None, step=1, **kwargs):
 
     Also accepts the same keyword arguments as np.linspace.  See
     https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
-    
+
     returns: array or Quantity
     """
     if stop is None:
@@ -169,8 +177,8 @@ def linrange(start=0, stop=None, step=1, **kwargs):
         start = 0
 
     # TODO: what breaks if we don't make the dtype float?
-    #underride(kwargs, endpoint=True, dtype=np.float64)
-    underride(kwargs, endpoint=True)
+    #underride(options, endpoint=True, dtype=np.float64)
+    underride(options, endpoint=True)
 
     # see if any of the arguments has units
     units = getattr(start, 'units', None)
@@ -178,38 +186,38 @@ def linrange(start=0, stop=None, step=1, **kwargs):
     units = getattr(step, 'units', units)
 
     n = np.round((stop - start) / step)
-    if kwargs['endpoint']:
+    if options['endpoint']:
         n += 1
 
-    array = np.linspace(start, stop, int(n), **kwargs)
+    array = np.linspace(start, stop, int(n), **options)
     if units:
         array = array * units
     return array
 
 
 
-def fit_leastsq(error_func, params, data, **kwargs):
+def fit_leastsq(error_func, params, data, **options):
     """Find the parameters that yield the best fit for the data.
-    
+
     `params` can be a sequence, array, or Series
-    
+
     error_func: function that computes a sequence of errors
     params: initial guess for the best parameters
     data: the data to be fit; will be passed to min_fun
-    kwargs: any other arguments are passed to leastsq
+    options: any other arguments are passed to leastsq
     """
     # to pass `data` to `leastsq`, we have to put it in a tuple
     args = (data,)
-    
+
     # override `full_output` so we get a message if something goes wrong
-    kwargs['full_output'] = True
-    
+    options['full_output'] = True
+
     # run leastsq
-    best_params, _, _, mesg, ier = leastsq(error_func, x0=params, 
-                                           args=args, **kwargs)
+    best_params, _, _, mesg, ier = leastsq(error_func, x0=params,
+                                           args=args, **options)
 
     #TODO: check why logging.info is not visible
-    
+
     # check for errors
     if ier in [1, 2, 3, 4]:
         print("""modsim.py: scipy.optimize.leastsq ran successfully
@@ -218,21 +226,21 @@ def fit_leastsq(error_func, params, data, **kwargs):
         logging.error("""modsim.py: When I ran scipy.optimize.leastsq, something
                          went wrong, and I got the following message:""")
         raise Exception(mesg)
-        
+
     # return the best parameters
     return best_params
 
 
 def min_bounded(min_func, bounds, *args, **options):
     """Finds the input value that minimizes `min_func`.
-    
+
     min_func: computes the function to be minimized
     bounds: sequence of two values, lower and upper bounds of the
             range to be searched
     args: any additional positional arguments are passed to min_func
     options: any keyword arguments are passed as options to minimize_scalar
-    
-    returns: OptimizeResult object 
+
+    returns: OptimizeResult object
              (see https://docs.scipy.org/doc/scipy/
                   reference/generated/scipy.optimize.minimize_scalar.html)
     """
@@ -246,13 +254,13 @@ def min_bounded(min_func, bounds, *args, **options):
                  the following error:"""
         logger.error(msg)
         raise(e)
-        
+
     underride(options, xatol=1e-3)
-    
-    res = minimize_scalar(min_func, 
+
+    res = minimize_scalar(min_func,
                           bracket=bounds,
-                          bounds=bounds, 
-                          args=args, 
+                          bounds=bounds,
+                          args=args,
                           method='bounded',
                           options=options)
 
@@ -266,35 +274,35 @@ def min_bounded(min_func, bounds, *args, **options):
 
 def max_bounded(max_func, bounds, *args, **options):
     """Finds the input value that maximizes `max_func`.
-    
+
     min_func: computes the function to be maximized
     bounds: sequence of two values, lower and upper bounds of the
             range to be searched
     args: any additional positional arguments are passed to max_func
     options: any keyword arguments are passed as options to minimize_scalar
-    
-    returns: OptimizeResult object 
+
+    returns: OptimizeResult object
              (see https://docs.scipy.org/doc/scipy/
                   reference/generated/scipy.optimize.minimize_scalar.html)
     """
     def min_func(*args):
         return -max_func(*args)
-    
+
     res = min_bounded(min_func, bounds, *args, **options)
     # we have to negate the function value before returning res
     res.fun = -res.fun
     return res
 
 
-def run_odeint(system, slope_func, **kwargs):
+def run_odeint(system, slope_func, **options):
     """Runs a simulation of the system.
-    
+
     `system` should contain system parameters and `ts`, which
     is an array or Series that specifies the time when the
     solution will be computed.
-    
+
     Adds a DataFrame to the System: results
-    
+
     system: System object
     slope_func: function that computes slopes
     """
@@ -305,10 +313,10 @@ def run_odeint(system, slope_func, **kwargs):
                  or Series that specifies the times when the
                  solution will be computed:"""
         raise ValueError(msg)
-    
+
     # make the system parameters available as globals
     unpack(system)
-    
+
     # try running the slope function with the initial conditions
     try:
         slope_func(init, ts[0], system)
@@ -319,39 +327,39 @@ def run_odeint(system, slope_func, **kwargs):
                  the following error:"""
         logger.error(msg)
         raise(e)
-    
+
     # when odeint calls slope_func, it should pass `system` as
     # the third argument.  To make that work, we have to make a
     # tuple with a single element and pass the tuple to odeint as `args`
     args = (system,)
-    
+
     # now we're ready to run `odeint` with `init` and `ts` from `system`
     units_off()
-    array = odeint(slope_func, list(init), ts, args, **kwargs)
+    array = odeint(slope_func, list(init), ts, args, **options)
     units_on()
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
-    system.results = TimeFrame(array, columns=init.index, index=ts, 
+    system.results = TimeFrame(array, columns=init.index, index=ts,
                                dtype=np.float64)
 
 
-def fsolve(func, x0, *args, **kwargs):
+def fsolve(func, x0, *args, **options):
     """Return the roots of the (non-linear) equations
     defined by func(x) = 0 given a starting estimate.
-    
+
     Uses scipy.optimize.fsolve, with extra error-checking.
-    
+
     func: function to find the roots of
     x0: scalar or array, initial guess
     args: additional positional arguments are passed along to fsolve,
           which passes them along to func
-    
+
     returns: solution as an array
     """
     # make sure we can run the given function with x0
-    x0 = np.asarray(x0).flatten() 
-    
+    x0 = np.asarray(x0).flatten()
+
     try:
         func(x0, *args)
     except Exception as e:
@@ -360,13 +368,13 @@ def fsolve(func, x0, *args, **kwargs):
                  you provided, and I got the following error:"""
         logger.error(msg)
         raise(e)
-    
+
     # make the tolerance more forgiving than the default
-    underride(kwargs, xtol=1e-7)
+    underride(options, xtol=1e-7)
 
     # run fsolve
     units_off()
-    result = scipy.optimize.fsolve(func, x0, args=args, **kwargs)
+    result = scipy.optimize.fsolve(func, x0, args=args, **options)
     units_on()
     return result
 
@@ -377,7 +385,7 @@ def interpolate(series, **options):
     series: Series object
     options: any legal options to scipy.interpolate.interp1d
 
-    returns: function that maps from the index of the series to values 
+    returns: function that maps from the index of the series to values
     """
     # TODO: add error checking for nonmonotonicity
 
@@ -386,9 +394,9 @@ def interpolate(series, **options):
                  NaN values in the index, which would result in
                  undefined behavior.  So I'm putting a stop to that."""
         raise ValueError(msg)
-    
+
     # make the interpolate function extrapolate past the ends of
-    # the range, unless `options` already specifies a value for `fill_value`    
+    # the range, unless `options` already specifies a value for `fill_value`
     underride(options, fill_value='extrapolate')
 
     # call interp1d, which returns a new function object
@@ -397,11 +405,11 @@ def interpolate(series, **options):
 
 def interp_inverse(series, **options):
     """Interpolate the inverse function of a Series.
-    
+
     series: Series object, represents a mapping from `a` to `b`
     kind: string, which kind of iterpolation
     options: keyword arguments passed to interpolate
-    
+
     returns: interpolation object, can be used as a function
              from `b` to `a`
     """
@@ -415,9 +423,20 @@ def unpack(series):
 
     series: Series with variables names in the index
     """
+    # TODO: Make this a context manager, so the syntax is
+    # with series:
+    # and maybe even add an __exit__ that copies changes back
     frame = inspect.currentframe()
     caller = frame.f_back
     caller.f_globals.update(series)
+
+
+def source_code(obj):
+    """Prints the source code for a given object.
+
+    obj: function or method object
+    """
+    print(inspect.getsource(obj))
 
 
 def underride(d, **options):
@@ -437,229 +456,21 @@ def underride(d, **options):
     return d
 
 
-class Simplot:
-    """Provides a simplified interface to matplotlib."""
-
-    def __init__(self):
-        """Initializes the instance variables."""
-        # map from Figure to FigureState
-        self.figure_states = dict()
-        
-    def get_figure_state(self, figure=None):
-        """Gets the state of the current figure.
-
-        figure: Figure
-
-        returns: FigureState object
-        """
-        if figure is None:
-            figure = plt.gcf()
-        
-        try:
-            return self.figure_states[figure]
-        except KeyError:
-            figure_state = FigureState()
-            self.figure_states[figure] = figure_state
-            return figure_state
-    
-SIMPLOT = Simplot()
-
-
-class FigureState:
-    """Encapsulates information about the current figure."""
-    def __init__(self):
-        # map from style tuple to Lines object
-        self.lines = dict()
-        
-    def get_line(self, style, kwargs):
-        """Gets the line object for a given style tuple.
-
-        style: Matplotlib style string
-        kwargs: dictionary of style options
-
-        returns: maplotlib.lines.Lines2D
-        """
-        color = kwargs.get('color')
-        key = style, color
-
-        # if there's no style or color, make a new line,
-        # but don't store it for future updating.
-        if key == (None, None):
-            return self.make_line(style, kwargs)
-
-        # otherwise try to look it up, and if it's
-        # not there, make a new line and store it.
-        try:
-            return self.lines[key]
-        except KeyError:
-            line = self.make_line(style, kwargs)
-            self.lines[key] = line
-            return line
-    
-    def make_line(self, style, kwargs):
-        underride(kwargs, linewidth=3, alpha=0.6)
-        if style is None:
-            lines = plt.plot([], **kwargs)
-        else:
-            lines = plt.plot([], style, **kwargs)
-        return lines[0]
-
-    def clear_lines(self):
-        self.lines = dict()
-
-
-
-def parse_plot_args(*args, **kwargs):
-    """Parse the args the same way plt.plot does."""
-    x = None
-    y = None
-    style = 'bo-'
-    
-    if len(args) == 1:
-        y = args[0]
-    elif len(args) == 2:
-        if isinstance(args[1], str):
-            y, style = args
-        else:
-            x, y = args
-    elif len(args) == 3:
-        x, y, style = args
-
-    # check if style is provided as a kwarg; if so,
-    # it can clobber a positional style argument
-    if 'style' in kwargs:
-        style = kwargs.pop('style')
-
-    return x, y, style
-
-        
-def mark(*args, **kwargs):
-    """Adds a new marker to an existing line.
-    
-    args can be:
-      plot(y)
-      plot(y, style_string)
-      plot(x, y)
-      plot(x, y, style_string)
-    
-    Keyword arguments are the same as for pyplot.plot()
-
-    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html
-
-    If a line with the same style and color exists, the new point
-    is added to the existing line.
-    
-    """
-    x, y, style = parse_plot_args(*args, **kwargs)
-
-    # get the current line, based on style and kwargs,
-    # or create a new empty line
-    figure = plt.gcf()
-    figure_state = SIMPLOT.get_figure_state(figure)
-    line = figure_state.get_line(style, kwargs)
-    
-    # append y to ydata
-    ys = line.get_ydata()
-    ys = np.append(ys, y)
-    line.set_ydata(ys)
-
-    # update xdata
-    xs = line.get_xdata()
-
-    # if we don't have an x, increment the last element of xs  
-    if x is None:
-        try:
-            x = xs[-1] + 1
-        except IndexError:
-            x = 0
-
-    xs = np.append(xs, x)
-    line.set_xdata(xs)
-    
-    #print(line.get_xdata())
-    #print(line.get_ydata())
-    
-    axes = plt.gca()
-    axes.relim()
-    axes.autoscale_view(True, True, True)
-    axes.margins(0.02)
-    figure.canvas.draw()
-    
-
-def plot(*args, **kwargs):
+def plot(*args, **options):
     """Makes line plots.
-    
+
     args can be:
       plot(y)
       plot(y, style_string)
       plot(x, y)
       plot(x, y, style_string)
-    
-    kwargs are the same as for pyplot.plot
 
-    In addition, update=True causes the new data to replace the old.
-    
-    If x or y have attributes label and/or units, label the axes accordingly.
-    
+    options are the same as for pyplot.plot
     """
-    x, y, style = parse_plot_args(*args, **kwargs)
+    underride(options, linewidth=3, alpha=0.6)
+    lines = plt.plot(*args, **options)
+    # TODO: think about whether to return `lines`
 
-    if x is None:
-        if isinstance(y, pd.Series):
-            # if y is a Series, use the index
-            x = y.index
-        else:
-            try:
-                # otherwise use numbers from 0 to n-1 
-                x = np.arange(len(y))
-            except TypeError:
-                x = 0
-
-    underride(kwargs, linewidth=3, alpha=0.6)
-    lines = plt.plot(x, y, style, **kwargs)
-    
-
-def replot(*args, **kwargs):
-    """Makes line plots.
-    
-    args can be:
-      plot(y)
-      plot(y, style_string)
-      plot(x, y)
-      plot(x, y, style_string)
-    
-    kwargs are the same as for pyplot.plot
-
-    In addition, update=True causes the new data to replace the old.
-    
-    If x or y have attributes label and/or units, label the axes accordingly.
-    
-    """
-    x, y, style = parse_plot_args(*args, **kwargs)
-
-    if x is None:
-        if isinstance(y, pd.Series):
-            # if y is a Series, use the index
-            x = y.index
-        else:
-            # otherwise use numbers from 0 to n-1 
-            x = np.arange(len(y))
-
-    # get the current line, based on style and kwargs,
-    # or create a new empty line
-    figure = plt.gcf()
-    figure_state = SIMPLOT.get_figure_state(figure)
-    line = figure_state.get_line(style, kwargs)
-    
-    # append y to ydata
-    ys = np.asarray(y)
-    line.set_ydata(ys)
-
-    xs = np.asarray(x)
-    line.set_xdata(xs)
-    
-    figure.canvas.draw()
-    
 
 def contour(df, **options):
     """Makes a contour plot from a DataFrame.
@@ -675,19 +486,7 @@ def contour(df, **options):
     plt.clabel(cs, inline=1, fontsize=10)
 
 
-def newfig(**kwargs):
-    """Creates a new figure.
-
-    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html
-
-    Keyword arguments are passed along to Figure.set()
-    """
-    fig = plt.figure()
-    fig.set(**kwargs)
-    fig.canvas.draw()
-
-
-def savefig(filename, **kwargs):
+def savefig(filename, **options):
     """Save the current figure.
 
     Keyword arguments are passed along to plt.savefig
@@ -697,10 +496,10 @@ def savefig(filename, **kwargs):
     filename: string
     """
     print('Saving figure to file', filename)
-    return plt.savefig(filename, **kwargs)
+    plt.savefig(filename, **options)
 
 
-def decorate(**kwargs):
+def decorate(**options):
     """Decorate the current axes.
 
     Call decorate with keyword arguments like
@@ -718,20 +517,26 @@ def decorate(**kwargs):
     And you can use `loc` to indicate the location of the legend
     (the default value is 'best')
     """
-    # 
-    loc = kwargs.pop('loc', 'best')
-    if kwargs.pop('legend', True):
+    loc = options.pop('loc', 'best')
+    if options.pop('legend', True):
         legend(loc=loc)
-    
-    plt.gca().set(**kwargs)
+
+    plt.gca().set(**options)
+    plt.tight_layout()
 
 
-def legend(**kwargs):
-    underride(kwargs, loc='best')
+def legend(**options):
+    """Draws a legend only if there is at least one labeled item.
+
+    options are passed to plt.legend()
+    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html
+
+    """
+    underride(options, loc='best')
 
     ax = plt.gca()
     handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles, labels, **kwargs)
+    ax.legend(handles, labels, **options)
 
 
 def remove_from_legend(bad_labels):
@@ -766,19 +571,19 @@ class SubPlots:
         return current_axes()
 
 
-def subplots(*args, **kwargs):
-    fig, axes_seq = plt.subplots(*args, **kwargs)
+def subplots(*args, **options):
+    fig, axes_seq = plt.subplots(*args, **options)
     return SubPlots(fig, axes_seq)
 
 
-def subplot(nrows, ncols, plot_number, **kwargs):
+def subplot(nrows, ncols, plot_number, **options):
     figsize = {(2, 1): (8, 8),
                (3, 1): (8, 10)}
     key = nrows, ncols
     default = (8, 5.5)
     width, height = figsize.get(key, default)
-    
-    plt.subplot(nrows, ncols, plot_number, **kwargs)
+
+    plt.subplot(nrows, ncols, plot_number, **options)
     fig = plt.gcf()
     fig.set_figwidth(width)
     fig.set_figheight(height)
@@ -789,18 +594,18 @@ class Array(np.ndarray):
     pass
 
 
-class MySeries(pd.Series):
+class ModSimSeries(pd.Series):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **options):
         """Initialize a Series.
 
         Note: this cleans up a weird Series behavior, which is
         that Series() and Series([]) yield different results.
         See: https://github.com/pandas-dev/pandas/issues/16737
         """
-        if args or kwargs:
-            #underride(kwargs, dtype=np.float64)
-            super().__init__(*args, **kwargs)
+        if args or options:
+            #underride(options, dtype=np.float64)
+            super().__init__(*args, **options)
         else:
             super().__init__([], dtype=np.float64)
 
@@ -809,15 +614,15 @@ class MySeries(pd.Series):
 
         Mostly used for Jupyter notebooks.
         """
-        df = pd.DataFrame(self, columns=['value'])
+        df = pd.DataFrame(self, columns=['values'])
         return df._repr_html_()
 
-    def set(self, **kwargs):
+    def set(self, **options):
         """Uses keyword arguments to update the Series in place.
 
         Example: series.set(a=1, b=2)
         """
-        for name, value in kwargs.items():
+        for name, value in options.items():
             self[name] = value
 
 
@@ -842,34 +647,33 @@ def get_last_value(series):
     return series.values[-1]
 
 
-
-class TimeSeries(MySeries):
+class TimeSeries(ModSimSeries):
     """Represents a mapping from times to values."""
     pass
 
 
-class SweepSeries(MySeries):
+class SweepSeries(ModSimSeries):
     """Represents a mapping from parameter values to metrics."""
     pass
 
 
-class System(MySeries):
+class System(ModSimSeries):
     """Contains the parameters of a system and their values."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **options):
         """Initialize the series.
 
-        If there are no positional arguments, use kwargs.
+        If there are no positional arguments, use options.
 
         If there is one positional argument, copy it.
 
-        More than one positional argument is an error. 
+        More than one positional argument is an error.
         """
         if len(args) == 0:
-            super().__init__(list(kwargs.values()), index=kwargs)
+            super().__init__(list(options.values()), index=options)
         elif len(args) == 1:
             super().__init__(*args)
-            # TODO: if there are also kwargs, should we add them in?
+            # TODO: if there are also options, should we add them in?
         else:
             msg = '__init__() takes at most one positional argument'
             raise TypeError(msg)
@@ -901,7 +705,7 @@ class State(System):
 
 class Condition(System):
     """Represents the condition of a system.
-    
+
     Condition object are often used to construct a System object.
     """
     pass
@@ -919,11 +723,11 @@ class MyDataFrame(pd.DataFrame):
     So I added new definitions that override the special variables
     and make these names useable as row labels.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **options):
         # TODO: currently MyDataFrame underrides to float64 and
-        # MySeries does not.  Does this inconsistency make sense?
-        underride(kwargs, dtype=np.float64)
-        super().__init__(*args, **kwargs)
+        # ModSimSeries does not.  Does this inconsistency make sense?
+        underride(options, dtype=np.float64)
+        super().__init__(*args, **options)
 
     @property
     def dt(self):
@@ -948,18 +752,19 @@ class MyDataFrame(pd.DataFrame):
 class TimeFrame(MyDataFrame):
     pass
 
+
 class SweepFrame(MyDataFrame):
     pass
 
 
 class _Vector(Quantity):
     """Represented as a Pint Quantity with a NumPy array
-    
+
     x, y, z, mag, mag2, and angle are accessible as attributes.
-    
+
     Supports vector operations hat, dot, cross, proj, and comp.
     """
-    
+
     @property
     def x(self):
         """Returns the x component with units."""
@@ -1007,7 +812,7 @@ class _Vector(Quantity):
         """
         assert len(self) == 2
         return Vector(-self.y, self.x)
-    
+
     def dot(self, other):
         """Returns the dot product of self and other."""
         return np.dot(self, other) * self.units * other.units
@@ -1038,31 +843,31 @@ class _Vector(Quantity):
             #TODO: see http://www.euclideanspace.com/maths/algebra/
             # vectors/angleBetween/
             raise NotImplementedError()
-        
-        
+
+
 def Vector(*args, units=None):
     # if there's only one argument, it should be iterable
     if len(args) == 1:
         args = args[0]
-        
+
         # if it's a series, pull out the values
         if isinstance(args, Series):
             args = args.values
-        
+
     # see if any of the arguments have unit; if so, save the first one
     for elt in args:
         found_units = getattr(elt, 'units', None)
         if found_units:
             break
-            
+
     if found_units:
         # if there are units, remove them
         args = [getattr(elt, 'magnitude', elt) for elt in args]
-    
+
     # if the units keyword is provided, it overrides the units in args
     if units is not None:
         found_units = units
-    
+
     return _Vector(args, found_units)
 
 
@@ -1079,7 +884,7 @@ def plot_segment(A, B, **options):
     xs = A.x, B.x
     ys = A.y, B.y
     plot(xs, ys, **options)
-    
+
 
 @property
 def dimensionality(self):
@@ -1102,7 +907,7 @@ def units_off():
     """Make all quantities behave as if they were dimensionless.
     """
     global SAVED_PINT_METHOD
-    
+
     SAVED_PINT_METHOD = UNITS._get_dimensionality
     UNITS._get_dimensionality = lambda self: {}
 
@@ -1111,4 +916,3 @@ def units_on():
     """Restore the saved behavior of quantities.
     """
     UNITS._get_dimensionality = SAVED_PINT_METHOD
-
