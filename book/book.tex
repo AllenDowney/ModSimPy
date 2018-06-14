@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.5}
+\newcommand{\theversion}{2.0.7}
 
 
 %%%% Both LATEX and PLASTEX
@@ -365,7 +365,7 @@ In most freshman physics classes, students don't make modeling decisions; someti
 
 \section*{How much programming do I need?}
 
-If you have never programmed before, you should be able to read this book, understand it, and do the exercises.  I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it it used.  If you find that I have used a term without defining it, let me know.
+If you have never programmed before, you should be able to read this book, understand it, and do the exercises.  I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it is used.  If you find that I have used a term without defining it, let me know.
 
 If you have programmed before, you will have an easier time getting started, but you might be uncomfortable in some places.  I take an approach to programming you have probably not seen before.
 
@@ -477,15 +477,17 @@ You could update Python and install these libraries, but I strongly recommend th
 
 Anaconda is available for Linux, macOS, and Windows.  By default, it puts all files in your home directory, so you don't need administrator (root) permission to install it, and if you have a version of Python already, Anaconda will not remove or modify it.
 
-Start at \url{https://www.anaconda.com/download}.  Download the installer for your system and run it.  I suggest you accept the recommended options.
+Start at \url{https://www.anaconda.com/download}.  Download the installer for your system and run it.  You don't need administrative privileges to install Anaconda, so I recommend you run the installer as a normal user, not as administrator or root.
+
+I suggest you accept the recommended options.
 On Windows you have the option to install Visual Studio Code, which is an interactive environment for writing programs.  You won't need it for this book, but you might want it for other projects.
 
 By default, Anaconda installs most of the packages you need, but there are a few more you might have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open the Anaconda Prompt that should be in your Start menu.
 
-Run the following command
+Run the following command (copy and paste it if you can, to avoid typos):
 
 \begin{code}
-conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml
+conda install jupyter pandas seaborn sympy beautifulsoup4 lxml
 \end{code}
 
 These packages might already be installed.  Then run this command:
@@ -525,7 +527,7 @@ For Windows, the client I recommend is Git for Windows.  In the installer, I sug
 
 Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open Git Bash, which should be in your Start menu.
 
-To find out what directory you are in, type \py{pwd}, which stands for ``print working directory".  On MacOS or Linux, you are probably in your home directory, \py{/home/yourusername}.  One Windows, most likely you are in \py{Users\\yourusername}.
+To find out what directory you are in, type \py{pwd}, which stands for ``print working directory".  On MacOS or Linux, you are probably in your home directory, \py{/home/yourusername}.  On Windows, most likely you are in \py{Users\\yourusername}.
 
 To copy files from my repository to your computer, which is called {\bf cloning} in Git's vocabulary, run this command
 
@@ -619,9 +621,12 @@ Wood, Chris Lee, and Jason Woodard.
 % START THE BOOK
 \mainmatter
 
+%\part{Modeling a bikeshare system}
 
-\chapter{Modeling}
+\chapter{Falling penny}
 \label{chap01}
+
+%TODO: Consider moving the modeling material from the Preface to here.
 
 The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.  The word ``model" means different things in different contexts, so it is hard to define except by example.
 \index{mathematical model}
@@ -677,11 +682,10 @@ There are (at least) two ways to work with mathematical models, {\bf analysis} a
 
 In this book we do some analysis and a lot of simulation; along the way, I discuss the pros and cons of each.  The primary tools we use for simulation are the Python programming language and Jupyter, which is an environment for writing and running programs.
 
-As a first example, I'll show you how I computed the results from the previous section using Python.  You can view this example at \url{http://modsimpy.com/chap01a}.  For instructions on downloading and running the code, see Section~\ref{code}.
+As a first example, I'll show you how I computed the results from the previous section using Python.
 
-% TODO: Fix the links to the notebooks.
+First I create a {\bf variable} to represent acceleration.
 
-First I'll create a {\bf variable} to represent acceleration.
 \index{variable}
 \index{value}
 
@@ -722,13 +726,15 @@ v = a * t
 
 The result is about \SI{86}{\meter\per\second}, again with the correct units.
 
-This example demonstrates analysis and computation using Python.  Next we'll see an example of simulation.  Before you go on, you might want to read the first notebook for this chapter, \py{chap_01_a.ipynb}, and work on the exercises in it.
+This example demonstrates analysis and computation using Python.  Next we'll see an example of simulation.  
+
+Before you go on, you might want to read the notebook for this chapter, \py{chap01.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\section{Modeling a bike share system}
+\chapter{Bikeshare}
+
+\section{Bikeshare}
 \label{modeling}
-
-You can view the code for the rest of this chapter at \url{http://modsimpy.com/chap01b}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
 \index{Wellesley College}
@@ -1199,13 +1205,14 @@ When the loop exits, \py{results} contains 10 time stamps, from 0 through 9, and
 
 \py{TimeSeries} is a specialized version of \py{Series}, which is defined by Pandas.  The \py{Series} object provides many functions; one example is \py{mean}, which we can call like this:
 
-\begin{code}
+\begin{python}
 results.mean()
-\end{code}
+\end{python}
 
 %TODO: shorten URL
 You can read the documentation of \py{Series} at \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html}.
 \index{Pandas}
+
 
 \section{Plotting}
 \label{plotting}
@@ -1230,11 +1237,11 @@ plot(results, label='Olin')
 
 Whenever you make a figure, you should label the axes.  The \py{modsim} library provides \py{decorate}, which labels the axes and gives the figure a title and legend:
 
-\begin{code}
+\begin{python}
 decorate(title='Olin-Wellesley Bikeshare',
          xlabel='Time step (min)', 
          ylabel='Number of bikes')
-\end{code}
+\end{python}
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap01-fig01.pdf}}
@@ -1248,10 +1255,9 @@ Figure~\ref{chap03-fig01} shows the result.
 
 \index{Pyplot}
 
-%TODO: define library
 %TODO: replace matplotlib with pyplot
 
-Before you go on, you might want to read the second notebook for this chapter, \py{chap_01_b.ipynb}, and work on the exercises in it.
+Before you go on, you might want to read the notebook for this chapter, \py{chap02.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 \section{Under the hood}
 
@@ -1285,7 +1291,7 @@ For each new function you learn, you should deliberately make as many mistakes a
 
 
 
-\chapter{Simulation}
+\chapter{Iterative modeling}
 \label{chap02}
 
 To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this chapter, I demonstrate the process we use to make models less wrong.
@@ -1296,8 +1302,6 @@ To paraphrase two Georges, ``All models are wrong, but some models are more wron
 As an example, we'll review the bikeshare model from the previous chapter, consider its strengths and weaknesses, and gradually improve it.  We'll also see ways to use the model to understand the behavior of the system and evaluate designs intended to make it work better.
 
 \index{bikeshare}
-
-You can view the code for this chapter at \url{http://modsimpy.com/chap02}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Iterative modeling}
@@ -1360,13 +1364,13 @@ The name of the parameter is \py{state} rather than \py{bikeshare} as a reminder
 
 Since the new version of \py{move_bike} requires a \py{State} object as a parameter, I have to update the functions that call it:
 
-\begin{code}
+\begin{python}
 def bike_to_wellesley(state):
     move_bike(state, 1)
     
 def bike_to_olin(state):
     move_bike(state, -1)
-\end{code}
+\end{python}
 
 Now I can create as many \py{State} objects as I want:
 
@@ -1624,8 +1628,10 @@ print(bikeshare.olin_empty, bikeshare.wellesley_empty)
 
 Because the simulation is stochastic, the results are different each time it runs.
 
-Before you go on, you might want to read the first notebook for this chapter, \py{chap_02_a.ipynb}, and work on the exercises in it.
+Before you go on, you might want to read the notebook for this chapter, \py{chap03.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
+
+\chapter{Sweeping parameters}
 
 \section{Functions that return values}
 
@@ -1684,7 +1690,7 @@ If we call \py{run_simulation} like this:
 state = run_simulation()
 \end{python}
 
-It assigns to \py{state} a new \py{State} object, which we can use to check the metrics we are interested in:
+It assigns the \py{State} object from \py{run_simulation} to \py{state}, which contains the metrics we are interested in:
 
 \begin{python}
 print(state.olin_empty, state.wellesley_empty)
@@ -1727,8 +1733,6 @@ Now we can call \py{run_simulation} with different parameters and see how the me
 \section{Loops and arrays}
 \label{array}
 
-% TODO: clean this section
-
 In Section~\ref{forloop}, we saw a loop like this:
 
 \begin{python}
@@ -1743,7 +1747,7 @@ for i in range(4):
 \index{loop variable}
 \index{variable!loop}
 
-\py{range} only works with integers; to get a sequence of floating-point numbers, we can use \py{linspace}:
+\py{range} only works with integers; to get a sequence of non-integer values, we can use \py{linspace}:
 
 \begin{python}
 p1_array = linspace(0, 1, 5)
@@ -1755,14 +1759,16 @@ p1_array = linspace(0, 1, 5)
 \index{NumPy}
 \index{array}
 
-The result is a NumPy {\bf array}, which is a new kind of object we have not seen before.  An array is a container for a sequence of numbers. 
+The result is a NumPy {\bf array}, which is a new kind of object we have not seen before.  An array is a container for a sequence of numbers.
+
+We can use an array in a \py{for} loop like this:
 
 \begin{python}
 for p1 in p1_array:
     print(p1)
 \end{python}
 
-In the for loop, the values from the array are assigned to the loop variable one a time.  When this loop runs, it
+When this loop runs, it
 
 \begin{enumerate}
 
@@ -1776,7 +1782,7 @@ In the for loop, the values from the array are assigned to the loop variable one
 
 \end{enumerate}
 
-And so on, until it gets to the end of the range.  The result is:
+And so on, until it gets to the end of the array.  The result is:
 
 \begin{result}
 0.0
@@ -1792,6 +1798,7 @@ This will come in handy in the next section.
 \section{Sweeping parameters}
 
 If we know the actual values of parameters like \py{p1} and \py{p2}, we can use them to make specific predictions, like how many bikes will be at Olin after one hour.
+
 \index{prediction}
 \index{explanation}
 
@@ -1799,6 +1806,7 @@ But prediction is not the only goal; models like this are also used to explain w
 \index{what if scenario}
 
 As an example, suppose we have enough data to estimate that \py{p2} is about \py{0.2}, but we don't have any information about \py{p1}.  We could run simulations with a range of values for \py{p1} and see how the results vary.  This process is called {\bf sweeping} a parameter, in the sense that the value of the parameter ``sweeps" through a range of possible values.
+
 \index{sweep}
 \index{parameter sweep}
 
@@ -1812,20 +1820,32 @@ for p1 in p1_array:
     print(p1, state.olin_empty)
 \end{python}
 
-Each time through the loop, we run a simulation with a the given value of \py{p1} and the same value of \py{p2}, \py{0.2}.  Then we print \py{p1} and the number of unhappy customers at Olin.
+Each time through the loop, we run a simulation with a different value of \py{p1} and the same value of \py{p2}, \py{0.2}.  Then we print \py{p1} and the number of unhappy customers at Olin.
 
-To visualize the results, we can run the same loop, replacing \py{print} with \py{plot}:
+To save and plot the results, we can use a \py{SweepSeries} object, which is similar to a \py{Timeseries}; the difference is that the labels in a \py{SweepSeries} are parameter values rather than time values. 
+
+We can create an empty \py{SweepSeries} like this:
+
+\begin{code}
+sweep = SweepSeries()
+\end{code}
+
+And add values like this:
 
 \begin{python}
-newfig()
 for p1 in p1_array:
-    state = run_simulation(p1, 0.2)
-    mark(p1, state.olin_empty, 'rs', label='olin')
+    state = run_simulation(p1, p2, num_steps)
+    sweep[p1] = state.olin_empty
 \end{python}
 
-When you run the notebook for this chapter, you will see the results and have a chance to try additional experiments.
+The result is a \py{SweepSeries} that maps from each value of \py{p1} to the resulting number of unhappy customers.  Then we can plot the results:
 
-Before you go on, you might want to read the second notebook for this chapter, \py{chap_02_b.ipynb}, and work on the exercises in it.
+\begin{code}
+plot(sweep, label='Olin')
+\end{code}
+
+
+
 
 \section{Incremental development}
 
@@ -1833,6 +1853,7 @@ When you start writing programs that are more than a few lines, you
 might find yourself spending more and more time debugging.  The more
 code you write before you start debugging, the harder it is to find
 the problem.
+
 \index{debugging}
 \index{incremental development}
 
@@ -1848,10 +1869,11 @@ something you {\em know} is correct, like {\tt x=5}.  Run the program
 and confirm that it does what you expect.
 
 \item Make one small, testable change at a time.  A ``testable''
-change is one that displays something, or has some
-other effect, that you can check.  Ideally, you should know what
+change is one that displays something or has some
+other effect you can check.  Ideally, you should know what
 the correct answer is, or be able to check it by performing another
 computation. 
+
 \index{testable change}
 
 \item Run the program and see if the change worked.  If so, go back
@@ -1865,6 +1887,7 @@ When this process works, your changes usually work the first time, or if they do
 \begin{itemize}
 
 \item Sometimes you have to write extra code to generate visible output that you can check.  This extra code is called {\bf scaffolding} because you use it to build the program and then remove it when you are done.  That might seem like a waste, but time you spend on scaffolding is almost always time you save on debugging.
+
 \index{scaffolding}
 
 \item When you are getting started, it might not be obvious how to
@@ -1875,8 +1898,12 @@ to write.  You will see more examples of this process as we go along, and you wi
 
 If you find yourself writing more than a few lines of code before you start testing, and you are spending a lot of time debugging, try incremental development.
 
+Before you go on, you might want to read the notebook for this chapter, \py{chap04.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
-\chapter{Explanation}
+
+%\part{Modeling population growth}
+
+\chapter{World population}
 \label{chap03}
 
 In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{http://modsimpy.com/popbomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.
@@ -1892,8 +1919,6 @@ But world population growth is still a topic of concern, and it is an open quest
 In this chapter and the next, we use tools from the previous chapters to explain world population growth since 1950 and generate predictions for the next 50--100 years.
 
 \index{prediction}
-
-You can view the code for this chapter at \url{http://modsimpy.com/chap03}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{World Population Data}
@@ -2144,8 +2169,10 @@ Figure~\ref{chap03-fig02} shows the result. The model does not fit the data part
 
 We'll try out some different models in the next few sections, but first let's clean up the code.
 
-Before you go on, you might want to read the first notebook for this chapter, \py{chap_03_a.ipynb}, and work on the exercises in it.
+Before you go on, you might want to read the notebook for this chapter, \py{chap05.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
+
+\chapter{Modeling growth}
 
 \section{Now with System objects}
 \label{nowwithsystem}
@@ -2266,8 +2293,10 @@ There are a few things we could try to improve the model:
 
 We will try out these variations, but first, we'll clean up the code one more time.
 
-Before you go on, you might want to read the second notebook for this chapter, \py{chap_03_b.ipynb}, and work on the exercises in it.
+Before you go on, you might want to read the notebook for this chapter, \py{chap06.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
+
+\chapter{Equilibrium}
 
 \section{Factoring out the update function}
 
@@ -2465,7 +2494,7 @@ In this version, it is easier to interpret the parameters: $\alpha$ is the maxim
 
 In the next chapter we use the models we have developed to generate predictions.
 
-Before you go on, you might want to read the third notebook for this chapter, \py{chap_03_c.ipynb}, and work on the exercises in it.
+
 
 
 \section{Disfunctions}
@@ -2561,7 +2590,7 @@ Or if you had more than one system, you could compute the total carrying capacit
 total = carrying_capacity(sys1) + carrying_capacity(sys2)
 \end{python}
 
-In the notebook for this chapter, you can try out each of these examples and see what happens.
+Before you go on, you might want to read the notebook for this chapter, \py{chap07.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Prediction}
@@ -2573,8 +2602,6 @@ In this chapter we'll use the quadratic model to generate projections of future 
 
 \index{prediction}
 \index{projection}
-
-You can view the code for this chapter at \url{http://modsimpy.com/chap04}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Generating projections}
@@ -2709,8 +2736,10 @@ And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the resu
 
 Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the results from this model, simple as it is, are not entirely crazy.
 
-Before you go on, you might want to read the first notebook for this chapter, \py{chap_04_a.ipynb}, and work on the exercises in it.
+Before you go on, you might want to read the notebook for this chapter, \py{chap08.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
+
+\chapter{Analysis}
 
 \section{Recurrence relations}
 
@@ -3089,7 +3118,7 @@ What I've been calling the constant growth model is more commonly called ``linea
 
 I avoided these terms until now because they are based on the solutions to problems we had not solved yet.
 
-Before you go on, you might want to read the second notebook for this chapter, \py{chap_04_b.ipynb}, and work on the exercises in it.
+
 
 
 \section{DataFrame and Series}
@@ -3146,6 +3175,8 @@ Several of the objects defined in \py{modsim} are modified versions of \py{Serie
 Defining these objects wasn't necessary; we could do all the same things using \py{Series} objects.  But giving them different names makes the code easier to read and understand, and helps avoid certain kinds of errors (like getting two \py{Series} objects mixed up).
 
 If you write simulations in Python in the future, you can continue using the objects in \py{modsim}, if you find them useful, or you can use Pandas objects directly.
+
+Before you go on, you might want to read the notebook for this chapter, \py{chap09.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter*{Case studies}
@@ -3244,7 +3275,7 @@ def run_simulation(p1, p2, num_steps):
 
 The parameters of \py{run_simulation} are the parameters of the model.  It creates a \py{State} object that represents the initial state of the system, then updates the state over a given number of time steps.  It returns the final value of \py{state}, which contains metrics we can use to measure the performance of the system.
 
-We used \py{linspace} to create a NumPy array of equally-spaced values, and a \py{for} loop to loop through the array.  We used a \py{SweepSeries} to store results from a series of simulation, mapping from the value of a parameter to the value of a resulting metric.
+We used \py{linspace} to create a NumPy array of equally-spaced values, and a \py{for} loop to loop through the array.  We used a \py{SweepSeries} to store results from a series of simulations, mapping from the value of a parameter to the value of a resulting metric.
 
 \begin{code}
 p1_array = linspace(0, 1, 11)
@@ -3315,7 +3346,7 @@ That's a brief summary of the computational tools we have seen so far.  The next
 
 \section*{One queue or two?}
 
-The first case study asks you to apply what you've learned to a problem from {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
+The first case study asks you to apply what you've learned to a problem from {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  
 
 Suppose you are designing the checkout area for a new store.  You have enough room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that feeds both counters.
 
@@ -3377,6 +3408,8 @@ Hint: if there are at least two customers in the store, there are two chances fo
 
 \end{enumerate}
 
+A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
+
 
 \section*{Predicting salmon populations}
 
@@ -3385,8 +3418,6 @@ Each year the U.S. Atlantic Salmon Assessment Committee reports estimates of sal
 The goal of this case study is to model year-to-year changes in population, evaluate how predictable these changes are, and estimate the probability that a particular population will increase or decrease in the next 10 years.
 
 As an example, I'll use data from page 18 of the 2017 report, which provides population estimates for the Narraguagus and Sheepscot Rivers in Maine.
-
-A solution to this exercise is in \py{salmon_soln.ipynb} in the repository for this book.
 
 Again, I'll make some suggestions for how to proceed, but if you want to try something different, please do!
 
@@ -3417,26 +3448,32 @@ last_pops.describe()
 
 \end{enumerate}
 
+A solution to this exercise is in \py{salmon_soln.ipynb} in the repository for this book.
 
-\chapter{Design}
+
+%\part{Modeling contagious disease}
+
+\chapter{Epidemiology}
 
 In the previous chapter, we developed a model of world population growth and used it to generate projections for the next 100 years.  In this chapter, we develop a model of an epidemic as it spreads in a susceptible population, and use it to evaluate the effectiveness of possible interventions.
+
 \index{epidemic}
 
 My presentation of the SIR model in this chapter, and the analysis in the next chapter, is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{http://modsimpy.com/sir}.}.
-\index{SIR model}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap05}.  For instructions on downloading and running the code, see Section~\ref{code}.
+\index{SIR model}
 
 
 \section{The Freshman Plague}
 
 Every year at Olin College, about 90 new students come to campus from around the country and the world.  Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease.  A few weeks later, predictably, some fraction of the incoming class comes down with what we call ``The Freshman Plague".
+
 \index{Olin College}
 \index{Freshman Plague}
 \index{Kermack-McKendrick}
 
 In this chapter we introduce a well-known model of infectious disease, the Kermack-McKendrick model, and use it to explain the progression of the disease over the course of the semester, predict the effect of possible interventions (like immunization) and design the most effective intervention campaign.
+
 \index{disease}
 \index{infection}
 \index{design}
@@ -3463,14 +3500,17 @@ In the basic version of the model, people who have recovered are considered to b
 Let's think about how the number of people in each category changes over time.  Suppose we know that people with the disease are infectious for a period of 4 days, on average.  If 100 people are infectious at a particular point in time, and we ignore the particular time each one became infected, we expect about 1 out of 4 to recover on any particular day.
 
 Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the Greek letter gamma, $\gamma$.  If the total number of people in the population is $N$, and the fraction currently infectious is $i$, the total number of recoveries we expect per day is $\gamma i N$.
+
 \index{recovery rate}
 
-Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in such a way that they would contract the disease if the other person is infected.  We'll denote this contact rate with the Greek letter beta, $\beta$.
+Now let's think about the number of new infections.  Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in such a way that they would transmit the disease if the other person is infected.  We'll denote this contact rate with the Greek letter beta, $\beta$.
+
 \index{infection rate}
 
 It's probably not reasonable to assume that we know $\beta$ ahead of time, but later we'll see how to estimate it based on data from previous outbreaks.
 
 If $s$ is the fraction of the population that's susceptible, $s N$ is the number of susceptible people, $\beta s N$ is the number of contacts per day, and $\beta s i N$ is the number of those contacts where the other person is infectious.
+
 \index{susceptible}
 
 In summary:
@@ -3501,6 +3541,7 @@ To avoid cluttering the equations, I leave it implied that $s$ is a function of 
 \index{differential equation}
 
 SIR models are examples of {\bf compartment models}, so-called because they divide the world into discrete categories, or compartments, and describe transitions from one compartment to another.  Compartments are also called {\bf stocks} and transitions between them are called {\bf flows}.
+
 \index{compartment model}
 \index{stock}
 \index{flow}
@@ -3525,14 +3566,16 @@ Stocks are represented by rectangles, flows by arrows.  The widget in the middle
 \section{Implementation}
 
 For a given physical system, there are many possible models, and for a given model, there are many ways to represent it.  For example, we can represent an SIR model as a stock-and-flow diagram, as a set of differential equations, or as a Python program.  The process of representing a model in these forms is called {\bf implementation}.  In this section, we implement the SIR model in Python.
+
 \index{implementation}
 
 To get started, I'll represent the initial state of the system using a \py{State} object, which is defined in the \py{modsim} library.  A \py{State} object is a collection of {\bf state variables}; each state variable represents information about the system that changes over time.  In this example, the state variables are \py{S}, \py{I}, and \py{R}; they represent the fraction of the population in each compartment.
+
 \index{System object}
 \index{State object}
 \index{state variable}
 
-Creating a \py{State} object is similar to creating a \py{System} object.  We can initialize the \py{State} object with the {\em number} of people in each compartment:
+We can initialize the \py{State} object with the {\em number} of people in each compartment, assuming there is one infected student in a class of 90:
 
 \begin{python}
 init = State(S=89, I=1, R=0)
@@ -3551,7 +3594,7 @@ tc = 3             # time between contacts in days
 tr = 4             # recovery time in days
 \end{python}
 
-In that case we can compute the parameters of the model:
+We can use them to compute the parameters of the model:
 
 \begin{python}
 beta = 1 / tc      # contact rate in per day
@@ -3559,6 +3602,7 @@ gamma = 1 / tr     # recovery rate in per day
 \end{python}
 
 Now we need a \py{System} object to store the parameters and initial conditions.  The following function takes the system parameters as function parameters and returns a new \py{System} object:
+
 \index{\py{make_system}}
 
 \begin{python}
@@ -3579,12 +3623,13 @@ The default value for \py{t_end} is 14 weeks, about the length of a semester.
 \section{The update function}
 
 At any point in time, the state of the system is represented by a \py{State} object with three variables, \py{S}, \py{I} and \py{R}.  Next we'll define an update function that takes the \py{State} object as a parameter, along with the \py{System} object that contains the parameters, and computes the state of the system during the next time step:
+
 \index{update function}
 \index{function!update}
 \index{time step}
 
 \begin{python}
-def update1(state, system):
+def update_func(state, t, system):
     s, i, r = state
 
     infected = system.beta * i * s    
@@ -3598,15 +3643,21 @@ def update1(state, system):
 \end{python}
 
 The first line uses a feature we have not seen before, {\bf multiple assignment}.  The value on the right side is a \py{State} object that contains three values.  The left side is a sequence of three variable names.  The assignment does just what we want: it assigns the three values from the \py{State} object to the three variables, in order.
+
+The local variables, \py{s}, \py{i} and \py{r}, are lowercase to distinguish them from the state variables, \py{S}, \py{I} and \py{R}.
+
 \index{State object}
+\index{state variable}
+\index{local variable}
 
 The update function computes \py{infected} and \py{recovered} as a fraction of the population, then updates \py{s}, \py{i} and \py{r}.  The return value is a \py{State} that contains the updated values.
+
 \index{return value}
 
-When we call \py{update1} like this:
+When we call \py{update_func} like this:
 
 \begin{python}
-state = update1(init, sir)
+state = update_func(init, 0, sir)
 \end{python}
 
 The result is a \py{State} object with these values:
@@ -3619,12 +3670,15 @@ The result is a \py{State} object with these values:
 {\bf \sf R} & 0.002747 \\ 
 \end{tabular} 
 
+You might notice that this version of \py{update_func} does not use one of its parameters, \py{t}.  I include it anyway because update functions sometimes depend on time, and it is convenient if they all take the same parameters, whether they need them or not.
+
 %TODO: figure out when to talk about integers and floats (or never)
 
 
 \section{Running the simulation}
 
 Now we can simulate the model over a sequence of time steps:
+
 \index{time step}
 
 \begin{python}
@@ -3632,12 +3686,13 @@ def run_simulation(system, update_func):
     state = system.init
 
     for t in linrange(system.t0, system.t_end-1):
-        state = update_func(state, system)
+        state = update_func(state, t, system)
 
     return state
 \end{python}
 
 The parameters of \py{run_simulation} are the \py{System} object and the update function.  The \py{System} object contains the parameters, initial conditions, and values of \py{t0} and \py{t_end}.
+
 \index{\py{run_simulation}}
 
 The outline of this function should look familiar; it is similar to the function we used for the population model in Section~\ref{nowwithsystem}.
@@ -3646,7 +3701,7 @@ We can call \py{run_simulation} like this:
 
 \begin{python}
 system = make_system(beta, gamma)
-run_simulation(system, update1)
+final_state = run_simulation(system, update_func)
 \end{python}
 
 The result is the final state of the system:
@@ -3665,6 +3720,7 @@ This result indicates that after 14 weeks (98 days), about 52\% of the populatio
 \section{Collecting the results}
 
 The previous version of \py{run_simulation} only returns the final state, but we might want to see how the state changes over time.  We'll consider two ways to do that: first, using three \py{TimeSeries} objects, then using a new object called a \py{TimeFrame}.
+
 \index{TimeFrame object}
 \index{TimeSeries object}
 
@@ -3681,12 +3737,10 @@ def run_simulation(system, update_func):
     S[t0], I[t0], R[t0] = state
     
     for t in linrange(system.t0, system.t_end-1):
-        state = update_func(state, system)
+        state = update_func(state, t, system)
         S[t+1], I[t+1], R[t+1] = state
     
-    system.S = S
-    system.I = I
-    system.R = R
+    return S, I, R
 \end{python}
 
 First, we create \py{TimeSeries} objects to store the results.  Notice that the variables \py{S}, \py{I}, and \py{R} are \py{TimeSeries} objects now.
@@ -3694,15 +3748,16 @@ First, we create \py{TimeSeries} objects to store the results.  Notice that the 
 Next we initialize \py{state}, \py{t0}, and the first elements of \py{S}, \py{I} and \py{R}.  
 
 Inside the loop, we use \py{update_func} to compute the state of the system at the next time step, then use multiple assignment to unpack the elements of \py{state}, assigning each to the corresponding \py{TimeSeries}.
+
 \index{time step}
 
-At the end of the function, we store \py{S}, \py{I}, and \py{R} as system variables.
+At the end of the function, we return the values \py{S}, \py{I}, and \py{R}.  This is the first example we have seen where a function returns more than one value.
 
 Now we can run the function like this:
 
 \begin{python}
 system = make_system(beta, gamma)
-run_simulation(system, update1)
+S, I, R = run_simulation(system, update_func)
 \end{python}
 
 We'll use the following function to plot the results:
@@ -3716,12 +3771,13 @@ def plot_results(S, I, R):
              ylabel='Fraction of population')
 \end{python}
 
-And run it like this:
 \index{plot}
 \index{decorate}
 
+And run it like this:
+
 \begin{python}
-plot_results(system.S, system.I, system.R)
+plot_results(S, I, R)
 \end{python}
 
 \begin{figure}
@@ -3737,22 +3793,23 @@ Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three we
 \label{timeframe}
 
 If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}, which is another object are defined in the \py{modsim} library.
+
 \index{TimeFrame object}
 \index{DataFrame object}
 
-A \py{TimeFrame} is almost identical to a \py{DataFrame}, which we used in Section~\ref{worldpopdata}, with just a few changes I made to adapt it for our purposes.  For more details, you can read the \py{modsim} library source code.
+A \py{TimeFrame} is almost identical to a \py{DataFrame}, which we used in Section~\ref{worldpopdata}, with just a few changes I made to adapt it for our purposes.
 
 Here's a more concise version of \py{run_simulation} using a \py{TimeFrame}:
 
 \begin{python}
 def run_simulation(system, update_func):
     frame = TimeFrame(columns=system.init.index)
-    frame.loc[system.t0] = system.init
+    frame.row[system.t0] = system.init
     
     for t in linrange(system.t0, system.t_end-1):
-        frame.loc[t+1] = update_func(frame.loc[t], system)
+        frame.row[t+1] = update_func(frame.row[t], system)
     
-    system.results = frame
+    return frame
 \end{python}
 
 The first line creates an empty \py{TimeFrame} with one column for each state variable.  Then, before the loop starts, we store the initial conditions in the \py{TimeFrame} at \py{t0}.  Based on the way we've been using \py{TimeSeries} objects, it is tempting to write:
@@ -3762,6 +3819,7 @@ frame[system.t0] = system.init
 \end{python}
 
 But when you use the bracket operator with a \py{TimeFrame} or \py{DataFrame}, it selects a column, not a row.  For example, to select a column, we could write:
+
 \index{bracket operator}
 \index{operator~bracket}
 
@@ -3769,33 +3827,38 @@ But when you use the bracket operator with a \py{TimeFrame} or \py{DataFrame}, i
 frame['S']
 \end{python}
 
-To select a row, we have to use \py{loc}, which stands for ``location". \py{frame.loc[0]} reads a row from a \py{TimeFrame} and 
-\index{loc}
+%TODO: Consider defining `row` as a synonym for `loc`.
+
+To select a row, we have to use \py{row}, like this:
+
+\index{row}
 
 \begin{python}
 frame.loc[system.t0] = system.init
 \end{python}
 
-assigns the values from \py{system.init} to the first row of \py{df}.  Since the value on the right side is a \py{State}, the assignment matches up the index of the \py{State} with the columns of the \py{TimeFrame}; it assigns the \py{S} value from \py{system.init} to the \py{S} column of the \py{TimeFrame}, and likewise with \py{I} and \py{R}.
+Since the value on the right side is a \py{State}, the assignment matches up the index of the \py{State} with the columns of the \py{TimeFrame}; that is, it assigns the \py{S} value from \py{system.init} to the \py{S} column of \py{frame}, and likewise with \py{I} and \py{R}.
+
 \index{assignment}
 
-We can use the same feature to write the loop more concisely, assigning the \py{State} we get from \py{update_func} directly to the next row of \py{df}.  
+We can use the same feature to write the loop more concisely, assigning the \py{State} we get from \py{update_func} directly to the next row of \py{frame}.
+  
 \index{system variable}
 
-Finally, we store \py{frame} as a new system variable.  We can call this version of \py{run_simulation} like this:
+Finally, we return \py{frame}.  We can call this version of \py{run_simulation} like this:
 
 \begin{python}
-run_simulation(system, update1)
+results = run_simulation(system, update_func)
 \end{python}
 
 And plot the results like this:
 
 \begin{python}
-frame = system.results
-plot_results(frame.S, frame.I, frame.R)
+plot_results(results.S, results.I, results.R)
 \end{python}
 
 As with a \py{DataFrame}, we can use the dot operator to select columns from a \py{TimeFrame}.
+
 \index{dot operator}
 \index{operator!dot}
 
@@ -3803,10 +3866,9 @@ As with a \py{DataFrame}, we can use the dot operator to select columns from a \
 \section{Metrics}
 \label{metrics}
 
-When we plot a time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a few numbers that summarize the outcome.  These summary statistics are called {\bf metrics}.
-\index{metric}
+When we plot a time series, we get a view of everything that happened when the model ran, but often we want to boil it down to a few numbers that summarize the outcome.  These summary statistics are called {\bf metrics}, as we saw in Section~\ref{metrics}.
 
-% TODO: already defined metrics
+\index{metric}
 
 In the SIR model, we might want to know the time until the peak of the outbreak, the number of people who are sick at the peak, the number of students who will still be sick at the end of the semester, or the total number of students who get sick at any point.
 
@@ -3815,12 +3877,12 @@ As an example, I will focus on the last one --- the total number of sick student
 When a person gets infected, they move from \py{S} to \py{I}, so we can get the total number of infections by computing the difference in \py{S} at the beginning and the end:
 
 \begin{python}
-def calc_total_infected(system):
-    frame = system.results
-    return frame.S[system.t0] - frame.S[system.t_end]
+def calc_total_infected(results, system):
+    return results.S[system.t0] - results.S[system.t_end]
 \end{python}
 
 In the notebook that accompanies this chapter, you will have a chance to write functions that compute other metrics.  Two functions you might find useful are \py{max} and \py{idxmax}.
+
 \index{max}
 \index{idxmax}
  
@@ -3837,17 +3899,19 @@ time_of_largest_value = S.idxmax()
 \end{python}
 
 If the \py{Series} is a \py{TimeSeries}, the label you get from \py{idxmax} is a time or date.  You can read more about these functions in the \py{Series} documentation at \url{http://modsimpy.com/series}.
+
 \index{Series}
 
 
 \section{Immunization}
 
 Models like this are useful for testing ``what if?" scenarios.  As an example, we'll consider the effect of immunization.
+
 \index{immunization}
 \index{vaccine}
 \index{Freshman Plague}
 
-Suppose there is a vaccine that causes a patient to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
+Suppose there is a vaccine that causes a student to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
 
 One option is to treat immunization as a short cut from susceptible to recovered without going through infectious.  We can implement this feature like this:
 
@@ -3862,10 +3926,10 @@ def add_immunization(system, fraction):
 \begin{python}
 system2 = make_system(beta, gamma)
 add_immunization(system2, 0.1)
-run_simulation(system2, update1)
+results2 = run_simulation(system2, update_func)
 \end{python}
 
-For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap05-fig02} shows the results, plotting \py{S} as a function of time, with and without immunization.  
+For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap05-fig02} shows \py{S} as a function of time, with and without immunization.  
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
@@ -3875,7 +3939,8 @@ For comparison, we can run the same model without immunization and plot the resu
 
 Without immunization, almost 47\% of the population gets infected at some point.  With 10\% immunization, only 31\% gets infected.  That's pretty good.
 
-So let's see what happens if we administer more vaccines.  This following function sweeps a range of immunization rates:
+Now let's see what happens if we administer more vaccines.  This following function sweeps a range of immunization rates:
+
 \index{sweep}
 
 \begin{python}
@@ -3885,19 +3950,20 @@ def sweep_immunity(immunize_array):
     for fraction in immunize_array:
         sir = make_system(beta, gamma)
         add_immunization(sir, fraction)
-        run_simulation(sir, update1)
-        sweep[fraction] = calc_total_infected(sir)
+        results = run_simulation(sir, update_func)
+        sweep[fraction] = calc_total_infected(results, sir)
 
     return sweep
 \end{python}
 
-The parameter of \py{sweep_immunity} is an array of immunization rates.  The result is a \py{SweepSeries} object, which is defined in the \py{modsim} library.  \py{SweepSeries} is similar to \py{TimeSeries}; the difference is that the index of a \py{SweepSeries} contains parameter values, not times.  
+The parameter of \py{sweep_immunity} is an array of immunization rates.  The result is a \py{SweepSeries} object that maps from each immunization rate to the resulting fraction of students ever infected.
+  
 \index{SweepSeries object}
 \index{parameter sweep}
 
 Figure~\ref{chap05-fig03} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
 
-As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized, of course, but it also protects the rest of the population. 
+As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized (of course) but it also protects the rest of the population. 
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
@@ -3906,19 +3972,25 @@ As the immunization rate increases, the number of infections drops steeply.  If 
 \end{figure} 
 
 Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{http://modsimpy.com/herd}).
+
 \index{herd immunity}
 
 The steepness of the curve in Figure~\ref{chap05-fig03} is a blessing and a curse.  It's a blessing because it means we don't have to immunize everyone, and vaccines can protect the ``herd" even if they are not 100\% effective.
 
 But it's a curse because a small decrease in immunization can cause a big increase in infections.  In this example, if we drop from 80\% immunization to 60\%, that might not be too bad.  But if we drop from 40\% to 20\%, that would trigger a major outbreak, affecting more than 15\% of the population.  For a serious disease like measles, just to name one, that would be a public health catastrophe.
+
 \index{measles}
 
 One use of models like this is to demonstrate phenomena like herd immunity and to predict the effect of interventions like vaccination.  Another use is to evaluate alternatives and guide decision making.  We'll see an example in the next section.
 
+Before you go on, you might want to read the notebook for this chapter, \py{chap10.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+
+\chapter{Optimization}
 
 \section{Hand washing}
 
-Suppose you are the Dean of Student Affairs, and you have a budget of just \$1200 to combat the Freshman Plague.  You have two options for spending this money:
+Suppose you are the Dean of Student Life, and you have a budget of just \$1200 to combat the Freshman Plague.  You have two options for spending this money:
 
 \begin{enumerate}
 
@@ -3955,6 +4027,7 @@ Now we have to model the relationship between the money we spend and the effecti
 \end{itemize}
 
 In the notebook for this chapter you will see how I used a logistic curve to fit this data.  The result is the following function, which takes spending as a parameter and returns \py{factor}, which is the factor by which \py{beta} is reduced:
+
 \index{logistic curve}
 
 \begin{python}
@@ -3962,7 +4035,7 @@ def compute_factor(spending):
     return logistic(spending, M=500, K=0.2, B=0.01)
 \end{python}
 
-We use \py{compute_factor} to write \py{add_hand_washing}, which takes a \py{System} object and a budget, and modifies \py{system.beta} to model the effect of hand washing:
+I use \py{compute_factor} to write \py{add_hand_washing}, which takes a \py{System} object and a budget, and modifies \py{system.beta} to model the effect of hand washing:
 
 \begin{python}
 def add_hand_washing(system, spending):
@@ -3979,8 +4052,8 @@ def sweep_hand_washing(spending_array):
     for spending in spending_array:
         sir = make_system(beta, gamma)
         add_hand_washing(sir, spending)
-        run_simulation(sir, update1)
-        sweep[spending] = calc_total_infected(sir)
+        results, run_simulation(sir, update_func)
+        sweep[spending] = calc_total_infected(results, sir)
         
     return sweep
 \end{python}
@@ -4004,6 +4077,7 @@ Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has littl
 \section{Optimization} 
 
 Let's put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
+
 \index{optimization}
 
 Here are the parameters:
@@ -4014,6 +4088,8 @@ budget = 1200
 price_per_dose = 100
 max_doses = int(budget / price_per_dose)
 \end{python}
+
+The fraction \py{budget/price_per_dose} might not be an integer.  \py{int} is a built-in function that converts numbers to integers, rounding down.
 
 We'll sweep the range of possible doses:
 
@@ -4035,7 +4111,7 @@ def sweep_doses(dose_array):
         add_immunization(sir, fraction)
         add_hand_washing(sir, spending)
         
-        run_simulation(sir, update1)
+        run_simulation(sir, update_func)
         sweep[doses] = calc_total_infected(sir)
 
     return sweep
@@ -4052,44 +4128,21 @@ For each number of doses, we compute the fraction of students we can immunize, \
 Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
 
 As we increase the number of doses, we have to cut campaign spending, which turns out to make things worse.  But interestingly, when we get above 10 doses, the effect of herd immunity starts to kick in, and the number of sick students goes down again.
+
 \index{herd immunity}
 
-In the notebook for this chapter, you'll have a chance to run this optimization for a few other scenarios.
-
-
-\section{Under the hood}
-
-This chapter introduces three new objects, \py{State}, \py{TimeFrame}, and \py{SweepSeries}.
-
-A \py{State} object is similar to a \py{System} object.  The difference is that the variables in a \py{State} object change over time; the variables in a \py{System} object are parameters that usually don't change.  At least, they usually don't change during a simulation --- they often vary from one simulation to the next.
-
-In previous chapters, we used \py{System} objects to store both state variables and parameters.  Now we are using \py{State} objects to partition values that play different roles.
-
-A \py{TimeFrame} is a version of a Pandas \py{DataFrame}; to be honest, the biggest difference in the name, which is intended as a reminder that the index contains a sequence of times.  Usually each row in a \py{TimeFrame} corresponds to a time step in a simulation, and the columns correspond to the state variables. 
-
-Finally, a \py{SweepSeries} is a version of a Pandas \py{Series} where
-
-\begin{itemize}
-
-\item The index contains a range of values for a system parameter, 
-
-\item And the values contain metrics that summarize the results of a simulation.
-
-\end{itemize}
-
-In the next chapter, we'll see a two-dimensional version of a \py{SweepSeries}, called a \py{SweepFrame}, where the index contains one parameter, the columns contain a second parameter, and the values contain metrics.
+Before you go on, you might want to read the notebook for this chapter, \py{chap11.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 
-\chapter{Analysis}
+\chapter{Sweeping two parameters}
 
-In the previous chapter I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model.  We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.
+In the previous chapters I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model.  We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.
+
 \index{Kermack-McKendrick model}
 \index{SIR model}
 
 But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
-
-You can view the code for this chapter at \url{http://modsimpy.com/chap06}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Unpack}
@@ -4101,15 +4154,16 @@ Before we analyze the SIR model, I want to make a few improvements to the code. 
 \begin{python}
 def run_simulation(system, update_func):
     frame = DataFrame(columns=system.init.index)
-    frame.loc[system.t0] = system.init
+    frame.row[system.t0] = system.init
     
     for i in linrange(system.t0, system.t_end):
-        frame.loc[i+1] = update_func(frame.loc[i], system)
+        frame.row[i+1] = update_func(frame.row[i], system)
     
     system.results = frame
 \end{python}
 
 Because we read so many variables from \py{system}, this code is a bit cluttered.  We can clean it up using \py{unpack}, which is defined in the \py{modsim} library.  \py{unpack} takes a \py{System} object as a parameter and makes the system variables available without using the dot operator.  So we can rewrite \py{run_simulation} like this:
+
 \index{unpack}
 \index{System object}
 
@@ -4118,10 +4172,10 @@ def run_simulation(system, update_func):
     unpack(system)
     
     frame = TimeFrame(columns=init.index)
-    frame.loc[t0] = init
+    frame.row[t0] = init
     
     for i in linrange(t0, t_end):
-        frame.loc[i+1] = update_func(frame.loc[i], system)
+        frame.row[i+1] = update_func(frame.row[i], system)
     
     system.results = frame
 \end{python}
@@ -4229,8 +4283,11 @@ for gamma in gamma_array:
 
 Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even low a contact rate (\py{beta}) results in an epidemic.
 
-When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  In fact, there is.  I will demonstrate it first by running simulations, then derive it by analysis.
+When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  In fact, there is.  In the next two chapters I demonstrate it by running simulations, then derive it by analysis.
 
+Before you go on, you might want to read the notebook for this chapter, \py{chap12.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+\chapter{Nondimensionalization} 
 
 \section{Nondimensionalization}
 \label{nondim}
@@ -4434,18 +4491,22 @@ On the other hand, for larger contact numbers, nearly the entire population is i
 
 In summary, the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
 
+Before you go on, you might want to read the notebook for this chapter, \py{chap13.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\chapter{Thermal systems}
 
-So far the systems we have studied have been physical, in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In this chapter, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
+%\part{Modeling thermal systems}
+
+So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In the next few chapters, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
+
 \index{thermal system}
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap07}.  For instructions on downloading and running the code, see Section~\ref{code}.
+\chapter{The coffee cooling problem}
 
-\section{The coffee cooling problem}
+\section{The problem}
 
 The coffee cooling problem was discussed by Jearl Walker in {\it Scientific American} in 1977\footnote{Walker, ``The Amateur Scientist", {\it Scientific American}, Volume 237, Issue 5, November 1977.}; since then it has become a standard example of modeling and simulation.
+
 \index{coffee cooling problem}
 \index{Walker, Jearl}
 
@@ -4455,7 +4516,7 @@ Here is my version of the problem:
 Suppose I stop on the way to work to pick up a cup of coffee, which I take with milk.  Assuming that I want the coffee to be as hot as possible when I arrive at work, should I add the milk at the coffee shop, wait until I get to work, or add the milk at some point in between?
 \end{quote}
 
-To help answer this question, I made a trial run with the milk and coffee in separate containers and took some measurements:
+To help answer this question, I made a trial run with the milk and coffee in separate containers and took some measurements\footnote{This is fiction.  I usually drink tea, and I bike to work.}:
 
 \begin{itemize}
 
@@ -4472,14 +4533,16 @@ To help answer this question, I made a trial run with the milk and coffee in sep
 \end{itemize}
 
 To use this data and answer the question, we have to know something about temperature and heat, and we have to make some modeling decisions.
-\index{data}
+
 
 \section{Temperature and heat}
 
 To understand how coffee cools (and milk warms), we need a model of temperature and heat.  {\bf Temperature} is a property of an object or a system; in SI units it is measured in degrees Celsius (\si{\celsius}).  Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.
+
 \index{temperature}
 
-When particles in a hot object contact particles in a cold object, the hot object gets cooler and the cold object gets warmer, as energy is transferred from one to the other.  The transferred energy is called {\bf heat}; in SI units it is measured in joules (\si{\joule}).
+When particles in a hot object contact particles in a cold object, the hot object gets cooler and the cold object gets warmer as energy is transferred from one to the other.  The transferred energy is called {\bf heat}; in SI units it is measured in joules (\si{\joule}).
+
 \index{heat}
 
 Heat is related to temperature by the following equation (see \url{http://modsimpy.com/thermass}):
@@ -4487,6 +4550,7 @@ Heat is related to temperature by the following equation (see \url{http://modsim
 \[ Q = C \Delta T \]
 %
 where $Q$ is the amount of heat transferred to an object, $\Delta T$ is resulting change in temperature, and $C$ is the {\bf thermal mass} of the object, which quantifies how much energy it takes to heat or cool it.  In SI units, thermal mass is measured in joules per degree Celsius (\si{\joule\per\celsius}).
+
 \index{thermal mass}
 
 For objects made primarily from one material, thermal mass can be computed like this:
@@ -4494,22 +4558,27 @@ For objects made primarily from one material, thermal mass can be computed like 
 \[ C = m c_p \]
 %
 where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity} of the material (see \url{http://modsimpy.com/specheat}).
+
 \index{specific heat capacity}
 
 We can use these equations to estimate the thermal mass of a cup of coffee.  The specific heat capacity of coffee is probably close to that of water, which is \SI{4.2}{\joule\per\gram\per\celsius}.  Assuming that the density of coffee is close to that of water, which is \SI{1}{\gram\per\milli\liter}, the mass of \SI{300}{\milli\liter} of coffee is \SI{300}{\gram}, and the thermal mass is \SI{1260}{\joule\per\celsius}.
+
 \index{density}
 
 So when a cup of coffee cools from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ is \SI{20}{\celsius}, which means that \SI{25200}{\joule} of heat energy was transferred from the coffee to the surrounding environment (the cup holder and air in my car).
 
 To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot\footnote{See \url{http://modsimpy.com/thermo}.}), you could use it to lift a cup of coffee from sea level to \SI{8571}{\meter}, just shy of the height of Mount Everest, \SI{8848}{\meter}.
+
 \index{Mount Everest}
 
 Assuming that the cup has less mass than the coffee, and is made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
+For a cup with substantial thermal mass, we might consider a model that computes the temperature of coffee and cup separately.
 
 
 \section{Heat transfer}
 
 In a situation like the coffee cooling problem, there are three ways heat transfers from one object to another (see \url{http://modsimpy.com/transfer}):
+
 \index{heat transfer}
 \index{conduction}
 \index{convection}
@@ -4520,16 +4589,18 @@ In a situation like the coffee cooling problem, there are three ways heat transf
 \item Conduction: When objects at different temperatures come into contact, the faster-moving particles of the higher-temperature object transfer kinetic energy to the slower-moving particles of the lower-temperature object.
 
 \item Convection: When particles in a gas or liquid flow from place to place, they carry heat energy with them.  Fluid flows can be caused by external action, like stirring, or by internal differences in temperature.  For example, you might have heard that hot air rises, which is a form of ``natural convection".
+
 \index{fluid flow}
 
 \item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The energy carried by this radiation depends on the object's temperature and surface properties (see \url{http://modsimpy.com/thermrad}).
 
 \end{itemize}
 
-For objects like coffee in a car, thermal radiation is much smaller than 
-heat transfer due to conduction and convection, so we will ignore it.
+For objects like coffee in a car, the effect of radiation is much smaller than 
+the effects of conduction and convection, so we will ignore it.
 
 Convection can be a complex topic, since it often depends on details of fluid flow in three dimensions.  But for this problem we will be able to get away with a simple model called ``Newton's law of cooling".
+
 \index{Newton's law of cooling}
 
 \section{Newton's law of cooling}
@@ -4538,7 +4609,7 @@ Newton's law of cooling asserts that the temperature rate of change for an objec
 %
 \[ \frac{dT}{dt} = -r (T - T_{env}) \]
 %
-where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heats is transferred between the system and the environment.
+where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heat is transferred between the system and the environment.
 
 Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
 
@@ -4547,6 +4618,7 @@ For example, if the primary mechanism of heat transfer is conduction, Newton's l
 When convection contributes a non-negligible fraction of heat transfer, $r$  depends on temperature, but Newton's law is often accurate enough, at least over a narrow range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
 
 When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures (more than a few hundred degrees Celsius, say).
+
 \index{radiation}
 
 However, for a situation like the coffee cooling problem, we expect Newton's model to be quite good.
@@ -4558,41 +4630,49 @@ However, for a situation like the coffee cooling problem, we expect Newton's mod
 To get started, let's forget about the milk temporarily and focus on the coffee.  I'll create a \py{State} object to represent the initial temperature:
 
 \begin{python}
-init = State(temp=90)
+init = State(T=90)
 \end{python}
 
 And a \py{System} object to contain the parameters of the system:
+
 \index{State object}
 \index{System object}
 
 \begin{python}
-coffee = System(init=init, T_env=22, r=0.01,
-                t0=0, t_end=30, dt=1)
+coffee = System(init=init,
+                volume=300,
+                r=0.01,
+                T_env=22,
+                t_0=0, 
+                t_end=30,
+                dt=1)
 \end{python}
 
-The values of \py{T_env}, \py{t0}, and \py{t_end} come from the statement of the problem.  I chose the value of \py{r} arbitrarily for now; we will figure out how to estimate it soon.
+The values of \py{volume}, \py{T_env}, and \py{t_end} come from the statement of the problem.  I chose the value of \py{r} arbitrarily for now; we will figure out how to estimate it soon.
+
 \index{time step}
 
 \py{dt} is the time step we use to simulate the cooling process.
 Strictly speaking, Newton's law is a differential equation, but over a short period of time we can approximate it with a difference equation:
 %
-\[ \Delta T = -r (T - T_{env}) \Delta t \]
+\[ \Delta T = -r (T - T_{env}) dt \]
 %
-where $\Delta t$ is a small time step and $\Delta T$ is the change in temperature during that time step.
+where $dt$ is a small time step and $\Delta T$ is the change in temperature during that time step.
 
 Note: I use $\Delta T$ to denote a change in temperature over time, but in the context of heat transfer, you might also see $\Delta T$ used to denote the difference in temperature between an object and its environment, $T - T_{env}$.  To minimize confusion, I avoid this second use.
 
 Now we can write an update function:
+
 \index{unpack}
 
 \begin{python}
-def update(state, system):
+def update_func(state, system):
     unpack(system)
     
-    T = state.temp
+    T = state.T
     T += -r * (T - T_env) * dt
 
-    return State(temp=T)
+    return State(T=T)
 \end{python}
 
 Now if we run 
@@ -4603,7 +4683,8 @@ update(init, coffee)
 
 we see that the temperature after one minute is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
 
-Now we can use \py{run_simulation}, as defined in Section~\ref{timeframe}, to simulate a series of time steps from \py{t0} to \py{t_end}:
+Now we write a version of \py{run_simulation} that simulates a series of time steps from \py{t0} to \py{t_end}:
+
 \index{time step}
 \index{\py{run_simulation}}
 \index{unpack}
@@ -4613,22 +4694,36 @@ def run_simulation(system, update_func):
     unpack(system)
     
     frame = TimeFrame(columns=init.index)
-    frame.loc[t0] = init
-    ts = linrange(t0, t_end-dt, dt)
+    frame.row[t_0] = init
+    ts = linrange(t_0, t_end-dt, dt)
     
     for t in ts:
-        frame.loc[t+dt] = update_func(frame.loc[t], system)
+        frame.row[t+dt] = update_func(frame.row[t], system)
+        
+    # store the final temperature in T_final
+    system.T_final = get_last_value(frame.T)
     
-    system.results = frame
+    return frame
 \end{python}
 
-and run it like this:
+This function is similar to previous versions of \py{run_simulation}, with two small differences:
+
+\begin{itemize}
+
+\item It uses \py{linrange} with three parameters to make an array of timesteps from \py{t_0} to \py{t_end} with space between timesteps \py{dt}.
+
+\item It stores the final temperature as a system variable, \py{T_final}.
+
+\end{itemize}
+
+We can run it like this:
 
 \begin{python}
-run_simulation(coffee, update)
+results = run_simulation(coffee, update_func)
 \end{python}
 
-The result is a \py{TimeFrame} object with one row per time step and just one column, \py{temp}.  The temperature after 30 minutes is \SI{72.3}{\celsius}, which is a little higher than stated in the problem, \SI{70}{\celsius}.  We could adjust \py{r} by hand and find the right value by trial and error, but we can do better, as we'll see in the next section.
+The result is a \py{TimeFrame} object with one row per time step and just one column, \py{T}.  The temperature after 30 minutes is \SI{72.3}{\celsius}, which is a little higher than stated in the problem, \SI{70}{\celsius}.  We can adjust \py{r} and find the right value by trial and error, but we'll see a better way in the next chapter.
+
 \index{time step}
 \index{TimeFrame object}
 
@@ -4636,28 +4731,38 @@ First I want to wrap what we have so far in a function:
 
 \begin{python}
 def make_system(T_init=90, r=0.01, volume=300, t_end=30):
-    init = State(temp=T_init)
+    init = State(T=T_init)
     
-    system = System(init=init,
-                    volume=volume,
-                    r=r,
-                    T_env=22, 
-                    t0=0,
-                    t_end=t_end,
-                    dt=1)
-    return system
+    return System(init=init,
+                  T_final=T_init,
+                  volume=volume,
+                  r=r,
+                  T_env=22, 
+                  t_0=0,
+                  t_end=t_end,
+                  dt=1)
 \end{python}
 
 \py{make_system} takes the system parameters and packs them into a \py{System} object.  Now we can simulate the coffee like this:
+
 \index{\py{make_system}}
 
 \begin{python}
-coffee = make_system()
-run_simulation(coffee, update)
+coffee = make_system(T_init=90, r=0.01, volume=300, t_end=30)
+results = run_simulation(coffee, update_func)
 \end{python}
 
-Now let's see a better was to estimate \py{r}.
+Before you go on, you might want to read the notebook for this chapter, \py{chap14.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
+\chapter{Mixing}
+
+In the previous chapter we wrote a simulation of a cooling cup of coffee.  Given the initial temperature of the coffee, the temperature of the atmosphere, and the rate parameter, \py{r}, we can predict how the temperature of the coffee will change over time.
+
+In general, we don't know the value of \py{r}, but we can use measurements to estimate it.  Given an initial temperature, a final temperature, and the time in between, we can find \py{r} by trial and error.
+
+In this chapter, we'll see a better way to find \py{r}, using a SciPy function called \py{fsolve}.
+
+And the we'll get back to solving the coffee cooling problem.
 
 \section{Using fsolve}
 \label{fsolve}
@@ -4667,6 +4772,7 @@ SciPy provides a method called \py{fsolve} that finds the roots of non-linear eq
 \[ f(x) = (x - 1)(x - 2)(x - 3) \]
 %
 where {\bf root} means a value of $x$ that makes $f(x)=0$.  Because of the way I wrote the polynomial, we can see that if $x=1$, the first factor is 0; if $x=2$, the second factor is 0; and if $x=3$, the third factor is 0, so those are the roots.
+
 \index{root}
 \index{fsolve}
 
@@ -4689,16 +4795,17 @@ Often \py{fsolve} finds the root that's closest to the initial guess.  In this e
 
 So how can we use \py{fsolve} to estimate \py{r}?  
 
-Now, we want to find the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
+What we want is the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
 
 \begin{python}
 def error_func1(r):
     system = make_system(r=r)
-    run_simulation(system, update)
-    return final_temp(system) - 70
+    results = run_simulation(system, update)
+    return system.T_final - 70
 \end{python}
 
 I call a function like this an ``error function" because it returns the difference between what we got and what we wanted, that is, the error.  When we find the right value of \py{r}, this error will be 0.
+
 \index{error function}
 \index{function!error}
 
@@ -4733,9 +4840,11 @@ With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results
 \section{Mixing liquids}
 
 When we mix two liquids, the temperature of the mixture depends on the temperatures of the ingredients, but it might not be obvious how to compute it.
+
 \index{mixing}
 
-Assuming there are no chemical reactions between the liquids that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is {\bf conserved}.
+Assuming there are no chemical reactions that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is {\bf conserved}.
+
 \index{conservation of energy}
 
 If the temperature of the first liquid is $T_1$, the temperature of the second liquid is $T_2$, and the final temperature of the mixture is $T$, the heat transfer into the first liquid is $C_1 (T - T_1)$ and the heat transfer into the second liquid is $C_2 (T - T_2)$, where $C_1$ and $C_2$ are the thermal masses of the liquids.
@@ -4757,6 +4866,7 @@ If we assume that the density and specific heat of the milk and coffee are equal
 \[ T = \frac{V_1 T_1 + V_2 T_2}{V_1 + V_2} \]
 %
 where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk to see how good this approximation is.
+
 \index{volume}
 \index{density}
 \index{specific heat}
@@ -4767,25 +4877,27 @@ The following function takes two \py{System} objects that represent the coffee a
 def mix(s1, s2):
     assert s1.t_end == s2.t_end
     
-    volume = s1.volume + s2.volume
+    V_mix = s1.volume + s2.volume
     
-    temp = (s1.volume * final_temp(s1) + 
-            s2.volume * final_temp(s2)) / volume
+    T_mix = (s1.volume * s1.T_final + 
+             s2.volume * s2.T_final) / V_mix
     
-    mixture = make_system(T_init=temp,
-                          volume=volume,
-                          r=s1.r)
+    mixture = make_system(T_init=T_mix,
+                          t_end=0,
+                          r=s1.r,
+                          volume=V_mix)
     
     return mixture
 \end{python}
 
 The first line is an \py{assert} statement, which is a way of checking for errors.  It compares \py{t_end} for the two systems to confirm that they have been cooling for the same time.  If not, \py{assert} displays an error message and stops the program.
+
 \index{assert statement}
 \index{statement!assert}
 
 The next two statements compute the total volume of the mixture and its temperature.  Fianlly, \py{mix} makes a new \py{System} object and returns it.
 
-This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption to we might want to revisit when.
+This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption to we might want to revisit.
 
 
 \section{Mix first or last?}
@@ -4795,14 +4907,14 @@ Now we have everything we need to solve the problem.  First I'll create objects 
 \begin{python}
 coffee = make_system(T_init=90, t_end=30, 
                      r=r_coffee, volume=300)
-run_simulation(coffee, update)
+coffee_results = run_simulation(coffee, update_func)
 
 milk = make_system(T_init=5, t_end=30, 
                    r=r_milk, volume=50)
-run_simulation(milk, update)
+milk_results = run_simulation(milk, update_func)
 \end{python}
 
-The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.7}{\celsius}.  Then we mix them:
+The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.8}{\celsius}.  Then we mix them:
 
 \begin{python}
 mix_last = mix(coffee, milk)
@@ -4813,8 +4925,8 @@ After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough
 To find out, I'll create new objects for the coffee and milk:
 
 \begin{python}
-coffee = run(T_init=90, r=r_coffee, volume=300)
-milk = run(T_init=5, r=r_milk, volume=50)
+coffee = make_system(T_init=90, r=r_coffee, volume=300)
+milk = make_system(T_init=5, r=r_milk, volume=50)
 \end{python}
 
 Then mix them and simulate 30 minutes:
@@ -4822,32 +4934,33 @@ Then mix them and simulate 30 minutes:
 \begin{python}
 mix_first = mix(coffee, milk)
 mix_first.t_end = 30
-run_simulation(mix_first, update)
+results = run_simulation(mix_first, update_func)
 \end{python}
 
-The final temperature is only \SI{61.6}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.5}{\celsius}.  But is that the best we can do?
+The final temperature is only \SI{61.4}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.7}{\celsius}.  But is that the best we can do?
 
 
 \section{Optimization}
 
 Adding the milk after 30 minutes is better than adding immediately, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
+
 \index{optimization}
 
 \begin{python}
 def run_and_mix(t_add, t_total=30):
     coffee = make_system(T_init=90, t_end=t_add, 
                          r=r_coffee, volume=300)
-    run_simulation(coffee, update)
+    coffee_results = run_simulation(coffee, update_func)
 
     milk = make_system(T_init=5, t_end=t_add, 
                        r=r_milk, volume=50)
-    run_simulation(milk, update)
+    milk_results = run_simulation(milk, update_func)
     
     mixture = mix(coffee, milk)
     mixture.t_end = t_total - t_add
-    run_simulation(mixture, update)
+    results = run_simulation(mixture, update_func)
 
-    return final_temp(mixture)
+    return mixture.T_final
 \end{python}
 
 When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at the end.  Now we can sweep the range of values in between:
@@ -4855,8 +4968,7 @@ When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at
 \begin{python}
 sweep = SweepSeries()
 for t_add in linrange(0, 30, 2):
-    temp = run_and_mix(t_add)
-    sweep[t_add] = temp
+    sweep[t_add] = run_and_mix(t_add, 30)
 \end{python}
 
 \begin{figure}
@@ -4882,11 +4994,12 @@ the general solution is
 %
 \[ T{\left (t \right )} = C_{1} \exp(-r t) + T_{env} \]
 %
-and the particular solution where $T(0) = T_init$ is
+and the particular solution where $T(0) = T_{init}$ is
 %
 \[ T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t) \]
 %
-You can see how I got this solution using SymPy at \url{http://modsimpy.com/sympy07}; if you would like to see it done by hand, you can watch this video: \url{http://modsimpy.com/khan3}.
+You can see how I got this solution using SymPy in \py{chap14analysis.ipynb} in the repository for this book.  If you would like to see it done by hand, you can watch this video: \url{http://modsimpy.com/khan3}.
+
 \index{analysis}
 \index{SymPy}
 
@@ -4903,27 +5016,36 @@ We can use the following function to compute the time series:
 def run_analysis(system):
     unpack(system)
     
-    T_init = init.temp    
-    ts = linrange(t0, t_end, dt)
+    T_init = init.T    
+    ts = linrange(t_0, t_end, dt)
     
-    temp_array = T_env + (T_init - T_env) * exp(-r * ts)
-    temp_series = TimeSeries(temp_array, index=ts)
+    T_array = T_env + (T_init - T_env) * exp(-r * ts)
     
-    system.results = TimeFrame(temp_series, columns=['temp'])
+    results = TimeFrame(T_array, index=ts, columns=['T'])
+    system.T_final = get_last_value(results.T)
+
+    return results
 \end{python}
 
-This function is similar to \py{run_simulation}; it takes a \py{System} as a parameter, and stores a \py{TimeFrame} as a result.  We can run it like this, with \py{r_coffee2=0.0116}:
+This function is similar to \py{run_simulation}; it takes a \py{System} as a parameter and returns a \py{TimeFrame} as a result.
+
+Because \py{linrange} returns a NumPy array, \py{T_array} is also a NumPy array.  To be consistent with \py{run_simulation}, we have to put it into a \py{TimeFrame}.
+    
+We can run it like this:
 \index{\py{run_analysis}}
 
 \begin{python}
-init = State(temp=90)
-coffee2 = System(init=init, T_env=22, r=r_coffee2, 
-                 t0=0, t_end=30)
-run_analysis(coffee2)
+r_coffee2 = 0.0116
+coffee2 = make_system(T_init=90, r=r_coffee2, volume=300, t_end=30)
+results = run_analysis(coffee2)
 \end{python}
 
-The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with very small differences due to round off errors.
+The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with a small difference due to round off.
 
+Before you go on, you might want to read the notebook for this chapter, \py{chap15.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+
+%%\part{Pharmacokinetics}
 
 \chapter{Pharmacokinetics}
 
@@ -4937,7 +5059,6 @@ We will use this model to fit data collected from a patient, and use the paramet
 My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{http://modsimpy.com/bergman},
 PDF at \url{http://modsimpy.com/minmod}).
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap08}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The glucose-insulin system}
@@ -5499,7 +5620,6 @@ So far the differential equations we've worked with have been {\bf first order},
 
 We'll revisit the falling penny example from Chapter~\ref{chap01}, and use \py{odeint} to find the position and velocity of the penny as it falls, with and without air resistance.
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap09}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{Newton's second law of motion}
@@ -5951,7 +6071,6 @@ These methods demonstrate two ways to use models to solve problems, sometimes ca
 
 In the previous chapter we modeled objects moving in one dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap10}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The Manny Ramirez problem}
@@ -6313,6 +6432,7 @@ def interpolate_range(results):
 \end{python}
 
 \py{interpolate_range} uses \py{idxmax} to find the time when the ball hits its peak (see Section~\ref{metrics}).
+
 \index{idxmax}
 
 Then it uses \py{ys.loc} to extract only the points from \py{t_peak} to the end.  The index in brackets includes a colon (\py{:}), which indicates that it is a {\bf slice index}.  In general, a slice selects a range of elements from a \py{Series}, specifying the start and end indices.  For example, the following slice selects elements from \py{t_peak} to \py{t_land}, including both:
@@ -6446,7 +6566,6 @@ The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular a
 
 As an exercise at the end of the chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{http://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
 
-You can view the code for this chapter at \url{http://modsimpy.com/chap11}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \section{The physics of toilet paper}
