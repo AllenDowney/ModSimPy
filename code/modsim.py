@@ -60,25 +60,6 @@ pow = np.power
 sum = np.sum
 round = np.round
 
-# def abs(*args):
-#     # TODO: warn about using the built in
-#     return np.abs(*args)
-#
-# def min(*args):
-#     # TODO: warn about using the built in
-#     return np.min(*args)
-#
-# def max(*args):
-#     # TODO: warn about using the built in
-#     return np.max(*args)
-#
-# def sum(*args):
-#     # TODO: warn about using the built in
-#     return np.sum(*args)
-#
-# def round(*args):
-#     # TODO: warn about using the built in
-#     return np.round(*args)
 
 
 def cart2pol(x, y, z=None):
@@ -595,17 +576,33 @@ class Array(np.ndarray):
 
 
 class ModSimSeries(pd.Series):
+    """Modified version of a Pandas Series,
+    with a few changes to make it more suited to our purpose.
 
-    def __init__(self, *args, **options):
+    In particular:
+
+    1. I provide a more consistent __init__ method.
+
+    2. Series provides two special variables called
+       `dt` and `T` that cause problems if we try to use those names
+        as variables.  I override them so they can be used variable names.
+
+    3. Series doesn't provide a good _repr_html, so it doesn't look
+       good in Jupyter notebooks.
+
+    4. ModSimSeries provides a set() method that takes keyword arguments.
+    """
+
+    def __init__(self, *args, **kwargs):
         """Initialize a Series.
 
         Note: this cleans up a weird Series behavior, which is
         that Series() and Series([]) yield different results.
         See: https://github.com/pandas-dev/pandas/issues/16737
         """
-        if args or options:
+        if args or kwargs:
             #underride(options, dtype=np.float64)
-            super().__init__(*args, **options)
+            super().__init__(*args, **kwargs)
         else:
             super().__init__([], dtype=np.float64)
 
@@ -624,6 +621,24 @@ class ModSimSeries(pd.Series):
         """
         for name, value in options.items():
             self[name] = value
+
+    @property
+    def dt(self):
+        """Intercept the Series accessor object so we can use `dt`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.dt.html
+        """
+        return self.loc['dt']
+
+    @property
+    def T(self):
+        """Intercept the Series accessor object so we can use `T`
+        as a row label and access it using dot notation.
+
+        https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.T.html
+        """
+        return self.loc['T']
 
 
 def get_first_label(series):
@@ -658,48 +673,35 @@ class SweepSeries(ModSimSeries):
 
 
 class System(ModSimSeries):
-    """Contains the parameters of a system and their values."""
+    """Contains system variables and their values.
 
-    def __init__(self, *args, **options):
+    Takes keyword arguments and stores them as rows.
+    """
+
+    def __init__(self, *args, **kwargs):
         """Initialize the series.
 
-        If there are no positional arguments, use options.
+        If there are no positional arguments, use kwargs.
 
         If there is one positional argument, copy it.
 
         More than one positional argument is an error.
         """
         if len(args) == 0:
-            super().__init__(list(options.values()), index=options)
+            super().__init__(list(kwargs.values()), index=kwargs)
         elif len(args) == 1:
             super().__init__(*args)
-            # TODO: if there are also options, should we add them in?
+            # TODO: if there are also kwargs, should we add them in?
         else:
             msg = '__init__() takes at most one positional argument'
             raise TypeError(msg)
 
-    @property
-    def dt(self):
-        """Intercept the Series accessor object so we can use `dt`
-        as a row label and access it using dot notation.
-
-        https://pandas.pydata.org/pandas-docs/stable/generated/
-        pandas.Series.dt.html
-        """
-        return self.loc['dt']
-
-    @property
-    def T(self):
-        """Intercept the Series accessor object so we can use `T`
-        as a row label and access it using dot notation.
-
-        https://pandas.pydata.org/pandas-docs/stable/generated/
-        pandas.Series.T.html#pandas.Series.T     """
-        return self.loc['T']
-
 
 class State(System):
-    """Represents the state of a system at a point in time."""
+    """Contains state variables and their values.
+
+    Takes keyword arguments and stores them as rows.
+    """
     pass
 
 
@@ -711,50 +713,117 @@ class Condition(System):
     pass
 
 
+def compute_abs_diff(seq):
+    xs = np.asarray(seq)
+    diff = np.ediff1d(xs, np.nan)
+    if isinstance(seq, Series):
+        return Series(diff, seq.index)
+    else:
+        return diff
 
-class MyDataFrame(pd.DataFrame):
-    """MyTimeFrame is a modified version of a Pandas DataFrame,
+def compute_rel_diff(seq):
+    xs = np.asarray(seq)
+    diff = np.ediff1d(xs, np.nan)
+    return diff / seq
+
+
+class ModSimDataFrame(pd.DataFrame):
+    """ModSimDataFrame is a modified version of a Pandas DataFrame,
     with a few changes to make it more suited to our purpose.
 
-    In particular, DataFrame provides two special variables called
-    `dt` and `T` that cause problems if we try to use those names
-    as state variables.
+    In particular:
 
-    So I added new definitions that override the special variables
-    and make these names useable as row labels.
+    1. DataFrame provides two special variables called
+       `dt` and `T` that cause problems if we try to use those names
+        as variables.    I override them so they can be used as row labels.
+
+    2.  When you select a row or column from a ModSimDataFrame, you get
+        back an appropriate subclass of Series: TimeSeries, SweepSeries,
+        or ModSimSeries.
     """
+    column_constructor = ModSimSeries
+    row_constructor = ModSimSeries
+
     def __init__(self, *args, **options):
-        # TODO: currently MyDataFrame underrides to float64 and
+        # TODO: currently ModSimDataFrame underrides to float64 and
         # ModSimSeries does not.  Does this inconsistency make sense?
         underride(options, dtype=np.float64)
         super().__init__(*args, **options)
 
+    def __getitem__(self, key):
+        """Intercept the column getter to return the right subclass of Series.
+        """
+        obj = super().__getitem__(key)
+        if isinstance(obj, Series):
+            obj = self.column_constructor(obj)
+        return obj
+
     @property
     def dt(self):
         """Intercept the Series accessor object so we can use `dt`
-        as a row label and access it using dot notation.
+        as a column label and access it using dot notation.
 
-        https://pandas.pydata.org/pandas-docs/stable/generated/
-        pandas.DataFrame.dt.html
+        https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.dt.html
         """
-        return self.loc['dt']
+        return self['dt']
 
     @property
     def T(self):
         """Intercept the Series accessor object so we can use `T`
-        as a row label and access it using dot notation.
+        as a column label and access it using dot notation.
 
-        https://pandas.pydata.org/pandas-docs/stable/generated/
-        pandas.DataFrame.T.html#pandas.DataFrame.T     """
-        return self.loc['T']
+        https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.T.html
+        """
+        return self['T']
+
+    @property
+    def row(self):
+        """Gets or sets a row.
+
+        Returns a wrapper for the Pandas LocIndexer, so when we look up a row
+        we get the right kind of ModSimSeries.
+
+        returns ModSimLocIndexer
+        """
+        li = self.loc
+        return ModSimLocIndexer(li, self.row_constructor)
 
 
-class TimeFrame(MyDataFrame):
-    pass
+class ModSimLocIndexer:
+    """Wraps a Pandas LocIndexer."""
+
+    def __init__(self, li, constructor):
+        """Save the LocIndexer and constructor.
+        """
+        self.li = li
+        self.constructor = constructor
+
+    def __getitem__(self, key):
+        """Get a row and return the appropriate type of Series.
+        """
+        result = self.li[key]
+        if isinstance(result, Series):
+            result = self.constructor(result)
+        return result
+
+    def __setitem__(self, key, value):
+        """Setting just passes the request to the wrapped object.
+        """
+        self.li[key] = value
 
 
-class SweepFrame(MyDataFrame):
-    pass
+class TimeFrame(ModSimDataFrame):
+    """A DataFrame that maps from time to State.
+    """
+    column_constructor = TimeSeries
+    row_constructor = State
+
+
+class SweepFrame(ModSimDataFrame):
+    """A DataFrame that maps from a parameter value to a SweepSeries.
+    """
+    column_constructor = SweepSeries
+    row_constructor = SweepSeries
 
 
 class _Vector(Quantity):
@@ -854,7 +923,7 @@ def Vector(*args, units=None):
         if isinstance(args, Series):
             args = args.values
 
-    # see if any of the arguments have unit; if so, save the first one
+    # see if any of the arguments have units; if so, save the first one
     for elt in args:
         found_units = getattr(elt, 'units', None)
         if found_units:
