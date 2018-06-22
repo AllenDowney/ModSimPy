@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.7}
+\newcommand{\theversion}{2.0.9}
 
 
 %%%% Both LATEX and PLASTEX
@@ -283,70 +283,6 @@ available at \url{http://modsimpy.com/license}.
 \chapter{Preface}
 \label{preface}
 
-This book is about modeling and simulation of physical systems.  
-The following diagram shows what I mean by ``modeling":
-
-\index{modeling}
-
-\vspace{0.2in}
-\centerline{\includegraphics[height=3in]{figs/modeling_framework.pdf}}
-
-Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be left out; removing details is called {\bf abstraction}.
-
-\index{system}
-
-The result of abstraction is a {\bf model}, which is a description of the system that includes only the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
-
-\index{model}
-\index{abstraction}
-\index{analysis}
-
-The result of analysis and simulation might be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
-
-\index{prediction}
-\index{explanation}
-\index{design}
-
-We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
-
-\index{validation}
-\index{data}
-
-For any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
-
-\index{iterative modeling}
-
-Sometimes the best model is the most detailed.  If we include more features, the model is more realistic, and we expect its predictions to be more accurate.
-
-\index{realism}
-
-But often a simpler model is better.  If we include only the essential features and leave out the rest, we get models that are easier to work with, and the explanations they provide can be clearer and more compelling.
-
-\index{simplicity}
-
-As an example, suppose someone asked you why the orbit of the Earth is nearly elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size), compute the gravitational force between them using Newton's law of universal gravitation, and compute the resulting orbit using Newton's laws of motion, you can show that the result is an ellipse.
-
-\index{orbit}
-\index{ellipse}
-
-Of course, the actual orbit of Earth is not a perfect ellipse, because of the gravitational forces of the Moon, Jupiter, and other objects in the solar system, and because Newton's laws of motion are only approximately true (they don't take into account relativistic effects).
-
-\index{Newton}
-\index{relativity}
-
-But adding these features to the model would not improve the explanation; more detail would only be a distraction from the fundamental cause.  However, if the goal is to predict the position of the Earth with great precision, including more details might be necessary.  
-
-Choosing the best model depends on what the model is for.  It is usually a good idea to start with a simple model, even if it is likely to be too simple, and test whether it is good enough for its purpose.  Then you can add features gradually, starting with the ones you expect to be most essential.  This process is called {\bf iterative modeling}.
-
-Comparing results of successive models provides a form of {\bf internal validation}, so you can catch conceptual, mathematical, and software errors.  And by adding and removing features, you can tell which ones have the biggest effect on the results, and which can be ignored.
-
-\index{internal validation}
-\index{validation!internal}
-\index{external validation}
-\index{validation!external}
-
-Comparing results to data from the real world provides {\bf external validation}, which is generally the strongest test.
-
 
 \section*{Can modeling be taught?}
 
@@ -360,7 +296,7 @@ If students are limited to the mathematical analysis they can do by hand, they a
 
 And they will only work with bad models; that is, models that are too simple for their purpose.  In nearly every mechanical system, air resistance and friction are essential features; if we ignore them, our predictions will be wrong and our designs won't work.
 
-In most freshman physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach, and for students to practice, the entire modeling process.
+In most freshman physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach the entire modeling process and give students a chance to practice it.
 
 
 \section*{How much programming do I need?}
@@ -395,11 +331,11 @@ In this book, you learn to program with an immediate goal in mind: writing simul
 
 \index{SciPy}
 
-\item matplotlib for visualization (see \url{http://matplotlib.org/}).
+\item Matplotlib for visualization (see \url{http://matplotlib.org/}).
 
 \index{Matplotlib}
 
-\item pandas for working with data (see \url{http://pandas.pydata.org/}).
+\item Pandas for working with data (see \url{http://pandas.pydata.org/}).
 
 \index{Pandas}
 
@@ -508,14 +444,13 @@ The code for this book is available from
 \index{Git}
 \index{GitHub}
 
-There are several ways you can copy the files from my repository to your computer.
+Before you download these files, I suggest you copy my repository on GitHub, which is called {\bf forking}.  If you don't already have a GitHub account, you'll need to create one.  
 
-If you don't want to use Git at all, you can download my files
-in a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download, and then skip to the next section.
+Use a browser to view the homepage of my repository at \url{https://github.com/AllenDowney/ModSimPy}.   You should see a gray button in the upper right that says {\sf Fork}.  If you press it, GitHub will create a copy of my repository that belongs to you.
 
-If you want to use Git, you need a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Linux, macOS, and Windows at \url{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}. 
+Now, the best way to download the files is to use a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Windows, macOS, and Linux at \url{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}. 
 
-For Windows, the client I recommend is Git for Windows.  In the installer, I suggest you accept the recommended options, with two exceptions:
+In Windows, I suggest you accept the options recommended by the installer, with two exceptions:
 
 \begin{itemize}
 
@@ -525,32 +460,25 @@ For Windows, the client I recommend is Git for Windows.  In the installer, I sug
 
 \end{itemize}
 
-Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open Git Bash, which should be in your Start menu.
+For macOS and Linux, I suggest you accept the recommended options.
 
-To find out what directory you are in, type \py{pwd}, which stands for ``print working directory".  On MacOS or Linux, you are probably in your home directory, \py{/home/yourusername}.  On Windows, most likely you are in \py{Users\\yourusername}.
+Once the installation is complete, open a command window.  On Windows, open Git Bash, which should be in your Start menu.  On macOS or Linux, you can use Terminal.  
 
-To copy files from my repository to your computer, which is called {\bf cloning} in Git's vocabulary, run this command
+To find out what directory you are in, type \py{pwd}, which stands for ``print working directory".  On Windows, most likely you are in \py{Users\\yourusername}.  On MacOS or Linux, you are probably in your home directory, \py{/home/yourusername}.  
 
-\begin{python}
-git clone https://github.com/AllenDowney/ModSimPy
-\end{python}
-
-You don't need a GitHub account to do this, but you won't be able to write your changes back to GitHub.
-
-If you want to use GitHub to keep track of the code you write while you are using this book, you can make of a copy of my repository on GitHub, which is called {\bf forking}.  If you don't already have a GitHub account, you'll need to create one.  
-
-Use a browser to view the homepage of my repository at \url{https://github.com/AllenDowney/ModSimPy}.   You should see a gray button in the upper right that says {\sf Fork}.  If you press it, GitHub will create a copy of my repository that belongs to you.  Then you can clone your repository like this:
+The next step is to copy files from your repository on GitHub to your computer; in Git vocabulary, this process is called {\bf cloning}.  Run this command:
 
 \begin{python}
 git clone https://github.com/YourGitHubUserName/ModSimPy
 \end{python}
 
-Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.
+Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.  After cloning, you should have a new directory called \py{ModSimPy}.
 
-Whether you clone my repository or yours, you should have a new directory called \py{ModSimPy}.
+If you don't want to use Git, you can download my files
+in a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download.
 
 
-\section{Running Jupyter}
+\section*{Running Jupyter}
 
 The code for each chapter, and starter code for the exercises, is in
 Jupyter notebooks.  If you have not used Jupyter before, you can read
@@ -564,8 +492,6 @@ To start Jupyter on macOS or Linux, open a Terminal; on Windows, open Git Bash. 
 cd ModSimPy/code
 \end{code}
 
-If you downloaded the code in a Zip file, you might have to navigate to whatever directory you downloaded it into.
-
 Then launch the Jupyter notebook server:
 
 \begin{code}
@@ -575,6 +501,9 @@ jupyter notebook
 Jupyter should open a window in a browser, and you should see the list of notebooks in my repository.  Click on the first notebook, \py{chap_01_a.ipynb} and follow the instructions to run the first few ``cells".  The first time you run a notebook, it might take a minute or two while some Python files get initialized.  After that, it should run faster.
 
 Feel free to read through the notebook, but it might not make sense until you read Chapter~\ref{chap01}.
+
+You can also launch Jupyter from the Start menu on Windows, the Dock on macOS, or the Anaconda Navigator on any system.  If you do that, Jupyter might start in your home directory or somewhere else in your file system, so you might have to navigate to find the \py{ModSimPy} directory.
+
 
 
 \section*{Contributor List}
@@ -626,27 +555,81 @@ Wood, Chris Lee, and Jason Woodard.
 \chapter{Falling penny}
 \label{chap01}
 
-%TODO: Consider moving the modeling material from the Preface to here.
+This book is about modeling and simulation of physical systems.  
+The following diagram shows what I mean by ``modeling":
 
-The world is a complicated place.  In order to make sense of it, we use {\bf models}, which are generally smaller and simpler than the thing we want to study.  The word ``model" means different things in different contexts, so it is hard to define except by example.
-\index{mathematical model}
+\index{modeling}
 
-Some models are actual objects, like a scale model of a car, which has the same shape as the car, but smaller.  Scale models are often useful for testing properties of mechanical systems, like air resistance.
+\vspace{0.2in}
+\centerline{\includegraphics[height=3in]{figs/modeling_framework.pdf}}
 
-This book is about {\bf mathematical models}, which are ideas, not objects.  If you studied Newton's laws of motion, what you learned is a mathematical model of how objects move in space when forces act on them.
+Starting in the lower left, the {\bf system} is something in the real world we are interested in.  Often, it is something complicated, so we have to decide which details can be left out; removing details is called {\bf abstraction}.
+
+\index{system}
+
+The result of abstraction is a {\bf model}, which is a description of the system that includes only the features we think are essential.  A model can be represented in the form of diagrams and equations, which can be used for mathematical {\bf analysis}.  It can also be implemented in the form of a computer program, which can run {\bf simulations}.
+
+\index{model}
+\index{abstraction}
+\index{analysis}
+
+The result of analysis and simulation might be a {\bf prediction} about what the system will do, an {\bf explanation} of why it behaves the way it does, or a {\bf design} intended to achieve a purpose.
+
+\index{prediction}
+\index{explanation}
+\index{design}
+
+We can {\bf validate} predictions and test designs by taking {\bf measurements} from the real world and comparing the {\bf data} we get with the results from analysis and simulation. 
+
+\index{validation}
+\index{data}
+
+For any physical system, there are many possible models, each one including and excluding different features, or including different levels of detail.  The goal of the modeling process is to find the model best suited to its purpose (prediction, explanation, or design).
+
+\index{iterative modeling}
+
+Sometimes the best model is the most detailed.  If we include more features, the model is more realistic, and we expect its predictions to be more accurate.
+
+\index{realism}
+
+But often a simpler model is better.  If we include only the essential features and leave out the rest, we get models that are easier to work with, and the explanations they provide can be clearer and more compelling.
+
+\index{simplicity}
+
+As an example, suppose someone asked you why the orbit of the Earth is nearly elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size), compute the gravitational force between them using Newton's law of universal gravitation, and compute the resulting orbit using Newton's laws of motion, you can show that the result is an ellipse.
+
+\index{orbit}
+\index{ellipse}
+
+Of course, the actual orbit of Earth is not a perfect ellipse, because of the gravitational forces of the Moon, Jupiter, and other objects in the solar system, and because Newton's laws of motion are only approximately true (they don't take into account relativistic effects).
 
 \index{Newton}
+\index{relativity}
+
+But adding these features to the model would not improve the explanation; more detail would only be a distraction from the fundamental cause.  However, if the goal is to predict the position of the Earth with great precision, including more details might be necessary.  
+
+Choosing the best model depends on what the model is for.  It is usually a good idea to start with a simple model, even if it is likely to be too simple, and test whether it is good enough for its purpose.  Then you can add features gradually, starting with the ones you expect to be most essential.  This process is called {\bf iterative modeling}.
+
+Comparing results of successive models provides a form of {\bf internal validation}, so you can catch conceptual, mathematical, and software errors.  And by adding and removing features, you can tell which ones have the biggest effect on the results, and which can be ignored.
+
+\index{internal validation}
+\index{validation!internal}
+\index{external validation}
+\index{validation!external}
+
+Comparing results to data from the real world provides {\bf external validation}, which is generally the strongest test.
 
 
 \section{The falling penny myth}
 \label{penny}
 
 Let's see an example of how models are used.  You might have heard that a penny dropped from the top of the Empire State Building would be going so fast when it hit the pavement that it would be embedded in the concrete; or if it hit a person, it would break their skull.
+
 \index{Empire State Building}
 \index{penny}
 \index{myth}
 
-We can test this myth by making and analyzing a model.  To get started, I'll assume that the effect of air resistance is small.  This will turn out to be a bad assumption, but bear with me.
+We can test this myth by making and analyzing a model.  To get started, we'll assume that the effect of air resistance is small.  This will turn out to be a bad assumption, but bear with me.
 
 If air resistance is negligible, the primary force acting on the penny is gravity, which causes the penny to accelerate downward.
 \index{air resistance}
@@ -666,10 +649,12 @@ Of course, these results are not exact because the model is based on simplificat
 
 On the other hand, ignoring air resistance is not a good choice.  Once the penny gets to about \SI{18}{\meter\per\second}, the upward force of air resistance equals the downward force of gravity, so the penny stops accelerating.  After that, it doesn't matter how far the penny falls; it hits the sidewalk (or your head) at about \SI{18}{\meter\per\second}, much less than \SI{86}{\meter\per\second}, as the simple model predicts.
 
-The statistician George Box famously said ``All models are wrong, but some are useful."  He was talking about statistical models, but his wise words apply to all kinds of models.  Our first model, which ignores air resistance, is very wrong, and probably not useful.  The second model is also wrong, but much better, and probably good enough to refute the myth.
+The statistician George Box famously said ``All models are wrong, but some are useful."  He was talking about statistical models, but his wise words apply to all kinds of models.  Our first model, which ignores air resistance, is very wrong, and probably not useful.  In the notebook for this chapter, you will see another model, which assumes that acceleration is constant until the penny reaches terminal velocity.  This model is also wrong, but it's better, and it's good enough to refute the myth.
+
 \index{Box, George}
 
 The television show {\it Mythbusters} has tested the myth of the falling penny more carefully; you can view the results at \url{http://modsimpy.com/myth}.  Their work is based on a mathematical model of motion, measurements to determine the force of air resistance on a penny, and a physical model of a human head.
+
 \index{Mythbusters}
 
 
@@ -731,24 +716,32 @@ This example demonstrates analysis and computation using Python.  Next we'll see
 Before you go on, you might want to read the notebook for this chapter, \py{chap01.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\chapter{Bikeshare}
+\chapter{Bike share}
+\label{chap02}
+
+%TODO: Write this intro
+
+In this chapter we develop a simple model of a bike share system.
+
+demonstrates the features of Python we'll use to develop computational simulations of real-world systems.  
+
+Along the way, we'll make decisions about how to model the system.  In the next chapter we'll review these decisions and gradually improve the model.
+
 
 \section{Bikeshare}
 \label{modeling}
 
 Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
+
 \index{Wellesley College}
 \index{Olin College}
 
-This example demonstrates the features of Python we'll use to develop computational simulations of real-world systems.  Along the way, I make some decisions about how to model the system.  In the next chapter we'll review these decisions.
-
 Suppose the system contains 12 bikes and two bike racks, one at Olin and one at Wellesley, each with the capacity to hold 12 bikes.
+
 \index{bike share system}
 
-As students arrive, check out a bike, and ride to the other campus,
-the number of bikes in each location changes.  In the simulation,
-we'll need to keep track of where the bikes are.  To do that, I'll
-create a \py{State} object, which is defined in the \py{modsim} library.  
+As students arrive, check out a bike, and ride to the other campus, the number of bikes in each location changes.  In the simulation, we'll need to keep track of where the bikes are.  To do that, I'll create a \py{State} object, which is defined in the \py{modsim} library.  
+
 \index{State object}
 
 Before we can use the library, we have to \py{import} it:
@@ -759,9 +752,11 @@ from modsim import *
 
 This line of code is an {\bf import statement} that tells Python
 to read the file {\tt modsim.py} and make the functions it defines available.
+
 \index{import statement}
 
 Functions in the \py{modsim.py} library include \py{sqrt}, which we used in the previous section, and \py{State}, which we are using now.  \py{State} creates a \py{State} object, which is a collection of {\bf state variables}.  
+
 \index{state variable}
 
 \begin{python}
@@ -769,6 +764,7 @@ bikeshare = State(olin=10, wellesley=2)
 \end{python}
 
 The state variables, \py{olin} and \py{wellesley}, represent the number of bikes at each location.  The initial values are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.  The \py{State} object created by \py{State} is assigned to a new variable named \py{bikeshare}.
+
 \index{dot operator}
 \index{operator!dot}
 
@@ -800,6 +796,7 @@ The result looks like a table with the variable names and their values:
 \end{tabular} 
 
 The state variables and their values make up the {\bf state} of the system.  We can update the state by assigning new values to the variables.  For example, if a student moves a bike from Olin to Wellesley, we can figure out the new values and assign them:
+
 \index{state}
 
 \begin{python}
@@ -808,6 +805,7 @@ bikeshare.wellesley = 3
 \end{python}
 
 Or we can use {\bf update operators}, \py{-=} and \py{+=}, to subtract 1 from \py{olin} and add 1 to \py{wellesley}:
+
 \index{update operator}
 \index{operator!update}
 
@@ -816,12 +814,13 @@ bikeshare.olin -= 1
 bikeshare.wellesley += 1
 \end{python}
 
-The result is the same either way.
+The result is the same either way, but the second version is more versatile.
 
 
 \section{Defining functions}
 
 So far we have used functions defined in \py{modsim} and other libraries.  Now we're going to define our own functions.
+
 \index{function}
 \index{defining functions}
 
@@ -884,9 +883,6 @@ Python looks up the name of the function and displays:
 This result indicates that \py{bike_to_wellesley} is a function.  You don't have to know what \py{__main__} means, but if you see something like this, it probably means that you looked up a function but you didn't
 actually call it.  So don't forget the parentheses.
 
-
-\section{Parameters}
-
 Just like \py{bike_to_wellesley}, we can define a function that moves a bike from Wellesley to Olin:
 
 \begin{python}
@@ -905,71 +901,6 @@ One benefit of defining functions is that you avoid repeating chunks
 of code, which makes programs smaller.  Another benefit is that the
 name you give the function documents what it does, which makes programs
 more readable.
-\index{parameter}
-
-In this example, there is one other benefit that might be even
-more important.  Putting these lines in a function makes the program
-more reliable because it guarantees that when we decrease the number
-of bikes at Olin, we increase the number of bikes at Wellesley.
-That way, bikes in the model are neither created nor destroyed!
-
-However, now we have two functions that are nearly identical except
-for a change of sign.  Repeated code makes programs harder to work with, because if we make a change, we have to make it in several places.
-
-We can avoid that by defining a more general function that moves any number of bikes in either direction:
-
-\begin{python}
-def move_bike(n):
-    bikeshare.olin -= n
-    bikeshare.wellesley += n
-\end{python}
-
-The name in parentheses, \py{n}, is a {\bf parameter} of the function.
-When we run the function, we provide a value in parentheses, which gets assigned to the parameter.  So if we call \py{move_bike} like this:
-
-\begin{python}
-move_bike(1)
-\end{python}
-
-It assigns the value, \py{1}, to the parameter, \py{n}, and then runs the body of the function.  So the effect is the same as:
-
-\begin{python}
-n = 1
-bikeshare.olin -= n
-bikeshare.wellesley += n
-\end{python}
-
-Which moves a bike from Olin to Wellesley.  Similarly, if we call
-\py{move_bike} like this:
-
-\begin{python}
-move_bike(-1)
-\end{python}
-
-The effect is the same as:
-
-\begin{python}
-n = -1
-bikeshare.olin -= n
-bikeshare.wellesley += n
-\end{python}
-
-Which moves a bike from Wellesley to Olin.
-
-The value in parentheses is called an {\bf argument}.  If you call \py{move_bike} without providing an argument, you get an error.
-
-Now that we have \py{move_bike}, we can rewrite the other two functions to use it: 
-
-\begin{python}
-def bike_to_wellesley():
-    move_bike(1)
-    
-def bike_to_olin():
-    move_bike(-1)
-\end{python}
-
-If you define the same function name more than once, the new definition
-replaces the old one.
 
 
 \section{Print statements}
@@ -1024,7 +955,7 @@ as an argument a probability between 0 and 1:
 flip(0.7)
 \end{python}
 
-The result is one of two values: \py{True} with probability 0.7 or \py{False} with probability 0.3.  If you run this function 100 times, you should to get \py{True} about 70 times and \py{False} about 30 times.  But the results are random, so they might differ from these expectations.
+The result is one of two values: \py{True} with probability 0.7 or \py{False} with probability 0.3.  If you run this function 100 times, you should get \py{True} about 70 times and \py{False} about 30 times.  But the results are random, so they might differ from these expectations.
 \index{flip}
 \index{True}
 \index{False}
@@ -1063,21 +994,22 @@ else:
     print('tails')    
 \end{python}
 
-Now we can use \py{flip} to simulate the arrival of students who want to borrow a bike.  Suppose we have data about the number of students who want to borrow a bike at a particular time of day.  If students arrive every 2 minutes, on average, then during any one-minute period, there is a 50\% chance a student will arrive:
+Now we can use \py{flip} to simulate the arrival of students who want to borrow a bike.  Suppose students arrive at the Olin station every 2 minutes, on average.  In that case, the chance of an arrival during any one-minute period is 50\%, and we can simulate it like this:
 
 \begin{python}
 if flip(0.5):
     bike_to_wellesley()
 \end{python}
 
-At the same time, there might be a different probability that a student at Wellesley wants to ride to Olin:
+If students arrive at the Wellesley station every 3 minutes, on average, the chance of an arrival during any one-minute period is 33\%, and we can simulate it like this:
 
 \begin{python}
-if flip(0.4):
+if flip(0.33):
     bike_to_olin()
 \end{python}
 
-We can combine these snippets of code into a function that simulates a {\bf time step}, which is an interval of time, like one minute:
+We can combine these snippets into a function that simulates a {\bf time step}, which is an interval of time, in this case one minute:
+
 \index{time step}
 
 \begin{python}
@@ -1085,7 +1017,7 @@ def step():
     if flip(0.5):
         bike_to_wellesley()
     
-    if flip(0.4):
+    if flip(0.33):
         bike_to_olin()
 \end{python}
 
@@ -1095,7 +1027,16 @@ Then we can simulate a time step like this:
 step()
 \end{python}
 
-In reality, the probability of an arrival will vary over the course of a day, and might be higher at Olin or Wellesley, at any point in time.  So instead of putting the constant values 0.5 and 0.4 in \py{step} we can replace them with parameters, like this:
+
+
+\section{Parameters}
+
+The previous version of \py{step} is fine if the arrival probabilities never change, but in reality, these probabilities vary over time.
+
+So instead of putting the constant values 0.5 and 0.33 in \py{step} we can replace them with {\bf parameters}.  Parameters are variables whose values are set when a function is called.
+
+Here's a version of \py{step} that takes two parameters, \py{p1} and \py{p2}:
+
 \index{probability}
 
 \begin{python}
@@ -1107,17 +1048,19 @@ def step(p1, p2):
         bike_to_olin()
 \end{python}
 
-Now when you call \py{step}, you have to provide two arguments:
+The values of \py{p1} and \py{p2} are not set inside this function; instead, they are provided when the function is called, like this:
+
 
 \begin{python}
-step(0.5, 0.4)
+step(0.5, 0.33)
 \end{python}
 
-The arguments you provide, \py{0.5} and \py{0.4}, get assigned to the parameters, \py{p1} and \py{p2}, in order.  So running this function has the same effect as:
+The values you provide when you call the function are called {\bf arguments}.
+The arguments, \py{0.5} and \py{0.33}, get assigned to the parameters, \py{p1} and \py{p2}, in order.  So running this function has the same effect as:
 
 \begin{python}
 p1 = 0.5
-p2 = 0.4
+p2 = 0.33
 
 if flip(p1):
     bike_to_wellesley()
@@ -1126,7 +1069,7 @@ if flip(p2):
     bike_to_olin()
 \end{python}
 
-The advantage of using a function is that you can call the same function many times, providing different values for the parameters each time.
+The advantage of using parameters is that you can call the same function many times, providing different arguments each time.
 
 
 \section{For loops}
@@ -1203,7 +1146,7 @@ Each time through the loop, we call \py{step}, which updates \py{bikeshare}.  Th
 When the loop exits, \py{results} contains 10 time stamps, from 0 through 9, and the number of bikes at Olin at the end of each time step.
 \index{loop variable}
 
-\py{TimeSeries} is a specialized version of \py{Series}, which is defined by Pandas.  The \py{Series} object provides many functions; one example is \py{mean}, which we can call like this:
+\py{TimeSeries} is a specialized version of \py{Series}, which is defined by Pandas, one of the libraries we'll be using extensively.  The \py{Series} object provides many functions; one example is \py{mean}, which we can call like this:
 
 \begin{python}
 results.mean()
@@ -1211,7 +1154,11 @@ results.mean()
 
 %TODO: shorten URL
 You can read the documentation of \py{Series} at \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html}.
+
 \index{Pandas}
+\index{Series}
+\index{TimeSeries}
+\index{mean}
 
 
 \section{Plotting}
@@ -1249,50 +1196,22 @@ decorate(title='Olin-Wellesley Bikeshare',
 \label{chap01-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig01} shows the result.
+Figure~\ref{chap01-fig01} shows the result.
 
-\py{plot} and \py{decorate} library are based on Pyplot, which is a Python for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{http://modsimpy.com/plot}.
+\py{plot} and \py{decorate} are based on Pyplot, which is a Python library for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{http://modsimpy.com/plot}.
 
 \index{Pyplot}
+\index{plot}
+\index{decorate}
 
 %TODO: replace matplotlib with pyplot
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap02.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
-\section{Under the hood}
-
-Throughout this book, we'll use functions defined in the \py{modsim} library.  You don't have to know how they work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
-
-\index{modsim}
-
-Most of the functions in \py{modsim} are based on other Python libraries; the libraries we have used so far include:
-
-\begin{description}
-
-\item[Pint], which provides units like meters and seconds, as we saw in Section~\ref{penny}.
-
-\item[NumPy], which provides mathematical operations like \py{sqrt}, which we saw in Section~\ref{computation}.
-
-\item[Pandas], which provides the \py{Series} object, which is the basis of the \py{State} object in Section~\ref{modeling}.
-
-\item[Pyplot], which provides plotting functions, as we saw in Section~\ref{plotting}.
-
-\end{description}
-
-You could use these libraries directly, and when you have more experience, you probably will.  But the functions in \py{modsim} are meant to be easier to use; they provide some additional capabilities, including error checking; and by hiding details you don't need to know about, they let you focus on more important things.
-
-However, there is one drawback: when something goes wrong, it can be hard to understand the error messages.  I'll have more to say about this in later chapters, but for now I have a suggestion.  When you are getting started, you should practice making errors.
-
-Along with each chapter, I provide a Jupyter notebook that contains the code from the chapter, so you can run it, see how it works, and modify it, and see how it breaks.
-
-\index{debugging}
-
-For each new function you learn, you should deliberately make as many mistakes as possible so you can see what happens.  When you see what the errors messages are, you will understand what they mean.  And that should help later, when you make errors accidentally.
-
 
 
 \chapter{Iterative modeling}
-\label{chap02}
+\label{chap03}
 
 To paraphrase two Georges, ``All models are wrong, but some models are more wrong than others."  In this chapter, I demonstrate the process we use to make models less wrong.
 
@@ -1340,39 +1259,46 @@ For any physical system, there are many possible models, based on different assu
 \section{More than one State object}
 
 Before we go on, I want to make a few changes to the code from the previous chapter.  First I'll generalize the functions we wrote so they take a \py{State} object as a parameter.  Then, I'll make the code more readable by adding documentation.
+
 \index{parameter}
 
-Here is one of the functions from the previous chapter, \py{move_bike}:
+Here is one of the functions from the previous chapter, \py{bike_to_wellesley}:
 
 \begin{python}
-def move_bike(n):
-    bikeshare.olin -= n
-    bikeshare.wellesley += n
+def bike_to_wellesley():
+    bikeshare.olin -= 1
+    bikeshare.wellesley += 1
 \end{python}
 
-When this function is called, it modifies \py{bikeshare}.  As long as there is only one \py{State} object, that's fine, but this function would be more flexible if it took a \py{State} object as a parameter.  Here's what that looks like:
+When this function is called, it modifies \py{bikeshare}.  As long as there is only one \py{State} object, that's fine, but what if there is more than one bike share system in the world?  Or what if we want to run more than one simulation?
+
+This function would be more flexible if it took a \py{State} object as a parameter.  Here's what that looks like:
 
 \index{State object}
 
 \begin{python}
-def move_bike(state, n):
-    state.olin -= n
-    state.wellesley += n
+def bike_to_wellesley(state):
+    state.olin -= 1
+    state.wellesley += 1
 \end{python}
 
 The name of the parameter is \py{state} rather than \py{bikeshare} as a reminder that the value of \py{state} could be any \py{State} object, not just \py{bikeshare}.
 
-Since the new version of \py{move_bike} requires a \py{State} object as a parameter, I have to update the functions that call it:
+This version of \py{bike_to_wellesley} requires a \py{State} object as a parameter, so we have to provide one when we call it:
 
 \begin{python}
-def bike_to_wellesley(state):
-    move_bike(state, 1)
-    
-def bike_to_olin(state):
-    move_bike(state, -1)
+bike_to_wellesley(bikeshare)
 \end{python}
 
-Now I can create as many \py{State} objects as I want:
+Again, the argument we provide gets assigned to the parameter, so this function call has the same effect as:
+
+\begin{code}
+state = bikeshare
+state.olin -= 1
+state.wellesley += 1
+\end{code}
+
+Now we can create as many \py{State} objects as we want:
 
 \begin{python}
 bikeshare1 = State(olin=10, wellesley=2)
@@ -1382,14 +1308,15 @@ bikeshare2 = State(olin=2, wellesley=10)
 And update them independently:
 
 \begin{python}
-bike_to_olin(bikeshare1)
+bike_to_wellesley(bikeshare1)
 bike_to_wellesley(bikeshare2)
 \end{python}
 
-Changes in \py{bikeshare1} do not affect \py{bikeshare2}, and vice versa.  This behavior will be useful later when we create a series of \py{State} objects to simulate different scenarios.
+Changes in \py{bikeshare1} do not affect \py{bikeshare2}, and vice versa.  So we can simulate different bike share systems, or run multiple simulations of the same system.
 
 
 \section{Documentation}
+\label{documentation}
 
 Another problem with the code we have so far is that it contains no {\bf documentation}.  Documentation is text we add to a program to help other programmers read and understand it.  It has no effect on the program when it runs.
 
@@ -1434,21 +1361,18 @@ A comment is a line of text that begins with a hash symbol, \py{#}.  It usually 
 \index{comment}
 \index{hash symbol}
 
-For example, here is a version of \py{move_bike} with a docstring and a comment.
+For example, here is a version of \py{bike_to_olin} with a docstring and a comment.
 
 \begin{python}
-def move_bike(state, n):
-    """Move a bike.
-    
-    state: bikeshare State object
-    n: +1 to move from Olin to Wellesley or
-       -1 to move from Wellesley to Olin
-    """
-    # Because we decrease one state variable by n
-    # and increase the other by n, the total number
-    # of bikes is unchanged.
-    state.olin -= n
-    state.wellesley += n
+def bike_to_olin(state):
+	"""Move one bike from Wellesley to Olin.
+	
+	state: State object	
+	"""
+	# We decrease one state variable and increase the
+	# other, so the total number of bikes is unchanged.
+    state.wellesley -= 1
+    state.olin += 1
 \end{python}
 
 At this point we have more documentation than code, which is not unusual for short functions.
@@ -1461,81 +1385,29 @@ The changes we've made so far improve the quality of the code, but we haven't do
 
 \index{code quality}
 
-Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be negative.  That's not very realistic.  Here's an updated version of \py{move_bike} that fixes the problem:
+Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be negative.  That's not very realistic.  Here's an updated version of \py{bike_to_olin} that fixes the problem:
 
 \begin{python}
-def move_bike(state, n):
-    # make sure the number of bikes won't go negative
-    olin_temp = state.olin - n
-    if olin_temp < 0:
+def bike_to_olin(state):
+    if state.wellesley == 0:
         return
-    
-    wellesley_temp = state.wellesley + n
-    if wellesley_temp < 0:
-        return
-    
-    # update the state
-    state.olin = olin_temp
-    state.wellesley = wellesley_temp
+    state.wellesley -= 1
+    state.olin += 1
 \end{python}
 
-The comments explain the two sections of the function: the first checks to make sure a bike is available; the second updates the state.
-
-The first line creates a variable named \py{olin_temp} that gets the number of bikes that {\em would} be at Olin if \py{n} bikes were moved.  I added the suffix \py{_temp} to the name to indicate that I am using it as a {\bf temporary variable}.
-
-\index{temporary variable}
-\index{variable!temporary}
-
-\py{move_bike} uses the less-than operator, \py{<}, to compare \py{olin_temp} to \py{0}.  The result of this operator is a boolean.  If it's \py{True}, that means \py{olin_temp} is negative, which means that there are not enough bikes.
-
-\index{operator}
-\index{boolean}
+The first line checks whether the number of bike at Wellesley is zero.  If so, it uses a a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are no bikes at Wellesley, we ``return" from \py{bike_to_olin} without changing the state.
 
 \index{return statement}
 \index{statement!return}
 
-In that case I use a {\bf return statement}, which causes the function to end immediately, without running the rest of the statements.  So if there are not enough bikes at Olin, we ``return" from \py{move_bike} without changing the state.  We do the same if there are not enough bikes at Wellesley.
-
-If both of these tests pass, we run the last two lines, which assigns the values from the temporary variables to the corresponding state variables.
-
-Because \py{olin_temp} and \py{wellesley_temp} are created inside a function, they are {\bf local variables}, which means they only exist inside the function.  At the end of the function, they disappear, and you cannot read or write them from anywhere else in the program.
-
-\index{local variables}
-\index{variables!local}
-
-In contrast, the state variables \py{olin} and \py{wellesley} belong to \py{state}, the \py{State} object that was passed to this function as a parameter.  When we change state variables inside a function, those changes are visible in other parts of the program.
-
-This version of \py{move_bike} makes sure we never have negative bikes at either station.  But what about \py{bike_to_wellesley} and \py{bike_to_olin}; do we have to update them, too?  Here they are:
-
-\begin{python}
-def bike_to_wellesley(state):
-    move_bike(state, 1)
-    
-def bike_to_olin(state):
-    move_bike(state, -1)
-\end{python}
-
-Because these functions use \py{move_bike}, they take advantage of the new feature automatically.  We don't have to update them.
+We can update \py{bike_to_wellesley} the same way.
 
 
 \section{Comparison operators}
 
-In the previous section, we used the less-than operator to compare two values.  For completeness, here are the other {\bf comparison operators}:
-\index{comparison operator}
-\index{operator!comparison}
+The version of \py{bike_to_olin} in the previous section uses the equals operator, \py{==}, which compares two values and returns \py{True} if they are equal and \py{False} otherwise.
 
-\begin{tabular}{l|c}
-{\bf Operation} & {\bf Symbol} \\ 
-\hline 
-Less than & \py{<} \\ 
-Greater than & \py{>} \\
-Less than or equal & \py{<=}  \\ 
-Greater than or equal & \py{>=} \\ 
-Equal & \py{==} \\ 
-Not equal & \py{!=} \\ 
-\end{tabular} 
-
-The equals operator, \py{==}, compares two values and returns \py{True} if they are equal and \py{False} otherwise.  It is easy to confuse with the {\bf assignment operator}, \py{=}, which assigns a value to a variable.  For example, the following statement uses the assignment operator, which creates \py{x} if it doesn't already exist and gives it the value \py{5}.
+It is easy to confuse the equals operators with the assignment operator, \py{=}, which assigns a value to a variable.  For example, the following statement creates a variables, \py{x}, if it doesn't already exist, and gives it the value \py{5}.
 
 \index{equality}
 \index{assignment operator}
@@ -1551,7 +1423,7 @@ On the other hand, the following statement checks whether \py{x} is \py{5} and r
 x == 5
 \end{python}
 
-You can use the equals operator in an if statement, like this:
+You can use the equals operator in an \py{if} statement, like this:
 
 \index{if statement}
 \index{statement!if}
@@ -1561,7 +1433,7 @@ if x == 5:
     print('yes, x is 5')
 \end{python}
 
-If you make a mistake and use \py{=} in the first line of an \py{if} statement, like this:
+If you make a mistake and use \py{=} in an \py{if} statement, like this:
 
 \begin{python}
 if x = 5:
@@ -1572,6 +1444,22 @@ That's a {\bf syntax error}, which means that the structure of the program is in
 
 \index{syntax error}
 \index{error!syntax}
+
+The equals operator is one of the {\bf comparison operators}. The others are:
+
+\index{comparison operator}
+\index{operator!comparison}
+
+\begin{tabular}{l|c}
+{\bf Operation} & {\bf Symbol} \\ 
+\hline 
+Less than & \py{<} \\ 
+Greater than & \py{>} \\
+Less than or equal & \py{<=}  \\ 
+Greater than or equal & \py{>=} \\ 
+Equal & \py{==} \\ 
+Not equal & \py{!=} \\ 
+\end{tabular} 
 
 
 \section{Metrics}
@@ -1587,40 +1475,33 @@ From the customer's point of view, we might like to know the probability of find
 
 \index{metric}
 
-As a simple example, let's measure the number of unhappy customers.  Here's a version of \py{move_bike} that keeps track of the number of customers who arrive at a station with no bikes:
+As a simple example, let's measure the number of unhappy customers.  Here's a version of \py{bike_to_olin} that keeps track of the number of customers who arrive at a station with no bikes:
 
 \begin{python}
-def move_bike(state, n):
-    olin_temp = state.olin - n
-    if olin_temp < 0:
-        state.olin_empty += 1
-        return
-    
-    wellesley_temp = state.wellesley + n
-    if wellesley_temp < 0:
+def bike_to_olin(state):
+    if state.wellesley == 0:
         state.wellesley_empty += 1
         return
-    
-    state.olin = olin_temp
-    state.wellesley = wellesley_temp
+    state.wellesley -= 1
+    state.olin += 1
 \end{python}
 
-Inside \py{move_bike}, we update the values of \py{olin_empty} and \py{wellesley_empty}, which are the number of times a customer finds the Olin or Wellesley station empty.
+If a customer arrives at the Wellesley station and finds no bike available, \py{bike_to_olin} updates \py{wellesley_empty} which counts the number of unhappy customers.
 
-This version of \py{move_bike} will only work if we initialize \py{olin_empty} and \py{wellesley_empty} when we create the \py{State} object, like this:
+This function only works if we initialize \py{wellesley_empty} when we create the \py{State} object, like this:
 
 \begin{python}
 bikeshare = State(olin=10, wellesley=2, 
-                   olin_empty=0, wellesley_empty=0)
+                  olin_empty=0, wellesley_empty=0)
 \end{python}
 
-Now we can run a simulation like this:
+Assuming we update \py{move_to_wellesley} the same way, we can run the simulation like this (see Section~\ref{documentation}):
 
 \begin{python}
 run_simulation(bikeshare, 0.4, 0.2, 60)
 \end{python}
 
-And then check the metrics:
+Then we can check the metrics:
 
 \begin{python}
 print(bikeshare.olin_empty, bikeshare.wellesley_empty)
@@ -1632,6 +1513,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 
 \chapter{Sweeping parameters}
+\label{chap04}
 
 \section{Functions that return values}
 
@@ -1741,7 +1623,7 @@ for i in range(4):
     plot_state()
 \end{python}
 
-\py{range} creates a sequence of numbers from 0 to 3.  Each time through the loop, the next number in the sequence gets assigned to the loop variable, \py{i}.
+\py{range(4)} creates a sequence of numbers from 0 to 3.  Each time through the loop, the next number in the sequence gets assigned to the loop variable, \py{i}.
 
 \index{loop}
 \index{loop variable}
@@ -1753,7 +1635,7 @@ for i in range(4):
 p1_array = linspace(0, 1, 5)
 \end{python}
 
-\py{linspace} is a defined in the \py{modsim} library.  It takes three arguments, \py{start}, \py{stop}, and \py{num}.  In this example, it creates a sequence of \py{5} equally-spaced numbers, starting at \py{0} and ending at \py{1}. 
+The arguments indicate where the sequence should start and stop, and how many elements it should contain.  In this example, the sequence contains \py{5} equally-spaced numbers, starting at \py{0} and ending at \py{1}. 
 
 \index{linspace}
 \index{NumPy}
@@ -1822,7 +1704,7 @@ for p1 in p1_array:
 
 Each time through the loop, we run a simulation with a different value of \py{p1} and the same value of \py{p2}, \py{0.2}.  Then we print \py{p1} and the number of unhappy customers at Olin.
 
-To save and plot the results, we can use a \py{SweepSeries} object, which is similar to a \py{Timeseries}; the difference is that the labels in a \py{SweepSeries} are parameter values rather than time values. 
+To save and plot the results, we can use a \py{SweepSeries} object, which is similar to a \py{TimeSeries}; the difference is that the labels in a \py{SweepSeries} are parameter values rather than time values. 
 
 We can create an empty \py{SweepSeries} like this:
 
@@ -1904,7 +1786,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 %\part{Modeling population growth}
 
 \chapter{World population}
-\label{chap03}
+\label{chap05}
 
 In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{http://modsimpy.com/popbomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.
   
@@ -1919,6 +1801,10 @@ But world population growth is still a topic of concern, and it is an open quest
 In this chapter and the next, we use tools from the previous chapters to explain world population growth since 1950 and generate predictions for the next 50--100 years.
 
 \index{prediction}
+
+For background on world population growth, watch this video from the American Museum of Natural History \url{https://www.youtube.com/watch?v=PUwmA3Q0_OE}.
+
+\index{American Museum of Natural History}
 
 
 \section{World Population Data}
@@ -2049,7 +1935,7 @@ The \py{label} argument provides the string that appears in the legend.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap03-fig01.pdf}}
-\caption{Estimates of world population, 1950--2015.}
+\caption{Estimates of world population, 1950--2016.}
 \label{chap03-fig01}
 \end{figure}
 
@@ -2068,7 +1954,7 @@ In the next few sections I demonstrate this process starting with simple models 
 
 Although there is some curvature in the plotted estimates, it looks like world population growth has been close to linear since 1960 or so.  So we'll start with a model that has constant growth.
 
-To fit the model to the data, we'll compute the average annual growth from 1950 to 2015.  Since the UN and Census data are so close, I'll use the Census data.
+To fit the model to the data, we'll compute the average annual growth from 1950 to 2016.  Since the UN and Census data are so close, I'll use the Census data.
 
 We can select a value from a \py{Series} using the bracket operator:
 \index{bracket operator}
@@ -2081,14 +1967,14 @@ census[1950]
 So we can get the total growth during the interval like this:
 
 \begin{python}
-total_growth = census[2015] - census[1950]
+total_growth = census[2016] - census[1950]
 \end{python}
 
 The numbers in brackets are called {\bf labels}, because they label the rows of the \py{Series} (not to be confused with the labels we saw in the previous section, which label lines in a graph).
 
 \index{label}
 
-In this example, the labels 2015 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data change in the future, we have to modify the program (see \url{http://modsimpy.com/hardcode}).
+In this example, the labels 2016 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data change in the future, we have to modify the program (see \url{http://modsimpy.com/hardcode}).
 
 \index{hard coding}
 
@@ -2100,11 +1986,14 @@ t_end = get_last_label(census)
 elapsed_time = t_end - t_0
 \end{python}
 
-\py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guessed, they select the first and last labels from \py{census}.  We can use these labels to select the first and last values, then compute \py{total_growth} and \py{annual_growth}:
+\py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guessed, they select the first and last labels from \py{census}.
+The difference between them is the elapsed time.
+
+The \py{modsim} library also defines \py{get_first_value} and \py{get_last_value}, which we can use to compute \py{total_growth}:
 
 \begin{python}
-p_0 = census[t_0]
-p_end = census[t_end]
+p_0 = get_first_value(census)
+p_end = get_last_value(census)
 total_growth = p_end - p_0
 \end{python}
 
@@ -2146,14 +2035,14 @@ for t in linrange(t_0, t_end-1):
 \index{NumPy}
 \index{array}
 
-Each time through the loop, the loop variable \py{t} gets the next value from the array.  Inside the loop, we compute the population for each year by adding the population for the previous year and \py{annual_growth}.  The last time through the loop, the value of \py{t} is 2014, so the last label in \py{results} is 2015, which is what we want.
+Each time through the loop, the loop variable \py{t} gets the next value from the array.  Inside the loop, we compute the population for each year by adding the population for the previous year and \py{annual_growth}.  The last time through the loop, the value of \py{t} is 2015, so the last label in \py{results} is 2016, which is what we want.
 
 \index{loop}
 \index{loop variable}
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap03-fig02.pdf}}
-\caption{Estimates of world population, 1950--2015, and a constant growth model.}
+\caption{Estimates of world population, 1950--2016, and a constant growth model.}
 \label{chap03-fig02}
 \end{figure}
 
@@ -2173,11 +2062,29 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 
 \chapter{Modeling growth}
+\label{chap06}
+In the previous chapter we simulated a model of world population with constant growth.  In this chapter we see if we can make a better model with growth proportional to the population.
 
-\section{Now with System objects}
+But first, we can improve the code from the previous chapter by encapsulating it in a function and using \py{System} objects.
+
+\section{System objects}
 \label{nowwithsystem}
 
-First, let's put all the information we need to run the model into a \py{System} object:
+Like a \py{State} object, a \py{System} object contains variables and their values.  The difference is:
+
+\begin{itemize}
+
+\item \py{State} objects contain state variables, which represent the state of the system, which get updated in the course of a simulation.
+
+\item \py{System} objects contain {\bf system variables}, which represent parameters of the system, which usually don't get updated over the course of a simulation.
+
+\end{itemize}  
+
+For example, in the bike share model, state variables include the number of bikes at each location, which get updated whenever a customer moves a bike.  System variables include the number of location, total number of bikes, and arrival rates at each location.
+
+In the population model, the only state variable is the population.  System variables include the annual growth rate, the initial time and population, and the end time.
+
+Here's how we create a \py{System} object with these variables:
 
 \index{System object}
 
@@ -2190,7 +2097,7 @@ system = System(t_0=t_0,
 
 \py{t0} and \py{t_end} are the first and last years; \py{p_0} is the initial population, and \py{annual_growth} is the estimated annual growth.
 
-Next we'll wrap the code from the previous section in a function:
+Next we'll wrap the code from the previous chapter in a function:
 
 \begin{python}
 def run_simulation1(system):
@@ -2223,12 +2130,12 @@ def plot_results(census, un, timeseries, title):
 \index{plot}
 \index{decorate}
 
-You will not be surprised to learn that the \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://matplotlib.org/users/colors.html}.
+The \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://matplotlib.org/users/colors.html}.
 
 \index{Pyplot}
 \index{color}
 
-Finally, we can run it like this.
+Finally, we can run the simulation like this.
 
 \begin{python}
 results = run_simulation1(system)
@@ -2236,6 +2143,10 @@ plot_results(census, un, results, 'Constant growth model')
 \end{python}
 
 The results are the same as Figure~\ref{chap03-fig02}.
+
+It might not be obvious that using functions and \py{System} objects is a big improvement, and for a simple model that we run only once, maybe it's not.  But as we work with more complex models, and when we run many simulations with different parameters, we'll see that the organization of the code makes a big difference.
+
+Now let's see if we can improve the model.
 
 
 \section{Proportional growth model}
@@ -2275,28 +2186,14 @@ plot_results(census, un, results, 'Proportional model')
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap03-fig03.pdf}}
-\caption{Estimates of world population, 1950--2015, and a proportional model.}
+\caption{Estimates of world population, 1950--2016, and a proportional model.}
 \label{chap03-fig03}
 \end{figure}
 
 Figure~\ref{chap03-fig03} shows the results.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
 
-There are a few things we could try to improve the model:
+In the next chapter we'll try one more time to find a model that makes sense and fits the data.  But first, I want to make a few more improvements to the code.
 
-\begin{itemize}
-
-\item Maybe the birth rate and death rate vary over time.
-
-\item Maybe net growth depends on the current population, but the relationship is quadratic, not linear.
-
-\end{itemize}
-
-We will try out these variations, but first, we'll clean up the code one more time.
-
-Before you go on, you might want to read the notebook for this chapter, \py{chap06.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
-
-
-\chapter{Equilibrium}
 
 \section{Factoring out the update function}
 
@@ -2305,7 +2202,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \index{update function}
 \index{function!update}
 
-Rather than repeat identical code, we can separate the things that change from the things that don't.  First, we'll pull out the body of the loop and make it a function:
+Rather than repeat identical code, we can separate the things that change from the things that don't.  First, I'll pull out the update code from \py{run_simulation2} and make it a function:
 
 \begin{python}
 def update_func1(pop, t, system):
@@ -2323,7 +2220,7 @@ def run_simulation(system, update_func):
     results = TimeSeries()
     results[system.t_0] = system.p_0
     
-    for t in linrange(system.t_0, system.t_end):
+    for t in linrange(system.t_0, system.t_end-1):
         results[t+1] = update_func(results[t], t, system)
         
     return results
@@ -2336,12 +2233,12 @@ This function demonstrates a feature we have not seen before: it takes a functio
 Here's how we call it:
 
 \begin{python}
-results = run_simulation(system, update_func)
+results = run_simulation(system, update_func1)
 \end{python}
 
 Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_simulation}, we can run \py{update_func} just like any other function.
 
-When you call \py{run_simulation}, it calls \py{update_func1} once for each year between \py{t_0} and \py{t_end}.  The result is the same as Figure~\ref{chap03-fig03}.
+The loop in \py{run_simulation} calls \py{update_func1} once for each year between \py{t_0} and \py{t_end-1}.  The result is the same as Figure~\ref{chap03-fig03}.
 
 
 \section{Combining birth and death}
@@ -2352,7 +2249,9 @@ While we are at it, we can also simplify the code by combining births and deaths
 system.alpha = system.birth_rate - system.death_rate
 \end{python}
 
-Here's the modified version of \py{update_func}:
+The name of this parameter, \py{alpha}, is the conventional name for a proportional growth rate.
+
+Here's the modified version of \py{update_func1}:
 
 \begin{python}
 def update_func2(pop, t, system):
@@ -2367,6 +2266,27 @@ results = run_simulation(system, update_func2)
 \end{python}
 
 Again, the result is the same as Figure~\ref{chap03-fig03}.
+
+Before you go on, you might want to read the notebook for this chapter, \py{chap06.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+
+
+\chapter{Quadratic growth}
+\label{chap07}
+
+In the previous chapter we developed a population model where net growth during each time step is proportional to the current population.  This model seems more realistic than the constant growth model, but it does not fit the data as well.
+
+There are a few things we could try to improve the model:
+
+\begin{itemize}
+
+\item Maybe the net growth rate varies over time.
+
+\item Maybe net growth depends on the current population, but the relationship is quadratic, not linear.
+
+\end{itemize}
+
+In the notebook for this chapter, you will have a chance to try the first option.  In this chapter, we explore the second.
 
 
 \section{Quadratic growth}
@@ -2411,7 +2331,7 @@ results = run_simulation(system, update_func_quad)
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap03-fig04.pdf}}
-\caption{Estimates of world population, 1950--2015, and a quadratic model.}
+\caption{Estimates of world population, 1950--2016, and a quadratic model.}
 \label{chap03-fig04}
 \end{figure}
 
@@ -2494,12 +2414,9 @@ In this version, it is easier to interpret the parameters: $\alpha$ is the maxim
 
 In the next chapter we use the models we have developed to generate predictions.
 
-
-
-
 \section{Disfunctions}
 
-When people first learn about functions, there are a few things they often find confusing.  In this section I present and explain some common problems with functions.
+When people learn about functions, there are a few things they often find confusing.  In this section I present and explain some common problems.
 
 As an example, suppose you want a function that takes a \py{System} object, with variables \py{alpha} and \py{beta}, as a parameter and computes the carrying capacity, \py{-alpha/beta}.  Here's a good solution: 
 
@@ -2515,19 +2432,19 @@ print(pop)
 
 Now let's see all the ways that can go wrong.
 
-Disfunction \#1: Not using parameters.  In the following version, the function doesn't take any parameters; when \py{system} appears inside the function, it refers to the object we created outside the function.
+Disfunction \#1: Not using parameters.  In the following version, the function doesn't take any parameters; when \py{sys1} appears inside the function, it refers to the object we create outside the function.
 
 \begin{python}
 def carrying_capacity():
-    K = -system.alpha / system.beta
+    K = -sys1.alpha / sys1.beta
     return K
     
-system = System(alpha=0.025, beta=-0.0018)
+sys1 = System(alpha=0.025, beta=-0.0018)
 pop = carrying_capacity()
 print(pop)
 \end{python}
 
-This version actually works, but it is not as versatile as it could be.  If there are several \py{System} objects, this function can only work with one of them, and only if it is named \py{system}.
+This version actually works, but it is not as versatile as it could be.  If there are several \py{System} objects, this function can only work with one of them, and only if it is named \py{sys1}.
 
 Disfunction \#2: Clobbering the parameters.  When people first learn about parameters, they often write functions like this:
 
@@ -2593,10 +2510,12 @@ total = carrying_capacity(sys1) + carrying_capacity(sys2)
 Before you go on, you might want to read the notebook for this chapter, \py{chap07.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\chapter{Prediction}
-\label{chap04}
 
-In the previous chapter we developed a quadratic model of world population growth from 1950 to 2015.  It is a simple model, but it fits the data well and the mechanisms it's based on are plausible.  
+
+\chapter{Prediction}
+\label{chap08}
+
+In the previous chapter we developed a quadratic model of world population growth from 1950 to 2016.  It is a simple model, but it fits the data well and the mechanisms it's based on are plausible.  
 
 In this chapter we'll use the quadratic model to generate projections of future growth, and compare our results to projections from actual demographers.  Also, we'll represent the models from the previous chapters as differential equations and solve them analytically.
 
@@ -2740,6 +2659,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 
 \chapter{Analysis}
+\label{chap09}
 
 \section{Recurrence relations}
 
@@ -3121,7 +3041,172 @@ I avoided these terms until now because they are based on the solutions to probl
 
 
 
-\section{DataFrame and Series}
+
+
+Before you go on, you might want to read the notebook for this chapter, \py{chap09.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+
+\chapter{Case studies}
+\label{chap10}
+
+This chapter reviews the computational patterns we have seen so far and presents two exercises where you can apply them.
+
+\section{Computational tools}
+
+In Chapter~\ref{chap01} we used Pint to define units and perform calculations with units:
+
+\begin{code}
+meter = UNITS.meter
+second = UNIT.second
+a = 9.8 * meter / second**2
+\end{code}
+
+In Chapter~\ref{chap02} we defined a \py{State} object that contains variables that represent the state of a system, usually changing over time:
+
+\begin{code}
+bikeshare = State(olin=10, wellesley=2)
+\end{code}
+
+We used update operators like \py{+=} and \py{-=} to change state variables.  We used \py{print} statements to display the values of variables.
+
+We used the \py{flip} function to simulate random arrivals, and used \py{if} statements to check the results.
+
+We learned to define new functions that take parameters:
+
+\begin{code}
+def step(p1, p2):
+    if flip(p1):
+        bike_to_wellesley()
+        
+    if flip(p2):
+        bike_to_olin()
+\end{code}
+
+We used a \py{for} loop with the \py{range} function to execute the body of the loop a specified number of times.
+
+\begin{code}
+for i in range(4):
+    step(p1, p2)
+\end{code}
+
+We learned to create a \py{TimeSeries} object and use it to store the value of a state variable as it changes over time:
+
+\begin{code}
+results = TimeSeries()
+
+for i in range(10):
+    step(0.3, 0.2)
+    results[i] = bikeshare.olin
+\end{code}
+
+We used \py{plot} to plot the results, \py{decorate} to label the axes, and \py{savefig} to save the figure.
+
+\begin{code}
+plot(results, label='Olin')
+decorate(xlabel='Time step (min)', 
+         ylabel='Number of bikes')
+savefig('chap01-fig01.pdf)
+\end{code}
+
+In Chapter~\ref{chap03} we used comparison operators to check for certain conditions, and the \py{return} statement to end the execution of a function.
+
+\begin{code}
+def bike_to_olin(state):
+    if state.wellesley == 0:
+        state.wellesley_empty += 1
+        return
+    state.wellesley -= 1
+    state.olin += 1
+\end{code}
+
+
+In Chapter~\ref{chap04} we wrote a version of \py{run_simulation} that uses a \py{return} statement to return a value:
+
+\begin{code}
+def run_simulation(p1, p2, num_steps):
+    state = State(olin=10, wellesley=2, 
+                  olin_empty=0, wellesley_empty=0)
+                    
+    for i in range(num_steps):
+        step(state, p1, p2)
+        
+    return state
+\end{code}
+
+The parameters of \py{run_simulation} are the parameters of the model.  It creates a \py{State} object that represents the initial state of the system, then updates the state over a given number of time steps.  It returns the final value of \py{state}, which contains metrics we can use to measure the performance of the system.
+
+We used \py{linspace} to create a NumPy array of equally-spaced values, and a \py{for} loop to loop through the array.  We used a \py{SweepSeries} to store results from a series of simulations, mapping from the value of a parameter to the value of a resulting metric.
+
+\begin{code}
+p1_array = linspace(0, 1, 11)
+sweep = SweepSeries()
+
+for p1 in p1_array:
+    state = run_simulation(p1, p2, num_steps)
+    sweep[p1] = state.olin_empty
+\end{code}
+
+In Chapter~\ref{chap05} we used Pandas to read data from a web page and store the results in a \py{DataFrame}.  We selected a column from the \py{DataFrame} to get a \py{Series}.
+
+%TODO: Update this to reflect the new chapter numbers
+
+We defined another version of \py{run_simulation} with a few changes:
+
+\begin{itemize}
+
+\item As parameters it takes a \py{System} object, which contains the parameters of the system, and an update function, which updates the state of the system.
+
+\item Instead of returning the final state of the system, it returns a \py{TimeSeries} that contains the state as it changes over time.
+
+\end{itemize}
+
+\begin{code}
+def run_simulation(system, update_func):
+    results = TimeSeries()
+    results[system.t_0] = system.p_0
+    
+    for t in linrange(system.t_0, system.t_end):
+        results[t+1] = update_func(results[t], t, system)
+        
+    return results
+\end{code}
+
+The update functions takes the current state of the system, the time, and the \py{System} object as parameters, and returns the new state.
+
+For example, here's the update function for the quadratic growth model.
+
+\begin{code}
+def update_func_quad(pop, t, system):
+    net_growth = system.alpha * pop + system.beta * pop**2
+    return pop + net_growth
+\end{code}
+
+In this example, the state of the system is a single number, \py{pop}.  Later we'll see examples where state is represented by a \py{State} object with more than one variable.
+
+Chapter~\ref{chap09} introduces SymPy, which we can use to create \py{Symbol} objects:
+
+\begin{code}
+t, alpha = symbols('t alpha')
+f = Function('f')
+\end{code}
+
+Write differential equations:
+
+\begin{code}
+dfdt = diff(f(t), t)
+eq1 = Eq(dfdt, alpha*f(t))
+\end{code}
+
+And solve them:
+
+\begin{code}
+solution_eq = dsolve(eq1)
+\end{code}
+
+That's a brief summary of the computational tools we have seen so far.
+
+
+\section{Under the hood}
 \label{dataframe}
 
 So far we've been using \py{DataFrame} and \py{Series} objects without really understanding how they work.  In this section we'll review what we know so far and get into a little more detail.
@@ -3176,175 +3261,10 @@ Defining these objects wasn't necessary; we could do all the same things using \
 
 If you write simulations in Python in the future, you can continue using the objects in \py{modsim}, if you find them useful, or you can use Pandas objects directly.
 
-Before you go on, you might want to read the notebook for this chapter, \py{chap09.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\chapter*{Case studies}
-\label{case01}
 
-This chapter reviews the computational patterns we have seen so far and presents two exercises where you can apply them.
-
-\section*{Computational patterns}
-
-In Chapter~\ref{chap01} we used Pint to define units and perform calculations with units:
-
-\begin{code}
-meter = UNITS.meter
-second = UNIT.second
-a = 9.8 * meter / second**2
-\end{code}
-
-We defined a \py{State} object that contains state variables, which describe the state of a system, usually changing over time:
-
-\begin{code}
-bikeshare = State(olin=10, wellesley=2)
-\end{code}
-
-We used update operators like \py{+=} and \py{-=} to change state variables.  We used \py{print} statements to display the values of variables.
-
-We used the \py{flip} function to simulate random arrivals, and used \py{if} statements to check the results.
-
-We learned to define new functions that take parameters:
-
-\begin{code}
-def step(p1, p2):
-    if flip(p1):
-        bike_to_wellesley()
-        
-    if flip(p2):
-        bike_to_olin()
-\end{code}
-
-We used a \py{for} loop with the \py{range} function to execute the body of the loop a specified number of times.
-
-\begin{code}
-for i in range(4):
-    step(p1, p2)
-\end{code}
-
-We learned to create a \py{TimeSeries} object and use it to store the value of a state variable as it changes over time:
-
-\begin{code}
-results = TimeSeries()
-
-for i in range(10):
-    step(0.3, 0.2)
-    results[i] = bikeshare.olin
-\end{code}
-
-We used \py{plot} to plot the results, \py{decorate} to label the axes, and \py{savefig} to save the figure.
-
-\begin{code}
-plot(results, label='Olin')
-decorate(xlabel='Time step (min)', 
-         ylabel='Number of bikes')
-savefig('chap01-fig01.pdf)
-\end{code}
-
-In Chapter~\ref{chap02} we used local variables to store intermediate results, comparison operators to check for certain conditions, and the \py{return} statement to end the execution of a function.
-
-\begin{code}
-def move_bike(state, n):
-    olin_temp = state.olin - n
-    if olin_temp < 0:
-        state.olin_empty += 1
-        return
-    
-    wellesley_temp = state.wellesley + n
-    if wellesley_temp < 0:
-        state.wellesley_empty += 1
-        return
-    
-    state.olin = olin_temp
-    state.wellesley = wellesley_temp
-\end{code}
-
-
-And we wrote the first version of \py{run_simulation}, which defines the structure of almost every simulation in this book:
-
-\begin{code}
-def run_simulation(p1, p2, num_steps):
-    state = State(olin=10, wellesley=2, 
-                    olin_empty=0, wellesley_empty=0)
-                    
-    for i in range(num_steps):
-        step(state, p1, p2)
-        
-    return state
-\end{code}
-
-The parameters of \py{run_simulation} are the parameters of the model.  It creates a \py{State} object that represents the initial state of the system, then updates the state over a given number of time steps.  It returns the final value of \py{state}, which contains metrics we can use to measure the performance of the system.
-
-We used \py{linspace} to create a NumPy array of equally-spaced values, and a \py{for} loop to loop through the array.  We used a \py{SweepSeries} to store results from a series of simulations, mapping from the value of a parameter to the value of a resulting metric.
-
-\begin{code}
-p1_array = linspace(0, 1, 11)
-sweep = SweepSeries()
-
-for p1 in p1_array:
-    state = run_simulation(p1, p2, num_steps)
-    sweep[p1] = state.olin_empty
-\end{code}
-
-In Chapter~\ref{chap03} we used Pandas to read data from a web page and store the results in a \py{DataFrame}.  We selected a column from the \py{DataFrame} to get a \py{Series}.
-
-We defined another version of \py{run_simulation} with a few changes:
-
-\begin{itemize}
-
-\item As parameters it takes a \py{System} object, which contains the parameters of the system, and an update function, which updates the state of the system.
-
-\item Instead of returning the final state of the system, it returns a \py{TimeSeries} that contains the state as it changes over time.
-
-\end{itemize}
-
-\begin{code}
-def run_simulation(system, update_func):
-    results = TimeSeries()
-    results[system.t_0] = system.p_0
-    
-    for t in linrange(system.t_0, system.t_end):
-        results[t+1] = update_func(results[t], t, system)
-        
-    return results
-\end{code}
-
-The update functions takes the current state of the system, the time, and the \py{System} object as parameters, and returns the new state.
-
-For example, here's the update function for the quadratic growth model.
-
-\begin{code}
-def update_func_quad(pop, t, system):
-    net_growth = system.alpha * pop + system.beta * pop**2
-    return pop + net_growth
-\end{code}
-
-In this example, the state of the system is a single number, \py{pop}.  Later we'll see examples where state is represented by a \py{State} object with more than one variable.
-
-Chapter~\ref{chap04} introduces SymPy, which we can use to create \py{Symbol} objects:
-
-\begin{code}
-t, alpha = symbols('t alpha')
-f = Function('f')
-\end{code}
-
-Write differential equations:
-
-\begin{code}
-dfdt = diff(f(t), t)
-eq1 = Eq(dfdt, alpha*f(t))
-\end{code}
-
-And solve them:
-
-\begin{code}
-solution_eq = dsolve(eq1)
-\end{code}
-
-That's a brief summary of the computational tools we have seen so far.  The next two sections present examples where we can use these tools to build models and answer questions about systems.
-
-
-\section*{One queue or two?}
+\section{One queue or two?}
 
 The first case study asks you to apply what you've learned to a problem from {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  
 
@@ -3411,7 +3331,9 @@ Hint: if there are at least two customers in the store, there are two chances fo
 A solution to this exercise is in \py{queue_soln.ipynb} in the repository for this book.
 
 
-\section*{Predicting salmon populations}
+
+
+\section{Predicting salmon populations}
 
 Each year the U.S. Atlantic Salmon Assessment Committee reports estimates of salmon populations in oceans and rivers in the northeastern United States.  The reports are useful for monitoring changes in these populations, but they generally do not include predictions.
 
@@ -3429,9 +3351,9 @@ Again, I'll make some suggestions for how to proceed, but if you want to try som
 
 \item Write an update function that takes the current population, time, and a \py{System} object, and returns the updated population.  It should choose a random growth rate from \py{rates}.
 
-\item Write a version of \py{run_simulation} that uses this update function to simulate the salmon population for 10 years, starting with the 2015 estimate.  It should create and return a \py{TimeSeries} object.
+\item Write a version of \py{run_simulation} that uses this update function to simulate the salmon population for 10 years, starting with the 2016 estimate.  It should create and return a \py{TimeSeries} object.
 
-\item Plot the estimated values from 1997 to 2015 and the simulated values from 2015 to 2025.  As always, label the axes!  Each time you run the simulation, you should get different predictions.
+\item Plot the estimated values from 1997 to 2016 and the simulated values from 2016 to 2025.  As always, label the axes!  Each time you run the simulation, you should get different predictions.
 
 \item To get a sense of how the results vary from one run to the next, write a function that runs multiple simulations and plots all of the results.  If you use the plot option \py{alpha=0.1}, it makes the lines semi-transparent, so they are darker where they overlap.
 
@@ -3454,6 +3376,7 @@ A solution to this exercise is in \py{salmon_soln.ipynb} in the repository for t
 %\part{Modeling contagious disease}
 
 \chapter{Epidemiology}
+\label{chap11}
 
 In the previous chapter, we developed a model of world population growth and used it to generate projections for the next 100 years.  In this chapter, we develop a model of an epidemic as it spreads in a susceptible population, and use it to evaluate the effectiveness of possible interventions.
 
@@ -3862,6 +3785,8 @@ As with a \py{DataFrame}, we can use the dot operator to select columns from a \
 \index{dot operator}
 \index{operator!dot}
 
+\chapter{Optimization}
+\label{chap12}
 
 \section{Metrics}
 \label{metrics}
@@ -3986,7 +3911,7 @@ One use of models like this is to demonstrate phenomena like herd immunity and t
 Before you go on, you might want to read the notebook for this chapter, \py{chap10.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
-\chapter{Optimization}
+
 
 \section{Hand washing}
 
@@ -4136,6 +4061,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 
 \chapter{Sweeping two parameters}
+\label{chap13}
 
 In the previous chapters I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model.  We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.
 
@@ -4287,7 +4213,9 @@ When \py{gamma} is high, \py{beta} has to be even higher to get things going.  T
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap12.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
-\chapter{Nondimensionalization} 
+
+\chapter{Analysis} 
+\label{chap14}
 
 \section{Nondimensionalization}
 \label{nondim}
@@ -4502,6 +4430,7 @@ So far the systems we have studied have been physical in the sense that they exi
 \index{thermal system}
 
 \chapter{The coffee cooling problem}
+\label{chap15}
 
 \section{The problem}
 
@@ -4755,6 +4684,7 @@ results = run_simulation(coffee, update_func)
 Before you go on, you might want to read the notebook for this chapter, \py{chap14.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 \chapter{Mixing}
+\label{chap16}
 
 In the previous chapter we wrote a simulation of a cooling cup of coffee.  Given the initial temperature of the coffee, the temperature of the atmosphere, and the rate parameter, \py{r}, we can predict how the temperature of the coffee will change over time.
 
@@ -5048,11 +4978,14 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 %%\part{Pharmacokinetics}
 
 \chapter{Pharmacokinetics}
+\label{chap17}
 
-{\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we will implement one of the most widely used pharmacokinetic models: the so-called {\bf minimal model} of glucose and insulin in the blood stream.
+{\bf Pharmacokinetics} is the study of how drugs and other substances move around the body, react, and are eliminated.  In this chapter, we implement one of the most widely used pharmacokinetic models: the so-called {\bf minimal model} of glucose and insulin in the blood stream.
+
 \index{pharmacokinetics}
 
 We will use this model to fit data collected from a patient, and use the parameters of the fitted model to quantify the patient's ability to produce insulin and process glucose.
+
 \index{glucose}
 \index{insulin}
 
@@ -5064,15 +4997,18 @@ PDF at \url{http://modsimpy.com/minmod}).
 \section{The glucose-insulin system}
 
 {\bf Glucose} is a form of sugar that circulates in the blood of animals; it is used as fuel for muscles, the brain, and other organs.  The concentration of blood sugar is controlled by the hormone system, and especially by {\bf insulin}, which is produced by the pancreas and has the effect of reducing blood sugar.
+
 \index{pancreas}
 
 In people with normal pancreatic function, the hormone system maintains {\bf homeostasis}; that is, it keeps the concentration of blood sugar in a range that is neither too high or too low.
 
 But if the pancreas does not produce enough insulin, or if the cells that should respond to insulin become insensitive, blood sugar can become elevated, a condition called {\bf hyperglycemia}.  Long term, severe hyperglycemia is the defining symptom of {\bf diabetes mellitus}, a serious disease that affects almost 10\% of the population in the U.S. (see \url{http://modsimpy.com/cdc}).
+
 \index{hyperglycemia}
 \index{diabetes}
 
-One of the most-used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently), and then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentrations of glucose and insulin.
+One of the most-used tests for hyperglycemia and diabetes is the frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently); then blood samples are collected at intervals of 2--10 minutes for 3 hours.  The samples are analyzed to measure the concentrations of glucose and insulin.
+
 \index{FSIGT}
 
 By analyzing these measurements, we can estimate several parameters of the subject's response; the most important is a parameter denoted $S_I$, which quantifies the effect of insulin on the rate of reduction in blood sugar.
@@ -5081,7 +5017,8 @@ By analyzing these measurements, we can estimate several parameters of the subje
 \section{The glucose minimal model}
 
 The ``minimal model" was proposed by Bergman, Ider, Bowden, and Cobelli\footnote{Bergman RN, Ider YZ, Bowden CR, Cobelli C., ``Quantitative estimation of insulin sensitivity", Am J Physiol. 1979 Jun;236(6):E667-77.  Abstract at \url{http://modsimpy.com/insulin}.}.
-It consists of two parts: the glucose model and the insulin model.  I will present an implementation of the glucose model; in the notebook for this chapter, you will have the chance to implement the insulin model.
+It consists of two parts: the glucose model and the insulin model.  I will present an implementation of the glucose model; as a case study, you will have the chance to implement the insulin model.
+
 \index{minimal model}
 
 The original model was developed in the 1970s; since then, many variations and extensions have been proposed.  Bergman's comments on the development of the model provide insight into their process:
@@ -5099,6 +5036,7 @@ unverifiable assumptions).
 \end{quote}
 
 The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system without too much complexity to be practical.  In this case the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.
+
 \index{Occam's Razor}
 
 Bergman discusses the features he and his colleagues thought were essential:
@@ -5114,9 +5052,11 @@ insulin must first move from plasma to a remote compartment [...] to exert its a
 \end{quote}
 
 To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized that insulin must move, relatively slowly, from the blood to a ``remote compartment" where it has its effect.
+
 \index{compartment model}
 
 At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.
+
 \index{interstitial fluid}
 
 The glucose model consists of two differential equations:
@@ -5156,20 +5096,23 @@ We can interpret the terms in the equations one by one:
 \end{itemize}
 
 The initial state of the model is $X(0) = I_b$ and $G(0) = G_0$, where $G_0$ is a constant that represents the concentration of blood sugar immediately after the injection.  In theory we could estimate $G_0$ based on measurements, but in practice it takes time for the injected glucose to spread through the blood volume.  Since $G_0$ is not measurable, it is treated as a {\bf free parameter} of the model, which means that we are free to choose it to fit the data.
+
 \index{free parameter}
 
 
 \section{Data}
 
-To develop and test the model, I'll use data from Pacini and Bergman\footnote{``MINMOD: A computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122, 1986.}.  The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
+To develop and test the model, I use data from Pacini and Bergman\footnote{``MINMOD: A computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test", {\em Computer Methods and Programs in Biomedicine} 23: 113-122, 1986.}.  The dataset is in a file in the repository for this book, which we can read into a \py{DataFrame}:
 \index{data}
 \index{DataFrame object}
 
 \begin{python}
-data = pd.read_csv('glucose_insulin.csv', index_col='time')
+data = pd.read_csv('data/glucose_insulin.csv',
+                   index_col='time')
 \end{python}
 
 \py{data} has two columns: \py{glucose} is the concentration of blood glucose in \si{\milli\gram/\deci\liter}; \py{insulin} is concentration of insulin in the blood in \si{\micro U\per\milli\liter} (a medical ``unit", denoted \si{U}, is an amount defined by convention in context).  The index is time in \si{\minute}.
+
 \index{concentration}
 
 \begin{figure}
@@ -5188,6 +5131,7 @@ Before we are ready to implement the model, there's one problem we have to solve
 \index{interpolation}
 
 The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for the SciPy function \py{interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
+
 \index{function!as return value}
 \index{Series}
 \index{interpolate}
@@ -5214,6 +5158,7 @@ I(ts)
 \end{python}
 
 The result is an array of interpolated values for equally-spaced values of \py{t} between 0 and 182.
+
 \index{linrange}
 
 \py{interpolate} can take additional arguments, which it passes along to \py{interp1d}.  You can read about these options at \url{http://modsimpy.com/interp}.
@@ -5222,7 +5167,7 @@ The result is an array of interpolated values for equally-spaced values of \py{t
 \section{Implementation}
 \label{glucose}
 
-To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find parameter values that generate series that best fit the data.
+To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find the parameter values that generate the series that best fits the data.
 
 Taking advantage of estimates from prior work, I'll start with these values:
 
@@ -5241,6 +5186,7 @@ Ib = data.insulin[0]
 \end{python}
 
 Now we can create the initial state:
+
 \index{State object}
 \index{System object}
 
@@ -5258,6 +5204,7 @@ system = System(init=init,
 \end{python}
 
 Now here's the update function:
+
 \index{update function}
 \index{function!update}
 
@@ -5276,26 +5223,32 @@ def update_func(state, t, system):
 \end{python}
 
 As usual, the update function takes a \py{State} object and a \py{System} as parameters, but there's  one difference from previous examples: this update function also takes \py{t}.  That's because this system of differential equations is {\bf time dependent}; that is, time appears in the right-hand side of at least one equation.
+
 \index{time dependent}
 
 The first line of \py{update} uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} so we can read the system variables without using the dot operator.
+
 \index{unpack}
 
-Computing the derivatives \py{dGdt} and \py{dXdt} is straightforward; we just have to translate the equations from math notation to Python.
+Computing the derivatives \py{dGdt} and \py{dXdt} is straightforward; we just translate the equations from math notation to Python.
+
 \index{derivative}
 
 Then, to perform the update, we multiply each derivative by the discrete time step \py{dt}, which is \SI{2}{\minute} in this example.  The return value is a \py{State} object with the new values of \py{G} and \py{X}.
+
 \index{time step}
 
-Before running the simulation, it is always a good idea to run the update function with the initial conditions:
+Before running the simulation, it is a good idea to run the update function with the initial conditions:
 
 \begin{python}
 update_func(init, 0, system)
 \end{python}
 
-If there are no errors, and the results seem reasonable, we are ready to run the simulation.  Here's one more version of \py{run_simulation}.  It is almost the same as in Section~\ref{coffee_impl}, with one change: it passes \py{t} as an argument to \py{update_func}.
+If there are no errors, and the results seem reasonable, we are ready to run the simulation.
+
+Here's one more version of \py{run_simulation}.  It is almost the same as in Section~\ref{coffee_impl}, with one change: it passes \py{t} as an argument to \py{update_func}.
+
 \index{\py{run_simulation}}
-\index{unpack}
 
 \begin{python}
 def run_simulation(system, update_func):
@@ -5308,13 +5261,13 @@ def run_simulation(system, update_func):
     for t in ts:
         frame.loc[t+dt] = update_func(frame.loc[t], t, system)
     
-    system.results = frame
+    return frame
 \end{python}
 
 And we can run it like this:
 
 \begin{python}
-run_simulation(system, update_func)
+results = run_simulation(system, update_func)
 \end{python}
 
 \begin{figure}
@@ -5325,15 +5278,24 @@ run_simulation(system, update_func)
 
 The results are shown in Figure~\ref{chap08-fig03}.  The top plot shows simulated glucose levels from the model along with the measured data.  The bottom plot shows simulated insulin levels in tissue fluid, which is in unspecified units, and not to be confused with measured concentration of insulin in the blood.
 
-With the parameters I chose, the model fits the data reasonably well.  We can do better, but first, I want to replace \py{run_simulation} with a better differential equation solver.
-\index{fitting data}
-\index{quality of fit}
+With the parameters I chose, the model fits the data reasonably well.  But we can do better.
+
+In the next chapter, we replace \py{run_simulation} with a better differential equation solver, then search for the parameters that yield the best fit for the data.
 
 
-\section{Numerical solution of differential equations}
+
+\chapter{Numerical methods}
+\label{chap18}
+
+In the previous chapter, we implemented the glucose minimal model using \py{run_simulation}, which solves differential equations using discrete time steps.  This method works well enough for many applications, but it is not very accurate.  In this chapter we explore a better option: using an {\bf ODE solver}.
+
+Then we use a search algorithm to find the model parameters that yield the best fit for the data.
+
+
+\section{Solving differential equations}
 \label{slopefunc}
 
-So far we have been solving differential equations by rewriting them as difference equations.  In the current example, the differential equations are:
+So far we have solved differential equations by rewriting them as difference equations.  In the current example, the differential equations are:
 %
 \[ \frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)  \]
 %
@@ -5345,24 +5307,29 @@ If we multiply both sides by $dt$, we have:
 %
 \[ dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt \]
 %
-When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.  That's not exactly true, but it can be a good enough approximation.
+When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.
+
 \index{time step}
 
 This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{http://modsimpy.com/euler}).
+
 \index{Euler's method}
 
-Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called linear multistep methods (see \url{http://modsimpy.com/lmm}).
+Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations, including an entire family of methods called {\bf linear multistep methods} (see \url{http://modsimpy.com/lmm}).
+
 \index{linear multistep method}
 
 Rather than implement these methods ourselves, we will use functions from SciPy.  The \py{modsim} library provides a function called \py{run_odeint}, which is a wrapper for \py{scipy.integrate.odeint}.  The name \py{odeint} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  And the solver is called an integrator because solving differential equations is considered a form of integration.
+
 \index{ordinary differential equation}
 \index{odeint}
 \index{LSODA}
 \index{ODEPACK}
 
-\py{scipy.integrate.odeint} is a wrapper for \py{LSODA}, which is from ODEPACK, a venerable collection of ODE solvers written in Fortran (for some of the history of ODEPACK, see \url{http://modsimpy.com/hindmarsh}).
+\py{scipy.integrate.odeint} is a wrapper for \py{LSODA}, which is from ODEPACK, a venerable collection of ODE solvers written in Fortran (for the history of ODEPACK, see \url{http://modsimpy.com/hindmarsh}).
 
 To use \py{odeint}, we have to provide a ``slope function":
+
 \index{slope function}
 \index{function!slope}
 \index{unpack}
@@ -5381,25 +5348,28 @@ def slope_func(state, t, system):
 \py{slope_func} is similar to \py{update_func}; in fact, it takes the same parameters in the same order.  But \py{slope_func} is simpler, because all we have to do is compute the derivatives, that is, the slopes.  We don't have to do the updates; \py{odeint} does them for us.
 
 Before we call \py{run_odeint}, we have to create a \py{System} object:
+
 \index{System object}
 
 \begin{python}
 system2 = System(init=init, 
-                k1=k1, k2=k2, k3=k3,
-                I=I, Gb=Gb, Ib=Ib,
-                ts=data.index)
+                 k1=k1, k2=k2, k3=k3,
+                 I=I, Gb=Gb, Ib=Ib,
+                 ts=data.index)
 \end{python}
 
-When we were using \py{run_simulation}, we created a \py{System} object with variables \py{t0}, \py{t_end}, and \py{dt}.  When we use \py{run_odeint}, we don't need those variables, but we do have to provide \py{ts}, which is an array or \py{Series} that contains the times where we want the solver to evaluate $G$ and $X$.
+When we used \py{run_simulation}, we created a \py{System} object with variables \py{t0}, \py{t_end}, and \py{dt}.  When we use \py{run_odeint}, we don't need those variables, but we do have to provide \py{ts}, which is an array or \py{Series} that contains the times where we want the solver to evaluate $G$ and $X$.
+
 \index{\py{run_odeint}}
 
 Now we can call \py{run_odeint} like this:
 
 \begin{python}
-run_odeint(system2, slope_func)
+results = run_odeint(system2, slope_func)
 \end{python}
 
-Like \py{run_simulation}, \py{run_odeint} puts the results in a \py{TimeFrame} and stores it as a system variable named \py{results}.  The columns of \py{results} match the state variables in \py{init}, \py{G} and \py{X}.  The index of \py{results} matches the values from \py{ts}; in this example, \py{ts} contains the timestamps of the measurements.
+Like \py{run_simulation}, \py{run_odeint} returns \py{TimeFrame} with one row for each time step and one column for each state variable.  In this example, the rows are the values from \py{ts}, and the columns are the state variables, \py{G} and \py{X}.
+ 
 \index{TimeFrame object}
 
 The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The difference is about 1\% on average and never more than 2\%.
@@ -5408,6 +5378,7 @@ The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The differ
 \section{Least squares}
 
 So far we have been taking the parameters as given, but in general we don't have that luxury.  Normally we are given the data and we have to search for the parameters that yield a time series that best matches the data.
+
 \index{fitting data}
 
 We will do that now, in two steps:
@@ -5415,10 +5386,12 @@ We will do that now, in two steps:
 \begin{enumerate}
 
 \item First we'll define an {\bf error function} that takes a set of possible parameters, simulates the system with the given parameters, and computes the errors, that is, the differences between the simulation results and the data.
+
 \index{error function}
 \index{function~error}
 
 \item Then we'll use a SciPy function, \py{leastsq}, to search for the parameters that minimize mean squared error (MSE).
+
 \index{leastsq}
 \index{mean squared error}
 \index{MSE}
@@ -5430,24 +5403,41 @@ Here's an outline of the functions we'll use:
 \begin{itemize}
 
 \item The \py{modsim} library provides \py{fit_leastsq}, which takes a function called \py{error_func} as a parameter.  It does some error-checking, then calls \py{scipy.optimize.leastsq}, which does the real work.
+
 \index{\py{fit_leastsq}}
 
 \item \py{scipy.optimize.leastsq} uses functions called \py{lmdif} and \py{lmdir}, which implement the Levenberg-Marquardt algorithm for non-linear least squares problems (see \url{http://modsimpy.com/levmarq}).  These functions are provided by another venerable FORTRAN library called MINPACK (see \url{http://modsimpy.com/minpack}).
+
 \index{SciPy}
 \index{lmdif}
 \index{MINPACK}
 
-\item When \py{scipy.optimize.leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the set of parameters that minimizes MSE.
+\item When \py{scipy.optimize.leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the parameters that minimize MSE.
+
 \index{\py{error_func}}
 
 \end{itemize}
 
-Each time the error function runs, it creates a \py{System} object with the given parameters, so let's wrap that operation in a function:
+Here's the error function:
+
+\begin{python}
+def error_func(params, data):
+    system = make_system(params, data)
+    results = run_odeint(system, slope_func)
+    errors = results.G - data.glucose
+    return errors
+\end{python}
+
+The parameters of \py{error_func} are \py{params}, which is a sequence of four system parameters, and \py{data}, which is the \py{DataFrame} containing the measurements.
+
+\py{error_func} uses \py{make_system} to create a \py{System} object we can use with \py{odeint}:
+
 \index{\py{make_system}}
 \index{System object}
 
 \begin{python}
-def make_system(G0, k1, k2, k3, data):
+def make_system(params, data):
+    G0, k1, k2, k3 = params
     init = State(G=G0, X=0)
     system = System(init=init, 
                     k1=k1, k2=k2, k3=k3,
@@ -5457,60 +5447,47 @@ def make_system(G0, k1, k2, k3, data):
     return system
 \end{python}
 
-\py{make_system} takes \py{G0} and the rate constants as parameters, as well as \py{data}, which is the \py{DataFrame} containing the measurements.  It creates and returns a \py{System} object.
+\py{error_func} calls \py{run_odeint} using the same slope function we saw in Section~\ref{slopefunc}.  Then it computes the difference between the simulation results and the data.  Since \py{results.G} and \py{data.glucose} are both \py{Series} objects, the result of subtraction is also a \py{Series}.
 
-Now here's the error function:
-
-\begin{python}
-def error_func(params, data):
-    system = make_system(*params, data)
-    run_odeint(system, slope_func)
-    error = system.results.G - data.glucose
-    return error
-\end{python}
-
-The parameters of \py{error_func} are
-
-\begin{itemize}
-
-\item \py{params}, which is a sequence of four system parameters, and
-
-\item \py{data}, which is the \py{DataFrame} containing the measurements.
-
-\end{itemize}
-
-\py{error_func} uses \py{make_system} to create the \py{System} object.  This line demonstrates a feature we have not seen before, the {\bf scatter operator}, \py{*}.  Applied to \py{params}, the scatter operator unpacks the sequence, so instead of being considered a single value, it is treated as four separate values.
-\index{scatter operator}
-\index{operator!scatter}
-
-\py{error_func} calls \py{run_odeint} using the same slope function we saw in Section~\ref{slopefunc}.  Then it computes the difference between the simulation results and the data.  Since \py{system.results.G} and \py{data.glucose} are both \py{Series} objects, the result of subtraction is also a \py{Series}.
 \index{Series}
 \index{\py{run_odeint}}
 
 Now, to do the actual minimization, we run \py{fit_leastsq}:
 
 \begin{python}
+G0 = 290
 k1 = 0.03
 k2 = 0.02
 k3 = 1e-05
-G0 = 290
 params = G0, k1, k2, k3
 best_params = fit_leastsq(error_func, params, data)
 \end{python}
 
-\py{error_func} is the function we just defined.  \py{params} is a sequence containing an initial guess for the four system parameters, and \py{data} is the \py{DataFrame} containing the measurements.
+The parameters of \py{fit_leastsq} are:
+
+\begin{itemize}
+
+\item \py{error_func}, which is the function we just defined.
+
+\item \py{params}, which is a sequence containing an initial guess for the four system parameters.
+
+\item \py{data}, which is the \py{DataFrame} containing the measurements.
+\py{fit_leastsq} doesn't do anything with \py{data} other than pass it along to \py{error_func}.
+
+\end{itemize}
+
 \index{\py{fit_leastsq}}
 
-Actually, the third parameter can be any object we like.  \py{fit_leastsq} and \py{leastsq} don't do anything with this parameter except to pass it along to \py{error_func}, so in general it contains whatever information \py{error_func} needs to do its job.
+The return value from \py{fit_leastsq} is the sequence of parameters that yields the best fit for the data. 
 
 
 \section{Interpreting parameters}
 
-The return value from \py{fit_leastsq} is \py{best_params}, which we can pass along to \py{make_system}, again using the scatter operator, and then run the simulation:
+To see the results, we can pass \py{best_params} to \py{make_system} and then run the simulation:
 
 \begin{python}
-system = make_system(*best_params, data)
-run_odeint(system, slope_func)
+system = make_system(best_params, data)
+results = run_odeint(system, slope_func)
 \end{python}
 
 \begin{figure}
@@ -5519,15 +5496,19 @@ run_odeint(system, slope_func)
 \label{chap08-fig04}
 \end{figure}
 
-Figure~\ref{chap08-fig04} shows the results.  The simulation matches the measurements well, except during the first few minutes after the injection.  But we don't expect the model to do well in this regime.
+Figure~\ref{chap08-fig04} shows the results.  The simulation matches the measurements well except during the first few minutes after the injection.  
 
-The reason is that the model is {\bf non-spatial}; that is, it does not take into account different concentrations in different parts of the body.  Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body.  This way of representing the body is known among experts as the ``bag of blood" model.
+But we don't expect the model to do well in this regime.
+
+The problem is that the model is {\bf non-spatial}; that is, it does not take into account different concentrations in different parts of the body.  Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body.  This way of representing the body is known among experts as the ``bag of blood" model.
+
 \index{non-spatial model}
 \index{bag of blood}
 
 Immediately after injection, it takes time for the injected glucose to circulate.  During that time, we don't expect a non-spatial model to be accurate.  For this reason, we should not take the estimated value of \py{G0} too seriously; it is useful for fitting the model, but not meant to correspond to a physical, measurable quantity.
 
 On the other hand, the other parameters are meaningful; in fact, they are the reason the model is useful.  Using the best-fit parameters, we can estimate two quantities of interest:
+
 \index{glucose effectiveness}
 \index{insulin sensitivity}
 
@@ -5547,7 +5528,8 @@ where $\dot{G}$ is shorthand for $dG/dt$.  Taking the derivative of $dG/dt$ with
 %
 \[ E = k_1 + X \]
 %
-The {\bf glucose effectiveness index}, $S_G$, is the value of $E$ in when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
+The {\bf glucose effectiveness index}, $S_G$, is the value of $E$ when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
+
 \index{basal level}
 
 Insulin sensitivity is defined as the change in $E$ as we vary $I$:
@@ -5575,7 +5557,16 @@ So if we find parameters that make the model fit the data, we can use $k_3 / k_2
 For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and for $8.9 \times 10^{-4}$.  According to Pacini and Bergman, these values are within the normal range.
 
 
+\chapter{Case studies}
+\label{chap19}
+
+\section{Computational tools}
+
+\section{Something thermal?}
+
 \section{The insulin minimal model}
+
+%TODO: transition into this section
 
 Along with the glucose minimal mode, Berman et al.~developed an insulin minimal model, in which the concentration of insulin, $I$, is governed by this differential equation:
 %
@@ -5609,7 +5600,14 @@ The parameters of this model can be used to estimate, $\phi_1$ and $\phi_2$, whi
 %
 where $I_{max}$ is the maximum measured insulin level, and $I_b$ and $G_b$ are the basal levels of insulin and glucose.
 
+%TODO: Clarify whether G0 here is the parameter we estimated in the previous
+% model, or the maximum observed value of G.
+
 In the notebook for this chapter, you will have a chance to implement this model, find the parameters that best fit the data, and estimate these values.
+
+
+
+
 
 
 \chapter{Projectiles}
@@ -6067,7 +6065,7 @@ These methods demonstrate two ways to use models to solve problems, sometimes ca
 \index{parameter of a system}
 
 
-\chapter{Two dimensions}
+\chapter{Projectiles in 2-D}
 
 In the previous chapter we modeled objects moving in one dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
@@ -7080,3 +7078,35 @@ At this point you have everything you need to simulate the descent of a yo-yo.  
 \end{document}
 
 \end{itemize}
+
+
+\section{Under the hood}
+
+Throughout this book, we'll use functions defined in the \py{modsim} library.  You don't have to know how they work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
+
+\index{modsim}
+
+Most of the functions in \py{modsim} are based on other Python libraries; the libraries we have used so far include:
+
+\begin{description}
+
+\item[Pint], which provides units like meters and seconds, as we saw in Section~\ref{penny}.
+
+\item[NumPy], which provides mathematical operations like \py{sqrt}, which we saw in Section~\ref{computation}.
+
+\item[Pandas], which provides the \py{Series} object, which is the basis of the \py{State} object in Section~\ref{modeling}.
+
+\item[Pyplot], which provides plotting functions, as we saw in Section~\ref{plotting}.
+
+\end{description}
+
+You could use these libraries directly, and when you have more experience, you probably will.  But the functions in \py{modsim} are meant to be easier to use; they provide some additional capabilities, including error checking; and by hiding details you don't need to know about, they let you focus on more important things.
+
+However, there is one drawback: when something goes wrong, it can be hard to understand the error messages.  I'll have more to say about this in later chapters, but for now I have a suggestion.  When you are getting started, you should practice making errors.
+
+Along with each chapter, I provide a Jupyter notebook that contains the code from the chapter, so you can run it, see how it works, and modify it, and see how it breaks.
+
+\index{debugging}
+
+For each new function you learn, you should deliberately make as many mistakes as possible so you can see what happens.  When you see what the errors messages are, you will understand what they mean.  And that should help later, when you make errors accidentally.
+
