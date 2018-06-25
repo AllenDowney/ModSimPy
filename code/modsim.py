@@ -209,6 +209,9 @@ def fit_leastsq(error_func, params, data, **options):
         raise Exception(mesg)
 
     # return the best parameters
+    if isinstance(params, Params):
+        # if we got a Params object, we should return a Params object
+        best_params = Params(Series(best_params, params.index))
     return best_params
 
 
@@ -715,7 +718,13 @@ class State(System):
 class Condition(System):
     """Represents the condition of a system.
 
-    Condition object are often used to construct a System object.
+    Condition objects are often used to construct a System object.
+    """
+    pass
+
+
+class Params(System):
+    """Represents a set of parameters.
     """
     pass
 
