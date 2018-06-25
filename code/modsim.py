@@ -282,17 +282,24 @@ def run_odeint(system, slope_func, **options):
     is an array or Series that specifies the time when the
     solution will be computed.
 
-    Adds a DataFrame to the System: results
-
     system: System object
     slope_func: function that computes slopes
+
+    returns: TimeFrame
     """
     # makes sure `system` contains `ts`
     if not hasattr(system, 'ts'):
         msg = """It looks like `system` does not contain `ts`
-                 as a system parameter.  `ts` should be an array
+                 as a system variable.  `ts` should be an array
                  or Series that specifies the times when the
                  solution will be computed:"""
+        raise ValueError(msg)
+
+    # makes sure `system` contains `ts`
+    if not hasattr(system, 'init'):
+        msg = """It looks like `system` does not contain `init`
+                 as a system variable.  `init` should be a State
+                 object that specifies the initial condition:"""
         raise ValueError(msg)
 
     # make the system parameters available as globals
@@ -321,8 +328,8 @@ def run_odeint(system, slope_func, **options):
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
-    system.results = TimeFrame(array, columns=init.index, index=ts,
-                               dtype=np.float64)
+    frame = TimeFrame(array, columns=init.index, index=ts, dtype=np.float64)
+    return frame
 
 
 def fsolve(func, x0, *args, **options):
