@@ -35,7 +35,9 @@ from pandas import DataFrame, Series
 from time import sleep
 
 from scipy.interpolate import interp1d
+from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy.integrate import odeint
+from scipy.integrate import solve_ivp
 from scipy.optimize import leastsq
 from scipy.optimize import minimize_scalar
 
@@ -194,6 +196,7 @@ def fit_leastsq(error_func, params, data, **options):
     options['full_output'] = True
 
     # run leastsq
+    #TODO: do we need to turn units off?
     best_params, _, _, mesg, ier = leastsq(error_func, x0=params,
                                            args=args, **options)
 
@@ -241,6 +244,7 @@ def min_bounded(min_func, bounds, *args, **options):
 
     underride(options, xatol=1e-3)
 
+    #TODO: do we need to turn units off?
     res = minimize_scalar(min_func,
                           bracket=bounds,
                           bounds=bounds,
@@ -279,7 +283,7 @@ def max_bounded(max_func, bounds, *args, **options):
 
 
 def run_odeint(system, slope_func, **options):
-    """Runs a simulation of the system.
+    """Integrates an ordinary differential equation.
 
     `system` should contain system parameters and `ts`, which
     is an array or Series that specifies the time when the
@@ -290,7 +294,7 @@ def run_odeint(system, slope_func, **options):
 
     returns: TimeFrame
     """
-    # makes sure `system` contains `ts`
+    # make sure `system` contains `ts`
     if not hasattr(system, 'ts'):
         msg = """It looks like `system` does not contain `ts`
                  as a system variable.  `ts` should be an array
@@ -298,7 +302,7 @@ def run_odeint(system, slope_func, **options):
                  solution will be computed:"""
         raise ValueError(msg)
 
-    # makes sure `system` contains `ts`
+    # make sure `system` contains `ts`
     if not hasattr(system, 'init'):
         msg = """It looks like `system` does not contain `init`
                  as a system variable.  `init` should be a State
@@ -325,14 +329,107 @@ def run_odeint(system, slope_func, **options):
     args = (system,)
 
     # now we're ready to run `odeint` with `init` and `ts` from `system`
-    units_off()
-    array = odeint(slope_func, list(init), ts, args, **options)
-    units_on()
+    with units_off():
+        array = odeint(slope_func, list(init), ts, args, **options)
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
     frame = TimeFrame(array, columns=init.index, index=ts, dtype=np.float64)
     return frame
+
+
+def run_ode_solver(system, slope_func, **options):
+    """Computes a numerical solution to a differential equation.
+
+    `system` must contain `init` with initial conditions,
+    `t_0` with the start time, and `t_end` with the end time.
+
+    It can contain any other parameters required by the slope function.
+
+    `options` can be any legal options of `scipy.integrate.solve_ivp`
+
+    system: System object
+    slope_func: function that computes slopes
+
+    returns: TimeFrame
+    """
+    # make sure `system` contains `init`
+    if not hasattr(system, 'init'):
+        msg = """It looks like `system` does not contain `init`
+                 as a system variable.  `init` should be a State
+                 object that specifies the initial condition:"""
+        raise ValueError(msg)
+
+    # make sure `system` contains `t_end`
+    if not hasattr(system, 't_end'):
+        msg = """It looks like `system` does not contain `t_end`
+                 as a system variable.  `t_end` should be the
+                 final time:"""
+        raise ValueError(msg)
+
+    # make the system parameters available as globals
+    unpack(system)
+
+    # the default value for t_0 is 0
+    t_0 =  getattr(system, 't_0', 0)
+
+    # try running the slope function with the initial conditions
+    try:
+        slope_func(init, t_0, system)
+    except Exception as e:
+        msg = """Before running scipy.integrate.solve_ivp, I tried
+                 running the slope function you provided with the
+                 initial conditions in `system` and `t=t_0` and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
+
+    # wrap the slope function to reverse the arguments and add `system`
+    f = lambda t, y: slope_func(y, t, system)
+
+    def wrap_event(event):
+        """Wrap the event functions.
+
+        Make events terminal by default.
+        """
+        wrapped = lambda t, y: event(y, t, system)
+        wrapped.terminal = getattr(event, 'terminal', True)
+        wrapped.direction = getattr(event, 'direction', 0)
+        return wrapped
+
+    # wrap the event functions so they take the right arguments
+    events = options.pop('events', [])
+    try:
+        events = [wrap_event(event) for event in events]
+    except TypeError:
+        events = wrap_event(events)
+
+    # remove dimensions from the initial conditions.
+    # we need this because otherwise `init` gets copied into the
+    # results array along with its units
+    init_no_dim = [getattr(x, 'magnitude', x) for x in init]
+
+    # if the user did not provide t_eval or events, return
+    # equally spaced points
+    if 't_eval' not in options:
+        if not events:
+            options['t_eval'] = linspace(t_0, t_end, 51)
+
+    # run the solver
+    with units_off():
+        bunch = solve_ivp(f, [t_0, t_end], init_no_dim, events=events, **options)
+
+    # separate the results from the details
+    y = bunch.pop('y')
+    t = bunch.pop('t')
+    details = ModSimSeries(bunch)
+
+    # print the status message
+    print(details.message)
+
+    # pack the results into a TimeFrame
+    results = TimeFrame(np.transpose(y), index=t, columns=init.index)
+    return results, details
 
 
 def fsolve(func, x0, *args, **options):
@@ -348,26 +445,43 @@ def fsolve(func, x0, *args, **options):
 
     returns: solution as an array
     """
-    # make sure we can run the given function with x0
-    x0 = np.asarray(x0).flatten()
+    # when fsolve calls func, it always provides an array,
+    # even if there is only one element; so for consistency,
+    # we convert x0 to an array
+    #x0 = np.asarray(x0)
 
+    # make sure we can run the given function with x0
     try:
         func(x0, *args)
     except Exception as e:
         msg = """Before running scipy.optimize.fsolve, I tried
-                 running the function you provided with the x0
+                 running the error function you provided with the x0
                  you provided, and I got the following error:"""
         logger.error(msg)
         raise(e)
 
     # make the tolerance more forgiving than the default
-    underride(options, xtol=1e-7)
+    underride(options, xtol=1e-6)
 
     # run fsolve
-    units_off()
-    result = scipy.optimize.fsolve(func, x0, args=args, **options)
-    units_on()
+    with units_off():
+        result = scipy.optimize.fsolve(func, x0, args=args, **options)
+
     return result
+
+
+def crossings(series, value):
+    """Find the labels where the series passes through value.
+
+    The labels in series must be increasing numerical values.
+
+    series: Series
+    value: number
+
+    returns: sequence of labels
+    """
+    interp = InterpolatedUnivariateSpline(series.index, series-value)
+    return interp.roots()
 
 
 def interpolate(series, **options):
@@ -580,10 +694,21 @@ def subplot(nrows, ncols, plot_number, **options):
     fig.set_figheight(height)
 
 
+def ensure_units_array(value, units):
+    res = np.zeros_like(value)
+    for i in range(len(value)):
+        res[i] = Quantity(value[i], units[i])
+    return res
 
-class Array(np.ndarray):
-    pass
 
+def ensure_units(value, units):
+    if isinstance(value, np.ndarray):
+        return ensure_units_array(value, units)
+    else:
+        try:
+            return Quantity(value, units)
+        except TypeError:
+            return value
 
 class ModSimSeries(pd.Series):
     """Modified version of a Pandas Series,
@@ -701,7 +826,7 @@ class System(ModSimSeries):
             super().__init__(list(kwargs.values()), index=kwargs)
         elif len(args) == 1:
             super().__init__(*args)
-            # TODO: if there are also kwargs, should we add them in?
+            self.set(**kwargs)
         else:
             msg = '__init__() takes at most one positional argument'
             raise TypeError(msg)
@@ -763,7 +888,7 @@ class ModSimDataFrame(pd.DataFrame):
     def __init__(self, *args, **options):
         # TODO: currently ModSimDataFrame underrides to float64 and
         # ModSimSeries does not.  Does this inconsistency make sense?
-        underride(options, dtype=np.float64)
+        # underride(options, dtype=np.float64)
         super().__init__(*args, **options)
 
     def __getitem__(self, key):
@@ -988,16 +1113,17 @@ pint.unit._Unit.dimensionality = dimensionality
 pint.quantity._Quantity.dimensionality = dimensionality
 
 
-def units_off():
-    """Make all quantities behave as if they were dimensionless.
-    """
-    global SAVED_PINT_METHOD
+class units_off:
+    SAVED_PINT_METHOD_STACK = []
 
-    SAVED_PINT_METHOD = UNITS._get_dimensionality
-    UNITS._get_dimensionality = lambda self: {}
+    def __enter__(self):
+        """Make all quantities behave as if they were dimensionless.
+        """
+        self.SAVED_PINT_METHOD_STACK.append(UNITS._get_dimensionality)
+        UNITS._get_dimensionality = lambda self: {}
 
 
-def units_on():
-    """Restore the saved behavior of quantities.
-    """
-    UNITS._get_dimensionality = SAVED_PINT_METHOD
+    def __exit__(self, type, value, traceback):
+        """Restore the saved behavior of quantities.
+        """
+        UNITS._get_dimensionality = self.SAVED_PINT_METHOD_STACK.pop()
