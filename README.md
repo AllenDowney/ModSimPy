@@ -20,4 +20,4 @@ Python is an ideal programming language for this material.  It is a good first l
 
 *Modeling and Simulation in Python* is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial 4.0 Unported License](https://creativecommons.org/licenses/by-nc/4.0/), which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don’t use it for commercial purposes.
 
-Other Free Books by Allen Downey are available from [Green Tea Press](http://greenteapress.com/wp).
+[This](http://greenteapress.com/wp/modsimpy/) and other Free Books by Allen Downey are available from [Green Tea Press](http://greenteapress.com/wp).
