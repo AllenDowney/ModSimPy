@@ -232,8 +232,7 @@ def min_bounded(min_func, bounds, *args, **options):
                   reference/generated/scipy.optimize.minimize_scalar.html)
     """
     try:
-        midpoint = np.mean(bounds)
-        min_func(midpoint, *args)
+        min_func(bounds[0], *args)
     except Exception as e:
         msg = """Before running scipy.integrate.odeint, I tried
                  running the slope function you provided with the
@@ -244,8 +243,8 @@ def min_bounded(min_func, bounds, *args, **options):
 
     underride(options, xatol=1e-3)
 
-    #TODO: do we need to turn units off?
-    res = minimize_scalar(min_func,
+    with units_off():
+        res = minimize_scalar(min_func,
                           bracket=bounds,
                           bounds=bounds,
                           args=args,
@@ -257,7 +256,7 @@ def min_bounded(min_func, bounds, *args, **options):
                  The message it returns is %s""" % res.message
         raise Exception(msg)
 
-    return res
+    return ModSimSeries(res)
 
 
 def max_bounded(max_func, bounds, *args, **options):
@@ -424,9 +423,6 @@ def run_ode_solver(system, slope_func, **options):
     t = bunch.pop('t')
     details = ModSimSeries(bunch)
 
-    # print the status message
-    print(details.message)
-
     # pack the results into a TimeFrame
     results = TimeFrame(np.transpose(y), index=t, columns=init.index)
     return results, details
@@ -573,7 +569,9 @@ def plot(*args, **options):
     options are the same as for pyplot.plot
     """
     underride(options, linewidth=3, alpha=0.6)
-    lines = plt.plot(*args, **options)
+    with units_off():
+        lines = plt.plot(*args, **options)
+
     # TODO: think about whether to return `lines`
 
 
@@ -746,7 +744,7 @@ class ModSimSeries(pd.Series):
 
         Mostly used for Jupyter notebooks.
         """
-        df = pd.DataFrame(self, columns=['values'])
+        df = pd.DataFrame(self.values, index=self.index, columns=['values'])
         return df._repr_html_()
 
     def set(self, **options):
@@ -795,6 +793,11 @@ def get_first_value(series):
 def get_last_value(series):
     """Returns the value of the first element."""
     return series.values[-1]
+
+def gradient(series):
+    """Computes the numerical derivative of a series."""
+    a = np.gradient(series, series.index)
+    return TimeSeries(a, series.index)
 
 
 class TimeSeries(ModSimSeries):
