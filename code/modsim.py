@@ -231,15 +231,16 @@ def min_bounded(min_func, bounds, *args, **options):
              (see https://docs.scipy.org/doc/scipy/
                   reference/generated/scipy.optimize.minimize_scalar.html)
     """
-    try:
-        min_func(bounds[0], *args)
-    except Exception as e:
-        msg = """Before running scipy.integrate.odeint, I tried
-                 running the slope function you provided with the
-                 initial conditions in system and t=0, and I got
-                 the following error:"""
-        logger.error(msg)
-        raise(e)
+    # try:
+    #     print(bounds[0])
+    #     min_func(bounds[0], *args)
+    # except Exception as e:
+    #     msg = """Before running scipy.integrate.min_bounded, I tried
+    #              running the slope function you provided with the
+    #              initial conditions in system and t=0, and I got
+    #              the following error:"""
+    #     logger.error(msg)
+    #     raise(e)
 
     underride(options, xatol=1e-3)
 
@@ -373,15 +374,15 @@ def run_ode_solver(system, slope_func, **options):
     t_0 =  getattr(system, 't_0', 0)
 
     # try running the slope function with the initial conditions
-    try:
-        slope_func(init, t_0, system)
-    except Exception as e:
-        msg = """Before running scipy.integrate.solve_ivp, I tried
-                 running the slope function you provided with the
-                 initial conditions in `system` and `t=t_0` and I got
-                 the following error:"""
-        logger.error(msg)
-        raise(e)
+    # try:
+    #     slope_func(init, t_0, system)
+    # except Exception as e:
+    #     msg = """Before running scipy.integrate.solve_ivp, I tried
+    #              running the slope function you provided with the
+    #              initial conditions in `system` and `t=t_0` and I got
+    #              the following error:"""
+    #     logger.error(msg)
+    #     raise(e)
 
     # wrap the slope function to reverse the arguments and add `system`
     f = lambda t, y: slope_func(y, t, system)
@@ -406,8 +407,8 @@ def run_ode_solver(system, slope_func, **options):
     # remove dimensions from the initial conditions.
     # we need this because otherwise `init` gets copied into the
     # results array along with its units
-    init_no_dim = [getattr(x, 'magnitude', x) for x in init] 
-        
+    init_no_dim = [getattr(x, 'magnitude', x) for x in init]
+
     # if the user did not provide t_eval or events, return
     # equally spaced points
     if 't_eval' not in options:
@@ -572,7 +573,55 @@ def plot(*args, **options):
     with units_off():
         lines = plt.plot(*args, **options)
 
-    # TODO: think about whether to return `lines`
+    return lines
+
+REPLOT_CACHE = {}
+
+def replot(*args, **options):
+    """
+    """
+    try:
+        label = options['label']
+    except KeyError:
+        raise ValueError('To use replot, you must provide a label argument.')
+
+    axes = plt.gca()
+    key = (axes, label)
+
+    if key not in REPLOT_CACHE:
+        lines = plot(*args, **options)
+        if len(lines) != 1:
+            raise ValueError('Replot only works with a single plotted element.')
+        REPLOT_CACHE[key] = lines[0]
+        return lines
+
+    line = REPLOT_CACHE[key]
+    x, y, style = parse_plot_args(*args, **options)
+    line.set_xdata(x)
+    line.set_ydata(y)
+
+def parse_plot_args(*args, **options):
+    """Parse the args the same way plt.plot does."""
+    x = None
+    y = None
+    style = None
+
+    if len(args) == 1:
+        y = args[0]
+    elif len(args) == 2:
+        if isinstance(args[1], str):
+            y, style = args
+        else:
+            x, y = args
+    elif len(args) == 3:
+        x, y, style = args
+
+    # check if style is provided as a kwarg; if so,
+    # it can clobber a positional style argument
+    if 'style' in options:
+        style = options['style']
+
+    return x, y, style
 
 
 def contour(df, **options):
@@ -828,7 +877,7 @@ class System(ModSimSeries):
         if len(args) == 0:
             super().__init__(list(kwargs.values()), index=kwargs)
         elif len(args) == 1:
-            super().__init__(*args)
+            super().__init__(*args, copy=True)
             self.set(**kwargs)
         else:
             msg = '__init__() takes at most one positional argument'
