@@ -142,9 +142,10 @@ def linrange(start=0, stop=None, step=1, **options):
     This function works best if the space between start and stop
     is divisible by step; otherwise the results might be surprising.
 
-    By default, the last value in the array is `stop` (at least approximately).
-    If you provide the keyword argument `endpoint=False`, the last value
-    in the array is `stop-step`.
+    By default, the last value in the array is `stop-step`
+    (at least approximately).
+    If you provide the keyword argument `endpoint=True`,
+    the last value in the array is `stop`.
 
     start: first value
     stop: last value
@@ -161,7 +162,7 @@ def linrange(start=0, stop=None, step=1, **options):
 
     # TODO: what breaks if we don't make the dtype float?
     #underride(options, endpoint=True, dtype=np.float64)
-    underride(options, endpoint=True)
+    underride(options, endpoint=False)
 
     # see if any of the arguments has units
     units = getattr(start, 'units', None)
@@ -197,29 +198,24 @@ def fit_leastsq(error_func, params, data, **options):
 
     # run leastsq
     #TODO: do we need to turn units off?
-    best_params, _, _, mesg, ier = leastsq(error_func, x0=params,
+    best_params, cov_x, infodict, mesg, ier = leastsq(error_func, x0=params,
                                            args=args, **options)
 
-    #TODO: check why logging.info is not visible
+    details = ModSimSeries(infodict)
+    details.set(cov_x=cov_x, mesg=mesg, ier=ier)
 
-    # check for errors
-    if ier in [1, 2, 3, 4]:
-        print("""modsim.py: scipy.optimize.leastsq ran successfully
-                 and returned the following message:\n""" + mesg)
-    else:
-        logging.error("""modsim.py: When I ran scipy.optimize.leastsq, something
-                         went wrong, and I got the following message:""")
-        raise Exception(mesg)
-
-    # return the best parameters
+    # if we got a Params object, we should return a Params object
     if isinstance(params, Params):
-        # if we got a Params object, we should return a Params object
         best_params = Params(Series(best_params, params.index))
-    return best_params
+
+    # return the best parameters and details
+    return best_params, details
 
 
 def min_bounded(min_func, bounds, *args, **options):
     """Finds the input value that minimizes `min_func`.
+
+    Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
     min_func: computes the function to be minimized
     bounds: sequence of two values, lower and upper bounds of the
@@ -227,9 +223,7 @@ def min_bounded(min_func, bounds, *args, **options):
     args: any additional positional arguments are passed to min_func
     options: any keyword arguments are passed as options to minimize_scalar
 
-    returns: OptimizeResult object
-             (see https://docs.scipy.org/doc/scipy/
-                  reference/generated/scipy.optimize.minimize_scalar.html)
+    returns: ModSimSeries object
     """
     # try:
     #     print(bounds[0])
@@ -246,15 +240,15 @@ def min_bounded(min_func, bounds, *args, **options):
 
     with units_off():
         res = minimize_scalar(min_func,
-                          bracket=bounds,
-                          bounds=bounds,
-                          args=args,
-                          method='bounded',
-                          options=options)
+                              bracket=bounds,
+                              bounds=bounds,
+                              args=args,
+                              method='bounded',
+                              options=options)
 
     if not res.success:
         msg = """scipy.optimize.minimize_scalar did not succeed.
-                 The message it returns is %s""" % res.message
+                 The message it returned is %s""" % res.message
         raise Exception(msg)
 
     return ModSimSeries(res)
@@ -263,15 +257,15 @@ def min_bounded(min_func, bounds, *args, **options):
 def max_bounded(max_func, bounds, *args, **options):
     """Finds the input value that maximizes `max_func`.
 
+    Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
+
     min_func: computes the function to be maximized
     bounds: sequence of two values, lower and upper bounds of the
             range to be searched
     args: any additional positional arguments are passed to max_func
     options: any keyword arguments are passed as options to minimize_scalar
 
-    returns: OptimizeResult object
-             (see https://docs.scipy.org/doc/scipy/
-                  reference/generated/scipy.optimize.minimize_scalar.html)
+    returns: ModSimSeries object
     """
     def min_func(*args):
         return -max_func(*args)
@@ -783,7 +777,7 @@ class ModSimSeries(pd.Series):
         See: https://github.com/pandas-dev/pandas/issues/16737
         """
         if args or kwargs:
-            #underride(options, dtype=np.float64)
+            underride(kwargs, copy=True)
             super().__init__(*args, **kwargs)
         else:
             super().__init__([], dtype=np.float64)
@@ -796,12 +790,12 @@ class ModSimSeries(pd.Series):
         df = pd.DataFrame(self.values, index=self.index, columns=['values'])
         return df._repr_html_()
 
-    def set(self, **options):
+    def set(self, **kwargs):
         """Uses keyword arguments to update the Series in place.
 
         Example: series.set(a=1, b=2)
         """
-        for name, value in options.items():
+        for name, value in kwargs.items():
             self[name] = value
 
     @property
@@ -870,7 +864,8 @@ class System(ModSimSeries):
 
         If there are no positional arguments, use kwargs.
 
-        If there is one positional argument, copy it.
+        If there is one positional argument, copy it and add
+        in the kwargs.
 
         More than one positional argument is an error.
         """
