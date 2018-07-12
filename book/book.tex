@@ -5678,7 +5678,44 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 \section{Something thermal}
 
-\section{Filter}
+\section{Low-Pass Filter}
+
+The following circuit diagram\footnote{From \url{https://en.wikipedia.org/wiki/File:RC_Divider.svg}} shows a low-pass filter built with one resistor and one capacitor.  
+
+\centerline{\includegraphics[height=1.3in]{figs/RC_Divider.pdf}}
+
+A ``filter" is a circuit takes a signal, $V_{in}$, as input and produces a signal, $V_{out}$, as output.  In this context, a ``signal" is a voltage that changes over time.
+
+A filter is ``low-pass" if it allows low-frequency signals to pass from $V_{in}$ to $V_{out}$ unchanged, but it reduces the amplitude of high-frequency signals.
+
+By applying the laws of circuit analysis, we can derive a differential equation that describes the behavior of this system.  By solving the differential equation, we can predict the effect of this circuit on any input signal.
+
+Suppose we are given $V_{in}$ and $V_{out}$ at a particular instant in time.  By Ohm's law, which is a simple model of the behavior of resistors, the instantaneous current through the resistor is:
+%
+\[ I_R = (V_{in} - V_{out}) / R \]
+%
+where $R$ is resistance in ohms (\si{\ohm}).
+
+Assuming that no current flows through the output of the circuit, Kirchhoff's current law implies that the current through the capacitor is:
+%
+\[ I_C = I_R \]
+%
+According to a simple model of the behavior of capacitors, current through the capacitor causes a change in the voltage across the capacitor:
+%
+\[ I_C = C \frac{d V_{out}}{dt} \]
+%
+where $C$ is capacitance in farads (\si{\farad}).
+
+Combining these equations yields a differential equation for $V_{out}$:
+%
+\[ \frac{d V_{out}}{dt} = \frac{V_{in} - V_{out}}{R C} \]
+%
+In the repository for this book, you will find a notebook, \py{filter.ipynb}, which contains starter code for this case study.   Follow the instructions to simulate the low-pass filter for input signals like this:
+%
+\[ V_{in}(t) = A \cos (2 \pi f t) \]
+%
+where $A$ is the amplitude of the input signal, say \SI{5}{\volt}, and $f$ is the frequency of the signal in \si{\hertz}.
+
 
 \section{Tree growth}
 
