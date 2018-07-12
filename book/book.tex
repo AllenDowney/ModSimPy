@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.1.2}
+\newcommand{\theversion}{2.1.4}
 
 
 %%%% Both LATEX and PLASTEX
@@ -286,7 +286,7 @@ available at \url{http://modsimpy.com/license}.
 
 \section*{Can modeling be taught?}
 
-These essential modeling skills --- abstraction, analysis, simulation, and validation --- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most schools they are not taught explicitly, and students get little practice.  That's the problem this book is meant to address.  
+The essential skills of modeling --- abstraction, analysis, simulation, and validation --- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most schools they are not taught explicitly, and students get little practice.  That's the problem this book is meant to address.  
 
 At Olin College, we use this book in a class called Modeling and Simulation, which all students take in their first semester.  My colleagues, John Geddes and Mark Somerville, and I developed this class and taught it for the first time in 2009.
 
@@ -294,7 +294,7 @@ It is based on our belief that modeling should be taught explicitly, early, and 
 
 If students are limited to the mathematical analysis they can do by hand, they are restricted to a small number of simple physical systems, like a projectile moving in a vacuum or a block on a frictionless plane.
 
-And they will only work with bad models; that is, models that are too simple for their purpose.  In nearly every mechanical system, air resistance and friction are essential features; if we ignore them, our predictions will be wrong and our designs won't work.
+And they will only work with bad models; that is, models that are too simple for their intended purpose.  In nearly every mechanical system, air resistance and friction are essential features; if we ignore them, our predictions will be wrong and our designs won't work.
 
 In most freshman physics classes, students don't make modeling decisions; sometimes they are not even aware of the decisions that have been made for them.  Our goal is to teach the entire modeling process and give students a chance to practice it.
 
@@ -361,13 +361,12 @@ I have tried to mitigate these problems by providing a library, called \py{modsi
 
 Some features in the \py{modsim} library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, and later.
 
-I encourage you to read the the \py{modsim} library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse engineering my designs.
+I encourage you to read the the \py{modsim} library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse engineering my design decisions.
 
 
 \section*{How much math and science do I need?} 
 
-I assume that you know what derivatives and integrals are, but that's about all.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.
-More importantly, you should understand what those concepts {\em mean};  but if you don't, this book might help you figure it out.
+I assume that you know what derivatives and integrals are, but that's about all.  In particular, you don't need to know (or remember) much about finding derivatives or integrals of functions analytically.  If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it\footnote{And if you noticed that those two questions answer each other, even better.}.  More importantly, you should understand what those concepts {\em mean}; but if you don't, this book might help you figure it out.
 
 \index{calculus}
 
@@ -526,7 +525,7 @@ Wood, Chris Lee, and Jason Woodard.
 
 \item I am grateful to Lisa Downey and Jason Woodard for their thoughtful and careful copy editing.
 
-
+%TODO: Add the summer 2018 folks
 
 % ENDCONTRIB
 
@@ -552,7 +551,7 @@ Wood, Chris Lee, and Jason Woodard.
 
 %\part{Modeling a bikeshare system}
 
-\chapter{Falling penny}
+\chapter{Modeling}
 \label{chap01}
 
 This book is about modeling and simulation of physical systems.  
@@ -1514,6 +1513,8 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 \chapter{Sweeping parameters}
 \label{chap04}
+
+%TODO: intro
 
 \section{Functions that return values}
 
@@ -2679,6 +2680,8 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Analysis}
 \label{chap09}
 
+%TODO: write an intro
+
 \section{Recurrence relations}
 
 The population models in the previous chapter and this one are simple enough that we didn't really need to run simulations.  We could have solved them mathematically.  For example, we wrote the constant growth model like this:
@@ -2824,7 +2827,7 @@ But there are several things we can do with analysis that are harder or impossib
 
 \begin{itemize}
 
-\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{quadratic}, we get the general result that $K=-\alpha/\beta$.
+\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{equilibrium}, we get the general result that $K=-\alpha/\beta$.
 
 \item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
 
@@ -2903,9 +2906,9 @@ SymPy defines many functions, and some of them conflict with functions defined i
 
 SymPy defines a \py{Symbol} object that represents symbolic variable names, functions, and other mathematical entities.
 
-\index{Symbol} object
+\index{Symbol object}
 
-SymPy provides a function called \py{symbols} that takes a string and returns a \py{Symbol} object.  So if we run this assignment:
+The \py{symbols} function takes a string and returns \py{Symbol} objects.  So if we run this assignment:
 
 \begin{python}
 t = symbols('t')
@@ -3054,7 +3057,7 @@ What I've been calling the constant growth model is more commonly called ``linea
 \index{exponential growth}
 \index{logistic growth}
 
-Before you go on, you might want to read the notebook for this chapter, \py{chap09.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+Before you go on, you might want to read the notebook for this chapter, \py{chap09sympy.ipynb}.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Case studies}
@@ -3068,7 +3071,7 @@ In Chapter~\ref{chap01} we used Pint to define units and perform calculations wi
 
 \begin{code}
 meter = UNITS.meter
-second = UNIT.second
+second = UNITS.second
 a = 9.8 * meter / second**2
 \end{code}
 
@@ -3241,7 +3244,9 @@ type(table2.columns)
 type(table2.values)
 \end{code}
 
-They type of \py{table2} is \py{DataFrame}.  The type of \py{table2.index} is \py{Int64Index};  The type of \py{table2.columns} is \py{Index}.  \py{Int64Index} and \py{Index} are similar to \py{Series}.
+The type of \py{table2} is \py{DataFrame}.  The type of \py{table2.index} is \py{Int64Index}, which is similar to a \py{Series}.
+
+The type of \py{table2.columns} is \py{Index}, which might seem strange, because ``the" index is the sequence of row labels.  But the sequence of column labels is also a kind of index.
 
 The type of \py{table2.values} is \py{ndarray}, which is the primary array type provided by NumPy; the name indicates that the array is ``n-dimensional"; that is, it can have an arbitrary number of dimensions.
 
@@ -3259,7 +3264,7 @@ def get_last_label(series):
 
 In brackets, the number \py{0} selects the first label; the number \py{-1} selects the last label.
 
-Several of the objects defined in \py{modsim} are modified versions of \py{Series} objects.  A \py{System} object is a \py{Series} where the labels are variables names; a \py{TimeSeries} object is a \py{Series} where the labels are times.
+Several of the objects defined in \py{modsim} are modified versions of \py{Series} objects.  \py{State} and \py{System} objects are \py{Series} where the labels are variables names.  A \py{TimeSeries} is a \py{Series} where the labels are times, and a \py{SweepSeries} is a \py{Series} where the labels are parameter values.
 
 Defining these objects wasn't necessary; we could do all the same things using \py{Series} objects.  But giving them different names makes the code easier to read and understand, and helps avoid certain kinds of errors (like getting two \py{Series} objects mixed up).
 
@@ -3267,7 +3272,7 @@ If you write simulations in Python in the future, you can continue using the obj
 
 \section{One queue or two?}
 
-This chapter presents two cases students that let you practice what you have learned so far.  The first case study is related to {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  
+This chapter presents two cases studies that let you practice what you have learned so far.  The first case study is related to {\bf queueing theory}, which is the study of systems that involve waiting in lines, also known as ``queues".  
 
 Suppose you are designing the checkout area for a new store.  There is enough room in the store for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that feeds both counters.
 
@@ -3283,9 +3288,9 @@ So you'd like to check whether the single line is really better and by how much.
 
 Figure~\ref{fig-queue} shows the three scenarios we'll consider.  As we did in the bike share model, we'll assume that a customer is equally likely to arrive during any time step.  I'll denote this probability using the Greek letter lambda, $\lambda$, or the variable name \py{lam}.  The value of $\lambda$ probably varies from day to day, so we'll have to consider a range of possibilities.
 
-Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they have the same probability of finishing up during each time step.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
+Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, always have the same probability of finishing during the next time step, regardless of how long they have been checking out.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
 
-If we choose $\mu=1/5$ per minute, the average time for each checkout will be 5 minutes, which is consistent with the data.
+If we choose $\mu=1/5$ per minute, the average time for each checkout will be 5 minutes, which is consistent with the data.  Most people takes less than 5 minutes, but a few take substantially longer, which is probably not a bad model of the distribution in real stores.
 
 Now we're ready to get started.  In the repository for this book, you'll find a notebook called \py{queue.ipynb} that contains some code to get you started and instructions.
 
@@ -3723,6 +3728,9 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Optimization}
 \label{chap12}
 
+%TODO: Write an intro
+
+
 \section{Metrics}
 \label{metrics}
 
@@ -4158,8 +4166,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Analysis} 
 \label{chap14}
 
-In the previous chapter...
-
+%TODO: Write an intro
 
 \section{Nondimensionalization}
 \label{nondim}
@@ -4373,10 +4380,12 @@ So far the systems we have studied have been physical in the sense that they exi
 
 \index{thermal system}
 
-\chapter{The coffee cooling problem}
+\chapter{Heat}
 \label{chap15}
 
-\section{The problem}
+%TODO: intro
+
+\section{The coffee cooling problem}
 
 The coffee cooling problem was discussed by Jearl Walker in {\it Scientific American} in 1977\footnote{Walker, ``The Amateur Scientist", {\it Scientific American}, Volume 237, Issue 5, November 1977.}; since then it has become a standard example of modeling and simulation.
 
@@ -4875,7 +4884,7 @@ and the particular solution where $T(0) = T_{init}$ is
 %
 \[ T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t) \]
 %
-You can see how I got this solution using SymPy in \py{chap14analysis.ipynb} in the repository for this book.  If you would like to see it done by hand, you can watch this video: \url{http://modsimpy.com/khan3}.
+You can see how I got this solution using SymPy in \py{chap16sympy.ipynb} in the repository for this book.  If you would like to see it done by hand, you can watch this video: \url{http://modsimpy.com/khan3}.
 
 \index{analysis}
 \index{SymPy}
@@ -5463,6 +5472,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Case studies}
 \label{chap19}
 
+%TODO: write an intro
 
 \section{Computational tools}
 
@@ -5670,11 +5680,14 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 \section{Filter}
 
+\section{Tree growth}
+
 
 
 
 
 \chapter{Projectiles}
+\label{chap20}
 
 So far the differential equations we've worked with have been {\bf first order}, which means they involve only first derivatives.   In this chapter, we turn our attention to second order ODEs, which can involve both first and second derivatives.  
 
@@ -5881,10 +5894,11 @@ The result is an array with a single value, \SI{8.818}{s}.
 Now, we could run the simulation again with \py{t_end = 8.818}, but there's a better way.
 
 \section{Events}
+\label{events}
 
-As an option, \py{run_ode_solver} can take an {\bf event function}, which can detect an ``event", like the penny hitting the sidewalk, and end the simulation.
+As an option, \py{run_ode_solver} can take an {\bf event function}, which detects an ``event", like the penny hitting the sidewalk, and ends the simulation.
 
-Event functions take the same parameters as slope functions, \py{state}, \py{t}, and \py{system}; and they return a value that passes through \py{0} when the event occurs.  Here's an event function that detects the penny hitting the sidewalk:
+Event functions take the same parameters as slope functions, \py{state}, \py{t}, and \py{system}.  They should return a value that passes through \py{0} when the event occurs.  Here's an event function that detects the penny hitting the sidewalk:
 
 \begin{python}
 def event_func(state, t, system):
@@ -5892,7 +5906,9 @@ def event_func(state, t, system):
     return y
 \end{python}
 
-All it does is return the height of the penny, \py{y}, which passes through \py{0} when the penny hits the sidewalk.  We pass the event function to \py{run_ode_solver} like this:
+The return value is the height of the penny, \py{y}, which passes through \py{0} when the penny hits the sidewalk.
+
+We pass the event function to \py{run_ode_solver} like this:
 
 \begin{python}
 results, details = run_ode_solver(system, slope_func,
@@ -5901,7 +5917,7 @@ results, details = run_ode_solver(system, slope_func,
 
 \py{events} can also be a sequence of event functions, if there is more than one event that might occur.
 
-\py{run_ode_solver} can use the event function to estimate the time of the event precisely using Brent's method (see \url{https://en.wikipedia.org/wiki/Brents_method}).
+\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{https://en.wikipedia.org/wiki/Brents_method}).
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap20.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -5909,6 +5925,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 
 \chapter{Air resistance}
+\label{chap21}
 
 In the previous chapter we simulated a penny falling in a vacuum, that is, without air resistance.  But the computational framework we used is very general; it is easy to add additional forces, including drag.
 
@@ -6052,19 +6069,24 @@ def slope_func(state, t, system):
 
 To compute total acceleration, we add accelerations due to gravity and drag. \py{g} is negated because it is in the direction of decreasing \py{y}, and \py{a_drag} is positive because it is in the direction of increasing \py{y}.  In the next chapter we will use \py{Vector} objects to keep track of the direction of forces and add them up in a less error-prone way.
 
-We can test the slope function like this:
+To stop the simulation when the penny hits the sidewalk, we'll use the event function from Section~\ref{events}:
 
 \begin{python}
-slope_func(system.init, 0, system)
+def event_func(state, t, system):
+    y, v = state
+    return y
 \end{python}
 
-And then run the simulation like this:
+Now we can run the simulation like this:
 
 \index{\py{run_ode_solver}}
 
 \begin{python}
-results, details = run_ode_solver(system, slope_func)
+results, details = run_ode_solver(system, slope_func,
+                       events=event_func, max_step=0.5*s)
 \end{python}
+
+The optional argument \py{max_step} determines the largest step size \py{run_ode_solver} can use.  Specifying \py{max_step} makes the simulation take longer, but it makes the results look better when plotted.  It has little or no effect on accuracy.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-fig02.pdf}}
@@ -6124,13 +6146,13 @@ def make_system(params):
     
     C_d = 2 * mass * g / (rho * area * v_term**2)
     init = State(y=y_attach, v=v_init)
-    t_end = 30 * s
+    t_end = 20 * s
 
     return System(params, C_d=C_d, 
                   init=init, t_end=t_end)
 \end{python}
 
-We can test it like this:
+We can run it like this:
 
 \begin{python}
 system = make_system(params)
@@ -6182,20 +6204,16 @@ def slope_func(state, t, system):
 
 \py{slope_func} uses \py{spring_force} and \py{drag_force} to compute forces, then divides by \py{mass} to get accelerations.
 
-We can test it like this:
-
-\begin{python}
-slope_func(system.init, 0, system)
-\end{python}
-
-And run the simulation like this:
+We can run the simulation like this:
 
 \begin{python}
 ts = linspace(0, system.t_end, 301)
-results, details = run_ode_solver(system, slope_func, t_eval=ts)
+results, details = run_ode_solver(system, slope_func, t_eval=ts,
+                                  max_step=0.3*s)
 \end{python}
 
-In this example I use \py{t_eval} to evaluate the results at equally-spaced time values.  Figure~\ref{chap09-fig03} shows the results.
+Again, I use \py{max_step} so the results look better when plotted.
+Figure~\ref{chap09-fig03} shows the results.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-fig03.pdf}}
@@ -6231,6 +6249,7 @@ In the notebook for this chapter, \py{chap21.ipynb}, you can finish this problem
 
 
 \chapter{Projectiles in 2-D}
+\label{chap22}
 
 In the previous chapter we modeled objects moving in one dimension, with and without drag.  Now let's move on to two dimensions, and baseball!
 
@@ -6459,28 +6478,50 @@ We already saw how \py{a_drag} is computed.  \py{a_grav} is a \py{Vector} with m
 Using vectors to represent forces and accelerations makes the code concise, readable, and less error-prone.  In particular, when we add \py{a_grav} and \py{a_drag}, the directions are likely to be correct, because they are encoded in the \py{Vector} objects.  And the units are certain to be correct, because otherwise Pint would report an error.
 \index{Pint}
 
-
 As always, we can test the slope function by running it with the initial conditions:
 
 \begin{python}
 slope_func(system.init, 0, system)
 \end{python}
 
+We can use an event function to stop the simulation when the ball hits the ground.
 
-\section{Trajectories}
+\begin{python}
+def event_func(state, t, system):
+    x, y, vx, vy = state
+    return y
+\end{python}
+
+The event function takes the same parameters as the slope function, and returns the y coordinate.  When the y coordinate passes through 0, the simulation stops.
 
 Now we're ready to run the simulation:
 
 \begin{python}
 ts = linspace(0, system.t_end, 101)
-results, details = run_ode_solver(system, slope_func, t_eval=ts)
+results, details = run_ode_solver(system, slope_func,
+                       events=event_func, max_step=0.2*s)
 \end{python}
 
-In this case I use the \py{t_eval} option to evaluate the solution at 101 evenly spaced points.
-
-The result is a \py{TimeFrame} object with one column for each of the state variables, \py{x}, \py{y}, \py{vx}, and \py{vy}.
+\py{results} is a \py{TimeFrame} object with one column for each of the state variables, \py{x}, \py{y}, \py{vx}, and \py{vy}.
 
 \index{TimeFrame object}
+
+We can get the flight time like this:
+
+\begin{python}
+flight_time = get_last_label(results) * s
+\end{python}
+
+And the final \py{x} coordinate like this:
+
+\begin{python}
+x_dist = get_last_value(results.x) * m
+\end{python}
+
+Notice that the results don't have units; if we want these values to have the correct units, we have to apply them.
+
+
+\section{Trajectories}
 
 We can plot the $x$ and $y$ components of position like this:
 
@@ -6517,43 +6558,11 @@ Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is ca
 
 A trajectory plot can be easier to interpret than a time series plot, because it shows what the motion of the projectile would look like (at least from one point of view).  Both plots can be useful, but don't get them mixed up!  If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.
 
-
-\section{Range finding}
-
-To compute the distance the ball travels in the air, we can use an event function to stop the simulation when the \py{y} coordinate passes through 0, and record the final \py{x} coordinate.  Here's the event function:
-
-\begin{python}
-def event_func(state, t, system):
-    x, y, vx, vy = state
-    return y
-\end{python}
-
-And here's how we run the simulation:
-
-\begin{python}
-results, details = run_ode_solver(system, slope_func, events=event_func)
-\end{python}
-
-Since we don't know exactly when the simulation will end, we generally don't use the \py{t_eval} option if we're using an event function.  The time steps in these results are not evenly spaced, so they don't look very good when plotted.
-
-But we can get the flight time like this:
-
-\begin{python}
-flight_time = get_last_label(results) * s
-\end{python}
-
-And the final \py{x} coordinate like this:
-
-\begin{python}
-x_dist = get_last_value(results.x) * m
-\end{python}
-
-Notice that the results don't have units; if we want these values to have the correct units, we have to apply them.
-
 Before you go on, you might want to read the notebook for this chapter, \py{chap22.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Optimization}
+\label{chap23}
 
 In the previous chapter we developed a model of the flight of a baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.
 
@@ -6703,11 +6712,7 @@ For these parameters, the optimal angle is \SI{41.1}{\degree}, which yields a ra
 
 \index{ModSimSeries}
 
-\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which you can read about at \url{http://modsimpy.com/minimize}).
 
-\index{\py{max_bounded}}
-\index{SciPy}
-\index{\py{minimize_scalar}}
 
 
 \section{Finishing off the problem}
@@ -6732,23 +6737,27 @@ If you enjoy this exercise, you might be interested in this paper: ``How to hit 
 
 
 \chapter{Rotation}
+\label{chap24}
 
-In this chapter we model systems that involve rotating objects.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others; and they may be stable when spinning around some axes but not others.  
+In this chapter we model systems that involve rotating objects.  In general, rotation is complicated:  in three dimensions, objects can rotate around three axes; objects are often easier to spin around some axes than others; and they may be stable when spinning around some axes but not others.
+
 \index{rotation}
 
 If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
 
 And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{http://modsimpy.com/precess}.
+
 \index{gyroscopic precession}
 
 In this chapter, we will not take on the physics of rotation in all its glory.  Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.  In that case, we can treat some vector quantities as if they were scalars (in the same way that we sometimes treat velocity as a scalar with an implicit direction).
+
 \index{scalar}
 
 This approach makes it possible to simulate and analyze many interesting systems, but you will also encounter systems that would be better approached with the more general toolkit.
 
-The fundamental ideas in this chapter are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
+The fundamental ideas in this chapter and the next are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
 
-As an exercise at the end of the chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{http://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
+At the end of the next chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{http://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
 
 
 
@@ -6756,6 +6765,7 @@ As an exercise at the end of the chapter, you will use these tools to simulate t
 \label{paper}
 
 As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a roll of toilet paper in the U.S. (see \url{http://modsimpy.com/paper}).
+
 \index{toilet paper}
 
 \begin{figure}
@@ -6767,6 +6777,7 @@ As a simple example of a system with rotation, we'll simulate the manufacture of
 Figure~\ref{paper_roll} shows a diagram of the system: $r$ represents the radius of the roll at a point in time.  Initially, $r$ is the radius of the cardboard core, $R_{min}$.  When the roll is complete, $r$ is $R_{max}$.
 
 I'll use $\theta$ to represent the total rotation of the roll in radians.  In the diagram, $d\theta$ represents a small increase in $\theta$, which corresponds to a distance along the circumference of the roll of $r~d\theta$.
+
 \index{radian}
 
 Finally, I'll use $y$ to represent the total length of paper that's been rolled.  Initially, $\theta=0$ and $y=0$.  For each small increase in $\theta$, there is a corresponding increase in $y$:
@@ -6790,8 +6801,10 @@ Finally, let's assume that $\theta$ increases at a constant rate of \SI{10}{\rad
 \[ \frac{d\theta}{dt} = 10  \]
 %
 This rate of change is called an {\bf angular velocity}.  Now we have a system of three differential equations we can use to simulate the system.
+
 \index{angular velocity}
 \index{differential equation}
+
 
 \section{Implementation}
 \label{papersim}
@@ -6805,44 +6818,46 @@ m = UNITS.meter
 s = UNITS.second
 \end{python}
 
-And create a \py{Condition} object with the parameters of the system:
-\index{Condition object}
+And create a \py{Params} object with the parameters of the system:
+
+\index{Params object}
 
 \begin{python}
-condition = Condition(Rmin = 0.02 * m,
-                      Rmax = 0.055 * m,
-                      L = 47 * m,
-                      duration = 130 * s)
+params = Params(Rmin = 0.02 * m,
+                Rmax = 0.055 * m,
+                L = 47 * m,
+                t_end = 130 * s)
 \end{python}
 
-\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper, and \py{duration} is the length of the simulation in time.
+\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper, and \py{t_end} is the length of the simulation in time.
 
-Then we use the \py{Condition} object to make a \py{System} object:
+Then we use the \py{Params} object to make a \py{System} object:
+
 \index{System object}
 \index{\py{make_system}}
 
 \begin{python}
-def make_system(condition):
-    unpack(condition)
+def make_system(params):
+    unpack(params)
     
     init = State(theta = 0 * radian,
                  y = 0 * m,
                  r = Rmin)
     
-    k = estimate_k(condition)
-    ts = linspace(0, duration, 101)
+    k = estimate_k(params)
     
-    return System(init=init, k=k, ts=ts)
+    return System(init=init, k=k, t_end=t_end)
 \end{python}
 
 The initial state contains three variables, \py{theta}, \py{y}, and \py{r}.
+
 \index{unpack}
 
 To get started, we'll estimate a reasonable value for \py{k}; then in Section~\ref{paper_analysis} we'll figure it out exactly.  Here's how we compute the estimate:
 
 \begin{python}
-def estimate_k(condition):
-    unpack(condition)
+def estimate_k(params):
+    unpack(params)
     
     Ravg = (Rmax + Rmin) / 2
     Cavg = 2 * pi * Ravg
@@ -6859,6 +6874,7 @@ def estimate_k(condition):
 Finally, \py{k} is the change in \py{r} for each radian of revolution.  For these parameters, \py{k} is about \py{2.8e-5} \si{\meter\per\radian}.
 
 Now we can use the differential equations from Section~\ref{paper} to write a slope function:
+
 \index{slope function}
 \index{Function!slope}
 
@@ -6874,13 +6890,24 @@ def slope_func(state, t, system):
     return omega, dydt, drdt
 \end{python}
 
-As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains the hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+
 \index{State object}
+
+We'd like to stop the simulation when the length of paper on the roll is \py{L}.  We can do that with an event function that passes through 0 when \py{y} equals \py{L}:
+
+\begin{python}
+def event_func(state, t, system):
+    theta, y, r = state
+    unpack(system)
+    return y - L
+\end{python}
 
 Now we can run the simulation like this:
 
 \begin{python}
-run_ode_solver(system, slope_func)
+results, details = run_ode_solver(system, slope_func,
+                       events=event_func, max_step=1*s)
 \end{python}
 
 \begin{figure}
@@ -6942,6 +6969,7 @@ Integrating both sides yields:
 \[ y(t) = \left[ k \omega t^2 / 2 + R_{min} t \right] \omega + C_3\]
 %
 So $y$ is a parabola, as you might have guessed.  With initial condition $y(0)=0$, we find $C_3=0$.
+
 \index{analysis}
 \index{integration}
 
@@ -6979,17 +7007,20 @@ k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2)           \label{eqn4}
 %
 Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.  In this case the estimate turns out to be exact.
 
+In the next chapter, we'll run the simulation the other way, unrolling the paper.
+
 Before you go on, you might want to read the notebook for this chapter, \py{chap24.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Torque}
+\label{chap25}
 
-In the previous chapter...
+In the previous chapter we modeled a scenario with constant angular velocity.  In this chapter we make it more complicated, applying constant force to a roll, yielding increasing angular acceleration.
 
 
-\section{Toilet paper}
+\section{Kittens}
 
-Now that we've rolled up the paper, let's unroll it.  Specifically, let's simulate a kitten unrolling toilet paper.  As reference material, see this video: \url{http://modsimpy.com/kitten}.
+Let's simulate a kitten unrolling toilet paper.  As reference material, see this video: \url{http://modsimpy.com/kitten}.
 
 \index{kitten}
 
@@ -7051,23 +7082,24 @@ However, for most simple shapes, people have already done the calculations; you 
 
 \section{Unrolling}
 
-Let's work on simulating the kitten unrolling the toilet paper.  Here's the \py{Condition} object with the parameters we'll need:
+Let's get back to the kitten unrolling the toilet paper.  Here's the \py{Params} object with the parameters we'll need:
 
-\index{Condition object}
+\index{Params object}
 
 \begin{python}
-condition = Condition(Rmin = 0.02 * m,
-                      Rmax = 0.055 * m,
-                      L = 47 * m,
-                      Mcore = 15e-3 * kg,
-                      Mroll = 215e-3 * kg,
-                      tension = 2e-4 * N,
-                      duration = 180 * s)
+params = Params(Rmin = 0.02 * m,
+                Rmax = 0.055 * m,
+                Mcore = 15e-3 * kg,
+                Mroll = 215e-3 * kg,
+                L = 47 * m,
+                tension = 2e-4 * N,
+                t_end = 180 * s)
 \end{python}
 
 As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L} is the length of the paper.  \py{Mcore} is the mass of the cardboard tube at the center of the roll; \py{Mroll} is the mass of the paper.  \py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
 
 At \url{http://modsimpy.com/moment} you can find moments of inertia for simple geometric shapes.  I'll model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
+
 \index{cylinder}
 
 The moment of inertia for a thin shell is just $m r^2$, where $m$ is the mass and $r$ is the radius of the shell.
@@ -7079,6 +7111,7 @@ For a thick-walled tube the moment of inertia is
 where $\rho$ is the density of the material, $h$ is the height of the tube, $r_2$ is the outer diameter, and $r_1$ is the inner diameter.
 
 Since the outer diameter changes as the kitten unrolls the paper, we have to compute the moment of inertia, at each point in time, as a function of the current radius, \py{r}.  Here's the function that does it:
+
 \index{unpack}
 
 \begin{python}
@@ -7090,12 +7123,13 @@ def moment_of_inertia(r, system):
 \end{python}
 
 \py{rho_h} is the product of density and height, $\rho h$, which is the mass per area.  \py{rho_h} is computed in \py{make_system}:
+
 \index{density}
 \index{\py{make_system}}
 
 \begin{python}
-def make_system(condition):
-    unpack(condition)
+def make_system(params):
+    unpack(params)
     
     init = State(theta = 0 * radian,
                  omega = 0 * radian/s,
@@ -7104,15 +7138,14 @@ def make_system(condition):
     area = pi * (Rmax**2 - Rmin**2)
     rho_h = Mroll / area
     k = (Rmax**2 - Rmin**2) / 2 / L / radian    
-    ts = linspace(0, duration, 101)
     
     return System(init=init, k=k, rho_h=rho_h,
                   Rmin=Rmin, Rmax=Rmax,
                   Mcore=Mcore, Mroll=Mroll, 
-                  ts=ts)
+                  t_end=t_end)
 \end{python}
 
-\py{make_system} also computes \py{k}, using Equation~\ref{eqn4}.  Now we can write the slope function:
+\py{make_system} also computes \py{k} using Equation~\ref{eqn4}.  Now we can write the slope function:
 
 \index{slope function}
 \index{function!slope}
@@ -7135,14 +7168,15 @@ This slope function is similar to the previous one (Section~\ref{papersim}), wit
 
 \begin{itemize}
 
-\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, by Equation~\ref{eqn3}.
+\item \py{r} is no longer part of the \py{State} object.  Instead, we compute \py{r} at each time step, based on the current value of \py{y}, using Equation~\ref{eqn3}.
+
 \index{time step}
 
 \item Because \py{r} changes over time, we have to compute moment of inertia, \py{I}, at each time step\footnote{Actually, this is more of a problem than I have made it seem.  In the same way that $F = m a$ only applies when $m$ is constant, $\tau = I \alpha$ only applies when $I$ is constant.  When $I$ varies, we usually have to use a more general version of Newton's law.  However, in this example, mass and moment of inertia vary together in a way that makes the simple approach work out.}.
 
 \item Angular velocity, \py{omega}, is no longer constant.  Instead, we compute torque, \py{tau}, and angular acceleration, \py{alpha}, at each time step.
 
-\item I quietly changed the definition of \py{theta} so positive values of \py{theta} correspond to clockwise rotation, so \py{dydt = -r * omega}; that is, positive values of \py{omega} yield decreasing values of \py{y}, the amount of paper still on the roll.
+\item I changed the definition of \py{theta} so positive values of \py{theta} correspond to clockwise rotation, so \py{dydt = -r * omega}; that is, positive values of \py{omega} yield decreasing values of \py{y}, the amount of paper still on the roll.
 
 \end{itemize} 
 
@@ -7159,6 +7193,7 @@ Now we're ready to run the simulation.  Figure~\ref{chap11-fig02} shows the resu
 \begin{itemize}
 
 \item Angular velocity, \py{omega}, increases almost linearly at first, as constant force yields almost constant torque.  Then, as the radius decreases, the lever arm decreases, yielding lower torque, but moment of inertia decreases even more, yielding higher angular acceleration.
+
 \index{angular velocity}
 
 \item The final value of \py{omega} is \SI{7.4}{\radian\per\second}, which is close to one revolution per second, so that seems plausible.
@@ -7167,6 +7202,7 @@ Now we're ready to run the simulation.  Figure~\ref{chap11-fig02} shows the resu
 88 revolutions.  
 
 \item The final value of \py{y} is \SI{21}{\meter} of paper left on the roll, which means the kitten pulled off \SI{26}{\meter} in two minutes.  That doesn't seem impossible, although it is based on a level of consistency and focus that is unlikely in a kitten.
+
 \index{kitten}
 
 \end{itemize}
@@ -7177,6 +7213,7 @@ This model yields results that seem reasonable, but remember that I chose the fo
 \section{Simulating a yo-yo}
 
 Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
+
 \index{yo-yo}
 \index{torque}
 \index{lever arm}
@@ -7188,6 +7225,7 @@ Suppose you are holding a yo-yo with a length of string wound around its axle, a
 \end{figure}
 
 Figure~\ref{yoyo} is a diagram of the forces on the yo-yo and the resulting torque.  The outer shaded area shows the body of the yo-yo.  The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.
+
 \index{system of equations}
 
 In this model, we can't figure out the linear and angular acceleration independently; we have to solve a system of equations:
@@ -7214,6 +7252,7 @@ Which we can write more concisely:
 \[ a = -r \alpha \]
 %
 This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
+
 \index{rolling}
 
 Because of the way we've set up the problem, $y$ actually has two meanings: it represents the length of the rolled string and the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ represents acceleration in the length of the rolled string and the height of the yo-yo.
@@ -7229,6 +7268,7 @@ Because gravity acts on the center of mass, it creates no torque, so the only to
 \[ \sum \tau = T r = I \alpha \]
 %
 Positive (upward) tension yields positive (counter-clockwise) angular acceleration.
+
 \index{SymPy}
 
 Now we have three equations in three unknowns, $T$, $a$, and $\alpha$, with $I$, $m$, $g$, and $r$ as known quantities.  It is simple enough to solve these equations by hand, but we can also get SymPy to do it for us:
@@ -7250,24 +7290,150 @@ a      &= -m g r^2 / I^* \\
 \end{align*}
 %
 where $I^*$ is the augmented moment of inertia, $I + m r^2$.
-
 To simulate the system, we don't really need $T$; we can plug $a$ and $\alpha$ directly into the slope function.
 
-At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter, \py{chap24.ipynb}, you will have a chance to finish off the exercise.  For instructions on downloading and running the code, see Section~\ref{code}.
+You can see how I got these results in \py{chap25sympy.ipynb}, in the repository for this book.
+
+At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter, \py{chap25.ipynb}, you will have a chance to finish off the exercise.  For instructions on downloading and running the code, see Section~\ref{code}.
+
 
 \chapter{Case studies}
+\label{chap26}
 
 \section{Computational tools}
 
+In Chapter~\ref{chap20} we rewrote a second order differential equation as a system of first order equations, and solved them using a slope function like this:
+
+\begin{python}
+def slope_func(state, t, system):
+    y, v = state
+    unpack(system)    
+
+    dydt = v
+    dvdt = -g
+    
+    return dydt, dvdt
+\end{python}
+
+We used the \py{crossings} function to search for zero-crossings in the simulation results.
+
+Then we used an event function like this:
+
+\begin{python}
+def event_func(state, t, system):
+    y, v = state
+    return y
+\end{python}
+
+To stop the simulation when an event occurs.  Notice that the event function takes the same parameters as the slope function.
+
+In Chapter~\ref{chap21} we developed a model of air resistance and use a  \py{Params} object, which is a collection of parameters:
+
+\begin{python}
+params = Params(height = 381 * m,
+                v_init = 0 * m / s,
+                g = 9.8 * m/s**2,
+                mass = 2.5e-3 * kg,
+                diameter = 19e-3 * m,
+                rho = 1.2 * kg/m**3,
+                v_term = 18 * m / s)
+\end{python}
+
+And we saw a new way to create a \py{System} object, copying the variables from a \py{Params} object and adding or changing variables:
+
+\begin{python}
+    return System(params, area=area, C_d=C_d, 
+                  init=init, t_end=t_end)
+\end{python}
+
+We also used the \py{gradient} function to estimate acceleration, given velocity:
+
+\begin{python}
+a = gradient(results.v)
+\end{python}
+
+Chapter~\ref{chap22} introduces \py{Vector} objects, which can represent vector quantities, like position, velocity, force, and acceleration, in 2 or 3 dimensions.
+
+\begin{python}
+A = Vector(3, 4) * m
+\end{python}
+
+It also introduces trajectory plots, which show the path of an object in two dimensions:
+
+\begin{python}
+plot(results.x, results.y, label='trajectory')
+\end{python}
+
+In Chapter~\ref{chap23} we define a range function that computes the distance a baseball flies as a function of launch angle and velocity:
+
+\begin{python}
+def range_func(angle, params):  
+    params = Params(params, angle=angle)
+    system = make_system(params)
+    results, details = run_ode_solver(system, slope_func, 
+                                      events=event_func)
+    x_dist = get_last_value(results.x) * m
+    return x_dist
+\end{python}
+
+Then we use \py{max_bounded} to find the launch angle that maximizes range:
+
+\begin{python}
+res = max_bounded(range_func, [0, 90], params)
+\end{python}
+
+Chapter~\ref{chap24} and Chapter~\ref{chap25} introduce the physics of rotation and torque, but no new computational tools.
+
+With that, you have a reasonably complete toolkit for computational modeling and simulation.
+
+
+
+
 \section{Under the hood}
 
+The \py{crossings} function uses \py{InterpolatedUnivariateSpline} from SciPy, which provides a \py{roots} function that finds zero-crossings.  It uses a cubic spline to interpolate between the time steps of the ODE solution.
+
+\index{crossings}
+
+The \py{Params} object is identical to the \py{System} object in all but name, and based on a Pandas \py{Series}.  I sometimes find it useful to use \py{Params} objects to create \py{System} objects, but it is not necessary.
+
+\index{Params}
+
+The \py{Vector} object is a \py{Quantity}, as defined by Pint, so it normally has units.  It contains a NumPy array that contains the coordinates.  So most vector arithmetic is really array arithmetic.
+
+\index{Vector}
+
+\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read more about at \url{http://modsimpy.com/minimize}).
+
+\index{\py{max_bounded}}
+\index{SciPy}
+\index{\py{minimize_scalar}}
+\index{Brent's method}
+
+
+\section{Bungee dunk revisited}
+
+In Chapter~\ref{chap21}, we simulated a bungee jump with a model that took into account gravity, air resistance, and the spring force of the bungee cord, but we ignored the weight of the cord.
+
+It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
+
+At \url{http://iopscience.iop.org/article/10.1088/0031-9120/45/1/007} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains the phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
+
+$a = g + \frac{\mu v^2/2}{\mu(L+y) + 2L}$ 
+
+where $g$ is acceleration due to gravity, $L$ is the length of the cord, and $\mu$ is the ratio of the mass of the cord, $m$, and the mass of the jumper $M$.
+
+Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
+
+
 \section{Spiderman}
+
+
 
 \section{Rigid pendulum}
 
 \section{LRC circuit}
 
-\section{Bungee with momentum}
 
 % Pendulum:
 
