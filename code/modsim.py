@@ -182,13 +182,27 @@ def linrange(start=0, stop=None, step=1, **options):
 
 
 def magnitude(x):
-    """Returns the magnitude of a Quantity.
+    """Returns the magnitude of a Quantity or number.
 
     x: Quantity or number
 
     returns: number
     """
     return x.magnitude if isinstance(x, Quantity) else x
+
+
+def require_units(x, units):
+    """Apply units to `x`, if necessary.
+
+    x: Quantity or number
+    units: Pint Units object
+
+    returns: Quantity
+    """
+    if isinstance(x, Quantity):
+        return x.to(units)
+    else:
+        return Quantity(x, units)
 
 
 def fit_leastsq(error_func, params, data, **options):
