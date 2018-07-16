@@ -205,10 +205,12 @@ def require_units(x, units):
         return Quantity(x, units)
 
 
-def fit_leastsq(error_func, params, data, **options):
+def fit_leastsq(error_func, params, *args, **options):
     """Find the parameters that yield the best fit for the data.
 
     `params` can be a sequence, array, or Series
+
+    Whatever arguments are provided are passed along to `error_func`
 
     error_func: function that computes a sequence of errors
     params: initial guess for the best parameters
@@ -217,9 +219,6 @@ def fit_leastsq(error_func, params, data, **options):
     """
     # if any of the params are quantities, strip the units
     x0 = [magnitude(x) for x in params]
-
-    # to pass `data` to `leastsq`, we have to put it in a tuple
-    args = (data,)
 
     # override `full_output` so we get a message if something goes wrong
     options['full_output'] = True
