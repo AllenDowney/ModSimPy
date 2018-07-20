@@ -191,6 +191,16 @@ def magnitude(x):
     return x.magnitude if isinstance(x, Quantity) else x
 
 
+def units(x):
+    """Returns the units of a Quantity or number.
+
+    x: Quantity or number
+
+    returns: Unit object or 1
+    """
+    return x.units if isinstance(x, Quantity) else 1
+
+
 def require_units(x, units):
     """Apply units to `x`, if necessary.
 
@@ -457,11 +467,6 @@ def fsolve(func, x0, *args, **options):
 
     returns: solution as an array
     """
-    # when fsolve calls func, it always provides an array,
-    # even if there is only one element; so for consistency,
-    # we convert x0 to an array
-    #x0 = np.asarray(x0)
-
     # make sure we can run the given function with x0
     try:
         func(x0, *args)
@@ -761,22 +766,6 @@ def subplot(nrows, ncols, plot_number, **options):
     fig.set_figwidth(width)
     fig.set_figheight(height)
 
-
-def ensure_units_array(value, units):
-    res = np.zeros_like(value)
-    for i in range(len(value)):
-        res[i] = Quantity(value[i], units[i])
-    return res
-
-
-def ensure_units(value, units):
-    if isinstance(value, np.ndarray):
-        return ensure_units_array(value, units)
-    else:
-        try:
-            return Quantity(value, units)
-        except TypeError:
-            return value
 
 class ModSimSeries(pd.Series):
     """Modified version of a Pandas Series,
@@ -1084,8 +1073,15 @@ class _Vector(Quantity):
         return self.mag, self.angle
 
     def hat(self):
-        """Returns the unit vector in the direction of self."""
-        return self / self.mag
+        """Returns the unit vector in the direction of self.
+
+        The result should have no units.
+        """
+        mag = self.mag
+        if mag.magnitude == 0:
+            return self.magnitude
+        else:
+            return self / mag
 
     def perp(self):
         """Returns a perpendicular Vector (rotated left).
@@ -1153,6 +1149,104 @@ def Vector(*args, units=None):
         found_units = units
 
     return _Vector(args, found_units)
+
+
+## Vector functions (should work with Vectors or arrays)
+
+def vector_mag(v):
+    """Returns the magnitude with units."""
+    return np.sqrt(np.dot(v, v)) * units(v)
+
+def vector_mag2(v):
+    """Returns the magnitude squared with units."""
+    return np.dot(v, v) * units(v)
+
+def vector_angle(v):
+    """Returns the angle between self and the positive x axis.
+
+    Only works with 2-D vectors.
+    """
+    assert len(v) == 2
+    x, y = v
+    return np.arctan2(y, x)
+
+def vector_polar(v):
+    """Returns magnitude and angle."""
+    return vector_mag(v), vector_angle(v)
+
+def vector_hat(v):
+    """Returns the unit vector in the direction of self.
+
+    The result should have no units.
+
+    Returns: Vector or array
+    """
+    # get the size of the vector
+    mag = vector_mag(v)
+
+    # check if the magnitude of the Quantity is 0
+    if magnitude(mag) == 0:
+        return magnitude(mag)
+    else:
+        return v / mag
+
+def vector_perp(v):
+    """Returns a perpendicular Vector (rotated left).
+
+    Only works with 2-D Vectors.
+
+    returns: Vector
+    """
+    assert len(v) == 2
+    x, y = v
+    return Vector(-y, x)
+
+def vector_dot(v, w):
+    """Returns the dot product of v and w."""
+    return np.dot(v, w) * units(v) * units(w)
+
+def vector_cross(v, w):
+    """Returns the cross product of v and w."""
+    return np.cross(v, w) * units(v) * units(w)
+
+def vector_proj(v, w):
+    """Returns the projection of v onto w.
+
+    Results has the units of v, but that might not make sense unless
+    v and w have the same units.
+
+    returns: Vector with direction of w and units of v.
+    """
+    w_hat = vector_hat(w)
+    return vector_dot(v, w_hat) * w_hat
+
+def scalar_proj(v, w):
+    """Returns the scalar projection of v onto w.
+
+    Which is the magnitude of the projection of v onto w.
+
+    Results has the units of v, but that might not make sense unless
+    v and w have the same units.
+
+    returns: scalar with units of v.
+    """
+    return vector_dot(v, vector_hat(w))
+
+def vector_dist(v, w):
+    """Euclidean distance from v to w, with units."""
+    if isinstance(v, list):
+        v = np.asarray(v)
+    return vector_mag(v-w)
+
+def vector_diff_angle(v, w):
+    """Angular difference between two vectors, in radians.
+    """
+    if len(v) == 2:
+        return vector_angle(v) - vector_angle(w)
+    else:
+        #TODO: see http://www.euclideanspace.com/maths/algebra/
+        # vectors/angleBetween/
+        raise NotImplementedError()
 
 
 def plot_segment(A, B, **options):
