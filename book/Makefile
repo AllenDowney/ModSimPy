@@ -72,5 +72,9 @@ oreilly:
 clean:
 	rm -f *~ *.aux *.log *.dvi *.idx *.ilg *.ind *.toc
 
+split:
+	cp book.pdf ModSimPy.pdf
+	rm -f ModSimPyChapters/*
+	~/Downloads/sejda-console-3.2.51/bin/sejda-console splitbybookmarks -f ModSimPy.pdf -l 1 -o ModSimPyChapters
 
 
