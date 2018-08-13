@@ -2671,7 +2671,7 @@ And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the resu
 
 \index{demography}
 
-Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the results from this model, simple as it is, are not entirely unreasonable.
+Nevertheless, their projections are qualitatively similar to ours, and theirs differ from each other almost as much as they differ from ours.  So the results from this model, simple as it is, are not entirely crazy.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap08.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -4510,7 +4510,7 @@ To give you a sense of how much energy that is, if you were able to harness all 
 
 \index{Mount Everest}
 
-Assuming that the cup has less mass than the coffee, and is made from a material with lower a specific heat, we can ignore the thermal mass of the cup.
+Assuming that the cup has less mass than the coffee, and is made from a material with lower specific heat, we can ignore the thermal mass of the cup.
 For a cup with substantial thermal mass, we might consider a model that computes the temperature of coffee and cup separately.
 
 
@@ -4619,7 +4619,7 @@ Like previous update functions, this one takes a \py{State} object, a time, and 
 Now if we run 
 
 \begin{python}
-update(init, 0, coffee)
+update_func(init, 0, coffee)
 \end{python}
 
 we see that the temperature after one minute is \SI{89.3}{\celsius}, so the temperature drops by about \SI{0.7}{\celsius\per\minute}, at least for this value of \py{r}.
@@ -4839,9 +4839,9 @@ The first line is an \py{assert} statement, which is a way of checking for error
 \index{assert statement}
 \index{statement!assert}
 
-The next two statements compute the total volume of the mixture and its temperature.  Fianlly, \py{mix} makes a new \py{System} object and returns it.
+The next two statements compute the total volume of the mixture and its temperature.  Finally, \py{mix} makes a new \py{System} object and returns it.
 
-This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption to we might want to revisit.
+This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption we might want to revisit.
 
 
 \section{Mix first or last?}
@@ -4858,7 +4858,7 @@ milk = make_system(T_init=5, t_end=30,
 milk_results = run_simulation(milk, update_func)
 \end{python}
 
-The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.8}{\celsius}.  Then we mix them:
+The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.8}{\celsius}.  Then I'll mix them:
 
 \begin{python}
 mix_last = mix(coffee, milk)
@@ -5187,7 +5187,7 @@ The result is an array of interpolated values for equally-spaced values of \py{t
 
 To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find the parameters that generate the series that best fits the data.
 
-Taking advantage of estimates from prior work, I'll start with these values:
+Taking advantage of estimates from prior work, we'll start with these values:
 
 \begin{python}
 params = Params(G0 = 290,
@@ -5220,7 +5220,6 @@ def make_system(params, data):
                   t_0=t_0, t_end=t_end, dt=2)
 \end{python}
 
-
 \py{make_system} uses the measurements at \py{t=0} as the basal levels, \py{Gb} and \py{Ib}.
 It gets \py{t_0} and \py{t_end} from the data.
 And it uses the parameter \py{G0} as the initial value for \py{G}.
@@ -5245,9 +5244,7 @@ def update_func(state, t, system):
     return State(G=G, X=X)
 \end{python}
 
-As usual, the update function takes a \py{State} object, a time, and a \py{System} object as parameters.
-The first line \py{update} uses multiple assignment to extract the current values of \py{G} and \py{X}.
-The second line uses \py{unpack} so we can read the system variables without using the dot operator.
+As usual, the update function takes a \py{State} object, a time, and a \py{System} object as parameters.  The first line \py{update} uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} so we can read the system variables without using the dot operator.
 
 \index{unpack}
 
@@ -5345,7 +5342,7 @@ The ``IVP" in \py{solve_ivp} stands for ``initial value problem", which is the t
 \index{ordinary differential equation}
 \index{initial value problem}
 
-\py{scipy.integrate.solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}, specifically RKF45 (see \url{https://en.wikipedia.org/wiki/Runge-Kutta-Fehlberg_method}).  This method is {\bf adaptive}, which means to chooses the step size automatically, using small steps when necessary, to limit errors, and large steps when possible, to be efficient.
+\py{scipy.integrate.solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}, specifically RKF45 (see \url{https://en.wikipedia.org/wiki/Runge-Kutta-Fehlberg_method}).  This method is {\bf adaptive}, which means it chooses the step size automatically, using small steps when necessary, to limit errors, and large steps when possible, to be efficient.
 
 To use \py{run_ode_solver}, we have to provide a ``slope function", like this:
 
@@ -5376,7 +5373,7 @@ results, details = run_ode_solver(system, slope_func,
                                   t_eval=data.index)
 \end{python}
 
-\py{run_ode_solver} is similar to \py{run_simulation}: it takes a \py{System} object and a slope function as parameters, and returns a \py{TimeFrame} as a result.  \py{results} has with one row for each time step and one column for each state variable.  In this example, the rows are the values from \py{data.index}; the columns are the state variables, \py{G} and \py{X}.
+\py{run_ode_solver} is similar to \py{run_simulation}: it takes a \py{System} object and a slope function as parameters, and returns a \py{TimeFrame} as a result.  \py{results} has one row for each time step and one column for each state variable.  In this example, the rows are the values from \py{data.index}; the columns are the state variables, \py{G} and \py{X}.
  
 \index{TimeFrame object}
 
@@ -5444,7 +5441,7 @@ Now, to do the actual minimization, we run \py{fit_leastsq}:
 best_params, details = fit_leastsq(error_func, params, data)
 \end{python}
 
-The first return value is a \py{Params} object with the parameters that yields the best fit for the data.  The second return value is a \py{ModSimSeries} object with more information.
+The first return value is a \py{Params} object with the parameters that yield the best fit for the data.  The second return value is a \py{ModSimSeries} object with more information.
 
 
 \section{Interpreting parameters}
@@ -7440,6 +7437,8 @@ Before we go on, I'll store the result in a global variable.  Because \py{res} i
 
 \section{Estimating force}
 
+% TODO: Make this an exercise
+
 Now that we know the torque due to friction, we can compute the force needed to rotate the turntable through the remaining angle, that is, from \SI{1.5}{\radian} to \SI{3.14}{\radian}.
         
 Here's an error function that takes force and returns the offset from
@@ -7469,89 +7468,7 @@ In the notebook for this chapter, you can run this simulation with different val
 This problem also lends itself to analysis.  As a challenge, see if you can solve it without doing any simulation.
 
 
-\section{Simulating a yo-yo}
 
-Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
-
-\index{yo-yo}
-\index{torque}
-\index{lever arm}
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/yoyo.pdf}}
-\caption{Diagram of a yo-yo showing forces due to gravity and tension in the string, the lever arm of tension, and the resulting torque.}
-\label{yoyo}
-\end{figure}
-
-Figure~\ref{yoyo} is a diagram of the forces on the yo-yo and the resulting torque.  The outer shaded area shows the body of the yo-yo.  The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.
-
-\index{system of equations}
-
-In this model, we can't figure out the linear and angular acceleration independently; we have to solve a system of equations:
-%
-\begin{align*}
-\sum F &= m a \\
-\sum \tau &= I \alpha
-\end{align*}
-%
-where the summations indicate that we are adding up forces and torques.
-
-As in the previous examples, linear and angular velocity are related because of the way the string unrolls:
-%
-\[ \frac{dy}{dt} = -r \frac{d \theta}{dt} \]
-%
-In this example, the linear and angular accelerations have opposite sign.  As the yo-yo rotates counter-clockwise, $\theta$ increases and $y$, which is the length of the rolled part of the string, decreases.
-
-Taking the derivative of both sides yields a similar relationship between linear and angular acceleration:
-%
-\[ \frac{d^2 y}{dt^2} = -r \frac{d^2 \theta}{dt^2} \]
-%
-Which we can write more concisely:
-%
-\[ a = -r \alpha \]
-%
-This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
-
-\index{rolling}
-
-Because of the way we've set up the problem, $y$ actually has two meanings: it represents the length of the rolled string and the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ represents acceleration in the length of the rolled string and the height of the yo-yo.
-
-We can compute the acceleration of the yo-yo by adding up the linear forces:
-%
-\[ \sum F = T - mg = ma \]
-%
-Where $T$ is positive because the tension force points up, and $mg$ is negative because gravity points down.
-
-Because gravity acts on the center of mass, it creates no torque, so the only torque is due to tension:
-%
-\[ \sum \tau = T r = I \alpha \]
-%
-Positive (upward) tension yields positive (counter-clockwise) angular acceleration.
-
-\index{SymPy}
-
-Now we have three equations in three unknowns, $T$, $a$, and $\alpha$, with $I$, $m$, $g$, and $r$ as known quantities.  It is simple enough to solve these equations by hand, but we can also get SymPy to do it for us:
-
-\begin{python}
-T, a, alpha, I, m, g, r = symbols('T a alpha I m g r')
-eq1 = Eq(a, -r * alpha)
-eq2 = Eq(T - m*g, m * a)
-eq3 = Eq(T * r, I * alpha)
-soln = solve([eq1, eq2, eq3], [T, a, alpha])
-\end{python}
-
-The results are
-%
-\begin{align*}
-T      &= m g I / I^*   \\
-a      &= -m g r^2 / I^* \\
-\alpha &= m g r / I^*    \\
-\end{align*}
-%
-where $I^*$ is the augmented moment of inertia, $I + m r^2$.
-To simulate the system, we don't really need $T$; we can plug $a$ and $\alpha$ directly into the slope function.
-
-You can see how I got these results in \py{chap25sympy.ipynb}, in the repository for this book.
 
 At this point you have everything you need to simulate the descent of a yo-yo.  In the notebook for this chapter, \py{chap25.ipynb}, you will have a chance to finish off the exercise.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -7835,6 +7752,90 @@ Now we're ready to run the simulation.  Figure~\ref{chap11-fig02} shows the resu
 
 This model yields results that seem reasonable, but remember that I chose the force applied by the kitten arbitrarily, and the model ignores friction between the paper roll and the axle.  This example is not meant to be particularly serious, but it is good preparation for the next problem, which is a little more interesting.
 
+
+\section{Simulating a yo-yo}
+
+Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary.  As gravity accelerates the yo-yo downward, tension in the string exerts a force upward.  Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.
+
+\index{yo-yo}
+\index{torque}
+\index{lever arm}
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/yoyo.pdf}}
+\caption{Diagram of a yo-yo showing forces due to gravity and tension in the string, the lever arm of tension, and the resulting torque.}
+\label{yoyo}
+\end{figure}
+
+Figure~\ref{yoyo} is a diagram of the forces on the yo-yo and the resulting torque.  The outer shaded area shows the body of the yo-yo.  The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.
+
+\index{system of equations}
+
+In this model, we can't figure out the linear and angular acceleration independently; we have to solve a system of equations:
+%
+\begin{align*}
+\sum F &= m a \\
+\sum \tau &= I \alpha
+\end{align*}
+%
+where the summations indicate that we are adding up forces and torques.
+
+As in the previous examples, linear and angular velocity are related because of the way the string unrolls:
+%
+\[ \frac{dy}{dt} = -r \frac{d \theta}{dt} \]
+%
+In this example, the linear and angular accelerations have opposite sign.  As the yo-yo rotates counter-clockwise, $\theta$ increases and $y$, which is the length of the rolled part of the string, decreases.
+
+Taking the derivative of both sides yields a similar relationship between linear and angular acceleration:
+%
+\[ \frac{d^2 y}{dt^2} = -r \frac{d^2 \theta}{dt^2} \]
+%
+Which we can write more concisely:
+%
+\[ a = -r \alpha \]
+%
+This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
+
+\index{rolling}
+
+Because of the way we've set up the problem, $y$ actually has two meanings: it represents the length of the rolled string and the height of the yo-yo, which decreases as the yo-yo falls.  Similarly, $a$ represents acceleration in the length of the rolled string and the height of the yo-yo.
+
+We can compute the acceleration of the yo-yo by adding up the linear forces:
+%
+\[ \sum F = T - mg = ma \]
+%
+Where $T$ is positive because the tension force points up, and $mg$ is negative because gravity points down.
+
+Because gravity acts on the center of mass, it creates no torque, so the only torque is due to tension:
+%
+\[ \sum \tau = T r = I \alpha \]
+%
+Positive (upward) tension yields positive (counter-clockwise) angular acceleration.
+
+\index{SymPy}
+
+Now we have three equations in three unknowns, $T$, $a$, and $\alpha$, with $I$, $m$, $g$, and $r$ as known quantities.  It is simple enough to solve these equations by hand, but we can also get SymPy to do it for us:
+
+\begin{python}
+T, a, alpha, I, m, g, r = symbols('T a alpha I m g r')
+eq1 = Eq(a, -r * alpha)
+eq2 = Eq(T - m*g, m * a)
+eq3 = Eq(T * r, I * alpha)
+soln = solve([eq1, eq2, eq3], [T, a, alpha])
+\end{python}
+
+The results are
+%
+\begin{align*}
+T      &= m g I / I^*   \\
+a      &= -m g r^2 / I^* \\
+\alpha &= m g r / I^*    \\
+\end{align*}
+%
+where $I^*$ is the augmented moment of inertia, $I + m r^2$.
+To simulate the system, we don't really need $T$; we can plug $a$ and $\alpha$ directly into the slope function.
+
+You can see how I got these results in \py{chap25sympy.ipynb}, in the repository for this book.
 
 %\section{Rigid pendulum}
 
