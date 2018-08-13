@@ -7128,8 +7128,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Torque}
 \label{chap25}
 
-In the previous chapter we modeled a scenario with constant angular velocity.  In this chapter we make it (slightly) more complex; we'll model a scenario with constant angular acceleration.
-
+In the previous chapter we modeled a scenario with constant angular velocity.  In this chapter we make it more complex; we'll model a teapot on a turntable, revolving with constant angular acceleration, and a yo-yo on a string, rotating with increasing angular acceleration.
 
 \section{Angular acceleration}
 
@@ -7187,12 +7186,19 @@ supported by low-friction bearings that allow them to turn easily and
 glide. However, they can be heavy, especially when they are loaded with
 food, so they have a high moment of inertia.
 
+\index{teapot}
+\index{turntable}
+
 Suppose I am sitting at a table with a pot of tea on the turntable
 directly in front of me, and the person sitting directly opposite asks
 me to pass the tea. I push on the edge of the turntable with \SI{1}{\newton} of force until it has turned \SI{0.5}{\radian}, then let go. The turntable glides
 until it comes to a stop \SI{1.5}{\radian} from the starting position. How
 much force should I apply for a second push so the teapot glides to a
 stop directly opposite me?
+
+\index{force}
+\index{Newton}
+\index{friction}
 
 I'll answer this question in these steps:
 
@@ -7218,7 +7224,7 @@ Our simulation will use the following parameters:
   the turntable.
 \end{enumerate}
 
-Here's a \texttt{Params} object with these values
+Here's a \py{Params} object with these values
 
 \begin{python}
 params = Params(radius_disk=0.5*m,
@@ -7230,7 +7236,9 @@ params = Params(radius_disk=0.5*m,
                 theta_end=0.5*radian)
 \end{python}
 
-\texttt{make\_system} creates the initial state, \texttt{init}, and
+\index{Params object}
+
+\py{make_system} creates the initial state, \py{init}, and
 computes the total moment of inertia for the turntable and the teapot.
 
 \begin{python}
@@ -7244,22 +7252,26 @@ def make_system(params):
     
     return System(params, init=init, I=I_disk+I_pot, t_end=10*s)
 \end{python}
-        
+
+\index{make_system}
+
 \py{theta} represents the initial angle of the table, in \si{\radian}; \py{omega} represents the angular velocity in \si{\radian\per\second}.
 
 \py{I_disk} is the moment of inertia of the turntable, which is based on the moment of inertia for a horizontal disk revolving around a vertical axis through its center:
-
+%
 \[ I_{disk} = m r^2 / 2 \]
-
+%
 \py{I_pot} is the moment of inertia of the teapot, which I treat as a point mass with:
-
+%
 \[ I_{point} = m r^2 \]
-
+%
 Now we can make a \py{System} object:
 
 \begin{python}
 system1 = make_system(params)
 \end{python}
+
+\index{System object}
 
 Here's a slope that takes the current state, which contains angle and angular velocity, and returns the derivatives, angular velocity and angular acceleration:
 
@@ -7274,33 +7286,38 @@ def slope_func(state, t, system):
     return omega, alpha 
 \end{python}
 
+\index{slope function}
+
 In this scenario, the force I apply to the turntable is always perpendicular to the lever arm, so $\sin \theta = 1$ and the torque due to force is $\tau = r F$.
 
 In a more detailed model, I might quantify force due to friction and the moment arm of that force, but that's not really necessary; instead, I chose to quantify torque due to friction, leaving out the details.
 
+\index{friction}
+
 Now we are ready to run the simulation, but first there's a problem we have to address.
 
 When I stop pushing on the turntable, the angular acceleration changes
-abruptly. We could implement the slope function with an \texttt{if}
-statement that checks the value of \texttt{theta} and sets
-\texttt{force} accordingly. And for a coarse model like this one, that
+abruptly. We could implement the slope function with an \py{if}
+statement that checks the value of \py{theta} and sets
+\py{force} accordingly. And for a coarse model like this one, that
 might be fine. But we will get more accurate results if we simulate the
 system in two phases:
 
 \begin{enumerate}
 \item
   During the first phase, force is constant, and we run until
-  \texttt{theta} is 0.5 radians.
+  \py{theta} is 0.5 radians.
 \item
-  During the second phase, force is 0, and we run until \texttt{omega}
+  During the second phase, force is 0, and we run until \py{omega}
   is 0.
 \end{enumerate}
 
 Then we can combine the results of the two phases into a single
-\texttt{TimeFrame}.
+\py{TimeFrame}.
 
+\index{two-phase simulation}
 
-Here's the event function I'll use for Phase 1; it stops the simulation when \texttt{theta} reaches \texttt{theta\_end}, which is when I stop pushing:
+Here's the event function I'll use for Phase 1; it stops the simulation when \py{theta} reaches \py{theta_end}, which is when I stop pushing:
 
 \begin{python}
 def event_func1(state, t, system):
@@ -7315,6 +7332,9 @@ Now we can run the first phase.
 results1, details1 = run_ode_solver(system1, slope_func,
                          events=event_func1, max_step=0.1*s)
 \end{python}
+
+\index{run_ode_solver}
+\index{max_step}
 
 Again, I specify \py{max_step} so the results look smoother when I plot them, at the cost of some extra computation.
 
@@ -7333,7 +7353,10 @@ theta, omega = get_last_value(results1)
 init2 = State(theta=theta*radian, omega=omega*radian/s)
 \end{python}
 
-Now we can make a \texttt{System} object for Phase 2, with the initial state from Phase 1, and with \texttt{force=0}.
+Now we can make a \py{System} object for Phase 2, with the initial state from Phase 1, and with \py{force=0}.
+
+\index{get_last_label}
+\index{get_last_value}
 
 \begin{python}
 system2 = System(system1, t_0=t_0, init=init2, force=0)
@@ -7354,8 +7377,11 @@ results2, details2 = run_ode_solver(system2, slope_func,
                          events=event_func2, max_step=0.1*s)
 \end{python}
 
-Pandas provides \texttt{combine\_first}, which combines
-\texttt{results1} and \texttt{results2}.
+Pandas provides \py{combine_first}, which combines
+\py{results1} and \py{results2}.
+
+\index{Pandas}
+\index{combine_first}
 
 \begin{python}
 results = results1.combine_first(results2)
@@ -7369,6 +7395,8 @@ In the next section, we'll use this simulation to estimate the torque due to fri
 \section{Estimating friction}
 
 Let's take the code from the previous section and wrap it in a function.
+
+\index{function}
 
 \begin{python}
 def run_two_phases(force, torque_friction, params):
@@ -7397,6 +7425,8 @@ def run_two_phases(force, torque_friction, params):
 
 Now we can use \py{run_two_phases} to write an error function we can use, with \py{fsolve}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
 
+\index{error function}
+
 \begin{python}
 def error_func1(torque_friction, params):
     force = 1
@@ -7406,7 +7436,9 @@ def error_func1(torque_friction, params):
     return theta_final - 1.5
 \end{python}
 
-But before we call \py{solve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
+But before we call \py{fsolve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
+
+\index{fsolve}
 
 However, now that we have a working simulation, and some confidence that it is correct, it is less important to carry units through the computation.
 
@@ -7416,10 +7448,14 @@ We can drop them by creating a new \py{Params} object with the same values and n
 params_nodim = remove_units(params)
 \end{python}
 
+\index{remove_units}
+
 The rest of the code works without modification, in part because I designed it to keep almost all of the units in one place.
 
-Now we can use \texttt{fsolve} to estimate torque due to friction.
+Now we can use \py{fsolve} to estimate torque due to friction.
 
+\index{torque}
+\index{friction}
 
 \begin{python}
 guess = 0.2
@@ -7427,7 +7463,10 @@ res = fsolve(error_func1, guess, params_nodim)
 \end{python}
 
 The result is \SI{0.166}{\newton\meter}, a little less than the initial guess.
-          
+
+\index{global variable}
+\index{variable!global}
+
 Before we go on, I'll store the result in a global variable.  Because \py{res} is an array, we have to selected the first (and only) element:
 
 \begin{python}
@@ -7440,7 +7479,10 @@ Before we go on, I'll store the result in a global variable.  Because \py{res} i
 % TODO: Make this an exercise
 
 Now that we know the torque due to friction, we can compute the force needed to rotate the turntable through the remaining angle, that is, from \SI{1.5}{\radian} to \SI{3.14}{\radian}.
-        
+
+\index{force}
+\index{error function}
+
 Here's an error function that takes force and returns the offset from
 the remaining angle.  Notice that this function uses the global value of \py{torque_friction}.
 
@@ -7454,6 +7496,8 @@ def error_func2(force, params):
 \end{python}
     
 Now we can run \py{fsolve} again.  This time \py{guess} is a hypothetical value for \py{force}, not \py{torque_friction}:
+
+\index{fsolve}
 
 \begin{python}
 guess = 1
