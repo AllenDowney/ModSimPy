@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.2.5}
+\newcommand{\theversion}{2.2.4}
 
 
 %%%% Both LATEX and PLASTEX
@@ -447,7 +447,7 @@ Before you download these files, I suggest you copy my repository on GitHub, whi
 
 Use a browser to view the homepage of my repository at \url{https://github.com/AllenDowney/ModSimPy}.   You should see a gray button in the upper right that says {\sf Fork}.  If you press it, GitHub will create a copy of my repository that belongs to you.
 
-Now, the best way to download the files is to use a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Windows, macOS, and Linux at \url{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}. 
+Now, the best way to download the files is to use a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Windows, macOS, and Linux at \url{https://modsimpy.com/getgit}. 
 
 In Windows, I suggest you accept the options recommended by the installer, with two exceptions:
 
@@ -1149,7 +1149,7 @@ results.mean()
 \end{python}
 
 %TODO: shorten URL
-You can read the documentation of \py{Series} at \url{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html}.
+You can read the documentation of \py{Series} at \url{https://modsimpy.com/series}.
 
 \index{Pandas}
 \index{Series}
@@ -1221,7 +1221,7 @@ As an example, we'll review the bikeshare model from the previous chapter, consi
 
 \section{Iterative modeling}
 
-The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the model from the previous chapters.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
+The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the code from the previous chapter, which you can view at \url{https://modsimpy.com/chap01}.  This code is a representation of the model.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
 
 Here are some of the differences on my list:
 
@@ -1802,7 +1802,7 @@ In this chapter and the next, we use tools from the previous chapters to explain
 
 \index{prediction}
 
-For background on world population growth, watch this video from the American Museum of Natural History \url{https://www.youtube.com/watch?v=PUwmA3Q0_OE}.
+For background on world population growth, watch this video from the American Museum of Natural History \url{https://modsimpy.com/human}.
 
 \index{American Museum of Natural History}
 
@@ -2144,7 +2144,7 @@ def plot_results(census, un, timeseries, title):
 \index{plot}
 \index{decorate}
 
-The \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://matplotlib.org/users/colors.html}.
+The \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://modsimpy.com/color}.
 
 \index{Pyplot}
 \index{color}
@@ -3309,7 +3309,7 @@ You should take my instructions as suggestions; if you want to try something dif
 
 \section{Tree growth}
 
-This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom, available from \url{https://www.cfr.washington.edu/research.smc/working_papers/smc_working_paper_1.pdf}.
+This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom, available from \url{https://modsimpy.com/trees}.
 
 It provides ``site index curves", which are curves that show the expected height of the tallest tree in a stand of Douglas firs as a function of age, for a stand where the trees are the same age.
 
@@ -5338,7 +5338,7 @@ The ``IVP" in \py{solve_ivp} stands for ``initial value problem", which is the t
 \index{ordinary differential equation}
 \index{initial value problem}
 
-\py{scipy.integrate.solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}, specifically RKF45 (see \url{https://en.wikipedia.org/wiki/Runge-Kutta-Fehlberg_method}).  This method is {\bf adaptive}, which means it chooses the step size automatically, using small steps when necessary, to limit errors, and large steps when possible, to be efficient.
+\py{scipy.integrate.solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}, specifically RKF45 (see \url{https://modsimpy.com/runge}).  This method is {\bf adaptive}, which means it chooses the step size automatically, using small steps when necessary, to limit errors, and large steps when possible, to be efficient.
 
 To use \py{run_ode_solver}, we have to provide a ``slope function", like this:
 
@@ -5737,7 +5737,7 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 \section{Low-Pass Filter}
 
-The following circuit diagram\footnote{From \url{https://en.wikipedia.org/wiki/File:RC_Divider.svg}} shows a low-pass filter built with one resistor and one capacitor.  
+The following circuit diagram\footnote{From \url{https://modsimpy.com/divider}} shows a low-pass filter built with one resistor and one capacitor.  
 
 \centerline{\includegraphics[height=1.3in]{figs/RC_Divider.pdf}}
 
@@ -5778,9 +5778,9 @@ In the repository for this book, you will find a notebook, \py{filter.ipynb}, wh
 
 \section{Thermal behavior of a wall}
 
-This case study is based on a paper by Gori, et~al\footnote{Gori, Marincioni, Biddulph, Elwell, ``Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces", {\it Energy and Buildings}, Volume 135, pages 398-409, \url{https://www.sciencedirect.com/science/article/pii/S0378778816313056}.
+This case study is based on a paper by Gori, et~al\footnote{Gori, Marincioni, Biddulph, Elwell, ``Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces", {\it Energy and Buildings}, Volume 135, pages 398-409, \url{https://modsimpy.com/wall2}.
     
-The authors put their paper under a Creative Commons license, and make their data available at \url{http://discovery.ucl.ac.uk/1526521}.  I thank them for their commitment to open, reproducible science, which made this case study possible.} that models the thermal behavior of a brick wall, with the goal of understanding the ``performance gap between the expected energy use of buildings and their measured energy use".
+The authors put their paper under a Creative Commons license, and make their data available at \url{https://modsimpy.com/wall }.  I thank them for their commitment to open, reproducible science, which made this case study possible.} that models the thermal behavior of a brick wall, with the goal of understanding the ``performance gap between the expected energy use of buildings and their measured energy use".
 
 The following figure shows the scenario and their model of the wall:
 
@@ -6029,7 +6029,7 @@ results, details = run_ode_solver(system, slope_func,
 
 \py{events} can also be a sequence of event functions, if there is more than one event that might occur.
 
-\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{https://en.wikipedia.org/wiki/Brents_method}).
+\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{https://modsimpy.com/brent}).
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap20.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -6216,7 +6216,7 @@ In the notebook for this chapter, you'll have a chance to extend this model.
 \section{Bungee jumping}
 \label{bungee}
 
-Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{https://www.youtube.com/watch?v=UBf7WC19lpw}.
+Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{https://modsimpy.com/dunk}.
 
 Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
 
@@ -6226,7 +6226,7 @@ Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  W
 
 \item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
 
-\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{https://en.wikipedia.org/wiki/Hookes_law}. 
+\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{https://modsimpy.com/hooke}. 
 
 \item The mass of the jumper is \SI{75}{\kilogram}.
 
@@ -6846,7 +6846,7 @@ In the notebook for this chapter, \py{chap22.ipynb}, you'll have to chance to fi
 
 The notebook provides some additional hints, but at this point you should have everything you need.  Good luck!
 
-If you enjoy this exercise, you might be interested in this paper: ``How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories", by Sawicki, Hubbard, and Stronge, at \url{https://aapt.scitation.org/doi/abs/10.1119/1.1604384}.
+If you enjoy this exercise, you might be interested in this paper: ``How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories", by Sawicki, Hubbard, and Stronge, at \url{https://modsimpy.com/runs}.
 
 
 \chapter{Rotation}
@@ -7176,7 +7176,7 @@ Fortunately, in a system where all rotation and torque happens around a single a
 
 For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
-However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{https://en.wikipedia.org/wiki/List_of_moments_of_inertia}.
+However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{https://modsimpy.com/moment}.
 
 
 \section{Teapots and turntables}
@@ -7594,13 +7594,13 @@ In Chapter~\ref{chap21}, we simulated a bungee jump with a model that took into 
 
 It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
-At \url{https://iopscience.iop.org/article/10.1088/0031-9120/45/1/007} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
+At \url{https://modsimpy.com/bungee} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
 %
 \[ a = g + \frac{\mu v^2/2}{\mu(L+y) + 2L} \] 
 %
 where $g$ is acceleration due to gravity, $L$ is the length of the cord, and $\mu$ is the ratio of the mass of the cord, $m$, and the mass of the jumper, $M$.
 
-If you don't believe that their model is correct, this video might convince you: \url{https://www.youtube.com/watch?v=X-QFAB0gEtE}.
+If you don't believe that their model is correct, this video might convince you: \url{https://modsimpy.com/drop}.
 
 Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
 
@@ -7667,7 +7667,7 @@ We'll use the following parameters:
 
 \begin{enumerate}
 
-\item According to the Spider-Man Wiki\footnote{\url{https://spiderman.wikia.com/wiki/Peter_Parker_(Earth-616)}}, Spider-Man weighs \SI{76}{\kg}.
+\item According to the Spider-Man Wiki\footnote{\url{https://modsimpy.com/spider}}, Spider-Man weighs \SI{76}{\kg}.
 
 \item
   Let's assume his terminal velocity is \SI{60}{\meter\per\second}.
