@@ -193,6 +193,19 @@ def magnitude(x):
     return x.magnitude if isinstance(x, Quantity) else x
 
 
+def magnitudes(x):
+    """Returns the magnitude of a Quantity or number, or sequence.
+
+    x: Quantity or number, or sequence
+
+    returns: number
+    """
+    try:
+        return [magnitude(elt) for elt in x]
+    except TypeError:           # not iterable
+        return magnitude(x)
+
+
 def units(x):
     """Returns the units of a Quantity or number.
 
@@ -644,8 +657,8 @@ def plot(*args, **options):
         x = y.index
         y = y.values
 
-    x = [magnitude(elt) for elt in x]
-    y = [magnitude(elt) for elt in y]
+    x = magnitudes(x)
+    y = magnitudes(y)
     underride(options, linewidth=3, alpha=0.6)
 
     if style is not None:
