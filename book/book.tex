@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.2.4}
+\newcommand{\theversion}{2.2.7}
 
 
 %%%% Both LATEX and PLASTEX
@@ -524,7 +524,8 @@ Wood, Chris Lee, and Jason Woodard.
 
 \item I am grateful to Lisa Downey and Jason Woodard for their thoughtful and careful copy editing.
 
-%TODO: Add the summer 2018 folks
+\item Thanks to Alessandra Ferzoco, Erhardt Graeff, Emily Tow,
+Kelsey Houston-Edwards, Linda Vanasupa, Matt Neal, Joanne Pratt, and Steve Matsumoto for their helpful suggestions.
 
 % ENDCONTRIB
 
@@ -1106,7 +1107,7 @@ which moves one bike at a time from Olin to Wellesley.
 
 When we run a simulation, we usually want to save the results for later analysis.  The \py{modsim} library provides a \py{TimeSeries} object for this purpose.  A \py{TimeSeries} contains a sequence of time stamps and a corresponding sequence of values.  In this example, the time stamps are integers representing minutes, and the values are the number of bikes at one location.
 
-%TODO: index modsim library
+%TODO: index modsim library functions
 \index{modsim library}
 \index{TimeSeries}
 
@@ -1148,7 +1149,6 @@ When the loop exits, \py{results} contains 10 time stamps, from 0 through 9, and
 results.mean()
 \end{python}
 
-%TODO: shorten URL
 You can read the documentation of \py{Series} at \url{https://modsimpy.com/series}.
 
 \index{Pandas}
@@ -1200,8 +1200,6 @@ Figure~\ref{chap01-fig01} shows the result.
 \index{plot}
 \index{decorate}
 
-%TODO: replace matplotlib with pyplot
-
 Before you go on, you might want to read the notebook for this chapter, \py{chap02.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
@@ -1221,7 +1219,7 @@ As an example, we'll review the bikeshare model from the previous chapter, consi
 
 \section{Iterative modeling}
 
-The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the code from the previous chapter, which you can view at \url{https://modsimpy.com/chap01}.  This code is a representation of the model.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
+The model we have so far is simple, but it is based on unrealistic assumptions.  Before you go on, take a minute to review the model from the previous chapters.  What assumptions is it based on?  Make a list of ways this model might be unrealistic; that is, what are the differences between the model and the real world?
 
 Here are some of the differences on my list:
 
@@ -1512,7 +1510,10 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Sweeping parameters}
 \label{chap04}
 
-%TODO: intro
+In the previous chapter we defined metrics that quantify the performance of bike sharing this system.  In this chapter we see how those metrics depend on the parameters of the system, like the arrival rate of customers at bike stations.
+
+We also discuss a program development strategy, called incremental development, that might help you write programs faster and spend less time debugging.
+
 
 \section{Functions that return values}
 
@@ -1923,7 +1924,7 @@ plot(un, '--', label='UN DESA')
 \end{python}
 
 
-The next two lines plot the \py{Series} objects.  The {\bf format strings} \py{':'} and \py{'--'} indicate dotted and dashed lines.  For more about format strings in Pyplot, see \url{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html}.
+The next two lines plot the \py{Series} objects.  The {\bf format strings} \py{':'} and \py{'--'} indicate dotted and dashed lines.  For more about format strings in Pyplot, see \url{https://modsimpy.com/plot}.
 
 \index{format string}
 \index{Pyplot}
@@ -2677,7 +2678,8 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Analysis}
 \label{chap09}
 
-%TODO: write an intro
+In this chapter we express the models from previous chapters as difference equations and differential equations, solve the equations, and derive the functional forms of the solutions.  We also discuss the complementary roles of mathematical analysis and simulation.
+
 
 \section{Recurrence relations}
 
@@ -3989,6 +3991,12 @@ Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has littl
 
 \section{Optimization} 
 
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig06.pdf}}
+\caption{Fraction of the population infected as a function of the number of doses.}
+\label{chap05-fig06}
+\end{figure} 
+
 Let's put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
 
 \index{optimization}
@@ -4037,12 +4045,6 @@ def sweep_doses(dose_array):
 \end{python}
 
 For each number of doses, we compute the fraction of students we can immunize, \py{fraction} and the remaining budget we can spend on the campaign, \py{spending}.  Then we run the simulation with those quantities and store the number of infections.
-
-\begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig06.pdf}}
-\caption{Fraction of the population infected as a function of the number of doses.}
-\label{chap05-fig06}
-\end{figure} 
 
 Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
 
@@ -4204,7 +4206,7 @@ for gamma in gamma_array:
 \label{chap06-fig02}
 \end{figure}
 
-Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even low a contact rate (\py{beta}) results in an epidemic.
+Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even a low contact rate (\py{beta}) results in an epidemic.
 
 When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  In fact, there is.  In the next two chapters I demonstrate it by running simulations, then derive it by analysis.
 
@@ -4336,7 +4338,9 @@ In the same way we divided the contact rate by the infection rate to get the dim
 %
 \[ \frac{di}{ds} = -1 + \frac{1}{cs} \]
 %
-Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  We can multiply both sides of the equation by $ds$:
+Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  From that relationship, we can derive an equation that relates $c$ to the final value of $S$.  In theory, this equation makes it possible to infer $c$ by observing the course of an epidemic.
+
+Here's how the derivation goes.  We multiply both sides of the previous equation by $ds$:
 %
 \[ di = \left( -1 + \frac{1}{cs} \right) ds \]
 %
@@ -4358,7 +4362,7 @@ Since $\log 1 = 0$, we get $q = 1$.
 
 \newcommand{\sinf}{s_{\infty}}
 
-Now, at the end of the epidemic, let's assume that $i(\infty) = 0$ and $s(\infty)$ is an unknown quantity $\sinf$.  Now we have:
+Now, at the end of the epidemic, let's assume that $i(\infty) = 0$, and $s(\infty)$ is an unknown quantity, $\sinf$.  Now we have:
 %
 \[ q = 1 = 0 + \sinf - \frac{1}{c} \log \sinf \]
 %
@@ -4366,14 +4370,19 @@ Solving for $c$, we get
 %
 \[ c = \frac{\log \sinf}{\sinf - 1} \]
 %
-If we create a range of values for $\sinf$
+By relating $c$ and $\sinf$, this equation makes it possible to estimate $c$ based on data, and possibly predict the behavior of future epidemics.
+
+\section{Analysis and simulation}
+
+Let's compare this analytic result to the results from simulation.
+I'll create an array of values for $\sinf$
 \index{linspace}
 
 \begin{python}
 s_inf_array = linspace(0.0001, 0.9999, 31)
 \end{python}
 
-we can compute the corresponding values of $c$:
+And compute the corresponding values of $c$:
 
 \begin{python}
 c_array = log(s_inf_array) / (s_inf_array - 1)
@@ -4389,9 +4398,6 @@ frac_infected_series = Series(frac_infected, index=c_array)
 \end{python}
 
 Recall from Section~\ref{dataframe} that a \py{Series} object contains an index and a corresponding sequence of values.  In this case, the index is \py{c_array} and the values are from \py{frac_infected}.
-
-
-\section{Analysis and simulation}
 
 Now we can plot the results:
 
@@ -4421,7 +4427,7 @@ Well, at least in theory.  In practice, it might not work very well, because of 
 
 On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is quite flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything like 90\% of the population.
 
-In summary, the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
+So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap14.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -4429,14 +4435,14 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 %\part{Modeling thermal systems}
 
-So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In the next few chapters, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
 
-\index{thermal system}
 
 \chapter{Heat}
 \label{chap15}
 
-%TODO: intro
+So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about.  In the next few chapters, we'll do some physics, starting with {\bf thermal systems}, that is, systems where the temperature of objects changes as heat transfers from one to another.
+
+\index{thermal system}
 
 \section{The coffee cooling problem}
 
@@ -4451,7 +4457,7 @@ Here is my version of the problem:
 Suppose I stop on the way to work to pick up a cup of coffee, which I take with milk.  Assuming that I want the coffee to be as hot as possible when I arrive at work, should I add the milk at the coffee shop, wait until I get to work, or add the milk at some point in between?
 \end{quote}
 
-To help answer this question, I made a trial run with the milk and coffee in separate containers and took some measurements\footnote{This is fiction.  I usually drink tea, and I bike to work.}:
+To help answer this question, I made a trial run with the milk and coffee in separate containers and took some measurements\footnote{This is fiction.  I usually drink tea and bike to work.}:
 
 \begin{itemize}
 
@@ -4713,8 +4719,8 @@ SciPy provides a method called \py{fsolve} that finds the roots of non-linear eq
 %
 where {\bf root} means a value of $x$ that makes $f(x)=0$.  Because of the way I wrote the polynomial, we can see that if $x=1$, the first factor is 0; if $x=2$, the second factor is 0; and if $x=3$, the third factor is 0, so those are the roots.
 
+\index{\py{fsolve}}
 \index{root}
-\index{fsolve}
 
 But usually it's not that easy.  In that case \py{fsolve} can help.  First, we have to write a function that evaluates $f$:
 
@@ -4865,8 +4871,10 @@ After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough
 To find out, I'll create new objects for the coffee and milk:
 
 \begin{python}
-coffee = make_system(T_init=90, r=r_coffee, volume=300, t_end=30)
-milk = make_system(T_init=5, r=r_milk, volume=50, t_end=30)
+coffee = make_system(T_init=90, r=r_coffee, 
+                     volume=300, t_end=30)
+milk = make_system(T_init=5, r=r_milk, 
+                   volume=50, t_end=30)
 \end{python}
 
 Then mix them and simulate 30 minutes:
@@ -5128,7 +5136,7 @@ data = pd.read_csv('data/glucose_insulin.csv',
 \index{concentration}
 
 \begin{figure}
-\centerline{\includegraphics[width=3in]{figs/chap08-fig01.pdf}}
+\centerline{\includegraphics[width=3.5in]{figs/chap08-fig01.pdf}}
 \caption{Glucose and insulin concentrations measured by FSIGT.}
 \label{chap08-fig01}
 \end{figure}
@@ -5283,7 +5291,7 @@ results = run_simulation(system, update_func)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[width=3in]{figs/chap08-fig03.pdf}}
+\centerline{\includegraphics[width=3.5in]{figs/chap08-fig03.pdf}}
 \caption{Results from simulation of the glucose minimal model.}
 \label{chap08-fig03}
 \end{figure}
@@ -5329,7 +5337,9 @@ This method, evaluating derivatives at discrete time steps and assuming that the
 
 \index{Euler's method}
 
-Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations.  Rather than implement these methods ourselves, we will use functions from SciPy.  The \py{modsim} library provides a function called \py{run_ode_solver}, which is a wrapper for \py{scipy.integrate.solve_ivp}.
+Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations.  Rather than implement these methods ourselves, we will use functions from SciPy.  The \py{modsim} library provides a function called \py{run_ode_solver}, which uses the SciPy function \py{solve_ivp}.
+
+\index{SciPy}
 
 The ``ODE" in \py{run_ode_solver} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  
 
@@ -5338,7 +5348,7 @@ The ``IVP" in \py{solve_ivp} stands for ``initial value problem", which is the t
 \index{ordinary differential equation}
 \index{initial value problem}
 
-\py{scipy.integrate.solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}, specifically RKF45 (see \url{https://modsimpy.com/runge}).  This method is {\bf adaptive}, which means it chooses the step size automatically, using small steps when necessary, to limit errors, and large steps when possible, to be efficient.
+\py{solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}.  These methods are {\bf adaptive}; that is, they choose the step size automatically, using small steps when necessary to limit errors, and large steps when possible to be efficient.
 
 To use \py{run_ode_solver}, we have to provide a ``slope function", like this:
 
@@ -5373,13 +5383,11 @@ results, details = run_ode_solver(system, slope_func,
  
 \index{TimeFrame object}
 
-\py{run_ode_solver} also returns \py{details}, which is a \py{ModSimSeries} with information about how the solver ran, including a success code, a diagnostic message, and other information.
+\py{run_ode_solver} also returns \py{details}, which is a \py{ModSimSeries} with information about how the solver ran, including a success code, a diagnostic message, and other information.  A \py{ModSimSeries} is like a \py{System} or \py{State} object; it contains a set of variables and their values.
 
 \index{ModSimSeries}
 
 \py{run_ode_solver} takes an optional argument, \py{t_eval}, which indicates where we want to evaluate the solution.  In this case we want the results to have the same time steps as the data, so we can compare them easily. 
-
-%TODO: First use of ModSimSeries?
 
 The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The biggest relative difference is less than 1\%.
 
@@ -5408,9 +5416,7 @@ We will do that now, in two steps:
 
 \end{enumerate}
 
-\py{fit_leastsq} is defined in the \py{modsim} library.  It uses the SciPy function \py{leastsq}, which implements the Levenberg-Marquardt algorithm for non-linear least squares problems.
-
-When \py{leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the parameters that minimize MSE.
+When \py{fit_leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the parameters that minimize MSE.
 
 \index{\py{error_func}}
 
@@ -5614,6 +5620,8 @@ def run_simulation(system, update_func):
 
 In Chapter~\ref{chap16} we used \py{fsolve} to find the value of a parameter that yields a particular result.  We defined an error function:
 
+\index{\py{fsolve}}
+
 \begin{python}
 def error_func1(r):
     system = make_system(r=r)
@@ -5684,14 +5692,29 @@ Then we passed the error function to \py{fit_leastsq}, which finds the set of pa
 best_params, fit_details = fit_leastsq(error_func, params, data)
 \end{python}
 
+%TODO: Anything to say here?
+
+
+\section{Under the hood}
+
+\py{unpack} is a function in the \py{modsim} library that copies the variables and values from a \py{System} object into a special Python data structure that stores global variables.  To be honest, it is a bit of a hack; that is, it may be expedient, but it might not be an example of software engineering you should emulate.
+
+\py{fsolve} is based on a Scipy function that is also called \py{fsolve}; you can read more about it at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html}.
+It uses a numerical method called Powell's method, and you can read more about that at \url{https://en.wikipedia.org/wiki/Powell's_method}.
+
+\index{\py{fsolve}}
+
+\py{run_ode_solver} uses the SciPy function \py{solve_ivp}, which you can read about at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html}.
+By default it uses an algorithm called RK45, or RKF45, which you can read about at \url{https://modsimpy.com/runge}).
+
+\py{fit_leastsq} is based on the SciPy function \py{leastsq}; you can read about it at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html}.
+By default it uses a version of the Levenberg-Marquardt method, which you can read about at \url{https://en.wikipedia.org/wiki/Levenberg-Marquardt_algorithm}.
+
+These SciPy functions don't work with the units provided by Pint, so the \py{modsim} library turns off unit-checking before calling them.  This mechanism is a bit of a hack, so you might get some unexpected behavior.  If so, I suggest you make a modest effort to fix them problem, but don't spend too much time on it.
+
+Carrying units through computations like this is not as common as it should be, so the tools are not as polished as they could be.  I think it is worth trying, because you can catch a lot of errors by checking units; but if it gets to be too much trouble, you can always remove the units from the code.  In that case, you should add comments that document the units for all variables!
+
 The rest of this chapter presents case studies you can use to practice what you have learned so far.
-
-
-% TODO: Anything for under the hood?
-% unpack?
-% run_ode_solver?
-% fit_leastsq?
-% \section{Under the hood}
 
 
 \section{The insulin minimal model}
@@ -5771,9 +5794,8 @@ In the repository for this book, you will find a notebook, \py{filter.ipynb}, wh
 %
 where $A$ is the amplitude of the input signal, say \SI{5}{\volt}, and $f$ is the frequency of the signal in \si{\hertz}.
 
-In the repository for this book, you will find a notebook, \py{filter.ipynb}, which contains starter code for this case study.
+In the repository for this book, you will find a notebook, \py{filter.ipynb}, which contains starter code for this case study.  Read the notebook, run the code, and work on the exercises.
 
-%TODO: Add instructions
 
 
 \section{Thermal behavior of a wall}
@@ -5964,10 +5986,11 @@ dydt, dvdt = slope_func(init, 0, system)
 The result is \SI{0}{\meter\per\second} for velocity and \SI{9.8}{\meter\per\second\squared} for acceleration.  Now we can call \py{run_ode_solver} like this:
 
 \begin{python}
-results, details = run_ode_solver(system, slope_func)
+results, details = run_ode_solver(system, slope_func,
+                                  max_step=0.5*s)
 \end{python}
 
-%TODO: explain `details` at first use
+The optional argument \py{max_step} determines the largest step size \py{run_ode_solver} can use.  Specifying \py{max_step} makes the simulation take longer, but it makes the results look better when plotted.  It has little or no effect on accuracy.
 
 \py{results} in a \py{TimeFrame} with two columns: \py{y} contains the height of the penny; \py{v} contains its velocity.
  
@@ -6001,9 +6024,7 @@ The \py{modsim} library provides \py{crossings}, which takes a \py{TimeSeries} a
 t_crossings = crossings(results.y, 0)
 \end{python}
 
-The result is an array with a single value, \SI{8.818}{s}.
-
-Now, we could run the simulation again with \py{t_end = 8.818}, but there's a better way.
+The result is an array with a single value, \SI{8.818}{s}.  Now, we could run the simulation again with \py{t_end = 8.818}, but there's a better way.
 
 \section{Events}
 \label{events}
@@ -6085,8 +6106,6 @@ For objects moving at moderate speeds through air, typical drag coefficients are
 For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from the data.
 
 Of course, the drag equation is itself a model, based on the assumption that $C_d$ does not depend on the other terms in the equation: density, velocity, and area.  For objects moving in air at moderate speeds (below 45 mph or \SI{20}{\meter\per\second}), this model might be good enough, but we should remember to revisit this assumption.
-
-%TODO: exercise with C_d(v)
 
 For the falling penny, we can use measurements to estimate $C_d$.   In particular, we can measure {\bf terminal velocity}, $v_{term}$, which is the speed where drag force equals force due to gravity:
 %
@@ -6197,8 +6216,6 @@ Now we can run the simulation like this:
 results, details = run_ode_solver(system, slope_func,
                        events=event_func, max_step=0.5*s)
 \end{python}
-
-The optional argument \py{max_step} determines the largest step size \py{run_ode_solver} can use.  Specifying \py{max_step} makes the simulation take longer, but it makes the results look better when plotted.  It has little or no effect on accuracy.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-fig02.pdf}}
@@ -6320,7 +6337,7 @@ We can run the simulation like this:
 
 \begin{python}
 ts = linspace(0, system.t_end, 301)
-results, details = run_ode_solver(system, slope_func, t_eval=ts,
+results, details = run_ode_solver(system, slope_func,
                                   max_step=0.3*s)
 \end{python}
 
@@ -6819,7 +6836,7 @@ The first parameter is the function we want to maximize.  The second is the rang
 
 \index{Params object}
 
-The return value from \py{max_bounded} is an \py{ModSimSeries} object that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
+The return value from \py{max_bounded} is an \py{ModSimSeries} that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
 
 For these parameters, the optimal angle is \SI{41.1}{\degree}, which yields a range of \SI{103.4}{\meter}.
 
@@ -6840,7 +6857,7 @@ In the notebook for this chapter, \py{chap22.ipynb}, you'll have to chance to fi
 
 \item Finally, you'll use \py{fsolve} to find the velocity that makes the optimal height at the wall just barely 37 feet.
   
-\index{fsolve}
+\index{\py{fsolve}}
 
 \end{itemize}
 
@@ -7003,6 +7020,12 @@ def slope_func(state, t, system):
     return omega, dydt, drdt
 \end{python}
 
+\begin{figure}[t]
+\centerline{\includegraphics[height=4.5in]{figs/chap11-fig01.pdf}}
+\caption{Results from paper rolling simulation, showing rotation, length, and radius over time.}
+\label{chap11-fig01}
+\end{figure}
+
 As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
 
 \index{State object}
@@ -7023,11 +7046,6 @@ results, details = run_ode_solver(system, slope_func,
                        events=event_func, max_step=1*s)
 \end{python}
 
-\begin{figure}
-\centerline{\includegraphics[width=3in]{figs/chap11-fig01.pdf}}
-\caption{Results from paper rolling simulation, showing rotation, length, and radius over time.}
-\label{chap11-fig01}
-\end{figure}
 
 Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
 
@@ -7346,7 +7364,7 @@ results1, details1 = run_ode_solver(system1, slope_func,
 Again, I specify \py{max_step} so the results look smoother when I plot them, at the cost of some extra computation.
 
 \begin{figure}
-\centerline{\includegraphics[height=3.5in]{figs/chap25-fig01.pdf}}
+\centerline{\includegraphics[height=4.0in]{figs/chap25-fig01.pdf}}
 \caption{Angle and angular velocity of a turntable with applied force and friction.}
 \label{chap25-fig01}
 \end{figure}
@@ -7431,6 +7449,7 @@ def run_two_phases(force, torque_friction, params):
 
 Now we can use \py{run_two_phases} to write an error function we can use, with \py{fsolve}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
 
+\index{\py{fsolve}}
 \index{error function}
 
 \begin{python}
@@ -7444,7 +7463,7 @@ def error_func1(torque_friction, params):
 
 But before we call \py{fsolve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
 
-\index{fsolve}
+\index{\py{fsolve}}
 
 However, now that we have a working simulation, and some confidence that it is correct, it is less important to carry units through the computation.
 
@@ -7462,6 +7481,7 @@ Now we can use \py{fsolve} to estimate torque due to friction.
 
 \index{torque}
 \index{friction}
+\index{\py{fsolve}}
 
 \begin{python}
 guess = 0.2
