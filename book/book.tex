@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.2.7}
+\newcommand{\theversion}{2.3}
 
 
 %%%% Both LATEX and PLASTEX
@@ -150,26 +150,26 @@
 \begin{latexonly}
 
 %-half title--------------------------------------------------
-\thispagestyle{empty}
-
-\begin{flushright}
-\vspace*{2.0in}
-
-\begin{spacing}{3}
-{\huge \thetitle}
-\end{spacing}
-
-\vspace{0.25in}
-
-Version \theversion
-
-\vfill
-
-\end{flushright}
+%\thispagestyle{empty}
+%
+%\begin{flushright}
+%\vspace*{2.0in}
+%
+%\begin{spacing}{3}
+%{\huge \thetitle}
+%\end{spacing}
+%
+%\vspace{0.25in}
+%
+%Version \theversion
+%
+%\vfill
+%
+%\end{flushright}
 
 %--verso------------------------------------------------------
 
-\afterpage{\blankpage}
+%\afterpage{\blankpage}
 
 %\newpage
 %\newpage
@@ -230,7 +230,9 @@ Green Tea Press       \\
 Needham MA 02492
 \end{flushleft}
 
-Permission is granted to copy, distribute, transmit and adapt this work under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: \url{https://modsimpy.com/license}.
+Permission is granted to copy, distribute, transmit and adapt this work under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: \url{http://modsimpy.com/license}.
+
+% TODO: get the shortened URLs working with https
 
 If you are interested in distributing a commercial version of this
 work, please contact the author.
@@ -269,7 +271,7 @@ Copyright \copyright ~2017 \theauthors.
 Permission is granted to copy, distribute, and/or modify this work
 under the terms of the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License, which is
-available at \url{https://modsimpy.com/license}.
+available at \url{http://modsimpy.com/license}.
 
 \vspace{1em}
 
@@ -447,7 +449,7 @@ Before you download these files, I suggest you copy my repository on GitHub, whi
 
 Use a browser to view the homepage of my repository at \url{https://github.com/AllenDowney/ModSimPy}.   You should see a gray button in the upper right that says {\sf Fork}.  If you press it, GitHub will create a copy of my repository that belongs to you.
 
-Now, the best way to download the files is to use a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Windows, macOS, and Linux at \url{https://modsimpy.com/getgit}. 
+Now, the best way to download the files is to use a {\bf Git client}, which is a program that manages git repositories.  You can get installation instructions for Windows, macOS, and Linux at \url{http://modsimpy.com/getgit}. 
 
 In Windows, I suggest you accept the options recommended by the installer, with two exceptions:
 
@@ -474,7 +476,7 @@ git clone https://github.com/YourGitHubUserName/ModSimPy
 Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.  After cloning, you should have a new directory called \py{ModSimPy}.
 
 If you don't want to use Git, you can download my files
-in a Zip archive from \url{https://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download.
+in a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download.
 
 
 \section{Running Jupyter}
@@ -640,7 +642,7 @@ Using algebra, we can solve for $t$:
 %
 \[ t = \sqrt{ 2 h / a} \]
 %
-Plugging in the acceleration of gravity, $a = \SI{9.8}{\meter\per\second\squared}$ and the height of the Empire State Building, $h=\SI{381}{\meter}$, we get $t = \SI{8.8}{\second}$.  Then computing $v = a t$ we get a velocity on impact of $\SI{86}{\meter\per\second}$, which is about 190 miles per hour.  That sounds like it could hurt.
+Plugging in the acceleration of gravity, $a = \SI{9.8}{\meter\per\second\squared}$, and the height of the Empire State Building, $h=\SI{381}{\meter}$, we get $t = \SI{8.8}{\second}$.  Then computing $v = a t$ we get a velocity on impact of $\SI{86}{\meter\per\second}$, which is about 190 miles per hour.  That sounds like it could hurt.
 
 Of course, these results are not exact because the model is based on simplifications.  For example, we assume that gravity is constant.  In fact, the force of gravity is different on different parts of the globe, and gets weaker as you move away from the surface.  But these differences are small, so ignoring them is probably a good choice for this scenario.
 \index{gravity}
@@ -651,7 +653,7 @@ The statistician George Box famously said ``All models are wrong, but some are u
 
 \index{Box, George}
 
-The television show {\it Mythbusters} has tested the myth of the falling penny more carefully; you can view the results at \url{https://modsimpy.com/myth}.  Their work is based on a mathematical model of motion, measurements to determine the force of air resistance on a penny, and a physical model of a human head.
+The television show {\it Mythbusters} has tested the myth of the falling penny more carefully; you can view the results at \url{http://modsimpy.com/myth}.  Their work is based on a mathematical model of motion, measurements to determine the force of air resistance on a penny, and a physical model of a human head.
 
 \index{Mythbusters}
 
@@ -963,7 +965,7 @@ which is a special value, and \py{'True'}, which is a string.
 \index{boolean}
 
 \py{True} and \py{False} are called {\bf boolean} values because
-they are related to Boolean algebra (\url{https://modsimpy.com/boolean}).
+they are related to Boolean algebra (\url{http://modsimpy.com/boolean}).
 
 We can use boolean values to control the behavior of the program, using
 an {\bf if statement}:
@@ -1149,7 +1151,7 @@ When the loop exits, \py{results} contains 10 time stamps, from 0 through 9, and
 results.mean()
 \end{python}
 
-You can read the documentation of \py{Series} at \url{https://modsimpy.com/series}.
+You can read the documentation of \py{Series} at \url{http://modsimpy.com/series}.
 
 \index{Pandas}
 \index{Series}
@@ -1194,7 +1196,7 @@ decorate(title='Olin-Wellesley Bikeshare',
 
 Figure~\ref{chap01-fig01} shows the result.
 
-\py{plot} and \py{decorate} are based on Pyplot, which is a Python library for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{https://modsimpy.com/plot}.
+\py{plot} and \py{decorate} are based on Pyplot, which is a Python library for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{http://modsimpy.com/plot}.
 
 \index{Pyplot}
 \index{plot}
@@ -1789,7 +1791,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{World population}
 \label{chap05}
 
-In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{https://modsimpy.com/popbomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.
+In 1968 Paul Erlich published {\it The Population Bomb}, in which he predicted that world population would grow quickly during the 1970s, that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see \url{http://modsimpy.com/popbomb}).  As someone who grew up during those decades, I am happy to report that those predictions were wrong.
   
 \index{Erlich, Paul}
 \index{Population Bomb}
@@ -1803,7 +1805,7 @@ In this chapter and the next, we use tools from the previous chapters to explain
 
 \index{prediction}
 
-For background on world population growth, watch this video from the American Museum of Natural History \url{https://modsimpy.com/human}.
+For background on world population growth, watch this video from the American Museum of Natural History \url{http://modsimpy.com/human}.
 
 \index{American Museum of Natural History}
 
@@ -1811,7 +1813,7 @@ For background on world population growth, watch this video from the American Mu
 \section{World Population Data}
 \label{worldpopdata}
 
-The Wikipedia article on world population contains tables with estimates of world population from prehistory to the present, and projections for the future (\url{https://modsimpy.com/worldpop}).
+The Wikipedia article on world population contains tables with estimates of world population from prehistory to the present, and projections for the future (\url{http://modsimpy.com/worldpop}).
 
 \index{Wikipedia}
 \index{Pandas}
@@ -1924,7 +1926,7 @@ plot(un, '--', label='UN DESA')
 \end{python}
 
 
-The next two lines plot the \py{Series} objects.  The {\bf format strings} \py{':'} and \py{'--'} indicate dotted and dashed lines.  For more about format strings in Pyplot, see \url{https://modsimpy.com/plot}.
+The next two lines plot the \py{Series} objects.  The {\bf format strings} \py{':'} and \py{'--'} indicate dotted and dashed lines.  For more about format strings in Pyplot, see \url{http://modsimpy.com/plot}.
 
 \index{format string}
 \index{Pyplot}
@@ -1975,7 +1977,7 @@ The numbers in brackets are called {\bf labels}, because they label the rows of 
 
 \index{label}
 
-In this example, the labels 2016 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data change in the future, we have to modify the program (see \url{https://modsimpy.com/hardcode}).
+In this example, the labels 2016 and 1950 are part of the data, so it would be better not to make them part of the program.  Putting values like these in the program is called {\bf hard coding}; it is considered bad practice because if the data change in the future, we have to modify the program (see \url{http://modsimpy.com/hardcode}).
 
 \index{hard coding}
 
@@ -2145,7 +2147,7 @@ def plot_results(census, un, timeseries, title):
 \index{plot}
 \index{decorate}
 
-The \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{https://modsimpy.com/color}.
+The \py{color} argument specifies the color of the line.  For details on color specification in Pyplot, see \url{http://modsimpy.com/color}.
 
 \index{Pyplot}
 \index{color}
@@ -2605,7 +2607,7 @@ But in the case of world population growth, those conditions don't apply.  Over 
 
 \begin{itemize}
 
-\item First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{https://modsimpy.com/mortality}).  So the decrease in net growth is due entirely to declining birth rates.
+\item First, the death rate is not increasing; rather, it has declined from 1.9\% in 1950 to 0.8\% now (see \url{http://modsimpy.com/mortality}).  So the decrease in net growth is due entirely to declining birth rates.
 
 \index{mortality rate}
 
@@ -2622,7 +2624,7 @@ In fact, demographers who study population growth often use models similar to ou
 
 \section{Comparing projections}
 
-Table 3 from \url{https://modsimpy.com/worldpop} contains projections from the U.S. Census and the United Nations DESA:
+Table 3 from \url{http://modsimpy.com/worldpop} contains projections from the U.S. Census and the United Nations DESA:
 
 \begin{python}
 table3 = tables[3]
@@ -2693,7 +2695,7 @@ In mathematical notation, we would write the same model like this:
 %
 \[ x_{n+1} = x_n + c \]
 %
-where $x_n$ is the population during year $n$, $x_0$ is a given initial population, and $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence relation}; see \url{https://modsimpy.com/recur}.
+where $x_n$ is the population during year $n$, $x_0$ is a given initial population, and $c$ is constant annual growth.  This way of representing the model is a {\bf recurrence relation}; see \url{http://modsimpy.com/recur}.
 
 \index{recurrence relation}
 
@@ -2717,7 +2719,7 @@ Now we can see that $x_1 = x_0 (1 + \alpha)$, and $x_2 = x_0 (1 + \alpha)^2$, an
 %
 \[ x_n = x_0 (1 + \alpha)^n \]
 %
-This result is a {\bf geometric progression}; see \url{https://modsimpy.com/geom}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
+This result is a {\bf geometric progression}; see \url{http://modsimpy.com/geom}.  When $\alpha$ is positive, the factor $1+\alpha$ is greater than 1, so the elements of the sequence grow without bound.
 
 \index{geometric progression}
 \index{quadratic growth}
@@ -2758,7 +2760,7 @@ We can make this model continuous by writing the rate of change in the form of a
 %
 \[ \frac{dx}{dt} = c \]
 %
-This way of representing the model is a {\bf differential equation}; see \url{https://modsimpy.com/diffeq}.
+This way of representing the model is a {\bf differential equation}; see \url{http://modsimpy.com/diffeq}.
 
 \index{differential equation}
 
@@ -2804,7 +2806,7 @@ When $t=0$, $x(t) = C$, so $C = x_0$ and the solution we want is
 %
 \[ x(t) = x_0 \exp(\alpha t) \]
 %
-If you would like to see this derivation done more carefully, you might like this video: \url{https://modsimpy.com/khan1}.
+If you would like to see this derivation done more carefully, you might like this video: \url{http://modsimpy.com/khan1}.
 
 \index{logarithm}
 \index{exponentiation}
@@ -2842,7 +2844,7 @@ But there are several things we can do with analysis that are harder or impossib
 
 \end{itemize}
 
-When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{https://modsimpy.com/plato}.}.
+When people see what analysis can do, they sometimes get drunk with power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe.  When they analyze a model of a physical system, they talk about ``the math behind it" as if our world is the mere shadow of a world of ideal mathematical entities\footnote{I am not making this up; see \url{http://modsimpy.com/plato}.}.
 
 \index{Plato}
 
@@ -2991,7 +2993,7 @@ The result is
 %
 \[ f{\left (t \right )} = p_{0} \exp(\alpha t) \]
 %
-This function is called the {\bf exponential growth curve}; see \url{https://modsimpy.com/expo}.
+This function is called the {\bf exponential growth curve}; see \url{http://modsimpy.com/expo}.
 
 \index{exponential growth}
 
@@ -3014,13 +3016,13 @@ Finally, we substitute this value of $C_1$ into the general solution, which yiel
 %
 \[ f(t) = \frac{K p_{0} \exp(r t)}{K + p_{0} \exp(r t) - p_{0}} \]
 %
-This function is called the {\bf logistic growth curve}; see \url{https://modsimpy.com/logistic}.  In the context of growth models, the logistic function is often written, equivalently,
+This function is called the {\bf logistic growth curve}; see \url{http://modsimpy.com/logistic}.  In the context of growth models, the logistic function is often written, equivalently,
 %
 \[ f(t) = \frac{K}{1 + A \exp(-rt)} \]
 %
 where $A = (K - p_0) / p_0$.
 
-If you would like to see this differential equation solved by hand, you might like this video: \url{https://modsimpy.com/khan2}
+If you would like to see this differential equation solved by hand, you might like this video: \url{http://modsimpy.com/khan2}
 \index{quadratic growth}
 \index{logistic function}
 
@@ -3311,7 +3313,7 @@ You should take my instructions as suggestions; if you want to try something dif
 
 \section{Tree growth}
 
-This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom, available from \url{https://modsimpy.com/trees}.
+This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom, available from \url{http://modsimpy.com/trees}.
 
 It provides ``site index curves", which are curves that show the expected height of the tallest tree in a stand of Douglas firs as a function of age, for a stand where the trees are the same age.
 
@@ -3369,7 +3371,7 @@ In this chapter, we develop a model of an epidemic as it spreads in a susceptibl
 
 \index{epidemic}
 
-My presentation of the SIR model in the next few chapters is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{https://modsimpy.com/sir}.}.
+My presentation of the SIR model in the next few chapters is based on an excellent article by David Smith and Lang Moore\footnote{Smith and Moore, ``The SIR Model for Spread of Disease," Journal of Online Mathematics and its Applications, December 2001, at \url{http://modsimpy.com/sir}.}.
 
 \index{SIR model}
 
@@ -3457,7 +3459,7 @@ SIR models are examples of {\bf compartment models}, so-called because they divi
 \index{flow}
 \index{stock and flow diagram}
 
-In this example, there are three stocks --- susceptible, infectious, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{https://modsimpy.com/stock}.
+In this example, there are three stocks --- susceptible, infectious, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{http://modsimpy.com/stock}.
 Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
@@ -3814,7 +3816,7 @@ And the label of the largest value like this:
 time_of_largest_value = S.idxmax()
 \end{python}
 
-If the \py{Series} is a \py{TimeSeries}, the label you get from \py{idxmax} is a time or date.  You can read more about these functions in the \py{Series} documentation at \url{https://modsimpy.com/series}.
+If the \py{Series} is a \py{TimeSeries}, the label you get from \py{idxmax} is a time or date.  You can read more about these functions in the \py{Series} documentation at \url{http://modsimpy.com/series}.
 
 \index{Series}
 
@@ -3887,7 +3889,7 @@ As the immunization rate increases, the number of infections drops steeply.  If 
 \label{chap05-fig03}
 \end{figure} 
 
-Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{https://modsimpy.com/herd}).
+Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{http://modsimpy.com/herd}).
 
 \index{herd immunity}
 
@@ -4290,7 +4292,7 @@ Now let's think about possible relationships between \py{beta} and \py{gamma}:
 
 \end{itemize}
 
-Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: {\bf nondimensionalization} (see \url{https://modsimpy.com/nondim}).
+Describing physical systems using dimensionless parameters is often a useful move in the modeling and simulation game.  It is so useful, in fact, that it has a name: {\bf nondimensionalization} (see \url{http://modsimpy.com/nondim}).
 
 \index{nondimensionalization}
 
@@ -4324,7 +4326,7 @@ Recall that the number of new infections in a given day is $\beta s i N$, and th
 \index{contact number}
 \index{basic reproduction number}
 
-When a new disease is introduced to a susceptible population, $s$ is approximately 1, so the number of people infected by each sick person is $\beta / \gamma$.  This ratio is called the ``contact number" or ``basic reproduction number" (see \url{https://modsimpy.com/contact}).  By convention it is usually denoted $R_0$, but in the context of an SIR model, this notation is confusing, so we'll use $c$ instead.
+When a new disease is introduced to a susceptible population, $s$ is approximately 1, so the number of people infected by each sick person is $\beta / \gamma$.  This ratio is called the ``contact number" or ``basic reproduction number" (see \url{http://modsimpy.com/contact}).  By convention it is usually denoted $R_0$, but in the context of an SIR model, this notation is confusing, so we'll use $c$ instead.
 
 The results in the previous section suggest that there is a relationship between $c$ and the total number of infections.  We can derive this relationship by analyzing the differential equations from Section~\ref{sireqn}:
 %
@@ -4486,7 +4488,7 @@ When particles in a hot object contact particles in a cold object, the hot objec
 
 \index{heat}
 
-Heat is related to temperature by the following equation (see \url{https://modsimpy.com/thermass}):
+Heat is related to temperature by the following equation (see \url{http://modsimpy.com/thermass}):
 %
 \[ Q = C \Delta T \]
 %
@@ -4498,7 +4500,7 @@ For objects made primarily from one material, thermal mass can be computed like 
 %
 \[ C = m c_p \]
 %
-where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity} of the material (see \url{https://modsimpy.com/specheat}).
+where $m$ is the mass of the object and $c_p$ is the {\bf specific heat capacity} of the material (see \url{http://modsimpy.com/specheat}).
 
 \index{specific heat capacity}
 
@@ -4508,7 +4510,7 @@ We can use these equations to estimate the thermal mass of a cup of coffee.  The
 
 So when a cup of coffee cools from \SI{90}{\celsius} to \SI{70}{\celsius}, the change in temperature, $\Delta T$ is \SI{20}{\celsius}, which means that \SI{25200}{\joule} of heat energy was transferred from the coffee to the surrounding environment (the cup holder and air in my car).
 
-To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot\footnote{See \url{https://modsimpy.com/thermo}.}), you could use it to lift a cup of coffee from sea level to \SI{8571}{\meter}, just shy of the height of Mount Everest, \SI{8848}{\meter}.
+To give you a sense of how much energy that is, if you were able to harness all of that heat to do work (which you cannot\footnote{See \url{http://modsimpy.com/thermo}.}), you could use it to lift a cup of coffee from sea level to \SI{8571}{\meter}, just shy of the height of Mount Everest, \SI{8848}{\meter}.
 
 \index{Mount Everest}
 
@@ -4518,7 +4520,7 @@ For a cup with substantial thermal mass, we might consider a model that computes
 
 \section{Heat transfer}
 
-In a situation like the coffee cooling problem, there are three ways heat transfers from one object to another (see \url{https://modsimpy.com/transfer}):
+In a situation like the coffee cooling problem, there are three ways heat transfers from one object to another (see \url{http://modsimpy.com/transfer}):
 
 \index{heat transfer}
 \index{conduction}
@@ -4533,7 +4535,7 @@ In a situation like the coffee cooling problem, there are three ways heat transf
 
 \index{fluid flow}
 
-\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The energy carried by this radiation depends on the object's temperature and surface properties (see \url{https://modsimpy.com/thermrad}).
+\item Radiation: As the particles in an object move due to thermal energy, they emit electromagnetic radiation.  The energy carried by this radiation depends on the object's temperature and surface properties (see \url{http://modsimpy.com/thermrad}).
 
 \end{itemize}
 
@@ -4945,7 +4947,7 @@ and the particular solution where $T(0) = T_{init}$ is
 %
 \[ T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t) \]
 %
-You can see how I got this solution using SymPy in \py{chap16sympy.ipynb} in the repository for this book.  If you would like to see it done by hand, you can watch this video: \url{https://modsimpy.com/khan3}.
+You can see how I got this solution using SymPy in \py{chap16sympy.ipynb} in the repository for this book.  If you would like to see it done by hand, you can watch this video: \url{http://modsimpy.com/khan3}.
 
 \index{analysis}
 \index{SymPy}
@@ -5008,8 +5010,8 @@ We will use this model to fit data collected from a patient, and use the paramet
 \index{glucose}
 \index{insulin}
 
-My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{https://modsimpy.com/bergman},
-PDF at \url{https://modsimpy.com/minmod}).
+My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{http://modsimpy.com/bergman},
+PDF at \url{http://modsimpy.com/minmod}).
 
 
 
@@ -5021,7 +5023,7 @@ PDF at \url{https://modsimpy.com/minmod}).
 
 In people with normal pancreatic function, the hormone system maintains {\bf homeostasis}; that is, it keeps the concentration of blood sugar in a range that is neither too high or too low.
 
-But if the pancreas does not produce enough insulin, or if the cells that should respond to insulin become insensitive, blood sugar can become elevated, a condition called {\bf hyperglycemia}.  Long term, severe hyperglycemia is the defining symptom of {\bf diabetes mellitus}, a serious disease that affects almost 10\% of the population in the U.S. (see \url{https://modsimpy.com/cdc}).
+But if the pancreas does not produce enough insulin, or if the cells that should respond to insulin become insensitive, blood sugar can become elevated, a condition called {\bf hyperglycemia}.  Long term, severe hyperglycemia is the defining symptom of {\bf diabetes mellitus}, a serious disease that affects almost 10\% of the population in the U.S. (see \url{http://modsimpy.com/cdc}).
 
 \index{hyperglycemia}
 \index{diabetes}
@@ -5035,7 +5037,7 @@ By analyzing these measurements, we can estimate several parameters of the subje
 
 \section{The glucose minimal model}
 
-The ``minimal model" was proposed by Bergman, Ider, Bowden, and Cobelli\footnote{Bergman RN, Ider YZ, Bowden CR, Cobelli C., ``Quantitative estimation of insulin sensitivity", Am J Physiol. 1979 Jun;236(6):E667-77.  Abstract at \url{https://modsimpy.com/insulin}.}.
+The ``minimal model" was proposed by Bergman, Ider, Bowden, and Cobelli\footnote{Bergman RN, Ider YZ, Bowden CR, Cobelli C., ``Quantitative estimation of insulin sensitivity", Am J Physiol. 1979 Jun;236(6):E667-77.  Abstract at \url{http://modsimpy.com/insulin}.}.
 It consists of two parts: the glucose model and the insulin model.  I will present an implementation of the glucose model; as a case study, you will have the chance to implement the insulin model.
 
 \index{minimal model}
@@ -5183,7 +5185,7 @@ The result is an array of interpolated values for equally-spaced values of \py{t
 \index{linrange}
 \index{NumPy}
 
-\py{interpolate} can take additional arguments, which it passes along to \py{interp1d}.  You can read about these options at \url{https://modsimpy.com/interp}.
+\py{interpolate} can take additional arguments, which it passes along to \py{interp1d}.  You can read about these options at \url{http://modsimpy.com/interp}.
 
 
 \section{Implementation}
@@ -5333,7 +5335,7 @@ When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is
 
 \index{time step}
 
-This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{https://modsimpy.com/euler}).
+This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called {\bf Euler's method} (see \url{http://modsimpy.com/euler}).
 
 \index{Euler's method}
 
@@ -5699,16 +5701,16 @@ best_params, fit_details = fit_leastsq(error_func, params, data)
 
 \py{unpack} is a function in the \py{modsim} library that copies the variables and values from a \py{System} object into a special Python data structure that stores global variables.  To be honest, it is a bit of a hack; that is, it may be expedient, but it might not be an example of software engineering you should emulate.
 
-\py{fsolve} is based on a Scipy function that is also called \py{fsolve}; you can read more about it at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html}.
-It uses a numerical method called Powell's method, and you can read more about that at \url{https://en.wikipedia.org/wiki/Powell's_method}.
+\py{fsolve} is based on a Scipy function that is also called \py{fsolve}; you can read more about it at \url{http://modsimpy.com/fsolve}.
+It uses a numerical method called Powell's method, and you can read more about that at \url{http://modsimpy.com/powell}.
 
 \index{\py{fsolve}}
 
-\py{run_ode_solver} uses the SciPy function \py{solve_ivp}, which you can read about at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html}.
-By default it uses an algorithm called RK45, or RKF45, which you can read about at \url{https://modsimpy.com/runge}).
+\py{run_ode_solver} uses the SciPy function \py{solve_ivp}, which you can read about at \url{http://modsimpy.com/ivp}.
+By default it uses an algorithm called RK45, or RKF45, which you can read about at \url{http://modsimpy.com/runge}).
 
-\py{fit_leastsq} is based on the SciPy function \py{leastsq}; you can read about it at \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html}.
-By default it uses a version of the Levenberg-Marquardt method, which you can read about at \url{https://en.wikipedia.org/wiki/Levenberg-Marquardt_algorithm}.
+\py{fit_leastsq} is based on the SciPy function \py{leastsq}; you can read about it at \url{http://modsimpy.com/sq}.
+By default it uses a version of the Levenberg-Marquardt method, which you can read about at \url{http://modsimpy.com/lm }.
 
 These SciPy functions don't work with the units provided by Pint, so the \py{modsim} library turns off unit-checking before calling them.  This mechanism is a bit of a hack, so you might get some unexpected behavior.  If so, I suggest you make a modest effort to fix them problem, but don't spend too much time on it.
 
@@ -5760,7 +5762,7 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 \section{Low-Pass Filter}
 
-The following circuit diagram\footnote{From \url{https://modsimpy.com/divider}} shows a low-pass filter built with one resistor and one capacitor.  
+The following circuit diagram\footnote{From \url{http://modsimpy.com/divider}} shows a low-pass filter built with one resistor and one capacitor.  
 
 \centerline{\includegraphics[height=1.3in]{figs/RC_Divider.pdf}}
 
@@ -5800,9 +5802,9 @@ In the repository for this book, you will find a notebook, \py{filter.ipynb}, wh
 
 \section{Thermal behavior of a wall}
 
-This case study is based on a paper by Gori, et~al\footnote{Gori, Marincioni, Biddulph, Elwell, ``Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces", {\it Energy and Buildings}, Volume 135, pages 398-409, \url{https://modsimpy.com/wall2}.
+This case study is based on a paper by Gori, et~al\footnote{Gori, Marincioni, Biddulph, Elwell, ``Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces", {\it Energy and Buildings}, Volume 135, pages 398-409, \url{http://modsimpy.com/wall2}.
     
-The authors put their paper under a Creative Commons license, and make their data available at \url{https://modsimpy.com/wall }.  I thank them for their commitment to open, reproducible science, which made this case study possible.} that models the thermal behavior of a brick wall, with the goal of understanding the ``performance gap between the expected energy use of buildings and their measured energy use".
+The authors put their paper under a Creative Commons license, and make their data available at \url{http://modsimpy.com/wall }.  I thank them for their commitment to open, reproducible science, which made this case study possible.} that models the thermal behavior of a brick wall, with the goal of understanding the ``performance gap between the expected energy use of buildings and their measured energy use".
 
 The following figure shows the scenario and their model of the wall:
 
@@ -5837,7 +5839,7 @@ First order ODEs can be written
 %
 \[ \frac{dy}{dx} = G(x, y) \]
 %
-where $G$ is some function of $x$ and $y$ (see \url{https://modsimpy.com/ode}).  Second order ODEs can be written
+where $G$ is some function of $x$ and $y$ (see \url{http://modsimpy.com/ode}).  Second order ODEs can be written
 %
 \[ \frac{d^2y}{dx^2} = H(x, y, \frac{dy}{dt}) \]
 %
@@ -5869,7 +5871,7 @@ Of course, this ``law" is really a model, in the sense that it is a simplificati
 
 \begin{itemize}
 
-\item It only applies if $m$ is constant.  If mass depends on time, position, or velocity, we have to use a more general form of Newton's law (see \url{https://modsimpy.com/varmass}).
+\item It only applies if $m$ is constant.  If mass depends on time, position, or velocity, we have to use a more general form of Newton's law (see \url{http://modsimpy.com/varmass}).
 
 \index{variable mass}
 
@@ -6050,7 +6052,7 @@ results, details = run_ode_solver(system, slope_func,
 
 \py{events} can also be a sequence of event functions, if there is more than one event that might occur.
 
-\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{https://modsimpy.com/brent}).
+\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{http://modsimpy.com/brent}).
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap20.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -6068,14 +6070,14 @@ In this chapter, I present a model of drag force and add it to the simulation.
 \section{Drag force}
 \label{drag}
 
-As an object moves through a fluid, like air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{https://modsimpy.com/newton}).
+As an object moves through a fluid, like air, the object applies force to the air and, in accordance with Newton's third law of motion, the air applies an equal and opposite force to the object (see \url{http://modsimpy.com/newton}).
 
 \index{air resistance}
 \index{drag force}
 \index{force!drag}
 \index{drag equation}
 
-The direction of this {\bf drag force} is opposite the direction of travel, and its magnitude is given by the drag equation (see \url{https://modsimpy.com/drageq}):
+The direction of this {\bf drag force} is opposite the direction of travel, and its magnitude is given by the drag equation (see \url{http://modsimpy.com/drageq}):
 %
 \[ F_d = \frac{1}{2}~\rho~v^2~C_d~A \]
 %
@@ -6101,7 +6103,7 @@ where
 
 \end{itemize}
 
-For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see \url{https://modsimpy.com/dragco}).
+For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see \url{http://modsimpy.com/dragco}).
 
 For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from the data.
 
@@ -6115,7 +6117,7 @@ where $m$ is the mass of the object and $g$ is acceleration due to gravity.  Sol
 %
 \[ C_d = \frac{2~m g}{\rho~v_{term}^2~A} \]
 %
-According to {\it Mythbusters}, the terminal velocity of a penny is between 35 and 65 mph (see \url{https://modsimpy.com/mythbust}).  Using the low end of their range, 40 mph or about \SI{18}{\meter\per\second}, the estimated value of $C_d$ is 0.44, which is close to the drag coefficient of a smooth sphere.
+According to {\it Mythbusters}, the terminal velocity of a penny is between 35 and 65 mph (see \url{http://modsimpy.com/mythbust}).  Using the low end of their range, 40 mph or about \SI{18}{\meter\per\second}, the estimated value of $C_d$ is 0.44, which is close to the drag coefficient of a smooth sphere.
 
 \index{Mythbusters}
 \index{terminal velocity}
@@ -6142,7 +6144,7 @@ params = Params(height = 381 * m,
                 v_term = 18 * m / s)
 \end{python}
 
-The mass and diameter are from \url{https://modsimpy.com/penny}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{https://modsimpy.com/density}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
+The mass and diameter are from \url{http://modsimpy.com/penny}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{http://modsimpy.com/density}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
 
 \index{System object}
 \index{\py{make_system}}
@@ -6233,7 +6235,7 @@ In the notebook for this chapter, you'll have a chance to extend this model.
 \section{Bungee jumping}
 \label{bungee}
 
-Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{https://modsimpy.com/dunk}.
+Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
 
 Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
 
@@ -6243,7 +6245,7 @@ Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  W
 
 \item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
 
-\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{https://modsimpy.com/hooke}. 
+\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
 
 \item The mass of the jumper is \SI{75}{\kilogram}.
 
@@ -6388,7 +6390,7 @@ In this chapter we model the flight of a baseball including the effect of air re
 \section{Baseball}
 \label{baseball}
 
-To model the flight of a baseball, we have to make some modeling decisions.  To get started, we ignore any spin that might be on the ball, and the resulting Magnus force (see \url{https://modsimpy.com/magnus}).  Under this assumption, the ball travels in a vertical plane, so we'll run simulations in two dimensions, rather than three.
+To model the flight of a baseball, we have to make some modeling decisions.  To get started, we ignore any spin that might be on the ball, and the resulting Magnus force (see \url{http://modsimpy.com/magnus}).  Under this assumption, the ball travels in a vertical plane, so we'll run simulations in two dimensions, rather than three.
 
 \index{Magnus force}
 
@@ -6396,7 +6398,7 @@ Air resistance has a substantial effect on most projectiles in air, so we will i
 
 \index{air resistance}
 
-To model air resistance, we'll need the mass, frontal area, and drag coefficient of a baseball.  Mass and diameter are easy to find (see \url{https://modsimpy.com/baseball}).  Drag coefficient is only a little harder; according to {\it The Physics of Baseball}\footnote{Adair, {\it The Physics of Baseball}, Third Edition, Perennial, 2002}, the drag coefficient of a baseball is approximately 0.33 (with no units).
+To model air resistance, we'll need the mass, frontal area, and drag coefficient of a baseball.  Mass and diameter are easy to find (see \url{http://modsimpy.com/baseball}).  Drag coefficient is only a little harder; according to {\it The Physics of Baseball}\footnote{Adair, {\it The Physics of Baseball}, Third Edition, Perennial, 2002}, the drag coefficient of a baseball is approximately 0.33 (with no units).
 
 \index{drag coefficient}
 
@@ -6446,7 +6448,7 @@ A + B
 A - B
 \end{python}
 
-For the definition and graphical interpretation of these operations, see \url{https://modsimpy.com/vecops}.
+For the definition and graphical interpretation of these operations, see \url{http://modsimpy.com/vecops}.
 
 \index{vector operation}
 
@@ -6529,7 +6531,7 @@ params = Params(x = 0 * m,
                 duration = 6 * s)
 \end{python}
 
-The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{baseball}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{https://modsimpy.com/tempress}).
+The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{baseball}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{http://modsimpy.com/tempress}).
  I chose the value of \py{duration} to run the simulation long enough for the ball to land on the ground.
 
 \index{density}
@@ -6682,7 +6684,7 @@ plot(results.x, results.y, label='trajectory')
 \label{chap10-fig02}
 \end{figure}
 
-Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{https://modsimpy.com/trajec}).
+Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{http://modsimpy.com/trajec}).
 
 \index{trajectory plot}
 
@@ -6705,7 +6707,7 @@ Manny Ramirez is a former member of the Boston Red Sox (an American baseball tea
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
-Fenway Park is a baseball stadium in Boston, Massachusetts.  One of its most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet away.  To compensate for the short distance, the wall is unusually high, at 37 feet (see \url{https://modsimpy.com/wally}).
+Fenway Park is a baseball stadium in Boston, Massachusetts.  One of its most famous features is the ``Green Monster", which is a wall in left field that is unusually close to home plate, only 310 feet away.  To compensate for the short distance, the wall is unusually high, at 37 feet (see \url{http://modsimpy.com/wally}).
 
 \index{Ramirez, Manny}
 \index{Fenway Park}
@@ -6863,7 +6865,7 @@ In the notebook for this chapter, \py{chap22.ipynb}, you'll have to chance to fi
 
 The notebook provides some additional hints, but at this point you should have everything you need.  Good luck!
 
-If you enjoy this exercise, you might be interested in this paper: ``How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories", by Sawicki, Hubbard, and Stronge, at \url{https://modsimpy.com/runs}.
+If you enjoy this exercise, you might be interested in this paper: ``How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories", by Sawicki, Hubbard, and Stronge, at \url{http://modsimpy.com/runs}.
 
 
 \chapter{Rotation}
@@ -6875,7 +6877,7 @@ In this chapter we model systems that involve rotating objects.  In general, rot
 
 If the configuration of an object changes over time, it might become easier or harder to spin, which explains the surprising dynamics of gymnasts, divers, ice skaters, etc.
 
-And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{https://modsimpy.com/precess}.
+And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.  For an example, see this video on gyroscopic precession \url{http://modsimpy.com/precess}.
 
 \index{gyroscopic precession}
 
@@ -6887,14 +6889,14 @@ This approach makes it possible to simulate and analyze many interesting systems
 
 The fundamental ideas in this chapter and the next are {\bf angular velocity}, {\bf angular acceleration}, {\bf torque}, and {\bf moment of inertia}.  If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.
 
-At the end of the next chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{https://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
+At the end of the next chapter, you will use these tools to simulate the behavior of a yo-yo (see \url{http://modsimpy.com/yoyo}).  But we'll work our way up to it gradually, starting with toilet paper.
 
 
 
 \section{The physics of toilet paper}
 \label{paper}
 
-As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a roll of toilet paper in the U.S. (see \url{https://modsimpy.com/paper}).
+As a simple example of a system with rotation, we'll simulate the manufacture of a roll of toilet paper.  Starting with a cardboard tube at the center, we will roll up \SI{47}{\meter} of paper, the typical length of a roll of toilet paper in the U.S. (see \url{http://modsimpy.com/paper}).
 
 \index{toilet paper}
 
@@ -7154,7 +7156,7 @@ In the previous chapter we modeled a scenario with constant angular velocity.  I
 \index{angular acceleration}
 \index{torque}
 
-Just as linear acceleration is the derivative of velocity, {\bf angular acceleration} is the derivative of angular velocity.  And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, {\bf torque}.  If you are not familiar with torque, you can read about it at \url{https://modsimpy.com/torque}.
+Just as linear acceleration is the derivative of velocity, {\bf angular acceleration} is the derivative of angular velocity.  And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, {\bf torque}.  If you are not familiar with torque, you can read about it at \url{http://modsimpy.com/torque}.
 
 In general, torque is a vector quantity, defined as the {\bf cross product} of $\vec{r}$ and $\vec{F}$, where $\vec{r}$ is the {\bf lever arm}, a vector from the point of rotation to the point where the force is applied, and $\vec{F}$ is the vector that represents the magnitude and direction of the force.
 
@@ -7194,7 +7196,7 @@ Fortunately, in a system where all rotation and torque happens around a single a
 
 For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
-However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{https://modsimpy.com/moment}.
+However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{http://modsimpy.com/moment}.
 
 
 \section{Teapots and turntables}
@@ -7597,7 +7599,7 @@ The \py{Vector} object is a \py{Quantity}, as defined by Pint, so it normally ha
 
 \index{Vector}
 
-\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read about it at \url{https://modsimpy.com/minimize}).
+\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read about it at \url{http://modsimpy.com/minimize}).
 
 \index{\py{max_bounded}}
 \index{SciPy}
@@ -7614,13 +7616,13 @@ In Chapter~\ref{chap21}, we simulated a bungee jump with a model that took into 
 
 It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
-At \url{https://modsimpy.com/bungee} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
+At \url{http://modsimpy.com/bungee} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
 %
 \[ a = g + \frac{\mu v^2/2}{\mu(L+y) + 2L} \] 
 %
 where $g$ is acceleration due to gravity, $L$ is the length of the cord, and $\mu$ is the ratio of the mass of the cord, $m$, and the mass of the jumper, $M$.
 
-If you don't believe that their model is correct, this video might convince you: \url{https://modsimpy.com/drop}.
+If you don't believe that their model is correct, this video might convince you: \url{http://modsimpy.com/drop}.
 
 Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
 
@@ -7687,7 +7689,7 @@ We'll use the following parameters:
 
 \begin{enumerate}
 
-\item According to the Spider-Man Wiki\footnote{\url{https://modsimpy.com/spider}}, Spider-Man weighs \SI{76}{\kg}.
+\item According to the Spider-Man Wiki\footnote{\url{http://modsimpy.com/spider}}, Spider-Man weighs \SI{76}{\kg}.
 
 \item
   Let's assume his terminal velocity is \SI{60}{\meter\per\second}.
@@ -7710,7 +7712,7 @@ In the repository for this book, you will find a notebook, \py{spiderman.ipynb},
 
 \section{Kittens}
 
-Let's simulate a kitten unrolling toilet paper.  As reference material, see this video: \url{https://modsimpy.com/kitten}.
+Let's simulate a kitten unrolling toilet paper.  As reference material, see this video: \url{http://modsimpy.com/kitten}.
 
 \index{kitten}
 
@@ -7740,7 +7742,7 @@ params = Params(Rmin = 0.02 * m,
 
 As before, \py{Rmin} is the minimum radius and \py{Rmax} is the maximum.  \py{L} is the length of the paper.  \py{Mcore} is the mass of the cardboard tube at the center of the roll; \py{Mroll} is the mass of the paper.  \py{tension} is the force applied by the kitten, in \si{\newton}.  I chose a value that yields plausible results.
 
-At \url{https://modsimpy.com/moment} you can find moments of inertia for simple geometric shapes.  I'll model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
+At \url{http://modsimpy.com/moment} you can find moments of inertia for simple geometric shapes.  I'll model the cardboard tube at the center of the roll as a ``thin cylindrical shell", and the paper roll as a ``thick-walled cylindrical tube with open ends".
 
 \index{cylinder}
 
@@ -7776,7 +7778,6 @@ def make_system(params):
     init = State(theta = 0 * radian,
                  omega = 0 * radian/s,
                  y = L)
-    
     area = pi * (Rmax**2 - Rmin**2)
     rho_h = Mroll / area
     k = (Rmax**2 - Rmin**2) / 2 / L / radian    
