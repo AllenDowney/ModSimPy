@@ -652,10 +652,16 @@ def plot(*args, **options):
     # TODO: add lines to REPLOT_CACHE
 
     x, y, style = parse_plot_args(*args, **options)
+    if isinstance(x, pd.DataFrame) or isinstance(y, pd.DataFrame):
+        raise ValueError("modsimpy.plot can't handle DataFrames.")
 
-    if x is None and isinstance(y, pd.Series):
-        x = y.index
-        y = y.values
+    if x is None:
+        if isinstance(y, np.ndarray):
+            x = np.arange(len(y))
+
+        if isinstance(y, pd.Series):
+            x = y.index
+            y = y.values
 
     x = magnitudes(x)
     y = magnitudes(y)
