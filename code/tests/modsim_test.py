@@ -140,7 +140,7 @@ class TestLinspaceLinRange(unittest.TestCase):
         self.assertEqual(len(array), 11)
         self.assertAlmostEqual(array[0], 11 * meter)
         self.assertAlmostEqual(array[1], 11.2 * meter)
-        self.assertAlmostEqual(array[10], 13 * meter)
+        self.assertAlmostEqual(magnitude(array[10]), 13)
 
 class TestAbsRelDiff(unittest.TestCase):
 
@@ -186,7 +186,12 @@ class TestRunOdeint(unittest.TestCase):
         pass
 
 class TestVector(unittest.TestCase):
+    def assertArrayEqual(self, res, ans):
+        self.assertTrue(isinstance(res, np.ndarray))
+        self.assertTrue((res == ans).all())
+
     def assertVectorEqual(self, res, ans):
+        self.assertTrue(isinstance(res, ModSimVector))
         self.assertTrue((res == ans).all())
 
     def assertVectorAlmostEqual(self, res, ans):
@@ -214,7 +219,7 @@ class TestVector(unittest.TestCase):
         v = Vector(3, 4)
         self.assertEqual(vector_mag2(v), 25)
         v = Vector(3, 4)*m
-        self.assertEqual(vector_mag2(v), 25*m)
+        self.assertEqual(vector_mag2(v), 25*m*m)
 
     def test_vector_angle(self):
         m = UNITS.meter
@@ -230,7 +235,7 @@ class TestVector(unittest.TestCase):
         m = UNITS.meter
         v = [3, 4]
         ans = [0.6, 0.8]
-        self.assertVectorEqual(vector_hat(v), ans)
+        self.assertArrayEqual(vector_hat(v), ans)
 
         v = Vector(3, 4)
         self.assertVectorEqual(vector_hat(v), ans)
@@ -239,7 +244,7 @@ class TestVector(unittest.TestCase):
 
         v = [0, 0]
         ans = [0, 0]
-        self.assertVectorEqual(vector_hat(v), ans)
+        self.assertArrayEqual(vector_hat(v), ans)
         v = Vector(0, 0)
         self.assertVectorEqual(vector_hat(v), ans)
         v = Vector(0, 0)*m
@@ -303,8 +308,8 @@ class TestVector(unittest.TestCase):
 
         v = [3, 4, 5]
         w = [5, 6, 7]
-        self.assertVectorEqual(vector_cross(v, w), ans)
-        self.assertVectorEqual(-vector_cross(w, v), ans)
+        self.assertArrayEqual(vector_cross(v, w), ans)
+        self.assertArrayEqual(-vector_cross(w, v), ans)
 
         v = Vector(3, 4, 5)
         self.assertVectorEqual(vector_cross(v, w), ans)
@@ -398,6 +403,13 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector_diff_angle(v, w), ans)
         self.assertAlmostEqual(vector_diff_angle(w, v), -ans)
 
+
+class TestSeriesCopy(unittest.TestCase):
+    def test_series_copy(self):
+        series = TimeSeries()
+        res = series.copy()
+        #print(type(res))
+        self.assertTrue(isinstance(res, TimeSeries))
 
 if __name__ == '__main__':
     unittest.main()

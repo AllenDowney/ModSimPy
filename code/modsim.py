@@ -177,7 +177,10 @@ def linrange(start=0, stop=None, step=1, **options):
     if options['endpoint']:
         n += 1
 
-    array = np.linspace(start, stop, int(n), **options)
+    array = magnitude(step) * np.ones(int(round(n)))
+    array[0] = magnitude(start)
+    array = np.cumsum(array)
+
     if units:
         array = array * units
     return array
