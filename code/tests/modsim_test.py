@@ -122,11 +122,13 @@ class TestLinspaceLinRange(unittest.TestCase):
 
     def test_linrange(self):
         array = linrange(0, 1, 0.1)
+        self.assertEqual(len(array), 10)
         self.assertAlmostEqual(array[0], 0)
         self.assertAlmostEqual(array[1], 0.1)
         self.assertAlmostEqual(array[9], 0.9)
 
         array = linrange(0, 1, 0.1, endpoint=True)
+        self.assertEqual(len(array), 11)
         self.assertAlmostEqual(array[0], 0)
         self.assertAlmostEqual(array[1], 0.1)
         self.assertAlmostEqual(array[10], 1.0)
