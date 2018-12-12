@@ -14,7 +14,7 @@ logger = logging.getLogger(name='modsim.py')
 # make sure we have Python 3.6 or better
 import sys
 if sys.version_info < (3, 6):
-    logger.warn('modsim.py depends on Python 3.6 features.')
+    logger.warning('modsim.py depends on Python 3.6 features.')
 
 import inspect
 import matplotlib.pyplot as plt
