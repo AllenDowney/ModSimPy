@@ -385,7 +385,7 @@ def run_odeint(system, slope_func, **options):
                  solution will be computed:"""
         raise ValueError(msg)
 
-    # make sure `system` contains `ts`
+    # make sure `system` contains `init`
     if not hasattr(system, 'init'):
         msg = """It looks like `system` does not contain `init`
                  as a system variable.  `init` should be a State
@@ -725,10 +725,10 @@ def contour(df, **options):
 
     df: DataFrame
     """
-    x = results.columns
-    y = results.index
+    x = df.columns
+    y = df.index
     X, Y = np.meshgrid(x, y)
-    cs = plt.contour(X, Y, results, **options)
+    cs = plt.contour(X, Y, df, **options)
     plt.clabel(cs, inline=1, fontsize=10)
 
 
@@ -808,13 +808,13 @@ class SubPlots:
         self.axes_seq = axes_seq
         self.current_axes_index = 0
 
-    def current_axes():
+    def current_axes(self):
         return self.axes_seq(self.current_axes_index)
 
     # TODO: consider making SubPlots iterable
     def next_axes(self):
         self.current_axes_index += 1
-        return current_axes()
+        return self.current_axes()
 
 
 def subplots(*args, **options):
