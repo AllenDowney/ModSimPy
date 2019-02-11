@@ -490,6 +490,10 @@ def run_ode_solver(system, slope_func, **options):
     # remove dimensions from the initial conditions.
     # we need this because otherwise `init` gets copied into the
     # results array along with its units
+    # try:
+    #     y_0 = [magnitude(x) for x in init]
+    # except TypeError:
+    #     y_0 = [magnitude(init)]
     y_0 = [magnitude(x) for x in init]
 
     # run the solver
