@@ -141,15 +141,15 @@ def linspace(start, stop, num=50, **options):
 
 
 def linrange(start=0, stop=None, step=1, **options):
-    """Returns an array of evenly-spaced values in the interval [start, stop].
-
-    This function works best if the space between start and stop
-    is divisible by step; otherwise the results might be surprising.
+    """Returns an array of evenly-spaced values in an interval.
 
     By default, the last value in the array is `stop-step`
     (at least approximately).
     If you provide the keyword argument `endpoint=True`,
     the last value in the array is `stop`.
+
+    This function works best if the space between start and stop
+    is divisible by step; otherwise the results might be surprising.
 
     start: first value
     stop: last value
@@ -161,8 +161,6 @@ def linrange(start=0, stop=None, step=1, **options):
         stop = start
         start = 0
 
-    # TODO: what breaks if we don't make the dtype float?
-    #underride(options, endpoint=True, dtype=np.float64)
     underride(options, endpoint=False)
 
     # see if any of the arguments has units
