@@ -22,8 +22,8 @@
 \usepackage{hevea}
 \usepackage{makeidx}
 \usepackage{setspace}
-\usepackage{xcolor}
 \usepackage{upquote}
+\usepackage{xcolor}
 \usepackage[listings]{tcolorbox}
 
 
@@ -419,7 +419,7 @@ Start at \url{https://www.anaconda.com/download}.  Download the installer for yo
 I suggest you accept the recommended options.
 On Windows you have the option to install Visual Studio Code, which is an interactive environment for writing programs.  You won't need it for this book, but you might want it for other projects.
 
-By default, Anaconda installs most of the packages you need, but there are a few more you might have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open Git Bash.
+By default, Anaconda installs most of the packages you need, but there are a few more you might have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open the Anaconda Prompt that should be in your Start menu.
 
 Run the following command (copy and paste it if you can, to avoid typos):
 
@@ -724,7 +724,7 @@ This chapter presents a simple model of a bike share system and demonstrates the
 Along the way, we'll make decisions about how to model the system.  In the next chapter we'll review these decisions and gradually improve the model.
 
 
-\section{Bikeshare}
+\section{Modeling}
 \label{modeling}
 
 Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.
@@ -5277,7 +5277,7 @@ def run_simulation(system, update_func):
     unpack(system)
     
     frame = TimeFrame(columns=init.index)
-    frame.loc[t0] = init
+    frame.row[t0] = init
     ts = linrange(t0, t_end, dt)
     
     for t in ts:
@@ -7627,7 +7627,7 @@ If you don't believe that their model is correct, this video might convince you:
 Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
 
 
-\section{Spiderman}
+\section{Spider-Man}
 
 In this case study we'll develop a model of Spider-Man swinging from a
 springy cable of webbing attached to the top of the Empire State
