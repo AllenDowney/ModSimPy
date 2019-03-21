@@ -1002,7 +1002,7 @@ def compute_abs_diff(seq):
         return diff
 
 def compute_rel_diff(seq):
-    xs = np.asarray(seq)
+    xs = np.asarray(seq, dtype=np.float64)
     diff = np.ediff1d(xs, np.nan)
     return diff / seq
 
