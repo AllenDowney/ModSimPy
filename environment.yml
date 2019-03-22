@@ -12,6 +12,8 @@ dependencies:
   - sympy
   - lxml
   - html5lib
+  - beautifulsoup4
+  
   
 
 
