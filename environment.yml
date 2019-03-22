@@ -11,7 +11,7 @@ dependencies:
   - pint
   - sympy
   - lxml
-  
+  - html5lib
   
 
 
