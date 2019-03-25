@@ -1003,7 +1003,13 @@ def compute_abs_diff(seq):
 
 def compute_rel_diff(seq):
     xs = np.asarray(seq, dtype=np.float64)
-    to_end = np.array([np.nan], dtype=np.float64)
+
+    # The right thing to put at the end is np.nan, but at
+    # the moment edfiff1d is broken
+    # https://github.com/numpy/numpy/issues/13103
+    # So I'm working around by appending 0 instead.
+    #to_end = np.array([np.nan], dtype=np.float64)
+    to_end = np.array([0], dtype=np.float64)
     diff = np.ediff1d(xs, to_end)
     return diff / seq
 
