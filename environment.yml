@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.6
+  - python=3.7
   - jupyter
   - numpy
   - matplotlib
@@ -12,10 +12,10 @@ dependencies:
   - scipy
   - pint
   - sympy
-  - lxml
-  - html5lib
-  - beautifulsoup4
-  - pytables
+  - lxml>=4.3
+  - html5lib>=1.0
+  - beautifulsoup4>=4.7
+  - pytables>=3.5
   
   
   
