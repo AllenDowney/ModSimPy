@@ -96,7 +96,10 @@ def handwritingClassTest():
         if (classifierResult != classNumStr): errorCount += 1.0
     print ("\nthe total number of errors is: %d" % errorCount)
     print ("\nthe total error rate is: %f" % (errorCount/float(mTest)))
-
+def classifyPerson():
+				resulteList = ['not at all','in small doses','in large deses']
+				percentTats = input("percentage of time spent playing video games?")
+				print("You will probably like this person:")
 # datingDataMat,datingLabels = file2matrix('datingTestSet2.txt')
 # print(datingDataMat[:5],datingLabels[:5])
 
@@ -109,3 +112,4 @@ def handwritingClassTest():
 # print(normMat[:5],ranges,minVals)
 
 # datingClassTest()
+classifyPerson()
