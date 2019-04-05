@@ -1,64 +1,39 @@
-# import sys
-# print('Python: {}'.format(sys.version))
-# # scipy
-# import scipy
-# print('scipy: {}'.format(scipy.__version__))
-import operator
-import matplotlib
+import pandas as pd
+import numpy as np
+
+import seaborn as sns
 import matplotlib.pyplot as plt
-from numpy import *
-# print('numpy: {}'.format(numpy.__version__))
-# # matplotlib
-# import matplotlib
-# print('matplotlib: {}'.format(matplotlib.__version__))
-# # # pandas
-# # import pandas
-# # print('pandas: {}'.format(pandas.__version__))
-# # # scikit-learn
-# import sklearn
-# print('sklearn: {}'.format(sklearn.__version__))
+# %matplotlib inline
 
-# x = numpy.array([3, 1, 0])
-# print(x,"\n",numpy.argsort(x))
+#set font size of labels on matplotlib plots
+plt.rc('font', size=16)
 
-# a = numpy.array([0, 1, 2])
-# b = numpy.tile(a, 1)
-# c= numpy.tile(a, 2)
-# print(b,c)
-# # x = numpy.array([1, 2, 3])
-# print(x,"\n",numpy.argsort(x))
-# x = np.array([1,2, 2, 4])
-# y = x.shape[0]
-# z= x.sum()
-# print(z)
-# from sklearn.neighbors.nearest_centroid import NearestCentroid
-# import numpy as np
-# X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
-# y = np.array([1, 1, 1, 2, 2, 2])
-# clf = NearestCentroid()
-# clf.fit(X, y)
-# NearestCentroid(metric='euclidean', shrink_threshold=None)
-# print(clf.predict([[-1.8, -1]]))
-group = array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-labels = ['A','A','B','B']
-dataSet = group
-inX =[0,0]
-dataSetSize = dataSet.shape[0]
-diffMat = tile(inX, (dataSetSize,1)) - dataSet
-sqDiffMat = diffMat**2
-sqDistances = sqDiffMat.sum(axis=1)
-distances = sqDistances**0.5
-sortedDistIndicies = distances.argsort() 
-k=3
-dataSetSize = dataSet.shape[0]
-diffMat = tile(inX, (dataSetSize,1)) - dataSet
-sqDiffMat = diffMat**2
-sqDistances = sqDiffMat.sum(axis=1)
-distances = sqDistances**0.5
-sortedDistIndicies = distances.argsort()     
-classCount={}                   
-for i in range(k):
-    voteIlabel = labels[sortedDistIndicies[i]]
-    classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
-sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
-print(sortedClassCount[0][0])
+#set style of plots
+sns.set_style('white')
+
+#define a custom palette
+customPalette = ['#630C3A', '#39C8C6', '#D3500C', '#FFB139']
+sns.set_palette(customPalette)
+sns.palplot(customPalette)
+
+#number of points per group
+n = 50
+
+#define group labels and their centers
+groups = {'A': (2,2),
+          'B': (4,4)}
+          
+#create labeled x and y data
+data = pd.DataFrame(index=range(n*len(groups)), columns=['x','y','label'])
+for i, group in enumerate(groups.keys()):
+    #randomly select n datapoints from a gaussian distrbution
+    data.loc[i*n:((i+1)*n)-1,['x','y']] = np.random.normal(groups[group], 
+                                                           [0.5,0.5], 
+                                                           [n,2])
+    #add group labels
+    data.loc[i*n:((i+1)*n)-1,['label']] = group
+
+print(data)
+#plot data with seaborn
+facet = sns.lmplot(data=data, x='x', y='y', hue='label', 
+                   fit_reg=False, legend=True, legend_out=True)
