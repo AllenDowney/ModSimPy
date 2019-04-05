@@ -33,7 +33,7 @@ for i, group in enumerate(groups.keys()):
     #add group labels
     data.loc[i*n:((i+1)*n)-1,['label']] = group
 
-print(data)
+# print(data)
 #plot data with seaborn
 facet = sns.lmplot(data=data, x='x', y='y', hue='label', 
                    fit_reg=False, legend=True, legend_out=True)
