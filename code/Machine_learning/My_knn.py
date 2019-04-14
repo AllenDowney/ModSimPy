@@ -98,8 +98,14 @@ def handwritingClassTest():
     print ("\nthe total error rate is: %f" % (errorCount/float(mTest)))
 def classifyPerson():
 				resulteList = ['not at all','in small doses','in large deses']
-				percentTats = input("percentage of time spent playing video games?")
-				print("You will probably like this person:")
+				percentTats = float(input("percentage of time spent playing video games:"))
+			 ffMiles = float(input("frequent flier miles earned per year:"))
+			 iceCream =float(input("liters of ice cream consumed er year:"))
+			 datingDataMat,datingLabels = file2matrix('datingTestSet2.txt')
+			 normMat, ranges, percentTats = autoNorm(datingDataMat)
+			 inArr = array ({ffMiles,percentTats,iceCream})
+			 classifierResult =classify0(inArr-minVals/ranges,normMat,datingLabels,3)
+				print("You will probably like this person:",resulteList[classifierResult-1])
 # datingDataMat,datingLabels = file2matrix('datingTestSet2.txt')
 # print(datingDataMat[:5],datingLabels[:5])
 
@@ -112,4 +118,4 @@ def classifyPerson():
 # print(normMat[:5],ranges,minVals)
 
 # datingClassTest()
-classifyPerson()
+# classifyPerson()
