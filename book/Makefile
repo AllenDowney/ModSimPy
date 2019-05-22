@@ -3,8 +3,8 @@ LATEX = latex
 DVIPS = dvips
 
 PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
-           -dCompressPages=true -dUseFlateCompression=true  \
            -dEmbedAllFonts=true -dSubsetFonts=true -dMaxSubsetPct=100
+#           -dCompressPages=true -dUseFlateCompression=true  \
 
 
 %.dvi: %.tex
@@ -14,12 +14,16 @@ PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
 	$(DVIPS) -o $@ $<
 
 %.pdf: %.ps
-	ps2pdf $(PDFFLAGS) $<
+	ps2pdf $<
 
 all:	book.tex
-	pdflatex $(PDFFLAGS) --shell-escape book
+	pdflatex --shell-escape book
 	makeindex book.idx
 	evince book.pdf
+
+ps:
+	pdf2ps book.pdf
+	# and then upload to https://www.ps2pdf.com/convert-ps-to-pdf
 
 hevea:
 	#sed 's/\(figs\/[^.]*\).\(pdf\|png\)/\1.eps/' 

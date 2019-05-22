@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.3}
+\newcommand{\theversion}{2.3.1}
 
 
 %%%% Both LATEX and PLASTEX
@@ -3263,7 +3263,7 @@ def get_last_label(series):
 
 In brackets, the number \py{0} selects the first label; the number \py{-1} selects the last label.
 
-Several of the objects defined in \py{modsim} are modified versions of \py{Series} objects.  \py{State} and \py{System} objects are \py{Series} where the labels are variables names.  A \py{TimeSeries} is a \py{Series} where the labels are times, and a \py{SweepSeries} is a \py{Series} where the labels are parameter values.
+Several of the objects defined in \py{modsim} are modified versions of \py{Series} objects.  \py{State} and \py{System} objects are \py{Series} where the labels are variable names.  A \py{TimeSeries} is a \py{Series} where the labels are times, and a \py{SweepSeries} is a \py{Series} where the labels are parameter values.
 
 Defining these objects wasn't necessary; we could do all the same things using \py{Series} objects.  But giving them different names makes the code easier to read and understand, and helps avoid certain kinds of errors (like getting two \py{Series} objects mixed up).
 
@@ -3287,7 +3287,7 @@ So you'd like to check whether the single line is really better and by how much.
 
 Figure~\ref{fig-queue} shows the three scenarios we'll consider.  As we did in the bike share model, we'll assume that a customer is equally likely to arrive during any time step.  I'll denote this probability using the Greek letter lambda, $\lambda$, or the variable name \py{lam}.  The value of $\lambda$ probably varies from day to day, so we'll have to consider a range of possibilities.
 
-Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, always have the same probability of finishing during the next time step, regardless of how long they have been checking out.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
+Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they always have the same probability of finishing during the next time step, regardless of how long they have been checking out.  I'll denote this probability using the Greek letter mu, $\mu$, or the variable name \py{mu}.
 
 If we choose $\mu=1/5$ per minute, the average time for each checkout will be 5 minutes, which is consistent with the data.  Most people takes less than 5 minutes, but a few take substantially longer, which is probably not a bad model of the distribution in real stores.
 
@@ -3326,7 +3326,7 @@ Depending on the quality of the site, the trees might grow more quickly or slowi
 \end{figure}
 
 Figure~\ref{trees-fig01} shows site curves for three different site indices.
-The goal of this case study is to explain the shape of these curves; that is, why trees grow the way they do.
+The goal of this case study is to explain the shape of these curves, that is, why trees grow the way they do.
 
 As a starting place, let's assume that the ability of the tree to gain mass is limited by the area it exposes to sunlight, and that the growth rate (in mass) is proportional to that area.  In that case we can write:
 %
@@ -3348,7 +3348,7 @@ I specify height in feet, and choose units for mass and area so that $\beta=1$ a
 
 $ h_{n+1}^D = h_n^D + \alpha h_n^2 $
 
-The solution to this equation turns out to be close to a straight line, which is not a bad model for the growth curves.  But the model that trees can grow forever, and we know that's not true.  As trees get taller, it gets harder for them to move water and nutrients against the force of gravity, and their growth slows.
+With $D=3$, the solution to this equation is close to a straight line, which is not a bad model for the growth curves.  But the model implies that trees can grow forever, and we know that's not true.  As trees get taller, it gets harder for them to move water and nutrients against the force of gravity, and their growth slows.
 
 We can model this effect by adding a factor to the model similar to what we saw in the logistic model of population growth.  Instead of assuming:
 
@@ -3403,15 +3403,15 @@ The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named
 
 \item {\bf I}: People who are ``infectious", that is, capable of passing along the disease if they come into contact with someone susceptible.
 
-\item {\bf R}: People who are ``recovered".
+\item {\bf R}: People who are ``recovered".  In the basic version of the model, people who have recovered are considered to be immune to reinfection.  That is a reasonable model for some diseases, but not for others, so it should be on the list of assumptions to reconsider later.
 
 \end{itemize}
- 
-In the basic version of the model, people who have recovered are considered to be immune to reinfection.  That is a reasonable model for some diseases, but not for others, so it should be on the list of assumptions to reconsider later.
 
 Let's think about how the number of people in each category changes over time.  Suppose we know that people with the disease are infectious for a period of 4 days, on average.  If 100 people are infectious at a particular point in time, and we ignore the particular time each one became infected, we expect about 1 out of 4 to recover on any particular day.
 
-Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the Greek letter gamma, $\gamma$.  If the total number of people in the population is $N$, and the fraction currently infectious is $i$, the total number of recoveries we expect per day is $\gamma i N$.
+Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we'll denote with the Greek letter gamma, $\gamma$, or the variable name \py{gamma}.
+
+If the total number of people in the population is $N$, and the fraction currently infectious is $i$, the total number of recoveries we expect per day is $\gamma i N$.
 
 \index{recovery rate}
 
@@ -3459,7 +3459,7 @@ SIR models are examples of {\bf compartment models}, so-called because they divi
 \index{flow}
 \index{stock and flow diagram}
 
-In this example, there are three stocks --- susceptible, infectious, and recovered --- and two flows --- new infections and recoveries.  Compartment models are often represented visually using stock-and-flow diagrams (see \url{http://modsimpy.com/stock}.
+In this example, there are three stocks---susceptible, infectious, and recovered---and two flows---new infections and recoveries.  Compartment models are often represented visually using stock and flow diagrams (see \url{http://modsimpy.com/stock}).
 Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
@@ -3831,7 +3831,7 @@ Models like this are useful for testing ``what if?" scenarios.  As an example, w
 
 Suppose there is a vaccine that causes a student to become immune to the Freshman Plague without being infected.  How might you modify the model to capture this effect?
 
-One option is to treat immunization as a short cut from susceptible to recovered without going through infectious.  We can implement this feature like this:
+One option is to treat immunization as a shortcut from susceptible to recovered without going through infectious.  We can implement this feature like this:
 
 \begin{python}
 def add_immunization(system, fraction):
@@ -4105,6 +4105,8 @@ def run_simulation(system, update_func):
 \end{python}
 
 The variables you unpack should be treated as read-only.  Modifying them is not an error, but it might not have the behavior you expect.  In the notebook for this chapter, you can use \py{unpack} to clean up \py{update1}.
+
+%TODO: Consider removing unpack
 
 
 \section{Sweeping beta}
@@ -4654,12 +4656,11 @@ def run_simulation(system, update_func):
 This function is similar to previous versions of \py{run_simulation}.
 
 One difference is that it uses \py{linrange} to make an array of values from \py{t_0} to \py{t_end} with time step \py{dt}.  The result does not include \py{t_end}, so the last value in the array is \py{t_end-dt}.
+Also, it stores the final temperature as a system variable, \py{T_final}.
 
 \index{linrange}
 \index{NumPy}
 \index{array}
-
-Also, it stores the final temperature as a system variable, \py{T_final}.
 
 We can run it like this:
 
@@ -4772,7 +4773,7 @@ solution = fsolve(error_func1, 0.01)
 r_coffee = solution[0]
 \end{python}
 
-The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute}.
+The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
@@ -4809,11 +4810,14 @@ For the coffee cooling problem, we have the volume of each liquid; if we also kn
 %
 \[ C = \rho V c_p \]
 %
-If we assume that the density and specific heat of the milk and coffee are equal, they drop out of the equation, and we can write:
+If the densities of the liquids are equal, they drop out of the equation, and we can write:
 %
 \[ T = \frac{V_1 T_1 + V_2 T_2}{V_1 + V_2} \]
 %
-where $V_1$ and $V_2$ are the volumes of the liquids.  As an exercise, you can look up the density and specific heat of milk to see how good this approximation is.
+where $V_1$ and $V_2$ are the volumes of the liquids.  
+
+For this problem, we'll assume that milk and coffee have the same density and the same specific heat.
+As an exercise, you can look up these quantities to see how good the approximation is.
 
 \index{volume}
 \index{density}
@@ -4991,7 +4995,7 @@ coffee2 = make_system(T_init=90, r=r_coffee2,
 results = run_analysis(coffee2)
 \end{python}
 
-The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with a small difference due to round off.
+The final temperature is \SI{70}{\celsius}, as it should be.  In fact, the results are identical to what we got by simulation, with a small difference due to rounding.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap16.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -5056,7 +5060,7 @@ of the model from a single data set (thus avoiding
 unverifiable assumptions).
 \end{quote}
 
-The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system without too much complexity to be practical.  In this case the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.
+The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system without so much complexity that they are impractical.  In this example, the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.
 
 \index{Occam's Razor}
 
@@ -5393,6 +5397,8 @@ results, details = run_ode_solver(system, slope_func,
 
 The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The biggest relative difference is less than 1\%.
 
+%TODO: Consider adding a figure to show that the two series are visually  identical
+
 
 \section{Least squares}
 
@@ -5691,7 +5697,7 @@ def error_func(params, data):
 Then we passed the error function to \py{fit_leastsq}, which finds the set of parameters that minimizes the errors:
 
 \begin{python}
-best_params, fit_details = fit_leastsq(error_func, params, data)
+best_params, details = fit_leastsq(error_func, params, data)
 \end{python}
 
 %TODO: Anything to say here?
@@ -5712,7 +5718,9 @@ By default it uses an algorithm called RK45, or RKF45, which you can read about 
 \py{fit_leastsq} is based on the SciPy function \py{leastsq}; you can read about it at \url{http://modsimpy.com/sq}.
 By default it uses a version of the Levenberg-Marquardt method, which you can read about at \url{http://modsimpy.com/lm }.
 
-These SciPy functions don't work with the units provided by Pint, so the \py{modsim} library turns off unit-checking before calling them.  This mechanism is a bit of a hack, so you might get some unexpected behavior.  If so, I suggest you make a modest effort to fix them problem, but don't spend too much time on it.
+These SciPy functions don't work with the units provided by Pint, so the \py{modsim} library turns off unit-checking before calling them.  This mechanism is a bit of a hack, so you might get some unexpected behavior.  If so, I suggest you make a modest effort to fix the problem, but don't spend too much time on it.
+
+% TODO: Consider dumping Pint
 
 Carrying units through computations like this is not as common as it should be, so the tools are not as polished as they could be.  I think it is worth trying, because you can catch a lot of errors by checking units; but if it gets to be too much trouble, you can always remove the units from the code.  In that case, you should add comments that document the units for all variables!
 
@@ -5746,7 +5754,7 @@ The initial condition is $I(0) = I_0$.  As in the glucose minimal model, we trea
 \index{insulin minimal model}
 \index{differential equation}
 
-The parameters of this model can be used to estimate, $\phi_1$ and $\phi_2$, which are values that ``describe the sensitivity to glucose of the first and second phase pancreatic responsivity".  They are related to the parameters as follows:
+The parameters of this model can be used to estimate $\phi_1$ and $\phi_2$, which are values that ``describe the sensitivity to glucose of the first and second phase pancreatic responsivity".  They are related to the parameters as follows:
 %
 \[ \phi_1 = \frac{I_{max} - I_b}{k (G_0 - G_b)}\]
 %
@@ -5895,7 +5903,7 @@ As a first example, let's get back to the penny falling from the Empire State Bu
 \index{falling penny}
 \index{air resistance}
 
-Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped with velocity zero, the initial conditions are:
+Given that the Empire State Building is \SI{381}{\meter} high, and assuming that the penny is dropped from a standstill, the initial conditions are:
 
 \index{State object}
 
@@ -6362,7 +6370,7 @@ For the parameters we chose, the jumper bottoms out at about \SI{5}{\meter}, so 
 
 \section{Getting acceleration}
 
-In fact, there are many combinations of \py{L} or decrease \py{k} that would work.  We might want to find the combination that minimizes the peak acceleration of the jumper, providing the maximum time near the sidewalk to make the dunk.
+In fact, there are many combinations of \py{L} and \py{k} that would work.  We might want to find the combination that minimizes the peak acceleration of the jumper, providing the maximum time near the sidewalk to make the dunk.
 
 To do that, we need to know the acceleration of the jumper over time.  Although we compute acceleration in the slope function, it is not included in the results.
 
@@ -6603,7 +6611,7 @@ The return values from the slope function are the derivatives of these component
 \index{velocity}
 \index{position}
 
-The total acceleration of the baseball is the sum of accelerations due to gravity and drag.  These quantities have both magnitude and direction, so they are represented by vectors \py{Vector} objects.
+The total acceleration of the baseball is the sum of accelerations due to gravity and drag.  These quantities have both magnitude and direction, so they are represented by \py{Vector} objects.
 
 We already saw how \py{a_drag} is computed.  \py{a_grav} is a \py{Vector} with magnitude \py{g} pointed in the negative \py{y} direction.
 
@@ -6827,6 +6835,8 @@ for angle in angles:
 \end{figure}
 
 Figure~\ref{chap10-fig03} shows the results.  It looks like the optimal angle is between \SI{40}{\degree} and \SI{45}{\degree}.
+
+%TODO: Draw a vertical line to show this
 
 We can find the optimal angle more precisely and more efficiently using \py{max_bounded}, like this:
 
@@ -7464,6 +7474,8 @@ def error_func1(torque_friction, params):
 \end{python}
 
 But before we call \py{fsolve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
+
+%TODO: remove this when we remove Pint
 
 \index{\py{fsolve}}
 
