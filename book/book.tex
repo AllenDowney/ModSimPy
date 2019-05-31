@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.3.1}
+\newcommand{\theversion}{2.4.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -4709,42 +4709,43 @@ In the previous chapter we wrote a simulation of a cooling cup of coffee.  Given
 
 In general, we don't know the value of \py{r}, but we can use measurements to estimate it.  Given an initial temperature, a final temperature, and the time in between, we can find \py{r} by trial and error.
 
-In this chapter, we'll see a better way to find \py{r}, using a SciPy function called \py{fsolve}.
+In this chapter, we'll see a better way to find \py{r}, using a SciPy function called \py{root_scalar}.
 
 And the we'll get back to solving the coffee cooling problem.
 
-\section{Using fsolve}
-\label{fsolve}
+\section{Finding roots}
+\label{root_scalar}
 
-SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
+SciPy provides a method called \py{root_scalar} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
 %
 \[ f(x) = (x - 1)(x - 2)(x - 3) \]
 %
 where {\bf root} means a value of $x$ that makes $f(x)=0$.  Because of the way I wrote the polynomial, we can see that if $x=1$, the first factor is 0; if $x=2$, the second factor is 0; and if $x=3$, the third factor is 0, so those are the roots.
 
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 \index{root}
 
-But usually it's not that easy.  In that case \py{fsolve} can help.  First, we have to write a function that evaluates $f$:
+But usually it's not that easy.  In that case \py{root_scalar} can help.  First, we have to write a function that evaluates $f$:
 
 \begin{python}
 def func(x):
     return (x-1) * (x-2) * (x-3)
 \end{python}
 
-Now we call \py{fsolve} like this:
+Now we call \py{root_scalar} like this:
 
 \begin{python}
-fsolve(func, x0=0)
+res = root_scalar(func, [1.5, 2.5])
+print(res.root)
 \end{python}
 
-The first argument is the function whose roots we want.  The second argument, \py{x0}, is an initial guess about where a root might be.  Generally, the closer the initial guess is to an actual root, the faster \py{fsolve} runs.  In this case, with the initial guess \py{x0=0}, the result is 1.
+The first argument is the function whose roots we want.  
+The second argument is an interval that contains a root.  
+The result is an object that contains several variables, including \py{root}, which stores the root that was found.
 
-Often \py{fsolve} finds the root that's closest to the initial guess.  In this example, when \py{x0=1.9}, \py{fsolve} returns 2, and when \py{x0=2.9}, \py{fsolve} returns 3.  But this behavior can be unpredictable; with \py{x0=1.5}, \py{fsolve} returns 3.
+So how can we use \py{root_scalar} to estimate \py{r}?  
 
-So how can we use \py{fsolve} to estimate \py{r}?  
-
-What we want is the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
+What we want is the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{root_scalar}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
 
 \begin{python}
 def error_func1(r):
@@ -4766,14 +4767,17 @@ error_func1(r=0.01)
 
 The result is an error of \SI{2.3}{\celsius}, because the final temperature with this value of \py{r} is too high.
 
-Now we can call \py{fsolve} like this:
+With \py{r=0.02}, the error is \SI{-10.9}{\celsius}, which means that the final temperature is too low.  
+So we know that the correct value must be in between.
+
+Now we can call \py{root_scalar} like this:
 
 \begin{python}
-solution = fsolve(error_func1, 0.01)
-r_coffee = solution[0]
+res = root_scalar(error_func1, [0.01, 0.02])
+r_coffee = res.root
 \end{python}
 
-The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
+In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
@@ -5626,9 +5630,9 @@ def run_simulation(system, update_func):
     return frame
 \end{python}
 
-In Chapter~\ref{chap16} we used \py{fsolve} to find the value of a parameter that yields a particular result.  We defined an error function:
+In Chapter~\ref{chap16} we used \py{root_scalar} to find the value of a parameter that yields a particular result.  We defined an error function:
 
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 
 \begin{python}
 def error_func1(r):
@@ -5637,11 +5641,11 @@ def error_func1(r):
     return system.T_final - 70
 \end{python}
 
-And passed it to \py{fsolve} with an initial guess, like this:
+And passed it to \py{root_scalar} with an initial interval, like this:
 
 \begin{python}
-solution = fsolve(error_func1, 0.01)
-r_coffee = solution[0]
+res = root_scalar(error_func1, [0.01, 0.02])
+r_coffee = res.root
 \end{python}
 
 In Chapter~\ref{chap17} we used \py{interpolate}, which returns a function:
@@ -5707,10 +5711,12 @@ best_params, details = fit_leastsq(error_func, params, data)
 
 \py{unpack} is a function in the \py{modsim} library that copies the variables and values from a \py{System} object into a special Python data structure that stores global variables.  To be honest, it is a bit of a hack; that is, it may be expedient, but it might not be an example of software engineering you should emulate.
 
-\py{fsolve} is based on a Scipy function that is also called \py{fsolve}; you can read more about it at \url{http://modsimpy.com/fsolve}.
+% TODO: Add the pointer to root_scalar
+
+\py{root_scalar} is based on a Scipy function that is also called \py{root_scalar}; you can read more about it at \url{http://modsimpy.com/root_scalar}.
 It uses a numerical method called Powell's method, and you can read more about that at \url{http://modsimpy.com/powell}.
 
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 
 \py{run_ode_solver} uses the SciPy function \py{solve_ivp}, which you can read about at \url{http://modsimpy.com/ivp}.
 By default it uses an algorithm called RK45, or RKF45, which you can read about at \url{http://modsimpy.com/runge}).
@@ -6240,151 +6246,6 @@ Figure~\ref{chap09-fig02} shows the result.  It only takes a few seconds for the
 In the notebook for this chapter, you'll have a chance to extend this model.
 
 
-\section{Bungee jumping}
-\label{bungee}
-
-Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
-
-Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
-
-\begin{itemize}
-
-\item  Initially the bungee cord hangs from a crane with the attachment point \SI{80}{\meter} above a cup of tea.
-
-\item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
-
-\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
-
-\item The mass of the jumper is \SI{75}{\kilogram}.
-
-\item The jumper is subject to drag force, as in the previous model, so that their terminal velocity is \SI{60}{\meter \per \second}.
-
-\end{itemize}
-
-Our objective is to choose the length of the cord, \py{L}, and its spring constant, \py{k}, so that the jumper falls all the way to the tea cup, but no farther!
-
-We'll start with the length of the bungee cord, \py{L} at \SI{25}{\meter} and spring constant, \py{k} at \SI{40}{\newton \per \meter}.  Here's a \py{Params} object with all of these parameters:
-
-\begin{python}
-params = Params(y_attach = 80 * m,
-                v_init = 0 * m / s,
-                g = 9.8 * m/s**2,
-                mass = 75 * kg,
-                area = 1 * m**2,
-                rho = 1.2 * kg/m**3,
-                v_term = 60 * m / s,
-                L = 25 * m,
-                k = 40 * N / m)
-\end{python}
-
-And here's a version of \py{make_system} that uses \py{v_term} to compute \py{C_d}:
-
-\begin{python}
-def make_system(params):
-    unpack(params)
-    
-    C_d = 2 * mass * g / (rho * area * v_term**2)
-    init = State(y=y_attach, v=v_init)
-    t_end = 20 * s
-
-    return System(params, C_d=C_d, 
-                  init=init, t_end=t_end)
-\end{python}
-
-We can run it like this:
-
-\begin{python}
-system = make_system(params)
-\end{python}
-
-We need a function to compute spring force based on the altitude of the jumper, \py{y}:
-
-\begin{python}
-def spring_force(y, system):
-    unpack(system)
-    distance_fallen = y_attach - y
-    if distance_fallen <= L:
-        return 0 * N
-    
-    extension = distance_fallen - L
-    f_spring = k * extension
-    return f_spring
-\end{python}
-
-\py{distance_fallen} is the distance of the jumper from the attachment point.  If the cord is not fully extended, the spring force is 0.  Otherwise we compute the extension of the cord, \py{extension}, and the spring force, \py{f_spring}.
-
-I'll also define a function to compute drag force:
-
-\begin{python}
-def drag_force(v, system):
-    unpack(system)
-    f_drag = -np.sign(v) * rho * v**2 * C_d * area / 2
-    return f_drag
-\end{python}
-
-\py{drag_force} uses the NumPy function \py{sign}, which returns 1 if the argument is positive, -1 if it is negative, and 0 if it is 0.  This ensures that the drag force is always in the opposite direction of velocity.
-
-\index{NumPy}
-\index{sign}
-
-Now here's the slope function:
-
-\begin{python}
-def slope_func(state, t, system):
-    y, v = state
-    unpack(system)
-    
-    a_drag = drag_force(v, system) / mass
-    a_spring = spring_force(y, system) / mass
-    dvdt = -g + a_drag + a_spring
-    
-    return v, dvdt
-\end{python}
-
-\py{slope_func} uses \py{spring_force} and \py{drag_force} to compute forces, then divides by \py{mass} to get accelerations.
-
-We can run the simulation like this:
-
-\begin{python}
-ts = linspace(0, system.t_end, 301)
-results, details = run_ode_solver(system, slope_func,
-                                  max_step=0.3*s)
-\end{python}
-
-Again, I use \py{max_step} so the results look better when plotted.
-Figure~\ref{chap09-fig03} shows the results.
-
-\begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-fig03.pdf}}
-\caption{Position and velocity of the bungee jumper.}
-\label{chap09-fig03}
-\end{figure}
-
-We can find the altitude of the jumper at the lowest point like this:
-
-\begin{python}
-min(results.y)
-\end{python}
-
-For the parameters we chose, the jumper bottoms out at about \SI{5}{\meter}, so we need to increase \py{L} or decrease \py{k}.  In the notebook for this chapter, you'll have to a chance to find the best parameters for the bungee dunk.
-
-\section{Getting acceleration}
-
-In fact, there are many combinations of \py{L} and \py{k} that would work.  We might want to find the combination that minimizes the peak acceleration of the jumper, providing the maximum time near the sidewalk to make the dunk.
-
-To do that, we need to know the acceleration of the jumper over time.  Although we compute acceleration in the slope function, it is not included in the results.
-
-It might be tempting to record the acceleration each time the slope function runs, but we should not do that.  The ODE solver calls the slope function many times with different values of \py{state} and \py{t}.  Because of the way the solver works, not all of the states and times are actually part of the solution.  So recording acceleration while the solver is running would not work.
-
-Instead, we can use the computed velocities to estimate acceleration as a function of time.
-
-The \py{modsim} library provides \py{gradient}, which uses NumPy to estimate the derivative of a \py{TimeSeries}.  Here's how it works:
-
-\begin{python}
-a = gradient(results.v)
-\end{python}
-
-In the notebook for this chapter, \py{chap21.ipynb}, you can finish this problem by finding the combination of \py{L} and \py{k} that allows the jumper to complete the bungee dunk while minimizing the acceleration they experience.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Projectiles in 2-D}
@@ -6544,7 +6405,7 @@ The mass, diameter, and drag coefficient of the baseball are from the sources in
 
 \index{density}
 
-The following function uses the \py{Params} object to make a \py{System} object.  This two-step process makes the code more readable and makes it easier to work with functions like \py{fsolve}.
+The following function uses the \py{Params} object to make a \py{System} object.  This two-step process makes the code more readable and makes it easier to work with functions like \py{root_scalar}.
 
 \index{System object}
 \index{\py{make_system}}
@@ -6577,7 +6438,8 @@ def drag_force(v, system):
     return f_drag
 \end{python}
 
-This function differs from the one in Section~\ref{bungee} because it takes \py{v} as a \py{Vector} and returns \py{f_drag} as a \py{Vector}.  It uses the drag equation to compute the magnitude of the drag force, and the \py{hat} function to compute the direction.  \py{-v.hat()} computes a unit vector pointing in the opposite direction of \py{v}.
+This function takes \py{v} as a \py{Vector} and returns \py{f_drag} as a \py{Vector}.
+It uses the drag equation to compute the magnitude of the drag force, and the \py{hat} function to compute the direction.  \py{-v.hat()} computes a unit vector pointing in the opposite direction of \py{v}.
 
 \index{unit vector}
 \index{slope function}
@@ -6838,17 +6700,17 @@ Figure~\ref{chap10-fig03} shows the results.  It looks like the optimal angle is
 
 %TODO: Draw a vertical line to show this
 
-We can find the optimal angle more precisely and more efficiently using \py{max_bounded}, like this:
+We can find the optimal angle more precisely and more efficiently using \py{maximize_scalar}, like this:
 
 \begin{python}
-res = max_bounded(range_func, [0, 90], params)
+res = maximize_scalar(range_func, [0, 90], params)
 \end{python}
 
-The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument can be any object; it gets passed along as an argument when \py{max_bounded} calls \py{range_func}.
+The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument can be any object; it gets passed along as an argument when \py{maximize_scalar} calls \py{range_func}.
 
 \index{Params object}
 
-The return value from \py{max_bounded} is an \py{ModSimSeries} that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
+The return value from \py{maximize_scalar} is an \py{ModSimSeries} that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
 
 For these parameters, the optimal angle is \SI{41.1}{\degree}, which yields a range of \SI{103.4}{\meter}.
 
@@ -6863,13 +6725,13 @@ In the notebook for this chapter, \py{chap22.ipynb}, you'll have to chance to fi
 
 \begin{itemize}
 
-\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that's not what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{max_bounded} to find the revised optimum.
+\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that's not what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{maximize_scalar} to find the revised optimum.
 
 \item Once you can find the optimal angle for any velocity, you have to find the minimum velocity that gets the ball over the wall.  You'll write a function that takes a velocity as a parameter, computes the optimal angle for that velocity, and returns the height of the ball, at the wall, using the optimal angle.
 
-\item Finally, you'll use \py{fsolve} to find the velocity that makes the optimal height at the wall just barely 37 feet.
+\item Finally, you'll use \py{root_scalar} to find the velocity that makes the optimal height at the wall just barely 37 feet.
   
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 
 \end{itemize}
 
@@ -7459,9 +7321,9 @@ def run_two_phases(force, torque_friction, params):
     return results
 \end{python}
 
-Now we can use \py{run_two_phases} to write an error function we can use, with \py{fsolve}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
+Now we can use \py{run_two_phases} to write an error function we can use, with \py{root_scalar}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
 
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 \index{error function}
 
 \begin{python}
@@ -7473,33 +7335,15 @@ def error_func1(torque_friction, params):
     return theta_final - 1.5
 \end{python}
 
-But before we call \py{fsolve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
-
-%TODO: remove this when we remove Pint
-
-\index{\py{fsolve}}
-
-However, now that we have a working simulation, and some confidence that it is correct, it is less important to carry units through the computation.
-
-We can drop them by creating a new \py{Params} object with the same values and no units.  The \py{modsim} library provides \py{remove_unit}, which does just that.
-
-\begin{python}
-params_nodim = remove_units(params)
-\end{python}
-
-%\index{remove_units}
-
-The rest of the code works without modification, in part because I designed it to keep almost all of the units in one place.
-
-Now we can use \py{fsolve} to estimate torque due to friction.
+Now we can use \py{root_scalar} to estimate torque due to friction.
 
 \index{torque}
 \index{friction}
-\index{\py{fsolve}}
+\index{\py{root_scalar}}
 
 \begin{python}
-guess = 0.2
-res = fsolve(error_func1, guess, params_nodim)
+res = root_scalar(error_func1, [0.5, 2], params)
+force = res.root
 \end{python}
 
 The result is \SI{0.166}{\newton\meter}, a little less than the initial guess.
@@ -7588,10 +7432,10 @@ def range_func(angle, params):
     return x_dist
 \end{python}
 
-Then we use \py{max_bounded} to find the launch angle that maximizes range:
+Then we use \py{maximize_scalar} to find the launch angle that maximizes range:
 
 \begin{python}
-res = max_bounded(range_func, [0, 90], params)
+res = maximize_scalar(range_func, [0, 90], params)
 \end{python}
 
 With that, your toolkit is complete.  Chapter~\ref{chap24} and Chapter~\ref{chap25} introduce the physics of rotation, but no new computational tools.
@@ -7611,22 +7455,47 @@ The \py{Vector} object is a \py{Quantity}, as defined by Pint, so it normally ha
 
 \index{Vector}
 
-\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read about it at \url{http://modsimpy.com/minimize}).
+\py{maximize_scalar} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read about it at \url{http://modsimpy.com/minimize}).
 
-\index{\py{max_bounded}}
+\index{\py{maximize_scalar}}
 \index{SciPy}
 \index{\py{minimize_scalar}}
 \index{Brent's method}
 
 
+\section{Bungee jumping}
+\label{bungee}
+
+Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
+
+Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
+
+\begin{itemize}
+
+\item  Initially the bungee cord hangs from a crane with the attachment point \SI{80}{\meter} above a cup of tea.
+
+\item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
+
+\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
+
+\item The mass of the jumper is \SI{75}{\kilogram}.
+
+\item The jumper is subject to drag force so that their terminal velocity is \SI{60}{\meter \per \second}.
+
+\end{itemize}
+
+Our objective is to choose the length of the cord, \py{L}, and its spring constant, \py{k}, so that the jumper falls all the way to the tea cup, but no farther!
+
+In the repository for this book, you will find a notebook, \py{bungee.ipynb}, which contains starter code and exercises for this case study.
+
+
 \section{Bungee dunk revisited}
 
-In Chapter~\ref{chap21}, we simulated a bungee jump with a model that took into account gravity, air resistance, and the spring force of the bungee cord, but we ignored the weight of the cord.
+In the previous case study, we assume that the cord applies no force to the jumper until it is stretched.
+It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
 \index{bungee jump}
 \index{bungee cord}
-
-It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
 At \url{http://modsimpy.com/bungee} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
 %
@@ -7636,7 +7505,10 @@ where $g$ is acceleration due to gravity, $L$ is the length of the cord, and $\m
 
 If you don't believe that their model is correct, this video might convince you: \url{http://modsimpy.com/drop}.
 
-Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
+In the repository for this book, you will find a notebook, \py{bungee2.ipynb}, which contains starter code and exercises for this case study.
+How does the behavior of the system change as we vary the mass of the cord?
+When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
+
 
 
 \section{Spider-Man}
@@ -7719,7 +7591,7 @@ We'll use the following parameters:
 
 \end{enumerate}
 
-In the repository for this book, you will find a notebook, \py{spiderman.ipynb}, which contains starter code.   Read through the notebook and run the code.  It uses \py{minimize}, which is a SciPy function that can search for an optimal set of parameters (as contrasted with \py{min_bounded}, which can only search along a single axis).
+In the repository for this book, you will find a notebook, \py{spiderman.ipynb}, which contains starter code.   Read through the notebook and run the code.  It uses \py{minimize}, which is a SciPy function that can search for an optimal set of parameters (as contrasted with \py{minimize_scalar}, which can only search along a single axis).
 
 
 \section{Kittens}
