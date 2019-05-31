@@ -30,6 +30,11 @@ import pint
 UNITS = pint.UnitRegistry()
 Quantity = UNITS.Quantity
 
+# TODO: Consider making this optional
+from pint.errors import UnitStrippedWarning
+import warnings
+warnings.simplefilter('error', UnitStrippedWarning)
+
 # expose some names so we can use them without dot notation
 from copy import copy
 from numpy import sqrt, log, exp, pi
@@ -38,12 +43,12 @@ from time import sleep
 
 from scipy.interpolate import interp1d
 from scipy.interpolate import InterpolatedUnivariateSpline
+
 from scipy.integrate import odeint
 from scipy.integrate import solve_ivp
-from scipy.optimize import leastsq
-from scipy.optimize import minimize_scalar
 
-import scipy.optimize
+#from scipy.optimize import leastsq
+#from scipy.optimize import minimize_scalar
 
 
 def flip(p=0.5):
@@ -80,8 +85,7 @@ def cart2pol(x, y, z=None):
     x = np.asarray(x)
     y = np.asarray(y)
 
-    # TODO: use hypot?
-    rho = np.sqrt(x**2 + y**2)
+    rho = np.hypot(x, y)
     theta = np.arctan2(y, x)
 
     if z is None:
@@ -93,20 +97,12 @@ def cart2pol(x, y, z=None):
 def pol2cart(theta, rho, z=None):
     """Convert polar coordinates to Cartesian.
 
-    theta: number or sequence
+    theta: number or sequence in radians
     rho: number or sequence
     z: number or sequence (optional)
 
     returns: x, y OR x, y, z
     """
-    if hasattr(theta, 'units'):
-        if theta.units == UNITS.degree:
-            theta = theta.to(UNITS.radian)
-        if theta.units != UNITS.radian:
-            msg = """In pol2cart, theta must be either a number or
-            a Quantity in degrees or radians."""
-            raise ValueError(msg)
-
     x = rho * np.cos(theta)
     y = rho * np.sin(theta)
 
@@ -128,19 +124,17 @@ def linspace(start, stop, num=50, **options):
 
     returns: array or Quantity
     """
+    # drop the units
+    start = magnitude(start)
+    stop = magnitude(stop)
+
     underride(options, dtype=np.float64)
 
-    # see if either of the arguments has units
-    units = getattr(start, 'units', None)
-    units = getattr(stop, 'units', units)
-
     array = np.linspace(start, stop, num, **options)
-    if units:
-        array = array * units
     return array
 
 
-def linrange(start=0, stop=None, step=1, **options):
+def linrange(start=0, stop=None, step=1, endpoint=False, **options):
     """Returns an array of evenly-spaced values in an interval.
 
     By default, the last value in the array is `stop-step`
@@ -155,30 +149,24 @@ def linrange(start=0, stop=None, step=1, **options):
     stop: last value
     step: space between values
 
-    returns: array or Quantity
+    returns: NumPy array
     """
     if stop is None:
         stop = start
         start = 0
 
-    underride(options, endpoint=False)
-
-    # see if any of the arguments has units
-    units = getattr(start, 'units', None)
-    units = getattr(stop, 'units', units)
-    units = getattr(step, 'units', units)
-
     n = np.round((stop - start) / step)
-    if options['endpoint']:
+    if endpoint:
         n += 1
 
-    array = np.full(int(n), magnitude(step))
-    array[0] = magnitude(start)
-    array = np.cumsum(array)
+    # drop the units
+    start = magnitude(start)
+    step = magnitude(step)
 
-    if units:
-        array = array * units
-    return array
+    array = np.full(int(n), step, **options)
+    if n:
+        array[0] = start
+    return np.cumsum(array)
 
 
 def magnitude(x):
@@ -204,7 +192,7 @@ def magnitudes(x):
         return magnitude(x)
 
 
-def units(x):
+def get_units(x):
     """Returns the units of a Quantity or number.
 
     x: Quantity or number
@@ -223,7 +211,6 @@ def remove_units(series):
     returns: new Series object
     """
     res = copy(series)
-    print(type(res))
     for label, value in res.iteritems():
         res[label] = magnitude(value)
     return res
@@ -243,75 +230,72 @@ def require_units(x, units):
         return Quantity(x, units)
 
 
-def fit_leastsq(error_func, params, *args, **options):
+def leastsq(error_func, x0, *args, **options):
     """Find the parameters that yield the best fit for the data.
 
-    `params` can be a sequence, array, or Series
+    `x0` can be a sequence, array, Series, or Params
 
-    Whatever arguments are provided are passed along to `error_func`
+    Positional arguments are passed along to `error_func`.
+
+    Keyword arguments are passed to `scipy.optimize.leastsq`
 
     error_func: function that computes a sequence of errors
-    params: initial guess for the best parameters
-    data: the data to be fit; will be passed to min_fun
-    options: any other arguments are passed to leastsq
-    """
-    # if any of the params are quantities, strip the units
-    x0 = [magnitude(x) for x in params]
+    x0: initial guess for the best parameters
+    args: passed to error_func
+    options: passed to leastsq
 
+    :returns: Params object with best_params and ModSimSeries with details
+    """
     # override `full_output` so we get a message if something goes wrong
     options['full_output'] = True
 
     # run leastsq
-    with units_off():
-        best_params, cov_x, infodict, mesg, ier = leastsq(error_func,
-                                         x0=x0, args=args, **options)
+    t = scipy.optimize.leastsq(error_func, x0=x0, args=args, **options)
+    best_params, cov_x, infodict, mesg, ier = t
 
+    # pack the results into a ModSimSeries object
     details = ModSimSeries(infodict)
     details.set(cov_x=cov_x, mesg=mesg, ier=ier)
 
     # if we got a Params object, we should return a Params object
-    if isinstance(params, Params):
-        best_params = Params(Series(best_params, params.index))
+    if isinstance(x0, Params):
+        best_params = Params(Series(best_params, x0.index))
 
     # return the best parameters and details
     return best_params, details
 
 
-def min_bounded(min_func, bounds, *args, **options):
+def minimize_scalar(min_func, bounds, *args, **options):
     """Finds the input value that minimizes `min_func`.
 
-    Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
+    Wrapper for
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
     min_func: computes the function to be minimized
-    bounds: sequence of two values, lower and upper bounds of the
-            range to be searched
+    bounds: sequence of two values, lower and upper bounds of the range to be searched
     args: any additional positional arguments are passed to min_func
     options: any keyword arguments are passed as options to minimize_scalar
 
     returns: ModSimSeries object
     """
-    # try:
-    #     print(bounds[0])
-    #     min_func(bounds[0], *args)
-    # except Exception as e:
-    #     msg = """Before running scipy.integrate.min_bounded, I tried
-    #              running the slope function you provided with the
-    #              initial conditions in system and t=0, and I got
-    #              the following error:"""
-    #     logger.error(msg)
-    #     raise(e)
+    try:
+        min_func(bounds[0], *args)
+    except Exception as e:
+        msg = """Before running scipy.integrate.minimize_scalar, I tried
+                 running the slope function you provided with the
+                 initial conditions in system and t=0, and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
 
     underride(options, xatol=1e-3)
 
-    # TODO: Do we need to remove units from bounds?
-
-    with units_off():
-        res = minimize_scalar(min_func,
-                              bracket=bounds,
-                              bounds=bounds,
-                              args=args,
-                              method='bounded',
-                              options=options)
+    res = scipy.optimize.minimize_scalar(min_func,
+                                         bracket=bounds,
+                                         bounds=bounds,
+                                         args=args,
+                                         method='bounded',
+                                         options=options)
 
     if not res.success:
         msg = """scipy.optimize.minimize_scalar did not succeed.
@@ -321,7 +305,7 @@ def min_bounded(min_func, bounds, *args, **options):
     return ModSimSeries(res)
 
 
-def max_bounded(max_func, bounds, *args, **options):
+def maximize_scalar(max_func, bounds, *args, **options):
     """Finds the input value that maximizes `max_func`.
 
     Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
@@ -337,7 +321,8 @@ def max_bounded(max_func, bounds, *args, **options):
     def min_func(*args):
         return -max_func(*args)
 
-    res = min_bounded(min_func, bounds, *args, **options)
+    res = minimize_scalar(min_func, bounds, *args, **options)
+
     # we have to negate the function value before returning res
     res.fun = -res.fun
     return res
@@ -346,7 +331,8 @@ def max_bounded(max_func, bounds, *args, **options):
 def minimize(min_func, x0, *args, **options):
     """Finds the input value that minimizes `min_func`.
 
-    Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+    Wrapper for
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
     min_func: computes the function to be minimized
     x0: initial guess
@@ -357,8 +343,7 @@ def minimize(min_func, x0, *args, **options):
     """
     underride(options, tol=1e-3)
 
-    with units_off():
-        res = scipy.optimize.minimize(min_func, x0, *args, **options)
+    res = scipy.optimize.minimize(min_func, x0, *args, **options)
 
     return ModSimSeries(res)
 
@@ -390,12 +375,9 @@ def run_odeint(system, slope_func, **options):
                  object that specifies the initial condition:"""
         raise ValueError(msg)
 
-    # make the system parameters available as globals
-    unpack(system)
-
     # try running the slope function with the initial conditions
     try:
-        slope_func(init, ts[0], system)
+        slope_func(system.init, system.ts[0], system)
     except Exception as e:
         msg = """Before running scipy.integrate.odeint, I tried
                  running the slope function you provided with the
@@ -410,12 +392,11 @@ def run_odeint(system, slope_func, **options):
     args = (system,)
 
     # now we're ready to run `odeint` with `init` and `ts` from `system`
-    with units_off():
-        array = odeint(slope_func, list(init), ts, args, **options)
+    array = odeint(slope_func, list(system.init), system.ts, args, **options)
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
-    frame = TimeFrame(array, columns=init.index, index=ts, dtype=np.float64)
+    frame = TimeFrame(array, columns=system.init.index, index=system.ts, dtype=np.float64)
     return frame
 
 
@@ -448,22 +429,25 @@ def run_ode_solver(system, slope_func, **options):
                  final time:"""
         raise ValueError(msg)
 
-    # make the system parameters available as globals
-    unpack(system)
+    # remove units from the system object
+    system = remove_units(system)
+    system.init = remove_units(system.init)
+
+    # TODO: remove units from max_step?
 
     # the default value for t_0 is 0
     t_0 =  getattr(system, 't_0', 0)
 
     # try running the slope function with the initial conditions
-    # try:
-    #     slope_func(init, t_0, system)
-    # except Exception as e:
-    #     msg = """Before running scipy.integrate.solve_ivp, I tried
-    #              running the slope function you provided with the
-    #              initial conditions in `system` and `t=t_0` and I got
-    #              the following error:"""
-    #     logger.error(msg)
-    #     raise(e)
+    try:
+        slope_func(system.init, t_0, system)
+    except Exception as e:
+        msg = """Before running scipy.integrate.solve_ivp, I tried
+                 running the slope function you provided with the
+                 initial conditions in `system` and `t=t_0` and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
 
     # wrap the slope function to reverse the arguments and add `system`
     f = lambda t, y: slope_func(y, t, system)
@@ -485,18 +469,8 @@ def run_ode_solver(system, slope_func, **options):
     except TypeError:
         events = wrap_event(events)
 
-    # remove dimensions from the initial conditions.
-    # we need this because otherwise `init` gets copied into the
-    # results array along with its units
-    # try:
-    #     y_0 = [magnitude(x) for x in init]
-    # except TypeError:
-    #     y_0 = [magnitude(init)]
-    y_0 = [magnitude(x) for x in init]
-
     # run the solver
-    with units_off():
-        bunch = solve_ivp(f, [t_0, t_end], y_0, events=events, **options)
+    bunch = solve_ivp(f, [t_0, system.t_end], system.init, events=events, **options)
 
     # separate the results from the details
     y = bunch.pop('y')
@@ -504,8 +478,91 @@ def run_ode_solver(system, slope_func, **options):
     details = ModSimSeries(bunch)
 
     # pack the results into a TimeFrame
-    results = TimeFrame(np.transpose(y), index=t, columns=init.index)
+    results = TimeFrame(np.transpose(y), index=t, columns=system.init.index)
     return results, details
+
+
+def check_system(system, slope_func):
+    """
+
+    :param system:
+    :param slope_func:
+    :return:
+    """
+    # make sure `system` contains `init`
+    if not hasattr(system, 'init'):
+        msg = """It looks like `system` does not contain `init`
+                 as a system variable.  `init` should be a State
+                 object that specifies the initial condition:"""
+        raise ValueError(msg)
+
+    # make sure `system` contains `t_end`
+    if not hasattr(system, 't_end'):
+        msg = """It looks like `system` does not contain `t_end`
+                 as a system variable.  `t_end` should be the
+                 final time:"""
+        raise ValueError(msg)
+
+    # the default value for t_0 is 0
+    t_0 =  getattr(system, 't_0', 0)
+
+    # try running the slope function with the initial conditions
+    try:
+        slope_func(system.init, t_0, system)
+    except Exception as e:
+        msg = """Before running the ODE solver, I tried
+                 running the slope function you provided with the
+                 initial conditions in `system` and `t=t_0` and I got
+                 the following error:"""
+        logger.error(msg)
+        raise(e)
+
+
+def run_euler(system, slope_func, **options):
+    """Computes a numerical solution to a differential equation.
+
+    `system` must contain `init` with initial conditions,
+    `t_end` with the end time, and `dt` with the time step.
+
+    `system` may contain `t_0` to override the default, 0
+
+    It can contain any other parameters required by the slope function.
+
+    `options` can be ...
+
+    system: System object
+    slope_func: function that computes slopes
+
+    returns: TimeFrame
+    """
+    check_system(system, slope_func)
+
+    # the default value for t_0 is 0
+    t_0 =  getattr(system, 't_0', 0)
+
+    # get the initial conditions
+    init, t_end, dt = system.init, system.t_end, system.dt
+
+    # make the TimeFrame
+    frame = TimeFrame(columns=init.index)
+    frame.row[0] = init
+    ts = linrange(0, t_end, dt) * get_units(t_end)
+
+    # run the solver
+    for t1 in ts:
+        y1 = frame.row[t1]
+        slopes = slope_func(y1, t1, system)
+        k = [slope * dt for slope in slopes]
+        t2 = t1 + dt
+        y2 = y1 + k
+        frame.row[t2] = y2
+
+    return frame
+
+
+# TODO: Implement Ralston
+
+# TODO: Implement leapfrog
 
 
 def fsolve(func, x0, *args, **options):
@@ -534,13 +591,113 @@ def fsolve(func, x0, *args, **options):
     # make the tolerance more forgiving than the default
     underride(options, xtol=1e-6)
 
-    x0 = magnitude(x0)
-
     # run fsolve
-    with units_off():
-        result = scipy.optimize.fsolve(func, x0, args=args, **options)
+    result = scipy.optimize.fsolve(func, x0, args=args, **options)
 
     return result
+
+
+def root_scalar(func, bracket, *args, **options):
+    """Return the roots of the (non-linear) equations
+    defined by func(x) = 0 given a starting estimate.
+
+    Uses scipy.optimize.root_scalar, with extra error-checking.
+
+    func: function to find the roots of
+    bracket:
+    args: additional positional arguments are passed along to root_scalar,
+          which passes them along to func
+
+    returns: solution as an array
+    """
+    x0 = bracket[0]
+
+    # make sure we can run the given function with x0
+    try:
+        error = func(x0, *args)
+    except Exception as e:
+        msg = """Before running scipy.optimize.root_scalar, I tried
+                 running the error function you provided with the x0
+                 you provided, and I got the following error:"""
+        logger.error(msg)
+        raise(e)
+
+    if isinstance(error, Quantity):
+        msg = """It looks like your error function returns a Quantity
+                 with units.  In order to work with root_scalar, it
+                 has to return a number.  You can use magnitude()
+                 to get the unitless part of a Quantity."""
+        raise ValueError(msg)
+
+    # add the bracket to the options
+    underride(options, bracket=bracket)
+
+    # run root_scalar
+    res = scipy.optimize.root_scalar(func, args=args, **options)
+
+    return res
+
+
+def root_bisect(error_func, bracket, *args, **options):
+    """Return the roots of the (non-linear) equations
+    defined by error_func(x) = 0 given a starting bracket.
+
+    error_func: function to find the roots of
+    bracket: interval that brackets at least one root
+    args: additional positional arguments are passed along to error_func
+
+    returns: ModSimSeries with results
+    """
+    maxiter = options.get('maxiter', 100)
+    rtol = options.get('rtol', 1e-7)
+
+    def success(**kwargs):
+        return ModSimSeries(dict(converged=True, **kwargs))
+
+    def failure(**kwargs):
+        return ModSimSeries(dict(converged=False, **kwargs))
+
+    x0, x1 = bracket
+
+    y0 = error_func(x0, *args)
+    if y0 == 0:
+        return success(root=x0)
+
+    y1 = error_func(x1, *args)
+    if y1 == 0:
+        return success(root=x1)
+
+    for i in range(maxiter):
+
+        # check the bracket
+        if np.sign(y0 * y1) > 0:
+            return failure(flag='%f and %f do not bracket a root' % (x0, x1))
+
+        # bisection
+        x2 = (x0 + x1) / 2
+
+        # secant
+        #x2 = x1 - y1 * (x1 - x0) / (y1 - y0)
+
+        # check for convergence
+        if abs(x1-x0) / x2 < rtol:
+            return success(root=x2)
+
+        # evaluate the error function
+        y2 = error_func(x2, *args)
+        if y2 == 0:
+            return success(root=x2)
+
+        # make the new bracket
+        if np.sign(y0 * y2) > 0:
+            x0 = x2
+            y0 = y2
+        else:
+            x1 = x2
+            y1 = y2
+
+    # if we exited the loop, too many iterations
+    return failure(root=x2, flag='maximum iterations = %d exceeded' % maxiter)
 
 
 def crossings(series, value):
@@ -553,8 +710,27 @@ def crossings(series, value):
 
     returns: sequence of labels
     """
-    interp = InterpolatedUnivariateSpline(series.index, series-value)
+    values = magnitudes(series - value)
+    interp = InterpolatedUnivariateSpline(series.index, values)
     return interp.roots()
+
+
+def has_nan(a):
+    """Checks whether the an array contains any NaNs.
+
+    :param a: NumPy array or Pandas Series
+    :return: boolean
+    """
+    return np.any(np.isnan(a))
+
+
+def is_strictly_increasing(a):
+    """Checks whether the elements of an array are strictly increasing.
+
+    :param a: NumPy array or Pandas Series
+    :return: boolean
+    """
+    return np.all(np.diff(a) > 0)
 
 
 def interpolate(series, **options):
@@ -565,11 +741,15 @@ def interpolate(series, **options):
 
     returns: function that maps from the index of the series to values
     """
-    # TODO: add error checking for nonmonotonicity
-
-    if sum(series.index.isnull()):
+    if has_nan(series.index):
         msg = """The Series you passed to interpolate contains
                  NaN values in the index, which would result in
+                 undefined behavior.  So I'm putting a stop to that."""
+        raise ValueError(msg)
+
+    if not is_strictly_increasing(series.index):
+        msg = """The Series you passed to interpolate has an index
+                 that is not strictly increasing, which would result in
                  undefined behavior.  So I'm putting a stop to that."""
         raise ValueError(msg)
 
@@ -579,27 +759,21 @@ def interpolate(series, **options):
 
     # call interp1d, which returns a new function object
     interp_func = interp1d(series.index, series.values, **options)
-
-    units = getattr(series, 'units', None)
-    if units:
-        return lambda x: Quantity(interp_func(x), units)
-    else:
-        return interp_func
+    return interp_func
 
 
 def interp_inverse(series, **options):
     """Interpolate the inverse function of a Series.
 
     series: Series object, represents a mapping from `a` to `b`
-    kind: string, which kind of iterpolation
-    options: keyword arguments passed to interpolate
+    options: any legal options to scipy.interpolate.interp1d
 
     returns: interpolation object, can be used as a function
              from `b` to `a`
     """
     inverse = Series(series.index, index=series.values)
-    T = interpolate(inverse, **options)
-    return T
+    interp_func = interpolate(inverse, **options)
+    return interp_func
 
 
 def unpack(series):
@@ -784,7 +958,8 @@ def legend(**options):
 
     ax = plt.gca()
     handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles, labels, **options)
+    if handles:
+        ax.legend(handles, labels, **options)
 
 
 def remove_from_legend(bad_labels):
@@ -800,28 +975,6 @@ def remove_from_legend(bad_labels):
             handle_list.append(handle)
             label_list.append(label)
     ax.legend(handle_list, label_list)
-
-
-# TODO: Either finish SubPlots or remove it
-class SubPlots:
-
-    def __init__(self, fig, axes_seq):
-        self.fig = fig
-        self.axes_seq = axes_seq
-        self.current_axes_index = 0
-
-    def current_axes(self):
-        return self.axes_seq(self.current_axes_index)
-
-    # TODO: consider making SubPlots iterable
-    def next_axes(self):
-        self.current_axes_index += 1
-        return self.current_axes()
-
-
-def subplots(*args, **options):
-    fig, axes_seq = plt.subplots(*args, **options)
-    return SubPlots(fig, axes_seq)
 
 
 def subplot(nrows, ncols, plot_number, **options):
@@ -882,6 +1035,28 @@ class ModSimSeries(pd.Series):
 
     copy = __copy__
 
+    def __getitem__(self, key):
+        """
+
+        If the key is a Quantity, its units are stripped.
+
+        :param key:
+        :return:
+        """
+        key = magnitude(key)
+        return super().__getitem__(key)
+
+    def __setitem__(self, key, value):
+        """
+
+        If the key is a Quantity, its units are stripped.
+
+        :param key:
+        :param value:
+        """
+        key = magnitude(key)
+        super().__setitem__(key, value)
+
     def set(self, **kwargs):
         """Uses keyword arguments to update the Series in place.
 
@@ -916,10 +1091,6 @@ def get_first_label(series):
 def get_last_label(series):
     """Returns the label of the first element."""
     return series.index[-1]
-
-def get_index_label(series, i):
-    """Returns the ith label in the index."""
-    return series.index[i]
 
 def get_first_value(series):
     """Returns the value of the first element."""
@@ -994,15 +1165,12 @@ class Params(System):
 
 
 def compute_abs_diff(seq):
-    xs = np.asarray(seq)
-    diff = np.ediff1d(xs, np.nan)
-    if isinstance(seq, Series):
-        return Series(diff, seq.index)
-    else:
-        return diff
+    """Compute absolute differences between successive elements.
 
-def compute_rel_diff(seq):
-    xs = np.asarray(seq, dtype=np.float64)
+    :param seq:
+    :return: Series is seq is a Series, otherwise NumPy array
+    """
+    xs = np.asarray(seq)
 
     # The right thing to put at the end is np.nan, but at
     # the moment edfiff1d is broken
@@ -1011,6 +1179,19 @@ def compute_rel_diff(seq):
     #to_end = np.array([np.nan], dtype=np.float64)
     to_end = np.array([0], dtype=np.float64)
     diff = np.ediff1d(xs, to_end)
+
+    if isinstance(seq, Series):
+        return Series(diff, seq.index)
+    else:
+        return diff
+
+def compute_rel_diff(seq):
+    """Compute absolute differences between successive elements.
+
+    :param seq: any sequence
+    :return: Series is seq is a Series, otherwise NumPy array
+    """
+    diff = compute_abs_diff(seq)
     return diff / seq
 
 
@@ -1087,15 +1268,28 @@ class ModSimLocIndexer:
 
     def __getitem__(self, key):
         """Get a row and return the appropriate type of Series.
+
+        If key is a Quantity, its units are stripped
+
+        :key: scalar or Quantity
+
+        :return: Series
         """
+        key = magnitude(key)
         result = self.li[key]
         if isinstance(result, Series):
             result = self.constructor(result)
         return result
 
     def __setitem__(self, key, value):
-        """Setting just passes the request to the wrapped object.
+        """Setting a row in a DataFrame.
+
+        If key is a Quantity, its units are stripped
+
+        :key: scalar or Quantity
+        :value: sequence or Series
         """
+        key = magnitude(key)
         self.li[key] = value
 
 
@@ -1156,14 +1350,16 @@ def vector_mag(v):
 
     returns: number or Quantity
     """
-    return np.sqrt(np.dot(v, v)) * units(v)
+    a = magnitude(v)
+    return np.sqrt(np.dot(a, a)) * get_units(v)
 
 def vector_mag2(v):
     """Vector magnitude squared with units.
 
     returns: number of Quantity
     """
-    return np.dot(v, v) * units(v) * units(v)
+    a = magnitude(v)
+    return np.dot(a, a) * get_units(v) * get_units(v)
 
 def vector_angle(v):
     """Angle between v and the positive x axis.
@@ -1218,20 +1414,24 @@ def vector_dot(v, w):
 
     returns: number or Quantity
     """
-    return np.dot(v, w) * units(v) * units(w)
+    a1 = magnitude(v)
+    a2 = magnitude(w)
+    return np.dot(a1, a2) * get_units(v) * get_units(w)
 
 def vector_cross(v, w):
     """Cross product of v and w.
 
     returns: number or Quantity for 2-D, Vector for 3-D
     """
-    res = np.cross(v, w)
+    a1 = magnitude(v)
+    a2 = magnitude(w)
+    res = np.cross(a1, a2)
 
     if len(v)==3 and (isinstance(v, ModSimVector) or
                       isinstance(w, ModSimVector)):
-        return ModSimVector(res, units(v) * units(w))
+        return ModSimVector(res, get_units(v) * get_units(w))
     else:
-        return res * units(v) * units(w)
+        return res * get_units(v) * get_units(w)
 
 def vector_proj(v, w):
     """Projection of v onto w.
@@ -1335,36 +1535,3 @@ def plot_segment(A, B, **options):
     xs = A.x, B.x
     ys = A.y, B.y
     plot(xs, ys, **options)
-
-
-@property
-def dimensionality(self):
-    """Unit's dimensionality (e.g. {length: 1, time: -1})
-
-    This is a simplified version of this method that does no caching.
-
-    returns: dimensionality
-    """
-    dim = self._REGISTRY._get_dimensionality(self._units)
-    return dim
-
-# monkey patch Unit and Quantity so they use the non-caching
-# version of `dimensionality`
-pint.unit._Unit.dimensionality = dimensionality
-pint.quantity._Quantity.dimensionality = dimensionality
-
-
-class units_off:
-    SAVED_PINT_METHOD_STACK = []
-
-    def __enter__(self):
-        """Make all quantities behave as if they were dimensionless.
-        """
-        self.SAVED_PINT_METHOD_STACK.append(UNITS._get_dimensionality)
-        UNITS._get_dimensionality = lambda self: {}
-
-
-    def __exit__(self, type, value, traceback):
-        """Restore the saved behavior of quantities.
-        """
-        UNITS._get_dimensionality = self.SAVED_PINT_METHOD_STACK.pop()
