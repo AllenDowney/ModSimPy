@@ -155,17 +155,20 @@ def linrange(start=0, stop=None, step=1, endpoint=False, **options):
         stop = start
         start = 0
 
+    # drop the units
+    start = magnitude(start)
+    stop = magnitude(stop)
+    step = magnitude(step)
+
     n = np.round((stop - start) / step)
     if endpoint:
         n += 1
 
-    # drop the units
-    start = magnitude(start)
-    step = magnitude(step)
-
     array = np.full(int(n), step, **options)
     if n:
         array[0] = start
+
+    # TODO: restore units?
     return np.cumsum(array)
 
 
@@ -186,10 +189,12 @@ def magnitudes(x):
 
     returns: number
     """
+    if isinstance(x, Quantity):
+        return x.magnitude
     try:
         return [magnitude(elt) for elt in x]
     except TypeError:           # not iterable
-        return magnitude(x)
+        return x
 
 
 def get_units(x):
@@ -328,17 +333,93 @@ def maximize_scalar(max_func, bounds, *args, **options):
     return res
 
 
+def minimize_golden(min_func, bracket, *args, **options):
+    """Find the minimum of a function by golden section search.
+
+    Based on
+    https://en.wikipedia.org/wiki/Golden-section_search#Iterative_algorithm
+
+    :param min_func: function to be minimized
+    :param bracket: interval containing a minimum
+    :param args: arguments passes to min_func
+    :param options: rtol and maxiter
+
+    :return: ModSimSeries
+    """
+    maxiter = options.get('maxiter', 100)
+    rtol = options.get('rtol', 1e-3)
+
+    def success(**kwargs):
+        return ModSimSeries(dict(success=True, **kwargs))
+
+    def failure(**kwargs):
+        return ModSimSeries(dict(success=False, **kwargs))
+
+    a, b = bracket
+    ya = min_func(a, *args)
+    yb = min_func(b, *args)
+
+    phi = 2 / (np.sqrt(5) - 1)
+    h = b - a
+    c = b - h / phi
+    yc = min_func(c, *args)
+
+    d = a + h / phi
+    yd = min_func(d, *args)
+
+    if yc > ya or yc > yb:
+        return failure(message='The bracket is not well-formed.')
+
+    for i in range(maxiter):
+
+        # check for convergence
+        if abs(h / c) < rtol:
+            return success(x=c, fun=yc)
+
+        if yc < yd:
+            b, yb = d, yd
+            d, yd = c, yc
+            h = b - a
+            c = b - h / phi
+            yc = min_func(c, *args)
+        else:
+            a, ya = c, yc
+            c, yc = d, yd
+            h = b - a
+            d = a + h / phi
+            yd = min_func(d, *args)
+
+    # if we exited the loop, too many iterations
+    return failure(root=c, message='maximum iterations = %d exceeded' % maxiter)
+
+
+def maximize_golden(max_func, bracket, *args, **options):
+    """Find the maximum of a function by golden section search.
+
+    :param min_func: function to be maximized
+    :param bracket: interval containing a maximum
+    :param args: arguments passes to min_func
+    :param options: rtol and maxiter
+
+    :return: ModSimSeries
+    """
+    def min_func(*args):
+        return -max_func(*args)
+
+    res = minimize_golden(min_func, bracket, *args, **options)
+
+    # we have to negate the function value before returning res
+    res.fun = -res.fun
+    return res
+
+
 def minimize(min_func, x0, *args, **options):
     """Finds the input value that minimizes `min_func`.
-
-    Wrapper for
-    https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
-
+    Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
     min_func: computes the function to be minimized
     x0: initial guess
     args: any additional positional arguments are passed to min_func
     options: any keyword arguments are passed as options to minimize_scalar
-
     returns: ModSimSeries object
     """
     underride(options, tol=1e-3)
@@ -400,7 +481,7 @@ def run_odeint(system, slope_func, **options):
     return frame
 
 
-def run_ode_solver(system, slope_func, **options):
+def run_solve_ivp(system, slope_func, **options):
     """Computes a numerical solution to a differential equation.
 
     `system` must contain `init` with initial conditions,
@@ -433,10 +514,15 @@ def run_ode_solver(system, slope_func, **options):
     system = remove_units(system)
     system.init = remove_units(system.init)
 
-    # TODO: remove units from max_step?
-
     # the default value for t_0 is 0
     t_0 =  getattr(system, 't_0', 0)
+
+    # remove units from max_step
+    # if not specified, require 50 steps
+    max_step = options.pop('max_step', None)
+    if max_step is None:
+        max_step = system.t_end - system.t_0 / 50
+    options['max_step'] = magnitude(max_step)
 
     # try running the slope function with the initial conditions
     try:
@@ -483,7 +569,7 @@ def run_ode_solver(system, slope_func, **options):
 
 
 def check_system(system, slope_func):
-    """
+    """Make sure the system object has the fields we need for run_ode_solver.
 
     :param system:
     :param slope_func:
@@ -504,18 +590,21 @@ def check_system(system, slope_func):
         raise ValueError(msg)
 
     # the default value for t_0 is 0
-    t_0 =  getattr(system, 't_0', 0)
+    t_0 = getattr(system, 't_0', 0)
 
-    # try running the slope function with the initial conditions
+    # get the initial conditions
+    init = system.init
+
+    # get t_end
+    t_end = system.t_end
+
+    # if dt is not specified, take 100 steps
     try:
-        slope_func(system.init, t_0, system)
-    except Exception as e:
-        msg = """Before running the ODE solver, I tried
-                 running the slope function you provided with the
-                 initial conditions in `system` and `t=t_0` and I got
-                 the following error:"""
-        logger.error(msg)
-        raise(e)
+        dt = system.dt
+    except KeyError:
+        dt = t_end / 100
+
+    return init, t_0, t_end, dt
 
 
 def run_euler(system, slope_func, **options):
@@ -535,32 +624,93 @@ def run_euler(system, slope_func, **options):
 
     returns: TimeFrame
     """
-    check_system(system, slope_func)
+    # the default message if nothing changes
+    msg = "The solver successfully reached the end of the integration interval."
 
-    # the default value for t_0 is 0
-    t_0 =  getattr(system, 't_0', 0)
-
-    # get the initial conditions
-    init, t_end, dt = system.init, system.t_end, system.dt
+    # get parameters from system
+    init, t_0, t_end, dt = check_system(system, slope_func)
 
     # make the TimeFrame
     frame = TimeFrame(columns=init.index)
-    frame.row[0] = init
-    ts = linrange(0, t_end, dt) * get_units(t_end)
+    frame.row[t_0] = init
+    ts = linrange(t_0, t_end, dt) * get_units(t_end)
 
     # run the solver
     for t1 in ts:
         y1 = frame.row[t1]
         slopes = slope_func(y1, t1, system)
-        k = [slope * dt for slope in slopes]
+        y2 = [y + slope*dt for y, slope in zip(y1, slopes)]
         t2 = t1 + dt
-        y2 = y1 + k
         frame.row[t2] = y2
 
-    return frame
+    details = ModSimSeries(dict(message='Success'))
+    return frame, details
 
 
-# TODO: Implement Ralston
+def run_ralston(system, slope_func, **options):
+    """Computes a numerical solution to a differential equation.
+
+    `system` must contain `init` with initial conditions,
+     and `t_end` with the end time.
+
+     `system` may contain `t_0` to override the default, 0
+
+    It can contain any other parameters required by the slope function.
+
+    `options` can be ...
+
+    system: System object
+    slope_func: function that computes slopes
+
+    returns: TimeFrame
+    """
+    # the default message if nothing changes
+    msg = "The solver successfully reached the end of the integration interval."
+
+    # get parameters from system
+    init, t_0, t_end, dt = check_system(system, slope_func)
+
+    # make the TimeFrame
+    frame = TimeFrame(columns=init.index)
+    frame.row[t_0] = init
+    ts = linrange(t_0, t_end, dt) * get_units(t_end)
+
+    event_func = options.get('events', None)
+    z1 = np.nan
+
+    def project(y1, t1, slopes, dt):
+        t2 = t1 + dt
+        y2 = [y + slope * dt for y, slope in zip(y1, slopes)]
+        return y2, t2
+
+    # run the solver
+    for t1 in ts:
+        y1 = frame.row[t1]
+
+        slopes1 = slope_func(y1, t1, system)
+        y_mid, t_mid = project(y1, t1, slopes1, 2 * dt / 3)
+
+        slopes2 = slope_func(y_mid, t_mid, system)
+        slopes = [(k1 + 3 * k2) / 4 for k1, k2 in zip(slopes1, slopes2)]
+        y2, t2 = project(y1, t1, slopes, dt)
+
+        if event_func:
+            z2 = event_func(y2, t2, system)
+            if z1 * z2 < 0:
+                scale = magnitude(z1 / (z1 - z2))
+                y2, t2 = project(y1, t1, slopes, scale * dt)
+                frame.row[t2] = y2
+                msg = "A termination event occurred."
+                break
+            else:
+                z1 = z2
+
+        frame.row[t2] = y2
+
+    details = ModSimSeries(dict(success=True, message=msg))
+    return frame, details
+
+run_ode_solver = run_ralston
 
 # TODO: Implement leapfrog
 
@@ -758,8 +908,14 @@ def interpolate(series, **options):
     underride(options, fill_value='extrapolate')
 
     # call interp1d, which returns a new function object
-    interp_func = interp1d(series.index, series.values, **options)
-    return interp_func
+    x = magnitudes(series.index)
+    y = magnitudes(series.values)
+    interp_func = interp1d(x, y, **options)
+    units = get_units(series.values[0])
+
+    def wrapper(x):
+        return interp_func(magnitudes(x)) * units
+    return wrapper
 
 
 def interp_inverse(series, **options):
@@ -774,6 +930,43 @@ def interp_inverse(series, **options):
     inverse = Series(series.index, index=series.values)
     interp_func = interpolate(inverse, **options)
     return interp_func
+
+
+def gradient(series, **options):
+    """Computes the numerical derivative of a series.
+
+    If the elements of series have units, they are dropped.
+
+    series: Series object
+    options: any legal options to np.gradient
+
+    returns: Series, same subclass as series
+    """
+    x = magnitudes(series.index)
+    y = magnitudes(series.values)
+    # units = get_units(series.values[0])
+
+    a = np.gradient(y, x, **options)
+    return series.__class__(a, series.index)
+
+
+def correlate(s1, s2, **options):
+    """Computes the numerical derivative of a series.
+
+    If the elements of series have units, they are dropped.
+
+    s1: sequence or Series
+    options: any legal options to np.correlate
+
+    returns: NumPy array
+    """
+    # TODO: Check that they have the same units.
+    # TODO: Check that they have the same index.
+    x = magnitudes(s1)
+    y = magnitudes(s2)
+
+    corr = np.correlate(x, y, **options)
+    return corr
 
 
 def unpack(series):
@@ -841,7 +1034,7 @@ def plot(*args, **options):
 
     x = magnitudes(x)
     y = magnitudes(y)
-    underride(options, linewidth=3, alpha=0.6)
+    underride(options, linewidth=2)
 
     if style is not None:
         lines = plt.plot(x, y, style, **options)
@@ -1057,6 +1250,26 @@ class ModSimSeries(pd.Series):
         key = magnitude(key)
         super().__setitem__(key, value)
 
+    def first_label(self):
+        """Returns the first element of the index.
+        """
+        return self.index[0]
+
+    def last_label(self):
+        """Returns the last element of the index.
+        """
+        return self.index[-1]
+
+    def first_value(self):
+        """Returns the first element of the index.
+        """
+        return self[self.index[0]]
+
+    def last_value(self):
+        """Returns the last element of the index.
+        """
+        return self[self.index[-1]]
+
     def set(self, **kwargs):
         """Uses keyword arguments to update the Series in place.
 
@@ -1064,6 +1277,34 @@ class ModSimSeries(pd.Series):
         """
         for name, value in kwargs.items():
             self[name] = value
+
+    def extract(self, var):
+        """Extract a variable from each element of a Series.
+
+        Example: to extract the x-coordinate from a Series of Vectors
+
+        x_series = series.extract('x')
+
+        :param var: string variable name
+        :return: ModSimSeries, same subtype as `self`
+        """
+        t = [getattr(V, var) for V in self]
+        return self.__class__(t, self.index, name=var)
+
+    def plot(self, *args, **kwargs):
+        """Plot a Series.
+
+        :param args: arguments passed to plt.plot
+        :param kwargs: keyword argumentspassed to plt.plot
+        :return:
+        """
+        x = magnitudes(self.index)
+        y = magnitudes(self.values)
+
+        underride(kwargs, linewidth=2)
+        if self.name:
+            underride(kwargs, label=self.name)
+        plt.plot(x, y, *args, **kwargs)
 
     @property
     def dt(self):
@@ -1084,26 +1325,37 @@ class ModSimSeries(pd.Series):
         return self.loc['T']
 
 
-def get_first_label(series):
-    """Returns the label of the first element."""
-    return series.index[0]
+def get_first_label(x):
+    """Returns the label of the first element.
 
-def get_last_label(series):
-    """Returns the label of the first element."""
-    return series.index[-1]
+    :param x: Series or DataFrame
+    """
+    return x.index[0]
 
-def get_first_value(series):
-    """Returns the value of the first element."""
-    return series.values[0]
+def get_last_label(x):
+    """Returns the label of the last element.
 
-def get_last_value(series):
-    """Returns the value of the first element."""
-    return series.values[-1]
+    :param x: Series or DataFrame
+    """
+    return x.index[-1]
 
-def gradient(series):
-    """Computes the numerical derivative of a series."""
-    a = np.gradient(series, series.index)
-    return TimeSeries(a, series.index)
+def get_first_value(x):
+    """Returns the value of the first element.
+
+    Does not work with DataFrames; use first_row().
+
+    :param x: Series
+    """
+    return x[x.index[0]]
+
+def get_last_value(x):
+    """Returns the value of the last element.
+
+    Does not work with DataFrames; use last_row()
+
+    :param x: Series
+    """
+    return x[x.index[-1]]
 
 
 class TimeSeries(ModSimSeries):
@@ -1226,6 +1478,16 @@ class ModSimDataFrame(pd.DataFrame):
             obj = self.column_constructor(obj)
         return obj
 
+    def plot(self, *args, **kwargs):
+        """Plot the columns of a DataFrame.
+
+        :param args: arguments passed to plt.plot
+        :param kwargs: keyword argumentspassed to plt.plot
+        :return:
+        """
+        for col in self.columns:
+            self[col].plot(*args, **kwargs)
+
     @property
     def dt(self):
         """Intercept the Series accessor object so we can use `dt`
@@ -1255,6 +1517,30 @@ class ModSimDataFrame(pd.DataFrame):
         """
         li = self.loc
         return ModSimLocIndexer(li, self.row_constructor)
+
+    def first_row(self):
+        """Returns the first row
+
+        :return: some kind of ModSimSeries
+        """
+        return self.row[self.index[0]]
+
+    def last_row(self):
+        """Returns the first row
+
+        :return: some kind of ModSimSeries
+        """
+        return self.row[self.index[-1]]
+
+    def first_label(self):
+        """Returns the first element of the index.
+        """
+        return self.index[0]
+
+    def last_label(self):
+        """Returns the last element of the index.
+        """
+        return self.index[-1]
 
 
 class ModSimLocIndexer:

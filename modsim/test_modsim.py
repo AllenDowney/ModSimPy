@@ -248,6 +248,54 @@ class TestRunInterpolate(unittest.TestCase):
         i = interpolate(series)
         self.assertAlmostEqual(i(1.5), 2.0)
 
+    def test_interpolate_with_units(self):
+        index = [1,2,3]
+        values = np.array(index) * 2 - 1
+        series = pd.Series(values, index=index) * UNITS.meter
+        i = interpolate(series)
+        self.assertAlmostEqual(i(1.5), 2.0 * UNITS.meter)
+
+
+class TestGradient(unittest.TestCase):
+
+    def test_gradient(self):
+        a = [1,2,4]
+        s = TimeSeries(a)
+        r = gradient(s)
+        self.assertTrue(isinstance(r, TimeSeries))
+        self.assertAlmostEqual(r[1], 1.5)
+
+    def test_gradient_with_units(self):
+        s = SweepSeries()
+        s[0] = 1 * UNITS.meter
+        s[1] = 2 * UNITS.meter
+        s[2] = 4 * UNITS.meter
+        r = gradient(s)
+        self.assertTrue(isinstance(r, SweepSeries))
+        self.assertAlmostEqual(r[1], 1.5 * UNITS.meter)
+
+
+class TestGolden(unittest.TestCase):
+
+    def test_minimize(self):
+        def min_func(x, system):
+            return (x-system.actual_min)**2
+
+        system = System(actual_min=2)
+        res = minimize_golden(min_func, [0, 5], system, rtol=1e-7)
+        self.assertAlmostEqual(res.x, 2)
+        self.assertAlmostEqual(res.fun, 0)
+
+    def test_maximize(self):
+        def max_func(x, system):
+            return -(x-system.actual_min)**2
+
+        system = System(actual_min=2)
+        res = maximize_golden(max_func, [0, 5], system, rtol=1e-7)
+        self.assertAlmostEqual(res.x, 2)
+        self.assertAlmostEqual(res.fun, 0)
+
+
 
 class TestVector(unittest.TestCase):
     def assertArrayEqual(self, res, ans):
