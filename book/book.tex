@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{3.2.0}
+\newcommand{\theversion}{3.3.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -6713,38 +6713,36 @@ And create a \py{Params} object with the parameters of the system:
 params = Params(Rmin = 0.02 * m,
                 Rmax = 0.055 * m,
                 L = 47 * m,
-                t_end = 130 * s)
+                omega = 10 * radian / s,
+                t_end = 130 * s,
+                dt = 1*s)
 \end{python}
 
-\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper, and \py{t_end} is the length of the simulation in time.
+\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper. \py{t_end} is the length of the simulation in time, and \py{dt} is the time step for the ODE solver.
 
-Then we use the \py{Params} object to make a \py{System} object:
+We use the \py{Params} object to make a \py{System} object:
 
 \index{System object}
 \index{\py{make_system}}
 
 \begin{python}
 def make_system(params):
-    unpack(params)
-    
     init = State(theta = 0 * radian,
                  y = 0 * m,
-                 r = Rmin)
+                 r = params.Rmin)
     
     k = estimate_k(params)
-    
-    return System(init=init, k=k, t_end=t_end)
+
+    return System(params, init=init, k=k)
 \end{python}
 
 The initial state contains three variables, \py{theta}, \py{y}, and \py{r}.
 
-\index{unpack}
-
-To get started, we'll estimate a reasonable value for \py{k}; then in Section~\ref{paper_analysis} we'll figure it out exactly.  Here's how we compute the estimate:
+\py{estimate_k} computes the parameter, \py{k}, that relates \py{theta} and \py{r}.  Here's how it works:
 
 \begin{python}
 def estimate_k(params):
-    unpack(params)
+    Rmin, Rmax, L = params.Rmin, params.Rmax, params.L
     
     Ravg = (Rmax + Rmin) / 2
     Cavg = 2 * pi * Ravg
@@ -6768,9 +6766,8 @@ Now we can use the differential equations from Section~\ref{paper} to write a sl
 \begin{python}
 def slope_func(state, t, system):
     theta, y, r = state
-    unpack(system)
+    k, omega = system.k, system.omega
     
-    omega = 10 * radian / s
     dydt = r * omega
     drdt = k * omega
     
@@ -6778,12 +6775,12 @@ def slope_func(state, t, system):
 \end{python}
 
 \begin{figure}[t]
-\centerline{\includegraphics[height=4.5in]{figs/chap11-fig01.pdf}}
+\centerline{\includegraphics[height=4.5in]{figs/chap24-fig01.pdf}}
 \caption{Results from paper rolling simulation, showing rotation, length, and radius over time.}
-\label{chap11-fig01}
+\label{chap24-fig01}
 \end{figure}
 
-As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
 
 \index{State object}
 
@@ -6792,19 +6789,18 @@ We'd like to stop the simulation when the length of paper on the roll is \py{L}.
 \begin{python}
 def event_func(state, t, system):
     theta, y, r = state
-    unpack(system)
-    return y - L
+    return y - system.L
 \end{python}
 
 Now we can run the simulation like this:
 
 \begin{python}
 results, details = run_ode_solver(system, slope_func,
-                       events=event_func, max_step=1*s)
+                                   events=event_func)
 \end{python}
 
 
-Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
+Figure~\ref{chap24-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
 
 Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.
 
@@ -6895,8 +6891,6 @@ k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2)           \label{eqn4}
 %
 Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.  In this case the estimate turns out to be exact.
 
-In the next chapter, we'll run the simulation the other way, unrolling the paper.
-
 Before you go on, you might want to read the notebook for this chapter, \py{chap24.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
@@ -6904,7 +6898,6 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \label{chap25}
 
 In the previous chapter we modeled a scenario with constant angular velocity.  In this chapter we make it more complex; we'll model a teapot, on a turntable, revolving with constant angular acceleration and deceleration.
-
 
 \section{Angular acceleration}
 
@@ -6949,7 +6942,7 @@ Fortunately, in a system where all rotation and torque happens around a single a
 
 \index{scalar}
 
-For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
+For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
 However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{http://modsimpy.com/moment}.
 
@@ -6990,11 +6983,13 @@ We'll answer this question in these steps:
 Our simulation will use the following parameters:
 
 \begin{enumerate}
+
 \item
   The radius of the turntable is \SI{0.5}{\meter}, and its weight is \SI{7}{\kg}.
+  
 \item
-  The teapot weights \SI{0.3}{\kg}, and it sits \SI{0.4}{\meter} from the center of
-  the turntable.
+  The teapot weights \SI{0.3}{\kg}, and it sits \SI{0.4}{\meter} from the center of the turntable.
+
 \end{enumerate}
 
 \begin{figure}
@@ -7005,7 +7000,7 @@ Our simulation will use the following parameters:
 
 Figure~\ref{teapot} shows the scenario, where $F$ is the force I apply to the turntable at the perimeter, perpendicular to the moment arm, $r$, and $\tau$ is the resulting torque. The blue circle near the bottom is the teapot.
 
-Here's a \py{Params} object with these values
+Here's a \py{Params} object with the parameters of the scenario:
 
 \begin{python}
 params = Params(radius_disk=0.5*m,
@@ -7014,7 +7009,8 @@ params = Params(radius_disk=0.5*m,
                 mass_pot=0.3*kg,
                 force=1*N,
                 torque_friction=0.2*N*m,
-                theta_end=0.5*radian)
+                theta_end=0.5*radian,
+                t_end=20*s)
 \end{python}
 
 \index{Params object}
@@ -7024,20 +7020,21 @@ computes the total moment of inertia for the turntable and the teapot.
 
 \begin{python}
 def make_system(params):
-    unpack(params)
+    mass_disk, mass_pot = params.mass_disk, params.mass_pot
+    radius_disk, radius_pot = params.radius_disk, params.radius_pot
     
-    init = State(theta=0, omega=0)
+    init = State(theta=0*radian, omega=0*radian/s)
     
     I_disk = mass_disk * radius_disk**2 / 2
     I_pot = mass_pot * radius_pot**2
     
-    return System(params, init=init, t_end=20*s,
-                  I=I_disk+I_pot)
+    return System(params, init=init, I=I_disk+I_pot)
 \end{python}
 
 %\index{make_system}
 
-\py{theta} represents the initial angle of the table, in \si{\radian}; \py{omega} represents the angular velocity in \si{\radian\per\second}.
+In the initial state,
+\py{theta} represents the angle of the table in \si{\radian}; \py{omega} represents the angular velocity in \si{\radian\per\second}.
 
 \py{I_disk} is the moment of inertia of the turntable, which is based on the moment of inertia for a horizontal disk revolving around a vertical axis through its center:
 %
@@ -7047,6 +7044,8 @@ def make_system(params):
 %
 \[ I_{point} = m r^2 \]
 %
+In SI units, moment of inertia is expressed in \si{\kilogram\meter\squared}.  
+
 Now we can make a \py{System} object:
 
 \begin{python}
@@ -7060,7 +7059,8 @@ Here's a slope that takes the current state, which contains angle and angular ve
 \begin{python}
 def slope_func(state, t, system):
     theta, omega = state
-    unpack(system)
+    radius_disk, force = system.radius_disk, system.force
+    torque_friction, I = system.torque_friction, system.I
     
     torque = radius_disk * force - torque_friction
     alpha = torque / I
@@ -7072,7 +7072,7 @@ def slope_func(state, t, system):
 
 In this scenario, the force I apply to the turntable is always perpendicular to the lever arm, so $\sin \theta = 1$ and the torque due to force is $\tau = r F$.
 
-In a more detailed model, I might quantify force due to friction and the moment arm of that force, but that's not really necessary; instead, I chose to quantify torque due to friction, leaving out the details.
+\py{torque_friction} represents the torque due to friction.  Because the turntable is rotating in the direction of positive \py{theta}, friction acts in the direction of negative \py{theta}.
 
 \index{friction}
 
@@ -7104,21 +7104,17 @@ Here's the event function I'll use for Phase 1; it stops the simulation when \py
 \begin{python}
 def event_func1(state, t, system):
     theta, omega = state
-    unpack(system)
-    return theta - theta_end 
+    return theta - system.theta_end 
 \end{python}
 
 Now we can run the first phase.
 
 \begin{python}
 results1, details1 = run_ode_solver(system1, slope_func,
-                         events=event_func1, max_step=0.1*s)
+                                      events=event_func1)
 \end{python}
 
 %\index{run_ode_solver}
-%\index{max_step}
-
-Again, I specify \py{max_step} so the results look smoother when I plot them, at the cost of some extra computation.
 
 \begin{figure}
 \centerline{\includegraphics[height=4.0in]{figs/chap25-fig01.pdf}}
@@ -7131,8 +7127,7 @@ state of the first phase.
 
 \begin{python}
 t_0 = get_last_label(results1) * s
-theta, omega = get_last_value(results1)
-init2 = State(theta=theta*radian, omega=omega*radian/s)
+init2 = results1.last_row()
 \end{python}
 
 Now we can make a \py{System} object for Phase 2, with the initial state from Phase 1, and with \py{force=0}.
@@ -7141,7 +7136,7 @@ Now we can make a \py{System} object for Phase 2, with the initial state from Ph
 %\index{get_last_value}
 
 \begin{python}
-system2 = System(system1, t_0=t_0, init=init2, force=0)
+system2 = System(system1, t_0=t_0, init=init2, force=0*N)
 \end{python}
 
 For the second phase, we need an event function that stops when the turntable stops; that is, when angular velocity is 0.
@@ -7156,7 +7151,7 @@ Now we can run the second phase.
 
 \begin{python}
 results2, details2 = run_ode_solver(system2, slope_func,
-                         events=event_func2, max_step=0.1*s)
+                                      events=event_func2)
 \end{python}
 
 Pandas provides \py{combine_first}, which combines
@@ -7181,41 +7176,41 @@ Let's take the code from the previous section and wrap it in a function.
 
 \begin{python}
 def run_two_phases(force, torque_friction, params):
+    # put the parameters into the Params object
     params = Params(params, force=force, 
                     torque_friction=torque_friction)
 
     # run phase 1
     system1 = make_system(params)
-    results1, _ = run_ode_solver(system1, slope_func,
-                      events=event_func1, max_step=0.1*s)
+    results1, details1 = run_ode_solver(system1, slope_func, 
+                                          events=event_func1)
 
     # get the final state from phase 1
-    t_0 = get_last_label(results1) * s
-    theta, omega = get_last_value(results1)
-    init2 = State(theta=theta, omega=omega)
+    t_0 = results1.last_label() * s
+    init2 = results1.last_row()
     
     # run phase 2
-    system2 = System(system1, t_0=t_0, init=init2, force=0)
-    results2, _ = run_ode_solver(system2, slope_func,
-                      events=event_func2, max_step=0.1*s)
+    system2 = System(system1, t_0=t_0, init=init2, force=0*N)
+    results2, details2 = run_ode_solver(system2, slope_func, 
+                                          events=event_func2)
     
     # combine and return the results
     results = results1.combine_first(results2)
-    return results
+    return TimeFrame(results)
 \end{python}
 
-Now we can use \py{run_two_phases} to write an error function we can use, with \py{root_bisect}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
+We can use \py{run_two_phases} to write an error function we can use, with \py{root_bisect}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
 
 \index{\py{root_bisect}}
 \index{error function}
 
 \begin{python}
 def error_func1(torque_friction, params):
-    force = 1
+    force = 1 * N
     results = run_two_phases(force, torque_friction, params)
-    theta_final = get_last_value(results.theta)
+    theta_final = results.last_row().theta
     print(torque_friction, theta_final)
-    return theta_final - 1.5
+    return theta_final - 1.5 * radian
 \end{python}
 
 Now we can use \py{root_bisect} to estimate torque due to friction.
@@ -7246,7 +7241,7 @@ In Chapter~\ref{chap20} we rewrote a second order differential equation as a sys
 \begin{python}
 def slope_func(state, t, system):
     y, v = state
-    unpack(system)    
+    g = system.g    
 
     dydt = v
     dvdt = -g
@@ -7300,7 +7295,10 @@ A = Vector(3, 4) * m
 It also introduces trajectory plots, which show the path of an object in two dimensions:
 
 \begin{python}
-plot(results.x, results.y, label='trajectory')
+x = results.R.extract('x')
+y = results.R.extract('y')
+
+plot(x, y, label='trajectory')
 \end{python}
 
 In Chapter~\ref{chap23} we define a range function that computes the distance a baseball flies as a function of launch angle:
@@ -7309,16 +7307,17 @@ In Chapter~\ref{chap23} we define a range function that computes the distance a 
 def range_func(angle, params):  
     params = Params(params, angle=angle)
     system = make_system(params)
-    results, details = run_ode_solver(system, slope_func, 
-                                      events=event_func)
-    x_dist = get_last_value(results.x) * m
+    results, details = run_ode_solver(system, slope_func,
+                                       events=event_func)
+    x_dist = get_last_value(results.R).x
     return x_dist
 \end{python}
 
 Then we use \py{maximize} to find the launch angle that maximizes range:
 
 \begin{python}
-res = maximize(range_func, [0, 90], params)
+bounds = [0, 90] * degree
+res = maximize(range_func, bounds, params)
 \end{python}
 
 With that, your toolkit is complete.  Chapter~\ref{chap24} and Chapter~\ref{chap25} introduce the physics of rotation, but no new computational tools.
@@ -7505,8 +7504,10 @@ Since the outer diameter changes as the kitten unrolls the paper, we have to com
 
 \begin{python}
 def moment_of_inertia(r, system):
-    unpack(system)
-    Icore = Mcore / 2 * Rmin**2
+    Mcore, Rmin = system.Mcore, system.Rmin
+    rho_h = system.rho_h
+    
+    Icore = Mcore * Rmin**2   
     Iroll = pi * rho_h / 2 * (r**4 - Rmin**4)
     return Icore + Iroll
 \end{python}
@@ -7518,19 +7519,19 @@ def moment_of_inertia(r, system):
 
 \begin{python}
 def make_system(params):
-    unpack(params)
+    L, Rmax, Rmin = params.L, params.Rmax, params.Rmin
+    Mroll = params.Mroll
     
     init = State(theta = 0 * radian,
                  omega = 0 * radian/s,
                  y = L)
+    
     area = pi * (Rmax**2 - Rmin**2)
     rho_h = Mroll / area
     k = (Rmax**2 - Rmin**2) / 2 / L / radian    
     
-    return System(init=init, k=k, rho_h=rho_h,
-                  Rmin=Rmin, Rmax=Rmax,
-                  Mcore=Mcore, Mroll=Mroll, 
-                  t_end=t_end)
+    return System(params, init=init, area=area, 
+                  rho_h=rho_h, k=k)
 \end{python}
 
 \py{make_system} also computes \py{k} using Equation~\ref{eqn4}.
@@ -7579,7 +7580,7 @@ Which we can write more concisely:
 %
 \[ a = -r \alpha \]
 %
-This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
+This relationship is not a general law of nature; it is specific to scenarios like this where one object rolls along another without stretching or slipping.
 
 \index{rolling}
 
