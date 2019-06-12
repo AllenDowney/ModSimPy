@@ -7,14 +7,16 @@ License: https://creativecommons.org/licenses/by/4.0)
 """
 
 import logging
-logger = logging.getLogger(name='modsim.py')
 
-#TODO: Make this Python 3.7 when conda is ready
+logger = logging.getLogger(name="modsim.py")
+
+# TODO: Make this Python 3.7 when conda is ready
 
 # make sure we have Python 3.6 or better
 import sys
+
 if sys.version_info < (3, 6):
-    logger.warning('modsim.py depends on Python 3.6 features.')
+    logger.warning("modsim.py depends on Python 3.6 features.")
 
 import inspect
 import matplotlib.pyplot as plt
@@ -24,16 +26,19 @@ import scipy
 import sympy
 
 import seaborn as sns
-sns.set(style='white', font_scale=1.2)
+
+sns.set(style="white", font_scale=1.2)
 
 import pint
+
 UNITS = pint.UnitRegistry()
 Quantity = UNITS.Quantity
 
 # TODO: Consider making this optional
 from pint.errors import UnitStrippedWarning
 import warnings
-warnings.simplefilter('error', UnitStrippedWarning)
+
+warnings.simplefilter("error", UnitStrippedWarning)
 
 # expose some names so we can use them without dot notation
 from copy import copy
@@ -47,8 +52,8 @@ from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy.integrate import odeint
 from scipy.integrate import solve_ivp
 
-#from scipy.optimize import leastsq
-#from scipy.optimize import minimize_scalar
+# from scipy.optimize import leastsq
+# from scipy.optimize import minimize_scalar
 
 
 def flip(p=0.5):
@@ -70,7 +75,6 @@ max = np.max
 pow = np.power
 sum = np.sum
 round = np.round
-
 
 
 def cart2pol(x, y, z=None):
@@ -185,19 +189,29 @@ def magnitude(x):
 def magnitudes(x):
     """Returns the magnitude of a Quantity or number, or sequence.
 
-    x: Quantity or number, or sequence
+    x: Quantity, number, or sequence
 
-    returns: number
+    returns: number or list or same type as x
     """
     if isinstance(x, Quantity):
         return x.magnitude
     try:
-        return [magnitude(elt) for elt in x]
-    except TypeError:           # not iterable
+        t = [magnitude(elt) for elt in x]
+
+        # if x is an array, return an array
+        if isinstance(x, np.ndarray):
+            return np.array(t)
+
+        # if x is a Series, return a Series of the same subtype
+        if isinstance(x, pd.Series):
+            return x.__class__(t, x.index)
+
+        return t
+    except TypeError:  # not iterable
         return x
 
 
-def get_units(x):
+def get_unit(x):
     """Returns the units of a Quantity or number.
 
     x: Quantity or number
@@ -205,6 +219,46 @@ def get_units(x):
     returns: Unit object or 1
     """
     return x.units if isinstance(x, Quantity) else 1
+
+
+def get_units(x):
+    """Returns the units of a Quantity, number, or sequence.
+
+    x: Quantity, number, or sequence
+
+    returns: Unit object or list or same type as x
+    """
+    if isinstance(x, Quantity):
+        return x.units
+    try:
+        t = [get_unit(elt) for elt in x]
+
+        # if x is an array, return an array
+        if isinstance(x, np.ndarray):
+            return np.array(t)
+
+        # if x is a Series, return a Series of the same subtype
+        if isinstance(x, pd.Series):
+            return x.__class__(t, x.index)
+
+        return t
+    except TypeError:  # not iterable
+        return 1
+
+
+def get_first_unit(x):
+    """Returns the units of a Quantity, number, or sequence.
+
+    If x is a sequence, returns the units of the first element.
+
+    :param x: Quantity, number, or sequence
+
+    :return: Unit object or 1
+    """
+    units = get_units(x)
+    if hasattr(units, "__getitem__"):
+        units = units[0]
+    return units
 
 
 def remove_units(series):
@@ -252,7 +306,7 @@ def leastsq(error_func, x0, *args, **options):
     :returns: Params object with best_params and ModSimSeries with details
     """
     # override `full_output` so we get a message if something goes wrong
-    options['full_output'] = True
+    options["full_output"] = True
 
     # run leastsq
     t = scipy.optimize.leastsq(error_func, x0=x0, args=args, **options)
@@ -291,20 +345,25 @@ def minimize_scalar(min_func, bounds, *args, **options):
                  initial conditions in system and t=0, and I got
                  the following error:"""
         logger.error(msg)
-        raise(e)
+        raise (e)
 
     underride(options, xatol=1e-3)
 
-    res = scipy.optimize.minimize_scalar(min_func,
-                                         bracket=bounds,
-                                         bounds=bounds,
-                                         args=args,
-                                         method='bounded',
-                                         options=options)
+    res = scipy.optimize.minimize_scalar(
+        min_func,
+        bracket=bounds,
+        bounds=bounds,
+        args=args,
+        method="bounded",
+        options=options,
+    )
 
     if not res.success:
-        msg = """scipy.optimize.minimize_scalar did not succeed.
-                 The message it returned is %s""" % res.message
+        msg = (
+            """scipy.optimize.minimize_scalar did not succeed.
+                 The message it returned is %s"""
+            % res.message
+        )
         raise Exception(msg)
 
     return ModSimSeries(res)
@@ -323,6 +382,7 @@ def maximize_scalar(max_func, bounds, *args, **options):
 
     returns: ModSimSeries object
     """
+
     def min_func(*args):
         return -max_func(*args)
 
@@ -346,8 +406,8 @@ def minimize_golden(min_func, bracket, *args, **options):
 
     :return: ModSimSeries
     """
-    maxiter = options.get('maxiter', 100)
-    rtol = options.get('rtol', 1e-3)
+    maxiter = options.get("maxiter", 100)
+    rtol = options.get("rtol", 1e-3)
 
     def success(**kwargs):
         return ModSimSeries(dict(success=True, **kwargs))
@@ -368,7 +428,7 @@ def minimize_golden(min_func, bracket, *args, **options):
     yd = min_func(d, *args)
 
     if yc > ya or yc > yb:
-        return failure(message='The bracket is not well-formed.')
+        return failure(message="The bracket is not well-formed.")
 
     for i in range(maxiter):
 
@@ -390,7 +450,7 @@ def minimize_golden(min_func, bracket, *args, **options):
             yd = min_func(d, *args)
 
     # if we exited the loop, too many iterations
-    return failure(root=c, message='maximum iterations = %d exceeded' % maxiter)
+    return failure(root=c, message="maximum iterations = %d exceeded" % maxiter)
 
 
 def maximize_golden(max_func, bracket, *args, **options):
@@ -403,6 +463,7 @@ def maximize_golden(max_func, bracket, *args, **options):
 
     :return: ModSimSeries
     """
+
     def min_func(*args):
         return -max_func(*args)
 
@@ -413,7 +474,7 @@ def maximize_golden(max_func, bracket, *args, **options):
     return res
 
 
-def minimize(min_func, x0, *args, **options):
+def minimize_powell(min_func, x0, *args, **options):
     """Finds the input value that minimizes `min_func`.
     Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
     min_func: computes the function to be minimized
@@ -429,6 +490,11 @@ def minimize(min_func, x0, *args, **options):
     return ModSimSeries(res)
 
 
+# make aliases for minimize and maximize
+minimize = minimize_golden
+maximize = maximize_golden
+
+
 def run_odeint(system, slope_func, **options):
     """Integrates an ordinary differential equation.
 
@@ -442,7 +508,7 @@ def run_odeint(system, slope_func, **options):
     returns: TimeFrame
     """
     # make sure `system` contains `ts`
-    if not hasattr(system, 'ts'):
+    if not hasattr(system, "ts"):
         msg = """It looks like `system` does not contain `ts`
                  as a system variable.  `ts` should be an array
                  or Series that specifies the times when the
@@ -450,7 +516,7 @@ def run_odeint(system, slope_func, **options):
         raise ValueError(msg)
 
     # make sure `system` contains `init`
-    if not hasattr(system, 'init'):
+    if not hasattr(system, "init"):
         msg = """It looks like `system` does not contain `init`
                  as a system variable.  `init` should be a State
                  object that specifies the initial condition:"""
@@ -465,7 +531,7 @@ def run_odeint(system, slope_func, **options):
                  initial conditions in system and t=0, and I got
                  the following error:"""
         logger.error(msg)
-        raise(e)
+        raise (e)
 
     # when odeint calls slope_func, it should pass `system` as
     # the third argument.  To make that work, we have to make a
@@ -477,7 +543,9 @@ def run_odeint(system, slope_func, **options):
 
     # the return value from odeint is an array, so let's pack it into
     # a TimeFrame with appropriate columns and index
-    frame = TimeFrame(array, columns=system.init.index, index=system.ts, dtype=np.float64)
+    frame = TimeFrame(
+        array, columns=system.init.index, index=system.ts, dtype=np.float64
+    )
     return frame
 
 
@@ -497,14 +565,14 @@ def run_solve_ivp(system, slope_func, **options):
     returns: TimeFrame
     """
     # make sure `system` contains `init`
-    if not hasattr(system, 'init'):
+    if not hasattr(system, "init"):
         msg = """It looks like `system` does not contain `init`
                  as a system variable.  `init` should be a State
                  object that specifies the initial condition:"""
         raise ValueError(msg)
 
     # make sure `system` contains `t_end`
-    if not hasattr(system, 't_end'):
+    if not hasattr(system, "t_end"):
         msg = """It looks like `system` does not contain `t_end`
                  as a system variable.  `t_end` should be the
                  final time:"""
@@ -515,14 +583,14 @@ def run_solve_ivp(system, slope_func, **options):
     system.init = remove_units(system.init)
 
     # the default value for t_0 is 0
-    t_0 =  getattr(system, 't_0', 0)
+    t_0 = getattr(system, "t_0", 0)
 
     # remove units from max_step
     # if not specified, require 50 steps
-    max_step = options.pop('max_step', None)
+    max_step = options.pop("max_step", None)
     if max_step is None:
         max_step = system.t_end - system.t_0 / 50
-    options['max_step'] = magnitude(max_step)
+    options["max_step"] = magnitude(max_step)
 
     # try running the slope function with the initial conditions
     try:
@@ -533,7 +601,7 @@ def run_solve_ivp(system, slope_func, **options):
                  initial conditions in `system` and `t=t_0` and I got
                  the following error:"""
         logger.error(msg)
-        raise(e)
+        raise (e)
 
     # wrap the slope function to reverse the arguments and add `system`
     f = lambda t, y: slope_func(y, t, system)
@@ -544,12 +612,12 @@ def run_solve_ivp(system, slope_func, **options):
         Make events terminal by default.
         """
         wrapped = lambda t, y: event(y, t, system)
-        wrapped.terminal = getattr(event, 'terminal', True)
-        wrapped.direction = getattr(event, 'direction', 0)
+        wrapped.terminal = getattr(event, "terminal", True)
+        wrapped.direction = getattr(event, "direction", 0)
         return wrapped
 
     # wrap the event functions so they take the right arguments
-    events = options.pop('events', [])
+    events = options.pop("events", [])
     try:
         events = [wrap_event(event) for event in events]
     except TypeError:
@@ -559,8 +627,8 @@ def run_solve_ivp(system, slope_func, **options):
     bunch = solve_ivp(f, [t_0, system.t_end], system.init, events=events, **options)
 
     # separate the results from the details
-    y = bunch.pop('y')
-    t = bunch.pop('t')
+    y = bunch.pop("y")
+    t = bunch.pop("t")
     details = ModSimSeries(bunch)
 
     # pack the results into a TimeFrame
@@ -576,21 +644,21 @@ def check_system(system, slope_func):
     :return:
     """
     # make sure `system` contains `init`
-    if not hasattr(system, 'init'):
+    if not hasattr(system, "init"):
         msg = """It looks like `system` does not contain `init`
                  as a system variable.  `init` should be a State
                  object that specifies the initial condition:"""
         raise ValueError(msg)
 
     # make sure `system` contains `t_end`
-    if not hasattr(system, 't_end'):
+    if not hasattr(system, "t_end"):
         msg = """It looks like `system` does not contain `t_end`
                  as a system variable.  `t_end` should be the
                  final time:"""
         raise ValueError(msg)
 
     # the default value for t_0 is 0
-    t_0 = getattr(system, 't_0', 0)
+    t_0 = getattr(system, "t_0", 0)
 
     # get the initial conditions
     init = system.init
@@ -639,11 +707,11 @@ def run_euler(system, slope_func, **options):
     for t1 in ts:
         y1 = frame.row[t1]
         slopes = slope_func(y1, t1, system)
-        y2 = [y + slope*dt for y, slope in zip(y1, slopes)]
+        y2 = [y + slope * dt for y, slope in zip(y1, slopes)]
         t2 = t1 + dt
         frame.row[t2] = y2
 
-    details = ModSimSeries(dict(message='Success'))
+    details = ModSimSeries(dict(message="Success"))
     return frame, details
 
 
@@ -675,7 +743,7 @@ def run_ralston(system, slope_func, **options):
     frame.row[t_0] = init
     ts = linrange(t_0, t_end, dt) * get_units(t_end)
 
-    event_func = options.get('events', None)
+    event_func = options.get("events", None)
     z1 = np.nan
 
     def project(y1, t1, slopes, dt):
@@ -687,13 +755,20 @@ def run_ralston(system, slope_func, **options):
     for t1 in ts:
         y1 = frame.row[t1]
 
+        # evaluate the slopes at the start of the time step
         slopes1 = slope_func(y1, t1, system)
-        y_mid, t_mid = project(y1, t1, slopes1, 2 * dt / 3)
 
+        # evaluate the slopes at the two-thirds point
+        y_mid, t_mid = project(y1, t1, slopes1, 2 * dt / 3)
         slopes2 = slope_func(y_mid, t_mid, system)
+
+        # compute the weighted sum of the slopes
         slopes = [(k1 + 3 * k2) / 4 for k1, k2 in zip(slopes1, slopes2)]
+
+        # compute the next time stamp
         y2, t2 = project(y1, t1, slopes, dt)
 
+        # check for a terminating event
         if event_func:
             z2 = event_func(y2, t2, system)
             if z1 * z2 < 0:
@@ -705,10 +780,12 @@ def run_ralston(system, slope_func, **options):
             else:
                 z1 = z2
 
+        # store the results
         frame.row[t2] = y2
 
     details = ModSimSeries(dict(success=True, message=msg))
     return frame, details
+
 
 run_ode_solver = run_ralston
 
@@ -736,7 +813,7 @@ def fsolve(func, x0, *args, **options):
                  running the error function you provided with the x0
                  you provided, and I got the following error:"""
         logger.error(msg)
-        raise(e)
+        raise (e)
 
     # make the tolerance more forgiving than the default
     underride(options, xtol=1e-6)
@@ -770,7 +847,7 @@ def root_scalar(func, bracket, *args, **options):
                  running the error function you provided with the x0
                  you provided, and I got the following error:"""
         logger.error(msg)
-        raise(e)
+        raise (e)
 
     if isinstance(error, Quantity):
         msg = """It looks like your error function returns a Quantity
@@ -798,8 +875,8 @@ def root_bisect(error_func, bracket, *args, **options):
 
     returns: ModSimSeries with results
     """
-    maxiter = options.get('maxiter', 100)
-    rtol = options.get('rtol', 1e-7)
+    maxiter = options.get("maxiter", 100)
+    rtol = options.get("rtol", 1e-7)
 
     def success(**kwargs):
         return ModSimSeries(dict(converged=True, **kwargs))
@@ -821,16 +898,16 @@ def root_bisect(error_func, bracket, *args, **options):
 
         # check the bracket
         if np.sign(y0 * y1) > 0:
-            return failure(flag='%f and %f do not bracket a root' % (x0, x1))
+            return failure(flag="%f and %f do not bracket a root" % (x0, x1))
 
         # bisection
         x2 = (x0 + x1) / 2
 
         # secant
-        #x2 = x1 - y1 * (x1 - x0) / (y1 - y0)
+        # x2 = x1 - y1 * (x1 - x0) / (y1 - y0)
 
         # check for convergence
-        if abs(x1-x0) / x2 < rtol:
+        if abs(x1 - x0) / x2 < rtol:
             return success(root=x2)
 
         # evaluate the error function
@@ -847,7 +924,7 @@ def root_bisect(error_func, bracket, *args, **options):
             y1 = y2
 
     # if we exited the loop, too many iterations
-    return failure(root=x2, flag='maximum iterations = %d exceeded' % maxiter)
+    return failure(root=x2, flag="maximum iterations = %d exceeded" % maxiter)
 
 
 def crossings(series, value):
@@ -905,7 +982,7 @@ def interpolate(series, **options):
 
     # make the interpolate function extrapolate past the ends of
     # the range, unless `options` already specifies a value for `fill_value`
-    underride(options, fill_value='extrapolate')
+    underride(options, fill_value="extrapolate")
 
     # call interp1d, which returns a new function object
     x = magnitudes(series.index)
@@ -915,10 +992,11 @@ def interpolate(series, **options):
 
     def wrapper(x):
         return interp_func(magnitudes(x)) * units
+
     return wrapper
 
 
-def interp_inverse(series, **options):
+def interpolate_inverse(series, **options):
     """Interpolate the inverse function of a Series.
 
     series: Series object, represents a mapping from `a` to `b`
@@ -944,7 +1022,7 @@ def gradient(series, **options):
     """
     x = magnitudes(series.index)
     y = magnitudes(series.values)
-    # units = get_units(series.values[0])
+    # units = get_units(series)
 
     a = np.gradient(y, x, **options)
     return series.__class__(a, series.index)
@@ -1018,14 +1096,16 @@ def plot(*args, **options):
 
     options are the same as for pyplot.plot
     """
-    # TODO: add lines to REPLOT_CACHE
-
     x, y, style = parse_plot_args(*args, **options)
+
     if isinstance(x, pd.DataFrame) or isinstance(y, pd.DataFrame):
         raise ValueError("modsimpy.plot can't handle DataFrames.")
 
     if x is None:
-        if isinstance(y, np.ndarray):
+        if isinstance(y, Quantity):
+            y = y.magnitude
+
+        if isinstance(y, (list, np.ndarray)):
             x = np.arange(len(y))
 
         if isinstance(y, pd.Series):
@@ -1041,31 +1121,6 @@ def plot(*args, **options):
     else:
         lines = plt.plot(x, y, **options)
     return lines
-
-REPLOT_CACHE = {}
-
-def replot(*args, **options):
-    """
-    """
-    try:
-        label = options['label']
-    except KeyError:
-        raise ValueError('To use replot, you must provide a label argument.')
-
-    axes = plt.gca()
-    key = (axes, label)
-
-    if key not in REPLOT_CACHE:
-        lines = plot(*args, **options)
-        if len(lines) != 1:
-            raise ValueError('Replot only works with a single plotted element.')
-        REPLOT_CACHE[key] = lines[0]
-        return lines
-
-    line = REPLOT_CACHE[key]
-    x, y, style = parse_plot_args(*args, **options)
-    line.set_xdata(x)
-    line.set_ydata(y)
 
 
 def parse_plot_args(*args, **options):
@@ -1090,15 +1145,21 @@ def parse_plot_args(*args, **options):
 def contour(df, **options):
     """Makes a contour plot from a DataFrame.
 
+    Wrapper for plt.contour
+    https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.contour.html
+
     Note: columns and index must be numerical
 
     df: DataFrame
+    options: passed to plt.contour
     """
+    fontsize = options.pop("fontsize", 12)
+    underride(options, cmap="viridis")
     x = df.columns
     y = df.index
     X, Y = np.meshgrid(x, y)
     cs = plt.contour(X, Y, df, **options)
-    plt.clabel(cs, inline=1, fontsize=10)
+    plt.clabel(cs, inline=1, fontsize=fontsize)
 
 
 def savefig(filename, **options):
@@ -1110,7 +1171,7 @@ def savefig(filename, **options):
 
     filename: string
     """
-    print('Saving figure to file', filename)
+    print("Saving figure to file", filename)
     plt.savefig(filename, **options)
 
 
@@ -1132,8 +1193,8 @@ def decorate(**options):
     And you can use `loc` to indicate the location of the legend
     (the default value is 'best')
     """
-    loc = options.pop('loc', 'best')
-    if options.pop('legend', True):
+    loc = options.pop("loc", "best")
+    if options.pop("legend", True):
         legend(loc=loc)
 
     plt.gca().set(**options)
@@ -1147,7 +1208,7 @@ def legend(**options):
     https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html
 
     """
-    underride(options, loc='best')
+    underride(options, loc="best", frameon=False)
 
     ax = plt.gca()
     handles, labels = ax.get_legend_handles_labels()
@@ -1171,8 +1232,7 @@ def remove_from_legend(bad_labels):
 
 
 def subplot(nrows, ncols, plot_number, **options):
-    figsize = {(2, 1): (8, 8),
-               (3, 1): (8, 10)}
+    figsize = {(2, 1): (8, 8), (3, 1): (8, 10)}
     key = nrows, ncols
     default = (8, 5.5)
     width, height = figsize.get(key, default)
@@ -1219,7 +1279,7 @@ class ModSimSeries(pd.Series):
 
         Mostly used for Jupyter notebooks.
         """
-        df = pd.DataFrame(self.values, index=self.index, columns=['values'])
+        df = pd.DataFrame(self.values, index=self.index, columns=["values"])
         return df._repr_html_()
 
     def __copy__(self, deep=True):
@@ -1313,7 +1373,7 @@ class ModSimSeries(pd.Series):
 
         https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.dt.html
         """
-        return self.loc['dt']
+        return self.loc["dt"]
 
     @property
     def T(self):
@@ -1322,7 +1382,7 @@ class ModSimSeries(pd.Series):
 
         https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.T.html
         """
-        return self.loc['T']
+        return self.loc["T"]
 
 
 def get_first_label(x):
@@ -1332,12 +1392,14 @@ def get_first_label(x):
     """
     return x.index[0]
 
+
 def get_last_label(x):
     """Returns the label of the last element.
 
     :param x: Series or DataFrame
     """
     return x.index[-1]
+
 
 def get_first_value(x):
     """Returns the value of the first element.
@@ -1347,6 +1409,7 @@ def get_first_value(x):
     :param x: Series
     """
     return x[x.index[0]]
+
 
 def get_last_value(x):
     """Returns the value of the last element.
@@ -1360,11 +1423,13 @@ def get_last_value(x):
 
 class TimeSeries(ModSimSeries):
     """Represents a mapping from times to values."""
+
     pass
 
 
 class SweepSeries(ModSimSeries):
     """Represents a mapping from parameter values to metrics."""
+
     pass
 
 
@@ -1390,7 +1455,7 @@ class System(ModSimSeries):
             super().__init__(*args, copy=True)
             self.set(**kwargs)
         else:
-            msg = '__init__() takes at most one positional argument'
+            msg = "__init__() takes at most one positional argument"
             raise TypeError(msg)
 
 
@@ -1399,6 +1464,7 @@ class State(System):
 
     Takes keyword arguments and stores them as rows.
     """
+
     pass
 
 
@@ -1407,12 +1473,14 @@ class Condition(System):
 
     Condition objects are often used to construct a System object.
     """
+
     pass
 
 
 class Params(System):
     """Represents a set of parameters.
     """
+
     pass
 
 
@@ -1428,7 +1496,7 @@ def compute_abs_diff(seq):
     # the moment edfiff1d is broken
     # https://github.com/numpy/numpy/issues/13103
     # So I'm working around by appending 0 instead.
-    #to_end = np.array([np.nan], dtype=np.float64)
+    # to_end = np.array([np.nan], dtype=np.float64)
     to_end = np.array([0], dtype=np.float64)
     diff = np.ediff1d(xs, to_end)
 
@@ -1436,6 +1504,7 @@ def compute_abs_diff(seq):
         return Series(diff, seq.index)
     else:
         return diff
+
 
 def compute_rel_diff(seq):
     """Compute absolute differences between successive elements.
@@ -1461,6 +1530,7 @@ class ModSimDataFrame(pd.DataFrame):
         back an appropriate subclass of Series: TimeSeries, SweepSeries,
         or ModSimSeries.
     """
+
     column_constructor = ModSimSeries
     row_constructor = ModSimSeries
 
@@ -1495,7 +1565,7 @@ class ModSimDataFrame(pd.DataFrame):
 
         https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.dt.html
         """
-        return self['dt']
+        return self["dt"]
 
     @property
     def T(self):
@@ -1504,7 +1574,7 @@ class ModSimDataFrame(pd.DataFrame):
 
         https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.T.html
         """
-        return self['T']
+        return self["T"]
 
     @property
     def row(self):
@@ -1582,6 +1652,7 @@ class ModSimLocIndexer:
 class TimeFrame(ModSimDataFrame):
     """A DataFrame that maps from time to State.
     """
+
     column_constructor = TimeSeries
     row_constructor = State
 
@@ -1589,6 +1660,7 @@ class TimeFrame(ModSimDataFrame):
 class SweepFrame(ModSimDataFrame):
     """A DataFrame that maps from a parameter value to a SweepSeries.
     """
+
     column_constructor = SweepSeries
     row_constructor = SweepSeries
 
@@ -1614,7 +1686,7 @@ def Vector(*args, units=None):
 
     # see if any of the arguments have units; if so, save the first one
     for elt in args:
-        found_units = getattr(elt, 'units', None)
+        found_units = getattr(elt, "units", None)
         if found_units:
             break
 
@@ -1631,13 +1703,16 @@ def Vector(*args, units=None):
 
 ## Vector functions (should work with any sequence)
 
+
 def vector_mag(v):
     """Vector magnitude with units.
 
     returns: number or Quantity
     """
     a = magnitude(v)
-    return np.sqrt(np.dot(a, a)) * get_units(v)
+    units = get_first_unit(v)
+    return np.sqrt(np.dot(a, a)) * units
+
 
 def vector_mag2(v):
     """Vector magnitude squared with units.
@@ -1645,7 +1720,9 @@ def vector_mag2(v):
     returns: number of Quantity
     """
     a = magnitude(v)
-    return np.dot(a, a) * get_units(v) * get_units(v)
+    units = get_first_unit(v)
+    return np.dot(a, a) * units * units
+
 
 def vector_angle(v):
     """Angle between v and the positive x axis.
@@ -1658,12 +1735,14 @@ def vector_angle(v):
     x, y = v
     return np.arctan2(y, x)
 
+
 def vector_polar(v):
     """Vector magnitude and angle.
 
     returns: (number or quantity, number in radians)
     """
     return vector_mag(v), vector_angle(v)
+
 
 def vector_hat(v):
     """Unit vector in the direction of v.
@@ -1684,6 +1763,7 @@ def vector_hat(v):
     else:
         return v / mag
 
+
 def vector_perp(v):
     """Perpendicular Vector (rotated left).
 
@@ -1695,6 +1775,7 @@ def vector_perp(v):
     x, y = v
     return Vector(-y, x)
 
+
 def vector_dot(v, w):
     """Dot product of v and w.
 
@@ -1702,7 +1783,8 @@ def vector_dot(v, w):
     """
     a1 = magnitude(v)
     a2 = magnitude(w)
-    return np.dot(a1, a2) * get_units(v) * get_units(w)
+    return np.dot(a1, a2) * get_first_unit(v) * get_first_unit(w)
+
 
 def vector_cross(v, w):
     """Cross product of v and w.
@@ -1713,11 +1795,11 @@ def vector_cross(v, w):
     a2 = magnitude(w)
     res = np.cross(a1, a2)
 
-    if len(v)==3 and (isinstance(v, ModSimVector) or
-                      isinstance(w, ModSimVector)):
-        return ModSimVector(res, get_units(v) * get_units(w))
+    if len(v) == 3 and (isinstance(v, ModSimVector) or isinstance(w, ModSimVector)):
+        return ModSimVector(res, get_first_unit(v) * get_first_unit(w))
     else:
-        return res * get_units(v) * get_units(w)
+        return res * get_first_unit(v) * get_first_unit(w)
+
 
 def vector_proj(v, w):
     """Projection of v onto w.
@@ -1729,6 +1811,7 @@ def vector_proj(v, w):
     """
     w_hat = vector_hat(w)
     return vector_dot(v, w_hat) * w_hat
+
 
 def scalar_proj(v, w):
     """Returns the scalar projection of v onto w.
@@ -1742,11 +1825,13 @@ def scalar_proj(v, w):
     """
     return vector_dot(v, vector_hat(w))
 
+
 def vector_dist(v, w):
     """Euclidean distance from v to w, with units."""
     if isinstance(v, list):
         v = np.asarray(v)
-    return vector_mag(v-w)
+    return vector_mag(v - w)
+
 
 def vector_diff_angle(v, w):
     """Angular difference between two vectors, in radians.
@@ -1754,7 +1839,7 @@ def vector_diff_angle(v, w):
     if len(v) == 2:
         return vector_angle(v) - vector_angle(w)
     else:
-        #TODO: see http://www.euclideanspace.com/maths/algebra/
+        # TODO: see http://www.euclideanspace.com/maths/algebra/
         # vectors/angleBetween/
         raise NotImplementedError()
 
@@ -1805,7 +1890,6 @@ class ModSimVector(Quantity):
     comp = scalar_proj
     dist = vector_dist
     diff_angle = vector_diff_angle
-
 
 
 def plot_segment(A, B, **options):
