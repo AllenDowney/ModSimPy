@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{3.3.0}
+\newcommand{\theversion}{3.4.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -1189,12 +1189,12 @@ decorate(title='Olin-Wellesley Bikeshare',
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap01-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap02-fig01.pdf}}
 \caption{Simulation of a bikeshare system showing number of bikes at Olin over time.}
-\label{chap01-fig01}
+\label{chap02-fig01}
 \end{figure}
 
-Figure~\ref{chap01-fig01} shows the result.
+Figure~\ref{chap02-fig01} shows the result.
 
 \py{plot} and \py{decorate} are based on Pyplot, which is a Python library for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{http://modsimpy.com/plot}.
 
@@ -1937,12 +1937,12 @@ The \py{label} argument provides the string that appears in the legend.
 \index{legend}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016.}
-\label{chap03-fig01}
+\label{chap05-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig01} shows the result.  The lines overlap almost completely; for most dates the difference between the two estimates is less than 1\%.
+Figure~\ref{chap05-fig01} shows the result.  The lines overlap almost completely; for most dates the difference between the two estimates is less than 1\%.
 
 
 \section{Constant growth model}
@@ -2044,12 +2044,12 @@ Each time through the loop, the loop variable \py{t} gets the next value from th
 \index{loop variable}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
 \caption{Estimates of world population, 1950--2016, and a constant growth model.}
-\label{chap03-fig02}
+\label{chap05-fig02}
 \end{figure}
 
-Figure~\ref{chap03-fig02} shows the result. The model does not fit the data particularly well from 1950 to 1990, but after that, it's pretty good.  Nevertheless, there are problems:
+Figure~\ref{chap05-fig02} shows the result. The model does not fit the data particularly well from 1950 to 1990, but after that, it's pretty good.  Nevertheless, there are problems:
 
 \begin{itemize}
 
@@ -2202,12 +2202,12 @@ plot_results(census, un, results, 'Proportional model')
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016, and a proportional model.}
-\label{chap03-fig03}
+\label{chap06-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig03} shows the results.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
+Figure~\ref{chap06-fig01} shows the results.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
 
 In the next chapter we'll try one more time to find a model that makes sense and fits the data.  But first, I want to make a few more improvements to the code.
 
@@ -2349,12 +2349,12 @@ results = run_simulation(system, update_func_quad)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig04.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016, and a quadratic model.}
-\label{chap03-fig04}
+\label{chap07-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig04} shows the result.  The model fits the data well over the whole range, with just a bit of space between them in the 1960s.
+Figure~\ref{chap07-fig01} shows the result.  The model fits the data well over the whole range, with just a bit of space between them in the 1960s.
 
 Of course, we should expect the quadratic model to fit better than the constant and proportional models because it has two parameters we can choose, where the other models have only one.  In general, the more parameters you have to play with, the better you should expect the model to fit.
 
@@ -2381,12 +2381,12 @@ plot(pop_array, net_growth_array)
 Previously we have used \py{plot} with \py{Series} objects.  In this example, we use two NumPy arrays, corresponding to the x and y axes.
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig05.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
 \caption{Net growth as a function of population.}
-\label{chap03-fig05}
+\label{chap07-fig02}
 \end{figure}
 
-Figure~\ref{chap03-fig05} shows the result.  Note that the x-axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
+Figure~\ref{chap07-fig02} shows the result.  Note that the x-axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
 \index{regime}
 
 \begin{itemize}
@@ -2586,12 +2586,12 @@ results = run_simulation(system, update_func_quad)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap04-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig01.pdf}}
 \caption{Quadratic model of world population growth, with projection from 2016 to 2250.}
-\label{chap04-fig01}
+\label{chap08-fig01}
 \end{figure}
 
-Figure~\ref{chap04-fig01} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
+Figure~\ref{chap08-fig01} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
 
 I am using the word ``projection" deliberately, rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
 
@@ -2637,9 +2637,9 @@ For some years, one agency or the other has not published a projection, so some 
 \index{missing data}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap04-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig02.pdf}}
 \caption{Projections of world population generated by the U.S. Census Bureau, the United Nations, and our quadratic model.}
-\label{chap04-fig02}
+\label{chap08-fig02}
 \end{figure}
 
 Pandas provides functions that deal with missing data, including \py{dropna}, which removes any elements in a series that contain \py{NaN}.  Using \py{dropna}, we can plot the projections like this:
@@ -2668,7 +2668,7 @@ system.t_end = 2100
 results = run_simulation(system, update_func_quad)
 \end{python}
 
-And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+And compare our projections to theirs.  Figure~\ref{chap08-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
 
 \index{demography}
 
@@ -3464,10 +3464,6 @@ In this example, there are three stocks---susceptible, infectious, and recovered
 Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
-% first version was on YUML
-% https://yuml.me/edit/3de9c163
-% wget https://yuml.me/2389d485.pdf; mv 2389d485.pdf figs/stock_flow1.pdf
-% current version uses lodraw
 \centerline{\includegraphics[width=4in]{figs/stock_flow1.pdf}}
 \caption{Stock and flow diagram for an SIR model.}
 \label{stock_flow1}
@@ -3694,12 +3690,12 @@ plot_results(S, I, R)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap11-fig01.pdf}}
 \caption{Time series for \py{S}, \py{I}, and \py{R} over the course of 98 days.}
-\label{chap05-fig01}
+\label{chap11-fig01}
 \end{figure}
 
-Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  In total, almost half the population gets sick. 
+Figure~\ref{chap11-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  In total, almost half the population gets sick. 
 
 
 \section{Now with a TimeFrame}
@@ -3847,12 +3843,12 @@ add_immunization(system2, 0.1)
 results2 = run_simulation(system2, update_func)
 \end{python}
 
-For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap05-fig02} shows \py{S} as a function of time, with and without immunization.  
+For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap12-fig01} shows \py{S} as a function of time, with and without immunization.  
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig01.pdf}}
 \caption{Time series for \py{S}, with and without immunization.}
-\label{chap05-fig02}
+\label{chap12-fig01}
 \end{figure}
 
 Without immunization, almost 47\% of the population gets infected at some point.  With 10\% immunization, only 31\% gets infected.  That's pretty good.
@@ -3879,14 +3875,14 @@ The parameter of \py{sweep_immunity} is an array of immunization rates.  The res
 \index{SweepSeries object}
 \index{parameter sweep}
 
-Figure~\ref{chap05-fig03} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
+Figure~\ref{chap12-fig02} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
 
 As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized (of course) but it also protects the rest of the population. 
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig02.pdf}}
 \caption{Fraction of the population infected as a function of immunization rate.}
-\label{chap05-fig03}
+\label{chap12-fig02}
 \end{figure} 
 
 Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{http://modsimpy.com/herd}).
@@ -3983,20 +3979,20 @@ infected_sweep = sweep_hand_washing(spending_array)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig05.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig03.pdf}}
 \caption{Fraction of the population infected as a function of hand-washing campaign spending.}
-\label{chap05-fig05}
+\label{chap12-fig03}
 \end{figure} 
 
-Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
+Figure~\ref{chap12-fig03} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
 
 
 \section{Optimization} 
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig06.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig04.pdf}}
 \caption{Fraction of the population infected as a function of the number of doses.}
-\label{chap05-fig06}
+\label{chap12-fig04}
 \end{figure} 
 
 Let's put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
@@ -4048,7 +4044,7 @@ def sweep_doses(dose_array):
 
 For each number of doses, we compute the fraction of students we can immunize, \py{fraction} and the remaining budget we can spend on the campaign, \py{spending}.  Then we run the simulation with those quantities and store the number of infections.
 
-Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
+Figure~\ref{chap12-fig04} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
 
 As we increase the number of doses, we have to cut campaign spending, which turns out to make things worse.  But interestingly, when we get above 10 doses, the effect of herd immunity starts to kick in, and the number of sick students goes down again.
 
@@ -4135,7 +4131,7 @@ If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap13-fig01.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
+\caption{Fraction of students infected as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
 \label{chap13-fig01}
 \end{figure}
 
@@ -4165,7 +4161,7 @@ for gamma in gamma_array:
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap13-fig02.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{beta}, for several values of \py{gamma}.}
+\caption{Fraction of students infected as a function of the parameter \py{beta}, for several values of \py{gamma}.}
 \label{chap13-fig02}
 \end{figure}
 
@@ -4226,7 +4222,7 @@ for beta in [1.1, 0.9, 0.7, 0.5, 0.3]:
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap13-fig03.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{gamma}, for several values of \py{beta}.}
+\caption{Fraction of students infected as a function of the parameter \py{gamma}, for several values of \py{beta}.}
 \label{chap13-fig03}
 \end{figure}
 
@@ -4244,7 +4240,7 @@ contour(frame)
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap13-fig04.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{gamma}, for several values of \py{beta}.}
+\caption{Contour plot showing fraction of students infected as a function of the parameters \py{gamma} and \py{beta}.}
 \label{chap13-fig04}
 \end{figure}
 
@@ -4791,14 +4787,14 @@ r_coffee = res.root
 In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap16-fig01.pdf}}
 \caption{Temperature of the coffee and milk over time.}
-\label{chap07-fig01}
+\label{chap16-fig01}
 \end{figure}
 
 As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  
 
-With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time.
+With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results should look like Figure~\ref{chap16-fig01}, which shows the temperature of the coffee and milk over time.
 
 
 \section{Mixing liquids}
@@ -4939,12 +4935,12 @@ for t_add in linspace(0, 30, 11):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap16-fig02.pdf}}
 \caption{Final temperature as a function of the time the milk is added.}
-\label{chap07-fig02}
+\label{chap16-fig02}
 \end{figure}
 
-Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the index of a \py{TimeSeries}.
+Figure~\ref{chap16-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the index of a \py{TimeSeries}.
 
 The final temperature is maximized when \py{t_add=30}, so adding the milk at the end is optimal.
 
@@ -5168,7 +5164,7 @@ Before we are ready to implement the model, there's one problem we have to solve
 \index{interpolation}
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap17-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap17-fig02.pdf}}
 \caption{Insulin concentrations measured by FSIGT and an interpolated function.}
 \label{chap17-fig02}
 \end{figure}
@@ -5406,8 +5402,8 @@ The \py{TimeFrame}, which we assign to \py{results}, has one row for each time s
 \index{TimeFrame object}
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap18-fig02.pdf}}
-\caption{Results Euler's method and Ralston's method.}
+\centerline{\includegraphics[height=3in]{figs/chap18-fig02.pdf}}
+\caption{Results from Euler's method (simulation) and Ralston's method (ODE solver).}
 \label{chap18-fig02}
 \end{figure}
 
@@ -5612,7 +5608,7 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 The following circuit diagram\footnote{From \url{http://modsimpy.com/divider}} shows a low-pass filter built with one resistor and one capacitor.  
 
-\centerline{\includegraphics[height=1.3in]{figs/RC_Divider.pdf}}
+\centerline{\includegraphics[height=1.2in]{figs/RC_Divider.pdf}}
 
 A ``filter" is a circuit takes a signal, $V_{in}$, as input and produces a signal, $V_{out}$, as output.  In this context, a ``signal" is a voltage that changes over time.
 
@@ -5657,7 +5653,7 @@ The authors put their paper under a Creative Commons license, and make their dat
 The following figure shows the scenario and their model of the wall:
 
 \vspace{0.1in}
-\centerline{\includegraphics[height=1.3in]{figs/wall_model.pdf}}
+\centerline{\includegraphics[height=1.4in]{figs/wall_model.pdf}}
 
 On the interior and exterior surfaces of the wall, they measure temperature and heat flux over a period of three days.  They model the wall using two thermal masses connected to the surfaces, and to each other, by thermal resistors.
 
@@ -5856,12 +5852,12 @@ def plot_position(results):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap20-fig01.pdf}}
 \caption{Height of the penny versus time, with no air resistance.}
-\label{chap09-fig01}
+\label{chap20-fig01}
 \end{figure}
 
-Figure~\ref{chap09-fig01} shows the result.  Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.
+Figure~\ref{chap20-fig01} shows the result.  Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.
 
 \index{parabola}
 
