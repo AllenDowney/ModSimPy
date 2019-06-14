@@ -16,7 +16,9 @@ dependencies:
   - html5lib>=1.0
   - beautifulsoup4>=4.7
   - pytables>=3.5
-  
+  - pip
+  - pip:
+    - .
   
   
 
