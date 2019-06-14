@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.3.1}
+\newcommand{\theversion}{3.4.0}
 
 
 %%%% Both LATEX and PLASTEX
@@ -37,7 +37,7 @@
 \newtcblisting{python}{
   skin=standard,
   boxrule=0.4pt,
-  colback=light-gray,
+  %colback=light-gray,
   listing only,
   top=0pt,
   bottom=0pt,
@@ -288,7 +288,7 @@ available at \url{http://modsimpy.com/license}.
 
 \section{Can modeling be taught?}
 
-The essential skills of modeling --- abstraction, analysis, simulation, and validation --- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most schools they are not taught explicitly, and students get little practice.  That's the problem this book is meant to address.  
+The essential skills of modeling --- abstraction, analysis, simulation, and validation --- are central in engineering, natural sciences, social sciences, medicine, and many other fields.  Some students learn these skills implicitly, but in most schools they are not taught explicitly, and students get little practice.  That's the problem this book is meant to address.
 
 At Olin College, we use this book in a class called Modeling and Simulation, which all students take in their first semester.  My colleagues, John Geddes and Mark Somerville, and I developed this class and taught it for the first time in 2009.
 
@@ -361,9 +361,9 @@ I have tried to mitigate these problems by providing a library, called \py{modsi
 
 \index{modsim library}
 
-Some features in the \py{modsim} library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, and later.
+Some features in the ModSim library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, and later.
 
-I encourage you to read the the \py{modsim} library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse engineering my design decisions.
+I encourage you to read the the ModSim library code.  Most of it is not complicated, and I tried to make it readable.  Particularly if you have some programming experience, you might learn something by reverse engineering my design decisions.
 
 
 \section{How much math and science do I need?} 
@@ -419,24 +419,35 @@ Start at \url{https://www.anaconda.com/download}.  Download the installer for yo
 I suggest you accept the recommended options.
 On Windows you have the option to install Visual Studio Code, which is an interactive environment for writing programs.  You won't need it for this book, but you might want it for other projects.
 
-By default, Anaconda installs most of the packages you need, but there are a few more you might have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open the Anaconda Prompt that should be in your Start menu.
+By default, Anaconda installs most of the packages you need, but there are a few more you have to add.  Once the installation is complete, open a command window.  On macOS or Linux, you can use Terminal.  On Windows, open the Anaconda Prompt that should be in your Start menu.
 
 Run the following command (copy and paste it if you can, to avoid typos):
 
 \begin{code}
-conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml
+conda install jupyterlab pandas seaborn sympy 
+conda install beautifulsoup4 lxml html5lib pytables
 \end{code}
 
-Some of these packages might already be installed.  Then run this command:
+Some of these packages might already be installed.  To install Pint, run this command:
 
 \begin{code}
 conda install -c unidata pint
+\end{code}
+
+And to install the ModSim library, run this command:
+
+\begin{code}
+pip install modsim
 \end{code}
 
 That should be everything you need.
 
 
 \section{Copying my files}
+
+The simplest way to get the files for this book is to download a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download.
+
+If you download the Zip file, you can skip the rest of this section, which explains how to use Git.
 
 The code for this book is available from
 \url{https://github.com/AllenDowney/ModSimPy}, which is a {\bf Git repository}.  Git is a software tool that helps you keep track of the programs and other files that make up a project.  A collection of files under Git's control is called a repository (the cool kids call it a ``repo").  GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
@@ -474,10 +485,6 @@ git clone https://github.com/YourGitHubUserName/ModSimPy
 \end{python}
 
 Of course, you should replace \py{YourGitHubUserName} with your GitHub user name.  After cloning, you should have a new directory called \py{ModSimPy}.
-
-If you don't want to use Git, you can download my files
-in a Zip archive from \url{http://modsimpy.com/zip}.  You will need a program like WinZip or gzip to unpack the Zip file.  Make a note of the location of the files you download.
-
 
 \section{Running Jupyter}
 
@@ -596,7 +603,7 @@ But often a simpler model is better.  If we include only the essential features 
 
 \index{simplicity}
 
-As an example, suppose someone asked you why the orbit of the Earth is nearly elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size), compute the gravitational force between them using Newton's law of universal gravitation, and compute the resulting orbit using Newton's laws of motion, you can show that the result is an ellipse.
+As an example, suppose someone asks you why the orbit of the Earth is elliptical.  If you model the Earth and Sun as point masses (ignoring their actual size), compute the gravitational force between them using Newton's law of universal gravitation, and compute the resulting orbit using Newton's laws of motion, you can show that the result is an ellipse.
 
 \index{orbit}
 \index{ellipse}
@@ -691,7 +698,7 @@ Division & \py{/} \\
 Exponentiation & \py{**}  \\ 
 \end{tabular} 
 
-Next, we can compute the time it takes for the penny to drop \SI{381}{\meter}, the height of the Empire State Building.
+Next, we compute the time it takes for the penny to drop \SI{381}{\meter}, the height of the Empire State Building.
 
 \begin{python}
 h = 381 * meter
@@ -703,7 +710,7 @@ These lines create two more variables: \py{h} gets the height of the building in
 \index{function}
 \index{sqrt}
 
-Finally, we can compute the velocity of the penny after $t$ seconds:
+Finally, we compute the velocity of the penny after $t$ seconds:
 
 \begin{python}
 v = a * t
@@ -711,7 +718,7 @@ v = a * t
 
 The result is about \SI{86}{\meter\per\second}, again with the correct units.
 
-This example demonstrates analysis and computation using Python.  Next we'll see an example of simulation.  
+This example demonstrates analysis and computation using Python.  In the next chapter, we'll see an example of simulation.  
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap01.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -736,7 +743,7 @@ Suppose the system contains 12 bikes and two bike racks, one at Olin and one at 
 
 \index{bike share system}
 
-As students arrive, check out a bike, and ride to the other campus, the number of bikes in each location changes.  In the simulation, we'll need to keep track of where the bikes are.  To do that, I'll create a \py{State} object, which is defined in the \py{modsim} library.  
+As students arrive, check out a bike, and ride to the other campus, the number of bikes in each location changes.  In the simulation, we'll need to keep track of where the bikes are.  To do that, I'll create a \py{State} object, which is defined in the ModSim library.  
 
 \index{State object}
 
@@ -946,7 +953,7 @@ The argument of this \py{print} is a {\bf string}, which is a sequence of letter
 
 \section{If statements}
 
-The \py{modsim} library provides a function called \py{flip} that takes
+The ModSim library provides a function called \py{flip} that takes
 as an argument a probability between 0 and 1:
 
 \begin{python}
@@ -1107,7 +1114,7 @@ which moves one bike at a time from Olin to Wellesley.
 \section{TimeSeries}
 \label{timeseries}
 
-When we run a simulation, we usually want to save the results for later analysis.  The \py{modsim} library provides a \py{TimeSeries} object for this purpose.  A \py{TimeSeries} contains a sequence of time stamps and a corresponding sequence of values.  In this example, the time stamps are integers representing minutes, and the values are the number of bikes at one location.
+When we run a simulation, we usually want to save the results for later analysis.  The ModSim library provides a \py{TimeSeries} object for this purpose.  A \py{TimeSeries} contains a sequence of time stamps and a corresponding sequence of values.  In this example, the time stamps are integers representing minutes, and the values are the number of bikes at one location.
 
 %TODO: index modsim library functions
 \index{modsim library}
@@ -1162,7 +1169,7 @@ You can read the documentation of \py{Series} at \url{http://modsimpy.com/series
 \section{Plotting}
 \label{plotting}
 
-The \py{modsim} library provides a function called \py{plot} we can use to plot \py{results}:
+The ModSim library provides a function called \py{plot} we can use to plot \py{results}:
 
 \begin{python}
 plot(results)
@@ -1180,7 +1187,7 @@ plot(results, label='Olin')
 \index{positional argument}
 \index{argument}
 
-Whenever you make a figure, you should label the axes.  The \py{modsim} library provides \py{decorate}, which labels the axes and gives the figure a title and legend:
+Whenever you make a figure, you should label the axes.  The ModSim library provides \py{decorate}, which labels the axes and gives the figure a title and legend:
 
 \begin{python}
 decorate(title='Olin-Wellesley Bikeshare',
@@ -1189,12 +1196,12 @@ decorate(title='Olin-Wellesley Bikeshare',
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap01-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap02-fig01.pdf}}
 \caption{Simulation of a bikeshare system showing number of bikes at Olin over time.}
-\label{chap01-fig01}
+\label{chap02-fig01}
 \end{figure}
 
-Figure~\ref{chap01-fig01} shows the result.
+Figure~\ref{chap02-fig01} shows the result.
 
 \py{plot} and \py{decorate} are based on Pyplot, which is a Python library for generating figures.  You can read more about \py{plot} and the arguments it takes at \url{http://modsimpy.com/plot}.
 
@@ -1630,7 +1637,7 @@ for i in range(4):
 \index{loop variable}
 \index{variable!loop}
 
-\py{range} only works with integers; to get a sequence of non-integer values, we can use \py{linspace}, which is defined in the \py{modsim} library:
+\py{range} only works with integers; to get a sequence of non-integer values, we can use \py{linspace}, which is defined in the ModSim library:
 
 \begin{python}
 p1_array = linspace(0, 1, 5)
@@ -1828,7 +1835,7 @@ To read this data, we will use Pandas, which provides functions for working with
 from modsim import *
 \end{python}
 
-which imports all functions from the \py{modsim} library.  To import \py{read_html}, the statement we need is:
+which imports all functions from the ModSim library.  To import \py{read_html}, the statement we need is:
 
 \begin{python}
 from pandas import read_html
@@ -1937,12 +1944,12 @@ The \py{label} argument provides the string that appears in the legend.
 \index{legend}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016.}
-\label{chap03-fig01}
+\label{chap05-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig01} shows the result.  The lines overlap almost completely; for most dates the difference between the two estimates is less than 1\%.
+Figure~\ref{chap05-fig01} shows the result.  The lines overlap almost completely; for most dates the difference between the two estimates is less than 1\%.
 
 
 \section{Constant growth model}
@@ -1992,7 +1999,7 @@ elapsed_time = t_end - t_0
 \py{get_first_label} and \py{get_last_label} are defined in \py{modsim.py}; as you might have guessed, they select the first and last labels from \py{census}.
 The difference between them is the elapsed time.
 
-The \py{modsim} library also defines \py{get_first_value} and \py{get_last_value}, which we can use to compute \py{total_growth}:
+The ModSim library also defines \py{get_first_value} and \py{get_last_value}, which we can use to compute \py{total_growth}:
 
 \begin{python}
 p_0 = get_first_value(census)
@@ -2022,7 +2029,7 @@ results = TimeSeries()
 We can set the first value in the new \py{TimeSeries} by copying the first value from \py{census}:
 
 \begin{python}
-results[t_0] = census[t_0]
+results[t_0] = census[p_0]
 \end{python}
 
 Then we set the rest of the values by simulating annual growth:
@@ -2032,7 +2039,7 @@ for t in linrange(t_0, t_end):
     results[t+1] = results[t] + annual_growth
 \end{python}
 
-\py{linrange} is defined in the \py{modsim} library.  In this example it returns a NumPy array of integers from \py{t_0} to \py{t_end}, including the first but not the last.
+\py{linrange} is defined in the ModSim library.  In this example it returns a NumPy array of integers from \py{t_0} to \py{t_end}, including the first but not the last.
 
 \index{linrange}
 \index{NumPy}
@@ -2044,12 +2051,12 @@ Each time through the loop, the loop variable \py{t} gets the next value from th
 \index{loop variable}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
 \caption{Estimates of world population, 1950--2016, and a constant growth model.}
-\label{chap03-fig02}
+\label{chap05-fig02}
 \end{figure}
 
-Figure~\ref{chap03-fig02} shows the result. The model does not fit the data particularly well from 1950 to 1990, but after that, it's pretty good.  Nevertheless, there are problems:
+Figure~\ref{chap05-fig02} shows the result. The model does not fit the data particularly well from 1950 to 1990, but after that, it's pretty good.  Nevertheless, there are problems:
 
 \begin{itemize}
 
@@ -2202,12 +2209,12 @@ plot_results(census, un, results, 'Proportional model')
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap06-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016, and a proportional model.}
-\label{chap03-fig03}
+\label{chap06-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig03} shows the results.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
+Figure~\ref{chap06-fig01} shows the results.  The proportional model fits the data well from 1950 to 1965, but not so well after that.  Overall, the {\bf quality of fit} is not as good as the constant growth model, which is surprising, because it seems like the proportional model is more realistic.
 
 In the next chapter we'll try one more time to find a model that makes sense and fits the data.  But first, I want to make a few more improvements to the code.
 
@@ -2349,12 +2356,12 @@ results = run_simulation(system, update_func_quad)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig04.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
 \caption{Estimates of world population, 1950--2016, and a quadratic model.}
-\label{chap03-fig04}
+\label{chap07-fig01}
 \end{figure}
 
-Figure~\ref{chap03-fig04} shows the result.  The model fits the data well over the whole range, with just a bit of space between them in the 1960s.
+Figure~\ref{chap07-fig01} shows the result.  The model fits the data well over the whole range, with just a bit of space between them in the 1960s.
 
 Of course, we should expect the quadratic model to fit better than the constant and proportional models because it has two parameters we can choose, where the other models have only one.  In general, the more parameters you have to play with, the better you should expect the model to fit.
 
@@ -2381,12 +2388,12 @@ plot(pop_array, net_growth_array)
 Previously we have used \py{plot} with \py{Series} objects.  In this example, we use two NumPy arrays, corresponding to the x and y axes.
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap03-fig05.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
 \caption{Net growth as a function of population.}
-\label{chap03-fig05}
+\label{chap07-fig02}
 \end{figure}
 
-Figure~\ref{chap03-fig05} shows the result.  Note that the x-axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
+Figure~\ref{chap07-fig02} shows the result.  Note that the x-axis is not time, as in the previous figures, but population.  We can divide this curve into four regimes of behavior:
 \index{regime}
 
 \begin{itemize}
@@ -2586,12 +2593,12 @@ results = run_simulation(system, update_func_quad)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap04-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig01.pdf}}
 \caption{Quadratic model of world population growth, with projection from 2016 to 2250.}
-\label{chap04-fig01}
+\label{chap08-fig01}
 \end{figure}
 
-Figure~\ref{chap04-fig01} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
+Figure~\ref{chap08-fig01} shows the result, with a projection until 2250.  According to this model, population growth will continue almost linearly for the next 50--100 years, then slow over the following 100 years, approaching 13.9 billion by 2250.
 
 I am using the word ``projection" deliberately, rather than ``prediction", with the following distinction: ``prediction" implies something like ``this is what we should reasonably expect to happen, at least approximately"; ``projection" implies something like ``if this model is actually a good description of what is happening in this system, and if nothing in the future causes the parameters of the model to change, this is what would happen."
 
@@ -2637,9 +2644,9 @@ For some years, one agency or the other has not published a projection, so some 
 \index{missing data}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap04-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap08-fig02.pdf}}
 \caption{Projections of world population generated by the U.S. Census Bureau, the United Nations, and our quadratic model.}
-\label{chap04-fig02}
+\label{chap08-fig02}
 \end{figure}
 
 Pandas provides functions that deal with missing data, including \py{dropna}, which removes any elements in a series that contain \py{NaN}.  Using \py{dropna}, we can plot the projections like this:
@@ -2668,7 +2675,7 @@ system.t_end = 2100
 results = run_simulation(system, update_func_quad)
 \end{python}
 
-And compare our projections to theirs.  Figure~\ref{chap04-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
+And compare our projections to theirs.  Figure~\ref{chap08-fig02} shows the results.  Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.
 
 \index{demography}
 
@@ -3251,7 +3258,7 @@ The type of \py{table2.values} is \py{ndarray}, which is the primary array type 
 
 In \py{census} or \py{un}, the index is an \py{Int64Index} object and the values are stored in an \py{ndarray}.  
 
-In the \py{modsim} library, the functions \py{get_first_label} and \py{get_last_label} provide a simple way to access the index of a \py{DataFrame} or \py{Series}:
+In the ModSim library, the functions \py{get_first_label} and \py{get_last_label} provide a simple way to access the index of a \py{DataFrame} or \py{Series}:
 
 \begin{code}
 def get_first_label(series):
@@ -3394,6 +3401,7 @@ So far we have done our own modeling; that is, we've chosen physical systems, id
 
 
 \section{The SIR model}
+\label{sirmodel}
 
 The Kermack-McKendrick model is a simple version of an {\bf SIR model}, so-named because it considers three categories of people:
 
@@ -3463,10 +3471,6 @@ In this example, there are three stocks---susceptible, infectious, and recovered
 Figure~\ref{stock_flow1} shows the stock and flow diagram for an SIR model.
 
 \begin{figure}
-% first version was on YUML
-% https://yuml.me/edit/3de9c163
-% wget https://yuml.me/2389d485.pdf; mv 2389d485.pdf figs/stock_flow1.pdf
-% current version uses lodraw
 \centerline{\includegraphics[width=4in]{figs/stock_flow1.pdf}}
 \caption{Stock and flow diagram for an SIR model.}
 \label{stock_flow1}
@@ -3693,18 +3697,18 @@ plot_results(S, I, R)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap11-fig01.pdf}}
 \caption{Time series for \py{S}, \py{I}, and \py{R} over the course of 98 days.}
-\label{chap05-fig01}
+\label{chap11-fig01}
 \end{figure}
 
-Figure~\ref{chap05-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  In total, almost half the population gets sick. 
+Figure~\ref{chap11-fig01} shows the result.  Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks.  The fraction of the population that's infected is never very high, but it adds up.  In total, almost half the population gets sick. 
 
 
 \section{Now with a TimeFrame}
 \label{timeframe}
 
-If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}, which is another object defined in the \py{modsim} library.
+If the number of state variables is small, storing them as separate \py{TimeSeries} objects might not be so bad.  But a better alternative is to use a \py{TimeFrame}, which is another object defined in the ModSim library.
 
 \index{TimeFrame object}
 \index{DataFrame object}
@@ -3778,8 +3782,7 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \chapter{Optimization}
 \label{chap12}
 
-In the previous chapter I presented the SIR model of infectious disease and used it to model the Freshman Plague at Olin.  In this chapter we'll consider metrics intended to quantify the effect of the disease and interventions that might reduce the negative effects.
-
+In the previous chapter I presented the SIR model of infectious disease and used it to model the Freshman Plague at Olin.  In this chapter we'll consider metrics intended to quantify the effects of the disease and interventions intended to reduce those effects.
 
 \section{Metrics}
 \label{metrics2}
@@ -3847,12 +3850,12 @@ add_immunization(system2, 0.1)
 results2 = run_simulation(system2, update_func)
 \end{python}
 
-For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap05-fig02} shows \py{S} as a function of time, with and without immunization.  
+For comparison, we can run the same model without immunization and plot the results.  Figure~\ref{chap12-fig01} shows \py{S} as a function of time, with and without immunization.  
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig01.pdf}}
 \caption{Time series for \py{S}, with and without immunization.}
-\label{chap05-fig02}
+\label{chap12-fig01}
 \end{figure}
 
 Without immunization, almost 47\% of the population gets infected at some point.  With 10\% immunization, only 31\% gets infected.  That's pretty good.
@@ -3879,14 +3882,14 @@ The parameter of \py{sweep_immunity} is an array of immunization rates.  The res
 \index{SweepSeries object}
 \index{parameter sweep}
 
-Figure~\ref{chap05-fig03} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
+Figure~\ref{chap12-fig02} shows a plot of the \py{SweepSeries}.  Notice that the x-axis is the immunization rate, not time.
 
 As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized (of course) but it also protects the rest of the population. 
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig02.pdf}}
 \caption{Fraction of the population infected as a function of immunization rate.}
-\label{chap05-fig03}
+\label{chap12-fig02}
 \end{figure} 
 
 Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{http://modsimpy.com/herd}).
@@ -3983,20 +3986,20 @@ infected_sweep = sweep_hand_washing(spending_array)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig05.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig03.pdf}}
 \caption{Fraction of the population infected as a function of hand-washing campaign spending.}
-\label{chap05-fig05}
+\label{chap12-fig03}
 \end{figure} 
 
-Figure~\ref{chap05-fig05} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
+Figure~\ref{chap12-fig03} shows the result.  Below \$200, the campaign has little effect.  At \$800 it has a substantial effect, reducing total infections from 46\% to 20\%.  Above \$800, the additional benefit is small.
 
 
 \section{Optimization} 
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap05-fig06.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig04.pdf}}
 \caption{Fraction of the population infected as a function of the number of doses.}
-\label{chap05-fig06}
+\label{chap12-fig04}
 \end{figure} 
 
 Let's put it all together.  With a fixed budget of \$1200, we have to decide how many doses of vaccine to buy and how much to spend on the hand-washing campaign.
@@ -4048,7 +4051,7 @@ def sweep_doses(dose_array):
 
 For each number of doses, we compute the fraction of students we can immunize, \py{fraction} and the remaining budget we can spend on the campaign, \py{spending}.  Then we run the simulation with those quantities and store the number of infections.
 
-Figure~\ref{chap05-fig06} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
+Figure~\ref{chap12-fig04} shows the result.  If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19\%.  At 4 doses, we have \$800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.
 
 As we increase the number of doses, we have to cut campaign spending, which turns out to make things worse.  But interestingly, when we get above 10 doses, the effect of herd immunity starts to kick in, and the number of sick students goes down again.
 
@@ -4067,47 +4070,6 @@ In the previous chapters I presented an SIR model of infectious disease, specifi
 \index{SIR model}
 
 But we assumed that the parameters of the model, contact rate and recovery rate, were known.  In this chapter, we explore the behavior of the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.
-
-
-\section{Unpack}
-\label{unpack}
-
-Before we analyze the SIR model, I want to make a few improvements to the code.  In the previous chapter, we used this version of \py{run_simulation}:
-\index{\py{run_simulation}}
-
-\begin{python}
-def run_simulation(system, update_func):
-    frame = DataFrame(columns=system.init.index)
-    frame.row[system.t0] = system.init
-    
-    for t in linrange(system.t0, system.t_end):
-        frame.row[t+1] = update_func(frame.row[t], t, system)
-    
-    system.results = frame
-\end{python}
-
-Because we read so many variables from \py{system}, this code is a bit cluttered.  We can clean it up using \py{unpack}, which is defined in the \py{modsim} library.  \py{unpack} takes a \py{System} object as a parameter and makes the system variables available without using the dot operator.  So we can rewrite \py{run_simulation} like this:
-
-\index{unpack}
-\index{System object}
-
-\begin{python}
-def run_simulation(system, update_func):
-    unpack(system)
-    
-    frame = TimeFrame(columns=init.index)
-    frame.row[t0] = init
-    
-    for t in linrange(t0, t_end):
-        frame.row[t+1] = update_func(frame.row[t], t, system)
-    
-    system.results = frame
-\end{python}
-
-The variables you unpack should be treated as read-only.  Modifying them is not an error, but it might not have the behavior you expect.  In the notebook for this chapter, you can use \py{unpack} to clean up \py{update1}.
-
-%TODO: Consider removing unpack
-
 
 \section{Sweeping beta}
 
@@ -4155,8 +4117,6 @@ label = 'gamma = ' + str(gamma)
 plot(infected_sweep, label=label)
 \end{python}
 
-%TODO: figure out when to introduce strings
-
 The first line uses string operations to assemble a label for the plotted line:
 \index{string}
 
@@ -4172,22 +4132,24 @@ The first line uses string operations to assemble a label for the plotted line:
 
 \end{itemize}
 
-If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
+% TODO: Make the gamma symbol appear in the line below and in the figures.
+
+If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'γ = 0.25'}.
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap06-fig01.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
-\label{chap06-fig01}
+\centerline{\includegraphics[height=3in]{figs/chap13-fig01.pdf}}
+\caption{Fraction of students infected as a function of the parameter \py{beta}, with \py{gamma = 0.25}.}
+\label{chap13-fig01}
 \end{figure}
 
-Figure~\ref{chap06-fig01} shows the results.  Remember that this figure is a parameter sweep, not a time series, so the x-axis is the parameter \py{beta}, not time.  
+Figure~\ref{chap13-fig01} shows the results.  Remember that this figure is a parameter sweep, not a time series, so the x-axis is the parameter \py{beta}, not time.  
 
 When \py{beta} is small, the contact rate is low and the outbreak never really takes off; the total number of infected students is near zero.  As \py{beta} increases, it reaches a threshold near 0.3 where the fraction of infected students increases quickly.  When \py{beta} exceeds 0.5, more than 80\% of the population gets sick.
 
 
 \section{Sweeping gamma}
 
-Now let's see what that looks like for a few different values of \py{gamma}.  Again, we'll use \py{linspace} to make an array of values:
+Let's see what that looks like for a few different values of \py{gamma}.  Again, we'll use \py{linspace} to make an array of values:
 
 \index{linspace}
 
@@ -4205,14 +4167,93 @@ for gamma in gamma_array:
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap06-fig02.pdf}}
-\caption{Total number of infected students as a function of the parameter \py{beta}, for several values of \py{gamma}.}
-\label{chap06-fig02}
+\centerline{\includegraphics[height=3in]{figs/chap13-fig02.pdf}}
+\caption{Fraction of students infected as a function of the parameter \py{beta}, for several values of \py{gamma}.}
+\label{chap13-fig02}
 \end{figure}
 
-Figure~\ref{chap06-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even a low contact rate (\py{beta}) results in an epidemic.
+Figure~\ref{chap06-fig13} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even a low contact rate (\py{beta}) results in an epidemic.
 
-When \py{gamma} is high, \py{beta} has to be even higher to get things going.  That observation suggests that there might be a relationship between \py{gamma} and \py{beta} that determines the outcome of the model.  In fact, there is.  In the next two chapters I demonstrate it by running simulations, then derive it by analysis.
+When \py{gamma} is high, \py{beta} has to be even higher to get things going.
+
+
+\section{SweepFrame}
+\label{sweepframe}
+
+In the previous section, we swept a range of values for \py{gamma}, and for each value, we swept a range of values for \py{beta}.  This process is a {\bf two-dimensional sweep}.  
+
+If we want to store the results, rather than plot them, we can use a \py{SweepFrame}, which is a kind of {\tt DataFrame} where the rows sweep one parameter, the columns sweep another parameter, and the values contain  metrics from a simulation.
+
+\index{SweepFrame object}
+\index{DataFrame object}
+
+This function shows how it works:
+
+\begin{python}
+def sweep_parameters(beta_array, gamma_array):
+    frame = SweepFrame(columns=gamma_array)
+    for gamma in gamma_array:
+        frame[gamma] = sweep_beta(beta_array, gamma)
+    return frame
+\end{python}
+
+\py{sweep_parameters} takes as parameters an array of values for \py{beta} and an array of values for \py{gamma}.
+
+It creates a \py{SweepFrame} to store the results, with one column for each value of \py{gamma} and one row for each value of \py{beta}.
+
+Each time through the loop, we run \py{sweep_beta}.  The result is a \py{SweepSeries} object with one element for each value of \py{beta}.  The assignment inside the loop stores the \py{SweepSeries} as a new column in the \py{SweepFrame}, corresponding to the current value of \py{gamma}.
+
+At the end, the \py{SweepFrame} stores the fraction of students infected for each pair of parameters, \py{beta} and \py{gamma}.
+
+We can run \py{sweep_parameters} like this:
+
+\begin{python}
+frame = sweep_parameters(beta_array, gamma_array)
+\end{python}
+
+With the results in a \py{SweepFrame}, we can plot each column like this:
+
+\begin{python}
+for gamma in gamma_array:
+    label = 'γ = ' + str(gamma)
+    plot(frame[gamma], label=label)
+\end{python}
+
+Alternatively, we can plot each row like this:
+
+\begin{python}
+for beta in [1.1, 0.9, 0.7, 0.5, 0.3]:
+    label = 'β = ' + str(beta)
+    plot(frame.row[beta], label=label)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap13-fig03.pdf}}
+\caption{Fraction of students infected as a function of the parameter \py{gamma}, for several values of \py{beta}.}
+\label{chap13-fig03}
+\end{figure}
+
+Figure~\ref{chap13-fig03} shows the results.  This example demonstrates one use of a \py{SweepFrame}: we can run the analysis once, save the results, and then generate different visualizations.
+
+Another way to visualize the results of a two-dimensional sweep is a {\bf contour plot}, which shows the parameters on the axes and contour lines, that is, lines of constant value.  In this example, the value is the fraction of students infected.
+
+\index{contour plot}
+
+The ModSim library provides \py{contour}, which takes a \py{SweepFrame} as a parameter:
+
+\begin{python}
+contour(frame)
+\end{python}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap13-fig04.pdf}}
+\caption{Contour plot showing fraction of students infected as a function of the parameters \py{gamma} and \py{beta}.}
+\label{chap13-fig04}
+\end{figure}
+
+Figure~\ref{chap13-fig04} shows the result.  Infection rates are lowest in the lower right, where the contact rate is and the recovery rate is high.  They increase as we move to the upper left, where the contact rate is high and the recovery rate is low.
+
+This figure suggests that there might be a relationship between \py{beta} and \py{gamma} that determines the outcome of the model.  In fact, there is.  In the next chapter we'll explore it by running simulations, then derive it by analysis.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap13.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -4224,70 +4265,15 @@ In the previous chapters we used simulation to predict the effect of an infectio
 
 In this chapter we use analysis to investigate the relationship between the parameters, \py{beta} and \py{gamma}, and the outcome of the simulation.
 
-
 \section{Nondimensionalization}
 \label{nondim}
 
-Before we go on, let's wrap the code from the previous chapter in a function:
-
-\begin{python}
-def sweep_parameters(beta_array, gamma_array):
-    frame = SweepFrame(columns=gamma_array)
-    for gamma in gamma_array:
-        frame[gamma] = sweep_beta(beta_array, gamma)
-    return frame
-\end{python}
-
-\py{sweep_parameters} takes as parameters two arrays: a range of values for \py{beta} and a range of values for \py{gamma}.
-
-It creates a \py{SweepFrame} to store the results, with one column for each value of \py{gamma} and one row for each value of \py{beta}.  A \py{SweepFrame} is a kind of \py{DataFrame}, defined in the \py{modsim} library.  Its purpose is to store results from a two-dimensional parameter sweep.
-\index{SweepFrame object}
-\index{DataFrame object}
-
-Each time through the loop, we run \py{sweep_beta}.  The result is a \py{SweepSeries} object with one element for each value of \py{gamma}.  The assignment
-
-\begin{python}
-frame[gamma] = sweep_beta(beta_array, gamma)
-\end{python}
-
-stores the values from the \py{SweepSeries} object as a new column in the \py{SweepFrame}, corresponding to the current value of \py{gamma}.
-
-At the end, the \py{SweepFrame} stores the fraction of students infected for each pair of parameters, \py{beta} and \py{gamma}.
-
-We can run \py{sweep_parameters} like this:
-
-\begin{python}
-frame = sweep_parameters(beta_array, gamma_array)
-\end{python}
-
-Then we can loop through the results like this:
-
-\begin{python}
-for gamma in frame.columns:
-    series = frame[gamma]
-    for beta in series.index:
-        frac_infected = series[beta]
-        print(beta, gamma, frac_infected)
-\end{python}
-
-This is the first example we've seen with one \py{for} loop inside another:
+The figures in Section~\ref{sweepframe} suggest that there is a relationship between the parameters of the SIR model, \py{beta} and \py{gamma}, that determines the outcome of the simulation, the fraction of students infected.
+Let's think what that relationship might be.
 
 \begin{itemize}
 
-\item Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column as a \py{Series}.
-\index{Series}
-
-\item Each time the inner loop runs, it selects a value of \py{beta} from the \py{Series} and selects the corresponding element, which is the fraction of student infected.
-
-\end{itemize}  
-
-In this example, \py{frame} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
-
-Now let's think about possible relationships between \py{beta} and \py{gamma}:
-
-\begin{itemize}
-
-\item When \py{beta} exceeds \py{gamma}, that means there are more contacts (that is, potential infections) than recoveries.  The difference between \py{beta} and \py{gamma} might be called the ``excess contact rate", in units of contacts per day.
+\item When \py{beta} exceeds \py{gamma}, that means there are more contacts (that is, potential infections) than recoveries during each day (or other unit of time).  The difference between \py{beta} and \py{gamma} might be called the ``excess contact rate", in units of contacts per day.
 
 \item As an alternative, we might consider the ratio \py{beta/gamma}, which is the number of contacts per recovery.  Because the numerator and denominator are in the same units, this ratio is {\bf dimensionless}, which means it has no units.
 \index{dimensionless}
@@ -4300,7 +4286,36 @@ Describing physical systems using dimensionless parameters is often a useful mov
 
 So we'll try the second option first.  In the notebook for this chapter, you can explore the first option as an exercise.
 
-The following function wraps the previous loops and plots the fraction infected as a function of the ratio \py{beta/gamma}:
+
+\section{Exploring the results}
+
+Suppose we have a \py{SweepFrame} with one row for each value of \py{beta} and one column for each value of \py{gamma}.  Each element in the \py{SweepFrame} is the fraction of students infected in a simulation with a given pair of parameters.
+
+We can print the values in the \py{SweepFrame} like this:
+
+\begin{python}
+for gamma in frame.columns:
+    column = frame[gamma]
+    for beta in column.index:
+        frac_infected = column[beta]
+        print(beta, gamma, frac_infected)
+\end{python}
+
+This is the first example we've seen with one \py{for} loop inside another:
+\index{loop}
+\index{for loop}
+
+\begin{itemize}
+
+\item Each time the outer loop runs, it selects a value of \py{gamma} from the columns of the \py{DataFrame} and extracts the corresponding column.
+
+\item Each time the inner loop runs, it selects a value of \py{beta} from the column and selects the corresponding element, which is the fraction of students infected.
+
+\end{itemize}  
+
+In the example from the previous chapter, \py{frame} has 4 columns, one for each value of \py{gamma}, and 11 rows, one for each value of \py{beta}.  So these loops print 44 lines, one for each pair of parameters.
+
+The following function encapulates the previous loop and plots the fraction infected as a function of the ratio \py{beta/gamma}:
 
 \begin{python}
 def plot_sweep_frame(frame):
@@ -4312,18 +4327,18 @@ def plot_sweep_frame(frame):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap06-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap14-fig01.pdf}}
 \caption{Total fraction infected as a function of contact number.}
-\label{chap06-fig03}
+\label{chap14-fig01}
 \end{figure}
 
-Figure~\ref{chap06-fig03} shows that the results fall neatly on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
+Figure~\ref{chap14-fig01} shows that the results fall on a single curve, at least approximately.  That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio \py{beta/gamma}.  We don't need to know the values of \py{beta} and \py{gamma} separately.
 
 
 \section{Contact number}
 \label{contact}
 
-Recall that the number of new infections in a given day is $\beta s i N$, and the number of recoveries is $\gamma i N$.  If we divide these quantities, the result is $\beta s / \gamma$, which is the number of new infections per recovery (as a fraction of the population).
+From Section~\ref{sirmodel}, recall that the number of new infections in a given day is $\beta s i N$, and the number of recoveries is $\gamma i N$.  If we divide these quantities, the result is $\beta s / \gamma$, which is the number of new infections per recovery (as a fraction of the population).
 
 \index{contact number}
 \index{basic reproduction number}
@@ -4342,7 +4357,7 @@ In the same way we divided the contact rate by the infection rate to get the dim
 %
 \[ \frac{di}{ds} = -1 + \frac{1}{cs} \]
 %
-Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  From that relationship, we can derive an equation that relates $c$ to the final value of $S$.  In theory, this equation makes it possible to infer $c$ by observing the course of an epidemic.
+Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between $i$, $s$ and $c$ that does not depend on time.  From that relationship, we can derive an equation that relates $c$ to the final value of $s$.  In theory, this equation makes it possible to infer $c$ by observing the course of an epidemic.
 
 Here's how the derivation goes.  We multiply both sides of the previous equation by $ds$:
 %
@@ -4410,12 +4425,13 @@ plot(frac_infected_series)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap06-fig04.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap14-fig02.pdf}}
 \caption{Total fraction infected as a function of contact number, showing results from simulation and analysis.}
-\label{chap06-fig04}
+\label{chap14-fig02}
 \end{figure}
 
-Figure~\ref{chap06-fig04} compares the analytic results from this section with the simulation results from Section~\ref{nondim}.  Over most of the range they are consistent with each other, with one discrepancy: when the contact number is less than 1, analysis indicates there should be no infections; but in the simulations a small part of the population is affected even when $c<1$.
+Figure~\ref{chap14-fig02} compares the analytic results from this section with the simulation results from Section~\ref{nondim}.  When the contact number exceeds 1, analysis and simulation agree.
+When the contact number is less than 1, they do not: analysis indicates there should be no infections; in the simulations there are a small number of infections.
 \index{analysis}
 
 The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity.  In other words, the two methods are actually based on different models.  So which model is better?
@@ -4425,13 +4441,15 @@ Probably neither.  When the contact number is small, the early progress of the e
 
 For contact numbers near or less than 1, we might need a more detailed model.  But for higher contact numbers the SIR model might be good enough.
 
-Figure~\ref{chap06-fig04} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
+\section{Estimating contact number}
 
-Well, at least in theory.  In practice, it might not work very well, because of the shape of the curve.  When the contact number is near 2, the curve is quite steep, which means that small changes in $c$ yield big changes in the number of infections.  If we observe that the total fraction infected is anywhere from 20\% to 80\%, we would conclude that $c$ is near 2.
+Figure~\ref{chap14-fig02} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
 
-On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is quite flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything like 90\% of the population.
+Well, in theory we can.  In practice, it might not work very well, because of the shape of the curve.  When the contact number is near 2, the curve is quite steep, which means that small changes in $c$ yield big changes in the number of infections.  If we observe that the total fraction infected is anywhere from 20\% to 80\%, we would conclude that $c$ is near 2.
 
-So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in the previous chapter, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
+On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is nearly flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything close to 90\% of the population.
+
+So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in Chapter~\ref{chap12}, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap14.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -4486,15 +4504,17 @@ To understand how coffee cools (and milk warms), we need a model of temperature 
 
 \index{temperature}
 
-When particles in a hot object contact particles in a cold object, the hot object gets cooler and the cold object gets warmer as energy is transferred from one to the other.  The transferred energy is called {\bf heat}; in SI units it is measured in joules (\si{\joule}).
+When particles in a hot object contact particles in a cold object, the hot object gets cooler and the cold object gets warmer as energy is transferred from one to the other.  
+The transferred energy is called {\bf heat}; in SI units it is measured in joules (\si{\joule}).
 
 \index{heat}
 
 Heat is related to temperature by the following equation (see \url{http://modsimpy.com/thermass}):
 %
-\[ Q = C \Delta T \]
+\[ Q = C~\Delta T \]
 %
-where $Q$ is the amount of heat transferred to an object, $\Delta T$ is resulting change in temperature, and $C$ is the {\bf thermal mass} of the object, which quantifies how much energy it takes to heat or cool it.  In SI units, thermal mass is measured in joules per degree Celsius (\si{\joule\per\celsius}).
+where $Q$ is the amount of heat transferred to an object, $\Delta T$ is resulting change in temperature, and $C$ is the {\bf thermal mass} of the object, which quantifies how much energy it takes to heat or cool it.  
+In SI units, thermal mass is measured in joules per degree Celsius (\si{\joule\per\celsius}).
 
 \index{thermal mass}
 
@@ -4517,7 +4537,7 @@ To give you a sense of how much energy that is, if you were able to harness all 
 \index{Mount Everest}
 
 Assuming that the cup has less mass than the coffee, and is made from a material with lower specific heat, we can ignore the thermal mass of the cup.
-For a cup with substantial thermal mass, we might consider a model that computes the temperature of coffee and cup separately.
+For a cup with substantial thermal mass, like a ceramic mug, we might consider a model that computes the temperature of coffee and cup separately.
 
 
 \section{Heat transfer}
@@ -4541,8 +4561,7 @@ In a situation like the coffee cooling problem, there are three ways heat transf
 
 \end{itemize}
 
-For objects like coffee in a car, the effect of radiation is much smaller than 
-the effects of conduction and convection, so we will ignore it.
+For objects like coffee in a car, the effect of radiation is much smaller than the effects of conduction and convection, so we will ignore it.
 
 Convection can be a complex topic, since it often depends on details of fluid flow in three dimensions.  But for this problem we will be able to get away with a simple model called ``Newton's law of cooling".
 
@@ -4556,11 +4575,11 @@ Newton's law of cooling asserts that the temperature rate of change for an objec
 %
 where $T$, the temperature of the object, is a function of time, $t$; $T_{env}$ is the temperature of the environment, and $r$ is a constant that characterizes how quickly heat is transferred between the system and the environment.
 
-Newton's so-called ``law" is really a model in the sense that it is approximately true in some conditions, only roughly true in others, and not at all true in others.
+Newton's so-called ``law" is really a model: it is a good approximation in some conditions and less good in others.
 
 For example, if the primary mechanism of heat transfer is conduction, Newton's law is ``true", which is to say that $r$ is constant over a wide range of temperatures.  And sometimes we can estimate $r$ based on the material properties and shape of the object.
 
-When convection contributes a non-negligible fraction of heat transfer, $r$  depends on temperature, but Newton's law is often accurate enough, at least over a narrow range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
+When convection contributes a non-negligible fraction of heat transfer, $r$ depends on temperature, but Newton's law is often accurate enough, at least over a narrow range of temperatures.  In this case $r$ usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.
 
 When radiation makes up a substantial part of heat transfer, Newton's law is not a good model at all.  This is the case for objects in space or in a vacuum, and for objects at high temperatures (more than a few hundred degrees Celsius, say).
 
@@ -4588,7 +4607,7 @@ coffee = System(init=init,
                 volume=300,
                 r=0.01,
                 T_env=22,
-                t_0=0, 
+                t_0=0,
                 t_end=30,
                 dt=1)
 \end{python}
@@ -4608,15 +4627,13 @@ Note: I use $\Delta T$ to denote a change in temperature over time, but in the c
 
 Now we can write an update function:
 
-\index{unpack}
-
 \begin{python}
 def update_func(state, t, system):
-    unpack(system)
+    r, T_env, dt = system.r, system.T_env, system.dt
     
     T = state.T
     T += -r * (T - T_env) * dt
-
+    
     return State(T=T)
 \end{python}
 
@@ -4634,11 +4651,11 @@ Here's a version of \py{run_simulation} that simulates a series of time steps fr
 
 \index{time step}
 \index{\py{run_simulation}}
-\index{unpack}
 
 \begin{python}
 def run_simulation(system, update_func):
-    unpack(system)
+    init = system.init
+    t_0, t_end, dt = system.t_0, system.t_end, system.dt
     
     frame = TimeFrame(columns=init.index)
     frame.row[t_0] = init
@@ -4646,9 +4663,6 @@ def run_simulation(system, update_func):
     
     for t in ts:
         frame.row[t+dt] = update_func(frame.row[t], t, system)
-        
-    # store the final temperature in T_final
-    system.T_final = get_last_value(frame.T)
     
     return frame
 \end{python}
@@ -4656,7 +4670,6 @@ def run_simulation(system, update_func):
 This function is similar to previous versions of \py{run_simulation}.
 
 One difference is that it uses \py{linrange} to make an array of values from \py{t_0} to \py{t_end} with time step \py{dt}.  The result does not include \py{t_end}, so the last value in the array is \py{t_end-dt}.
-Also, it stores the final temperature as a system variable, \py{T_final}.
 
 \index{linrange}
 \index{NumPy}
@@ -4676,17 +4689,17 @@ The result is a \py{TimeFrame} object with one row per time step and just one co
 First I want to wrap what we have so far in a function:
 
 \begin{python}
-def make_system(T_init=90, r=0.01, volume=300, t_end=30):
+def make_system(T_init, r, volume, t_end):
     init = State(T=T_init)
-    
+                   
     return System(init=init,
-                  T_final=T_init,
+                  r=r, 
                   volume=volume,
-                  r=r,
-                  T_env=22, 
-                  t_0=0,
-                  t_end=t_end,
-                  dt=1)
+                  temp=T_init,
+                  t_0=0, 
+                  t_end=t_end, 
+                  dt=1,
+                  T_env=22)
 \end{python}
 
 \py{make_system} takes the system parameters and packs them into a \py{System} object.  Now we can simulate the system like this:
@@ -4709,48 +4722,50 @@ In the previous chapter we wrote a simulation of a cooling cup of coffee.  Given
 
 In general, we don't know the value of \py{r}, but we can use measurements to estimate it.  Given an initial temperature, a final temperature, and the time in between, we can find \py{r} by trial and error.
 
-In this chapter, we'll see a better way to find \py{r}, using a SciPy function called \py{fsolve}.
+In this chapter, we'll see a better way to find \py{r}, using a {\bf bisection search}.
 
-And the we'll get back to solving the coffee cooling problem.
+And then we'll get back to solving the coffee cooling problem.
 
-\section{Using fsolve}
-\label{fsolve}
+\section{Finding roots}
+\label{root_bisect}
 
-SciPy provides a method called \py{fsolve} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
+The ModSim library provides a method called \py{root_bisect} that finds the roots of non-linear equations.  As a simple example, suppose you want to find the roots of the polynomial
 %
 \[ f(x) = (x - 1)(x - 2)(x - 3) \]
 %
 where {\bf root} means a value of $x$ that makes $f(x)=0$.  Because of the way I wrote the polynomial, we can see that if $x=1$, the first factor is 0; if $x=2$, the second factor is 0; and if $x=3$, the third factor is 0, so those are the roots.
 
-\index{\py{fsolve}}
+\index{\py{root_bisect}}
 \index{root}
 
-But usually it's not that easy.  In that case \py{fsolve} can help.  First, we have to write a function that evaluates $f$:
+I'll use this example to demonstrate \py{root_bisect}.  First, we have to write a function that evaluates $f$:
 
 \begin{python}
 def func(x):
     return (x-1) * (x-2) * (x-3)
 \end{python}
 
-Now we call \py{fsolve} like this:
+Now we call \py{root_bisect} like this:
 
 \begin{python}
-fsolve(func, x0=0)
+res = root_bisect(func, [1.5, 2.5])
+print(res.root)
 \end{python}
 
-The first argument is the function whose roots we want.  The second argument, \py{x0}, is an initial guess about where a root might be.  Generally, the closer the initial guess is to an actual root, the faster \py{fsolve} runs.  In this case, with the initial guess \py{x0=0}, the result is 1.
+The first argument is the function whose roots we want.  
+The second argument is an interval that contains a root.  
+The result is an object that contains several variables, including \py{root}, which stores the root that was found.
 
-Often \py{fsolve} finds the root that's closest to the initial guess.  In this example, when \py{x0=1.9}, \py{fsolve} returns 2, and when \py{x0=2.9}, \py{fsolve} returns 3.  But this behavior can be unpredictable; with \py{x0=1.5}, \py{fsolve} returns 3.
+So how can we use \py{root_bisect} to estimate \py{r}?  
 
-So how can we use \py{fsolve} to estimate \py{r}?  
-
-What we want is the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{fsolve}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
+What we want is the value of \py{r} that yields a final temperature of \SI{70}{\celsius}.  To work with \py{root_bisect}, we need a function that takes \py{r} as a parameter and returns the difference between the final temperature and the goal:
 
 \begin{python}
 def error_func1(r):
-    system = make_system(r=r)
-    results = run_simulation(system, update)
-    return system.T_final - 70
+    system = make_system(T_init=90, r=r, volume=300, t_end=30)
+    results = run_simulation(system, update_func)
+    T_final = get_last_value(results.T)
+    return T_final - 70
 \end{python}
 
 I call a function like this an ``error function" because it returns the difference between what we got and what we wanted, that is, the error.  When we find the right value of \py{r}, this error will be 0.
@@ -4766,24 +4781,27 @@ error_func1(r=0.01)
 
 The result is an error of \SI{2.3}{\celsius}, because the final temperature with this value of \py{r} is too high.
 
-Now we can call \py{fsolve} like this:
+With \py{r=0.02}, the error is \SI{-10.9}{\celsius}, which means that the final temperature is too low.  
+So we know that the correct value must be in between.
+
+Now we can call \py{root_bisect} like this:
 
 \begin{python}
-solution = fsolve(error_func1, 0.01)
-r_coffee = solution[0]
+res = root_bisect(error_func1, [0.01, 0.02])
+r_coffee = res.root
 \end{python}
 
-The return value from \py{fsolve} is an array with a single element, which is the root \py{fsolve} found.  In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
+In this example, \py{r_coffee} turns out to be about \py{0.012}, in units of \si{\per\minute} (inverse minutes).
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap07-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap16-fig01.pdf}}
 \caption{Temperature of the coffee and milk over time.}
-\label{chap07-fig01}
+\label{chap16-fig01}
 \end{figure}
 
 As one of the exercises for this chapter, you will use the same process to estimate \py{r_milk}.  
 
-With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results should look like Figure~\ref{chap07-fig01}, which shows the temperature of the coffee and milk over time.
+With the correct values of \py{r_coffee} and \py{r_milk}, the simulation results should look like Figure~\ref{chap16-fig01}, which shows the temperature of the coffee and milk over time.
 
 
 \section{Mixing liquids}
@@ -4810,14 +4828,14 @@ For the coffee cooling problem, we have the volume of each liquid; if we also kn
 %
 \[ C = \rho V c_p \]
 %
-If the densities of the liquids are equal, they drop out of the equation, and we can write:
+If the liquids have the same density and heat capacity, they drop out of the equation, and we can write:
 %
 \[ T = \frac{V_1 T_1 + V_2 T_2}{V_1 + V_2} \]
 %
 where $V_1$ and $V_2$ are the volumes of the liquids.  
 
-For this problem, we'll assume that milk and coffee have the same density and the same specific heat.
-As an exercise, you can look up these quantities to see how good the approximation is.
+As an approximation, I'll assume that milk and coffee have the same density and specific heat.
+As an exercise, you can look up these quantities and see how good this assumption is.
 
 \index{volume}
 \index{density}
@@ -4826,20 +4844,19 @@ As an exercise, you can look up these quantities to see how good the approximati
 The following function takes two \py{System} objects that represent the coffee and milk, and creates a new \py{System} to represent the mixture:
 
 \begin{python}
-def mix(s1, s2):
-    assert s1.t_end == s2.t_end
+def mix(system1, system2):
+    assert system1.t_end == system2.t_end
     
-    V_mix = s1.volume + s2.volume
+    V1, V2 = system1.volume, system2.volume
+    T1, T2 = system1.temp, system2.temp
     
-    T_mix = (s1.volume * s1.T_final + 
-             s2.volume * s2.T_final) / V_mix
+    V_mix = V1 + V2
+    T_mix = (V1 * T1 + V2 * T2) / V_mix
     
-    mixture = make_system(T_init=T_mix,
-                          t_end=0,
-                          r=s1.r,
-                          volume=V_mix)
-    
-    return mixture
+    return make_system(T_init=T_mix,
+                       r=system1.r,
+                       volume=V_mix,
+                       t_end=30)
 \end{python}
 
 The first line is an \py{assert} statement, which is a way of checking for errors.  It compares \py{t_end} for the two systems to confirm that they have been cooling for the same time.  If not, \py{assert} displays an error message and stops the program.
@@ -4847,73 +4864,73 @@ The first line is an \py{assert} statement, which is a way of checking for error
 \index{assert statement}
 \index{statement!assert}
 
-The next two statements compute the total volume of the mixture and its temperature.  Finally, \py{mix} makes a new \py{System} object and returns it.
+The next two lines extract volume and temperature from the two \py{System} objects.  Then the following two lines compute the volume and temperature of the mixture.  Finally, \py{mix} makes a new \py{System} object and returns it.
 
-This function uses the value of \py{r} from \py{s1} as the value of \py{r} for the mixture.  If \py{s1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption we might want to revisit.
+This function uses the value of \py{r} from \py{system1} as the value of \py{r} for the mixture.  If \py{system1} represents the coffee, and we are adding the milk to the coffee, this is probably a reasonable choice.  On the other hand, when we increase the amount of liquid in the coffee cup, that might change \py{r}.  So this is an assumption we might want to revisit.
 
+Notice that \py{mix} requires the \py{System} objects to have a variable named \py{temp}.
+To make sure this variable gets updated when we run a simulation, I use this function:
+
+\begin{python}
+def run_and_set(system):
+    results = run_simulation(system, update_func)
+    system.temp = get_last_value(results.T)
+    return results
+\end{python}
+
+Now we have everything we need to solve the problem.
 
 \section{Mix first or last?}
 
-Now we have everything we need to solve the problem.  First I'll create objects to represent the coffee and cream, and run for 30 minutes.
-
-\begin{python}
-coffee = make_system(T_init=90, t_end=30, 
-                     r=r_coffee, volume=300)
-coffee_results = run_simulation(coffee, update_func)
-
-milk = make_system(T_init=5, t_end=30, 
-                   r=r_milk, volume=50)
-milk_results = run_simulation(milk, update_func)
-\end{python}
-
-The final temperatures, before mixing, are \SI{70}{\celsius} and \SI{21.8}{\celsius}.  Then I'll mix them:
-
-\begin{python}
-mix_last = mix(coffee, milk)
-\end{python}
-
-After mixing, the temperature is \SI{63.1}{\celsius}, which is still warm enough to be enjoyable.  Would we do any better if we added the milk first?
-
-To find out, I'll create new objects for the coffee and milk:
+First I'll create objects to represent the coffee and cream:
 
 \begin{python}
 coffee = make_system(T_init=90, r=r_coffee, 
                      volume=300, t_end=30)
-milk = make_system(T_init=5, r=r_milk, 
-                   volume=50, t_end=30)
+
+milk = make_system(T_init=5, r=r_milk, volume=50, t_end=30)
 \end{python}
 
-Then mix them and simulate 30 minutes:
+Then I'll mix them and simulate 30 minutes:
 
 \begin{python}
 mix_first = mix(coffee, milk)
-results = run_simulation(mix_first, update_func)
+mix_results = run_and_set(mix_first)
 \end{python}
 
-The final temperature is only \SI{61.4}{\celsius}.  So it looks like adding the milk at the end is better, by about \SI{1.7}{\celsius}.  But is that the best we can do?
+The final temperature is \SI{61.4}{\celsius} which is still warm enough to be enjoyable.  Would we do any better if we added the milk last?
 
+I'll simulate the coffee and milk separately, and then mix them:
+
+\begin{python}
+coffee_results = run_and_set(coffee)
+milk_results = run_and_set(milk)
+mix_last = mix(coffee, milk)
+\end{python}
+
+After mixing, the temperature is \SI{63.1}{\celsius}.  So it looks like adding the milk at the end is better by about \SI{1.7}{\celsius}.  But is that the best we can do?
 
 \section{Optimization}
 
-Adding the milk after 30 minutes is better than adding immediately, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes \py{t_add} as a parameter:
+Adding the milk after 30 minutes is better than adding immediately, but maybe there's something in between that's even better.  To find out, I'll use the following function, which takes the time to add the milk, \py{t_add}, as a parameter:
 
 \index{optimization}
 
 \begin{python}
-def run_and_mix(t_add, t_total=30):
-    coffee = make_system(T_init=90, t_end=t_add, 
-                         r=r_coffee, volume=300)
-    coffee_results = run_simulation(coffee, update_func)
-
-    milk = make_system(T_init=5, t_end=t_add, 
-                       r=r_milk, volume=50)
-    milk_results = run_simulation(milk, update_func)
+def run_and_mix(t_add, t_total):
+    coffee = make_system(T_init=90, r=r_coffee, 
+                         volume=300, t_end=t_add)
+    coffee_results = run_and_set(coffee)
+    
+    milk = make_system(T_init=5, r=r_milk, 
+                       volume=50, t_end=t_add)
+    milk_results = run_and_set(milk)
     
     mixture = mix(coffee, milk)
     mixture.t_end = t_total - t_add
-    results = run_simulation(mixture, update_func)
+    results = run_and_set(mixture)
 
-    return mixture.T_final
+    return mixture.temp
 \end{python}
 
 When \py{t_add=0}, we add the milk immediately; when \py{t_add=30}, we add it at the end.  Now we can sweep the range of values in between:
@@ -4925,12 +4942,12 @@ for t_add in linspace(0, 30, 11):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap07-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap16-fig02.pdf}}
 \caption{Final temperature as a function of the time the milk is added.}
-\label{chap07-fig02}
+\label{chap16-fig02}
 \end{figure}
 
-Figure~\ref{chap07-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the index of a \py{TimeSeries}.
+Figure~\ref{chap16-fig02} shows the result.  Again, note that this is a parameter sweep, not a time series.  The x-axis is the time when we add the milk, not the index of a \py{TimeSeries}.
 
 The final temperature is maximized when \py{t_add=30}, so adding the milk at the end is optimal.
 
@@ -4968,17 +4985,14 @@ We can use the following function to compute the time series:
 
 \begin{python}
 def run_analysis(system):
-    unpack(system)
+    T_env, r = system.T_env, system.r
     
-    T_init = init.T    
-    ts = linrange(t_0, t_end, dt, endpoint=True)
+    T_init = system.init.T    
+    ts = linspace(0, system.t_end)
     
     T_array = T_env + (T_init - T_env) * exp(-r * ts)
     
-    results = TimeFrame(T_array, index=ts, columns=['T'])
-    system.T_final = get_last_value(results.T)
-
-    return results
+    return TimeFrame(T_array, index=ts, columns=['T'])
 \end{python}
 
 This function is similar to \py{run_simulation}; it takes a \py{System} as a parameter and returns a \py{TimeFrame} as a result.
@@ -5009,14 +5023,13 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 
 \index{pharmacokinetics}
 
-We will use this model to fit data collected from a patient, and use the parameters of the fitted model to quantify the patient's ability to produce insulin and process glucose.
+%We will use this model to fit data collected from a patient, and use the %parameters of the fitted model to quantify the patient's ability to %produce insulin and process glucose.
 
 \index{glucose}
 \index{insulin}
 
 My presentation in this chapter follows Bergman (2005) ``Minimal Model" (abstract at \url{http://modsimpy.com/bergman},
 PDF at \url{http://modsimpy.com/minmod}).
-
 
 
 \section{The glucose-insulin system}
@@ -5076,11 +5089,11 @@ must be sluggish --- that is, that insulin acts slowly because
 insulin must first move from plasma to a remote compartment [...] to exert its action on glucose disposal.
 \end{quote}
 
-To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized that insulin must move, relatively slowly, from the blood to a ``remote compartment" where it has its effect.
+To paraphrase the second point, the effect of insulin on glucose disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood.  Bergman's group hypothesized that insulin must move relatively slowly from the blood to a ``remote compartment" where it has its effect.
 
 \index{compartment model}
 
-At the time, the remote compartment was a modeling abstraction that might, or might not, reflect something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.
+At the time, the remote compartment was a modeling abstraction that might, or might not, represent something physical.  Later, according to Bergman, it was ``shown to be interstitial fluid", that is, the fluid that surrounds tissue cells.  In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.
 
 \index{interstitial fluid}
 
@@ -5096,11 +5109,11 @@ where
 
 \item $G$ is the concentration of blood glucose as a function of time and $dG/dt$ is its rate of change.
 
+\item $X$ is the concentration of insulin in the tissue fluid as a function of time, and $dX/dt$ is its rate of change.
+
 \item $I$ is the concentration of insulin in the blood as a function of time, which is taken as an input into the model, based on measurements.
 
 \item $G_b$ is the basal concentration of blood glucose and $I_b$ is the basal concentration of blood insulin, that is, the concentrations at equilibrium.  Both are constants estimated from measurements at the beginning or end of the test.
-
-\item $X$ is the concentration of insulin in the tissue fluid as a function of time, and $dX/dt$ is its rate of change.
 
 \item $k_1$, $k_2$, and $k_3$ are positive-valued parameters that control the rates of appearance and disappearance for glucose and insulin. 
 
@@ -5112,7 +5125,7 @@ We can interpret the terms in the equations one by one:
 
 \item $-k_1 \left[ G(t) - G_b \right]$ is the rate of glucose disappearance due to the effect of glucose itself.  When $G(t)$ is above basal level, $G_b$, this term is negative; when $G(t)$ is below basal level this term is positive.  So in the absence of insulin, this term tends to restore blood glucose to basal level.
 
-\item $-X(t) G(t)$ models the interaction of glucose and insulin in tissue fluid, so the rate increases as either $X$ or $G$ increases.  This term does not require a rate parameter because the units of $X$ are unspecified; we can consider $X$ to be in whatever units would make the parameter of this term 1.
+\item $-X(t) G(t)$ models the interaction of glucose and insulin in tissue fluid, so the rate increases as either $X$ or $G$ increases.  This term does not require a rate parameter because the units of $X$ are unspecified; we can consider $X$ to be in whatever units make the parameter of this term 1.
 
 \item $k_3 \left[ I(t) - I_b \right]$ is the rate at which insulin diffuses between blood and tissue fluid.  When $I(t)$ is above basal level, insulin diffuses from the blood into the tissue fluid.  When $I(t)$ is below basal level, insulin diffuses from tissue to the blood.
 
@@ -5142,12 +5155,12 @@ data = pd.read_csv('data/glucose_insulin.csv',
 \index{concentration}
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap08-fig01.pdf}}
+\centerline{\includegraphics[width=3.5in]{figs/chap17-fig01.pdf}}
 \caption{Glucose and insulin concentrations measured by FSIGT.}
-\label{chap08-fig01}
+\label{chap17-fig01}
 \end{figure}
 
-Figure~\ref{chap08-fig01} shows glucose and insulin concentrations over \SI{182}{\minute} for a subject with normal insulin production and sensitivity.
+Figure~\ref{chap17-fig01} shows glucose and insulin concentrations over \SI{182}{\minute} for a subject with normal insulin production and sensitivity.
 
 
 \section{Interpolation}
@@ -5157,7 +5170,13 @@ Before we are ready to implement the model, there's one problem we have to solve
 
 \index{interpolation}
 
-The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for the SciPy function \py{interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap17-fig02.pdf}}
+\caption{Insulin concentrations measured by FSIGT and an interpolated function.}
+\label{chap17-fig02}
+\end{figure}
+
+The ModSim library provides a function named \py{interpolate}, which is a wrapper for the SciPy function \py{interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
 
 \index{function!as return value}
 \index{Series}
@@ -5184,18 +5203,28 @@ ts = linrange(t_0, t_end, endpoint=True)
 I(ts)
 \end{python}
 
-The result is an array of interpolated values for equally-spaced values of \py{t}.
+The result is an array of interpolated values for equally-spaced values of \py{t}, shown in Figure~\ref{chap17-fig02}.
 
 \index{linrange}
 \index{NumPy}
 
 \py{interpolate} can take additional arguments, which it passes along to \py{interp1d}.  You can read about these options at \url{http://modsimpy.com/interp}.
 
+In the next chapter, we will use interpolated data to run the simulation of the glucose-insulin system.
+
+Before you go on, you might want to read the notebook for this chapter, \py{chap17.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
+
+
+\chapter{The glucose model}
+\label{chap18}
+
+In this chapter, we implement the glucose minimal model described in the previous chapter.  We'll start with \py{run_simulation}, which solves differential equations using discrete time steps.  This method works well enough for many applications, but it is not very accurate.  In this chapter we explore a better option: using an {\bf ODE solver}.
+
 
 \section{Implementation}
 \label{glucose}
 
-To get started, we'll assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find the parameters that generate the series that best fits the data.
+To get started, let's assume that the parameters of the model are known.  We'll implement the model and use it to generate time series for \py{G} and \py{X}.  Then we'll see how to find the parameters that generate the series that best fits the data.
 
 Taking advantage of estimates from prior work, we'll start with these values:
 
@@ -5219,14 +5248,15 @@ def make_system(params, data):
     
     Gb = data.glucose[0]
     Ib = data.insulin[0]
+    I = interpolate(data.insulin)
     
     t_0 = get_first_label(data)
     t_end = get_last_label(data)
 
     init = State(G=G0, X=0)
     
-    return System(G0=G0, k1=k1, k2=k2, k3=k3,
-                  init=init, Gb=Gb, Ib=Ib,
+    return System(params,
+                  init=init, Gb=Gb, Ib=Ib, I=I,
                   t_0=t_0, t_end=t_end, dt=2)
 \end{python}
 
@@ -5243,7 +5273,9 @@ Here's the update function:
 \begin{python}
 def update_func(state, t, system):
     G, X = state
-    unpack(system)
+    k1, k2, k3 = system.k1, system.k2, system.k3 
+    I, Ib, Gb = system.I, system.Ib, system.Gb
+    dt = system.dt
         
     dGdt = -k1 * (G - Gb) - X*G
     dXdt = k3 * (I(t) - Ib) - k2 * X
@@ -5254,15 +5286,16 @@ def update_func(state, t, system):
     return State(G=G, X=X)
 \end{python}
 
-As usual, the update function takes a \py{State} object, a time, and a \py{System} object as parameters.  The first line \py{update} uses multiple assignment to extract the current values of \py{G} and \py{X}.  The second line uses \py{unpack} so we can read the system variables without using the dot operator.
+As usual, the update function takes a \py{State} object, a time, and a \py{System} object as parameters.  The first line uses multiple assignment to extract the current values of \py{G} and \py{X}.  
 
-\index{unpack}
+The following lines unpack the parameters we need from the \py{System} object.
 
 Computing the derivatives \py{dGdt} and \py{dXdt} is straightforward; we just translate the equations from math notation to Python.
 
 \index{derivative}
 
-Then, to perform the update, we multiply each derivative by the discrete time step \py{dt}, which is \SI{2}{\minute} in this example.  The return value is a \py{State} object with the new values of \py{G} and \py{X}.
+Then, to perform the update, we multiply each derivative by the discrete time step \py{dt}, which is \SI{2}{\minute} in this example.  
+The return value is a \py{State} object with the new values of \py{G} and \py{X}.
 
 \index{time step}
 
@@ -5272,17 +5305,18 @@ Before running the simulation, it is a good idea to run the update function with
 update_func(system.init, system.t_0, system)
 \end{python}
 
-Now we are ready to run the simulation.  We'll use this version of \py{run_simulation}, which is very similar to previous versions:
+If it runs without errors and there is nothing obviously wrong with the results, we are ready to run the simulation.  We'll use this version of \py{run_simulation}, which is very similar to previous versions:
 
 \index{\py{run_simulation}}
 
 \begin{python}
 def run_simulation(system, update_func):
-    unpack(system)
+    init = system.init
+    t_0, t_end, dt = system.t_0, system.t_end, system.dt
     
     frame = TimeFrame(columns=init.index)
-    frame.row[t0] = init
-    ts = linrange(t0, t_end, dt)
+    frame.row[t_0] = init
+    ts = linrange(t_0, t_end, dt)
     
     for t in ts:
         frame.row[t+dt] = update_func(frame.row[t], t, system)
@@ -5297,27 +5331,14 @@ results = run_simulation(system, update_func)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap08-fig03.pdf}}
+\centerline{\includegraphics[width=3.5in]{figs/chap18-fig01.pdf}}
 \caption{Results from simulation of the glucose minimal model.}
-\label{chap08-fig03}
+\label{chap18-fig01}
 \end{figure}
 
-The top plot in Figure~\ref{chap08-fig03} shows simulated glucose levels from the model along with the measured data.  The bottom plot shows simulated insulin levels in tissue fluid, which is in unspecified units, and not to be confused with measured insulin levels in the blood.
+Figure~\ref{chap18-fig01} shows the results.  The top plot shows simulated glucose levels from the model along with the measured data.  The bottom plot shows simulated insulin levels in tissue fluid, which is in unspecified units, and not to be confused with measured insulin levels in the blood.
 
-With the parameters I chose, the model fits the data well, but we can do better.
-
-In the next chapter, we replace \py{run_simulation} with a better differential equation solver, then search for the parameters that yield the best fit for the data.
-
-Before you go on, you might want to read the notebook for this chapter, \py{chap17.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
-
-
-
-\chapter{Numerical methods}
-\label{chap18}
-
-In the previous chapter, we implemented the glucose minimal model using \py{run_simulation}, which solves differential equations using discrete time steps.  This method works well enough for many applications, but it is not very accurate.  In this chapter we explore a better option: using an {\bf ODE solver}.
-
-Then we use a search algorithm to find the model parameters that yield the best fit for the data.
+With the parameters I chose, the model fits the data well, except for the first few data points, where we don't expect the model to be precise.
 
 
 \section{Solving differential equations}
@@ -5335,7 +5356,7 @@ If we multiply both sides by $dt$, we have:
 %
 \[ dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt \]
 %
-When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is small but not infinitesimal.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.
+When $dt$ is very small, or more precisely {\bf infinitesimal}, this equation is exact.  But in our simulations, $dt$ is \SI{2}{\minute}, which is not very small.  In effect, the simulations assume that the derivatives $dG/dt$ and $dX/dt$ are constant during each \SI{2}{\minute} time step.
 
 \index{time step}
 
@@ -5343,18 +5364,13 @@ This method, evaluating derivatives at discrete time steps and assuming that the
 
 \index{Euler's method}
 
-Euler's method is good enough for some simple problems, but there are many better ways to solve differential equations.  Rather than implement these methods ourselves, we will use functions from SciPy.  The \py{modsim} library provides a function called \py{run_ode_solver}, which uses the SciPy function \py{solve_ivp}.
+Euler's method is good enough for some simple problems, but it is not very accurate.  Other methods are more accurate, but many of them are substantially more complicated.
 
-\index{SciPy}
+One of the best simple methods is called {\bf Ralston's method}.  The ModSim library provides a function called \py{run_ode_solver} that implements it.
 
-The ``ODE" in \py{run_ode_solver} stands for ``ordinary differential equation integrator".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  
-
-The ``IVP" in \py{solve_ivp} stands for ``initial value problem", which is the term for problems where you start with an initial value and figure out how the system changes over time, or sometimes space or another quantity.
+The ``ODE" in \py{run_ode_solver} stands for ``ordinary differential equation".  The equations we are solving are ``ordinary'' because all the derivatives are with respect to the same variable; in other words, there are no partial derivatives.  
 
 \index{ordinary differential equation}
-\index{initial value problem}
-
-\py{solve_ivp} can use one of several ODE solvers; by default it uses a {\bf Runge-Kutta-Fehlberg method}.  These methods are {\bf adaptive}; that is, they choose the step size automatically, using small steps when necessary to limit errors, and large steps when possible to be efficient.
 
 To use \py{run_ode_solver}, we have to provide a ``slope function", like this:
 
@@ -5365,7 +5381,8 @@ To use \py{run_ode_solver}, we have to provide a ``slope function", like this:
 \begin{python}
 def slope_func(state, t, system):
     G, X = state
-    unpack(system)
+    k1, k2, k3 = system.k1, system.k2, system.k3 
+    I, Ib, Gb = system.I, system.Ib, system.Gb
     
     dGdt = -k1 * (G - Gb) - X*G
     dXdt = k3 * (I(t) - Ib) - k2 * X
@@ -5375,160 +5392,38 @@ def slope_func(state, t, system):
 
 \py{slope_func} is similar to \py{update_func}; in fact, it takes the same parameters in the same order.  But \py{slope_func} is simpler, because all we have to do is compute the derivatives, that is, the slopes.  We don't have to do the updates; \py{run_ode_solver} does them for us.
 
-
 \index{\py{run_ode_solver}}
 
 Now we can call \py{run_ode_solver} like this:
 
 \begin{python}
-results, details = run_ode_solver(system, slope_func, 
-                                  t_eval=data.index)
+results2, details = run_ode_solver(system, slope_func)
 \end{python}
 
-\py{run_ode_solver} is similar to \py{run_simulation}: it takes a \py{System} object and a slope function as parameters, and returns a \py{TimeFrame} as a result.  \py{results} has one row for each time step and one column for each state variable.  In this example, the rows are the values from \py{data.index}; the columns are the state variables, \py{G} and \py{X}.
+\py{run_ode_solver} is similar to \py{run_simulation}: it takes a \py{System} object and a slope function as parameters.  It returns two values: a \py{TimeFrame} with the solution and a \py{ModSimSeries} with additional information.
+
+A \py{ModSimSeries} is like a \py{System} or \py{State} object; it contains a set of variables and their values.  The \py{ModSimSeries} from \py{run_ode_solver}, which we assign to \py{details}, contains information about how the solver ran, including a success code and diagnostic message.  
+
+The \py{TimeFrame}, which we assign to \py{results}, has one row for each time step and one column for each state variable.  In this example, the rows are time from 0 to 182 minutes; the columns are the state variables, \py{G} and \py{X}.
  
 \index{TimeFrame object}
 
-\py{run_ode_solver} also returns \py{details}, which is a \py{ModSimSeries} with information about how the solver ran, including a success code, a diagnostic message, and other information.  A \py{ModSimSeries} is like a \py{System} or \py{State} object; it contains a set of variables and their values.
-
-\index{ModSimSeries}
-
-\py{run_ode_solver} takes an optional argument, \py{t_eval}, which indicates where we want to evaluate the solution.  In this case we want the results to have the same time steps as the data, so we can compare them easily. 
-
-The results are similar to what we saw in Figure~\ref{chap08-fig03}.  The biggest relative difference is less than 1\%.
-
-%TODO: Consider adding a figure to show that the two series are visually  identical
-
-
-\section{Least squares}
-
-So far we have been taking the parameters as given, but in general we don't have that luxury.  Normally we are given the data and we have to search for the parameters that yield a time series that best matches the data.
-
-\index{fitting data}
-
-We will do that now, in two steps:
-
-\begin{enumerate}
-
-\item First we'll define an {\bf error function} that takes a set of parameters, simulates the system with the given parameters, and computes the errors, that is, the differences between the simulation results and the data.
-
-\index{error function}
-\index{function~error}
-
-\item Then we'll use \py{fit_leastsq}, to search for the parameters that minimize mean squared error (MSE).
-
-\index{\py{fit_leastsq}}
-\index{leastsq}
-\index{mean squared error}
-\index{MSE}
-
-\end{enumerate}
-
-When \py{fit_leastsq} runs, it calls \py{error_func} many times, each time with a different set of parameters, until it converges on the parameters that minimize MSE.
-
-\index{\py{error_func}}
-
-Here's the error function:
-
-\begin{python}
-def error_func(params, data):
-    system = make_system(params, data)
-    results, details = run_ode_solver(system, slope_func)
-    errors = results.G - data.glucose
-    return errors
-\end{python}
-
-\py{error_func} takes as parameters a \py{Params} object and a \py{DataFrame} containing the measurements.  It uses \py{make_system} to create a \py{System} object, and calls \py{run_ode_solver} using the same slope function we saw in Section~\ref{slopefunc}.
-
-Then it computes the difference between the simulation results and the data.  Since \py{results.G} and \py{data.glucose} are both \py{Series} objects, \py{errors} is also a \py{Series}.
-
-\index{Series}
-\index{\py{run_ode_solver}}
-
-Now, to do the actual minimization, we run \py{fit_leastsq}:
-
-\begin{python}
-best_params, details = fit_leastsq(error_func, params, data)
-\end{python}
-
-The first return value is a \py{Params} object with the parameters that yield the best fit for the data.  The second return value is a \py{ModSimSeries} object with more information.
-
-
-\section{Interpreting parameters}
-
-To see the results, we can pass \py{best_params} to \py{make_system} and then run the simulation:
-
-\begin{python}
-system = make_system(best_params, data)
-results, details = run_ode_solver(system, slope_func,
-                                  t_eval=data.index)
-\end{python}
-
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap08-fig04.pdf}}
-\caption{Simulation of the glucose minimal model with parameters that minimize MSE.}
-\label{chap08-fig04}
+\centerline{\includegraphics[height=3in]{figs/chap18-fig02.pdf}}
+\caption{Results from Euler's method (simulation) and Ralston's method (ODE solver).}
+\label{chap18-fig02}
 \end{figure}
 
-Figure~\ref{chap08-fig04} shows the results.  The simulation matches the measurements well except during the first few minutes after the injection.  
+Figure~\ref{chap18-fig02} shows the results from \py{run_simulation} and \py{run_ode_solver}.  The difference between them is barely visible.
 
-But we don't expect the model to do well in this regime.
+We can compute the percentage differences like this:
 
-The problem is that the model is {\bf non-spatial}; that is, it does not take into account different concentrations in different parts of the body.  Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body.  This way of representing the body is known among experts as the ``bag of blood" model.
+\begin{python}
+diff = results.G - results2.G
+percent_diff = diff / results2.G * 100
+\end{python}
 
-\index{non-spatial model}
-\index{bag of blood}
-
-Immediately after injection, it takes time for the injected glucose to circulate.  During that time, we don't expect a non-spatial model to be accurate.  For this reason, we should not take the estimated value of \py{G0} too seriously; it is useful for fitting the model, but not meant to correspond to a physical, measurable quantity.
-
-On the other hand, the other parameters are meaningful; in fact, they are the reason the model is useful.  Using the best-fit parameters, we can estimate two quantities of interest:
-
-\index{glucose effectiveness}
-\index{insulin sensitivity}
-
-\begin{itemize}
-
-\item ``Glucose effectiveness", $E$, which is the tendency of elevated glucose to cause depletion of glucose.  
-
-\item ``Insulin sensitivity", $S$, which is the ability of elevated blood insulin to enhance glucose effectiveness.
-
-\end{itemize}
-
-Glucose effectiveness is defined as the change in $dG/dt$ as we vary $G$:
-%
-\[ E \equiv - \frac{\delta \dot{G}}{\delta G} \]
-%
-where $\dot{G}$ is shorthand for $dG/dt$.  Taking the derivative of $dG/dt$ with respect to $G$, we get
-%
-\[ E = k_1 + X \]
-%
-The {\bf glucose effectiveness index}, $S_G$, is the value of $E$ when blood insulin is near its basal level, $I_b$.  In that case, $X$ approaches 0 and $E$ approaches $k_1$.  So we can use the best-fit value of $k_1$ as an estimate of $S_G$.
-
-\index{basal level}
-
-Insulin sensitivity is defined as the change in $E$ as we vary $I$:
-%
-\[ S \equiv - \frac{\delta E}{\delta I} \]
-%
-The {\bf insulin sensitivity index}, $S_I$, is the value of $S$ when $E$ and $I$ are at steady state:
-%
-\[ S_I \equiv \frac{\delta E_{SS}}{\delta I_{SS}} \]
-%
-$E$ and $I$ are at steady state when $dG/dt$ and $dX/dt$ are 0, but we don't actually have to solve those equations to find $S_I$.  If we set $dX/dt = 0$ and solve for $X$, we find the relation:
-%
-\[ X_{SS} = \frac{k_3}{k_2} I_{SS} \]
-%
-And since $E = k_1 + X$, we have:
-%
-\[ S_I = \frac{\delta E_{SS}}{\delta I_{SS}} = \frac{\delta X_{SS}}{\delta I_{SS}} \]
-%
-Taking the derivative of $X_{SS}$ with respect to $I_{SS}$, we have:
-%
-\[ S_I = k_3 / k_2 \]
-%
-So if we find parameters that make the model fit the data, we can use $k_3 / k_2$ as an estimate of $S_I$.  
-
-For the example data, the estimated values of $S_G$ and $S_I$ are $0.029$ and for $8.9 \times 10^{-4}$.  According to Pacini and Bergman, these values are within the normal range.
+The largest percentage difference is less than 2\%, which is small enough that it probably doesn't matter in practice.  Later, we will see examples where Ralston's method is substantially more accurate.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap18.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -5561,9 +5456,9 @@ And in \py{run_simulation} we used multiple assignment again to assign state var
 \begin{python}
 def run_simulation(system, update_func):
     frame = TimeFrame(columns=system.init.index)
-    frame.row[system.t0] = system.init
+    frame.row[system.t_0] = system.init
     
-    for t in linrange(system.t0, system.t_end):
+    for t in linrange(system.t_0, system.t_end):
         frame.row[t+1] = update_func(frame.row[t], system)
     
     return frame
@@ -5578,24 +5473,7 @@ time_of_largest_value = S.idxmax()
 
 And we saw the logistic function, a general function which is useful for modeling relationships between variables, like the effectiveness of an intervention as a function of expenditure.
 
-In Chapter~\ref{chap13} we saw the \py{unpack} function, which makes system variables available as if they were local variables.
-
-\begin{python}
-def run_simulation(system, update_func):
-    unpack(system)
-    
-    frame = TimeFrame(columns=init.index)
-    frame.row[t0] = init
-    
-    for t in linrange(t0, t_end):
-        frame.row[t+1] = update_func(frame.row[t], t, system)
-    
-    system.results = frame
-\end{python}
-
-One thing to remember when you use \py{unpack}: if you modify any of the unpacked variables, the change does not affect the \py{System} object.
-
-In Chapter~\ref{chap14} we used a \py{SweepFrame} object to sweep two parameters.
+In Chapter~\ref{chap13} we used a \py{SweepFrame} object to sweep two parameters:
 
 \begin{python}
 def sweep_parameters(beta_array, gamma_array):
@@ -5605,13 +5483,16 @@ def sweep_parameters(beta_array, gamma_array):
     return frame
 \end{python}
 
-In Chapter~\ref{chap15} we used \py{linrange} to create an array of values with a given step size.  \py{linrange} is similar to \py{linspace}: the difference is that \py{linrange} lets you specify the space between values, and it computes the number of values; \py{linspace} lets you specify the number of values, and it computes the space between them.
+And we used \py{contour} to generate a contour plot of a two-dimensional sweep.
+
+In Chapter~\ref{chap15} we used \py{linrange} to create an array of equally spaced values.  \py{linrange} is similar to \py{linspace}: the difference is that \py{linrange} lets you specify the space between values, and it computes the number of values; \py{linspace} lets you specify the number of values, and it computes the space between them.
 
 Here's a version of \py{run_simulation} that uses \py{linrange}:
 
 \begin{python}
 def run_simulation(system, update_func):
-    unpack(system)
+    init = system.init
+    t_0, t_end, dt = system.t_0, system.t_end, system.dt
     
     frame = TimeFrame(columns=init.index)
     frame.row[t_0] = init
@@ -5619,29 +5500,26 @@ def run_simulation(system, update_func):
     
     for t in ts:
         frame.row[t+dt] = update_func(frame.row[t], t, system)
-        
-    # store the final temperature in T_final
-    system.T_final = get_last_value(frame.T)
     
     return frame
 \end{python}
 
-In Chapter~\ref{chap16} we used \py{fsolve} to find the value of a parameter that yields a particular result.  We defined an error function:
+In Chapter~\ref{chap16} we used \py{root_bisect} to find the value of a parameter that yields a particular result.  We defined an error function:
 
-\index{\py{fsolve}}
+\index{\py{root_bisect}}
 
 \begin{python}
-def error_func1(r):
-    system = make_system(r=r)
-    results = run_simulation(system, update)
-    return system.T_final - 70
+    system = make_system(T_init=90, r=r, volume=300, t_end=30)
+    results = run_simulation(system, update_func)
+    T_final = get_last_value(results.T)
+    return T_final - 70
 \end{python}
 
-And passed it to \py{fsolve} with an initial guess, like this:
+And passed it to \py{root_bisect} with an initial interval, like this:
 
 \begin{python}
-solution = fsolve(error_func1, 0.01)
-r_coffee = solution[0]
+res = root_bisect(error_func1, [0.01, 0.02])
+r_coffee = res.root
 \end{python}
 
 In Chapter~\ref{chap17} we used \py{interpolate}, which returns a function:
@@ -5650,7 +5528,7 @@ In Chapter~\ref{chap17} we used \py{interpolate}, which returns a function:
 I = interpolate(data.insulin)
 \end{python}
 
-which we can call like any other function, passing as an argument either a single value or a NumPy array:
+We can call \py{I} like any other function, passing as an argument either a single value or a NumPy array:
 
 \begin{python}
 I(18)
@@ -5659,7 +5537,7 @@ ts = linrange(t_0, t_end)
 I(ts)
 \end{python}
 
-We also used a \py{Params} object, which is a collection of parameters.
+In Chapter~\ref{chap18} we used a \py{Params} object, which is a collection of parameters.
 
 \begin{python}
 params = Params(G0 = 290,
@@ -5668,14 +5546,14 @@ params = Params(G0 = 290,
                 k3 = 1e-05)
 \end{python}
 
-Chapter~\ref{chap18} introduces \py{run_ode_solver} which computes numerical solutions to differential equations.
+Chapter~\ref{chap18} also introduces \py{run_ode_solver} which computes numerical solutions to differential equations.
 
 \py{run_ode_solver} uses a slope function, which is similar to an update function:
 
 \begin{python}
-def slope_func(state, t, system):
     G, X = state
-    unpack(system)
+    k1, k2, k3 = system.k1, system.k2, system.k3 
+    I, Ib, Gb = system.I, system.Ib, system.Gb
     
     dGdt = -k1 * (G - Gb) - X*G
     dXdt = k3 * (I(t) - Ib) - k2 * X
@@ -5683,48 +5561,13 @@ def slope_func(state, t, system):
     return dGdt, dXdt
 \end{python}
 
-We used \py{run_ode_solver} to write an error function, which takes a \py{Params} object, runs a simulation, and returns the difference between the simulation results and the data:
+And we can call it like this:
 
 \begin{python}
-def error_func(params, data):
-    system = make_system(params, data)
-    results, details = run_ode_solver(system, slope_func, 
-                                      t_eval=data.index)
-    errors = results.G - data.glucose
-    return errors
+results, details = run_ode_solver(system, slope_func)
 \end{python}
 
-Then we passed the error function to \py{fit_leastsq}, which finds the set of parameters that minimizes the errors:
-
-\begin{python}
-best_params, details = fit_leastsq(error_func, params, data)
-\end{python}
-
-%TODO: Anything to say here?
-
-
-\section{Under the hood}
-
-\py{unpack} is a function in the \py{modsim} library that copies the variables and values from a \py{System} object into a special Python data structure that stores global variables.  To be honest, it is a bit of a hack; that is, it may be expedient, but it might not be an example of software engineering you should emulate.
-
-\py{fsolve} is based on a Scipy function that is also called \py{fsolve}; you can read more about it at \url{http://modsimpy.com/fsolve}.
-It uses a numerical method called Powell's method, and you can read more about that at \url{http://modsimpy.com/powell}.
-
-\index{\py{fsolve}}
-
-\py{run_ode_solver} uses the SciPy function \py{solve_ivp}, which you can read about at \url{http://modsimpy.com/ivp}.
-By default it uses an algorithm called RK45, or RKF45, which you can read about at \url{http://modsimpy.com/runge}).
-
-\py{fit_leastsq} is based on the SciPy function \py{leastsq}; you can read about it at \url{http://modsimpy.com/sq}.
-By default it uses a version of the Levenberg-Marquardt method, which you can read about at \url{http://modsimpy.com/lm }.
-
-These SciPy functions don't work with the units provided by Pint, so the \py{modsim} library turns off unit-checking before calling them.  This mechanism is a bit of a hack, so you might get some unexpected behavior.  If so, I suggest you make a modest effort to fix the problem, but don't spend too much time on it.
-
-% TODO: Consider dumping Pint
-
-Carrying units through computations like this is not as common as it should be, so the tools are not as polished as they could be.  I think it is worth trying, because you can catch a lot of errors by checking units; but if it gets to be too much trouble, you can always remove the units from the code.  In that case, you should add comments that document the units for all variables!
-
-The rest of this chapter presents case studies you can use to practice what you have learned so far.
+The rest of this chapter presents case studies you can use to practice these tools.
 
 
 \section{The insulin minimal model}
@@ -5772,7 +5615,7 @@ In the repository for this book, you will find a notebook, \py{insulin.ipynb}, w
 
 The following circuit diagram\footnote{From \url{http://modsimpy.com/divider}} shows a low-pass filter built with one resistor and one capacitor.  
 
-\centerline{\includegraphics[height=1.3in]{figs/RC_Divider.pdf}}
+\centerline{\includegraphics[height=1.2in]{figs/RC_Divider.pdf}}
 
 A ``filter" is a circuit takes a signal, $V_{in}$, as input and produces a signal, $V_{out}$, as output.  In this context, a ``signal" is a voltage that changes over time.
 
@@ -5817,7 +5660,7 @@ The authors put their paper under a Creative Commons license, and make their dat
 The following figure shows the scenario and their model of the wall:
 
 \vspace{0.1in}
-\centerline{\includegraphics[height=1.3in]{figs/wall_model.pdf}}
+\centerline{\includegraphics[height=1.4in]{figs/wall_model.pdf}}
 
 On the interior and exterior surfaces of the wall, they measure temperature and heat flux over a period of three days.  They model the wall using two thermal masses connected to the surfaces, and to each other, by thermal resistors.
 
@@ -5838,7 +5681,7 @@ So far the differential equations we've worked with have been {\bf first order},
 \index{first order ODE}
 \index{second order ODE}
 
-We'll revisit the falling penny example from Chapter~\ref{chap01}, and use \py{odeint} to find the position and velocity of the penny as it falls, with and without air resistance.
+We'll revisit the falling penny example from Chapter~\ref{chap01}, and use \py{run_ode_solver} to find the position and velocity of the penny as it falls, with and without air resistance.
 
 
 \section{Newton's second law of motion}
@@ -5875,7 +5718,7 @@ Newton's law can be written
 %
 And that's definitely a second order ODE.  In general, $F$ can be a function of time, position, and velocity.
 
-Of course, this ``law" is really a model, in the sense that it is a simplification of the real world.  Although it is often approximately true:
+Of course, this ``law" is really a model in the sense that it is a simplification of the real world.  Although it is often approximately true:
 
 \begin{itemize}
 
@@ -5893,7 +5736,7 @@ Of course, this ``law" is really a model, in the sense that it is a simplificati
 
 \end{itemize}
 
-However, for medium-sized things with constant mass, moving at medium-sized speeds, Newton's model is phenomenally useful.  If we can quantify the forces that act on such an object, we can predict how it will move.
+However, for medium-sized things with constant mass, moving at medium-sized speeds, Newton's model is extremely useful.  If we can quantify the forces that act on such an object, we can predict how it will move.
 
 
 \section{Dropping pennies}
@@ -5928,18 +5771,21 @@ The only system parameter is the acceleration of gravity:
 g = 9.8 * m/s**2
 \end{python}
 
-In addition, we'll specify the duration of the simulation:
+In addition, we'll specify the duration of the simulation and the step size:
 
 \begin{python}
 t_end = 10 * s
+dt = 0.1 * s
 \end{python}
 
-We need a \py{System} object to contain the system parameters:
+With these parameters, the number of time steps is 100, which is good enough for many problems.  Once we have a solution, we will increase the number of steps and see what effect it has on the results.
+
+We need a \py{System} object to store the parameters:
 
 \index{System object}
 
 \begin{python}
-system = System(init=init, g=g, t_end=t_end)
+system = System(init=init, g=g, t_end=t_end, dt=dt)
 \end{python}
 
 Now we need a slope function, and here's where things get tricky.  As we have seen, \py{run_ode_solver} can solve systems of first order ODEs, but Newton's law is a second order ODE.  However, if we recognize that
@@ -5969,10 +5815,9 @@ And we can translate those equations into a slope function:
 \begin{python}
 def slope_func(state, t, system):
     y, v = state
-    unpack(system)    
 
     dydt = v
-    dvdt = -g
+    dvdt = -system.g
     
     return dydt, dvdt
 \end{python}
@@ -5985,24 +5830,21 @@ The second parameter, \py{t}, is time.  It is not used in this slope function be
 
 \index{time dependent}
 
-The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration is due to gravity, in the direction of decreasing $y$.  \py{slope_func} returns a sequence containing the two derivatives.
+The rest of the function is a straightforward translation of the differential equations, with the substitution $a = -g$, which indicates that acceleration due to gravity is in the direction of decreasing $y$.  \py{slope_func} returns a sequence containing the two derivatives.
 
 Before calling \py{run_ode_solver}, it is a good idea to test the slope function with the initial conditions:
 
 \begin{python}
-dydt, dvdt = slope_func(init, 0, system)
+dydt, dvdt = slope_func(system.init, 0, system)
 \end{python}
 
-The result is \SI{0}{\meter\per\second} for velocity and \SI{9.8}{\meter\per\second\squared} for acceleration.  Now we can call \py{run_ode_solver} like this:
+The result is \SI{0}{\meter\per\second} for velocity and \SI{9.8}{\meter\per\second\squared} for acceleration.  Now we call \py{run_ode_solver} like this:
 
 \begin{python}
-results, details = run_ode_solver(system, slope_func,
-                                  max_step=0.5*s)
+results, details = run_ode_solver(system, slope_func)
 \end{python}
 
-The optional argument \py{max_step} determines the largest step size \py{run_ode_solver} can use.  Specifying \py{max_step} makes the simulation take longer, but it makes the results look better when plotted.  It has little or no effect on accuracy.
-
-\py{results} in a \py{TimeFrame} with two columns: \py{y} contains the height of the penny; \py{v} contains its velocity.
+\py{results} is a \py{TimeFrame} with two columns: \py{y} contains the height of the penny; \py{v} contains its velocity.
  
 \index{TimeFrame object}
 \index{\py{run_ode_solver}}
@@ -6017,18 +5859,18 @@ def plot_position(results):
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap20-fig01.pdf}}
 \caption{Height of the penny versus time, with no air resistance.}
-\label{chap09-fig01}
+\label{chap20-fig01}
 \end{figure}
 
-Figure~\ref{chap09-fig01} shows the result.  Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.
+Figure~\ref{chap20-fig01} shows the result.  Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.
 
 \index{parabola}
 
 The last value of \py{results.y} is \SI{-109}{\meter}, which means we ran the simulation too long.  One way to solve this problem is to use the results to estimate the time when the penny hits the sidewalk.
 
-The \py{modsim} library provides \py{crossings}, which takes a \py{TimeSeries} and a value, and returns a sequence of times when the series passes through the value.  We can find the time when the height of the penny is \py{0} like this:
+The ModSim library provides \py{crossings}, which takes a \py{TimeSeries} and a value, and returns a sequence of times when the series passes through the value.  We can find the time when the height of the penny is \py{0} like this:
 
 \begin{python}
 t_crossings = crossings(results.y, 0)
@@ -6058,12 +5900,14 @@ results, details = run_ode_solver(system, slope_func,
                                   events=event_func)
 \end{python}
 
-\py{events} can also be a sequence of event functions, if there is more than one event that might occur.
+Then we can get the flight time and final velocity like this:
 
-\py{run_ode_solver} uses Brent's method to estimate the time of the event precisely (see \url{http://modsimpy.com/brent}).
+\begin{code}
+t_sidewalk = get_last_label(results) * s
+v_sidewalk = get_last_value(results.v)
+\end{code}
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap20.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
-
 
 
 
@@ -6113,7 +5957,7 @@ where
 
 For objects moving at moderate speeds through air, typical drag coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see \url{http://modsimpy.com/dragco}).
 
-For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from the data.
+For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate $C_d$ from data.
 
 Of course, the drag equation is itself a model, based on the assumption that $C_d$ does not depend on the other terms in the equation: density, velocity, and area.  For objects moving in air at moderate speeds (below 45 mph or \SI{20}{\meter\per\second}), this model might be good enough, but we should remember to revisit this assumption.
 
@@ -6138,6 +5982,8 @@ Now we are ready to add air resistance to the model.
 
 As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Params} object to contain the quantities we need to make a \py{System} object.  \py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
 
+% TODO: This is not actually the first use of Params
+
 \index{Params object}
 
 Here's the \py{Params} object for the falling penny:
@@ -6152,7 +5998,7 @@ params = Params(height = 381 * m,
                 v_term = 18 * m / s)
 \end{python}
 
-The mass and diameter are from \url{http://modsimpy.com/penny}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{http://modsimpy.com/density}).  I chose a value that might be typical in New York City at \SI{20}{\celsius}.
+The mass and diameter are from \url{http://modsimpy.com/penny}.  The density of air depends on temperature, barometric pressure (which depends on altitude), humidity, and composition (\url{http://modsimpy.com/density}).  I chose a value that might be typical in Boston, Massachusetts at \SI{20}{\celsius}.
 
 \index{System object}
 \index{\py{make_system}}
@@ -6163,18 +6009,22 @@ Here's a version of \py{make_system} that takes a \py{Params} object and returns
 
 \begin{python}
 def make_system(params):
-    unpack(params)
+    diameter, mass = params.diameter, params.mass
+    g, rho = params.g, params.rho, 
+    v_init, v_term = params.v_init, params.v_term
+    height = params.height
     
     area = np.pi * (diameter/2)**2
     C_d = 2 * mass * g / (rho * area * v_term**2)
     init = State(y=height, v=v_init)
     t_end = 30 * s
+    dt = t_end / 100
     
     return System(params, area=area, C_d=C_d, 
-                  init=init, t_end=t_end)
+                  init=init, t_end=t_end, dt=dt)
 \end{python}
 
-The first argument of \py{System} is \py{params}, so the result contains all of the parameters in \py{params}, plus \py{init}, \py{area}, and \py{C_d}.
+The first argument of \py{System} is \py{params}, so the result contains all of the parameters in \py{params}, \py{area}, \py{C_d}, and the rest.
 
 It might not be obvious why we need \py{Params} objects, but they will turn out to be useful soon.
 
@@ -6193,7 +6043,8 @@ Now here's a version of the slope function that includes drag:
 \begin{python}
 def slope_func(state, t, system):
     y, v = state
-    unpack(system)
+    rho, C_d, g = system.rho, system.C_d, system.g
+    area, mass = system.area, system.mass
     
     f_drag = rho * v**2 * C_d * area / 2
     a_drag = f_drag / mass
@@ -6224,167 +6075,21 @@ Now we can run the simulation like this:
 
 \begin{python}
 results, details = run_ode_solver(system, slope_func,
-                       events=event_func, max_step=0.5*s)
+                                  events=event_func)
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap21-fig01.pdf}}
 \caption{Height of the penny versus time, with air resistance.}
-\label{chap09-fig02}
+\label{chap21-fig01}
 \end{figure}
 
-Figure~\ref{chap09-fig02} shows the result.  It only takes a few seconds for the penny to accelerate up to terminal velocity; after that, velocity is constant, so height as a function of time is a straight line.
+Figure~\ref{chap21-fig01} shows the result.  It only takes a few seconds for the penny to accelerate up to terminal velocity; after that, velocity is constant, so height as a function of time is a straight line.
 
 \index{terminal velocity}
 
-In the notebook for this chapter, you'll have a chance to extend this model.
+Before you go on, you might want to read the notebook for this chapter, \py{chap21.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
-
-\section{Bungee jumping}
-\label{bungee}
-
-Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
-
-Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
-
-\begin{itemize}
-
-\item  Initially the bungee cord hangs from a crane with the attachment point \SI{80}{\meter} above a cup of tea.
-
-\item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
-
-\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
-
-\item The mass of the jumper is \SI{75}{\kilogram}.
-
-\item The jumper is subject to drag force, as in the previous model, so that their terminal velocity is \SI{60}{\meter \per \second}.
-
-\end{itemize}
-
-Our objective is to choose the length of the cord, \py{L}, and its spring constant, \py{k}, so that the jumper falls all the way to the tea cup, but no farther!
-
-We'll start with the length of the bungee cord, \py{L} at \SI{25}{\meter} and spring constant, \py{k} at \SI{40}{\newton \per \meter}.  Here's a \py{Params} object with all of these parameters:
-
-\begin{python}
-params = Params(y_attach = 80 * m,
-                v_init = 0 * m / s,
-                g = 9.8 * m/s**2,
-                mass = 75 * kg,
-                area = 1 * m**2,
-                rho = 1.2 * kg/m**3,
-                v_term = 60 * m / s,
-                L = 25 * m,
-                k = 40 * N / m)
-\end{python}
-
-And here's a version of \py{make_system} that uses \py{v_term} to compute \py{C_d}:
-
-\begin{python}
-def make_system(params):
-    unpack(params)
-    
-    C_d = 2 * mass * g / (rho * area * v_term**2)
-    init = State(y=y_attach, v=v_init)
-    t_end = 20 * s
-
-    return System(params, C_d=C_d, 
-                  init=init, t_end=t_end)
-\end{python}
-
-We can run it like this:
-
-\begin{python}
-system = make_system(params)
-\end{python}
-
-We need a function to compute spring force based on the altitude of the jumper, \py{y}:
-
-\begin{python}
-def spring_force(y, system):
-    unpack(system)
-    distance_fallen = y_attach - y
-    if distance_fallen <= L:
-        return 0 * N
-    
-    extension = distance_fallen - L
-    f_spring = k * extension
-    return f_spring
-\end{python}
-
-\py{distance_fallen} is the distance of the jumper from the attachment point.  If the cord is not fully extended, the spring force is 0.  Otherwise we compute the extension of the cord, \py{extension}, and the spring force, \py{f_spring}.
-
-I'll also define a function to compute drag force:
-
-\begin{python}
-def drag_force(v, system):
-    unpack(system)
-    f_drag = -np.sign(v) * rho * v**2 * C_d * area / 2
-    return f_drag
-\end{python}
-
-\py{drag_force} uses the NumPy function \py{sign}, which returns 1 if the argument is positive, -1 if it is negative, and 0 if it is 0.  This ensures that the drag force is always in the opposite direction of velocity.
-
-\index{NumPy}
-\index{sign}
-
-Now here's the slope function:
-
-\begin{python}
-def slope_func(state, t, system):
-    y, v = state
-    unpack(system)
-    
-    a_drag = drag_force(v, system) / mass
-    a_spring = spring_force(y, system) / mass
-    dvdt = -g + a_drag + a_spring
-    
-    return v, dvdt
-\end{python}
-
-\py{slope_func} uses \py{spring_force} and \py{drag_force} to compute forces, then divides by \py{mass} to get accelerations.
-
-We can run the simulation like this:
-
-\begin{python}
-ts = linspace(0, system.t_end, 301)
-results, details = run_ode_solver(system, slope_func,
-                                  max_step=0.3*s)
-\end{python}
-
-Again, I use \py{max_step} so the results look better when plotted.
-Figure~\ref{chap09-fig03} shows the results.
-
-\begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-fig03.pdf}}
-\caption{Position and velocity of the bungee jumper.}
-\label{chap09-fig03}
-\end{figure}
-
-We can find the altitude of the jumper at the lowest point like this:
-
-\begin{python}
-min(results.y)
-\end{python}
-
-For the parameters we chose, the jumper bottoms out at about \SI{5}{\meter}, so we need to increase \py{L} or decrease \py{k}.  In the notebook for this chapter, you'll have to a chance to find the best parameters for the bungee dunk.
-
-\section{Getting acceleration}
-
-In fact, there are many combinations of \py{L} and \py{k} that would work.  We might want to find the combination that minimizes the peak acceleration of the jumper, providing the maximum time near the sidewalk to make the dunk.
-
-To do that, we need to know the acceleration of the jumper over time.  Although we compute acceleration in the slope function, it is not included in the results.
-
-It might be tempting to record the acceleration each time the slope function runs, but we should not do that.  The ODE solver calls the slope function many times with different values of \py{state} and \py{t}.  Because of the way the solver works, not all of the states and times are actually part of the solution.  So recording acceleration while the solver is running would not work.
-
-Instead, we can use the computed velocities to estimate acceleration as a function of time.
-
-The \py{modsim} library provides \py{gradient}, which uses NumPy to estimate the derivative of a \py{TimeSeries}.  Here's how it works:
-
-\begin{python}
-a = gradient(results.v)
-\end{python}
-
-In the notebook for this chapter, \py{chap21.ipynb}, you can finish this problem by finding the combination of \py{L} and \py{k} that allows the jumper to complete the bungee dunk while minimizing the acceleration they experience.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
 \chapter{Projectiles in 2-D}
@@ -6412,7 +6117,7 @@ To model air resistance, we'll need the mass, frontal area, and drag coefficient
 
 However, this value {\em does} depend on velocity.  At low velocities it might be as high as 0.5, and at high velocities as low as 0.28.  Furthermore, the transition between these regimes typically happens exactly in the range of velocities we are interested in, between \SI{20}{\meter\per\second} and \SI{40}{\meter\per\second}.
 
-Nevertheless, we'll start with a simple model where the drag coefficient does not depend on velocity; as an exercise at the end of this chapter, you will have a chance to implement a more detailed model and see what effect is has on the results.
+Nevertheless, we'll start with a simple model where the drag coefficient does not depend on velocity; as an exercise at the end of the chapter, you will have a chance to implement a more detailed model and see what effect is has on the results.
 
 But first we need a new computational tool, the \py{Vector} object.
 
@@ -6425,7 +6130,7 @@ Now that we are working in two dimensions, we will find it useful to work with {
 \index{array}
 \index{NumPy}
 
-The \py{modsim} library provides a \py{Vector} object that represents a vector quantity.  A \py{Vector} object is a like a NumPy array; it contains elements that represent the {\bf components} of the vector.  For example, in a \py{Vector} that represents a position in space, the components are the $x$ and $y$ coordinates (and a $z$ coordinate in 3-D).  A \py{Vector} object can also have units, like the quantities we've seen in previous chapters.  
+The ModSim library provides a \py{Vector} object that represents a vector quantity.  A \py{Vector} object is a like a NumPy array; it contains elements that represent the {\bf components} of the vector.  For example, in a \py{Vector} that represents a position in space, the components are the $x$ and $y$ coordinates (and a $z$ coordinate in 3-D).  A \py{Vector} object can also have units, like the quantities we've seen in previous chapters.  
 
 \index{unit}
 
@@ -6437,14 +6142,14 @@ You can create a \py{Vector} by specifying its components.  The following \py{Ve
 A = Vector(3, 4) * m
 \end{python}
 
-You can access the components of a \py{Vector} by name using the dot operator, for example, \py{A.x} or \py{A.y}.  You can also access them by index using brackets, for example, \py{A[0]} or \py{A[1]}.
+You can access the components of a \py{Vector} by name using the dot operator: for example, \py{A.x} or \py{A.y}.  You can also access them by index using brackets: for example, \py{A[0]} or \py{A[1]}.
 
 Similarly, you can get the magnitude and angle using the dot operator, \py{A.mag} and \py{A.angle}.  {\bf Magnitude} is the length of the vector: if the \py{Vector} represents position, magnitude is the distance from the origin; if it represents velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.
 
 \index{angle}
 \index{magnitude}
 
-The {\bf angle} of a \py{Vector} is its direction, expressed as the angle in radians from the positive x-axis.  In the Cartesian plane, the angle \SI{0}{\radian} is due east, and the angle \SI{\pi}{\radian} is due west. 
+The {\bf angle} of a \py{Vector} is its direction, expressed as the angle in radians from the positive $x$ axis.  In the Cartesian plane, the angle \SI{0}{\radian} is due east, and the angle \SI{\pi}{\radian} is due west. 
 
 \index{radian}
 
@@ -6460,7 +6165,7 @@ For the definition and graphical interpretation of these operations, see \url{ht
 
 \index{vector operation}
 
-When you add and subtract \py{Vector} objects, the \py{modsim} library uses NumPy and Pint to check that the operands have the same number of dimensions and units.  The notebook for this chapter shows examples for working with \py{Vector} objects.
+When you add and subtract \py{Vector} objects, the ModSim library uses NumPy and Pint to check that the operands have the same number of dimensions and units.  The notebook for this chapter shows examples for working with \py{Vector} objects.
 
 \index{dimensions}
 
@@ -6527,41 +6232,58 @@ As in Section~\ref{penny_drag}, I'll create a \py{Params} object that contains t
 \index{Params object}
 
 \begin{python}
+t_end = 10 * s
+dt = t_end / 100
+
 params = Params(x = 0 * m, 
                 y = 1 * m,
                 g = 9.8 * m/s**2,
                 mass = 145e-3 * kg,
                 diameter = 73e-3 * m,
                 rho = 1.2 * kg/m**3,
-                C_d = 0.3,
+                C_d = 0.33,
                 angle = 45 * degree,
                 velocity = 40 * m / s,
-                duration = 6 * s)
+                t_end=t_end, dt=dt)
 \end{python}
 
 The mass, diameter, and drag coefficient of the baseball are from the sources in Section~\ref{baseball}.  The acceleration of gravity, \py{g}, is a well-known quantity, and the density of air, \py{rho}, is based on a temperature of \SI{20}{\celsius} at sea level (see \url{http://modsimpy.com/tempress}).
- I chose the value of \py{duration} to run the simulation long enough for the ball to land on the ground.
+ I chose the value of \py{t_end} to run the simulation long enough for the ball to land on the ground.
 
 \index{density}
 
-The following function uses the \py{Params} object to make a \py{System} object.  This two-step process makes the code more readable and makes it easier to work with functions like \py{fsolve}.
+The following function uses the \py{Params} object to make a \py{System} object.  This two-step process makes the code more readable and makes it easier to work with functions like \py{root_bisect}.
 
 \index{System object}
 \index{\py{make_system}}
 
 \begin{python}
-def make_system(condition):
-    unpack(params)
+def make_system(params):
+    angle, velocity = params.angle, params.velocity
     
+    # convert angle to degrees
     theta = np.deg2rad(angle)
+    
+    # compute x and y components of velocity
     vx, vy = pol2cart(theta, velocity)
-    init = State(x=x, y=y, vx=vx, vy=vy)
+    
+    # make the initial state
+    R = Vector(params.x, params.y)
+    V = Vector(vx, vy)
+    init = State(R=R, V=V)
+    
+    # compute area from diameter
+    diameter = params.diameter
     area = np.pi * (diameter/2)**2
     
     return System(params, init=init, area=area)
 \end{python}
 
-\py{make_system} uses \py{np.deg2rad} to convert \py{angle} to radians and \py{pol2cart} to compute the $x$ and $y$ components of the initial velocity.  Then it makes the initial \py{State} object, computes \py{area}, and creates the \py{System} object, which contains all of the variables in \py{params} plus \py{init} and \py{area}.
+\py{make_system} uses \py{np.deg2rad} to convert \py{angle} to radians and \py{pol2cart} to compute the $x$ and $y$ components of the initial velocity.  
+
+Then it makes \py{Vector} objects to represent the initial position, \py{R}, and velocity \py{V}.  These vectors are stored as state variables in \py{init}.
+
+\py{make_system} also computes \py{area}, then creates a \py{System} object with all of the variables from \py{params} plus \py{init} and \py{area}.
 
 \index{deg2rad}
 \index{State object}
@@ -6569,15 +6291,17 @@ def make_system(condition):
 Next we need a function to compute drag force:
 
 \begin{python}
-def drag_force(v, system):
-    unpack(system)
-    mag = rho * v.mag**2 * C_d * area / 2
-    direction = -v.hat()
+def drag_force(V, system):
+    rho, C_d, area = system.rho, system.C_d, system.area
+    
+    mag = -rho * V.mag**2 * C_d * area / 2
+    direction = V.hat()
     f_drag = direction * mag
     return f_drag
 \end{python}
 
-This function differs from the one in Section~\ref{bungee} because it takes \py{v} as a \py{Vector} and returns \py{f_drag} as a \py{Vector}.  It uses the drag equation to compute the magnitude of the drag force, and the \py{hat} function to compute the direction.  \py{-v.hat()} computes a unit vector pointing in the opposite direction of \py{v}.
+This function takes \py{V} as a \py{Vector} and returns \py{f_drag} as a \py{Vector}.
+It uses the drag equation to compute the magnitude of the drag force, and the \py{hat} function to compute the direction.  \py{-V.hat()} computes a unit vector pointing in the opposite direction of \py{V}.
 
 \index{unit vector}
 \index{slope function}
@@ -6587,25 +6311,24 @@ Now we're ready for a slope function:
 
 \begin{python}
 def slope_func(state, t, system):
-    x, y, vx, vy = state
-    unpack(system)
-
-    v = Vector(vx, vy)    
-    a_drag = drag_force(v, system) / mass
+    R, V = state
+    mass, g = system.mass, system.g
+    
+    a_drag = drag_force(V, system) / mass
     a_grav = Vector(0, -g)
     
-    a = a_grav + a_drag
+    A = a_grav + a_drag
     
-    return vx, vy, a.x, a.y
+    return V, A
 \end{python}
 
 As usual, the parameters of the slope function are a \py{State} object, time, and a \py{System} object.  In this example, we don't use \py{t}, but we can't leave it out because when \py{run_ode_solver} calls the slope function, it always provides the same arguments, whether they are needed or not.
 
-The \py{State} object contains four state variables: \py{x} and \py{y} are the components of position; \py{vx} and \py{vy} are the components of velocity.
+The \py{State} object contains two state variables, \py{R} and \py{V}, that represent position and velocity as \py{Vector} objects.
 
 \index{state variable}
 
-The return values from the slope function are the derivatives of these components.  The derivative of position is velocity, so the first two return values are just \py{vx} and \py{vy}, the values we extracted from the \py{State} object.  The derivative of velocity is acceleration, and that's what we have to compute.
+The return values from the slope function are the derivatives of these quantities.  The derivative of position is velocity, so the first return value is \py{V}, which we extracted from the \py{State} object.  The derivative of velocity is acceleration, and that's what we have to compute.
 
 \index{acceleration}
 \index{velocity}
@@ -6616,6 +6339,7 @@ The total acceleration of the baseball is the sum of accelerations due to gravit
 We already saw how \py{a_drag} is computed.  \py{a_grav} is a \py{Vector} with magnitude \py{g} pointed in the negative \py{y} direction.
 
 Using vectors to represent forces and accelerations makes the code concise, readable, and less error-prone.  In particular, when we add \py{a_grav} and \py{a_drag}, the directions are likely to be correct, because they are encoded in the \py{Vector} objects.  And the units are certain to be correct, because otherwise Pint would report an error.
+
 \index{Pint}
 
 As always, we can test the slope function by running it with the initial conditions:
@@ -6628,21 +6352,20 @@ We can use an event function to stop the simulation when the ball hits the groun
 
 \begin{python}
 def event_func(state, t, system):
-    x, y, vx, vy = state
-    return y
+    R, V = state
+    return R.y
 \end{python}
 
-The event function takes the same parameters as the slope function, and returns the y coordinate.  When the y coordinate passes through 0, the simulation stops.
+The event function takes the same parameters as the slope function, and returns the y coordinate of \py{R}.  When the y coordinate passes through 0, the simulation stops.
 
 Now we're ready to run the simulation:
 
 \begin{python}
-ts = linspace(0, system.t_end, 101)
 results, details = run_ode_solver(system, slope_func,
-                       events=event_func, max_step=0.2*s)
+                                   events=event_func)
 \end{python}
 
-\py{results} is a \py{TimeFrame} object with one column for each of the state variables, \py{x}, \py{y}, \py{vx}, and \py{vy}.
+\py{results} is a \py{TimeFrame} object with one column for each of the state variables, \py{R} and \py{V}.
 
 \index{TimeFrame object}
 
@@ -6655,10 +6378,9 @@ flight_time = get_last_label(results) * s
 And the final \py{x} coordinate like this:
 
 \begin{python}
-x_dist = get_last_value(results.x) * m
+R_final = get_last_value(results.R)
+x_dist = R_final.x
 \end{python}
-
-Notice that the results don't have units; if we want these values to have the correct units, we have to apply them.
 
 
 \section{Trajectories}
@@ -6666,33 +6388,43 @@ Notice that the results don't have units; if we want these values to have the co
 We can plot the $x$ and $y$ components of position like this:
 
 \begin{python}
-plot(results.x, label='x')
-plot(results.y, label='y')
+x = results.R.extract('x')
+y = results.R.extract('y')
+
+x.plot()
+y.plot()
 \end{python}
 
+The \py{extract} function loops through the \py{Vector} objects in \py{R} and extracts one coordinate from each.  The result is a \py{TimeSeries}.
+
+\index{extract function}
+\index{TimeSeries}
+
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap10-fig01.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap22-fig01.pdf}}
 \caption{Simulated baseball flight, $x$ and $y$ components of position as a function of time.}
-\label{chap10-fig01}
+\label{chap22-fig01}
 \end{figure}
 
-Figure~\ref{chap10-fig01} shows the result.  As expected, the $x$ component increases monotonically, with decreasing velocity.  The $y$ position climbs initially and then descends, falling slightly below \SI{0}{\meter} after \SI{5.1}{\second}.
+Figure~\ref{chap22-fig01} shows the result.  As expected, the $x$ component increases as the ball moves away from home plate.  The $y$ position climbs initially and then descends, falling to \SI{0}{\meter} near \SI{5.0}{\second}.
 
 \index{monotonic}
 
 Another way to view the same data is to plot the $x$ component on the x-axis and the $y$ component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:
 
 \begin{python}
-plot(results.x, results.y, label='trajectory')
+x = results.R.extract('x')
+y = results.R.extract('y')
+plot(x, y, label='trajectory')
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap10-fig02.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap22-fig02.pdf}}
 \caption{Simulated baseball flight, trajectory plot.}
-\label{chap10-fig02}
+\label{chap22-fig02}
 \end{figure}
 
-Figure~\ref{chap10-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{http://modsimpy.com/trajec}).
+Figure~\ref{chap22-fig02} shows this way of visualizing the results, which is called a {\bf trajectory plot} (see \url{http://modsimpy.com/trajec}).
 
 \index{trajectory plot}
 
@@ -6711,7 +6443,7 @@ In this chapter we apply that model to an optimization problem.
 \section{The Manny Ramirez problem}
 \label{manny}
 
-Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for a relaxed attitude and a taste for practical jokes that his managers did not always appreciate.  Our objective in this chapter is to solve the following Manny-inspired problem:
+Manny Ramirez is a former member of the Boston Red Sox (an American baseball team) who was notorious for his relaxed attitude and taste for practical jokes.  Our objective in this chapter is to solve the following Manny-inspired problem:
 
 {\it What is the minimum effort required to hit a home run in Fenway Park?}
 
@@ -6738,6 +6470,9 @@ We want to find the minimum velocity at which a ball can leave home plate and st
 We'll use the same model as in the previous chapter, with this \py{Params} object:
 
 \begin{python}
+t_end = 20 * s
+dt = t_end / 100
+
 params = Params(x = 0 * m, 
                 y = 1 * m,
                 g = 9.8 * m/s**2,
@@ -6747,18 +6482,31 @@ params = Params(x = 0 * m,
                 C_d = 0.3,
                 angle = 45 * degree,
                 velocity = 40 * m / s,
-                t_end = 20 * s)
+                t_end=t_end,
+                dt=dt)
 \end{python}
   
+\index{Params object}
+
 This version of \py{make_system}:
 
 \begin{python}
-def make_system(condition):
-    unpack(params)
+def make_system(params):
+    angle, velocity = params.angle, params.velocity
     
+    # convert angle to degrees
     theta = np.deg2rad(angle)
+    
+    # compute x and y components of velocity
     vx, vy = pol2cart(theta, velocity)
-    init = State(x=x, y=y, vx=vx, vy=vy)
+    
+    # make the initial state
+    R = Vector(params.x, params.y)
+    V = Vector(vx, vy)
+    init = State(R=R, V=V)
+    
+    # compute area from diameter
+    diameter = params.diameter
     area = np.pi * (diameter/2)**2
     
     return System(params, init=init, area=area)
@@ -6768,40 +6516,40 @@ This slope function:
 
 \begin{python}
 def slope_func(state, t, system):
-    x, y, vx, vy = state
-    unpack(system)
-
-    V = Vector(vx, vy)    
+    R, V = state
+    mass, g = system.mass, system.g
+    
     a_drag = drag_force(V, system) / mass
     a_grav = Vector(0, -g)
     
-    a = a_grav + a_drag
+    A = a_grav + a_drag
     
-    return vx, vy, a.x, a.y
+    return V, A
 \end{python}
 
 And this event function:
 
 \begin{python}
 def event_func(state, t, system):
-    x, y, vx, vy = state
-    return y
+    R, V = state
+    return R.y
 \end{python}
 
 
 \section{Finding the range}
 
-Suppose we want to find the launch angle that maximizes {\bf range}, that is, the distance the ball travels in the air before landing.   We'll use a function in the \py{modsim} library, \py{max_bounded}, which takes a function and finds its maximum.
+Suppose we want to find the launch angle that maximizes {\bf range}, that is, the distance the ball travels in the air before landing.   We'll use a function in the ModSim library, \py{maximize}, which takes a function and finds its maximum.
 
-The function we pass to \py{max_bounded} should take launch angle and a \py{params} object, and return range:
+The function we pass to \py{maximize} should take launch angle and a \py{params} object, and return range:
 
 \begin{python}
 def range_func(angle, params):  
     params = Params(params, angle=angle)
     system = make_system(params)
-    results, details = run_ode_solver(system, slope_func, 
-                                      events=event_func)
-    x_dist = get_last_value(results.x) * m
+    results, details = run_ode_solver(system, slope_func,
+                                       events=event_func)
+    x_dist = get_last_value(results.R).x
+    print(angle, x_dist)
     return x_dist
 \end{python}
 
@@ -6829,32 +6577,32 @@ for angle in angles:
 \end{python}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap10-fig03.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap23-fig01.pdf}}
 \caption{Distance from home plate as a function of launch angle, with fixed velocity.}
-\label{chap10-fig03}
+\label{chap23-fig01}
 \end{figure}
 
-Figure~\ref{chap10-fig03} shows the results.  It looks like the optimal angle is between \SI{40}{\degree} and \SI{45}{\degree}.
+Figure~\ref{chap23-fig01} shows the results.  It looks like the optimal angle is between \SI{40}{\degree} and \SI{45}{\degree}.
 
 %TODO: Draw a vertical line to show this
 
-We can find the optimal angle more precisely and more efficiently using \py{max_bounded}, like this:
+We can find the optimal angle more precisely and more efficiently using \py{maximize}, like this:
 
 \begin{python}
-res = max_bounded(range_func, [0, 90], params)
+res = maximize(range_func, [0, 90], params)
 \end{python}
 
-The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument can be any object; it gets passed along as an argument when \py{max_bounded} calls \py{range_func}.
+The first parameter is the function we want to maximize.  The second is the range of values we want to search; in this case it's the range of angles from \SI{0}{\degree} to \SI{90}{\degree}.  The third argument can be any object; it gets passed along as an argument when \py{maximize} calls \py{range_func}.
 
-\index{Params object}
-
-The return value from \py{max_bounded} is an \py{ModSimSeries} that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
-
-For these parameters, the optimal angle is \SI{41.1}{\degree}, which yields a range of \SI{103.4}{\meter}.
+The return value from \py{maximize} is an \py{ModSimSeries} that contains the results, including \py{x}, which is the angle that yielded the highest range, and \py{fun}, which is the value of \py{range_func} when it's evaluated at \py{x}, that is, range when the baseball is launched at the optimal angle.
 
 \index{ModSimSeries}
 
+For these parameters, the optimal angle is about \SI{42}{\degree}, which yields a range of \SI{103}{\meter}.
 
+\py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
+
+% TODO: update this link to point to Golden section search
 
 
 \section{Finishing off the problem}
@@ -6863,13 +6611,13 @@ In the notebook for this chapter, \py{chap22.ipynb}, you'll have to chance to fi
 
 \begin{itemize}
 
-\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that's not what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{max_bounded} to find the revised optimum.
+\item In the previous section the ``optimal" launch angle is the one that maximizes range, but that's not what we want.  Rather, we want the angle that maximizes the height of the ball when it gets to the wall (310 feet from home plate).  So you'll have to write a height function to compute it, and then use \py{maximize} to find the revised optimum.
 
 \item Once you can find the optimal angle for any velocity, you have to find the minimum velocity that gets the ball over the wall.  You'll write a function that takes a velocity as a parameter, computes the optimal angle for that velocity, and returns the height of the ball, at the wall, using the optimal angle.
 
-\item Finally, you'll use \py{fsolve} to find the velocity that makes the optimal height at the wall just barely 37 feet.
+\item Finally, you'll use \py{root_bisect} to find the velocity that makes the optimal height at the wall just barely 37 feet.
   
-\index{\py{fsolve}}
+\index{\py{root_bisect}}
 
 \end{itemize}
 
@@ -6968,38 +6716,36 @@ And create a \py{Params} object with the parameters of the system:
 params = Params(Rmin = 0.02 * m,
                 Rmax = 0.055 * m,
                 L = 47 * m,
-                t_end = 130 * s)
+                omega = 10 * radian / s,
+                t_end = 130 * s,
+                dt = 1*s)
 \end{python}
 
-\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper, and \py{t_end} is the length of the simulation in time.
+\py{Rmin} and \py{Rmax} are the initial and final values for the radius, \py{r}.  \py{L} is the total length of the paper. \py{t_end} is the length of the simulation in time, and \py{dt} is the time step for the ODE solver.
 
-Then we use the \py{Params} object to make a \py{System} object:
+We use the \py{Params} object to make a \py{System} object:
 
 \index{System object}
 \index{\py{make_system}}
 
 \begin{python}
 def make_system(params):
-    unpack(params)
-    
     init = State(theta = 0 * radian,
                  y = 0 * m,
-                 r = Rmin)
+                 r = params.Rmin)
     
     k = estimate_k(params)
-    
-    return System(init=init, k=k, t_end=t_end)
+
+    return System(params, init=init, k=k)
 \end{python}
 
 The initial state contains three variables, \py{theta}, \py{y}, and \py{r}.
 
-\index{unpack}
-
-To get started, we'll estimate a reasonable value for \py{k}; then in Section~\ref{paper_analysis} we'll figure it out exactly.  Here's how we compute the estimate:
+\py{estimate_k} computes the parameter, \py{k}, that relates \py{theta} and \py{r}.  Here's how it works:
 
 \begin{python}
 def estimate_k(params):
-    unpack(params)
+    Rmin, Rmax, L = params.Rmin, params.Rmax, params.L
     
     Ravg = (Rmax + Rmin) / 2
     Cavg = 2 * pi * Ravg
@@ -7023,9 +6769,8 @@ Now we can use the differential equations from Section~\ref{paper} to write a sl
 \begin{python}
 def slope_func(state, t, system):
     theta, y, r = state
-    unpack(system)
+    k, omega = system.k, system.omega
     
-    omega = 10 * radian / s
     dydt = r * omega
     drdt = k * omega
     
@@ -7033,12 +6778,12 @@ def slope_func(state, t, system):
 \end{python}
 
 \begin{figure}[t]
-\centerline{\includegraphics[height=4.5in]{figs/chap11-fig01.pdf}}
+\centerline{\includegraphics[height=4.5in]{figs/chap24-fig01.pdf}}
 \caption{Results from paper rolling simulation, showing rotation, length, and radius over time.}
-\label{chap11-fig01}
+\label{chap24-fig01}
 \end{figure}
 
-As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The time derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
+As usual, the slope function takes a \py{State} object, a time, and a \py{System} object.  The \py{State} object contains hypothetical values of \py{theta}, \py{y}, and \py{r} at time \py{t}.  The job of the slope function is to compute the time derivatives of these values.  The derivative of \py{theta} is angular velocity, which is often denoted \py{omega}.
 
 \index{State object}
 
@@ -7047,19 +6792,18 @@ We'd like to stop the simulation when the length of paper on the roll is \py{L}.
 \begin{python}
 def event_func(state, t, system):
     theta, y, r = state
-    unpack(system)
-    return y - L
+    return y - system.L
 \end{python}
 
 Now we can run the simulation like this:
 
 \begin{python}
 results, details = run_ode_solver(system, slope_func,
-                       events=event_func, max_step=1*s)
+                                   events=event_func)
 \end{python}
 
 
-Figure~\ref{chap11-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
+Figure~\ref{chap24-fig01} shows the results.  \py{theta} grows linearly over time, as we should expect.  As a result, \py{r} also grows linearly.  But since the derivative of \py{y} depends on \py{r}, and \py{r} is increasing, \py{y} grows with increasing slope.
 
 Because this system is so simple, it is almost silly to simulate it.  As we'll see in the next section, it is easy enough to solve the differential equations analytically.  But it is often useful to start with a simple simulation as a way of exploring and checking assumptions.
 
@@ -7150,8 +6894,6 @@ k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2)           \label{eqn4}
 %
 Plugging in the values of the parameters yields \py{2.8e-5} \si{\meter\per\radian}, the same as the ``estimate" we computed in Section~\ref{papersim}.  In this case the estimate turns out to be exact.
 
-In the next chapter, we'll run the simulation the other way, unrolling the paper.
-
 Before you go on, you might want to read the notebook for this chapter, \py{chap24.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
 
@@ -7159,7 +6901,6 @@ Before you go on, you might want to read the notebook for this chapter, \py{chap
 \label{chap25}
 
 In the previous chapter we modeled a scenario with constant angular velocity.  In this chapter we make it more complex; we'll model a teapot, on a turntable, revolving with constant angular acceleration and deceleration.
-
 
 \section{Angular acceleration}
 
@@ -7204,7 +6945,7 @@ Fortunately, in a system where all rotation and torque happens around a single a
 
 \index{scalar}
 
-For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$, in SI units \si{\kilogram\meter\squared}.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
+For a small object with mass $m$, rotating around a point at distance $r$, the moment of inertia is $I = m r^2$.  For more complex objects, we can compute $I$ by dividing the object into small masses, computing moments of inertia for each mass, and adding them up.
 
 However, for most simple shapes, people have already done the calculations; you can just look up the answers.  For example, see \url{http://modsimpy.com/moment}.
 
@@ -7245,11 +6986,13 @@ We'll answer this question in these steps:
 Our simulation will use the following parameters:
 
 \begin{enumerate}
+
 \item
   The radius of the turntable is \SI{0.5}{\meter}, and its weight is \SI{7}{\kg}.
+  
 \item
-  The teapot weights \SI{0.3}{\kg}, and it sits \SI{0.4}{\meter} from the center of
-  the turntable.
+  The teapot weights \SI{0.3}{\kg}, and it sits \SI{0.4}{\meter} from the center of the turntable.
+
 \end{enumerate}
 
 \begin{figure}
@@ -7260,7 +7003,7 @@ Our simulation will use the following parameters:
 
 Figure~\ref{teapot} shows the scenario, where $F$ is the force I apply to the turntable at the perimeter, perpendicular to the moment arm, $r$, and $\tau$ is the resulting torque. The blue circle near the bottom is the teapot.
 
-Here's a \py{Params} object with these values
+Here's a \py{Params} object with the parameters of the scenario:
 
 \begin{python}
 params = Params(radius_disk=0.5*m,
@@ -7269,7 +7012,8 @@ params = Params(radius_disk=0.5*m,
                 mass_pot=0.3*kg,
                 force=1*N,
                 torque_friction=0.2*N*m,
-                theta_end=0.5*radian)
+                theta_end=0.5*radian,
+                t_end=20*s)
 \end{python}
 
 \index{Params object}
@@ -7279,20 +7023,21 @@ computes the total moment of inertia for the turntable and the teapot.
 
 \begin{python}
 def make_system(params):
-    unpack(params)
+    mass_disk, mass_pot = params.mass_disk, params.mass_pot
+    radius_disk, radius_pot = params.radius_disk, params.radius_pot
     
-    init = State(theta=0, omega=0)
+    init = State(theta=0*radian, omega=0*radian/s)
     
     I_disk = mass_disk * radius_disk**2 / 2
     I_pot = mass_pot * radius_pot**2
     
-    return System(params, init=init, t_end=20*s,
-                  I=I_disk+I_pot)
+    return System(params, init=init, I=I_disk+I_pot)
 \end{python}
 
 %\index{make_system}
 
-\py{theta} represents the initial angle of the table, in \si{\radian}; \py{omega} represents the angular velocity in \si{\radian\per\second}.
+In the initial state,
+\py{theta} represents the angle of the table in \si{\radian}; \py{omega} represents the angular velocity in \si{\radian\per\second}.
 
 \py{I_disk} is the moment of inertia of the turntable, which is based on the moment of inertia for a horizontal disk revolving around a vertical axis through its center:
 %
@@ -7302,6 +7047,8 @@ def make_system(params):
 %
 \[ I_{point} = m r^2 \]
 %
+In SI units, moment of inertia is expressed in \si{\kilogram\meter\squared}.  
+
 Now we can make a \py{System} object:
 
 \begin{python}
@@ -7315,7 +7062,8 @@ Here's a slope that takes the current state, which contains angle and angular ve
 \begin{python}
 def slope_func(state, t, system):
     theta, omega = state
-    unpack(system)
+    radius_disk, force = system.radius_disk, system.force
+    torque_friction, I = system.torque_friction, system.I
     
     torque = radius_disk * force - torque_friction
     alpha = torque / I
@@ -7327,7 +7075,7 @@ def slope_func(state, t, system):
 
 In this scenario, the force I apply to the turntable is always perpendicular to the lever arm, so $\sin \theta = 1$ and the torque due to force is $\tau = r F$.
 
-In a more detailed model, I might quantify force due to friction and the moment arm of that force, but that's not really necessary; instead, I chose to quantify torque due to friction, leaving out the details.
+\py{torque_friction} represents the torque due to friction.  Because the turntable is rotating in the direction of positive \py{theta}, friction acts in the direction of negative \py{theta}.
 
 \index{friction}
 
@@ -7359,21 +7107,17 @@ Here's the event function I'll use for Phase 1; it stops the simulation when \py
 \begin{python}
 def event_func1(state, t, system):
     theta, omega = state
-    unpack(system)
-    return theta - theta_end 
+    return theta - system.theta_end 
 \end{python}
 
 Now we can run the first phase.
 
 \begin{python}
 results1, details1 = run_ode_solver(system1, slope_func,
-                         events=event_func1, max_step=0.1*s)
+                                      events=event_func1)
 \end{python}
 
 %\index{run_ode_solver}
-%\index{max_step}
-
-Again, I specify \py{max_step} so the results look smoother when I plot them, at the cost of some extra computation.
 
 \begin{figure}
 \centerline{\includegraphics[height=4.0in]{figs/chap25-fig01.pdf}}
@@ -7386,8 +7130,7 @@ state of the first phase.
 
 \begin{python}
 t_0 = get_last_label(results1) * s
-theta, omega = get_last_value(results1)
-init2 = State(theta=theta*radian, omega=omega*radian/s)
+init2 = results1.last_row()
 \end{python}
 
 Now we can make a \py{System} object for Phase 2, with the initial state from Phase 1, and with \py{force=0}.
@@ -7396,7 +7139,7 @@ Now we can make a \py{System} object for Phase 2, with the initial state from Ph
 %\index{get_last_value}
 
 \begin{python}
-system2 = System(system1, t_0=t_0, init=init2, force=0)
+system2 = System(system1, t_0=t_0, init=init2, force=0*N)
 \end{python}
 
 For the second phase, we need an event function that stops when the turntable stops; that is, when angular velocity is 0.
@@ -7411,7 +7154,7 @@ Now we can run the second phase.
 
 \begin{python}
 results2, details2 = run_ode_solver(system2, slope_func,
-                         events=event_func2, max_step=0.1*s)
+                                      events=event_func2)
 \end{python}
 
 Pandas provides \py{combine_first}, which combines
@@ -7436,70 +7179,52 @@ Let's take the code from the previous section and wrap it in a function.
 
 \begin{python}
 def run_two_phases(force, torque_friction, params):
+    # put the parameters into the Params object
     params = Params(params, force=force, 
                     torque_friction=torque_friction)
 
     # run phase 1
     system1 = make_system(params)
-    results1, _ = run_ode_solver(system1, slope_func,
-                      events=event_func1, max_step=0.1*s)
+    results1, details1 = run_ode_solver(system1, slope_func, 
+                                          events=event_func1)
 
     # get the final state from phase 1
-    t_0 = get_last_label(results1) * s
-    theta, omega = get_last_value(results1)
-    init2 = State(theta=theta, omega=omega)
+    t_0 = results1.last_label() * s
+    init2 = results1.last_row()
     
     # run phase 2
-    system2 = System(system1, t_0=t_0, init=init2, force=0)
-    results2, _ = run_ode_solver(system2, slope_func,
-                      events=event_func2, max_step=0.1*s)
+    system2 = System(system1, t_0=t_0, init=init2, force=0*N)
+    results2, details2 = run_ode_solver(system2, slope_func, 
+                                          events=event_func2)
     
     # combine and return the results
     results = results1.combine_first(results2)
-    return results
+    return TimeFrame(results)
 \end{python}
 
-Now we can use \py{run_two_phases} to write an error function we can use, with \py{fsolve}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
+We can use \py{run_two_phases} to write an error function we can use, with \py{root_bisect}, to find the torque due to friction that yields the observed results from the first push, a total rotation of \SI{1.5}{\radian}.
 
-\index{\py{fsolve}}
+\index{\py{root_bisect}}
 \index{error function}
 
 \begin{python}
 def error_func1(torque_friction, params):
-    force = 1
+    force = 1 * N
     results = run_two_phases(force, torque_friction, params)
-    theta_final = get_last_value(results.theta)
+    theta_final = results.last_row().theta
     print(torque_friction, theta_final)
-    return theta_final - 1.5
+    return theta_final - 1.5 * radian
 \end{python}
 
-But before we call \py{fsolve}, we have to deal with a problem.  In order to support computation with units, the \py{modsim} library uses a certain amount of black magic.  With most units, the magic works pretty well, but some units are problematic, including Newtons.
-
-%TODO: remove this when we remove Pint
-
-\index{\py{fsolve}}
-
-However, now that we have a working simulation, and some confidence that it is correct, it is less important to carry units through the computation.
-
-We can drop them by creating a new \py{Params} object with the same values and no units.  The \py{modsim} library provides \py{remove_unit}, which does just that.
-
-\begin{python}
-params_nodim = remove_units(params)
-\end{python}
-
-%\index{remove_units}
-
-The rest of the code works without modification, in part because I designed it to keep almost all of the units in one place.
-
-Now we can use \py{fsolve} to estimate torque due to friction.
+Now we can use \py{root_bisect} to estimate torque due to friction.
 
 \index{torque}
 \index{friction}
-\index{\py{fsolve}}
+\index{\py{root_bisect}}
 
 \begin{python}
-guess = 0.2
-res = fsolve(error_func1, guess, params_nodim)
+res = root_bisect(error_func1, [0.5, 2], params)
+force = res.root
 \end{python}
 
 The result is \SI{0.166}{\newton\meter}, a little less than the initial guess.
@@ -7519,7 +7244,7 @@ In Chapter~\ref{chap20} we rewrote a second order differential equation as a sys
 \begin{python}
 def slope_func(state, t, system):
     y, v = state
-    unpack(system)    
+    g = system.g    
 
     dydt = v
     dvdt = -g
@@ -7573,7 +7298,10 @@ A = Vector(3, 4) * m
 It also introduces trajectory plots, which show the path of an object in two dimensions:
 
 \begin{python}
-plot(results.x, results.y, label='trajectory')
+x = results.R.extract('x')
+y = results.R.extract('y')
+
+plot(x, y, label='trajectory')
 \end{python}
 
 In Chapter~\ref{chap23} we define a range function that computes the distance a baseball flies as a function of launch angle:
@@ -7582,51 +7310,55 @@ In Chapter~\ref{chap23} we define a range function that computes the distance a 
 def range_func(angle, params):  
     params = Params(params, angle=angle)
     system = make_system(params)
-    results, details = run_ode_solver(system, slope_func, 
-                                      events=event_func)
-    x_dist = get_last_value(results.x) * m
+    results, details = run_ode_solver(system, slope_func,
+                                       events=event_func)
+    x_dist = get_last_value(results.R).x
     return x_dist
 \end{python}
 
-Then we use \py{max_bounded} to find the launch angle that maximizes range:
+Then we use \py{maximize} to find the launch angle that maximizes range:
 
 \begin{python}
-res = max_bounded(range_func, [0, 90], params)
+bounds = [0, 90] * degree
+res = maximize(range_func, bounds, params)
 \end{python}
 
 With that, your toolkit is complete.  Chapter~\ref{chap24} and Chapter~\ref{chap25} introduce the physics of rotation, but no new computational tools.
 
 
-\section{Under the hood}
+\section{Bungee jumping}
+\label{bungee}
 
-The \py{crossings} function uses \py{InterpolatedUnivariateSpline} from SciPy, which provides a \py{roots} function that finds zero-crossings.  It uses a cubic spline to interpolate between the time steps of the ODE solution.
+Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
 
-\index{crossings}
+Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
 
-The \py{Params} object is identical to the \py{System} object in all but name, and based on a Pandas \py{Series}.  I sometimes find it useful to use \py{Params} objects to create \py{System} objects, but it is not necessary.
+\begin{itemize}
 
-\index{Params}
+\item  Initially the bungee cord hangs from a crane with the attachment point \SI{80}{\meter} above a cup of tea.
 
-The \py{Vector} object is a \py{Quantity}, as defined by Pint, so it normally has units.  It contains a NumPy array that contains the coordinates.  So most vector arithmetic is really array arithmetic.
+\item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
 
-\index{Vector}
+\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
 
-\py{max_bounded} uses the SciPy function \py{minimize_scalar}, which uses Brent's method.  You can read about it at \url{http://modsimpy.com/minimize}).
+\item The mass of the jumper is \SI{75}{\kilogram}.
 
-\index{\py{max_bounded}}
-\index{SciPy}
-\index{\py{minimize_scalar}}
-\index{Brent's method}
+\item The jumper is subject to drag force so that their terminal velocity is \SI{60}{\meter \per \second}.
+
+\end{itemize}
+
+Our objective is to choose the length of the cord, \py{L}, and its spring constant, \py{k}, so that the jumper falls all the way to the tea cup, but no farther!
+
+In the repository for this book, you will find a notebook, \py{bungee.ipynb}, which contains starter code and exercises for this case study.
 
 
 \section{Bungee dunk revisited}
 
-In Chapter~\ref{chap21}, we simulated a bungee jump with a model that took into account gravity, air resistance, and the spring force of the bungee cord, but we ignored the weight of the cord.
+In the previous case study, we assume that the cord applies no force to the jumper until it is stretched.
+It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
 \index{bungee jump}
 \index{bungee cord}
-
-It is tempting to say that the cord has no effect because it falls along with the jumper, but that intuition is incorrect.  As the cord falls, it transfers energy to the jumper.
 
 At \url{http://modsimpy.com/bungee} you'll find a paper\footnote{Heck, Uylings, and Kędzierska, ``Understanding the physics of bungee jumping", Physics Education, Volume 45, Number 1, 2010.} that explains this phenomenon and derives the acceleration of the jumper, $a$, as a function of position, $y$, and velocity, $v$:
 %
@@ -7636,7 +7368,10 @@ where $g$ is acceleration due to gravity, $L$ is the length of the cord, and $\m
 
 If you don't believe that their model is correct, this video might convince you: \url{http://modsimpy.com/drop}.
 
-Modify the code from Chapter~\ref{chap21} to model this effect.  How does the behavior of the system change as we vary the mass of the cord?  When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
+In the repository for this book, you will find a notebook, \py{bungee2.ipynb}, which contains starter code and exercises for this case study.
+How does the behavior of the system change as we vary the mass of the cord?
+When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?
+
 
 
 \section{Spider-Man}
@@ -7719,7 +7454,7 @@ We'll use the following parameters:
 
 \end{enumerate}
 
-In the repository for this book, you will find a notebook, \py{spiderman.ipynb}, which contains starter code.   Read through the notebook and run the code.  It uses \py{minimize}, which is a SciPy function that can search for an optimal set of parameters (as contrasted with \py{min_bounded}, which can only search along a single axis).
+In the repository for this book, you will find a notebook, \py{spiderman.ipynb}, which contains starter code.   Read through the notebook and run the code.  It uses \py{minimize}, which is a SciPy function that can search for an optimal set of parameters (as contrasted with \py{minimize_scalar}, which can only search along a single axis).
 
 
 \section{Kittens}
@@ -7772,8 +7507,10 @@ Since the outer diameter changes as the kitten unrolls the paper, we have to com
 
 \begin{python}
 def moment_of_inertia(r, system):
-    unpack(system)
-    Icore = Mcore / 2 * Rmin**2
+    Mcore, Rmin = system.Mcore, system.Rmin
+    rho_h = system.rho_h
+    
+    Icore = Mcore * Rmin**2   
     Iroll = pi * rho_h / 2 * (r**4 - Rmin**4)
     return Icore + Iroll
 \end{python}
@@ -7785,19 +7522,19 @@ def moment_of_inertia(r, system):
 
 \begin{python}
 def make_system(params):
-    unpack(params)
+    L, Rmax, Rmin = params.L, params.Rmax, params.Rmin
+    Mroll = params.Mroll
     
     init = State(theta = 0 * radian,
                  omega = 0 * radian/s,
                  y = L)
+    
     area = pi * (Rmax**2 - Rmin**2)
     rho_h = Mroll / area
     k = (Rmax**2 - Rmin**2) / 2 / L / radian    
     
-    return System(init=init, k=k, rho_h=rho_h,
-                  Rmin=Rmin, Rmax=Rmax,
-                  Mcore=Mcore, Mroll=Mroll, 
-                  t_end=t_end)
+    return System(params, init=init, area=area, 
+                  rho_h=rho_h, k=k)
 \end{python}
 
 \py{make_system} also computes \py{k} using Equation~\ref{eqn4}.
@@ -7846,7 +7583,7 @@ Which we can write more concisely:
 %
 \[ a = -r \alpha \]
 %
-This relationship is not a general law of nature; it is specific to scenarios like this where there is rolling without stretching or slipping.
+This relationship is not a general law of nature; it is specific to scenarios like this where one object rolls along another without stretching or slipping.
 
 \index{rolling}
 
@@ -7920,7 +7657,7 @@ In the repository for this book, you will find a notebook, \py{yoyo.ipynb}, whic
 
 \section{Under the hood}
 
-Throughout this book, we'll use functions defined in the \py{modsim} library.  You don't have to know how they work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
+Throughout this book, we'll use functions defined in the ModSim library.  You don't have to know how they work, but you might be curious.  So at the end of some chapters I'll provide additional information.  If you are an experienced programmer, you might be interested by the design decisions I made.  If you are a beginner, and you feel like you have your hands full already, feel free to skip these sections.
 
 \index{modsim}
 
