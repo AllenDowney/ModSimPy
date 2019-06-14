@@ -83,3 +83,8 @@ wall2,https://www.sciencedirect.com/science/article/pii/S0378778816313056
 human,https://www.youtube.com/watch?v=PUwmA3Q0_OE
 dunk,https://www.youtube.com/watch?v=UBf7WC19lpw
 drop,https://www.youtube.com/watch?v=X-QFAB0gEtE
+ivp,https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html
+fsolve,https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html
+sq,https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html
+lm ,https://en.wikipedia.org/wiki/Levenberg-Marquardt_algorithm
+powell,https://en.wikipedia.org/wiki/Powell's_method
