@@ -143,7 +143,7 @@ working directory". On Windows, most likely you are in . On MacOS or
 Linux, you are probably in your home directory, .
 
 The next step is to copy files from your repository on GitHub to your
-computer; in Git vocabulary, this process is called [**cloning**]{}. Run
+computer; in Git vocabulary, this process is called **cloning**. Run
 this command:
 
 ```
