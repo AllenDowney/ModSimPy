@@ -10,7 +10,7 @@ You can run the code from the repository in a browser by pressing the Binder but
 
 * The first part presents discrete models, including a bikeshare system and world population growth.
 
-* The second part introduces first-order systems, including models of infectious disease, thermal systems, and chemical kinetics.
+* The second part introduces first-order systems, including models of infectious disease, thermal systems, and pharmacokinetics.
 
 * The third part is about second-order systems, including mechanical systems like projectiles, celestial mechanics, and rotating rigid bodies.
 
@@ -59,7 +59,8 @@ all files in your home directory, so you don’t need administrator (root)
 permission to install it, and if you have a version of Python already,
 Anaconda will not remove or modify it.
 
-Start at <https://www.anaconda.com/download>. Download the installer for
+Start at [the Anaconda download page](https://www.anaconda.com/distribution/#download-section). 
+Download the installer for
 your system and run it. You don’t need administrative privileges to
 install Anaconda, so I recommend you run the installer as a normal user,
 not as administrator or root.
@@ -70,28 +71,36 @@ environment for writing programs. You won’t need it for this book, but
 you might want it for other projects.
 
 By default, Anaconda installs most of the packages you need, but there
-are a few more you might have to add. Once the installation is complete,
-open a command window. On macOS or Linux, you can use Terminal. On
-Windows, open Git Bash.
+are a few more you have to add. Once the installation is complete, open
+a command window. On macOS or Linux, you can use Terminal. On Windows,
+open the Anaconda Prompt that should be in your Start menu.
 
 Run the following command (copy and paste it if you can, to avoid
 typos):
-
 ```
-conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml
+conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml html5lib pytables
 ```
-
-Some of these packages might already be installed. Then run this
-command:
-
+To install Pint, run this command:
 ```
 conda install -c unidata pint
 ```
-
+And to install the ModSim library, run this command:
+```
+pip install modsim
+```
 That should be everything you need.
 
 Copying my files
 ----------------
+
+The simplest way to get the files for this book is to download a [Zip
+archive from GitHub](https://github.com/AllenDowney/ModSimPy/archive/master.zip). 
+You will need a program like
+WinZip or gzip to unpack the Zip file. Make a note of the location of
+the files you download.
+
+If you download the Zip file, you can skip the rest of this section,
+which explains how to use Git.
 
 The code for this book is available from
 <https://github.com/AllenDowney/ModSimPy>, which is a **Git
@@ -107,7 +116,7 @@ GitHub account, you’ll need to create one.
 
 Use a browser to view the homepage of my repository at
 <https://github.com/AllenDowney/ModSimPy>. You should see a gray button
-in the upper right that says **Fork**. If you press it, GitHub will
+in the upper right that says [Fork]{}. If you press it, GitHub will
 create a copy of my repository that belongs to you.
 
 Now, the best way to download the files is to use a **Git client**,
@@ -134,7 +143,7 @@ working directory". On Windows, most likely you are in . On MacOS or
 Linux, you are probably in your home directory, .
 
 The next step is to copy files from your repository on GitHub to your
-computer; in Git vocabulary, this process is called **cloning**. Run
+computer; in Git vocabulary, this process is called [**cloning**]{}. Run
 this command:
 
 ```
@@ -143,11 +152,6 @@ git clone https://github.com/YourGitHubUserName/ModSimPy
 
 Of course, you should replace with your GitHub user name. After cloning,
 you should have a new directory called .
-
-If you don’t want to use Git, you can download my files in a Zip archive
-from <http://modsimpy.com/zip>. You will need a program like WinZip or
-gzip to unpack the Zip file. Make a note of the location of the files
-you download.
 
 Running Jupyter
 ---------------
@@ -159,17 +163,13 @@ about it at <https://jupyter.org>.
 To start Jupyter on macOS or Linux, open a Terminal; on Windows, open
 Git Bash. Use to “change directory" into the code directory in the
 repository:
-
 ```
 cd ModSimPy/code
 ```
-
 Then launch the Jupyter notebook server:
-
 ```
 jupyter notebook
 ```
-
 Jupyter should open a window in a browser, and you should see the list
 of notebooks in my repository. Click on the first notebook, and follow
 the instructions to run the first few “cells". The first time you run a
@@ -177,7 +177,7 @@ notebook, it might take several seconds to start, while some Python
 files get initialized. After that, it should run faster.
 
 Feel free to read through the notebook, but it might not make sense
-until you read Chapter 1.
+until you read Chapter 1.
 
 You can also launch Jupyter from the Start menu on Windows, the Dock on
 macOS, or the Anaconda Navigator on any system. If you do that, Jupyter
