@@ -822,7 +822,7 @@ The result is the same either way, but the second version is more versatile.
 
 \section{Defining functions}
 
-So far we have used functions defined in \py{modsim} and other libraries.  Now we're going to define our own functions.
+So far we have used functions defined in ModSim and other libraries.  Now we're going to define our own functions.
 
 \index{function}
 \index{defining functions}
@@ -854,8 +854,7 @@ function.  The name of the function is \py{bike_to_wellesley}.  The empty parent
 \index{body}
 \index{indentation}
 
-The next two lines are the {\bf body} of the function.  They have
-to be indented; by convention, the indentation is 4 spaces.
+The next two lines are the {\bf body} of the function.  They have to be indented; by convention, the indentation is 4 spaces.
 
 When you define a function, it has no immediate effect.  The body
 of the function doesn't run until you {\bf call} the function.
@@ -866,11 +865,9 @@ Here's how to call this function:
 bike_to_wellesley()
 \end{python}
 
-When you call the function, it runs the statements in the body, which update the variables of the {\tt bikeshare} object; you can check by displaying
-or plotting the new state.
+When you call the function, it runs the statements in the body, which update the variables of the {\tt bikeshare} object; you can check by displaying the new state.
 
 When you call a function, you have to include the parentheses.  If you leave them out, like this:
-\index{argument}
 \index{parentheses}
 
 \begin{python}
@@ -926,15 +923,15 @@ print(bikeshare.olin)
 print(bikeshare.wellesley)
 \end{python}
 
-\py{print} is a function, so it takes an argument in parentheses.  It can also take a sequence of arguments separated by commas, like this:
+When you call the \py{print} function, you can put a variable name in parentheses, as in the previous example, or you can provide a sequence of variables separated by commas, like this:
 
 \begin{python}
 print(bikeshare.olin, bikeshare.wellesley)
 \end{python}
 
-In this example, the two values appear on the same line, separated by a space.
+Python looks up the values of the variables and displays them; in this example, it displays two values on the same line, with a space between them.
 
-Print statements are also useful for debugging functions.  For example, we can add a print statement to \py{move_bike}, like this:
+Print statements are useful for debugging functions.  For example, we can add a print statement to \py{move_bike}, like this:
 
 \begin{python}
 def bike_to_wellesley():
@@ -945,22 +942,19 @@ def bike_to_wellesley():
 
 Each time we call this version of the function, it displays a message, which can help us keep track of what the program is doing.
 
+The message in this example is a {\bf string}, which is a sequence of letters and other symbols in quotes.
 \index{string}
-
-The argument of this \py{print} is a {\bf string}, which is a sequence of letters and other symbols in quotes.
-
 
 
 \section{If statements}
 
-The ModSim library provides a function called \py{flip} that takes
-as an argument a probability between 0 and 1:
+The ModSim library provides a function called \py{flip}; when you call it, you provide a value between 0 and 1; in this example, it's \py{0.7}:
 
 \begin{python}
 flip(0.7)
 \end{python}
 
-The result is one of two values: \py{True} with probability 0.7 or \py{False} with probability 0.3.  If you run this function 100 times, you should get \py{True} about 70 times and \py{False} about 30 times.  But the results are random, so they might differ from these expectations.
+The result is one of two values: \py{True} with probability 0.7 or \py{False} with probability 0.3.  If you run \py{flip} like this 100 times, you should get \py{True} about 70 times and \py{False} about 30 times.  But the results are random, so they might differ from these expectations.
 \index{flip}
 \index{True}
 \index{False}
@@ -986,7 +980,7 @@ if flip(0.5):
 
 If the result from \py{flip} is \py{True}, the program displays the string \py{'heads'}.  Otherwise it does nothing.
 
-The punctuation for if statements is similar to the punctuation for function definitions: the first line has to end with a colon, and the lines inside the if statement have to be indented.
+The punctuation for \py{if} statements is similar to the punctuation for function definitions: the first line has to end with a colon, and the lines inside the \py{if} statement have to be indented.
 \index{indentation}
 \index{else clause}
 
@@ -1032,6 +1026,7 @@ Then we can simulate a time step like this:
 step()
 \end{python}
 
+Even though there are no values in parentheses, we have to include them.
 
 
 \section{Parameters}
@@ -1060,7 +1055,7 @@ step(0.5, 0.33)
 \end{python}
 
 The values you provide when you call the function are called {\bf arguments}.
-The arguments, \py{0.5} and \py{0.33}, get assigned to the parameters, \py{p1} and \py{p2}, in order.  So running this function has the same effect as:
+The arguments, \py{0.5} and \py{0.33} in this example, get assigned to the parameters, \py{p1} and \py{p2}, in order.  So running this function has the same effect as:
 
 \begin{python}
 p1 = 0.5
@@ -1073,7 +1068,9 @@ if flip(p2):
     bike_to_olin()
 \end{python}
 
-The advantage of using parameters is that you can call the same function many times, providing different arguments each time.  Adding parameters to a function is called {\bf generalization}, because it makes the function more general, that is, less specific.
+The advantage of using parameters is that you can call the same function many times, providing different arguments each time.  
+
+Adding parameters to a function is called {\bf generalization}, because it makes the function more general, that is, less specialized.
 
 \index{generalization}
 
@@ -1090,7 +1087,7 @@ for i in range(4):
     bike_to_wellesley()
 \end{python}
 
-The punctuation here should look familiar; the first line ends with a colon, and the lines inside the for loop are indented.  The other elements of the for loop are:
+The punctuation here should look familiar; the first line ends with a colon, and the lines inside the \py{for} loop are indented.  The other elements of the loop are:
 \index{range}
 
 \begin{itemize}
