@@ -3,7 +3,7 @@ Text and supporting code for Modeling and Simulation in Python
 
 You can run the code from the repository in a browser by pressing the Binder button below.
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?filepath=notebooks)
 
 
 *Modeling and Simulation in Python* is an introduction to physical modeling using a computational approach.  It is organized in three parts:
