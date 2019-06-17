@@ -2163,7 +2163,7 @@ results = run_simulation1(system)
 plot_results(census, un, results, 'Constant growth model')
 \end{python}
 
-The results are the same as Figure~\ref{chap03-fig02}.
+The results are the same as Figure~\ref{chap05-fig02}.
 
 It might not be obvious that using functions and \py{System} objects is a big improvement, and for a simple model that we run only once, maybe it's not.  But as we work with more complex models, and when we run many simulations with different parameters, we'll see that the organization of the code makes a big difference.
 
@@ -2261,7 +2261,7 @@ results = run_simulation(system, update_func1)
 
 Passing a function as an argument is the same as passing any other value.  The argument, which is \py{update_func1} in this example, gets assigned to the parameter, which is called \py{update_func}.  Inside \py{run_simulation}, we can run \py{update_func} just like any other function.
 
-The loop in \py{run_simulation} calls \py{update_func1} once for each year between \py{t_0} and \py{t_end-1}.  The result is the same as Figure~\ref{chap03-fig03}.
+The loop in \py{run_simulation} calls \py{update_func1} once for each year between \py{t_0} and \py{t_end-1}.  The result is the same as Figure~\ref{chap06-fig01}.
 
 
 \section{Combining birth and death}
@@ -2288,7 +2288,7 @@ And here's how we run it:
 results = run_simulation(system, update_func2)
 \end{python}
 
-Again, the result is the same as Figure~\ref{chap03-fig03}.
+Again, the result is the same as Figure~\ref{chap06-fig01}.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap06.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -2582,7 +2582,7 @@ And run the model:
 results = run_simulation(system, update_func_quad)
 \end{python}
 
-We have already seen the results in Figure~\ref{chap03-fig04}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
+We have already seen the results in Figure~\ref{chap07-fig01}.  Now, to generate a projection, the only thing we have to change is \py{t_end}:
 
 \begin{python}
 system.t_end = 2250
@@ -2832,7 +2832,7 @@ But there are several things we can do with analysis that are harder or impossib
 
 \begin{itemize}
 
-\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap03-fig05}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{equilibrium}, we get the general result that $K=-\alpha/\beta$.
+\item With analysis we can sometimes compute, exactly and efficiently, a value that we could only approximate, less efficiently, with simulation.  For example, in Figure~\ref{chap07-fig02}, we can see that net growth goes to zero near 14 billion, and we could estimate carrying capacity using a numerical search algorithm (more about that later).  But with the analysis in Section~\ref{equilibrium}, we get the general result that $K=-\alpha/\beta$.
 
 \item Analysis often provides ``computational shortcuts", that is, the ability to jump forward in time to compute the state of a system many time steps in the future without computing the intervening states.
 
@@ -3857,6 +3857,12 @@ For comparison, we can run the same model without immunization and plot the resu
 
 Without immunization, almost 47\% of the population gets infected at some point.  With 10\% immunization, only 31\% gets infected.  That's pretty good.
 
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap12-fig02.pdf}}
+\caption{Fraction of the population infected as a function of immunization rate.}
+\label{chap12-fig02}
+\end{figure} 
+
 Now let's see what happens if we administer more vaccines.  This following function sweeps a range of immunization rates:
 
 \index{sweep}
@@ -3883,17 +3889,11 @@ Figure~\ref{chap12-fig02} shows a plot of the \py{SweepSeries}.  Notice that the
 
 As the immunization rate increases, the number of infections drops steeply.  If 40\% of the students are immunized, fewer than 4\% get sick.  That's because immunization has two effects: it protects the people who get immunized (of course) but it also protects the rest of the population. 
 
-\begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap12-fig02.pdf}}
-\caption{Fraction of the population infected as a function of immunization rate.}
-\label{chap12-fig02}
-\end{figure} 
-
 Reducing the number of ``susceptibles" and increasing the number of ``resistants" makes it harder for the disease to spread, because some fraction of contacts are wasted on people who cannot be infected.  This phenomenon is called {\bf herd immunity}, and it is an important element of public health (see \url{http://modsimpy.com/herd}).
 
 \index{herd immunity}
 
-The steepness of the curve in Figure~\ref{chap05-fig03} is a blessing and a curse.  It's a blessing because it means we don't have to immunize everyone, and vaccines can protect the ``herd" even if they are not 100\% effective.
+The steepness of the curve in Figure~\ref{chap12-fig02} is a blessing and a curse.  It's a blessing because it means we don't have to immunize everyone, and vaccines can protect the ``herd" even if they are not 100\% effective.
 
 But it's a curse because a small decrease in immunization can cause a big increase in infections.  In this example, if we drop from 80\% immunization to 60\%, that might not be too bad.  But if we drop from 40\% to 20\%, that would trigger a major outbreak, affecting more than 15\% of the population.  For a serious disease like measles, just to name one, that would be a public health catastrophe.
 
@@ -4169,7 +4169,7 @@ for gamma in gamma_array:
 \label{chap13-fig02}
 \end{figure}
 
-Figure~\ref{chap06-fig13} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even a low contact rate (\py{beta}) results in an epidemic.
+Figure~\ref{chap13-fig02} shows the results.  When \py{gamma} is low, the recovery rate is low, which means people are infectious longer.  In that case, even a low contact rate (\py{beta}) results in an epidemic.
 
 When \py{gamma} is high, \py{beta} has to be even higher to get things going.
 
