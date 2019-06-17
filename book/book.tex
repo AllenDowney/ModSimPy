@@ -3317,7 +3317,9 @@ You should take my instructions as suggestions; if you want to try something dif
 
 \section{Tree growth}
 
-This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom, available from \url{http://modsimpy.com/trees}.
+This case study is based on ``Height-Age Curves for Planted Stands of Douglas Fir, with Adjustments for Density", a working paper by Flewelling, Collier, Gonyea, Marshall, and Turnblom.
+
+% TODO: Add paper to GitHub \url{http://modsimpy.com/trees}
 
 It provides ``site index curves", which are curves that show the expected height of the tallest tree in a stand of Douglas firs as a function of age, for a stand where the trees are the same age.
 
@@ -4131,7 +4133,7 @@ The first line uses string operations to assemble a label for the plotted line:
 
 % TODO: Make the gamma symbol appear in the line below and in the figures.
 
-If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'γ = 0.25'}.
+If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap13-fig01.pdf}}
@@ -4212,7 +4214,7 @@ With the results in a \py{SweepFrame}, we can plot each column like this:
 
 \begin{python}
 for gamma in gamma_array:
-    label = 'γ = ' + str(gamma)
+    label = 'gamma = ' + str(gamma)
     plot(frame[gamma], label=label)
 \end{python}
 
