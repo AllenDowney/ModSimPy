@@ -86,7 +86,7 @@ conda install -c unidata pint
 ```
 And to install the ModSim library, run this command:
 ```
-pip install modsim
+pip install modsimpy
 ```
 That should be everything you need.
 

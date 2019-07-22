@@ -13,7 +13,7 @@
 \newcommand{\thetitle}{Modeling and Simulation in Python}
 \newcommand{\thesubtitle}{}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{3.4.0}
+\newcommand{\theversion}{3.4.1}
 
 
 %%%% Both LATEX and PLASTEX
@@ -359,7 +359,7 @@ These tools let you work on more interesting programs sooner, but there are some
 
 I have tried to mitigate these problems by providing a library, called \py{modsim}, that makes it easier to get started with these tools, and provides some additional capabilities.
 
-\index{modsim library}
+\index{ModSim library}
 
 Some features in the ModSim library are like training wheels; at some point you will probably stop using them and start working with the underlying libraries directly.  Other features you might find useful the whole time you are working through the book, and later.
 
@@ -431,13 +431,13 @@ conda install beautifulsoup4 lxml html5lib pytables
 Some of these packages might already be installed.  To install Pint, run this command:
 
 \begin{code}
-conda install -c unidata pint
+conda install -c conda-forge pint
 \end{code}
 
 And to install the ModSim library, run this command:
 
 \begin{code}
-pip install modsim
+pip install modsimpy
 \end{code}
 
 That should be everything you need.
@@ -1114,7 +1114,7 @@ which moves one bike at a time from Olin to Wellesley.
 When we run a simulation, we usually want to save the results for later analysis.  The ModSim library provides a \py{TimeSeries} object for this purpose.  A \py{TimeSeries} contains a sequence of time stamps and a corresponding sequence of values.  In this example, the time stamps are integers representing minutes, and the values are the number of bikes at one location.
 
 %TODO: index modsim library functions
-\index{modsim library}
+\index{ModSim library}
 \index{TimeSeries}
 
 We can create a new, empty \py{TimeSeries} like this:
@@ -2198,7 +2198,7 @@ system.death_rate = 0.01
 system.birth_rate = 0.027
 \end{python}
 
-Then I ran the simulation and and plotted the results:
+Then I ran the simulation and plotted the results:
 
 \begin{python}
 results = run_simulation2(system)
@@ -4131,7 +4131,8 @@ The first line uses string operations to assemble a label for the plotted line:
 
 \end{itemize}
 
-% TODO: Make the gamma symbol appear in the line below and in the figures.
+% TODO: Consider using Greek letters in the code and figures.  But in that case, also
+% figure out how to get them through LaTeX intact.
 
 If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
 
@@ -5258,6 +5259,10 @@ A \py{Params} object is similar to a \py{System} or \py{State} object; it is use
 
 \index{State object}
 \index{System object}
+\index{Params object}
+
+% TODO: I introduce Params here because I use it with leastsq, but since we aren't
+% using leastsq here any more, we have the option of postponing Params
 
 We can pass \py{params} and \py{data} to \py{make_system}:
 
@@ -5564,6 +5569,8 @@ params = Params(G0 = 290,
                 k2 = 0.02,
                 k3 = 1e-05)
 \end{python}
+
+\py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
 
 Chapter~\ref{chap18} also introduces \py{run_ode_solver} which computes numerical solutions to differential equations.
 
@@ -5999,9 +6006,10 @@ Now we are ready to add air resistance to the model.
 \section{Implementation}
 \label{penny_drag}
 
-As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Params} object to contain the quantities we need to make a \py{System} object.  \py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
+As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Params} object to contain the quantities we need to make a \py{System} object.  
 
-% TODO: This is not actually the first use of Params
+% TODO: If we take Params out of Chapter 18, we have to introduce it here
+%\py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
 
 \index{Params object}
 
@@ -6313,8 +6321,8 @@ Next we need a function to compute drag force:
 def drag_force(V, system):
     rho, C_d, area = system.rho, system.C_d, system.area
     
-    mag = -rho * V.mag**2 * C_d * area / 2
-    direction = V.hat()
+    mag = rho * V.mag**2 * C_d * area / 2
+    direction = -V.hat()
     f_drag = direction * mag
     return f_drag
 \end{python}
@@ -6622,16 +6630,8 @@ The return value from \py{maximize} is an \py{ModSimSeries} that contains the re
 \index{ModSimSeries}
 
 For these parameters, the optimal angle is about \SI{42}{\degree}, which yields a range of \SI{103}{\meter}.
-<<<<<<< HEAD
 
 \py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
-
-=======
-
-\py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
-
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
-% TODO: update this link to point to Golden section search
 
 
 \section{Finishing off the problem}
