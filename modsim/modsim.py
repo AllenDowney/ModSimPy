@@ -1905,3 +1905,38 @@ def plot_segment(A, B, **options):
     xs = A.x, B.x
     ys = A.y, B.y
     plot(xs, ys, **options)
+
+from time import sleep
+from IPython.display import clear_output
+
+def animate(results, draw_func, interval=None):
+    """Animate the automaton.
+
+    interval: time between frames in seconds
+    """
+    plt.figure()
+    try:
+        for t, state in results.iterrows():
+            draw_func(state, t)
+            plt.show()
+            if interval:
+                sleep(interval)
+            clear_output(wait=True)
+        draw_func(state, t)
+        plt.show()
+    except KeyboardInterrupt:
+        pass
+
+def set_xlim(seq):
+    """Set the limits of the x-axis.
+
+    seq: sequence of numbers or Quantities
+    """
+    plt.xlim(magnitude(min(seq)), magnitude(max(seq)))
+
+def set_ylim(seq):
+    """Set the limits of the y-axis.
+
+    seq: sequence of numbers or Quantities
+    """
+    plt.ylim(magnitude(min(seq)), magnitude(max(seq)))
