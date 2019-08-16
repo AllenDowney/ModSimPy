@@ -82,7 +82,7 @@ conda install jupyterlab pandas seaborn sympy beautifulsoup4 lxml html5lib pytab
 ```
 To install Pint, run this command:
 ```
-conda install -c unidata pint
+conda install -c conda-forge pint
 ```
 And to install the ModSim library, run this command:
 ```
@@ -164,7 +164,7 @@ To start Jupyter on macOS or Linux, open a Terminal; on Windows, open
 Git Bash. Use to “change directory" into the code directory in the
 repository:
 ```
-cd ModSimPy/code
+cd ModSimPy/notebooks
 ```
 Then launch the Jupyter notebook server:
 ```
