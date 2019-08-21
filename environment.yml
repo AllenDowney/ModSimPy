@@ -12,10 +12,10 @@ dependencies:
   - scipy
   - pint
   - sympy
-  - lxml>=4.3
-  - html5lib>=1.0
-  - beautifulsoup4>=4.7
-  - pytables>=3.5
+  - lxml
+  - html5lib
+  - beautifulsoup4
+  - tables
   - pip
   - pip:
     - modsimpy
