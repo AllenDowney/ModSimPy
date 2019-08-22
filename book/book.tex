@@ -2015,7 +2015,7 @@ The next step is to use this estimate to simulate population growth since 1950.
 
 \section{Simulation}
 
-Our simulation will start with the observed population in 1950, \py{p0}, and add \py{annual_growth} each year.  To store the results, we'll use a \py{TimeSeries} object:
+Our simulation will start with the observed population in 1950, \py{p_0}, and add \py{annual_growth} each year.  To store the results, we'll use a \py{TimeSeries} object:
 
 \index{TimeSeries}
 
@@ -2978,7 +2978,7 @@ The result is the equation
 %
 \[ f{\left (t \right )} = C_{1} \exp(\alpha t) \]
 %
-This is the {\bf general solution}, which still contains an unspecified constant, $C_1$.  To get the {\bf particular solution} where $f(0) = p_0$, we substitute \py{p0} for \py{C1}.  First, we have to create two more symbols:
+This is the {\bf general solution}, which still contains an unspecified constant, $C_1$.  To get the {\bf particular solution} where $f(0) = p_0$, we substitute \py{p_0} for \py{C1}.  First, we have to create two more symbols:
 
 \index{general solution}
 \index{particular solution}
@@ -4131,8 +4131,7 @@ The first line uses string operations to assemble a label for the plotted line:
 
 \end{itemize}
 
-% TODO: Consider using Greek letters in the code and figures.  But in that case, also
-% figure out how to get them through LaTeX intact.
+% TODO: Make the gamma symbol appear in the line below and in the figures.
 
 If the value of \py{gamma} is \py{0.25}, the value of \py{label} is the string \py{'gamma = 0.25'}.
 
@@ -5570,8 +5569,6 @@ params = Params(G0 = 290,
                 k3 = 1e-05)
 \end{python}
 
-\py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
-
 Chapter~\ref{chap18} also introduces \py{run_ode_solver} which computes numerical solutions to differential equations.
 
 \py{run_ode_solver} uses a slope function, which is similar to an update function:
@@ -6006,10 +6003,9 @@ Now we are ready to add air resistance to the model.
 \section{Implementation}
 \label{penny_drag}
 
-As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Params} object to contain the quantities we need to make a \py{System} object.  
+As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a \py{Params} object to contain the quantities we need to make a \py{System} object.  \py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
 
-% TODO: If we take Params out of Chapter 18, we have to introduce it here
-%\py{Params} objects are similar to \py{System} and \py{State} objects; in fact, all three have the same capabilities.  I have given them different names to document the different roles they play.
+% TODO: This is not actually the first use of Params
 
 \index{Params object}
 
@@ -6321,8 +6317,8 @@ Next we need a function to compute drag force:
 def drag_force(V, system):
     rho, C_d, area = system.rho, system.C_d, system.area
     
-    mag = rho * V.mag**2 * C_d * area / 2
-    direction = -V.hat()
+    mag = -rho * V.mag**2 * C_d * area / 2
+    direction = V.hat()
     f_drag = direction * mag
     return f_drag
 \end{python}
@@ -6630,8 +6626,16 @@ The return value from \py{maximize} is an \py{ModSimSeries} that contains the re
 \index{ModSimSeries}
 
 For these parameters, the optimal angle is about \SI{42}{\degree}, which yields a range of \SI{103}{\meter}.
+<<<<<<< HEAD
 
 \py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
+
+=======
+
+\py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
+
+>>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
+% TODO: update this link to point to Golden section search
 
 
 \section{Finishing off the problem}
