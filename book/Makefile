@@ -16,6 +16,9 @@ PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
 %.pdf: %.ps
 	ps2pdf $<
 
+# this book uses siunitx, which you can install with apt
+# sudo apt-get install texlive-science 
+
 all:	book.tex
 	pdflatex --shell-escape book
 	makeindex book.idx
@@ -42,11 +45,11 @@ hevea:
 	mv ModSimPy*.png *motif.gif html
 
 DEST = /home/downey/public_html/greent/ModSimPy/
-DIST_FILES = ModSimPy.pdf
+PDF = ModSimPy3.pdf
 
 distrib:
-	cp book.pdf ModSimPy.pdf
-	rsync -a $(DIST_FILES) $(DEST)
+	cp book.pdf $(PDF)
+	rsync -a $(PDF) $(DEST)
 	#chmod -R o+r $(DEST)/*
 	cd /home/downey/public_html/greent; sh back
 

@@ -4447,7 +4447,6 @@ Probably neither.  When the contact number is small, the early progress of the e
 For contact numbers near or less than 1, we might need a more detailed model.  But for higher contact numbers the SIR model might be good enough.
 
 \section{Estimating contact number}
-<<<<<<< HEAD
 
 Figure~\ref{chap14-fig02} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
 
@@ -4455,16 +4454,7 @@ Well, in theory we can.  In practice, it might not work very well, because of th
 
 On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is nearly flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything close to 90\% of the population.
 
-=======
-
-Figure~\ref{chap14-fig02} shows that if we know the contact number, we can compute the fraction infected.  But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.
-
-Well, in theory we can.  In practice, it might not work very well, because of the shape of the curve.  When the contact number is near 2, the curve is quite steep, which means that small changes in $c$ yield big changes in the number of infections.  If we observe that the total fraction infected is anywhere from 20\% to 80\%, we would conclude that $c$ is near 2.
-
-On the other hand, for larger contact numbers, nearly the entire population is infected, so the curve is nearly flat.  In that case we would not be able to estimate $c$ precisely, because any value greater than 3 would yield effectively the same results.  Fortunately, this is unlikely to happen in the real world; very few epidemics affect anything close to 90\% of the population.
-
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
-So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd resistance.  As we saw in Chapter~\ref{chap12}, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
+So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd immunity.  As we saw in Chapter~\ref{chap12}, if we know the parameters of the model, we can use it to evaluate possible interventions.  And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.
 
 Before you go on, you might want to read the notebook for this chapter, \py{chap14.ipynb}, and work on the exercises.  For instructions on downloading and running the code, see Section~\ref{code}.
 
@@ -4914,15 +4904,9 @@ mix_results = run_and_set(mix_first)
 \end{python}
 
 The final temperature is \SI{61.4}{\celsius} which is still warm enough to be enjoyable.  Would we do any better if we added the milk last?
-<<<<<<< HEAD
 
 I'll simulate the coffee and milk separately, and then mix them:
 
-=======
-
-I'll simulate the coffee and milk separately, and then mix them:
-
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
 \begin{python}
 coffee_results = run_and_set(coffee)
 milk_results = run_and_set(milk)
@@ -5197,11 +5181,7 @@ Before we are ready to implement the model, there's one problem we have to solve
 \label{chap17-fig02}
 \end{figure}
 
-<<<<<<< HEAD
 The ModSim library provides a function named \py{interpolate}, which is a wrapper for the SciPy function \py{interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
-=======
-The \py{modsim} library provides a function named \py{interpolate}, which is a wrapper for the SciPy function \py{interp1d}.  It takes any kind of \py{Series} as a parameter, including \py{TimeSeries} and \py{SweepSeries}, and returns a function.  That's right, I said it returns a {\em function}.
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
 
 \index{function!as return value}
 \index{Series}
@@ -6567,11 +6547,7 @@ def event_func(state, t, system):
 
 \section{Finding the range}
 
-<<<<<<< HEAD
 Suppose we want to find the launch angle that maximizes {\bf range}, that is, the distance the ball travels in the air before landing.   We'll use a function in the ModSim library, \py{maximize}, which takes a function and finds its maximum.
-=======
-Suppose we want to find the launch angle that maximizes {\bf range}, that is, the distance the ball travels in the air before landing.   We'll use a function in the \py{modsim} library, \py{maximize}, which takes a function and finds its maximum.
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
 
 The function we pass to \py{maximize} should take launch angle and a \py{params} object, and return range:
 
@@ -6632,15 +6608,9 @@ The return value from \py{maximize} is an \py{ModSimSeries} that contains the re
 \index{ModSimSeries}
 
 For these parameters, the optimal angle is about \SI{42}{\degree}, which yields a range of \SI{103}{\meter}.
-<<<<<<< HEAD
 
 \py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
 
-=======
-
-\py{maximize} uses a golden section search, which you can read about at \url{http://modsimpy.com/minimize}).
-
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
 % TODO: update this link to point to Golden section search
 
 
@@ -7367,7 +7337,6 @@ With that, your toolkit is complete.  Chapter~\ref{chap24} and Chapter~\ref{chap
 
 \section{Bungee jumping}
 \label{bungee}
-<<<<<<< HEAD
 
 Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
 
@@ -7387,27 +7356,6 @@ Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  W
 
 \end{itemize}
 
-=======
-
-Suppose you want to set the world record for the highest ``bungee dunk", which is a stunt in which a bungee jumper dunks a cookie in a cup of tea at the lowest point of a jump.  An example is shown in this video: \url{http://modsimpy.com/dunk}.
-
-Since the record is \SI{70}{\meter}, let's design a jump for \SI{80}{\meter}.  We'll start with the following modeling assumptions:
-
-\begin{itemize}
-
-\item  Initially the bungee cord hangs from a crane with the attachment point \SI{80}{\meter} above a cup of tea.
-
-\item Until the cord is fully extended, it applies no force to the jumper.  It turns out this might not be a good assumption; we will revisit it.
-
-\item After the cord is fully extended, it obeys Hooke's Law; that is, it applies a force to the jumper proportional to the extension of the cord beyond its resting length.  See \url{http://modsimpy.com/hooke}. 
-
-\item The mass of the jumper is \SI{75}{\kilogram}.
-
-\item The jumper is subject to drag force so that their terminal velocity is \SI{60}{\meter \per \second}.
-
-\end{itemize}
-
->>>>>>> 4c199a00d3ede84f44f287deaa12a8413f4efa6b
 Our objective is to choose the length of the cord, \py{L}, and its spring constant, \py{k}, so that the jumper falls all the way to the tea cup, but no farther!
 
 In the repository for this book, you will find a notebook, \py{bungee.ipynb}, which contains starter code and exercises for this case study.
@@ -7708,7 +7656,7 @@ In the repository for this book, you will find a notebook, \py{yoyo.ipynb}, whic
 \backmatter
 \printindex
 
-\afterpage{\blankpage}
+%\afterpage{\blankpage}
 
 
 \end{document}
