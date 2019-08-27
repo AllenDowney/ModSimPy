@@ -15,7 +15,7 @@ dependencies:
   - lxml
   - html5lib
   - beautifulsoup4
-  - tables
+  - pytables
   - pip
   - pip:
     - modsimpy
