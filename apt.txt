@@ -1,0 +1,5 @@
+texlive-latex-base
+texlive-latex-recommended
+texlive-xetex
+dvipng
+ghostscript
