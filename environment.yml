@@ -16,12 +16,7 @@ dependencies:
   - html5lib
   - beautifulsoup4
   - pytables
+  - yapf
   - pip
   - pip:
-    - modsimpy
-  
-  
-
-
-
-
+      - modsimpy
