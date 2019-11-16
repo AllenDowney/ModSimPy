@@ -3,8 +3,8 @@ LATEX = latex
 DVIPS = dvips
 
 PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
-           -dCompressPages=true -dUseFlateCompression=true  \
            -dEmbedAllFonts=true -dSubsetFonts=true -dMaxSubsetPct=100
+#           -dCompressPages=true -dUseFlateCompression=true  \
 
 
 %.dvi: %.tex
@@ -14,12 +14,19 @@ PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
 	$(DVIPS) -o $@ $<
 
 %.pdf: %.ps
-	ps2pdf $(PDFFLAGS) $<
+	ps2pdf $<
+
+# this book uses siunitx, which you can install with apt
+# sudo apt-get install texlive-science 
 
 all:	book.tex
 	pdflatex --shell-escape book
 	makeindex book.idx
 	evince book.pdf
+
+ps:
+	pdf2ps book.pdf
+	# and then upload to https://www.ps2pdf.com/convert-ps-to-pdf
 
 hevea:
 	#sed 's/\(figs\/[^.]*\).\(pdf\|png\)/\1.eps/' 
@@ -38,11 +45,11 @@ hevea:
 	mv ModSimPy*.png *motif.gif html
 
 DEST = /home/downey/public_html/greent/ModSimPy/
-DIST_FILES = ModSimPy.pdf
+PDF = ModSimPy3.pdf
 
 distrib:
-	cp book.pdf ModSimPy.pdf
-	rsync -a $(DIST_FILES) $(DEST)
+	cp book.pdf $(PDF)
+	rsync -a $(PDF) $(DEST)
 	#chmod -R o+r $(DEST)/*
 	cd /home/downey/public_html/greent; sh back
 
@@ -72,5 +79,9 @@ oreilly:
 clean:
 	rm -f *~ *.aux *.log *.dvi *.idx *.ilg *.ind *.toc
 
+split:
+	cp book.pdf ModSimPy.pdf
+	rm -f ModSimPyChapters/*
+	~/Downloads/sejda-console-3.2.51/bin/sejda-console splitbybookmarks -f ModSimPy.pdf -l 1 -o ModSimPyChapters
 
 
