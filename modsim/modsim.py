@@ -1692,7 +1692,10 @@ def Vector(*args, units=None):
 
     if found_units:
         # if there are units, remove them
-        args = [magnitude(elt) for elt in args]
+        args = [float(magnitude(elt)) for elt in args]
+    else:
+        # otherwise, just ensure that all elements are floats (to avoid overflow issues in numpy)
+        args = [float(elt) for elt in args]
 
     # if the units keyword is provided, it overrides the units in args
     if units is not None:
