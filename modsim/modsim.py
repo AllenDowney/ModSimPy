@@ -1910,8 +1910,10 @@ from time import sleep
 from IPython.display import clear_output
 
 def animate(results, draw_func, interval=None):
-    """Animate the automaton.
+    """Animate results from a simulation.
 
+    results: TimeFrame
+    draw_func: function that draws state
     interval: time between frames in seconds
     """
     plt.figure()
