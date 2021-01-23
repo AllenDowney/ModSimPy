@@ -1,9 +1,6 @@
 # ModSimPython
-Text and supporting code for Modeling and Simulation in Python
 
-You can run the code from the repository in a browser by pressing the Binder button below.
-
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?filepath=notebooks)
+Text and supporting code for *Modeling and Simulation in Python*.
 
 
 *Modeling and Simulation in Python* is an introduction to physical modeling using a computational approach.  It is organized in three parts:
@@ -23,8 +20,78 @@ Python is an ideal programming language for this material.  It is a good first l
 [This](http://greenteapress.com/wp/modsimpy/) and other Free Books by Allen Downey are available from [Green Tea Press](http://greenteapress.com/wp).
 
 
-Getting started
----------------
+## Getting started
+
+There are three ways to work with the code:
+
+* You can run the notebooks on Colab.
+
+* You can run them on Binder.
+
+* You can download them and run them in your own Jupyter environment.
+
+### Colab
+
+Use these links to run the notebooks on Colab:
+
+* [chap01.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap01.ipynb)
+
+* [chap02.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap02.ipynb)
+
+* [chap03.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap03.ipynb)
+
+* [chap04.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap04.ipynb)
+
+* [chap05.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap05.ipynb)
+
+* [chap06.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap06.ipynb)
+
+* [chap07.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap07.ipynb)
+
+* [chap08.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap08.ipynb)
+
+* [chap09.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap09.ipynb)
+
+* [chap10.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap10.ipynb)
+
+* [chap11.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap11.ipynb)
+
+* [chap12.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap12.ipynb)
+
+* [chap13.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap13.ipynb)
+
+* [chap13ode.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap13ode.ipynb)
+
+* [chap14.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap14.ipynb)
+
+* [chap15.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap15.ipynb)
+
+* [chap16.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap16.ipynb)
+
+* [chap17.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap17.ipynb)
+
+* [chap18.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap18.ipynb)
+
+* [chap20.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap20.ipynb)
+
+* [chap21.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap21.ipynb)
+
+* [chap22.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap22.ipynb)
+
+* [chap23.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap23.ipynb)
+
+* [chap24.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap24.ipynb)
+
+* [chap25.ipynb](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/colab/chap25.ipynb)
+
+### Binder
+
+You can run the code from the repository in a browser by pressing the Binder button below.
+
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?filepath=notebooks)
+
+
+### Install Jupyter
 
 To run the examples and work on the exercises in this book, you have to:
 
@@ -38,11 +105,9 @@ To run the examples and work on the exercises in this book, you have to:
     text.
 
 The next three sections provide details for these steps. I wish there
-were an easier way to get started; it’s regrettable that you have to do
-so much work before you write your first program. Be persistent!
+were an easier way to get started; it’s regrettable that you have to do so much work before you write your first program. Be persistent!
 
-Installing Python
------------------
+#### Installing Python
 
 You might already have Python installed on your computer, but you might
 not have the latest version. To use the code in this book, you need
@@ -59,7 +124,7 @@ all files in your home directory, so you don’t need administrator (root)
 permission to install it, and if you have a version of Python already,
 Anaconda will not remove or modify it.
 
-Start at [the Anaconda download page](https://www.anaconda.com/distribution/#download-section). 
+Start at [the Anaconda download page](https://www.anaconda.com/distribution/#download-section).
 Download the installer for
 your system and run it. You don’t need administrative privileges to
 install Anaconda, so I recommend you run the installer as a normal user,
@@ -90,11 +155,10 @@ pip install modsimpy
 ```
 That should be everything you need.
 
-Copying my files
-----------------
+#### Copying my files
 
 The simplest way to get the files for this book is to download a [Zip
-archive from GitHub](https://github.com/AllenDowney/ModSimPy/archive/master.zip). 
+archive from GitHub](https://github.com/AllenDowney/ModSimPy/archive/master.zip).
 You will need a program like
 WinZip or gzip to unpack the Zip file. Make a note of the location of
 the files you download.
@@ -153,8 +217,7 @@ git clone https://github.com/YourGitHubUserName/ModSimPy
 Of course, you should replace with your GitHub user name. After cloning,
 you should have a new directory called .
 
-Running Jupyter
----------------
+#### Running Jupyter
 
 The code for each chapter, and starter code for the exercises, is in
 Jupyter notebooks. If you have not used Jupyter before, you can read
