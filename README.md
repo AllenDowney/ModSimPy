@@ -1,7 +1,4 @@
-# ModSimPython
-
-Text and supporting code for *Modeling and Simulation in Python*.
-
+# Modeling and Simulation in Python
 
 *Modeling and Simulation in Python* is an introduction to physical modeling using a computational approach.  It is organized in three parts:
 
