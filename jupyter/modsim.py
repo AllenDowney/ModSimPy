@@ -361,8 +361,6 @@ def run_odeint(system, slope_func, **options):
     return frame
 
 
-from scipy.integrate import solve_ivp
-
 def run_solve_ivp(system, slope_func, **options):
     """Computes a numerical solution to a differential equation.
 
@@ -406,7 +404,33 @@ def run_solve_ivp(system, slope_func, **options):
         logger.error(msg)
         raise (e)
 
-    # TODO: make dense solution the default
+    # get the list of event functions
+    events = options.get('events', [])
+
+    # if there's only one event function, put it in a list
+    try:
+        iter(events)
+    except TypeError:
+        events = [events]
+
+    for event_func in events:
+        # make events terminal unless otherwise specified
+        if not hasattr(event_func, 'terminal'):
+            event_func.terminal = True
+
+        # test the event function with the initial conditions
+        try:
+            event_func(t_0, system.init, system)
+        except Exception as e:
+            msg = """Before running scipy.integrate.solve_ivp, I tried
+                     running the event function you provided with the
+                     initial conditions in `system` and `t=t_0` and I got
+                     the following error:"""
+            logger.error(msg)
+            raise (e)
+
+    # get dense output unless otherwise specified
+    underride(options, dense_output=True)
 
     # run the solver
     bunch = solve_ivp(slope_func, [t_0, system.t_end], system.init,
@@ -416,8 +440,25 @@ def run_solve_ivp(system, slope_func, **options):
     y = bunch.pop("y")
     t = bunch.pop("t")
 
-    # pack the results into a TimeFrame
-    results = TimeFrame(y.T, index=t, columns=system.init.index)
+    # get the column names from `init`, if possible
+    if hasattr(system.init, 'index'):
+        columns = system.init.index
+    else:
+        columns = range(len(system.init))
+
+    # evaluate the results at 51 equally-spaced points
+    if options.get('dense_output', False):
+        t_end = t[-1]
+        t_array = linspace(t_0, t_end, 51)
+        y_array = bunch.sol(t_array)
+
+        # pack the results into a TimeFrame
+        results = TimeFrame(y_array.T, index=t_array,
+                        columns=columns)
+    else:
+        results = TimeFrame(y.T, index=t,
+                        columns=columns)
+
     return results, bunch
 
 
@@ -620,7 +661,7 @@ def crossings(series, value):
 
     returns: sequence of labels
     """
-    values = magnitudes(series - value)
+    values = series.values - value
     interp = InterpolatedUnivariateSpline(series.index, values)
     return interp.roots()
 
@@ -860,9 +901,9 @@ def plot(x, y=None, **options):
         x.plot(**options)
 
 
-def State(**kwargs):
-    """Contains state variables and their values."""
-    return pd.Series(kwargs)
+def State(**variables):
+    """Contains the values of state variables."""
+    return pd.Series(variables)
 
 
 class System(SimpleNamespace):
@@ -885,66 +926,16 @@ def SweepFrame(*args, **kwargs):
     return pd.DataFrame(*args, **kwargs)
 
 
-def Vector(*args, units=None):
-    """Make a ModSimVector.
-
-    args: can be a single argument or sequence
-    units: Pint Unit object or Quantity
-
-    If there's only one argument, it should be a sequence.
-
-    Otherwise, the arguments are treated as coordinates.
-
-    returns: ModSimVector
-    """
-    if len(args) == 1:
-        args = args[0]
-
-        # if it's a series, pull out the values
-        if isinstance(args, Series):
-            args = args.values
-
-    # see if any of the arguments have units; if so, save the first one
-    for elt in args:
-        found_units = getattr(elt, "units", None)
-        if found_units:
-            break
-
-    if found_units:
-        # if there are units, remove them
-        args = [float(magnitude(elt)) for elt in args]
-    else:
-        # otherwise, just ensure that all elements are floats (to avoid overflow issues in numpy)
-        args = [float(elt) for elt in args]
-
-    # if the units keyword is provided, it overrides the units in args
-    if units is not None:
-        found_units = units
-
-    return ModSimVector(args, found_units)
-
-
 ## Vector functions (should work with any sequence)
 
-
 def vector_mag(v):
-    """Vector magnitude with units.
-
-    returns: number or Quantity
-    """
-    a = magnitude(v)
-    units = get_first_unit(v)
-    return np.sqrt(np.dot(a, a)) * units
+    """Vector magnitude."""
+    return np.sqrt(np.dot(v, v))
 
 
 def vector_mag2(v):
-    """Vector magnitude squared with units.
-
-    returns: number of Quantity
-    """
-    a = magnitude(v)
-    units = get_first_unit(v)
-    return np.dot(a, a) * units * units
+    """Vector magnitude squared."""
+    return np.dot(v, v)
 
 
 def vector_angle(v):
@@ -952,7 +943,7 @@ def vector_angle(v):
 
     Only works with 2-D vectors.
 
-    returns: number in radians
+    returns: angle in radians
     """
     assert len(v) == 2
     x, y = v
@@ -962,7 +953,7 @@ def vector_angle(v):
 def vector_polar(v):
     """Vector magnitude and angle.
 
-    returns: (number or quantity, number in radians)
+    returns: (number, angle in radians)
     """
     return vector_mag(v), vector_angle(v)
 
@@ -970,19 +961,12 @@ def vector_polar(v):
 def vector_hat(v):
     """Unit vector in the direction of v.
 
-    The result should have no units.
-
     returns: Vector or array
     """
-    # get the size of the vector
-    mag = vector_mag(v)
-
     # check if the magnitude of the Quantity is 0
-    if magnitude(mag) == 0:
-        if isinstance(v, ModSimVector):
-            return Vector(magnitude(v))
-        else:
-            return magnitude(np.asarray(v))
+    mag = vector_mag(v)
+    if mag == 0:
+        return v
     else:
         return v / mag
 
@@ -1004,9 +988,7 @@ def vector_dot(v, w):
 
     returns: number or Quantity
     """
-    a1 = magnitude(v)
-    a2 = magnitude(w)
-    return np.dot(a1, a2) * get_first_unit(v) * get_first_unit(w)
+    return np.dot(v, w)
 
 
 def vector_cross(v, w):
@@ -1014,21 +996,16 @@ def vector_cross(v, w):
 
     returns: number or Quantity for 2-D, Vector for 3-D
     """
-    a1 = magnitude(v)
-    a2 = magnitude(w)
-    res = np.cross(a1, a2)
+    res = np.cross(v, w)
 
-    if len(v) == 3 and (isinstance(v, ModSimVector) or isinstance(w, ModSimVector)):
-        return ModSimVector(res, get_first_unit(v) * get_first_unit(w))
+    if len(v) == 3:
+        return Vector(*res)
     else:
-        return res * get_first_unit(v) * get_first_unit(w)
+        return res
 
 
 def vector_proj(v, w):
     """Projection of v onto w.
-
-    Results has the units of v, but that might not make sense unless
-    v and w have the same units.
 
     returns: array or Vector with direction of w and units of v.
     """
@@ -1040,9 +1017,6 @@ def scalar_proj(v, w):
     """Returns the scalar projection of v onto w.
 
     Which is the magnitude of the projection of v onto w.
-
-    Results has the units of v, but that might not make sense unless
-    v and w have the same units.
 
     returns: scalar with units of v.
     """
@@ -1068,7 +1042,7 @@ def vector_diff_angle(v, w):
 
 
 class ModSimVector(Quantity):
-    """Represented as a Pint Quantity with a NumPy array
+    """Represented as an array of 2 or 3 elements.
 
     x, y, z, mag, mag2, and angle are accessible as attributes.
     """
@@ -1115,6 +1089,19 @@ class ModSimVector(Quantity):
     diff_angle = vector_diff_angle
 
 
+def Vector(x, y, z=None, **options):
+    """
+    """
+    if z is None:
+        return pd.Series(dict(x=x, y=y), **options)
+    else:
+        return pd.Series(dict(x=x, y=y, z=z), **options)
+
+mag = vector_mag
+angle = vector_angle
+hat = vector_hat
+
+
 def plot_segment(A, B, **options):
     """Plots a line segment between two Vectors.
 
@@ -1142,12 +1129,12 @@ def animate(results, draw_func, interval=None):
     plt.figure()
     try:
         for t, state in results.iterrows():
-            draw_func(state, t)
+            draw_func(t, state)
             plt.show()
             if interval:
                 sleep(interval)
             clear_output(wait=True)
-        draw_func(state, t)
+        draw_func(t, state)
         plt.show()
     except KeyboardInterrupt:
         pass
