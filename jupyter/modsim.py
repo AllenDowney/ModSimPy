@@ -30,12 +30,12 @@ from scipy.integrate import odeint
 from scipy.integrate import solve_ivp
 
 from types import SimpleNamespace
+from copy import copy
 
+#import pint
 
-import pint
-
-units = pint.UnitRegistry()
-Quantity = units.Quantity
+#units = pint.UnitRegistry()
+#Quantity = units.Quantity
 
 
 def flip(p=0.5):
@@ -153,9 +153,8 @@ def minimize_scalar(min_func, bounds, *args, **options):
         min_func(bounds[0], *args)
     except Exception as e:
         msg = """Before running scipy.integrate.minimize_scalar, I tried
-                 running the slope function you provided with the
-                 initial conditions in system and t=0, and I got
-                 the following error:"""
+                 running the function you provided with the
+                 lower bound, and I got the following error:"""
         logger.error(msg)
         raise (e)
 
@@ -178,7 +177,7 @@ def minimize_scalar(min_func, bounds, *args, **options):
         )
         raise Exception(msg)
 
-    return ModSimSeries(res)
+    return res
 
 
 def maximize_scalar(max_func, bounds, *args, **options):
@@ -194,7 +193,6 @@ def maximize_scalar(max_func, bounds, *args, **options):
 
     returns: ModSimSeries object
     """
-
     def min_func(*args):
         return -max_func(*args)
 
@@ -446,10 +444,14 @@ def run_solve_ivp(system, slope_func, **options):
     else:
         columns = range(len(system.init))
 
-    # evaluate the results at 51 equally-spaced points
+    # evaluate the results at equally-spaced points
     if options.get('dense_output', False):
-        t_end = t[-1]
-        t_array = linspace(t_0, t_end, 51)
+        try:
+            num = system.num
+        except AttributeError:
+            num = 51
+        t_final = t[-1]
+        t_array = linspace(t_0, t_final, num)
         y_array = bunch.sol(t_array)
 
         # pack the results into a TimeFrame
@@ -495,7 +497,7 @@ def check_system(system, slope_func):
     # if dt is not specified, take 100 steps
     try:
         dt = system.dt
-    except KeyError:
+    except AttributeError:
         dt = t_end / 100
 
     return init, t_0, t_end, dt
@@ -648,7 +650,6 @@ def fsolve(func, x0, *args, **options):
     result = scipy.optimize.fsolve(func, x0, args=args, **options)
 
     return result
-
 
 
 def crossings(series, value):
@@ -906,7 +907,43 @@ def State(**variables):
     return pd.Series(variables)
 
 
-class System(SimpleNamespace):
+class SettableNamespace(SimpleNamespace):
+    """Contains a collection of parameters.
+
+    Used to make a System object.
+
+    Takes keyword arguments and stores them as attributes.
+    """
+    def get(self, name, default=None):
+        """Look up a variable.
+
+        name: string varname
+        default: value returned if `name` is not present
+        """
+        try:
+            return self.__getattribute__(name, default)
+        except AttributeError:
+            return default
+
+    def set(self, **variables):
+        """Make a copy and update the given variables.
+
+        returns: Params
+        """
+        new = copy(self)
+        new.__dict__.update(variables)
+        return new
+
+
+class System(SettableNamespace):
+    """Contains system parameters and their values.
+
+    Takes keyword arguments and stores them as attributes.
+    """
+    pass
+
+
+class Params(SettableNamespace):
     """Contains system parameters and their values.
 
     Takes keyword arguments and stores them as attributes.
@@ -1039,54 +1076,6 @@ def vector_diff_angle(v, w):
         # TODO: see http://www.euclideanspace.com/maths/algebra/
         # vectors/angleBetween/
         raise NotImplementedError()
-
-
-class ModSimVector(Quantity):
-    """Represented as an array of 2 or 3 elements.
-
-    x, y, z, mag, mag2, and angle are accessible as attributes.
-    """
-
-    @property
-    def x(self):
-        """Returns the x component with units."""
-        return self[0]
-
-    @property
-    def y(self):
-        """Returns the y component with units."""
-        return self[1]
-
-    @property
-    def z(self):
-        """Returns the z component with units."""
-        return self[2]
-
-    @property
-    def mag(self):
-        """Returns the magnitude with units."""
-        return vector_mag(self)
-
-    @property
-    def mag2(self):
-        """Returns the magnitude squared with units."""
-        return vector_mag2(self)
-
-    @property
-    def angle(self):
-        """Returns the angle between self and the positive x axis."""
-        return vector_angle(self)
-
-    # make the vector functions available as methods
-    polar = vector_polar
-    hat = vector_hat
-    perp = vector_perp
-    dot = vector_dot
-    cross = vector_cross
-    proj = vector_proj
-    comp = scalar_proj
-    dist = vector_dist
-    diff_angle = vector_diff_angle
 
 
 def Vector(x, y, z=None, **options):
