@@ -32,10 +32,10 @@ from scipy.integrate import solve_ivp
 from types import SimpleNamespace
 from copy import copy
 
-#import pint
+import pint
 
-#units = pint.UnitRegistry()
-#Quantity = units.Quantity
+units = pint.UnitRegistry()
+Quantity = units.Quantity
 
 
 def flip(p=0.5):
@@ -305,60 +305,6 @@ minimize = minimize_golden
 maximize = maximize_golden
 
 
-def run_odeint(system, slope_func, **options):
-    """Integrates an ordinary differential equation.
-
-    `system` should contain system parameters and `ts`, which
-    is an array or Series that specifies the time when the
-    solution will be computed.
-
-    system: System object
-    slope_func: function that computes slopes
-
-    returns: TimeFrame
-    """
-    # make sure `system` contains `ts`
-    if not hasattr(system, "ts"):
-        msg = """It looks like `system` does not contain `ts`
-                 as a system variable.  `ts` should be an array
-                 or Series that specifies the times when the
-                 solution will be computed:"""
-        raise ValueError(msg)
-
-    # make sure `system` contains `init`
-    if not hasattr(system, "init"):
-        msg = """It looks like `system` does not contain `init`
-                 as a system variable.  `init` should be a State
-                 object that specifies the initial condition:"""
-        raise ValueError(msg)
-
-    # try running the slope function with the initial conditions
-    try:
-        slope_func(system.init, system.ts[0], system)
-    except Exception as e:
-        msg = """Before running scipy.integrate.odeint, I tried
-                 running the slope function you provided with the
-                 initial conditions in system and t=0, and I got
-                 the following error:"""
-        logger.error(msg)
-        raise (e)
-
-    # when odeint calls slope_func, it should pass `system` as
-    # the third argument.  To make that work, we have to make a
-    # tuple with a single element and pass the tuple to odeint as `args`
-    args = (system,)
-
-    # now we're ready to run `odeint` with `init` and `ts` from `system`
-    array = odeint(slope_func, list(system.init), system.ts, args, **options)
-
-    # the return value from odeint is an array, so let's pack it into
-    # a TimeFrame with appropriate columns and index
-    frame = TimeFrame(
-        array, columns=system.init.index, index=system.ts, dtype=np.float64
-    )
-    return frame
-
-
 def run_solve_ivp(system, slope_func, **options):
     """Computes a numerical solution to a differential equation.
 
@@ -374,6 +320,8 @@ def run_solve_ivp(system, slope_func, **options):
 
     returns: TimeFrame
     """
+    system = remove_units(system)
+
     # make sure `system` contains `init`
     if not hasattr(system, "init"):
         msg = """It looks like `system` does not contain `init`
@@ -740,9 +688,8 @@ def gradient(series, **options):
 
     returns: Series, same subclass as series
     """
-    x = magnitudes(series.index)
-    y = magnitudes(series.values)
-    # units = get_units(series)
+    x = series.index
+    y = series.values
 
     a = np.gradient(y, x, **options)
     return series.__class__(a, series.index)
@@ -771,7 +718,6 @@ def underride(d, **options):
         d.setdefault(key, val)
 
     return d
-
 
 
 def contour(df, **options):
@@ -843,16 +789,99 @@ def remove_from_legend(bad_labels):
     ax.legend(handle_list, label_list)
 
 
-def subplot(nrows, ncols, plot_number, **options):
-    figsize = {(2, 1): (8, 8), (3, 1): (8, 10)}
-    key = nrows, ncols
-    default = (8, 5.5)
-    width, height = figsize.get(key, default)
+class SettableNamespace(SimpleNamespace):
+    """Contains a collection of parameters.
 
-    plt.subplot(nrows, ncols, plot_number, **options)
-    fig = plt.gcf()
-    fig.set_figwidth(width)
-    fig.set_figheight(height)
+    Used to make a System object.
+
+    Takes keyword arguments and stores them as attributes.
+    """
+    def __init__(self, namespace=None, **kwargs):
+        super().__init__()
+        if namespace:
+            self.__dict__.update(namespace.__dict__)
+        self.__dict__.update(kwargs)
+
+    def get(self, name, default=None):
+        """Look up a variable.
+
+        name: string varname
+        default: value returned if `name` is not present
+        """
+        try:
+            return self.__getattribute__(name, default)
+        except AttributeError:
+            return default
+
+    def set(self, **variables):
+        """Make a copy and update the given variables.
+
+        returns: Params
+        """
+        new = copy(self)
+        new.__dict__.update(variables)
+        return new
+
+
+def magnitude(x):
+    """Returns the magnitude of a Quantity or number.
+
+    x: Quantity or number
+
+    returns: number
+    """
+    return x.magnitude if hasattr(x, 'magnitude') else x
+
+
+def remove_units(namespace):
+    """Removes units from the values in a Namespace.
+
+    Only removes units from top-level values;
+    does not traverse nested values.
+
+    returns: new Namespace object
+    """
+    res = copy(namespace)
+    for label, value in res.__dict__.items():
+        if isinstance(value, pd.Series):
+            value = remove_units_series(value)
+        res.__dict__[label] = magnitude(value)
+    return res
+
+
+def remove_units_series(series):
+    """Removes units from the values in a Series.
+
+    Only removes units from top-level values;
+    does not traverse nested values.
+
+    returns: new Series object
+    """
+    res = copy(series)
+    for label, value in res.iteritems():
+        res[label] = magnitude(value)
+    return res
+
+
+class System(SettableNamespace):
+    """Contains system parameters and their values.
+
+    Takes keyword arguments and stores them as attributes.
+    """
+    pass
+
+
+class Params(SettableNamespace):
+    """Contains system parameters and their values.
+
+    Takes keyword arguments and stores them as attributes.
+    """
+    pass
+
+
+def State(**variables):
+    """Contains the values of state variables."""
+    return pd.Series(variables)
 
 
 def TimeSeries(*args, **kwargs):
@@ -883,74 +912,6 @@ def SweepSeries(*args, **kwargs):
     return series
 
 
-def show(series):
-    """
-    """
-    if not isinstance(series, pd.Series):
-        return series
-    df = pd.DataFrame(series)
-    return df
-
-
-def plot(x, y=None, **options):
-    """
-    """
-    if y is not None:
-        plt.plot(x, y, **options)
-    else:
-        # x better be a Series
-        x.plot(**options)
-
-
-def State(**variables):
-    """Contains the values of state variables."""
-    return pd.Series(variables)
-
-
-class SettableNamespace(SimpleNamespace):
-    """Contains a collection of parameters.
-
-    Used to make a System object.
-
-    Takes keyword arguments and stores them as attributes.
-    """
-    def get(self, name, default=None):
-        """Look up a variable.
-
-        name: string varname
-        default: value returned if `name` is not present
-        """
-        try:
-            return self.__getattribute__(name, default)
-        except AttributeError:
-            return default
-
-    def set(self, **variables):
-        """Make a copy and update the given variables.
-
-        returns: Params
-        """
-        new = copy(self)
-        new.__dict__.update(variables)
-        return new
-
-
-class System(SettableNamespace):
-    """Contains system parameters and their values.
-
-    Takes keyword arguments and stores them as attributes.
-    """
-    pass
-
-
-class Params(SettableNamespace):
-    """Contains system parameters and their values.
-
-    Takes keyword arguments and stores them as attributes.
-    """
-    pass
-
-
 def TimeFrame(*args, **kwargs):
     """DataFrame that maps from time to State.
     """
@@ -961,6 +922,15 @@ def SweepFrame(*args, **kwargs):
     """DataFrame that maps from parameter value to SweepSeries.
     """
     return pd.DataFrame(*args, **kwargs)
+
+
+def Vector(x, y, z=None, **options):
+    """
+    """
+    if z is None:
+        return pd.Series(dict(x=x, y=y), **options)
+    else:
+        return pd.Series(dict(x=x, y=y, z=z), **options)
 
 
 ## Vector functions (should work with any sequence)
@@ -1078,19 +1048,6 @@ def vector_diff_angle(v, w):
         raise NotImplementedError()
 
 
-def Vector(x, y, z=None, **options):
-    """
-    """
-    if z is None:
-        return pd.Series(dict(x=x, y=y), **options)
-    else:
-        return pd.Series(dict(x=x, y=y, z=z), **options)
-
-mag = vector_mag
-angle = vector_angle
-hat = vector_hat
-
-
 def plot_segment(A, B, **options):
     """Plots a line segment between two Vectors.
 
@@ -1105,10 +1062,11 @@ def plot_segment(A, B, **options):
     ys = A.y, B.y
     plot(xs, ys, **options)
 
+
 from time import sleep
 from IPython.display import clear_output
 
-def animate(results, draw_func, interval=None):
+def animate(results, draw_func, *args, interval=None):
     """Animate results from a simulation.
 
     results: TimeFrame
@@ -1118,12 +1076,12 @@ def animate(results, draw_func, interval=None):
     plt.figure()
     try:
         for t, state in results.iterrows():
-            draw_func(t, state)
+            draw_func(t, state, *args)
             plt.show()
             if interval:
                 sleep(interval)
             clear_output(wait=True)
-        draw_func(t, state)
+        draw_func(t, state, *args)
         plt.show()
     except KeyboardInterrupt:
         pass
