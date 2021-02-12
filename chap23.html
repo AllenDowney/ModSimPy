@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 23 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 24" href="chap24.html" />
+    <link rel="prev" title="Chapter 22" href="chap22.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap23.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap23.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-manny-ramirez-problem">
+   The Manny Ramirez problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-the-range">
+   Finding the range
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise">
+   Exercise
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the Hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-23">
+<h1>Chapter 23<a class="headerlink" href="#chapter-23" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from previous notebook</span>
+
+<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">params</span>
+<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">make_system</span>
+<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">slope_func</span>
+<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">event_func</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we developed a model of the flight of a
+baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.</p>
+<p>In this chapter we apply that model to an optimization problem.</p>
+<div class="section" id="the-manny-ramirez-problem">
+<h2>The Manny Ramirez problem<a class="headerlink" href="#the-manny-ramirez-problem" title="Permalink to this headline">¶</a></h2>
+<p>Manny Ramirez is a former member of the Boston Red Sox (an American
+baseball team) who was notorious for his relaxed attitude and taste for practical jokes. Our objective in this chapter is to solve the following Manny-inspired problem:</p>
+<blockquote>
+<div><p>What is the minimum effort required to hit a home run in Fenway Park?</p>
+</div></blockquote>
+<p>Fenway Park is a baseball stadium in Boston, Massachusetts. One of its
+most famous features is the “Green Monster”, which is a wall in left
+field that is unusually close to home plate, only 310 feet away. To
+compensate for the short distance, the wall is unusually high, at 37
+feet (see <a class="reference external" href="http://modsimpy.com/wally">http://modsimpy.com/wally</a>).</p>
+<p>We want to find the minimum velocity at which a ball can leave home
+plate and still go over the Green Monster. We’ll proceed in the
+following steps:</p>
+<ol class="simple">
+<li><p>For a given velocity, we’ll find the optimal <strong>launch angle</strong>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
+<li><p>Then we’ll find the minimal velocity that clears the wall, given
+that it has the optimal launch angle.</p></li>
+</ol>
+</div>
+<div class="section" id="finding-the-range">
+<h2>Finding the range<a class="headerlink" href="#finding-the-range" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to find the launch angle that maximizes <strong>range</strong>, that is, the distance the ball travels in the air before landing. We’ll use a function in the ModSim library, <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, which takes a function and finds its maximum.</p>
+<p>The function we pass to <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> should take launch angle in degrees, simulate the flight of a ball launched at that angle, and return the distance the ball travels along the <span class="math notranslate nohighlight">\(x\)</span> axis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">range_func</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                     <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+    <span class="n">x_dist</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">x_dist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_dist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">range_func</span></code> makes a new <code class="docutils literal notranslate"><span class="pre">System</span></code> object with the given value of
+<code class="docutils literal notranslate"><span class="pre">angle</span></code>. Then it calls <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> and
+returns the final value of <code class="docutils literal notranslate"><span class="pre">x</span></code> from the results.</p>
+<p>We can call <code class="docutils literal notranslate"><span class="pre">range_func</span></code> directly like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">range_func</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can sweep a sequence of angles like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+    <span class="n">x_dist</span> <span class="o">=</span> <span class="n">range_func</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">sweep</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_dist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the results look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Launch angle (degree)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Range (meter)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It looks like the optimal angle is near 40°.</p>
+<p>We can find the optimal angle more precisely and more efficiently using <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">range_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first parameter is the function we want to maximize. The second is
+the range of values we want to search; in this case, it’s the range of
+angles from 0° to 90°.</p>
+<p>The return value from <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> is an object that contains the
+results, including <code class="docutils literal notranslate"><span class="pre">x</span></code>, which is the angle that yielded the highest
+range, and <code class="docutils literal notranslate"><span class="pre">fun</span></code>, which is the value of <code class="docutils literal notranslate"><span class="pre">range_func</span></code> when it’s evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code>, that is, range when the baseball is launched at the optimal angle.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For these parameters, the optimal angle is about 41°, which yields a
+range of 100 m.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>If you enjoy this exercise, you might be interested in this paper: “How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories”, by Sawicki, Hubbard, and Stronge, at
+<a class="reference external" href="http://modsimpy.com/runs">http://modsimpy.com/runs</a>.</p>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Let’s finish off the Manny Ramirez problem:</p>
+<blockquote>
+<div><p>What is the minimum effort required to hit a home run in Fenway Park?</p>
+</div></blockquote>
+<p>Although the problem asks for a minimum, it is not an optimization problem.  Rather, we want to solve for the initial velocity that just barely gets the ball to the top of the wall, given that it is launched at the optimal angle.</p>
+<p>And we have to be careful about what we mean by “optimal”.  For this problem, we don’t want the longest range, we want the maximum height at the point where it reaches the wall.</p>
+<p>If you are ready to solve the problem on your own, go ahead.  Otherwise I will walk you through the process with an outline and some starter code.</p>
+<p>As a first step, write an <code class="docutils literal notranslate"><span class="pre">event_func</span></code> that stops the simulation when the ball reaches the wall at 310 feet (94.5 m).
+Test your function with the initial conditions.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, write a function called <code class="docutils literal notranslate"><span class="pre">height_func</span></code> that takes a launch angle, simulates the flight of a baseball, and returns the height of the baseball when it reaches the wall.
+Test your function with the initial conditions.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the optimal angle.  Is it higher or lower than the angle that maximizes range?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Even though we are finding the “minimum” velocity, we are not really solving a minimization problem.  Rather, we want to find the velocity that makes the height at the wall exactly 37 feet (11.3 m), given that it’s launched at the optimal angle.  And that’s a job for <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>.</p>
+<p>Write an error function that takes a velocity and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters.  It should use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the highest possible height of the ball at the wall, for the given velocity.  Then it should return the difference between that optimal height and 11.3 meters.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test your error function before you call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the answer to the problem, the minimum velocity that gets the ball out of the park.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And just to check, run <code class="docutils literal notranslate"><span class="pre">error_func</span></code> with the value you found.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> uses a SciPy function called <code class="docutils literal notranslate"><span class="pre">minimize_scalar</span></code>, which provides several optimization methods.  By default, it uses <code class="docutils literal notranslate"><span class="pre">bounded</span></code>, a version of Brent’s algorithm that is safe in the sense that it always uses values within the bounds you provide (including both ends).
+You can read more about it at <a class="reference external" href="http://modsimpy.com/minimize">http://modsimpy.com/minimize</a>).</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap22.html" title="previous page">Chapter 22</a>
+    <a class='right-next' id="next-link" href="chap24.html" title="next page">Chapter 24</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

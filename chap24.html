@@ -1,0 +1,902 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 24 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 25" href="chap25.html" />
+    <link rel="prev" title="Chapter 23" href="chap23.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap24.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap24.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-physics-of-toilet-paper">
+   The physics of toilet paper
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameters">
+   Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting">
+   Plotting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-24">
+<h1>Chapter 24<a class="headerlink" href="#chapter-24" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this chapter and the next we’ll model systems that involve rotating objects.</p>
+<p>In general, rotation is complicated.
+In three dimensions, objects can rotate around three axes and many objects are easier to spin around some axes than others.</p>
+<p>If the configuration of an object changes over time, it might become
+easier or harder to spin, which explains the surprising dynamics of
+gymnasts, divers, ice skaters, etc.</p>
+<p>And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.
+For an example, see this video on gyroscopic precession <a class="reference external" href="http://modsimpy.com/precess">http://modsimpy.com/precess</a>.</p>
+<p>In this book, we will not take on the physics of rotation in all its glory.
+Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.
+In that case, we can treat some vector quantities as if they were scalars, in the same way that we sometimes treat velocity as a scalar with an implicit direction.</p>
+<p>The fundamental ideas in these examples are angular velocity, angular acceleration, torque, and moment of inertia.
+If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.</p>
+<div class="section" id="the-physics-of-toilet-paper">
+<h2>The physics of toilet paper<a class="headerlink" href="#the-physics-of-toilet-paper" title="Permalink to this headline">¶</a></h2>
+<p>As an example of a system with rotation, we’ll simulate the manufacture of a roll of toilet paper, as shown in this video <a class="reference external" href="https://youtu.be/Z74OfpUbeac?t=231">https://youtu.be/Z74OfpUbeac?t=231</a>.
+Starting with a cardboard tube at the center, we will roll up 47 m of paper, a typical length for a roll of toilet paper in the U.S. (see <a class="reference external" href="http://modsimpy.com/paper">http://modsimpy.com/paper</a>).</p>
+<p>The following figure shows a diagram of the system: <span class="math notranslate nohighlight">\(r\)</span> represents
+the radius of the roll at a point in time. Initially, <span class="math notranslate nohighlight">\(r\)</span> is the radius of the cardboard core, <span class="math notranslate nohighlight">\(R_{min}\)</span>. When the roll is complete, <span class="math notranslate nohighlight">\(r\)</span> is <span class="math notranslate nohighlight">\(R_{max}\)</span>.</p>
+<p><img alt="Diagram of a roll of toilet paper, showing change in paper length as a result of a small rotation, ." src="https://github.com/AllenDowney/ModSim/raw/main/figs/paper_roll.png" /></p>
+<p>I’ll use <span class="math notranslate nohighlight">\(\theta\)</span> to represent the total rotation of the roll in
+radians. In the diagram, <span class="math notranslate nohighlight">\(d\theta\)</span> represents a small increase in
+<span class="math notranslate nohighlight">\(\theta\)</span>, which corresponds to a distance along the circumference of <span class="math notranslate nohighlight">\(r~d\theta\)</span>.</p>
+<p>I’ll use <span class="math notranslate nohighlight">\(y\)</span> to represent the total length of paper that’s been rolled.
+Initially, <span class="math notranslate nohighlight">\(\theta=0\)</span> and <span class="math notranslate nohighlight">\(y=0\)</span>.
+For each small increase in <span class="math notranslate nohighlight">\(\theta\)</span>, there is a corresponding increase in <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[dy = r~d\theta\]</div>
+<p>If we divide both sides by a small increase in time, <span class="math notranslate nohighlight">\(dt\)</span>, we get a
+differential equation for <span class="math notranslate nohighlight">\(y\)</span> as a function of time.</p>
+<div class="math notranslate nohighlight">
+\[\frac{dy}{dt} = r \frac{d\theta}{dt}\]</div>
+<p>As we roll up the paper, <span class="math notranslate nohighlight">\(r\)</span> increases. Assuming it increases by a fixed amount per revolution, we can write</p>
+<div class="math notranslate nohighlight">
+\[dr = k~d\theta\]</div>
+<p>Where <span class="math notranslate nohighlight">\(k\)</span> is an unknown constant we’ll have to figure out.
+Again, we can divide both sides by <span class="math notranslate nohighlight">\(dt\)</span> to get a differential equation in time:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dr}{dt} = k \frac{d\theta}{dt}\]</div>
+<p>Finally, let’s assume that <span class="math notranslate nohighlight">\(\theta\)</span> increases at a constant rate of <span class="math notranslate nohighlight">\(\omega = 300\)</span> rad/s (about 2900 revolutions per minute):</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\theta}{dt} = \omega\]</div>
+<p>This rate of change is called an <strong>angular velocity</strong>. Now we have a system of differential equations we can use to simulate the system.</p>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>Here are the parameters of the system:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Rmin</span> <span class="o">=</span> <span class="mf">0.02</span>      <span class="c1"># m</span>
+<span class="n">Rmax</span> <span class="o">=</span> <span class="mf">0.055</span>     <span class="c1"># m</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">47</span>           <span class="c1"># m</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">300</span>      <span class="c1"># rad / s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Rmin</span></code> and <code class="docutils literal notranslate"><span class="pre">Rmax</span></code> are the initial and final values for the radius, <code class="docutils literal notranslate"><span class="pre">r</span></code>.
+<code class="docutils literal notranslate"><span class="pre">L</span></code> is the total length of the paper.
+<code class="docutils literal notranslate"><span class="pre">omega</span></code> is the angular velocity in radians per second.</p>
+<p>Figuring out <code class="docutils literal notranslate"><span class="pre">k</span></code> is not easy, but we can estimate it by pretending that <code class="docutils literal notranslate"><span class="pre">r</span></code> is constant and equal to the average of <code class="docutils literal notranslate"><span class="pre">Rmin</span></code> and <code class="docutils literal notranslate"><span class="pre">Rmax</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ravg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Rmax</span> <span class="o">+</span> <span class="n">Rmin</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In that case, the circumference of the roll is also be constant:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cavg</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">Ravg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can compute the number of revolutions to roll up length <code class="docutils literal notranslate"><span class="pre">L</span></code>, like this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">revs</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">Cavg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Converting rotations to radians, we can estimate the final value of <code class="docutils literal notranslate"><span class="pre">theta</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">revs</span>
+<span class="n">theta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">k</span></code> is the total change in <code class="docutils literal notranslate"><span class="pre">r</span></code> divided by the total change in <code class="docutils literal notranslate"><span class="pre">theta</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_est</span> <span class="o">=</span> <span class="p">(</span><span class="n">Rmax</span> <span class="o">-</span> <span class="n">Rmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">theta</span>
+<span class="n">k_est</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>At the end of the chapter, we’ll derive <code class="docutils literal notranslate"><span class="pre">k</span></code> analytically, but this estimate is enough to get started.</p>
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<p>The state variables we’ll use are, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code>.
+Here are the initial conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">Rmin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with <code class="docutils literal notranslate"><span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use the differential equations from the previous section to
+write a slope function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
+    
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">omega</span>
+    <span class="n">drdt</span> <span class="o">=</span> <span class="n">k_est</span> <span class="o">*</span> <span class="n">omega</span>
+    
+    <span class="k">return</span> <span class="n">omega</span><span class="p">,</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">drdt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As usual, the slope function takes a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>The job of the slope function is to compute the time derivatives of the state variables.</p>
+<p>The derivative of <code class="docutils literal notranslate"><span class="pre">theta</span></code> is angular velocity, <code class="docutils literal notranslate"><span class="pre">omega</span></code>.
+The derivatives of <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code> are given by the differential equations we derived.</p>
+<p>And as usual, we’ll test the slope function with the initial conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’d like to stop the simulation when the length of paper on the roll is <code class="docutils literal notranslate"><span class="pre">L</span></code>. We can do that with an event function that passes through 0 when <code class="docutils literal notranslate"><span class="pre">y</span></code> equals <code class="docutils literal notranslate"><span class="pre">L</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">L</span> <span class="o">-</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can test it with the initial conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s run the simulation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                  <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the last few time steps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The time it takes to complete one roll is about 4.2 seconds, which is consistent with what we see in the video.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final value of <code class="docutils literal notranslate"><span class="pre">y</span></code> is 47 meters, as expected.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
+<span class="n">final_state</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final value of radius is 0.55 m, which is <code class="docutils literal notranslate"><span class="pre">Rmax</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span><span class="o">.</span><span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The total number of rotations is close to 200, which seems plausible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">radians</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">theta</span>
+<span class="n">rotations</span> <span class="o">=</span> <span class="n">radians</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">rotations</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As an exercise, we’ll see how fast the paper is moving.  But first, let’s take a closer look at the results.</p>
+</div>
+<div class="section" id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h2>
+<p>Here’s what <code class="docutils literal notranslate"><span class="pre">theta</span></code> looks like over time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_theta</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Angle (rad)&#39;</span><span class="p">)</span>
+    
+<span class="n">plot_theta</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">theta</span></code> grows linearly, as we should expect with constant angular velocity.</p>
+<p>Here’s what <code class="docutils literal notranslate"><span class="pre">r</span></code> looks like over time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_r</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Radius (m)&#39;</span><span class="p">)</span>
+    
+<span class="n">plot_r</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">r</span></code> also increases linearly.</p>
+<p>But since the derivative of <code class="docutils literal notranslate"><span class="pre">y</span></code> depends on <code class="docutils literal notranslate"><span class="pre">r</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code> is increasing, <code class="docutils literal notranslate"><span class="pre">y</span></code> grows with increasing slope.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_y</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Length (m)&#39;</span><span class="p">)</span>
+    
+<span class="n">plot_y</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the next section, we’ll see that we could have solved the
+differential equations analytically.
+However, it is often useful to start with simulation as a way of exploring and checking assumptions.</p>
+</div>
+<div class="section" id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
+<p>Since angular velocity is constant:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\theta}{dt} = \omega \quad\quad (1)\]</div>
+<p>We can find <span class="math notranslate nohighlight">\(\theta\)</span> as a function of time by integrating both sides:</p>
+<div class="math notranslate nohighlight">
+\[\theta(t) = \omega t\]</div>
+<p>Similarly, we can solve this equation</p>
+<div class="math notranslate nohighlight">
+\[\frac{dr}{dt} = k \omega\]</div>
+<p>to find</p>
+<div class="math notranslate nohighlight">
+\[r(t) = k \omega t + R_{min}\]</div>
+<p>Then we can plug the solution for <span class="math notranslate nohighlight">\(r\)</span> into the equation for <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{dy}{dt} &amp; = r \omega        \quad\quad (2)              \\
+              &amp; = \left[ k \omega t + R_{min} \right] \omega \nonumber\end{aligned}\end{split}\]</div>
+<p>Integrating both sides yields:</p>
+<div class="math notranslate nohighlight">
+\[y(t) = \left[ k \omega t^2 / 2 + R_{min} t \right] \omega\]</div>
+<p>So <span class="math notranslate nohighlight">\(y\)</span> is a parabola, as you might have guessed.</p>
+<p>We can also use these equations to find the relationship between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(r\)</span>, independent of time, which we can use to compute <span class="math notranslate nohighlight">\(k\)</span>.
+Dividing Equations 1 and 2, yields</p>
+<div class="math notranslate nohighlight">
+\[\frac{dr}{dy} = \frac{k}{r}\]</div>
+<p>Separating variables yields</p>
+<div class="math notranslate nohighlight">
+\[r~dr = k~dy\]</div>
+<p>Integrating both sides yields</p>
+<div class="math notranslate nohighlight">
+\[r^2 / 2 = k y + C\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(y\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[y = \frac{1}{2k} (r^2 - C)                 \label{eqn3}\]</div>
+<p>When <span class="math notranslate nohighlight">\(y=0\)</span>, <span class="math notranslate nohighlight">\(r=R_{min}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[R_{min}^2 / 2 = C\]</div>
+<p>When <span class="math notranslate nohighlight">\(y=L\)</span>, <span class="math notranslate nohighlight">\(r=R_{max}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[L = \frac{1}{2k} (R_{max}^2 - R_{min}^2)\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(k\)</span> yields</p>
+<div class="math notranslate nohighlight">
+\[k =  \frac{1}{2L} (R_{max}^2 - R_{min}^2)           \label{eqn4}\]</div>
+<p>Plugging in the values of the parameters yields <code class="docutils literal notranslate"><span class="pre">2.8e-5</span></code> m/rad, the same as the “estimate” we computed in Section xxx.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">Rmax</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Rmin</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span>
+<span class="n">k</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case the estimate turns out to be exact.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter introduces rotation, starting with an example where angular velocity is constant.</p>
+<p>We simulated the manufacture of a roll of toilet paper, then we solved the same problem analytically.</p>
+<p>In the next chapter, we’ll see a more interesting example where angular velocity is not constant.  And we’ll introduce three new concepts: torque, angular acceleration, and moment of inertia.</p>
+<p>But first, you might want to work on the following exercises.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Since we keep <code class="docutils literal notranslate"><span class="pre">omega</span></code> constant, the linear velocity of the paper increases with radius.  We can use <code class="docutils literal notranslate"><span class="pre">gradient</span></code> to estimate the derivative of <code class="docutils literal notranslate"><span class="pre">results.y</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dydt</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dydt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;dydt&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Linear velocity (m/s)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With constant angular velocity, linear velocity is increasing, reaching its maximum at the end.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_linear_velocity</span> <span class="o">=</span> <span class="n">dydt</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">max_linear_velocity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now suppose this peak velocity is the limiting factor; that is, we can’t move the paper any faster than that.</p>
+<p>In that case, we might be able to speed up the process by keeping the linear velocity at the maximum all the time.</p>
+<p>Write a slope function that keeps the linear velocity, <code class="docutils literal notranslate"><span class="pre">dydt</span></code>, constant, and computes the angular velocity, <code class="docutils literal notranslate"><span class="pre">omega</span></code>, accordingly.</p>
+<p>Run the simulation and see how much faster we could finish rolling the paper.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap23.html" title="previous page">Chapter 23</a>
+    <a class='right-next' id="next-link" href="chap25.html" title="next page">Chapter 25</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

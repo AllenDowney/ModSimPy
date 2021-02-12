@@ -1,0 +1,858 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 21 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 22" href="chap22.html" />
+    <link rel="prev" title="Chapter 20" href="chap20.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap21.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap21.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#drag-force">
+   Drag force
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-params-object">
+   The Params Object
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the Hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-21">
+<h1>Chapter 21<a class="headerlink" href="#chapter-21" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we simulated a penny falling in a vacuum, that
+is, without air resistance. But the computational framework we used is
+very general; it is easy to add additional forces, including drag.</p>
+<p>In this chapter, I present a model of drag force and add it to the
+simulation.</p>
+<div class="section" id="drag-force">
+<h2>Drag force<a class="headerlink" href="#drag-force" title="Permalink to this headline">¶</a></h2>
+<p>As an object moves through a fluid, like air, the object applies force
+to the air and, in accordance with Newton’s third law of motion, the air applies an equal and opposite force to the object (see
+<a class="reference external" href="http://modsimpy.com/newton">http://modsimpy.com/newton</a>).</p>
+<p>The direction of this <strong>drag force</strong> is opposite the direction of
+travel, and its magnitude is given by the drag equation (see
+<a class="reference external" href="http://modsimpy.com/drageq">http://modsimpy.com/drageq</a>):</p>
+<div class="math notranslate nohighlight">
+\[F_d = \frac{1}{2}~\rho~v^2~C_d~A\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(F_d\)</span> is force due to drag, in newtons (N).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho\)</span> is the density of the fluid in kg/m^3^.</p></li>
+<li><p><span class="math notranslate nohighlight">\(v\)</span> is the magnitude of velocity in m/s.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span> is the <strong>reference area</strong> of the object, in m^2^. In this
+context, the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of
+travel (and far away).</p></li>
+<li><p><span class="math notranslate nohighlight">\(C_d\)</span> is the <strong>drag coefficient</strong>, a dimensionless quantity that
+depends on the shape of the object (including length but not frontal area), its surface properties, and how it interacts with the fluid.</p></li>
+</ul>
+<p>For objects moving at moderate speeds through air, typical drag
+coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see
+<a class="reference external" href="http://modsimpy.com/dragco">http://modsimpy.com/dragco</a>).</p>
+<p>For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate <span class="math notranslate nohighlight">\(C_d\)</span> from data.</p>
+<p>Of course, the drag equation is itself a model, based on the assumption that <span class="math notranslate nohighlight">\(C_d\)</span> does not depend on the other terms in the equation: density, velocity, and area. For objects moving in air at moderate speeds (below 45 mph or 20 m/s), this model might be good enough, but we should remember to revisit this assumption.</p>
+<p>For the falling penny, we can use measurements to estimate <span class="math notranslate nohighlight">\(C_d\)</span>. In
+particular, we can measure <strong>terminal velocity</strong>, <span class="math notranslate nohighlight">\(v_{term}\)</span>, which is
+the speed where drag force equals force due to gravity:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{2}~\rho~v_{term}^2~C_d~A = m g\]</div>
+<p>where <span class="math notranslate nohighlight">\(m\)</span> is the mass of the object and <span class="math notranslate nohighlight">\(g\)</span> is acceleration due to gravity. Solving this equation for
+<span class="math notranslate nohighlight">\(C_d\)</span> yields:</p>
+<div class="math notranslate nohighlight">
+\[C_d = \frac{2~m g}{\rho~v_{term}^2~A}\]</div>
+<p>According to <em>Mythbusters</em>, the terminal velocity of a penny is between 35 and 65 mph (see <a class="reference external" href="http://modsimpy.com/mythbust">http://modsimpy.com/mythbust</a>). Using the low end of their range, 40 mph or about 18 m/s, the estimated value of <span class="math notranslate nohighlight">\(C_d\)</span> is 0.44, which is close to the drag coefficient of a smooth sphere.</p>
+<p>Now we are ready to add air resistance to the model.</p>
+</div>
+<div class="section" id="the-params-object">
+<h2>The Params Object<a class="headerlink" href="#the-params-object" title="Permalink to this headline">¶</a></h2>
+<p>As the number of system parameters increases, and as we need to do more work to compute them, we will find it useful to define a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object to contain the quantities we need to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object. <code class="docutils literal notranslate"><span class="pre">Params</span></code> objects are similar to <code class="docutils literal notranslate"><span class="pre">System</span></code> objects, and we initialize them the same way.</p>
+<p>Here’s the <code class="docutils literal notranslate"><span class="pre">Params</span></code> object for the falling penny:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span>
+    <span class="n">mass</span> <span class="o">=</span> <span class="mf">0.0025</span><span class="p">,</span>      <span class="c1"># kg</span>
+    <span class="n">diameter</span> <span class="o">=</span> <span class="mf">0.019</span><span class="p">,</span>   <span class="c1"># m</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span>     <span class="c1"># kg/m**3</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">,</span>       <span class="c1"># m/s**2</span>
+    <span class="n">v_init</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1"># m / s</span>
+    <span class="n">v_term</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span>   <span class="c1"># m / s</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">381</span><span class="p">,</span>  <span class="c1"># m</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>    <span class="c1"># s</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mass and diameter are from <a class="reference external" href="http://modsimpy.com/penny">http://modsimpy.com/penny</a>. The density
+of air depends on temperature, barometric pressure (which depends on
+altitude), humidity, and composition (<a class="reference external" href="http://modsimpy.com/density">http://modsimpy.com/density</a>). I
+chose a value that might be typical in Boston, Massachusetts at 20 °C.</p>
+<p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">make_system</span></code> that takes the <code class="docutils literal notranslate"><span class="pre">Params</span></code> object and computes the inital state, <code class="docutils literal notranslate"><span class="pre">init</span></code>, the area, and the coefficient of drag.
+Then it returns a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with the quantities we’ll need for the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+
+<span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">v_init</span><span class="p">)</span>
+
+    <span class="n">area</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">C_d</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">mass</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">g</span> <span class="o">/</span> 
+           <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">area</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">v_term</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+                  <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+                  <span class="n">C_d</span><span class="o">=</span><span class="n">C_d</span><span class="p">,</span>
+                  <span class="n">mass</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span>
+                  <span class="n">rho</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span>
+                  <span class="n">g</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
+                  <span class="n">t_end</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">t_end</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s how we call it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the mass and diameter of the penny, the density of air, and acceleration due to gravity, and the observed terminal velocity, we estimate that the coefficient of drag is about 0.44.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">C_d</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It might not be obvious why it is useful to create a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object just to create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
+In fact, if we only run one simulation, it might not be useful.  But it helps when we want to change or sweep the parameters.</p>
+<p>For example, suppose we learn that the terminal velocity of a penny is actually closer to 20 m/s.
+We can make a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with the new value, and a corresponding <code class="docutils literal notranslate"><span class="pre">System</span></code> object, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">v_term</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">set</span></code> is a new <code class="docutils literal notranslate"><span class="pre">Params</span></code> object that is identical to the original except for the given value of <code class="docutils literal notranslate"><span class="pre">v_term</span></code>.</p>
+<p>If we pass <code class="docutils literal notranslate"><span class="pre">params2</span></code> to <code class="docutils literal notranslate"><span class="pre">make_system</span></code>, we see that it computes a different value of <code class="docutils literal notranslate"><span class="pre">C_d</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system2</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params2</span><span class="p">)</span>
+<span class="n">system2</span><span class="o">.</span><span class="n">C_d</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the terminal velocity of the penny is 20 m/s, rather than 18 m/s, that implies that the coefficient of drag is 0.36, rather than 0.44.
+And that makes sense, since lower drag implies faster terminal velocity.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">Params</span></code> objects to make <code class="docutils literal notranslate"><span class="pre">System</span></code> objects helps make sure that relationships like this are consistent.  And since we are always making new objects, rather than modifying existing objects, we are less likely to make a mistake.</p>
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s get to the simulation.  Here’s a version of the slope function that includes drag:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">rho</span><span class="p">,</span> <span class="n">C_d</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">C_d</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">area</span>
+    <span class="n">mass</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">g</span>
+    
+    <span class="n">f_drag</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">C_d</span> <span class="o">*</span> <span class="n">area</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">a_drag</span> <span class="o">=</span> <span class="n">f_drag</span> <span class="o">/</span> <span class="n">mass</span>
+    
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">dvdt</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="n">a_drag</span>
+    
+    <span class="k">return</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">dvdt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">f_drag</span></code> is force due to drag, based on the drag equation. <code class="docutils literal notranslate"><span class="pre">a_drag</span></code> is
+acceleration due to drag, based on Newton’s second law.</p>
+<p>To compute total acceleration, we add accelerations due to gravity and
+drag. <code class="docutils literal notranslate"><span class="pre">g</span></code> is negated because it is in the direction of decreasing <code class="docutils literal notranslate"><span class="pre">y</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">a_drag</span></code> is positive because it is in the direction of increasing
+<code class="docutils literal notranslate"><span class="pre">y</span></code>. In the next chapter we will use <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects to keep track of
+the direction of forces and add them up in a less error-prone way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To stop the simulation when the penny hits the sidewalk, we’ll use the
+event function from Section xxx:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can run the simulation like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                 <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the last few time steps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final height is close to 0, as expected.</p>
+<p>Interestingly, the final velocity is not exactly terminal velocity, which suggests that there are some numerical errors.</p>
+<p>We can get the flight time from <code class="docutils literal notranslate"><span class="pre">results</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_sidewalk</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t_sidewalk</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the plot of position as a function of time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_position</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+        
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Position (m)&#39;</span><span class="p">)</span>
+    
+<span class="n">plot_position</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And velocity as a function of time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_velocity</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+
+    <span class="n">results</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+        
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Velocity (m/s)&#39;</span><span class="p">)</span>
+    
+<span class="n">plot_velocity</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>From an initial velocity of 0, the penny accelerates downward until it reaches terminal velocity; after that, velocity is constant.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Run the simulation with a downward initial velocity that exceeds the penny’s terminal velocity.</p>
+<p>What do you expect to happen?  Plot velocity and position as a function of time, and see if they are consistent with your prediction.</p>
+<p>Hint: Use <code class="docutils literal notranslate"><span class="pre">params.set</span></code> to make a new <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with a different initial velocity.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_sidewalk</span> <span class="o">=</span> <span class="n">results2</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t_sidewalk</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_position</span><span class="p">(</span><span class="n">results2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Suppose we drop a quarter from the Empire State Building and find that its flight time is 19.1 seconds.  Use this measurement to estimate terminal velocity and coefficient of drag.</p>
+<p>You can get the relevant dimensions of a quarter from https://en.wikipedia.org/wiki/Quarter_(United_States_coin).</p>
+<ol class="simple">
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with new values of <code class="docutils literal notranslate"><span class="pre">mass</span></code> and <code class="docutils literal notranslate"><span class="pre">diameter</span></code>. We don’t know <code class="docutils literal notranslate"><span class="pre">v_term</span></code>, so we’ll start with the initial guess 18 m/s.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">make_system</span></code> to create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to simulate the system.  How does the flight time of the simulation compare to the measurement?</p></li>
+<li><p>Try a few different values of <code class="docutils literal notranslate"><span class="pre">v_term</span></code> and see if you can get the simulated flight time close to 19.1 seconds.</p></li>
+<li><p>Optionally, write an error function and use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to improve your estimate.</p></li>
+<li><p>Use your best estimate of <code class="docutils literal notranslate"><span class="pre">v_term</span></code> to compute <code class="docutils literal notranslate"><span class="pre">C_d</span></code>.</p></li>
+</ol>
+<p>Note: I fabricated the observed flight time, so don’t take the results of this exercise too seriously.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Params</span></code> is a <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code>, like <code class="docutils literal notranslate"><span class="pre">System</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Params</span></code> and <code class="docutils literal notranslate"><span class="pre">System</span></code> are actually the same; I have given them different names to document the different roles they play.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap20.html" title="previous page">Chapter 20</a>
+    <a class='right-next' id="next-link" href="chap22.html" title="next page">Chapter 22</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

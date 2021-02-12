@@ -1,0 +1,852 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 18 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 19" href="chap19.html" />
+    <link rel="prev" title="Chapter 17" href="chap17.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap18.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap18.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementing-the-model">
+   Implementing the Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-update-function">
+   The Update Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-simulation">
+   The Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-differential-equations">
+   Solving differential equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-18">
+<h1>Chapter 18<a class="headerlink" href="#chapter-18" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The previous chapter present the minimal model of the glucose-insulin system, and introduces a tool we will need to implement it: interpolation.</p>
+<p>In this chapter, we’ll implement the model two ways:</p>
+<ul class="simple">
+<li><p>We’ll start by rewriting the differential equations as difference equations; then we’ll solve the difference equations using a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, similar to what we have used in previous chapters.</p></li>
+<li><p>Then we’ll use a new SciPy function, called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>, to solve the differential equation.</p></li>
+</ul>
+<p>We’ll see that <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> is faster and more accurate than <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.
+As a result, we will us it for every model in the rest of the book.</p>
+<p>The following cell downloads the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;glucose_insulin.csv&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/glucose_insulin.csv
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use Pandas to read the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="implementing-the-model">
+<h2>Implementing the Model<a class="headerlink" href="#implementing-the-model" title="Permalink to this headline">¶</a></h2>
+<p>To get started, let’s assume that the parameters of the model are known.
+We’ll implement the model and use it to generate time series for <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.
+Then we’ll see how we can choose parameters that generate a series that fits the data.</p>
+<p>Here are the parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G0</span> <span class="o">=</span> <span class="mi">270</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">k3</span> <span class="o">=</span> <span class="mf">1.5e-05</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll put these values in a sequence which we’ll pass to <code class="docutils literal notranslate"><span class="pre">make_system</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">make_system</span></code> that takes <code class="docutils literal notranslate"><span class="pre">params</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code> as parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span> <span class="o">=</span> <span class="n">params</span>
+    
+    <span class="n">t_0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">Gb</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">glucose</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+    <span class="n">Ib</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="p">)</span>
+    
+    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">G</span><span class="o">=</span><span class="n">G0</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                  <span class="n">Gb</span><span class="o">=</span><span class="n">Gb</span><span class="p">,</span> <span class="n">Ib</span><span class="o">=</span><span class="n">Ib</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="n">I</span><span class="p">,</span>
+                  <span class="n">t_0</span><span class="o">=</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">make_system</span></code> gets <code class="docutils literal notranslate"><span class="pre">t_0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> from the data.
+It uses the measurements at <code class="docutils literal notranslate"><span class="pre">t=0</span></code> as the basal levels, <code class="docutils literal notranslate"><span class="pre">Gb</span></code> and <code class="docutils literal notranslate"><span class="pre">Ib</span></code>.
+And it uses the parameter <code class="docutils literal notranslate"><span class="pre">G0</span></code> as the initial value for <code class="docutils literal notranslate"><span class="pre">G</span></code>. Then it
+packs everything into a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-update-function">
+<h2>The Update Function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
+<p>The minimal model is expressed in terms of differential equations:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t)\]</div>
+<p>To simulate this system, we will rewriting them as difference equations.
+If we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[dG = \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] dt\]</div>
+<div class="math notranslate nohighlight">
+\[dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt\]</div>
+<p>If we think of <span class="math notranslate nohighlight">\(dt\)</span> as a small step in time, these equations tell us how to compute the corresponding changes in <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<p>Here’s an update function that computes these changes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">G</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">params</span> 
+    <span class="n">I</span><span class="p">,</span> <span class="n">Ib</span><span class="p">,</span> <span class="n">Gb</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Ib</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Gb</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span>
+        
+    <span class="n">dGdt</span> <span class="o">=</span> <span class="o">-</span><span class="n">k1</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span> <span class="o">-</span> <span class="n">Gb</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">G</span>
+    <span class="n">dXdt</span> <span class="o">=</span> <span class="n">k3</span> <span class="o">*</span> <span class="p">(</span><span class="n">I</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">Ib</span><span class="p">)</span> <span class="o">-</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">X</span>
+    
+    <span class="n">G</span> <span class="o">+=</span> <span class="n">dGdt</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">X</span> <span class="o">+=</span> <span class="n">dXdt</span> <span class="o">*</span> <span class="n">dt</span>
+
+    <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As usual, the update function takes a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, a time, and a
+<code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters. The first line uses multiple assignment
+to extract the current values of <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>The following lines unpack the parameters we need from the <code class="docutils literal notranslate"><span class="pre">System</span></code>
+object.</p>
+<p>Computing the derivatives <code class="docutils literal notranslate"><span class="pre">dGdt</span></code> and <code class="docutils literal notranslate"><span class="pre">dXdt</span></code> is straightforward; we just translate the equations from math notation to Python.
+Then, to perform the update, we multiply each derivative by the discrete time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which is 2 min in this example.</p>
+<p>The return value is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the new values of <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>Before running the simulation, it is a good idea to run the update
+function with the initial conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">update_func</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If it runs without errors and there is nothing obviously wrong with the results, we are ready to run the simulation.</p>
+</div>
+<div class="section" id="the-simulation">
+<h2>The Simulation<a class="headerlink" href="#the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>We’ll use the following version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>    
+    <span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+    
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">TimeFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">t_array</span><span class="p">,</span> 
+                      <span class="n">columns</span><span class="o">=</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">frame</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can run it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with a row for each time step and a column for each of the state variables, <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.
+Here are the first few time steps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following plot shows the simulated glucose levels from the model along with the measured data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">glucose</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;glucose data&#39;</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the parameters I chose, the model fits the data well, except during the first few minutes after the injection.
+But we don’t expect the model to do well in this regime.</p>
+<p>The problem is that the model is <strong>non-spatial</strong>; that is, it does not
+take into account different concentrations in different parts of the
+body. Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body. This way of representing the body is known among experts as the “bag of blood” model.</p>
+<p>Immediately after injection, it takes time for the injected glucose to
+circulate. During that time, we don’t expect a non-spatial model to be
+accurate. For this reason, we should not take the estimated value of <code class="docutils literal notranslate"><span class="pre">G0</span></code> too seriously; it is useful for fitting the model, but not meant to correspond to a physical, measurable quantity.</p>
+<p>The following plot shows simulated insulin levels in the hypothetical “remote compartment”, which is in unspecified units.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;remote insulin&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (arbitrary units)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember that <code class="docutils literal notranslate"><span class="pre">X</span></code> represents the concentration of insulin in the “remote compartment”, which is believed to be tissue fluid, so we can’t compare it to the measured concentration of insulin in the blood.</p>
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code> rises quickly after the initial injection and then declines as the concentration of glucose declines.  Qualitatively, this behavior is as expected, but because <code class="docutils literal notranslate"><span class="pre">X</span></code> is not an observable quantity, we can’t validate this part of the model quantitatively.</p>
+</div>
+<div class="section" id="solving-differential-equations">
+<h2>Solving differential equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
+<p>To implement the minimal model, we rewrote the differential equations as difference equations with a finite time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p>
+<p>When <span class="math notranslate nohighlight">\(dt\)</span> is very small, or more precisely <strong>infinitesimal</strong>, the difference equations are the same as the differential equations.
+But in our simulations, <span class="math notranslate nohighlight">\(dt\)</span> is 2 min, which is not very small, and definitely not infinitesimal.</p>
+<p>In effect, the simulations assume that the derivatives <span class="math notranslate nohighlight">\(dG/dt\)</span> and <span class="math notranslate nohighlight">\(dX/dt\)</span> are constant during each 2 min time step.
+This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called <strong>Euler’s method</strong> (see <a class="reference external" href="http://modsimpy.com/euler">http://modsimpy.com/euler</a>).</p>
+<p>Euler’s method is good enough for many simple problems, but sometimes it is not very accurate.
+In that case, sometimes we can make it more accurate by decreasing the size of <code class="docutils literal notranslate"><span class="pre">dt</span></code>.
+But then it is not very efficient.</p>
+<p>There are other methods that are more accurate and more efficient than Euler’s method.
+SciPy provides several of them as a function called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>
+The “ivp” in <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> stands for “initial value problem”, which is the term for problems like the ones we’ve been solving, where we are given the initial conditions and try to predict what will happen.</p>
+<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> that makes <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> a little easier to use.</p>
+<p>To use it, we have to provide a “slope function”, which is similar to an update function; in fact, it takes the same parameters: a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>Here’s a slope function that evaluates the differential equations of the minimal model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">G</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">params</span> 
+    <span class="n">I</span><span class="p">,</span> <span class="n">Ib</span><span class="p">,</span> <span class="n">Gb</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Ib</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Gb</span>
+        
+    <span class="n">dGdt</span> <span class="o">=</span> <span class="o">-</span><span class="n">k1</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span> <span class="o">-</span> <span class="n">Gb</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">G</span>
+    <span class="n">dXdt</span> <span class="o">=</span> <span class="n">k3</span> <span class="o">*</span> <span class="p">(</span><span class="n">I</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">Ib</span><span class="p">)</span> <span class="o">-</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">X</span>
+    
+    <span class="k">return</span> <span class="n">dGdt</span><span class="p">,</span> <span class="n">dXdt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">slope_func</span></code> is a little simpler than <code class="docutils literal notranslate"><span class="pre">update_func</span></code> because it only compute the derivatives, that is, the slopes. It doesn’t do the updates; the solver does them for us.</p>
+<p>Now we can call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results2</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                  <span class="n">t_eval</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>: it takes a <code class="docutils literal notranslate"><span class="pre">System</span></code>
+object and a slope function as parameters.</p>
+<p>The third argument, <code class="docutils literal notranslate"><span class="pre">t_eval</span></code>, is optional; it specifies where the solution should be evaluated.</p>
+<p>It returns two values: a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which we assign to <code class="docutils literal notranslate"><span class="pre">results2</span></code>, and an <code class="docutils literal notranslate"><span class="pre">OdeResult</span></code> object, which we assign to <code class="docutils literal notranslate"><span class="pre">details</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OdeResult</span></code> object contains information about how the solver ran, including a success code and a diagnostic message.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">details</span><span class="o">.</span><span class="n">success</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s important to check these messages after running the solver, in case anything went wrong.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> has one row for each time step and one column for each state variable. In this example, the rows are time from 0 to 182 minutes; the columns are the state variables, <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.
+Here are the first few time steps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because we used <code class="docutils literal notranslate"><span class="pre">t_eval=results.index</span></code>, the time stamps in <code class="docutils literal notranslate"><span class="pre">results2</span></code> are the same as in <code class="docutils literal notranslate"><span class="pre">results</span></code>, which makes them easier to compare.</p>
+<p>Here are the results from <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> along with the results from <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;solve ivp&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The differences are barely visible.
+We can compute the relative differences like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">G</span> <span class="o">-</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span>
+<span class="n">percent_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">percent_diff</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The biggest differences are a little more than 1%.
+So in this example, the results from Euler’s method are probably good enough for practical purposes.</p>
+<p>Here are the results for <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;solve ivp&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (arbitrary units)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These differences are little bigger, especially at the beginning.
+As an exercise, you can experiment with <code class="docutils literal notranslate"><span class="pre">dt</span></code> and see what effect it has on these results.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we implemented the glucose minimal model two ways, using <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> and <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, and compared the results.
+We found that in this example, <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, which uses Euler’s method, is probably good enough.
+But soon we will see examples where it is not.</p>
+<p>So far, we have assumed that the parameters of the system are known, but in practice that’s not true.
+As one of the case studies in the next chapter, you’ll have a chance to see where those parameters came from.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong>  Our solution to the differential equations is only approximate because we used a finite step size, <code class="docutils literal notranslate"><span class="pre">dt=2</span></code> minutes.</p>
+<p>If we make the step size smaller, we expect the solution to be more accurate.  Run the simulation with <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> and compare the results.  What is the largest relative error between the two solutions?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p>The documentation for <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> is at <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html</a>.</p>
+<p>It uses a Runge-Kutta method…
+<a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods">RK45</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap17.html" title="previous page">Chapter 17</a>
+    <a class='right-next' id="next-link" href="chap19.html" title="next page">Chapter 19</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

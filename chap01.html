@@ -1,0 +1,1086 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 1 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 2" href="chap02.html" />
+    <link rel="prev" title="Preface" href="preface.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap01.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap01.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jupyter">
+   Jupyter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling">
+   Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-falling-penny-myth">
+   The falling penny myth
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computation">
+   Computation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computation-with-units">
+   Computation with units
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-jupyter">
+   More Jupyter
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-1">
+<h1>Chapter 1<a class="headerlink" href="#chapter-1" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="jupyter">
+<h2>Jupyter<a class="headerlink" href="#jupyter" title="Permalink to this headline">¶</a></h2>
+<p>Welcome to <em>Modeling and Simulation in Python</em>, and welcome to Jupyter.</p>
+<p>This is a Jupyter notebook, which is a development environment where you can write and run Python code.  Each notebook is divided into cells.  Each cell contains either text (like this cell) or Python code.</p>
+<p>To run a cell, hold down SHIFT and press ENTER.</p>
+<ul class="simple">
+<li><p>If you run a text cell, Jupyter formats the text and displays the result.</p></li>
+<li><p>If you run a code cell, Jupyter runs the Python code in the cell and displays the result, if any.</p></li>
+</ul>
+<p>If you run the following cell, it checks whether the libraries you need are installed.  If so, the cell produces no output.  If not, you’ll see updates from the installer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check if the libraries we need are installed</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+    
+<span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the previous cell runs without producing any error messages, you are all set.</p>
+</div>
+<div class="section" id="modeling">
+<h2>Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">¶</a></h2>
+<p>This book is about modeling and simulation of physical systems. The
+following diagram shows what I mean by “modeling”:</p>
+<img src ="https://github.com/AllenDowney/ModSimPy/raw/master/book/figs/modeling_framework.png" width="400"><p>Starting in the lower left, the <strong>system</strong> is something in the real
+world we are interested in.
+To model the system, we have to decide which elements of the real world to include and which we can leave out.
+This process is called <strong>abstraction</strong>.</p>
+<p>The result of abstraction is a <strong>model</strong>, which is a description of the system that includes only the features we think are essential. A model
+can be represented in the form of diagrams and equations, which can be
+used for mathematical <strong>analysis</strong>. It can also be implemented in the
+form of a computer program, which can run <strong>simulations</strong>.</p>
+<p>The result of analysis and simulation might be a <strong>prediction</strong> about
+what the system will do, an <strong>explanation</strong> of why it behaves the way it
+does, or a <strong>design</strong> intended to achieve a purpose.</p>
+<p>We can <strong>validate</strong> predictions and test designs by taking
+<strong>measurements</strong> from the real world and comparing the <strong>data</strong> we get
+with the results from analysis and simulation.</p>
+<p>For any physical system, there are many possible models, each one
+including and excluding different features, or including different
+levels of detail. The goal of the modeling process is to find the model
+best suited to its purpose (prediction, explanation, or design).</p>
+<p>Sometimes the best model is the most detailed. If we include more
+features, the model is more realistic, and we expect its predictions to
+be more accurate.</p>
+<p>But often a simpler model is better. If we include only the essential
+features and leave out the rest, we get models that are easier to work
+with, and the explanations they provide can be clearer and more
+compelling.</p>
+<p>As an example, suppose someone asks you why the orbit of the Earth is
+elliptical. If you model the Earth and Sun as point masses (ignoring
+their actual size), compute the gravitational force between them using
+Newton’s law of universal gravitation, and compute the resulting orbit
+using Newton’s laws of motion, you can show that the result is an
+ellipse.</p>
+<p>Of course, the actual orbit of Earth is not a perfect ellipse, because
+of the gravitational forces of the Moon, Jupiter, and other objects in
+the solar system, and because Newton’s laws of motion are only
+approximately true (they don’t take into account relativistic effects).</p>
+<p>But adding these features to the model would not improve the
+explanation; more detail would only be a distraction from the
+fundamental cause. However, if the goal is to predict the position of
+the Earth with great precision, including more details might be
+necessary.</p>
+<p>Choosing the best model depends on what the model is for. It is usually
+a good idea to start with a simple model, even if it is likely to be too
+simple, and test whether it is good enough for its purpose. Then you can
+add features gradually, starting with the ones you expect to be most
+essential. This process is called <strong>iterative modeling</strong>.</p>
+<p>Comparing results of successive models provides a form of <strong>internal
+validation</strong>, so you can catch conceptual, mathematical, and software
+errors. And by adding and removing features, you can tell which ones
+have the biggest effect on the results, and which can be ignored.</p>
+<p>Comparing results to data from the real world provides <strong>external
+validation</strong>, which is generally the strongest test.</p>
+</div>
+<div class="section" id="the-falling-penny-myth">
+<h2>The falling penny myth<a class="headerlink" href="#the-falling-penny-myth" title="Permalink to this headline">¶</a></h2>
+<p>Let’s see an example of how models are used. You might have heard that a
+penny dropped from the top of the Empire State Building would be going
+so fast when it hit the pavement that it would be embedded in the
+concrete; or if it hit a person, it would break their skull.</p>
+<p>We can test this myth by making and analyzing a model. To get started,
+we’ll assume that the effect of air resistance is small. This will turn out to be a bad assumption, but bear with me.
+If air resistance is negligible, the primary force acting on the penny
+is gravity, which causes the penny to accelerate downward.</p>
+<p>If the initial velocity is 0, the velocity after <span class="math notranslate nohighlight">\(t\)</span> seconds is</p>
+<div class="math notranslate nohighlight">
+\[v = a t\]</div>
+<p>and the distance the penny has dropped is</p>
+<div class="math notranslate nohighlight">
+\[x = a t^2 / 2\]</div>
+<p>To find the time until the penny reaches the sidewalk, we can solve for <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[t = \sqrt{ 2 x / a}\]</div>
+<p>Plugging in the acceleration of gravity, <span class="math notranslate nohighlight">\(a = 9.8\)</span> m/s<span class="math notranslate nohighlight">\(^2\)</span>, and the height of the Empire State Building, <span class="math notranslate nohighlight">\(x = 381\)</span> m, we get <span class="math notranslate nohighlight">\(t = 8.8\)</span> s.</p>
+<p>Then computing <span class="math notranslate nohighlight">\(v = a t\)</span> we get a velocity on impact of <span class="math notranslate nohighlight">\(86\)</span> m/s, which is about 190 miles per hour. That sounds like it could hurt.</p>
+<p>Of course, these results are not exact because the model is based on
+simplifications. For example, we assume that gravity is constant. In
+fact, the force of gravity is different on different parts of the globe, and it gets weaker as you move away from the surface. But these differences are small, so ignoring them is probably a good choice for this scenario.</p>
+<p>On the other hand, ignoring air resistance is not a good choice. Once
+the penny gets to about 29 m/s, the upward force of air resistance
+equals the downward force of gravity, so the penny stops accelerating.
+This is the <strong>terminal velocity</strong> of the penny in air.</p>
+<p>Once the penny reaches terminal velocity, it doesn’t matter how much farther it falls; it hits the sidewalk at about 29 m/s.
+That’s much less than 86 m/s, as the simple model predicts.</p>
+<p>The statistician George Box famously said “All models are wrong, but
+some are useful.” He was talking about statistical models, but his wise words apply to all kinds of models. Our first model, which ignores air resistance, is very wrong, and probably not useful. The second model, which takes air resistance into account, is still wrong, but it’s better, and it’s good enough to refute the myth.</p>
+<p>The television show <em>Mythbusters</em> has tested the myth of the falling
+penny more carefully; you can view the results at
+<a class="reference external" href="http://modsimpy.com/myth">http://modsimpy.com/myth</a>. Their work is based on a mathematical model of motion, measurements to determine the force of air resistance on a penny, and a physical model of a human head.</p>
+</div>
+<div class="section" id="computation">
+<h2>Computation<a class="headerlink" href="#computation" title="Permalink to this headline">¶</a></h2>
+<p>Let me show you how I computed the results from the
+previous section using Python.
+First we’ll create a variable to represent acceleration due to gravity in meters per second squared (m/s^2).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A <strong>variable</strong> is a name that corresponds to a value. In this example, the name is <code class="docutils literal notranslate"><span class="pre">a</span></code> and the value is the number <code class="docutils literal notranslate"><span class="pre">9.8</span></code>.</p>
+<p>Suppose we let the penny drop for <span class="math notranslate nohighlight">\(3.4\)</span> seconds (s).  I’ll create a variable to represent this time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mf">3.4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute the velocity of the penny after <code class="docutils literal notranslate"><span class="pre">t</span></code> seconds.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python uses the symbol <code class="docutils literal notranslate"><span class="pre">*</span></code> for multiplication.  The other arithmetic operators are <code class="docutils literal notranslate"><span class="pre">+</span></code> for addition, <code class="docutils literal notranslate"><span class="pre">-</span></code> for subtraction, <code class="docutils literal notranslate"><span class="pre">/</span></code> for division, and <code class="docutils literal notranslate"><span class="pre">**</span></code> for exponentiation.</p>
+<p>When you assign a value to a variable, Jupyter does not show the result automatically, but you can display the value of a variable like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After <span class="math notranslate nohighlight">\(3.4\)</span> s, the velocity of the penny is about <span class="math notranslate nohighlight">\(33\)</span> m/s (ignoring air resistance).  Now let’s see how far it would travel during that time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It would travel about <span class="math notranslate nohighlight">\(56\)</span> m.  Now, going in the other direction, let’s compute the time it takes to fall 381 m, the height of the Empire State Building.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mi">381</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this computation, we need the square root function, which is provided by a library called NumPy.
+Before we can use it, we have to import it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With no air resistance, it would take about <span class="math notranslate nohighlight">\(8.8\)</span> s for the penny to reach the sidewalk.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">t</span>
+<span class="n">v</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And its velocity on impact would be about <span class="math notranslate nohighlight">\(86\)</span> m/s.</p>
+<p>Python displays results with about 16 digits, which gives the impression that they are very precise, but don’t be fooled.
+The numbers we get out are only as good as the numbers we put in.</p>
+<p>For example, the “roof height” of the Empire State Building is <span class="math notranslate nohighlight">\(380\)</span> m <a class="reference external" href="https://en.wikipedia.org/wiki/Empire_State_Building">according to Wikipedia</a>.
+I chose <span class="math notranslate nohighlight">\(h=381\)</span> m for this example on the assumption that the observation deck is on the roof and you drop the penny from a 1 meter railing.
+But that’s probably not right, so we should treat this value as an approximation where only the first two digits are likely to be right.</p>
+<p>If the precision of the inputs is two digits, the precision of the outputs is two digits, <em>at most</em>.
+That’s why, if the output is <code class="docutils literal notranslate"><span class="pre">86.41527642726142</span></code>, I report it as “about 86”.</p>
+</div>
+<div class="section" id="computation-with-units">
+<h2>Computation with units<a class="headerlink" href="#computation-with-units" title="Permalink to this headline">¶</a></h2>
+<p>The computation in the previous section uses numbers without units.<br />
+When we set <code class="docutils literal notranslate"><span class="pre">h=381</span></code>, we left out the meters, and when we set <code class="docutils literal notranslate"><span class="pre">a=9.8</span></code>, we left out the meters per second squared.
+And, when we got the result <code class="docutils literal notranslate"><span class="pre">v=86</span></code>, we added back the meters per second.</p>
+<p>Leaving units of out computation is common practice, but it tends to cause errors, including the very expensive failure of the <a class="reference external" href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter">Mars Climate Orbiter</a> in 1999.
+When possible, it is better to include units in the computation.</p>
+<p>To represent units, we’ll use a Python library called <a class="reference external" href="https://pint.readthedocs.io/en/latest/">Pint</a>.
+The ModSim library initializes Pint and provides an object called <code class="docutils literal notranslate"><span class="pre">units</span></code> that contains variables representing pretty much every unit you’ve ever heard of.</p>
+<p>We can import it like this:</p>
+<p>Now we can create variables named <code class="docutils literal notranslate"><span class="pre">meter</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meter</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<span class="n">meter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">second</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span>
+<span class="n">second</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To find out what other units are defined, type <code class="docutils literal notranslate"><span class="pre">units.</span></code> (including the period) in the next cell and then press TAB.  You should see a pop-up menu with a list of units.</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">meter</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code> to create a variable named <code class="docutils literal notranslate"><span class="pre">a</span></code> and give it the value of acceleration due to gravity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="o">*</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <strong>quantity</strong> with two parts, called <code class="docutils literal notranslate"><span class="pre">magnitude</span></code> and <code class="docutils literal notranslate"><span class="pre">units</span></code>, which we can access like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">units</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create a quantity that represents <span class="math notranslate nohighlight">\(3.4\)</span> s.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">second</span>
+<span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And use it to compute the distance a penny would fall after <code class="docutils literal notranslate"><span class="pre">t</span></code> seconds with constant acceleration <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the units of the result are correct.
+If we create a quantity to represent the height of the Empire State Building:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mi">381</span> <span class="o">*</span> <span class="n">meter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use it to compute the time to reach the sidewalk.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the velocity of the penny on impact:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">t</span>
+<span class="n">v</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As in the previous section, the result is about <span class="math notranslate nohighlight">\(86\)</span>, but now it has the correct units, m/s.</p>
+<p>With Pint quantities, we can convert from one set of units to another like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mile</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">mile</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">hour</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">mile</span><span class="o">/</span><span class="n">hour</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are more familiar with miles per hour, this result might be easier to interpret.
+And it might give you a sense that this model is not realistic.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter introduces a modeling framework that consists of three steps:</p>
+<ul class="simple">
+<li><p>Abstraction is the process of defining a model, deciding which elements of the real world to include and which can be left out.</p></li>
+<li><p>Analysis and simulation are ways to use a model to generate predictions, explain why things behave as they to, and design things that behave as we want.</p></li>
+<li><p>Validation is how we test whether the model is right, often by comparing predictions with measurements from the real world.</p></li>
+</ul>
+<p>As a first example, we modeled a penny dropped from the Empire State building, including gravity but ignoring air resistance.
+In the exercises, you’ll have a chance to try a better model, including air resistance.</p>
+<p>This chapter also presents Pint, a library for doing computation with units, which is convenient for converting between different units and important for avoiding catastrophic errors.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise</strong> In mathematical notation, we can write an equation like <span class="math notranslate nohighlight">\(v = a t\)</span> and it’s understood that we are multiplying <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(t\)</span>.
+But that doesn’t work in Python.  If you put two variables side-by-side, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="n">t</span>
+</pre></div>
+</div>
+<p>you’ll get a <strong>syntax error</strong>, which means that something is wrong with the punctuation of the program.</p>
+<p>Try it out in the next cell so you see what the error message looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="o">*</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">second</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">t</span>
+<span class="n">v</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> In this chapter we used the <code class="docutils literal notranslate"><span class="pre">sqrt</span></code> function from the NumPy library.  NumPy also provides a variable named <code class="docutils literal notranslate"><span class="pre">pi</span></code> that contains an approximation of the mathematical constant <span class="math notranslate nohighlight">\(\pi\)</span>.
+We can import it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="n">pi</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>NumPy provides other functions we’ll use, including <code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, <code class="docutils literal notranslate"><span class="pre">sin</span></code>, and <code class="docutils literal notranslate"><span class="pre">cos</span></code>.
+Import <code class="docutils literal notranslate"><span class="pre">sin</span></code> and <code class="docutils literal notranslate"><span class="pre">cos</span></code> from NumPy and compute</p>
+<div class="math notranslate nohighlight">
+\[sin^2 \pi/4 + cos^2 \pi/4\]</div>
+<p>Note: A mathematical identity tells us that the answer should be <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Suppose you bring a 10 foot pole to the top of the Empire State Building and use it to drop the penny from <code class="docutils literal notranslate"><span class="pre">h</span></code> plus 10 feet.</p>
+<p>Define a variable named <code class="docutils literal notranslate"><span class="pre">foot</span></code> that contains the unit <code class="docutils literal notranslate"><span class="pre">foot</span></code> provided by <code class="docutils literal notranslate"><span class="pre">UNITS</span></code>.  Define a variable named <code class="docutils literal notranslate"><span class="pre">pole_height</span></code> and give it the value 10 feet.</p>
+<p>What happens if you add <code class="docutils literal notranslate"><span class="pre">h</span></code>, which is in units of meters, to <code class="docutils literal notranslate"><span class="pre">pole_height</span></code>, which is in units of feet?  What happens if you write the addition the other way around?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mi">381</span> <span class="o">*</span> <span class="n">meter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise</strong>: Why would it be nonsensical to add <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>? What happens if you try?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="o">*</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">second</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, you should get a <code class="docutils literal notranslate"><span class="pre">DimensionalityError</span></code>, which is defined by Pint to indicate that you have violated a rules of dimensional analysis: you cannot add quantities with different dimensions.</p>
+<p>The error messages you get from Python are big and scary, but if you read them carefully, they contain a lot of useful information.</p>
+<ol class="simple">
+<li><p>Start from the bottom and read up.</p></li>
+<li><p>The last line usually tells you what type of error happened, and sometimes additional information.</p></li>
+<li><p>The previous lines are a “traceback” of what was happening when the error occurred.  The first section of the traceback shows the code you wrote.  The following sections are often from Python libraries.</p></li>
+</ol>
+<p>Before you go on, you might want to delete the erroneous code so the notebook can run without errors.</p>
+<p><strong>Exercise:</strong> Suppose instead of dropping the penny, you throw it downward at its terminal velocity, <span class="math notranslate nohighlight">\(29\)</span> m/s.  How long would it take to fall <span class="math notranslate nohighlight">\(381\)</span> m?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> So far we have considered two models of a falling penny:</p>
+<ul class="simple">
+<li><p>If we ignore air resistance, the penny falls with constant acceleration, and we can compute the time to reach the sidewalk and the velocity of the penny when it gets there.</p></li>
+<li><p>If we take air resistance into account, and drop the penny at its terminal velocity, it falls with constant velocity.</p></li>
+</ul>
+<p>Now let’s consider a third model that includes elements of the first two: let’s assume that the acceleration of the penny is <code class="docutils literal notranslate"><span class="pre">a</span></code> until the penny reaches <span class="math notranslate nohighlight">\(29\)</span> m/s, and then <span class="math notranslate nohighlight">\(0\)</span> m/s afterwards.  What is the total time for the penny to fall <span class="math notranslate nohighlight">\(381\)</span> m?</p>
+<p>You can break this question into three parts:</p>
+<ol class="simple">
+<li><p>How long would the penny take to reach <span class="math notranslate nohighlight">\(29\)</span> m/s with constant acceleration <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p></li>
+<li><p>How far would it fall during that time?</p></li>
+<li><p>How long would it take to fall the remaining distance with constant velocity <span class="math notranslate nohighlight">\(29\)</span> m/s?</p></li>
+</ol>
+<p>Suggestion: Assign each intermediate result to a variable with a meaningful name.  And assign units to all quantities!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="o">*</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">381</span> <span class="o">*</span> <span class="n">meter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> When I was in high school, the pitcher on the baseball team claimed that, when he threw a fastball, he was throwing the ball down; that is, the ball was leaving his hand at a downward angle.
+I was skeptical; watching from the side, I thought the ball was leaving his hand at an upward angle.</p>
+<p>Can you think of a simple model you could use to settle the argument?  What factors would you include and what could you ignore?  What quantities would you have to look up or estimate?</p>
+<p>I suggest you convert all quantities to <a class="reference external" href="https://en.wikipedia.org/wiki/International_System_of_Units">SI units</a>: meters and seconds.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Suppose I run a 10K race in 44:52.  What is my average page in minutes per mile?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mile</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">mile</span>
+<span class="n">kilometer</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
+<span class="n">minute</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">minute</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="more-jupyter">
+<h2>More Jupyter<a class="headerlink" href="#more-jupyter" title="Permalink to this headline">¶</a></h2>
+<p>You can add and remove cells from a notebook using the buttons in the toolbar and the items in the menu, both of which you should see at the top of this notebook.</p>
+<p>Try the following exercises:</p>
+<ol class="simple">
+<li><p>From the Insert menu select “Insert cell below” to add a cell below this one.  By default, you get a code cell, as you can see in the pulldown menu that says “Code”.</p></li>
+<li><p>In the new cell, add a print statement like <code class="docutils literal notranslate"><span class="pre">print('Hello')</span></code>, and run it.</p></li>
+<li><p>Add another cell, select the new cell, and then click on the pulldown menu that says “Code” and select “Markdown”.  This makes the new cell a text cell.</p></li>
+<li><p>In the new cell, type some text, and then run it.</p></li>
+<li><p>Use the arrow buttons in the toolbar to move cells up and down.</p></li>
+<li><p>Use the cut, copy, and paste buttons to delete, add, and move cells.</p></li>
+<li><p>As you make changes, Jupyter saves your notebook automatically, but if you want to make sure, you can press the save button, which looks like a floppy disk from the 1990s.</p></li>
+<li><p>Finally, when you are done with a notebook, select “Close and Halt” from the File menu.</p></li>
+</ol>
+<p>When you change the contents of a cell, you have to run it again for those changes to have an effect.  If you forget to do that, the results can be confusing, because the code you are looking at is not the code you ran.</p>
+<p>If you ever lose track of which cells have run, and in what order, you should go to the Kernel menu and select “Restart &amp; Run All”.  Restarting the kernel means that all of your variables get deleted, and running all the cells means all of your code will run again, in the right order.</p>
+<p><strong>Exercise:</strong>  Select “Restart &amp; Run All” now and confirm that it does what you want.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="preface.html" title="previous page">Preface</a>
+    <a class='right-next' id="next-link" href="chap02.html" title="next page">Chapter 2</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

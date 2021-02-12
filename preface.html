@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preface &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 1" href="chap01.html" />
+    <link rel="prev" title="Modeling and Simulation in Python" href="index.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/preface.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling">
+   Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#who-is-this-book-for">
+   Who is this book for?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-the-code">
+   Working with the code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installing-jupyter">
+   Installing Jupyter
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributor-list">
+     Contributor List
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="preface">
+<h1>Preface<a class="headerlink" href="#preface" title="Permalink to this headline">¶</a></h1>
+<p>The premise of this book, and the other books in the <em>Think X</em> series,
+is that if you know how to program, you can use that skill to learn
+other topics.</p>
+<p>Most books on Bayesian statistics use math notation and present
+ideas using mathematical concepts like calculus. This book uses
+Python code and discrete approximations instead of
+continuous mathematics. As a result, what would be an integral in a math
+book becomes a summation, and most operations on probability
+distributions are loops or array operations.</p>
+<p>I think this presentation is easier to understand, at least for people
+with programming skills. It is also more general, because when we make
+modeling decisions, we can choose the most appropriate model without
+worrying too much about whether the model lends itself to mathematical
+analysis.</p>
+<p>Also, it provides a smooth development path from simple examples to
+real-world problems.</p>
+<div class="section" id="modeling">
+<h2>Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">¶</a></h2>
+<p>Most chapters in this book are motivated by a real-world problem, so
+they involve some degree of modeling.  Before we can apply Bayesian
+methods (or any other analysis), we have to make decisions about which
+parts of the real-world system to include in the model and which
+details we can abstract away.</p>
+<p>For example, in Chapter xxx, the motivating problem is to
+predict the winner of a soccer (football) game.  I model goal-scoring as a
+Poisson process, which implies that a goal is equally likely at any
+point in the game.  That is not exactly true, but it is probably a
+good enough model for most purposes.</p>
+<p>In Chapter xxx the motivating problem is interpreting SAT
+scores (the SAT is a standardized test used for college admissions in
+the United States).  I start with a simple model that assumes that all
+SAT questions are equally difficult, but in fact the designers of the
+SAT deliberately include some questions that are relatively easy and
+some that are relatively hard.  I present a second model that accounts
+for this aspect of the design, and show that it doesn’t have a big
+effect on the results after all.</p>
+<p>I think it is important to include modeling as an explicit part
+of problem solving because it reminds us to think about modeling
+errors (that is, errors due to simplifications and assumptions
+of the model).</p>
+<p>Many of the methods in this book are based on discrete distributions,
+which makes some people worry about numerical errors.  But for
+real-world problems, numerical errors are almost always
+smaller than modeling errors.</p>
+<p>Furthermore, the discrete approach often allows better modeling
+decisions, and I would rather have an approximate solution
+to a good model than an exact solution to a bad model.</p>
+</div>
+<div class="section" id="who-is-this-book-for">
+<h2>Who is this book for?<a class="headerlink" href="#who-is-this-book-for" title="Permalink to this headline">¶</a></h2>
+<p>To start this book, you should be comfortable with Python.
+If you are familiar with NumPy and Pandas, that will help, but I’ll
+explain what you need as we go.</p>
+<p>You don’t need to know calculus or linear algebra.
+You don’t need any prior knowledge of statistics.</p>
+<p>In Chapter 1, I define
+probability and introduce the idea of conditional probability, which is the
+foundation of Bayes’s Theorem.
+Chapter 3 introduces the idea of a probability distribution, which is the
+foundation of Bayesian statistics.</p>
+<p>Along the way, we will use a variety of discrete and continuous distributions,
+including the binomial, exponential, Poisson, beta, gamma, and normal
+distributions.
+I will explain each distribution when it is introduced, and we will use
+SciPy to compute them, so you don’t need to know anything about their
+mathematical properties.</p>
+</div>
+<div class="section" id="working-with-the-code">
+<h2>Working with the code<a class="headerlink" href="#working-with-the-code" title="Permalink to this headline">¶</a></h2>
+<p>Reading this book will only get you so far; to really understand it,
+you have to work with the code.
+The original form of this book is a series of Jupyter notebooks.
+After you read each chapter, I encourage you to run the notebook and work
+on the exercises.<br />
+If you need help, my solutions are available.</p>
+<p>There are several ways to run the notebooks:</p>
+<ul class="simple">
+<li><p>If you have Python and Jupyter installed, you can download the notebooks
+and run them on your computer.</p></li>
+<li><p>If you don’t have a programming environment where you can run
+Jupyter notebooks, you can run them
+on Colab, which lets you run Jupyter notebooks in a browser without
+installing anything.</p></li>
+</ul>
+<p>To run the notebooks on Colab, start from <a class="reference external" href="http://allendowney.github.io/ThinkBayes2/index.html">this landing page</a>,
+which has links to all of the notebooks.</p>
+<p>If you already have Python and Jupyter, you can
+<a class="reference external" href="https://github.com/AllenDowney/ThinkBayes2/raw/master/ThinkBayes2Notebooks.zip">download the notebooks as a Zip file</a>.</p>
+</div>
+<div class="section" id="installing-jupyter">
+<h2>Installing Jupyter<a class="headerlink" href="#installing-jupyter" title="Permalink to this headline">¶</a></h2>
+<p>If you don’t have Python and Jupyter already, I recommend you
+install Anaconda, which is a free Python distribution that includes all
+the packages you’ll need.
+I found Anaconda easy to install.
+By default it installs files in your home
+directory, so you don’t need administrator privileges. You can download
+Anaconda from <a class="reference external" href="https://www.anaconda.com/products/individual">this site</a>.</p>
+<p>By default Anaconda installs most of the packages you need to
+run the code in this book.
+But there are a few additional packages you need to install.</p>
+<p>To make sure you have everything you need
+(and the right versions), the best option is to create a Conda
+environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment</span><span class="o">.</span><span class="n">yml</span>
+        <span class="n">conda</span> <span class="n">activate</span> <span class="n">ThinkBayes2</span>
+</pre></div>
+</div>
+<p>If you don’t want to create an environment just for this book, you can
+install what you need using Conda. The following commands should get
+everything you need:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">conda</span> <span class="n">install</span> <span class="n">python</span> <span class="n">jupyter</span> <span class="n">pandas</span> <span class="n">scipy</span> <span class="n">matplotlib</span>
+    <span class="n">pip</span> <span class="n">install</span> <span class="n">empiricaldist</span>
+</pre></div>
+</div>
+<p>If you don’t want to use Anaconda, you will need the following packages:</p>
+<ul class="simple">
+<li><p>Jupyter to run the notebooks, <a class="reference external" href="https://jupyter.org/">https://jupyter.org/</a>;</p></li>
+<li><p>NumPy for basic numerical computation, <a class="reference external" href="https://www.numpy.org/">https://www.numpy.org/</a>;</p></li>
+<li><p>SciPy for scientific computation, <a class="reference external" href="https://www.scipy.org/">https://www.scipy.org/</a>;</p></li>
+<li><p>Pandas for working with data, <a class="reference external" href="https://pandas.pydata.org/">https://pandas.pydata.org/</a>;</p></li>
+<li><p>matplotlib for visualization, <a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a>;</p></li>
+<li><p>empiricaldist for representing distributions, <a class="reference external" href="https://pypi.org/project/empiricaldist/">https://pypi.org/project/empiricaldist/</a>. .</p></li>
+</ul>
+<p>Although these are commonly used packages, they are not included with
+all Python installations, and they can be hard to install in some
+environments. If you have trouble installing them, I recommend using
+Anaconda or one of the other Python distributions that include these
+packages.</p>
+<div class="section" id="contributor-list">
+<h3>Contributor List<a class="headerlink" href="#contributor-list" title="Permalink to this headline">¶</a></h3>
+<p>If you have a suggestion or correction, please send email to
+<em>downey&#64;allendowney.com</em>. If I make a change based on your feedback, I
+will add you to the contributor list (unless you ask to be omitted).</p>
+<p>If you include at least part of the sentence the error appears in, that
+makes it easy for me to search. Page and section numbers are fine, too,
+but not as easy to work with. Thanks!</p>
+<ul class="simple">
+<li><p>First, I have to acknowledge David MacKay’s excellent book,
+<em>Information Theory, Inference, and Learning Algorithms</em>, which is
+where I first came to understand Bayesian methods. With his
+permission, I use several problems from his book as examples.</p></li>
+<li><p>This book also benefited from my interactions with Sanjoy Mahajan,
+especially in Fall 2012, when I audited his class on Bayesian
+Inference at Olin College.</p></li>
+<li><p>I wrote parts of this book during project nights with the Boston
+Python User Group, so I would like to thank them for their company
+and pizza.</p></li>
+<li><p>Jasmine Kwityn and Dan Fauxsmith at O’Reilly Media proofread the
+first edition and found many opportunities for improvement.</p></li>
+<li><p>Linda Pescatore found a typo and made some helpful suggestions.</p></li>
+<li><p>Tomasz Miasko sent many excellent corrections and suggestions.</p></li>
+</ul>
+<p>Other people who spotted typos and small errors include
+Greg Marra,
+Matt Aasted,
+Marcus Ogren,
+Tom Pollard,
+Paul A. Giannaros, Jonathan Edwards, George Purkins, Robert Marcus, Ram
+Limbu, James Lawry, Ben Kahle, Jeffrey Law,
+Alvaro Sanchez,
+Olivier Yiptong,
+Yuriy Pasichnyk,
+Kristopher Overholt,
+Max Hailperin,
+Markus Dobler</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Modeling and Simulation in Python</a>
+    <a class='right-next' id="next-link" href="chap01.html" title="next page">Chapter 1</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

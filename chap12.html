@@ -1,0 +1,926 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 12 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 13" href="chap13.html" />
+    <link rel="prev" title="Chapter 11" href="chap11.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap12.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap12.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#immunization">
+   Immunization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metrics">
+   Metrics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sweeping-immunization">
+   Sweeping Immunization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hand-washing">
+   Hand washing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic-function">
+   Logistic function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   Optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercises">
+     Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-12">
+<h1>Chapter 12<a class="headerlink" href="#chapter-12" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import code from previous notebooks</span>
+
+<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">make_system</span>
+<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">update_func</span>
+<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">run_simulation</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter I presented the SIR model of infectious disease and used it to model the Freshman Plague at Olin. In this chapter we’ll consider metrics intended to quantify the effects of the disease and interventions intended to reduce those effects.</p>
+<div class="section" id="immunization">
+<h2>Immunization<a class="headerlink" href="#immunization" title="Permalink to this headline">¶</a></h2>
+<p>Models like this are useful for testing “what if?” scenarios. As an
+example, we’ll consider the effect of immunization.</p>
+<p>Suppose there is a vaccine that causes a student to become immune to the Freshman Plague without being infected. How might you modify the model to capture this effect?</p>
+<p>One option is to treat immunization as a shortcut from susceptible to
+recovered without going through infectious. We can implement this
+feature like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_immunization</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">S</span> <span class="o">-=</span> <span class="n">fraction</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">R</span> <span class="o">+=</span> <span class="n">fraction</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">add_immunization</span></code> moves the given fraction of the population from <code class="docutils literal notranslate"><span class="pre">S</span></code>
+to <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="o">=</span> <span class="mi">3</span>             <span class="c1"># time between contacts in days </span>
+<span class="n">tr</span> <span class="o">=</span> <span class="mi">4</span>             <span class="c1"># recovery time in days</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tc</span>      <span class="c1"># contact rate in per day</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr</span>     <span class="c1"># recovery rate in per day</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we assume that 10% of students are vaccinated at the
+beginning of the semester, and the vaccine is 100% effective, we can
+simulate the effect like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system2</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">add_immunization</span><span class="p">(</span><span class="n">system2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">results2</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system2</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows <code class="docutils literal notranslate"><span class="pre">S</span></code> as a function of time, with and
+without immunization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;No immunization&#39;</span><span class="p">)</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;10</span><span class="si">% i</span><span class="s1">mmunization&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction of population&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
+<p>When we plot a time series, we get a view of everything that happened
+when the model ran, but often we want to boil it down to a few numbers
+that summarize the outcome. These summary statistics are called
+<strong>metrics</strong>, as we saw in Section xxx.</p>
+<p>In the SIR model, we might want to know the time until the peak of the
+outbreak, the number of people who are sick at the peak, the number of
+students who will still be sick at the end of the semester, or the total number of students who get sick at any point.</p>
+<p>As an example, I will focus on the last one — the total number of sick students — and we will consider interventions intended to minimize it.</p>
+<p>When a person gets infected, they move from <code class="docutils literal notranslate"><span class="pre">S</span></code> to <code class="docutils literal notranslate"><span class="pre">I</span></code>, so we can get
+the total number of infections by computing the difference in <code class="docutils literal notranslate"><span class="pre">S</span></code> at the beginning and the end:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">s_0</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span>
+    <span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results2</span><span class="p">,</span> <span class="n">system2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Without immunization, almost 47% of the population gets infected at some point. With 10% immunization, only 31% get infected. That’s pretty good.</p>
+</div>
+<div class="section" id="sweeping-immunization">
+<h2>Sweeping Immunization<a class="headerlink" href="#sweeping-immunization" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s see what happens if we administer more vaccines. This
+following function sweeps a range of immunization rates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_immunity</span><span class="p">(</span><span class="n">immunize_array</span><span class="p">):</span>
+    <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">fraction</span> <span class="ow">in</span> <span class="n">immunize_array</span><span class="p">:</span>
+        <span class="n">sir</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+        <span class="n">add_immunization</span><span class="p">(</span><span class="n">sir</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">sir</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+        <span class="n">sweep</span><span class="p">[</span><span class="n">fraction</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">sir</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sweep</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The parameter of <code class="docutils literal notranslate"><span class="pre">sweep_immunity</span></code> is an array of immunization rates. The
+result is a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> object that maps from each immunization rate
+to the resulting fraction of students ever infected.</p>
+<p>The following figure shows a plot of the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>. Notice that
+the x-axis is the immunization rate, not time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">immunize_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="n">infected_sweep</span> <span class="o">=</span> <span class="n">sweep_immunity</span><span class="p">(</span><span class="n">immunize_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Fraction immunized&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Total fraction infected&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Fraction infected vs. immunization rate&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As the immunization rate increases, the number of infections drops
+steeply. If 40% of the students are immunized, fewer than 4% get sick.
+That’s because immunization has two effects: it protects the people who get immunized (of course) but it also protects the rest of the
+population.</p>
+<p>Reducing the number of “susceptibles” and increasing the number of
+“resistants” makes it harder for the disease to spread, because some
+fraction of contacts are wasted on people who cannot be infected. This
+phenomenon is called <strong>herd immunity</strong>, and it is an important element
+of public health (see <a class="reference external" href="http://modsimpy.com/herd">http://modsimpy.com/herd</a>).</p>
+<p>The steepness of the curve is a blessing and a curse. It’s a blessing
+because it means we don’t have to immunize everyone, and vaccines can
+protect the “herd” even if they are not 100% effective.</p>
+<p>But it’s a curse because a small decrease in immunization can cause a
+big increase in infections. In this example, if we drop from 80%
+immunization to 60%, that might not be too bad. But if we drop from 40% to 20%, that would trigger a major outbreak, affecting more than 15% of the population. For a serious disease like measles, just to name one, that would be a public health catastrophe.</p>
+<p>One use of models like this is to demonstrate phenomena like herd
+immunity and to predict the effect of interventions like vaccination.
+Another use is to evaluate alternatives and guide decision making. We’ll see an example in the next section.</p>
+</div>
+<div class="section" id="hand-washing">
+<h2>Hand washing<a class="headerlink" href="#hand-washing" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you are the Dean of Student Life, and you have a budget of just $1200 to combat the Freshman Plague. You have two options for spending this money:</p>
+<ol class="simple">
+<li><p>You can pay for vaccinations, at a rate of $100 per dose.</p></li>
+<li><p>You can spend money on a campaign to remind students to wash hands
+frequently.</p></li>
+</ol>
+<p>We have already seen how we can model the effect of vaccination. Now
+let’s think about the hand-washing campaign. We’ll have to answer two
+questions:</p>
+<ol class="simple">
+<li><p>How should we incorporate the effect of hand washing in the model?</p></li>
+<li><p>How should we quantify the effect of the money we spend on a
+hand-washing campaign?</p></li>
+</ol>
+<p>For the sake of simplicity, let’s assume that we have data from a
+similar campaign at another school showing that a well-funded campaign
+can change student behavior enough to reduce the infection rate by 20%.</p>
+<p>In terms of the model, hand washing has the effect of reducing <code class="docutils literal notranslate"><span class="pre">beta</span></code>.
+That’s not the only way we could incorporate the effect, but it seems
+reasonable and it’s easy to implement.</p>
+<p>Now we have to model the relationship between the money we spend and the
+effectiveness of the campaign. Again, let’s suppose we have data from
+another school that suggests:</p>
+<ul class="simple">
+<li><p>If we spend $500 on posters, materials, and staff time, we can
+change student behavior in a way that decreases the effective value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> by 10%.</p></li>
+<li><p>If we spend $1000, the total decrease in <code class="docutils literal notranslate"><span class="pre">beta</span></code> is almost 20%.</p></li>
+<li><p>Above $1000, additional spending has little additional benefit.</p></li>
+</ul>
+</div>
+<div class="section" id="logistic-function">
+<h2>Logistic function<a class="headerlink" href="#logistic-function" title="Permalink to this headline">¶</a></h2>
+<p>To model the effect of a hand-washing campaign, I’ll use a <a class="reference external" href="https://en.wikipedia.org/wiki/Generalised_logistic_function">generalized logistic function</a> (GLF), which is a convenient function for modeling curves that have a generally sigmoid shape.  The parameters of the GLF correspond to various features of the curve in a way that makes it easy to find a function that has the shape you want, based on data or background information about the scenario.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span>
+
+<span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the generalize logistic function.</span>
+<span class="sd">    </span>
+<span class="sd">    A: controls the lower bound</span>
+<span class="sd">    B: controls the steepness of the transition </span>
+<span class="sd">    C: not all that useful, AFAIK</span>
+<span class="sd">    M: controls the location of the transition</span>
+<span class="sd">    K: controls the upper bound</span>
+<span class="sd">    Q: shift the transition left or right</span>
+<span class="sd">    nu: affects the symmetry of the transition</span>
+<span class="sd">    </span>
+<span class="sd">    returns: float or array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exponent</span> <span class="o">=</span> <span class="o">-</span><span class="n">B</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">C</span> <span class="o">+</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">+</span> <span class="p">(</span><span class="n">K</span><span class="o">-</span><span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="n">denom</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">nu</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following array represents the range of possible spending.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spending</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">compute_factor</span></code> computes the reduction in <code class="docutils literal notranslate"><span class="pre">beta</span></code> for a given level of campaign spending.</p>
+<p><code class="docutils literal notranslate"><span class="pre">M</span></code> is chosen so the transition happens around $500.</p>
+<p><code class="docutils literal notranslate"><span class="pre">K</span></code> is the maximum reduction in <code class="docutils literal notranslate"><span class="pre">beta</span></code>, 20%.</p>
+<p><code class="docutils literal notranslate"><span class="pre">B</span></code> is chosen by trial and error to yield a curve that seems feasible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_factor</span><span class="p">(</span><span class="n">spending</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reduction factor as a function of spending.</span>
+<span class="sd">    </span>
+<span class="sd">    spending: dollars from 0 to 1200</span>
+<span class="sd">    </span>
+<span class="sd">    returns: fractional reduction in beta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">logistic</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">percent_reduction</span> <span class="o">=</span> <span class="n">compute_factor</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">make_series</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">percent_reduction</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Hand-washing campaign spending (USD)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent reduction in infection rate&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Effect of hand washing on infection rate&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the following function, which
+takes spending as a parameter and returns <code class="docutils literal notranslate"><span class="pre">factor</span></code>, which is the factor
+by which <code class="docutils literal notranslate"><span class="pre">beta</span></code> is reduced:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_factor</span><span class="p">(</span><span class="n">spending</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">logistic</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I use <code class="docutils literal notranslate"><span class="pre">compute_factor</span></code> to write <code class="docutils literal notranslate"><span class="pre">add_hand_washing</span></code>, which takes a
+<code class="docutils literal notranslate"><span class="pre">System</span></code> object and a budget, and modifies <code class="docutils literal notranslate"><span class="pre">system.beta</span></code> to model the
+effect of hand washing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_hand_washing</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">spending</span><span class="p">):</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">compute_factor</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">factor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can sweep a range of values for <code class="docutils literal notranslate"><span class="pre">spending</span></code> and use the simulation
+to compute the effect:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_hand_washing</span><span class="p">(</span><span class="n">spending_array</span><span class="p">):</span>
+    <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">spending</span> <span class="ow">in</span> <span class="n">spending_array</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+        <span class="n">add_hand_washing</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">spending</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+        <span class="n">sweep</span><span class="p">[</span><span class="n">spending</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">sweep</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s how we run it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+
+<span class="n">spending_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">infected_sweep2</span> <span class="o">=</span> <span class="n">sweep_hand_washing</span><span class="p">(</span><span class="n">spending_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Hand-washing campaign spending (USD)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Total fraction infected&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Effect of hand washing on total infections&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below $200, the campaign has little effect.</p>
+<p>At $800 it has a substantial effect, reducing total infections from more than 45% to about 20%.</p>
+<p>Above $800, the additional benefit is small.</p>
+</div>
+<div class="section" id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">¶</a></h2>
+<p>Let’s put it all together. With a fixed budget of $1200, we have to
+decide how many doses of vaccine to buy and how much to spend on the
+hand-washing campaign.</p>
+<p>Here are the parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_students</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">budget</span> <span class="o">=</span> <span class="mi">1200</span>
+<span class="n">price_per_dose</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">max_doses</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">budget</span> <span class="o">/</span> <span class="n">price_per_dose</span><span class="p">)</span>
+<span class="n">max_doses</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The fraction <code class="docutils literal notranslate"><span class="pre">budget/price_per_dose</span></code> might not be an integer. <code class="docutils literal notranslate"><span class="pre">int</span></code> is a
+built-in function that converts numbers to integers, rounding down.</p>
+<p>We’ll sweep the range of possible doses:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dose_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">max_doses</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example we call <code class="docutils literal notranslate"><span class="pre">linrange</span></code> with only one argument; it returns a NumPy array with the integers from 0 to <code class="docutils literal notranslate"><span class="pre">max_doses</span></code>, including both.</p>
+<p>Then we run the simulation for each element of <code class="docutils literal notranslate"><span class="pre">dose_array</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_doses</span><span class="p">(</span><span class="n">dose_array</span><span class="p">):</span>
+    <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">doses</span> <span class="ow">in</span> <span class="n">dose_array</span><span class="p">:</span>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="n">doses</span> <span class="o">/</span> <span class="n">num_students</span>
+        <span class="n">spending</span> <span class="o">=</span> <span class="n">budget</span> <span class="o">-</span> <span class="n">doses</span> <span class="o">*</span> <span class="n">price_per_dose</span>
+        
+        <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+        <span class="n">add_immunization</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span>
+        <span class="n">add_hand_washing</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">spending</span><span class="p">)</span>
+        
+        <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+        <span class="n">sweep</span><span class="p">[</span><span class="n">doses</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sweep</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each number of doses, we compute the fraction of students we can
+immunize, <code class="docutils literal notranslate"><span class="pre">fraction</span></code> and the remaining budget we can spend on the
+campaign, <code class="docutils literal notranslate"><span class="pre">spending</span></code>. Then we run the simulation with those quantities
+and store the number of infections.</p>
+<p>The following figure shows the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep3</span> <span class="o">=</span> <span class="n">sweep_doses</span><span class="p">(</span><span class="n">dose_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep3</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Doses of vaccine&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Total fraction infected&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Total infections vs. doses&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19%. At 4 doses, we have $800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.</p>
+<p>As we increase the number of doses, we have to cut campaign spending,
+which turns out to make things worse. But interestingly, when we get
+above 10 doses, the effect of herd immunity starts to kick in, and the
+number of sick students goes down again.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercises">
+<h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
+<p><strong>Exercise:</strong> Suppose the price of the vaccine drops to $50 per dose.  How does that affect the optimal allocation of the spending?</p>
+<p><strong>Exercise:</strong> Suppose we have the option to quarantine infected students.  For example, a student who feels ill might be moved to an infirmary, or a private dorm room, until they are no longer infectious.</p>
+<p>How might you incorporate the effect of quarantine in the SIR model?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap11.html" title="previous page">Chapter 11</a>
+    <a class='right-next' id="next-link" href="chap13.html" title="next page">Chapter 13</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

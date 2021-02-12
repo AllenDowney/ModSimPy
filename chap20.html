@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 20 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 21" href="chap21.html" />
+    <link rel="prev" title="Chapter 19" href="chap19.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap20.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap20.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#newton-s-second-law-of-motion">
+   Newton’s second law of motion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dropping-pennies">
+   Dropping pennies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#events">
+   Events
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercises">
+     Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-20">
+<h1>Chapter 20<a class="headerlink" href="#chapter-20" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So far the differential equations we’ve worked with have been <strong>first
+order</strong>, which means they involve only first derivatives. In this
+chapter, we turn our attention to second order ODEs, which can involve
+both first and second derivatives.</p>
+<p>We’ll revisit the falling penny example from
+Chapter xxx, and use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to find the position and velocity of the penny as it falls, with and without air resistance.</p>
+<div class="section" id="newton-s-second-law-of-motion">
+<h2>Newton’s second law of motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h2>
+<p>First order ODEs can be written</p>
+<div class="math notranslate nohighlight">
+\[\frac{dy}{dx} = G(x, y)\]</div>
+<p>where <span class="math notranslate nohighlight">\(G\)</span> is some function of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> (see <a class="reference external" href="http://modsimpy.com/ode">http://modsimpy.com/ode</a>). Second order ODEs can be written</p>
+<div class="math notranslate nohighlight">
+\[\frac{d^2y}{dx^2} = H(x, y, \frac{dy}{dt})\]</div>
+<p>where <span class="math notranslate nohighlight">\(H\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(dy/dx\)</span>.</p>
+<p>In this chapter, we will work with one of the most famous and useful
+second order ODEs, Newton’s second law of motion:</p>
+<div class="math notranslate nohighlight">
+\[F = m a\]</div>
+<p>where <span class="math notranslate nohighlight">\(F\)</span> is a force or the total of a set of forces, <span class="math notranslate nohighlight">\(m\)</span> is the mass of a moving object, and <span class="math notranslate nohighlight">\(a\)</span> is its acceleration.</p>
+<p>Newton’s law might not look like a differential equation, until we
+realize that acceleration, <span class="math notranslate nohighlight">\(a\)</span>, is the second derivative of position,
+<span class="math notranslate nohighlight">\(y\)</span>, with respect to time, <span class="math notranslate nohighlight">\(t\)</span>. With the substitution</p>
+<div class="math notranslate nohighlight">
+\[a = \frac{d^2y}{dt^2}\]</div>
+<p>Newton’s law can be written</p>
+<div class="math notranslate nohighlight">
+\[\frac{d^2y}{dt^2} = F / m\]</div>
+<p>And that’s definitely a second order ODE.
+In general, <span class="math notranslate nohighlight">\(F\)</span> can be a function of time, position, and velocity.</p>
+<p>Of course, this “law” is really a model in the sense that it is a
+simplification of the real world. Although it is often approximately
+true:</p>
+<ul class="simple">
+<li><p>It only applies if <span class="math notranslate nohighlight">\(m\)</span> is constant. If mass depends on time,
+position, or velocity, we have to use a more general form of
+Newton’s law (see <a class="reference external" href="http://modsimpy.com/varmass">http://modsimpy.com/varmass</a>).</p></li>
+<li><p>It is not a good model for very small things, which are better
+described by another model, quantum mechanics.</p></li>
+<li><p>And it is not a good model for things moving very fast, which are
+better described by yet another model, relativistic mechanics.</p></li>
+</ul>
+<p>However, for medium-sized things with constant mass, moving at
+medium-sized speeds, Newton’s model is extremely useful. If we can
+quantify the forces that act on such an object, we can predict how it
+will move.</p>
+</div>
+<div class="section" id="dropping-pennies">
+<h2>Dropping pennies<a class="headerlink" href="#dropping-pennies" title="Permalink to this headline">¶</a></h2>
+<p>As a first example, let’s get back to the penny falling from the Empire State Building, which we considered in
+Chapter xxx. We will implement two models of this system: first without air resistance, then with.</p>
+<p>Given that the Empire State Building is 381 m high, and assuming that
+the penny is dropped from a standstill, the initial conditions are:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">381</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">y</span></code> is height above the sidewalk and <code class="docutils literal notranslate"><span class="pre">v</span></code> is velocity.</p>
+<p>The units <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">s</span></code> are from the <code class="docutils literal notranslate"><span class="pre">units</span></code> object provided by Pint:</p>
+<p>The only system parameter is the acceleration of gravity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In addition, we’ll specify the duration of the simulation and the step
+size:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With these parameters, the number of time steps is 100, which is good
+enough for many problems. Once we have a solution, we will increase the
+number of steps and see what effect it has on the results.</p>
+<p>We need a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need a slope function, and here’s where things get tricky. As we have seen, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can solve systems of first order ODEs, but Newton’s law is a second order ODE. However, if we recognize that</p>
+<ol class="simple">
+<li><p>Velocity, <span class="math notranslate nohighlight">\(v\)</span>, is the derivative of position, <span class="math notranslate nohighlight">\(dy/dt\)</span>, and</p></li>
+<li><p>Acceleration, <span class="math notranslate nohighlight">\(a\)</span>, is the derivative of velocity, <span class="math notranslate nohighlight">\(dv/dt\)</span>,</p></li>
+</ol>
+<p>we can rewrite Newton’s law as a system of first order ODEs:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dy}{dt} = v\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{dv}{dt} = a\]</div>
+<p>And we can translate those
+equations into a slope function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">dvdt</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">g</span>
+    
+    <span class="k">return</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">dvdt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first parameter, <code class="docutils literal notranslate"><span class="pre">state</span></code>, contains the position and velocity of the
+penny. The last parameter, <code class="docutils literal notranslate"><span class="pre">system</span></code>, contains the system parameter <code class="docutils literal notranslate"><span class="pre">g</span></code>,
+which is the magnitude of acceleration due to gravity.</p>
+<p>The second parameter, <code class="docutils literal notranslate"><span class="pre">t</span></code>, is time. It is not used in this slope
+function because none of the factors of the model are time dependent. I include it anyway because this function will be called by <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, which always provides the same arguments,
+whether they are needed or not.</p>
+<p>The rest of the function is a straightforward translation of the
+differential equations, with the substitution <span class="math notranslate nohighlight">\(a = -g\)</span>, which indicates that acceleration due to gravity is in the direction of decreasing <span class="math notranslate nohighlight">\(y\)</span>. <code class="docutils literal notranslate"><span class="pre">slope_func</span></code> returns a sequence containing the two derivatives.</p>
+<p>Before calling <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, it is a good idea to test the slope
+function with the initial conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dydt</span><span class="p">,</span> <span class="n">dvdt</span> <span class="o">=</span> <span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dydt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dvdt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is 0 m/s for velocity and 9.8 m/s<span class="math notranslate nohighlight">\(^2\)</span> for acceleration. Now we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">)</span>
+<span class="n">details</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with two columns: <code class="docutils literal notranslate"><span class="pre">y</span></code> contains the height of
+the penny; <code class="docutils literal notranslate"><span class="pre">v</span></code> contains its velocity.</p>
+<p>We can plot the results like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Position (m)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.</p>
+<p>The last value of <code class="docutils literal notranslate"><span class="pre">results.y</span></code> is negative, which means we ran the simulation too long.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_end</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>One way to solve this problem is to use the results to
+estimate the time when the penny hits the sidewalk.</p>
+<p>The ModSim library provides <code class="docutils literal notranslate"><span class="pre">crossings</span></code>, which takes a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a value, and returns a sequence of times when the series passes through the value. We can find the time when the height of the penny is <code class="docutils literal notranslate"><span class="pre">0</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_crossings</span> <span class="o">=</span> <span class="n">crossings</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">t_crossings</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is an array with a single value, 8.818 s. Now, we could run
+the simulation again with <code class="docutils literal notranslate"><span class="pre">t_end</span> <span class="pre">=</span> <span class="pre">8.818</span></code>, but there’s a better way.</p>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>As an option, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can take an <strong>event function</strong>, which
+detects an “event”, like the penny hitting the sidewalk, and ends the
+simulation.</p>
+<p>Event functions take the same parameters as slope functions, <code class="docutils literal notranslate"><span class="pre">state</span></code>,
+<code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code>. They should return a value that passes through <code class="docutils literal notranslate"><span class="pre">0</span></code>
+when the event occurs. Here’s an event function that detects the penny
+hitting the sidewalk:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The return value is the height of the penny, <code class="docutils literal notranslate"><span class="pre">y</span></code>, which passes through
+<code class="docutils literal notranslate"><span class="pre">0</span></code> when the penny hits the sidewalk.</p>
+<p>We pass the event function to <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                 <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+<span class="n">details</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can get the flight time and final velocity like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t_end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If there were no air resistance, the penny would hit the sidewalk (or someone’s head) at more than 300 km/h.</p>
+<p>So it’s a good thing there is air resistance.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>But air resistance…</p>
+<div class="section" id="exercises">
+<h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
+<p><strong>Exercise:</strong> Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
+<p>“If the Earth suddenly stopped orbiting the Sun, I know eventually it would be pulled in by the Sun’s gravity and hit it. How long would it take the Earth to hit the Sun? I imagine it would go slowly at first and then pick up speed.”</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to answer this question.</p>
+<p>Here are some suggestions about how to proceed:</p>
+<ol class="simple">
+<li><p>Look up the Law of Universal Gravitation and any constants you need.  I suggest you work entirely in SI units: meters, kilograms, and Newtons.</p></li>
+<li><p>When the distance between the Earth and the Sun gets small, this system behaves badly, so you should use an event function to stop when the surface of Earth reaches the surface of the Sun.</p></li>
+<li><p>Express your answer in days, and plot the results as millions of kilometers versus days.</p></li>
+</ol>
+<p>If you read the reply by Dave Rothstein, you will see other ways to solve the problem, and a good discussion of the modeling decisions behind them.</p>
+<p>You might also be interested to know that <a class="reference external" href="https://www.theatlantic.com/science/archive/2018/08/parker-solar-probe-launch-nasa/567197/">it’s actually not that easy to get to the Sun</a>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_0</span> <span class="o">/</span> <span class="n">r_final</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="mf">1e7</span>  <span class="c1"># seconds</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+                <span class="n">G</span><span class="o">=</span><span class="mf">6.674e-11</span><span class="p">,</span>   <span class="c1"># N m^2 / kg^2</span>
+                <span class="n">m1</span><span class="o">=</span><span class="mf">1.989e30</span><span class="p">,</span>   <span class="c1"># kg</span>
+                <span class="n">m2</span><span class="o">=</span><span class="mf">5.972e24</span><span class="p">,</span>   <span class="c1"># kg</span>
+                <span class="n">r_final</span><span class="o">=</span><span class="n">radius_sun</span> <span class="o">+</span> <span class="n">radius_earth</span><span class="p">,</span>
+                <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code></p>
+<p>Here is the source code for <code class="docutils literal notranslate"><span class="pre">crossings</span></code> so you can see what’s happening under the hood:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">psource</span> crossings
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.InterpolatedUnivariateSpline.html">documentation of InterpolatedUnivariateSpline is here</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap19.html" title="previous page">Chapter 19</a>
+    <a class='right-next' id="next-link" href="chap21.html" title="next page">Chapter 21</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

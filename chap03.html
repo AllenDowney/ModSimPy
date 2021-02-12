@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 3 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 4" href="chap04.html" />
+    <link rel="prev" title="Chapter 2" href="chap02.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap03.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap03.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iterative-modeling">
+   Iterative modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-than-one-state-object">
+   More than one State object
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#documentation">
+   Documentation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#negative-bikes">
+   Negative bikes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparison-operators">
+   Comparison operators
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metrics">
+   Metrics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-3">
+<h1>Chapter 3<a class="headerlink" href="#chapter-3" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To paraphrase two Georges, “All models are wrong, but some models are
+more wrong than others.” In this chapter, I demonstrate the process we
+use to make models less wrong.</p>
+<p>As an example, we’ll review the bikeshare model from the previous
+chapter, consider its strengths and weaknesses, and gradually improve
+it. We’ll also see ways to use the model to understand the behavior of
+the system and evaluate designs intended to make it work better.</p>
+<div class="section" id="iterative-modeling">
+<h2>Iterative modeling<a class="headerlink" href="#iterative-modeling" title="Permalink to this headline">¶</a></h2>
+<p>The model we have so far is simple, but it is based on unrealistic
+assumptions. Before you go on, take a minute to review the model from
+the previous chapter. What assumptions is it based on? Make a list of
+ways this model might be unrealistic; that is, what are the differences between the model and the real world?</p>
+<p>Here are some of the differences on my list:</p>
+<ul class="simple">
+<li><p>In the model, a student is equally likely to arrive during any
+one-minute period. In reality, this probability varies depending on time of day, day of the week, etc.</p></li>
+<li><p>The model does not account for travel time from one bike station to another.</p></li>
+<li><p>The model does not check whether a bike is available, so it’s
+possible for the number of bikes to be negative (as you might have
+noticed in some of your simulations).</p></li>
+</ul>
+<p>Some of these modeling decisions are better than others. For example,
+the first assumption might be reasonable if we simulate the system for a short period of time, like one hour.</p>
+<p>The second assumption is not very realistic, but it might not affect the results very much, depending on what we use the model for.</p>
+<p>On the other hand, the third assumption seems problematic, and it is
+relatively easy to fix. In this chapter, we will.</p>
+<p>This process, starting with a simple model, identifying the most
+important problems, and making gradual improvements, is called
+<strong>iterative modeling</strong>.</p>
+<p>For any physical system, there are many possible models, based on
+different assumptions and simplifications. It often takes several
+iterations to develop a model that is good enough for the intended
+purpose, but no more complicated than necessary.</p>
+</div>
+<div class="section" id="more-than-one-state-object">
+<h2>More than one State object<a class="headerlink" href="#more-than-one-state-object" title="Permalink to this headline">¶</a></h2>
+<p>Before we go on, I want to make a few changes to the code from the
+previous chapter. First I’ll generalize the functions we wrote so they
+take a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a parameter. Then, I’ll make the code more
+readable by adding documentation.</p>
+<p>Here is one of the functions from the previous chapter, <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">():</span>
+    <span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">bikeshare</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When this function is called, it modifies <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>. As long as there
+is only one <code class="docutils literal notranslate"><span class="pre">State</span></code> object, that’s fine, but what if there is more than
+one bike share system in the world? Or what if we want to run more than
+one simulation?</p>
+<p>This function would be more flexible if it took a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a
+parameter. Here’s what that looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The name of the parameter is <code class="docutils literal notranslate"><span class="pre">state</span></code> rather than <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code> as a
+reminder that the value of <code class="docutils literal notranslate"><span class="pre">state</span></code> could be any <code class="docutils literal notranslate"><span class="pre">State</span></code> object, not just
+<code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.</p>
+<p>This version of <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> requires a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a
+parameter, so we have to provide one when we call it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, the argument we provide gets assigned to the parameter, so this
+function call has the same effect as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">bikeshare</span> 
+<span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span> 
+<span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Now we can create as many <code class="docutils literal notranslate"><span class="pre">State</span></code> objects as we want:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare1</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bikeshare2</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And update them independently:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">bikeshare1</span><span class="p">)</span>
+<span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">bikeshare2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Changes in <code class="docutils literal notranslate"><span class="pre">bikeshare1</span></code> do not affect <code class="docutils literal notranslate"><span class="pre">bikeshare2</span></code>, and vice versa. So
+we can simulate different bike share systems, or run multiple
+simulations of the same system.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Another problem with the code we have so far is that it contains no
+<strong>documentation</strong>. Documentation is text we add to a program to help
+other programmers read and understand it. It has no effect on the
+program when it runs.</p>
+<p>There are two forms of documentation, <strong>docstrings</strong> and <strong>comments</strong>:</p>
+<ul class="simple">
+<li><p>A docstring is a string in triple-quotes that appears at the beginning of a function.</p></li>
+<li><p>A comment is a line of text that begins with a hash symbol, <code class="docutils literal notranslate"><span class="pre">#</span></code>.</p></li>
+</ul>
+<p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> with a docstring and a comment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># We decrease one state variable and increase the</span>
+    <span class="c1"># other, so the total number of bikes is unchanged.</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Docstrings follow a conventional format:</p>
+<ul class="simple">
+<li><p>The first line is a single sentence that describes what the function does.</p></li>
+<li><p>The following lines explain what the parameters are.</p></li>
+</ul>
+<p>A function’s docstring should include the information someone needs to
+know to <em>use</em> the function; it should not include details about how the function works.</p>
+<p>Comments provide details about how the function works, especially if there is something that would not be obvious to someone reading the program.</p>
+</div>
+<div class="section" id="negative-bikes">
+<h2>Negative bikes<a class="headerlink" href="#negative-bikes" title="Permalink to this headline">¶</a></h2>
+<p>The changes we’ve made so far improve the quality of the code, but we
+haven’t done anything to improve the quality of the model yet. Let’s do that now.</p>
+<p>Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be
+negative. That’s not very realistic. Here’s a version of
+<code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that fixes the problem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first line checks whether the number of bikes at Wellesley is zero. If so, it uses a <strong>return statement</strong>, which causes the function to end immediately, without running the rest of the statements. So if there are no bikes at Wellesley, we “return” from <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> without changing the state.</p>
+<p>We can test it by initializing the state with no bikes at Wellesley And calling <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bike_to_olin</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The state of the system should be unchanged.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>No more negative bikes (at least at Wellesley).</p>
+</div>
+<div class="section" id="comparison-operators">
+<h2>Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
+<p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if they are equal and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>It is easy to confuse the equals operators with the assignment operator, <code class="docutils literal notranslate"><span class="pre">=</span></code>, which assigns a value to a variable. For example, the following statement creates a variable, <code class="docutils literal notranslate"><span class="pre">x</span></code>, if it doesn’t already exist, and gives it the value <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>On the other hand, the following statement checks whether <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">5</span></code> and
+returns <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>. It does not create <code class="docutils literal notranslate"><span class="pre">x</span></code> or change its value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can use the equals operator in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yes, x is 5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you make a mistake and use <code class="docutils literal notranslate"><span class="pre">=</span></code> in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yes, x is 5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That’s a <strong>syntax error</strong>, which means that the structure of the program is invalid. Python will print an error message and the program won’t run.</p>
+<p>The equals operator is one of the <strong>comparison operators</strong>. The others
+are:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Symbol</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Less than</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Greater than</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Less than or equal</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;=</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Greater than or equal</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Equal</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">==</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Not equal</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">!=</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
+<p>Getting back to the bike share system, at this point we have the ability to simulate the behavior of the system. Since the arrival of customers is random, the state of the system is different each time we run a
+simulation. Models like this are called random or <strong>stochastic</strong>; models
+that do the same thing every time they run are <strong>deterministic</strong>.</p>
+<p>Suppose we want to use our model to predict how well the bike share
+system will work, or to design a system that works better. First, we
+have to decide what we mean by “how well” and “better”.</p>
+<p>From the customer’s point of view, we might like to know the probability of finding an available bike. From the system-owner’s point of view, we
+might want to minimize the number of customers who don’t get a bike when
+they want one, or maximize the number of bikes in use. Statistics like
+these that quantify how well the system works are called <strong>metrics</strong>.</p>
+<p>As a simple example, let’s measure the number of unhappy customers.
+Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that keeps track of the number of
+customers who arrive at a station with no bikes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wellesley_empty</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If a customer arrives at the Wellesley station and finds no bike
+available, <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> updates <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code> which counts the
+number of unhappy customers.</p>
+<p>This function only works if we initialize <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code> when we
+create the <code class="docutils literal notranslate"><span class="pre">State</span></code> object, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                  <span class="n">wellesley_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can test it by calling <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bike_to_olin</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There should be 12 bikes at Olin, no bikes at Wellesley, and one unhappy customer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looks good!</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we wrote several versions of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>:</p>
+<ul class="simple">
+<li><p>We added a parameter, <code class="docutils literal notranslate"><span class="pre">state</span></code>, so we can work with more than one <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p></li>
+<li><p>We added a docstring that explains how to use the function and a comment that explains how it works.</p></li>
+<li><p>We used a conditional operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, to check whether a bike is available, in order to avoid negative bikes.</p></li>
+<li><p>We added a state variable, <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code>, to count the number of unhappy customers, which is a metric we’ll use to quantify how well the system works.</p></li>
+</ul>
+<p>In the exercises, you’ll update <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> the same way and test it by running a simulation.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>Here’s the code we have so far, with docstrings, all in one place.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate the given number of time steps.</span>
+<span class="sd">    </span>
+<span class="sd">    state: State object</span>
+<span class="sd">    p1: probability of an Olin-&gt;Wellesley customer arrival</span>
+<span class="sd">    p2: probability of a Wellesley-&gt;Olin customer arrival</span>
+<span class="sd">    num_steps: number of time steps</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span>
+        
+    <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
+             <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time step (min)&#39;</span><span class="p">,</span> 
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of bikes&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    p1: probability of an Olin-&gt;Wellesley ride</span>
+<span class="sd">    p2: probability of a Wellesley-&gt;Olin ride</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p1</span><span class="p">):</span>
+        <span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p2</span><span class="p">):</span>
+        <span class="n">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wellesley_empty</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move one bike from Olin to Wellesley.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Modify <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> so it checks whether a bike is available at Olin.  If not, it should add one to <code class="docutils literal notranslate"><span class="pre">olin_empty</span></code>.</p>
+<p>To test it, create a <code class="docutils literal notranslate"><span class="pre">State</span></code> that initializes <code class="docutils literal notranslate"><span class="pre">olin</span></code> and <code class="docutils literal notranslate"><span class="pre">olin_empty</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>, run <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>, and check the result.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Now run the simulation a few times and confirm that the number of bikes is never negative.  What’s the final state of the system?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap02.html" title="previous page">Chapter 2</a>
+    <a class='right-next' id="next-link" href="chap04.html" title="next page">Chapter 4</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

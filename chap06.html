@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 6 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 7" href="chap07.html" />
+    <link rel="prev" title="Chapter 5" href="chap05.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap06.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap06.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#system-objects">
+   System objects
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proportional-growth-model">
+   Proportional growth model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#factoring-out-the-update-function">
+   Factoring out the update function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-birth-and-death">
+   Combining birth and death
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the Hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-6">
+<h1>Chapter 6<a class="headerlink" href="#chapter-6" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we simulated a model of world population with
+constant growth. In this chapter we see if we can make a better model
+with growth proportional to the population.</p>
+<p>But first, we’ll improve the code from the previous chapter by
+encapsulating it in a function and using <code class="docutils literal notranslate"><span class="pre">System</span></code> objects.</p>
+<p>Here’s the code that reads the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
+
+<span class="n">tables</span> <span class="o">=</span> <span class="n">read_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
+<span class="n">table2</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">table2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">,</span> <span class="s1">&#39;maddison&#39;</span><span class="p">,</span> 
+                  <span class="s1">&#39;hyde&#39;</span><span class="p">,</span> <span class="s1">&#39;tanton&#39;</span><span class="p">,</span> <span class="s1">&#39;biraben&#39;</span><span class="p">,</span> <span class="s1">&#39;mj&#39;</span><span class="p">,</span> 
+                  <span class="s1">&#39;thomlinson&#39;</span><span class="p">,</span> <span class="s1">&#39;durand&#39;</span><span class="p">,</span> <span class="s1">&#39;clark&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="system-objects">
+<h2>System objects<a class="headerlink" href="#system-objects" title="Permalink to this headline">¶</a></h2>
+<p>Like a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, a <code class="docutils literal notranslate"><span class="pre">System</span></code> object contains variables and their
+values. The difference is:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span></code> objects contain state variables that get updated in the course of a simulation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">System</span></code> objects contain <strong>system parameters</strong>, which usually don’t get updated over the course of a simulation.</p></li>
+</ul>
+<p>For example, in the bike share model, state variables include the number of bikes at each location, which get updated whenever a customer moves a bike. System parameters include the number of locations, total number of bikes, and arrival rates at each location.</p>
+<p>In the population model, the only state variable is the population.
+System parameters include the annual growth rate, the initial time and
+population, and the end time.</p>
+<p>Suppose we have the following variables, as computed in the previous
+chapter (assuming <code class="docutils literal notranslate"><span class="pre">table2</span></code> is the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> we read from the file):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">un</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">un</span> <span class="o">/</span> <span class="mf">1e9</span>
+<span class="n">census</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">census</span> <span class="o">/</span> <span class="mf">1e9</span>
+
+<span class="n">t_0</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_0</span>
+
+<span class="n">p_0</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+<span class="n">p_end</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_end</span><span class="p">]</span>
+
+<span class="n">total_growth</span> <span class="o">=</span> <span class="n">p_end</span> <span class="o">-</span> <span class="n">p_0</span>
+<span class="n">annual_growth</span> <span class="o">=</span> <span class="n">total_growth</span> <span class="o">/</span> <span class="n">elapsed_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some of these are parameters we need to simulate the system; others are temporary values we can discard.
+To distinguish between them, we’ll put the parameters we need into a <code class="docutils literal notranslate"><span class="pre">System</span></code> object like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">t_0</span><span class="o">=</span><span class="n">t_0</span><span class="p">,</span> 
+                <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span>
+                <span class="n">p_0</span><span class="o">=</span><span class="n">p_0</span><span class="p">,</span>
+                <span class="n">annual_growth</span><span class="o">=</span><span class="n">annual_growth</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">t0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> are the first and last years; <code class="docutils literal notranslate"><span class="pre">p_0</span></code> is the initial
+population, and <code class="docutils literal notranslate"><span class="pre">annual_growth</span></code> is the estimated annual growth.</p>
+<p>Here’s what <code class="docutils literal notranslate"><span class="pre">system</span></code> looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we’ll wrap the code from the previous chapter in a function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">system</span><span class="o">.</span><span class="n">annual_growth</span>
+    
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">run_simulation1</span></code> takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and uses the parameters in it to determine <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, and <code class="docutils literal notranslate"><span class="pre">annual_growth</span></code>.</p>
+<p>Inside the loop, it stores the results in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> which it returns at the end.</p>
+<p>The following function plots the results along with the estimates
+<code class="docutils literal notranslate"><span class="pre">census</span></code> and <code class="docutils literal notranslate"><span class="pre">un</span></code>:</p>
+<p>Here’s how we call it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results1</span> <span class="o">=</span> <span class="n">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the function we used in the previous chapter to plot the estimates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_estimates</span><span class="p">():</span>
+    <span class="n">census</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;US Census&#39;</span><span class="p">)</span>
+    <span class="n">un</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UN DESA&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billion)&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plot_estimates</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It might not be obvious that using functions and <code class="docutils literal notranslate"><span class="pre">System</span></code> objects is a
+big improvement, and for a simple model that we run only once, maybe
+it’s not. But as we work with more complex models, and when we run many simulations with different parameters, we’ll see that the organization of the code makes a big difference.</p>
+<p>Now let’s see if we can improve the model.</p>
+</div>
+<div class="section" id="proportional-growth-model">
+<h2>Proportional growth model<a class="headerlink" href="#proportional-growth-model" title="Permalink to this headline">¶</a></h2>
+<p>The biggest problem with the constant growth model is that it doesn’t
+make any sense. It is hard to imagine how people all over the world
+could conspire to keep population growth constant from year to year.</p>
+<p>On the other hand, if some fraction of the population dies each year,
+and some fraction gives birth, we can compute the net change in the
+population like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation2</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">births</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">birth_rate</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="n">deaths</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">death_rate</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">births</span> <span class="o">-</span> <span class="n">deaths</span>
+        
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can choose the values of <code class="docutils literal notranslate"><span class="pre">birth_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">death_rate</span></code> that best fit the data.</p>
+<p>For the death rate, I’ll use 7.7 deaths per 1000 people, which was roughly the global death rate in 2020 (see <a class="reference external" href="https://www.indexmundi.com/world/death_rate.html">https://www.indexmundi.com/world/death_rate.html</a>).
+I chose the birth rate by hand to fit the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">death_rate</span> <span class="o">=</span> <span class="mf">7.7</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">system</span><span class="o">.</span><span class="n">birth_rate</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">/</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then I ran the simulation and plotted the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results2</span> <span class="o">=</span> <span class="n">run_simulation2</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plot_estimates</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Proportional Growth Model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The proportional model fits
+the data well from 1950 to 1965, but not so well after that. Overall,
+the <strong>quality of fit</strong> is not as good as the constant growth model,
+which is surprising, because it seems like the proportional model is
+more realistic.</p>
+<p>In the next chapter we’ll try one more time to find a model that makes
+sense and fits the data. But first, I want to make a few more
+improvements to the code.</p>
+</div>
+<div class="section" id="factoring-out-the-update-function">
+<h2>Factoring out the update function<a class="headerlink" href="#factoring-out-the-update-function" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">run_simulation1</span></code> and <code class="docutils literal notranslate"><span class="pre">run_simulation2</span></code> are nearly identical except for the body of the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, where we compute the population for the next year.</p>
+<p>Rather than repeat identical code, we can separate the things that
+change from the things that don’t. First, I’ll pull out the update code from <code class="docutils literal notranslate"><span class="pre">run_simulation2</span></code> and make it a function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func1</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">births</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">birth_rate</span> <span class="o">*</span> <span class="n">pop</span>
+    <span class="n">deaths</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">death_rate</span> <span class="o">*</span> <span class="n">pop</span>
+    <span class="k">return</span> <span class="n">births</span> <span class="o">-</span> <span class="n">deaths</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function takes as arguments the current population, current year,
+and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object; it returns the net population growth during the current year.</p>
+<p>This update function does not use <code class="docutils literal notranslate"><span class="pre">t</span></code>, so we could leave it out. But we will see other functions that need it, and it is convenient if they all take the same parameters, used or not.</p>
+<p>Now we can write a function that runs any model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">growth</span> <span class="o">=</span> <span class="n">growth_func</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">growth</span>
+        
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function demonstrates a feature we have not seen before: it takes a
+function as a parameter! When we call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, the second
+parameter is a function, like <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code>, that computes the
+population for the next year.</p>
+<p>Here’s how we call it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Passing a function as an argument is the same as passing any other
+value. The argument, which is <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code> in this example, gets
+assigned to the parameter, which is called <code class="docutils literal notranslate"><span class="pre">growth_func</span></code>. Inside
+<code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, we can run <code class="docutils literal notranslate"><span class="pre">growth_func</span></code> just like any other function.</p>
+<p>Each time through the loop, <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> calls <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code> to compute net growth, and uses it to compute the population during the next year.</p>
+</div>
+<div class="section" id="combining-birth-and-death">
+<h2>Combining birth and death<a class="headerlink" href="#combining-birth-and-death" title="Permalink to this headline">¶</a></h2>
+<p>We can simplify the code slightly by combining births and deaths to compute the net growth rate.
+Instead of two parameters, <code class="docutils literal notranslate"><span class="pre">birth_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">death_rate</span></code>, we can write the update function in terms of a single parameter that represents the difference:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">birth_rate</span> <span class="o">-</span> <span class="n">system</span><span class="o">.</span><span class="n">death_rate</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The name of this parameter, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, is the conventional name for a
+proportional growth rate.</p>
+<p>Here’s the modified version of <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func2</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s how we run it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results are the same as the previous versions, but now the code is organized in a way that makes it easy to explore other models.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we wrapped the code from the previous chapter in functions and used a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters of the system.</p>
+<p>We explored a new model of population growth, where the number of births and deaths is proportional to the current population.  This model seems more realistic, but it turns out not to fit the data particularly well.</p>
+<p>In the next chapter, we’ll try one more model, which is based on the assumption that the population can’t keep growing forever.
+But first, you might want to work on some exercises.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Maybe the reason the proportional model doesn’t work very well is that the growth rate, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, is changing over time.  So let’s try a model with different growth rates before and after 1980 (as an arbitrary choice).</p>
+<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">pop</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters.  The system object, <code class="docutils literal notranslate"><span class="pre">system</span></code>, should contain two parameters: the growth rate before 1980, <code class="docutils literal notranslate"><span class="pre">alpha1</span></code>, and the growth rate after 1980, <code class="docutils literal notranslate"><span class="pre">alpha2</span></code>.  It should use <code class="docutils literal notranslate"><span class="pre">t</span></code> to determine which growth rate to use.</p>
+<p>Test your function by calling it directly, then pass it to <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.  Plot the results.  Adjust the parameters <code class="docutils literal notranslate"><span class="pre">alpha1</span></code> and <code class="docutils literal notranslate"><span class="pre">alpha2</span></code> to fit the data as well as you can.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">System</span></code> object defined in the ModSim library, is based on the <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code> object defined in a standard Python library called <code class="docutils literal notranslate"><span class="pre">types</span></code>; the documentation is at <a class="reference external" href="https://docs.python.org/3.7/library/types.html#types.SimpleNamespace">https://docs.python.org/3.7/library/types.html#types.SimpleNamespace</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap05.html" title="previous page">Chapter 5</a>
+    <a class='right-next' id="next-link" href="chap07.html" title="next page">Chapter 7</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

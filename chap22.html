@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 22 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 23" href="chap23.html" />
+    <link rel="prev" title="Chapter 21" href="chap21.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap22.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap22.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#baseball">
+   Baseball
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vectors">
+   Vectors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulating-baseball-flight">
+   Simulating baseball flight
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trajectories">
+   Trajectories
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#animation">
+   Animation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#under-the-hood">
+     Under the hood
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-22">
+<h1>Chapter 22<a class="headerlink" href="#chapter-22" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we modeled objects moving in one dimension, with and without drag. Now let’s move on to two dimensions, and baseball!</p>
+<p>In this chapter we model the flight of a baseball including the effect
+of air resistance. In the next chapter we use this model to solve an
+optimization problem.</p>
+<div class="section" id="baseball">
+<h2>Baseball<a class="headerlink" href="#baseball" title="Permalink to this headline">¶</a></h2>
+<p>To model the flight of a baseball, we have to make some
+decisions. To get started, we’ll ignore any spin that might be on the ball, and the resulting Magnus force (see <a class="reference external" href="http://modsimpy.com/magnus">http://modsimpy.com/magnus</a>). Under this assumption, the ball travels in a vertical plane, so we’ll run simulations in two dimensions, rather than three.</p>
+<p>Air resistance has a substantial effect on most projectiles in air, so
+we will include a drag force.</p>
+<p>To model air resistance, we’ll need the mass, frontal area, and drag
+coefficient of a baseball. Mass and diameter are easy to find (see
+<a class="reference external" href="http://modsimpy.com/baseball">http://modsimpy.com/baseball</a>). Drag coefficient is only a little
+harder; according to <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>, the drag coefficient of a baseball is approximately 0.33 (with no units).</p>
+<p>However, this value <em>does</em> depend on velocity. At low velocities it
+might be as high as 0.5, and at high velocities as low as 0.28.
+Furthermore, the transition between these regimes typically happens
+exactly in the range of velocities we are interested in, between 20 m/s and 40 m/s.</p>
+<p>Nevertheless, we’ll start with a simple model where the drag coefficient does not depend on velocity; as an exercise at the end of the chapter, you will have a chance to implement a more detailed model and see what effect is has on the results.</p>
+<p>But first we need a new computational tool, the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> object.</p>
+</div>
+<div class="section" id="vectors">
+<h2>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline">¶</a></h2>
+<p>Now that we are working in two dimensions, it will be useful to
+work with <strong>vector quantities</strong>, that is, quantities that represent both a magnitude and a direction. We will use vectors to represent positions, velocities, accelerations, and forces in two and three dimensions.</p>
+<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">Vector</span></code> the creates a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> that contains the <strong>components</strong> of the vector.
+In a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents a position in space, the components are the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates in 2-D, plus a <span class="math notranslate nohighlight">\(z\)</span> coordinate if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is in 3-D.</p>
+<p>You can create a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> by specifying its components. The following
+<code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a point 3 units to the right (or east) and 4 units up (or north) from an implicit origin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can access the components of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> by name using the dot
+operator, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also access them by index using brackets, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects support most mathematical operations, including
+addition and subtraction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the definition and graphical interpretation of these operations, see <a class="reference external" href="http://modsimpy.com/vecops">http://modsimpy.com/vecops</a>.</p>
+<p>We can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with coordinates <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, as in the previous examples.
+Equivalently, we can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with a magnitude and angle.</p>
+<p><strong>Magnitude</strong> is the length of the vector: if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a position, magnitude is the distance from the origin; if it represents a velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.</p>
+<p>The <strong>angle</strong> of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is its direction, expressed as an angle in radians from the positive <span class="math notranslate nohighlight">\(x\)</span> axis. In the Cartesian plane, the angle 0 rad is due east, and the angle <span class="math notranslate nohighlight">\(\pi\)</span> rad is due west.</p>
+<p>ModSim provides functions to compute the magnitude and angle of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>.  For example, here are the magnitude and angle of <code class="docutils literal notranslate"><span class="pre">A</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mag</span> <span class="o">=</span> <span class="n">vector_mag</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">vector_angle</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">mag</span><span class="p">,</span> <span class="n">theta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The magnitude is 5 because the length of <code class="docutils literal notranslate"><span class="pre">A</span></code> is the hypotenuse of a 3-4-5 triangle.</p>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">vector_angle</span></code> is in radians, and most Python functions, like <code class="docutils literal notranslate"><span class="pre">sin</span></code> and <code class="docutils literal notranslate"><span class="pre">cos</span></code>, work with radians.
+But many people think more naturally in degrees.
+Fortunately, NumPy provides a function to convert radians to degrees:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">rad2deg</span>
+
+<span class="n">angle</span> <span class="o">=</span> <span class="n">rad2deg</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">angle</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And a function to convert degrees to radians:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">deg2rad</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+<span class="n">theta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Following convention, I’ll use <code class="docutils literal notranslate"><span class="pre">angle</span></code> for a value in degrees and <code class="docutils literal notranslate"><span class="pre">theta</span></code> for a value in radians.</p>
+<p>If you are given an angle and velocity, you can make a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> using
+<code class="docutils literal notranslate"><span class="pre">pol2cart</span></code>, which converts from polar to Cartesian coordinates. For example, here’s a new <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with the same angle and magnitude of <code class="docutils literal notranslate"><span class="pre">A</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pol2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">mag</span><span class="p">)</span>
+<span class="n">Vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Another way to represent the direction of <code class="docutils literal notranslate"><span class="pre">A</span></code> is a <strong>unit vector</strong>,
+which is a vector with magnitude 1 that points in the same direction as
+<code class="docutils literal notranslate"><span class="pre">A</span></code>. You can compute a unit vector by dividing a vector by its
+magnitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">/</span> <span class="n">vector_mag</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can do the same thing using the <code class="docutils literal notranslate"><span class="pre">vector_hat</span></code> function, so named because unit vectors are conventionally decorated with a hat, like this: <span class="math notranslate nohighlight">\(\hat{A}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_hat</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s get back to the game.</p>
+</div>
+<div class="section" id="simulating-baseball-flight">
+<h2>Simulating baseball flight<a class="headerlink" href="#simulating-baseball-flight" title="Permalink to this headline">¶</a></h2>
+<p>Let’s simulate the flight of a baseball that is batted from home plate
+at an angle of 45° and initial speed 40 m/s. We’ll use the center of home plate as the origin, a horizontal x-axis (parallel to the ground), and vertical y-axis (perpendicular to the ground). The initial height is about 1 m.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>          <span class="c1"># m</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>          <span class="c1"># m</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="mi">45</span><span class="p">,</span>     <span class="c1"># degree</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>  <span class="c1"># m / s</span>
+
+    <span class="n">mass</span> <span class="o">=</span> <span class="mf">145e-3</span><span class="p">,</span>    <span class="c1"># kg </span>
+    <span class="n">diameter</span> <span class="o">=</span> <span class="mf">73e-3</span><span class="p">,</span> <span class="c1"># m </span>
+    <span class="n">C_d</span> <span class="o">=</span> <span class="mf">0.33</span><span class="p">,</span>       <span class="c1"># dimensionless</span>
+
+    <span class="n">rho</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span>      <span class="c1"># kg/m**3</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">,</span>        <span class="c1"># m/s**2</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>     <span class="c1"># s</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I got the mass and diameter of the baseball from <a class="reference external" href="https://en.wikipedia.org/wiki/Baseball_(ball)">Wikipedia</a> and the coefficient of drag is from <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>:</p>
+<p>The density of air, <code class="docutils literal notranslate"><span class="pre">rho</span></code>, is based on a temperature of 20 °C at sea level (see <a class="reference external" href="http://modsimpy.com/tempress">http://modsimpy.com/tempress</a>).
+And we’ll need the acceleration of gravity, <code class="docutils literal notranslate"><span class="pre">g</span></code>.</p>
+<p>The following function uses these quantities to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">deg2rad</span>
+
+<span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    
+    <span class="c1"># convert angle to degrees</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+    
+    <span class="c1"># compute x and y components of velocity</span>
+    <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">pol2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+    
+    <span class="c1"># make the initial state</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="o">=</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="o">=</span><span class="n">vy</span><span class="p">)</span>
+    
+    <span class="c1"># compute the frontal area</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
+                  <span class="n">init</span> <span class="o">=</span> <span class="n">init</span><span class="p">,</span>
+                  <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="p">,</span>
+                 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">make_system</span></code> uses <code class="docutils literal notranslate"><span class="pre">deg2rad</span></code> to convert <code class="docutils literal notranslate"><span class="pre">angle</span></code> to radians and
+<code class="docutils literal notranslate"><span class="pre">pol2cart</span></code> to compute the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the initial
+velocity.</p>
+<p><code class="docutils literal notranslate"><span class="pre">init</span></code> is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with four state variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are the components of position.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> are the components of velocity.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">System</span></code> object also contains <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, which is 10 seconds, long enough for the ball to land on the ground.
+Here’s the <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the initial <code class="docutils literal notranslate"><span class="pre">State</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">init</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we need a function to compute drag force:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">drag_force</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">rho</span><span class="p">,</span> <span class="n">C_d</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">C_d</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">area</span>
+    
+    <span class="n">mag</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">vector_mag</span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">C_d</span> <span class="o">*</span> <span class="n">area</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="n">vector_hat</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+    <span class="n">f_drag</span> <span class="o">=</span> <span class="n">mag</span> <span class="o">*</span> <span class="n">direction</span>
+    <span class="k">return</span> <span class="n">f_drag</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function takes <code class="docutils literal notranslate"><span class="pre">V</span></code> as a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> and returns <code class="docutils literal notranslate"><span class="pre">f_drag</span></code> as a
+<code class="docutils literal notranslate"><span class="pre">Vector</span></code>.</p>
+<ul class="simple">
+<li><p>It uses <code class="docutils literal notranslate"><span class="pre">vector_mag</span></code> to compute the magnitude of <code class="docutils literal notranslate"><span class="pre">V</span></code>,
+and the drag equation to compute the magnitude of the drag force, <code class="docutils literal notranslate"><span class="pre">mag</span></code>.</p></li>
+<li><p>Then it uses <code class="docutils literal notranslate"><span class="pre">vector_hat</span></code> to compute <code class="docutils literal notranslate"><span class="pre">direction</span></code>, which is a unit vector in the opposite direction of <code class="docutils literal notranslate"><span class="pre">V</span></code>.</p></li>
+<li><p>Finally, it computes the drag force vector by multiplying <code class="docutils literal notranslate"><span class="pre">mag</span></code> and <code class="docutils literal notranslate"><span class="pre">direction</span></code>.</p></li>
+</ul>
+<p>We can test it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">vx</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">vy</span>
+<span class="n">V_test</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">)</span>
+<span class="n">drag_force</span><span class="p">(</span><span class="n">V_test</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents the drag force on the baseball, in Newtons, under the initial conditions.</p>
+<p>Now we’re ready for a slope function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">mass</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">g</span>
+    
+    <span class="n">V</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">)</span>
+    <span class="n">a_drag</span> <span class="o">=</span> <span class="n">drag_force</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span>
+    <span class="n">a_grav</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">A</span> <span class="o">=</span> <span class="n">a_grav</span> <span class="o">+</span> <span class="n">a_drag</span>
+    
+    <span class="k">return</span> <span class="n">V</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">V</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As usual, the parameters of the slope function are a time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
+In this example, we don’t use <code class="docutils literal notranslate"><span class="pre">t</span></code>, but we can’t leave it out because when <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> calls the slope function, it always provides the same arguments, whether they are needed or not.</p>
+<p><code class="docutils literal notranslate"><span class="pre">slope_func</span></code> unpacks the <code class="docutils literal notranslate"><span class="pre">State</span></code> object into variables <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">vx</span></code>, and <code class="docutils literal notranslate"><span class="pre">vy</span></code>.
+Then it packs <code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> into a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>, which it uses to compute drag force and acceleration due to drag, <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>.</p>
+<p>To represent acceleration due to gravity, it makes a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with magnitude <code class="docutils literal notranslate"><span class="pre">g</span></code> in the negative <span class="math notranslate nohighlight">\(y\)</span> direction.</p>
+<p>The total acceleration of the baseball, <code class="docutils literal notranslate"><span class="pre">A</span></code>, is the sum of accelerations due to gravity and drag.</p>
+<p>The return value is a sequence that contains:</p>
+<ul class="simple">
+<li><p>The components of velocity, <code class="docutils literal notranslate"><span class="pre">V.x</span></code> and <code class="docutils literal notranslate"><span class="pre">V.y</span></code>.</p></li>
+<li><p>The components of acceleration, <code class="docutils literal notranslate"><span class="pre">A.x</span></code> and <code class="docutils literal notranslate"><span class="pre">A.y</span></code>.</p></li>
+</ul>
+<p>Together, these components represent the slope of the state variables, because <code class="docutils literal notranslate"><span class="pre">V</span></code> is the derivative of position and <code class="docutils literal notranslate"><span class="pre">A</span></code> is the derivative of velocity.</p>
+<p>As always, we can test the slope function by running it with the initial conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using vectors to represent forces and accelerations makes the code
+concise, readable, and less error-prone. In particular, when we add
+<code class="docutils literal notranslate"><span class="pre">a_grav</span></code> and <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>, the directions are likely to be correct, because they are encoded in the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects.</p>
+<p>We’re almost ready to run the simulation.  The last thing we need is an event function that stops when the ball hits the ground.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The event function takes the same parameters as the slope function, and returns the <span class="math notranslate nohighlight">\(y\)</span> coordinate of position. When the <span class="math notranslate nohighlight">\(y\)</span> coordinate passes through 0, the simulation stops.</p>
+<p>As we did with <code class="docutils literal notranslate"><span class="pre">slope_func</span></code>, we can test <code class="docutils literal notranslate"><span class="pre">event_func</span></code> with the initial conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’re ready to run the simulation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
+                                 <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">details</span></code> contains information about the simulation, including a message that indicates that a “termination event” occurred; that is, the simulated ball reached the ground.</p>
+<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one column for each of the state variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can get the flight time like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flight_time</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">flight_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the final state like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">final_state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final value of <code class="docutils literal notranslate"><span class="pre">y</span></code> is close to 0, as it should be.  The final value of <code class="docutils literal notranslate"><span class="pre">x</span></code> tells us how far the ball flew, in meters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_dist</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">x</span>
+<span class="n">x_dist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also get the final velocity, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_V</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">final_state</span><span class="o">.</span><span class="n">vx</span><span class="p">,</span> <span class="n">final_state</span><span class="o">.</span><span class="n">vy</span><span class="p">)</span>
+<span class="n">final_V</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The speed of the ball on impact is about 26 m/s, which is substantially slower than the initial velocity, 40 m/s.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_mag</span><span class="p">(</span><span class="n">final_V</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="trajectories">
+<h2>Trajectories<a class="headerlink" href="#trajectories" title="Permalink to this headline">¶</a></h2>
+<p>To visualize the results, we can plot the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of position like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Position (m)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the <span class="math notranslate nohighlight">\(x\)</span> component increases as the ball moves away from home plate. The <span class="math notranslate nohighlight">\(y\)</span> position climbs initially and then descends, falling to 0 m near 5.0 s.</p>
+<p>Another way to view the results is to plot the <span class="math notranslate nohighlight">\(x\)</span> component on the
+x-axis and the <span class="math notranslate nohighlight">\(y\)</span> component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_trajectory</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">make_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;trajectory&#39;</span><span class="p">)</span>
+
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;x position (m)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;y position (m)&#39;</span><span class="p">)</span>
+
+<span class="n">plot_trajectory</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This way of visualizing the results is called a <strong>trajectory plot</strong> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).</p>
+<p>A trajectory plot can be easier to interpret than a time series plot,
+because it shows what the motion of the projectile would look like (at
+least from one point of view). Both plots can be useful, but don’t get
+them mixed up! If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.</p>
+</div>
+<div class="section" id="animation">
+<h2>Animation<a class="headerlink" href="#animation" title="Permalink to this headline">¶</a></h2>
+<p>One of the best ways to visualize the results of a physical model is animation.  If there are problems with the model, animation can make them apparent.</p>
+<p>The ModSimPy library provides <code class="docutils literal notranslate"><span class="pre">animate</span></code>, which takes as parameters a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a draw function.</p>
+<p>The draw function should take as parameters a <code class="docutils literal notranslate"><span class="pre">State</span></code> object and the time.  It should draw a single frame of the animation.</p>
+<p>Inside the draw function, you almost always have to call <code class="docutils literal notranslate"><span class="pre">set_xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">set_ylim</span></code>.  Otherwise <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> auto-scales the axes, which is usually not what you want.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
+
+<span class="n">xlim</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">ylim</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">draw_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;x position (m)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;y position (m)&#39;</span><span class="p">,</span>
+             <span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">,</span>
+             <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># animate(results, draw_func)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Run the simulation with and without air resistance.  How wrong would we be if we ignored drag?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hint</span>
+
+<span class="n">system2</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">C_d</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / meter<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same velocity and launch angle travel?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hint</span>
+
+<span class="n">system3</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC"><em>The Physics of Baseball</em></a>, shows coefficient of drag as a function of velocity.</p>
+<img src="https://github.com/AllenDowney/ModSimPy/raw/master/figs/baseball_drag.png" width="400">
+<p>I used <a class="reference external" href="https://automeris.io/WebPlotDigitizer/">an online graph digitizer</a> to extract the data and save it in a CSV file.  Here’s how we can read it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;baseball_drag.csv&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/baseball_drag.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+
+<span class="n">baseball_drag</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">mph</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">baseball_drag</span><span class="p">[</span><span class="s1">&#39;Velocity in mph&#39;</span><span class="p">],</span> <span class="n">units</span><span class="o">.</span><span class="n">mph</span><span class="p">)</span>
+<span class="n">mps</span> <span class="o">=</span> <span class="n">mph</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+<span class="n">baseball_drag</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mps</span><span class="o">.</span><span class="n">magnitude</span>
+<span class="n">baseball_drag</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Velocity in meters per second&#39;</span>
+<span class="n">baseball_drag</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drag_interp</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">baseball_drag</span><span class="p">[</span><span class="s1">&#39;Drag coefficient&#39;</span><span class="p">])</span>
+<span class="n">vs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">cds</span> <span class="o">=</span> <span class="n">drag_interp</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span>
+<span class="n">make_series</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">cds</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Velocity (m/s)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;C_d&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Modify the model to include the dependence of <code class="docutils literal notranslate"><span class="pre">C_d</span></code> on velocity, and see how much it affects the results.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h3>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Vector</span></code></p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap21.html" title="previous page">Chapter 21</a>
+    <a class='right-next' id="next-link" href="chap23.html" title="next page">Chapter 23</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

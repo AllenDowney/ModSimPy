@@ -1,0 +1,1009 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 9 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 10" href="chap10.html" />
+    <link rel="prev" title="Chapter 8" href="chap08.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap09.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap09.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recurrence-relations">
+   Recurrence relations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differential-equations">
+   Differential equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-and-simulation">
+   Analysis and simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-with-wolframalpha">
+   Analysis with WolframAlpha
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-with-sympy">
+   Analysis with SymPy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differential-equations-in-sympy">
+   Differential equations in SymPy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-quadratic-growth-model">
+   Solving the quadratic growth model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-9">
+<h1>Chapter 9<a class="headerlink" href="#chapter-9" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this chapter we express the models from previous chapters as
+difference equations and differential equations, solve the equations,
+and derive the functional forms of the solutions. We also discuss the
+complementary roles of mathematical analysis and simulation.</p>
+<div class="section" id="recurrence-relations">
+<h2>Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<p>The population models in the previous chapter and this one are simple
+enough that we didn’t really need to run simulations. We could have
+solved them mathematically. For example, we wrote the constant growth
+model like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">annual_growth</span>
+</pre></div>
+</div>
+<p>In mathematical notation, we would write the same model like this:</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n + c\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_n\)</span> is the population during year <span class="math notranslate nohighlight">\(n\)</span>,
+<span class="math notranslate nohighlight">\(x_0\)</span> is a given initial population, and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
+This way of representing the model is a <strong>recurrence relation</strong>; see
+<a class="reference external" href="http://modsimpy.com/recur">http://modsimpy.com/recur</a>.</p>
+<p>Sometimes it is possible to solve a recurrence relation by writing an
+equation that computes <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
+is, without computing the intervening values from <span class="math notranslate nohighlight">\(x_1\)</span> through
+<span class="math notranslate nohighlight">\(x_{n-1}\)</span>.</p>
+<p>In the case of constant growth we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 + c\)</span>, and
+<span class="math notranslate nohighlight">\(x_2 = x_1 + c\)</span>. Combining these, we get <span class="math notranslate nohighlight">\(x_2 = x_0 + 2c\)</span>, then
+<span class="math notranslate nohighlight">\(x_3 = x_0 + 3c\)</span>, and it is not hard to conclude that in general</p>
+<div class="math notranslate nohighlight">
+\[x_n = x_0 + nc\]</div>
+<p>So if we want to know <span class="math notranslate nohighlight">\(x_{100}\)</span> and we don’t care
+about the other values, we can compute it with one multiplication and
+one addition.</p>
+<p>We can also write the proportional model as a recurrence relation:</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n + \alpha x_n\]</div>
+<p>Or more conventionally as:</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n (1 + \alpha)\]</div>
+<p>Now we can see that</p>
+<p><span class="math notranslate nohighlight">\(x_1 = x_0 (1 + \alpha)\)</span>, and <span class="math notranslate nohighlight">\(x_2 = x_0 (1 + \alpha)^2\)</span>, and in general</p>
+<div class="math notranslate nohighlight">
+\[x_n = x_0 (1 + \alpha)^n\]</div>
+<p>This result is a <strong>geometric progression</strong>;
+see <a class="reference external" href="http://modsimpy.com/geom">http://modsimpy.com/geom</a>. When <span class="math notranslate nohighlight">\(\alpha\)</span> is positive, the factor
+<span class="math notranslate nohighlight">\(1+\alpha\)</span> is greater than 1, so the elements of the sequence grow
+without bound.</p>
+<p>Finally, we can write the quadratic model like this:</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n + \alpha x_n + \beta x_n^2\]</div>
+<p>or with the more
+conventional parameterization like this:</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n + r x_n (1 - x_n / K)\]</div>
+<p>There is no analytic solution to
+this equation, but we can approximate it with a differential equation
+and solve that, which is what we’ll do in the next section.</p>
+</div>
+<div class="section" id="differential-equations">
+<h2>Differential equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h2>
+<p>Starting again with the constant growth model</p>
+<div class="math notranslate nohighlight">
+\[x_{n+1} = x_n + c\]</div>
+<p>If we define <span class="math notranslate nohighlight">\(\Delta x\)</span> to be the change in <span class="math notranslate nohighlight">\(x\)</span> from one time step to the next, we can write:</p>
+<div class="math notranslate nohighlight">
+\[\Delta x = x_{n+1} - x_n = c\]</div>
+<p>If we define
+<span class="math notranslate nohighlight">\(\Delta t\)</span> to be the time step, which is one year in the example, we can
+write the rate of change per unit of time like this:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta x}{\Delta t} = c\]</div>
+<p>This model is <strong>discrete</strong>, which
+means it is only defined at integer values of <span class="math notranslate nohighlight">\(n\)</span> and not in between.
+But in reality, people are born and die all the time, not once a year,
+so a <strong>continuous</strong> model might be more realistic.</p>
+<p>We can make this model continuous by writing the rate of change in the
+form of a derivative:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dx}{dt} = c\]</div>
+<p>This way of representing the model is a <strong>differential equation</strong>; see <a class="reference external" href="http://modsimpy.com/diffeq">http://modsimpy.com/diffeq</a>.</p>
+<p>We can solve this differential equation if we multiply both sides by
+<span class="math notranslate nohighlight">\(dt\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[dx = c dt\]</div>
+<p>And then integrate both sides:</p>
+<div class="math notranslate nohighlight">
+\[x(t) = c t + x_0\]</div>
+<p>Similarly, we can write the proportional growth model like this:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta x}{\Delta t} = \alpha x\]</div>
+<p>And as a differential equation
+like this:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dx}{dt} = \alpha x\]</div>
+<p>If we multiply both sides by
+<span class="math notranslate nohighlight">\(dt\)</span> and divide by <span class="math notranslate nohighlight">\(x\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{x}~dx = \alpha~dt\]</div>
+<p>Now we
+integrate both sides, yielding:</p>
+<div class="math notranslate nohighlight">
+\[\ln x = \alpha t + K\]</div>
+<p>where <span class="math notranslate nohighlight">\(\ln\)</span> is the natural logarithm and <span class="math notranslate nohighlight">\(K\)</span> is the constant of integration.</p>
+<p>Exponentiating both sides, we have</p>
+<div class="math notranslate nohighlight">
+\[\exp(\ln(x)) = \exp(\alpha t + K)\]</div>
+<p>The exponential function can be written <span class="math notranslate nohighlight">\(\exp(x)\)</span> or <span class="math notranslate nohighlight">\(e^x\)</span>. In this book I use the first form because it resembles the Python code.</p>
+<p>We can rewrite the previous equation as</p>
+<div class="math notranslate nohighlight">
+\[x = \exp(\alpha t) \exp(K)\]</div>
+<p>Since <span class="math notranslate nohighlight">\(K\)</span> is an arbitrary constant,
+<span class="math notranslate nohighlight">\(\exp(K)\)</span> is also an arbitrary constant, so we can write</p>
+<div class="math notranslate nohighlight">
+\[x = C \exp(\alpha t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(C = \exp(K)\)</span>. There are many solutions
+to this differential equation, with different values of <span class="math notranslate nohighlight">\(C\)</span>. The
+particular solution we want is the one that has the value <span class="math notranslate nohighlight">\(x_0\)</span> when
+<span class="math notranslate nohighlight">\(t=0\)</span>.</p>
+<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, <span class="math notranslate nohighlight">\(x(t) = C\)</span>, so <span class="math notranslate nohighlight">\(C = x_0\)</span> and the solution we want is
+$<span class="math notranslate nohighlight">\(x(t) = x_0 \exp(\alpha t)\)</span>$ If you would like to see this derivation
+done more carefully, you might like this video:
+<a class="reference external" href="http://modsimpy.com/khan1">http://modsimpy.com/khan1</a>.</p>
+</div>
+<div class="section" id="analysis-and-simulation">
+<h2>Analysis and simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Once you have designed a model, there are generally two ways to proceed: simulation and analysis. Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place. Analysis often comes in the form of algebra; that is, symbolic manipulation using mathematical notation.</p>
+<p>Analysis and simulation have different capabilities and limitations.
+Simulation is generally more versatile; it is easy to add and remove
+parts of a program and test many versions of a model, as we have done in the previous examples.</p>
+<p>But there are several things we can do with analysis that are harder or impossible with simulations:</p>
+<ul class="simple">
+<li><p>With analysis we can sometimes compute, exactly and efficiently, a
+value that we could only approximate, less efficiently, with
+simulation. For example, in the quadratic model we plotted growth rate versus population and saw net crossed through zero when the population is
+near 14 billion.  We could estimate the crossing point using a
+numerical search algorithm (more about that later). But with the
+analysis in Section xxx, we get the general result that
+<span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p></li>
+<li><p>Analysis often provides “computational shortcuts”, that is, the
+ability to jump forward in time to compute the state of a system
+many time steps in the future without computing the intervening
+states.</p></li>
+<li><p>We can use analysis to state and prove generalizations about models;
+for example, we might prove that certain results will always or
+never occur. With simulations, we can show examples and sometimes
+find counterexamples, but it is hard to write proofs.</p></li>
+<li><p>Analysis can provide insight into models and the systems they
+describe; for example, sometimes we can identify regimes of
+qualitatively different behavior and key parameters that control
+those behaviors.</p></li>
+</ul>
+<p>When people see what analysis can do, they sometimes get drunk with
+power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe. When they analyze a model of a physical system, they talk about “the math behind it” as if our world is the mere shadow of a world of ideal mathematical entities (I am not making this up; see <a class="reference external" href="http://modsimpy.com/plato">http://modsimpy.com/plato</a>.).</p>
+<p>This is, of course, nonsense. Mathematical notation is a language
+designed by humans for a purpose, specifically to facilitate symbolic
+manipulations like algebra. Similarly, programming languages are
+designed for a purpose, specifically to represent computational ideas
+and run programs.</p>
+<p>Each of these languages is good for the purposes it was designed for and less good for other purposes. But they are often complementary, and one of the goals of this book is to show how they can be used together.</p>
+</div>
+<div class="section" id="analysis-with-wolframalpha">
+<h2>Analysis with WolframAlpha<a class="headerlink" href="#analysis-with-wolframalpha" title="Permalink to this headline">¶</a></h2>
+<p>Until recently, most analysis was done by rubbing graphite on wood
+pulp, a process that is laborious and error-prone. A useful
+alternative is symbolic computation. If you have used services like
+WolframAlpha, you have used symbolic computation.</p>
+<p>For example, if you go to <a class="reference external" href="https://www.wolframalpha.com/">https://www.wolframalpha.com/</a> and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">alpha</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>WolframAlpha infers that <code class="docutils literal notranslate"><span class="pre">f(t)</span></code> is a function of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> is a
+parameter; it classifies the query as a “first-order linear ordinary
+differential equation”, and reports the general solution:</p>
+<div class="math notranslate nohighlight">
+\[f(t) = c_1 \exp(\alpha t)\]</div>
+<p>If you add a second equation to specify
+the initial condition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">alpha</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>  <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">p_0</span>
+</pre></div>
+</div>
+<p>WolframAlpha reports the particular solution:</p>
+<div class="math notranslate nohighlight">
+\[f(t) = p_0 \exp(\alpha t)\]</div>
+<p>WolframAlpha is based on Mathematica, a powerful programming language
+designed specifically for symbolic computation.</p>
+</div>
+<div class="section" id="analysis-with-sympy">
+<h2>Analysis with SymPy<a class="headerlink" href="#analysis-with-sympy" title="Permalink to this headline">¶</a></h2>
+<p>Python has a library called SymPy that provides symbolic computation
+tools similar to Mathematica. They are not as easy to use as
+WolframAlpha, but they have some other advantages.</p>
+<p>Before we can use SymPy, we have to import it:</p>
+<p>SymPy defines a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> object that represents symbolic variable names,
+functions, and other mathematical entities.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">symbols</span></code> function takes a string and returns <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects. So
+if we run this assignment:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python understands that <code class="docutils literal notranslate"><span class="pre">t</span></code> is a symbol, not a numerical value. If we
+now run</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">expr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python doesn’t try to perform numerical addition; rather, it creates a
+new <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> that represents the sum of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code>. We can evaluate the
+sum using <code class="docutils literal notranslate"><span class="pre">subs</span></code>, which substitutes a value for a symbol. This example
+substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Functions in SymPy are represented by a special kind of <code class="docutils literal notranslate"><span class="pre">Symbol</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Function</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<span class="n">f</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now if we write <code class="docutils literal notranslate"><span class="pre">f(t)</span></code>, we get an object that represents the evaluation of a function, <span class="math notranslate nohighlight">\(f\)</span>, at a value, <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But again SymPy doesn’t actually
+try to evaluate it.</p>
+</div>
+<div class="section" id="differential-equations-in-sympy">
+<h2>Differential equations in SymPy<a class="headerlink" href="#differential-equations-in-sympy" title="Permalink to this headline">¶</a></h2>
+<p>SymPy provides a function, <code class="docutils literal notranslate"><span class="pre">diff</span></code>, that can differentiate a function. We can apply it to <code class="docutils literal notranslate"><span class="pre">f(t)</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">diff</span>
+
+<span class="n">dfdt</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">dfdt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> that represents the derivative of <code class="docutils literal notranslate"><span class="pre">f</span></code> with
+respect to <code class="docutils literal notranslate"><span class="pre">t</span></code>. But again, SymPy doesn’t try to compute the derivative
+yet.</p>
+<p>To represent a differential equation, we use <code class="docutils literal notranslate"><span class="pre">Eq</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Eq</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
+<span class="n">eq1</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">dfdt</span><span class="p">,</span> <span class="n">alpha</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">eq1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is an object that represents an equation.  Now
+we can use <code class="docutils literal notranslate"><span class="pre">dsolve</span></code> to solve this differential equation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">dsolve</span>
+
+<span class="n">solution_eq</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">eq1</span><span class="p">)</span>
+<span class="n">solution_eq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the <strong>general
+solution</strong>, which still contains an unspecified constant, <span class="math notranslate nohighlight">\(C_1\)</span>. To get the <strong>particular solution</strong> where <span class="math notranslate nohighlight">\(f(0) = p_0\)</span>, we substitute <code class="docutils literal notranslate"><span class="pre">p_0</span></code> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>. First, we have to create two more symbols:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C1</span><span class="p">,</span> <span class="n">p_0</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;C1 p_0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can perform the substitution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span> <span class="o">=</span> <span class="n">solution_eq</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">p_0</span><span class="p">)</span>
+<span class="n">particular</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is called the <strong>exponential growth curve</strong>; see
+<a class="reference external" href="http://modsimpy.com/expo">http://modsimpy.com/expo</a>.</p>
+</div>
+<div class="section" id="solving-the-quadratic-growth-model">
+<h2>Solving the quadratic growth model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
+<p>We’ll use the (r, K) parameterization, so we’ll need two more symbols:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;r K&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can write the differential equation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq2</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">),</span> <span class="n">r</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="n">K</span><span class="p">))</span>
+<span class="n">eq2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And solve it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solution_eq</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">eq2</span><span class="p">)</span>
+<span class="n">solution_eq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result, <code class="docutils literal notranslate"><span class="pre">solution_eq</span></code>, contains <code class="docutils literal notranslate"><span class="pre">rhs</span></code>, which is the right-hand side of the solution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">general</span> <span class="o">=</span> <span class="n">solution_eq</span><span class="o">.</span><span class="n">rhs</span>
+<span class="n">general</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can evaluate the right-hand side at <span class="math notranslate nohighlight">\(t=0\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">at_0</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">at_0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we want to find the value of <code class="docutils literal notranslate"><span class="pre">C1</span></code> that makes <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
+<p>So we’ll create the equation <code class="docutils literal notranslate"><span class="pre">at_0</span> <span class="pre">=</span> <span class="pre">p_0</span></code> and solve for <code class="docutils literal notranslate"><span class="pre">C1</span></code>.  Because this is just an algebraic identity, not a differential equation, we use <code class="docutils literal notranslate"><span class="pre">solve</span></code>, not <code class="docutils literal notranslate"><span class="pre">dsolve</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">solve</span>
+
+<span class="n">solutions</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">at_0</span><span class="p">,</span> <span class="n">p_0</span><span class="p">),</span> <span class="n">C1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">solve</span></code> is a list of solutions.  In this case, <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">we have reason to expect only one solution</a>, but we still get a list, so we have to use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[0]</span></code>, to select the first one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">solutions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">solutions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value_of_C1</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">value_of_C1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now in the general solution, we want to replace <code class="docutils literal notranslate"><span class="pre">C1</span></code> with the value of <code class="docutils literal notranslate"><span class="pre">C1</span></code> we just figured out.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">value_of_C1</span><span class="p">)</span>
+<span class="n">particular</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is complicated, but SymPy provides a function that tries to simplify it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function is called the <strong>logistic growth curve</strong>; see
+<a class="reference external" href="http://modsimpy.com/logistic">http://modsimpy.com/logistic</a>. In the context of growth models, the
+logistic function is often written like this:</p>
+<div class="math notranslate nohighlight">
+\[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
+<p>We can use SymPy to confirm that these two forms are equivalent.  First we represent the alternative version of the logistic function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">p_0</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_0</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">exp</span>
+
+<span class="n">logistic</span> <span class="o">=</span> <span class="n">K</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">A</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
+<span class="n">logistic</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see whether two expressions are equivalent, we can check whether their difference simplifies to 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">particular</span> <span class="o">-</span> <span class="n">logistic</span><span class="p">)</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This test only works one way: if SymPy says the difference reduces to 0, the expressions are definitely equivalent (and not just numerically close).</p>
+<p>But if SymPy can’t find a way to simplify the result to 0, that doesn’t necessarily mean there isn’t one.  Testing whether two expressions are equivalent is a surprisingly hard problem; in fact, there is no algorithm that can solve it in general.</p>
+<p>If you would like to see this differential equation solved by hand, you might like this video: <a class="reference external" href="http://modsimpy.com/khan2">http://modsimpy.com/khan2</a></p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter we wrote the growth models from the previous chapters in terms of difference and differential equations.</p>
+<p>What I called the constant growth model is more commonly called <strong>linear growth</strong> because the solution is a line.  If we model time as continuous, the solution is</p>
+<div class="math notranslate nohighlight">
+\[f(t) = p_0 + \alpha t\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the growth rate.</p>
+<p>Similarly, the proportional growth model is usually called <strong>exponential growth</strong> because the solution is exponential:</p>
+<div class="math notranslate nohighlight">
+\[f(t) = p_0 \exp{\alpha t}\]</div>
+<p>Finally, the quadratic growth model is called <strong>logistic growth</strong> because the solution is the logistic function:</p>
+<div class="math notranslate nohighlight">
+\[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
+<p>I avoided these terms until now because they are based on results we had not derived yet.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Solve the quadratic growth equation using the alternative parameterization</p>
+<p><span class="math notranslate nohighlight">\(\frac{df(t)}{dt} = \alpha f(t) + \beta f^2(t) \)</span></p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong>  Use <a class="reference external" href="https://www.wolframalpha.com/">WolframAlpha</a> to solve the quadratic growth model, using either or both forms of parameterization:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df(t) / dt = alpha f(t) + beta f(t)^2
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df(t) / dt = r f(t) (1 - f(t)/K)
+</pre></div>
+</div>
+<p>Find the general solution and also the particular solution where <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Chapter 8</a>
+    <a class='right-next' id="next-link" href="chap10.html" title="next page">Chapter 10</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

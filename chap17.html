@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 17 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 18" href="chap18.html" />
+    <link rel="prev" title="Chapter 16" href="chap16.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap17.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap17.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-minimal-model">
+   The Minimal Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-glucose-minimal-model">
+   The glucose minimal model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpolation">
+   Interpolation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-17">
+<h1>Chapter 17<a class="headerlink" href="#chapter-17" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this chapter we start a new example, a model of how glucose and insulin interact to control blood sugar.  We will implement a widely used model called the “Minimal Model” because it is intended to include only the elements essential to explain the observed behavior of the system.</p>
+<p>This chapter presents the model itself and some background information we need to understand it.
+In the next chapter we’ll implement the model and compare the results to real data.</p>
+<p>My presentation in this chapter follows Bergman (2005) “Minimal Model”
+(abstract at <a class="reference external" href="http://modsimpy.com/bergman">http://modsimpy.com/bergman</a>, PDF at
+<a class="reference external" href="http://modsimpy.com/minmod">http://modsimpy.com/minmod</a>).</p>
+<div class="section" id="the-minimal-model">
+<h2>The Minimal Model<a class="headerlink" href="#the-minimal-model" title="Permalink to this headline">¶</a></h2>
+<p><strong>Pharmacokinetics</strong> is the study of how drugs and other substances move around the body, react, and are eliminated. In this chapter, we
+implement one of the most widely used pharmacokinetic models: the
+so-called “minimal model” of glucose and insulin in the blood stream.</p>
+<p><strong>Glucose</strong> is a form of sugar that circulates in the blood of animals; it is used as fuel for muscles, the brain, and other organs. The concentration of blood sugar is controlled by the hormone system, and especially by <strong>insulin</strong>, which is produced by the pancreas and has the effect of reducing blood sugar.</p>
+<p>In people with normal pancreatic function, the hormone system maintains <strong>homeostasis</strong>; that is, it keeps the concentration of blood sugar in a range that is neither too high or too low.</p>
+<p>But if the pancreas does not produce enough insulin, or if the cells
+that should respond to insulin become insensitive, blood sugar can
+become elevated, a condition called <strong>hyperglycemia</strong>. Long term, severe hyperglycemia is the defining symptom of <strong>diabetes mellitus</strong>, a serious disease that affects almost 10% of the population in the U.S. (see <a class="reference external" href="http://modsimpy.com/cdc">http://modsimpy.com/cdc</a>).</p>
+<p>One of the most-used tests for hyperglycemia and diabetes is the
+frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently); then blood samples are collected at intervals of 2–10 minutes for 3 hours. The samples are analyzed to
+measure the concentrations of glucose and insulin.</p>
+<p>Using these measurements, we can estimate several parameters of
+the subject’s response; the most important is a parameter denoted <span class="math notranslate nohighlight">\(S_I\)</span>, which quantifies the effect of insulin on the rate of reduction in blood sugar.</p>
+</div>
+<div class="section" id="the-glucose-minimal-model">
+<h2>The glucose minimal model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
+<p>The “minimal model”, as proposed by Bergman, Ider, Bowden, and
+Cobelli, consists of two parts: the glucose model and the insulin model. I will present an implementation of the glucose model; as a case study, you will have the chance to implement the insulin model.</p>
+<p>The original model was developed in the 1970s; since then, many
+variations and extensions have been proposed. Bergman’s comments on the development of the model provide insight into their process:</p>
+<blockquote>
+<div><p>We applied the principle of Occam’s Razor, i.e. by asking what was the simplest model based upon known physiology that could account for the insulin-glucose relationship revealed in the data. Such a model must be simple enough to account totally for the measured glucose (given the insulin input), yet it must be possible, using mathematical techniques, to estimate all the characteristic parameters of the model from a single data set (thus avoiding unverifiable assumptions).</p>
+</div></blockquote>
+<p>The most useful models are the ones that achieve this balance: including enough realism to capture the essential features of the system without so much complexity that they are impractical. In this example, the practical limit is the ability to estimate the parameters of the model using data, and to interpret the parameters meaningfully.</p>
+<p>Bergman discusses the features he and his colleagues thought were
+essential:</p>
+<blockquote>
+<div><p>(1) Glucose, once elevated by injection, returns to basal level due to two effects: the effect of glucose itself to normalize its own concentration […] as well as the catalytic effect of insulin to allow glucose to self-normalize (2) Also, we discovered that the effect of insulin on net glucose disappearance must be sluggish — that is, that insulin acts slowly because insulin must first move from plasma to a remote compartment […] to exert its action on glucose disposal.</p>
+</div></blockquote>
+<p>To paraphrase the second point, the effect of insulin on glucose
+disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood. Bergman’s group hypothesized that insulin must move relatively slowly from the blood to a “remote compartment” where it has its effect.</p>
+<p>At the time, the remote compartment was a modeling abstraction that
+might, or might not, represent something physical. Later, according to
+Bergman, it was “shown to be interstitial fluid”, that is, the fluid
+that surrounds tissue cells. In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve
+particular effects, to be found later to correspond to physical
+entities.  The most notable example, historically, might be <a class="reference external" href="https://en.wikipedia.org/wiki/Gene#Discovery_of_discrete_inherited_units">genes</a>.</p>
+<p>The glucose model consists of two differential equations:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t)\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(G\)</span> is the concentration of blood glucose as a function of time and <span class="math notranslate nohighlight">\(dG/dt\)</span> is its rate of change.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span> is the concentration of insulin in the tissue fluid as a
+function of time, and <span class="math notranslate nohighlight">\(dX/dt\)</span> is its rate of change.</p></li>
+<li><p><span class="math notranslate nohighlight">\(I\)</span> is the concentration of insulin in the blood as a function of
+time, which is taken as an input into the model, based on
+measurements.</p></li>
+<li><p><span class="math notranslate nohighlight">\(G_b\)</span> is the basal concentration of blood glucose and <span class="math notranslate nohighlight">\(I_b\)</span> is the
+basal concentration of blood insulin, that is, the concentrations at equilibrium. Both are constants estimated from measurements at the
+beginning or end of the test.</p></li>
+<li><p><span class="math notranslate nohighlight">\(k_1\)</span>, <span class="math notranslate nohighlight">\(k_2\)</span>, and <span class="math notranslate nohighlight">\(k_3\)</span> are positive-valued parameters that control the rates of appearance and disappearance for glucose and insulin.</p></li>
+</ul>
+<p>We can interpret the terms in the equations one by one:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(-k_1 \left[ G(t) - G_b \right]\)</span> is the rate of glucose
+disappearance due to the effect of glucose itself. When <span class="math notranslate nohighlight">\(G(t)\)</span> is
+above basal level, <span class="math notranslate nohighlight">\(G_b\)</span>, this term is negative; when <span class="math notranslate nohighlight">\(G(t)\)</span> is
+below basal level this term is positive. So in the absence of
+insulin, this term tends to restore blood glucose to basal level.</p></li>
+<li><p><span class="math notranslate nohighlight">\(-X(t) G(t)\)</span> models the interaction of glucose and insulin in tissue
+fluid, so the rate increases as either <span class="math notranslate nohighlight">\(X\)</span> or <span class="math notranslate nohighlight">\(G\)</span> increases. This
+term does not require a rate parameter because the units of <span class="math notranslate nohighlight">\(X\)</span> are
+unspecified; we can consider <span class="math notranslate nohighlight">\(X\)</span> to be in whatever units make the
+parameter of this term 1.</p></li>
+<li><p><span class="math notranslate nohighlight">\(k_3 \left[ I(t) - I_b \right]\)</span> is the rate at which insulin
+diffuses between blood and tissue fluid. When <span class="math notranslate nohighlight">\(I(t)\)</span> is above basal
+level, insulin diffuses from the blood into the tissue fluid. When
+<span class="math notranslate nohighlight">\(I(t)\)</span> is below basal level, insulin diffuses from tissue to the
+blood.</p></li>
+<li><p><span class="math notranslate nohighlight">\(-k_2 X(t)\)</span> is the rate of insulin disappearance in tissue fluid as
+it is consumed or broken down.</p></li>
+</ul>
+<p>The initial state of the model is <span class="math notranslate nohighlight">\(X(0) = I_b\)</span> and <span class="math notranslate nohighlight">\(G(0) = G_0\)</span>, where
+<span class="math notranslate nohighlight">\(G_0\)</span> is a constant that represents the concentration of blood sugar
+immediately after the injection. In theory we could estimate <span class="math notranslate nohighlight">\(G_0\)</span> based on measurements, but in practice it takes time for the injected glucose to spread through the blood volume. Since <span class="math notranslate nohighlight">\(G_0\)</span> is not measurable, it is treated as a <strong>free parameter</strong> of the model, which means that we are free to choose it to fit the data.</p>
+</div>
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>To develop and test the model, we’ll use data from <a class="reference external" href="https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT">Pacini and Bergman</a>, “MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test”, <em>Computer Methods and Programs in Biomedicine</em>, 23: 113-122, (1986).</p>
+<p>The following cell downloads the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;glucose_insulin.csv&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/glucose_insulin.csv
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use Pandas to read the data file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;glucose_insulin.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">data</span></code> has two columns: <code class="docutils literal notranslate"><span class="pre">glucose</span></code> is the concentration of blood glucose in mg/dL; <code class="docutils literal notranslate"><span class="pre">insulin</span></code> is concentration of insulin in the blood in μU/mL (a medical “unit”, denoted U, is an amount defined by convention in context). The index is time in minutes.</p>
+<p>This dataset represents glucose and insulin concentrations over
+182 min for a subject with normal insulin production and sensitivity.</p>
+</div>
+<div class="section" id="interpolation">
+<h2>Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this headline">¶</a></h2>
+<p>Before we are ready to implement the model, there’s one problem we have to solve. In the differential equations, <span class="math notranslate nohighlight">\(I\)</span> is a function that can be evaluated at any time, <span class="math notranslate nohighlight">\(t\)</span>. But in the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we only have measurements at discrete times. This is a job for interpolation!</p>
+<p>The ModSim library provides an <code class="docutils literal notranslate"><span class="pre">interpolate</span></code>, function that takes a <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a parameter and returns a function. That’s right, I said it returns a <em>function</em>.</p>
+<p>So we can call <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can call the new function, <code class="docutils literal notranslate"><span class="pre">I</span></code>, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is about 31.7, which is a linear interpolation between the actual measurements at <code class="docutils literal notranslate"><span class="pre">t=16</span></code> and <code class="docutils literal notranslate"><span class="pre">t=19</span></code>.</p>
+<p>We can also pass an array as an argument to <code class="docutils literal notranslate"><span class="pre">I</span></code>.  Here’s an array of equally-spaced values from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the corresponding values of <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I_array</span> <span class="o">=</span> <span class="n">I</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to put the results in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">I_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the interpolated values look like along with the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;insulin data&#39;</span><span class="p">)</span>
+<span class="n">I_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolated&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration ($\mu$U/mL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter introduces a model of the interaction between glucose and insulin in the blood stream.
+And it introduces a new tool, interpolation, which we’ll need to implement the model</p>
+<p>In the next chapter, we will use measured concentrations of insulin to simulate the glucose-insulin system, and compare the results to measured concentrations of glucose.</p>
+<p>Then, you’ll have a chance to implement the second part of the model, which uses measured concentrations of glucose to simulate the insulin response, and compare the results to the data.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> is a wrapper for the SciPy function <code class="docutils literal notranslate"><span class="pre">interp1d</span></code>.
+Read the documentation of <code class="docutils literal notranslate"><span class="pre">interp1d</span></code> at <a class="reference external" href="http://modsimpy.com/interp">http://modsimpy.com/interp</a>.</p>
+<p>In particular, notice the <code class="docutils literal notranslate"><span class="pre">kind</span></code> argument, which specifies a kind of interpolation.
+The default is linear interpolation, which connects the data points with straight lines.</p>
+<p>Pass a keyword argument to <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> to specify one of the other kinds of interpolation, and run the code again to see what it looks like.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;insulin data&#39;</span><span class="p">)</span>
+<span class="n">I_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolated&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration ($\mu$U/mL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Interpolate the glucose data and generate a plot, similar to the previous one, that shows the data points and the interpolated curve evaluated at the time values in <code class="docutils literal notranslate"><span class="pre">t_array</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">glucose</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;glucose data&#39;</span><span class="p">)</span>
+<span class="n">G_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolated&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap16.html" title="previous page">Chapter 16</a>
+    <a class='right-next' id="next-link" href="chap18.html" title="next page">Chapter 18</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

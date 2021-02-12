@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 15 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 16" href="chap16.html" />
+    <link rel="prev" title="Chapter 14" href="chap14.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap15.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap15.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-coffee-cooling-problem">
+   The coffee cooling problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#temperature-and-heat">
+   Temperature and heat
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heat-transfer">
+   Heat transfer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#newton-s-law-of-cooling">
+   Newton’s law of cooling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementation">
+   Implementation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-roots">
+   Finding roots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#estimating-r">
+   Estimating
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     r
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-15">
+<h1>Chapter 15<a class="headerlink" href="#chapter-15" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about. In the next few chapters, we’ll do some physics, starting with <strong>thermal systems</strong>, that is, systems where the temperature of objects changes as heat transfers from one to another.</p>
+<div class="section" id="the-coffee-cooling-problem">
+<h2>The coffee cooling problem<a class="headerlink" href="#the-coffee-cooling-problem" title="Permalink to this headline">¶</a></h2>
+<p>The coffee cooling problem was discussed by Jearl Walker in
+“The Amateur Scientist”, <em>Scientific American</em>, Volume 237, Issue 5, November 1977. Since then it has become a standard example of modeling and simulation.</p>
+<p>Here is my version of the problem:</p>
+<blockquote>
+<div><p>Suppose I stop on the way to work to pick up a cup of coffee, which I take with milk. Assuming that I want the coffee to be as hot as possible when I arrive at work, should I add the milk at the coffee shop, wait until I get to work, or add the milk at some point in between?</p>
+</div></blockquote>
+<p>To help answer this question, I made a trial run with the milk and
+coffee in separate containers and took some measurements (not really):</p>
+<ul class="simple">
+<li><p>When served, the temperature of the coffee is 90 °C. The volume is
+300 mL.</p></li>
+<li><p>The milk is at an initial temperature of 5 °C, and I take about
+50 mL.</p></li>
+<li><p>The ambient temperature in my car is 22 °C.</p></li>
+<li><p>The coffee is served in a well insulated cup. When I arrive at work after 30 minutes, the temperature of the coffee has fallen to 70 °C.</p></li>
+<li><p>The milk container is not as well insulated. After 15 minutes, it
+warms up to 20 °C, nearly the ambient temperature.</p></li>
+</ul>
+<p>To use this data and answer the question, we have to know something
+about temperature and heat, and we have to make some modeling decisions.</p>
+</div>
+<div class="section" id="temperature-and-heat">
+<h2>Temperature and heat<a class="headerlink" href="#temperature-and-heat" title="Permalink to this headline">¶</a></h2>
+<p>To understand how coffee cools (and milk warms), we need a model of
+temperature and heat. <strong>Temperature</strong> is a property of an object or a
+system; in SI units it is measured in degrees Celsius (°C). Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.</p>
+<p>When particles in a hot object contact particles in a cold object, the
+hot object gets cooler and the cold object gets warmer as energy is
+transferred from one to the other. The transferred energy is called
+<strong>heat</strong>; in SI units it is measured in joules (J).</p>
+<p>Heat is related to temperature by the following equation (see
+<a class="reference external" href="http://modsimpy.com/thermass">http://modsimpy.com/thermass</a>):</p>
+<div class="math notranslate nohighlight">
+\[Q = C~\Delta T\]</div>
+<p>where <span class="math notranslate nohighlight">\(Q\)</span> is the amount of heat transferred to an object, <span class="math notranslate nohighlight">\(\Delta T\)</span> is resulting change in temperature, and <span class="math notranslate nohighlight">\(C\)</span> is the <strong>thermal mass</strong> of the object, which quantifies how much energy it takes to heat or cool it. In SI units, thermal mass is measured in joules per degree Celsius (J/°C).</p>
+<p>For objects made primarily from one material, thermal mass can be
+computed like this:</p>
+<div class="math notranslate nohighlight">
+\[C = m c_p\]</div>
+<p>where <span class="math notranslate nohighlight">\(m\)</span> is the mass of the object and <span class="math notranslate nohighlight">\(c_p\)</span> is the <strong>specific heat capacity</strong> of the material (see <a class="reference external" href="http://modsimpy.com/specheat">http://modsimpy.com/specheat</a>).</p>
+<p>We can use these equations to estimate the thermal mass of a cup of
+coffee. The specific heat capacity of coffee is probably close to that
+of water, which is 4.2 J/g/°C. Assuming that the density of coffee is
+close to that of water, which is 1 g/mL, the mass of 300 mL of coffee is 300 g, and the thermal mass is 1260 J/°C.</p>
+<p>So when a cup of coffee cools from 90 °C to 70 °C, the change in
+temperature, <span class="math notranslate nohighlight">\(\Delta T\)</span> is 20 °C, which means that 25 200 J of heat
+energy was transferred from the coffee to the surrounding environment
+(the cup holder and air in my car).</p>
+<p>To give you a sense of how much energy that is, if you were able to
+harness all of that heat to do work (which you cannot), you could
+use it to lift a cup of coffee from sea level to 8571 m, just shy of the height of Mount Everest, 8848 m.</p>
+<p>Assuming that the cup has less mass than the coffee, and is made from a material with lower specific heat, we can ignore the thermal mass of the cup. For a cup with substantial thermal mass, like a ceramic mug, we might consider a model that computes the temperature of coffee and cup separately.</p>
+</div>
+<div class="section" id="heat-transfer">
+<h2>Heat transfer<a class="headerlink" href="#heat-transfer" title="Permalink to this headline">¶</a></h2>
+<p>In a situation like the coffee cooling problem, there are three ways
+heat transfers from one object to another (see <a class="reference external" href="http://modsimpy.com/transfer">http://modsimpy.com/transfer</a>):</p>
+<ul class="simple">
+<li><p>Conduction: When objects at different temperatures come into
+contact, the faster-moving particles of the higher-temperature
+object transfer kinetic energy to the slower-moving particles of the lower-temperature object.</p></li>
+<li><p>Convection: When particles in a gas or liquid flow from place to
+place, they carry heat energy with them. Fluid flows can be caused
+by external action, like stirring, or by internal differences in
+temperature. For example, you might have heard that hot air rises,
+which is a form of “natural convection”.</p></li>
+<li><p>Radiation: As the particles in an object move due to thermal energy,
+they emit electromagnetic radiation. The energy carried by this
+radiation depends on the object’s temperature and surface properties
+(see <a class="reference external" href="http://modsimpy.com/thermrad">http://modsimpy.com/thermrad</a>).</p></li>
+</ul>
+<p>For objects like coffee in a car, the effect of radiation is much
+smaller than the effects of conduction and convection, so we will ignore it.</p>
+<p>Convection can be a complex topic, since it often depends on details of fluid flow in three dimensions. But for this problem we will be able to get away with a simple model called “Newton’s law of cooling”.</p>
+</div>
+<div class="section" id="newton-s-law-of-cooling">
+<h2>Newton’s law of cooling<a class="headerlink" href="#newton-s-law-of-cooling" title="Permalink to this headline">¶</a></h2>
+<p>Newton’s law of cooling asserts that the temperature rate of change for an object is proportional to the difference in temperature between the
+object and the surrounding environment:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dT}{dt} = -r (T - T_{env})\]</div>
+<p>where <span class="math notranslate nohighlight">\(T\)</span>, the temperature of the object, is a function of time, <span class="math notranslate nohighlight">\(t\)</span>; <span class="math notranslate nohighlight">\(T_{env}\)</span> is the temperature of the environment, and <span class="math notranslate nohighlight">\(r\)</span> is a constant that characterizes how quickly heat is transferred between the system and the environment.</p>
+<p>Newton’s so-called “law ” is really a model: it is a good approximation in some conditions and less good in others.</p>
+<p>For example, if the primary mechanism of heat transfer is conduction,
+Newton’s law is “true”, which is to say that <span class="math notranslate nohighlight">\(r\)</span> is constant over a
+wide range of temperatures. And sometimes we can estimate <span class="math notranslate nohighlight">\(r\)</span> based on
+the material properties and shape of the object.</p>
+<p>When convection contributes a non-negligible fraction of heat transfer, <span class="math notranslate nohighlight">\(r\)</span> depends on temperature, but Newton’s law is often accurate enough, at least over a narrow range of temperatures. In this case <span class="math notranslate nohighlight">\(r\)</span> usually has to be estimated experimentally, since it depends on details of surface shape, air flow, evaporation, etc.</p>
+<p>When radiation makes up a substantial part of heat transfer, Newton’s
+law is not a good model at all. This is the case for objects in space or in a vacuum, and for objects at high temperatures (more than a few
+hundred degrees Celsius, say).</p>
+<p>However, for a situation like the coffee cooling problem, we expect
+Newton’s model to be quite good.</p>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>To get started, let’s forget about the milk temporarily and focus on the coffee.</p>
+<p>Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="n">T_init</span><span class="p">,</span>
+                  <span class="n">T_final</span><span class="o">=</span><span class="n">T_init</span><span class="p">,</span>
+                  <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">,</span>
+                  <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+                  <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span>
+                  <span class="n">T_env</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span>
+                  <span class="n">t_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                  <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">T_init</span></code>, <code class="docutils literal notranslate"><span class="pre">volume</span></code>, and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> come from the statement of the problem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I chose the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> arbitrarily for now; we will figure out how to estimate it soon.</p>
+<p>In addition, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.</p>
+<p>Strictly speaking, Newton’s law is a differential equation, but over a short period of time we can approximate it with a difference equation:</p>
+<div class="math notranslate nohighlight">
+\[\Delta T = -r (T - T_{env}) dt\]</div>
+<p>where <span class="math notranslate nohighlight">\(dt\)</span> is the time step and <span class="math notranslate nohighlight">\(\Delta T\)</span> is the change in temperature during that time step.</p>
+<p>Note: I use <span class="math notranslate nohighlight">\(\Delta T\)</span> to denote a change in temperature over time, but in the context of heat transfer, you might also see <span class="math notranslate nohighlight">\(\Delta T\)</span> used to denote the difference in temperature between an object and its
+environment, <span class="math notranslate nohighlight">\(T - T_{env}\)</span>. To minimize confusion, I avoid this second
+use.</p>
+<p>The following function takes the current temperature, <code class="docutils literal notranslate"><span class="pre">T</span></code>, the current time <code class="docutils literal notranslate"><span class="pre">t</span></code>, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, and computes the change in temperature during a time step:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_func</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">T_env</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span>    
+    <span class="k">return</span> <span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">T_env</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can test it with the initial temperature of the coffee, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_func</span><span class="p">(</span><span class="n">coffee</span><span class="o">.</span><span class="n">T_init</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> minute, the temperature drops by about 0.7 °C/min, at least for this value of <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+<p>Now here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that simulates a series of time steps from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">):</span>
+    <span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+    
+    <span class="n">series</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">t_array</span><span class="p">)</span>
+    <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">T_init</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">change_func</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    
+    <span class="n">system</span><span class="o">.</span><span class="n">t_end</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">series</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function is similar to previous versions of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<p>One difference is that it uses <code class="docutils literal notranslate"><span class="pre">linrange</span></code> to make an array of values
+from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code> with time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p>
+<p>We can run it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> with one row per time step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the results look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;coffee&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (minute)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Temperature (C)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Coffee Cooling&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The temperature after 30 minutes is 72.3 °C, which is a little higher than what’s stated in the problem, 70 °C.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By trial and error, we could find the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> where the final temperature is precisely 70 °C.
+But it is more efficient to use a root-finding algorithm.</p>
+</div>
+<div class="section" id="finding-roots">
+<h2>Finding roots<a class="headerlink" href="#finding-roots" title="Permalink to this headline">¶</a></h2>
+<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> that finds the roots of non-linear equations. As a simple example, suppose you want to find the roots of the polynomial</p>
+<div class="math notranslate nohighlight">
+\[f(x) = (x - 1)(x - 2)(x - 3)\]</div>
+<p>A <strong>root</strong> is a value of <span class="math notranslate nohighlight">\(x\)</span> that makes <span class="math notranslate nohighlight">\(f(x)=0\)</span>. Because of the way I wrote the polynomial, we can see that if <span class="math notranslate nohighlight">\(x=1\)</span>, the first factor is 0; if <span class="math notranslate nohighlight">\(x=2\)</span>, the second factor is 0; and if <span class="math notranslate nohighlight">\(x=3\)</span>, the third factor is 0, so those are the roots.</p>
+<p>I’ll use this example to demonstrate <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>. First, we have to
+write a function that evaluates <span class="math notranslate nohighlight">\(f\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">])</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first argument is the function whose roots we want. The second
+argument is an interval that contains or “brackets” a root. The result is an object that contains several variables, including <code class="docutils literal notranslate"><span class="pre">root</span></code>, which stores the root that was found.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">root</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we provide a different interval, we find a different root.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
+<span class="n">res</span><span class="o">.</span><span class="n">root</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the interval doesn’t contain a root, you’ll get a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> and a message like “f(a) and f(b) must have different signs”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Now we can use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to estimate <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+</div>
+<div class="section" id="estimating-r">
+<h2>Estimating <code class="docutils literal notranslate"><span class="pre">r</span></code><a class="headerlink" href="#estimating-r" title="Permalink to this headline">¶</a></h2>
+<p>What we want is the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> that yields a final temperature of
+70 °C. To use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, we need a function that takes <code class="docutils literal notranslate"><span class="pre">r</span></code> as a parameter and returns the difference between the final temperature and the goal:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">error_func</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">-</span> <span class="mi">70</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is called an “error function” because it returns the
+difference between what we got and what we wanted, that is, the error.
+With the right value of <code class="docutils literal notranslate"><span class="pre">r</span></code>, the error is 0.</p>
+<p>We can test <code class="docutils literal notranslate"><span class="pre">error_func</span></code> like this, using the initial guess <code class="docutils literal notranslate"><span class="pre">r=0.01</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">error_func</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is an error of 2.3 °C, because the final temperature with
+this value of <code class="docutils literal notranslate"><span class="pre">r</span></code> is too high.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_func</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">r=0.02</span></code>, the error is  about -11°C, which means that the final temperature is too low. So we know that the correct value must be in between.</p>
+<p>So we can call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func</span><span class="p">,</span> <span class="n">coffee</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">])</span>
+<span class="n">res</span><span class="o">.</span><span class="n">flag</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first argument is the error function.
+The second argument is the <code class="docutils literal notranslate"><span class="pre">System</span></code> object, which <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> passes as an argument to <code class="docutils literal notranslate"><span class="pre">error_func</span></code>.
+The third argument is an interval that brackets the root.</p>
+<p>Here are the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_coffee</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+<span class="n">r_coffee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code> turns out to be about <code class="docutils literal notranslate"><span class="pre">0.0115</span></code>, in units of min<span class="math notranslate nohighlight">\(^{-1}\)</span> (inverse minutes).</p>
+<p>We can confirm that this value is correct by setting <code class="docutils literal notranslate"><span class="pre">r</span></code> to the root we found and running the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+<span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+<span class="n">coffee</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final temperature is very close to 70 °C.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong>  Simulate the temperature of 50 mL of milk with a starting temperature of 5 °C, in a vessel with <code class="docutils literal notranslate"><span class="pre">r=0.1</span></code>, for 15 minutes, and plot the results.</p>
+<p>By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap14.html" title="previous page">Chapter 14</a>
+    <a class='right-next' id="next-link" href="chap16.html" title="next page">Chapter 16</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 11 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 12" href="chap12.html" />
+    <link rel="prev" title="Chapter 10" href="chap10.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap11.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap11.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-freshman-plague">
+   The Freshman Plague
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-sir-model">
+   The SIR model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-sir-equations">
+   The SIR equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementation">
+   Implementation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-update-function">
+   The update function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-the-simulation">
+   Running the simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#collecting-the-results">
+   Collecting the results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#now-with-a-timeframe">
+   Now with a TimeFrame
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-11">
+<h1>Chapter 11<a class="headerlink" href="#chapter-11" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this chapter, we develop a model of an epidemic as it spreads in a
+susceptible population, and use it to evaluate the effectiveness of
+possible interventions.</p>
+<p>My presentation of the model in the next few chapters is based on an excellent article by David Smith and Lang Moore, [^1]: Smith and Moore, “The SIR Model for Spread of Disease,” Journal of Online Mathematics and its Applications, December 2001, available at <a class="reference external" href="http://modsimpy.com/sir">http://modsimpy.com/sir</a>.</p>
+<div class="section" id="the-freshman-plague">
+<h2>The Freshman Plague<a class="headerlink" href="#the-freshman-plague" title="Permalink to this headline">¶</a></h2>
+<p>Every year at Olin College, about 90 new students come to campus from
+around the country and the world. Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease. A few weeks later, predictably, some fraction of the incoming class comes down with what we call “The Freshman Plague”.</p>
+<p>In this chapter we introduce a well-known model of infectious disease,
+the Kermack-McKendrick model, and use it to explain the progression of
+the disease over the course of the semester, predict the effect of
+possible interventions (like immunization) and design the most effective intervention campaign.</p>
+<p>So far we have done our own modeling; that is, we’ve chosen physical
+systems, identified factors that seem important, and made decisions
+about how to represent them. In this chapter we start with an existing
+model and reverse-engineer it. Along the way, we consider the modeling
+decisions that went into it and identify its capabilities and
+limitations.</p>
+</div>
+<div class="section" id="the-sir-model">
+<h2>The SIR model<a class="headerlink" href="#the-sir-model" title="Permalink to this headline">¶</a></h2>
+<p>The Kermack-McKendrick model is a simple version of an <strong>SIR model</strong>,
+so-named because it considers three categories of people:</p>
+<ul class="simple">
+<li><p><strong>S</strong>: People who are “susceptible”, that is, capable of
+contracting the disease if they come into contact with someone who
+is infected.</p></li>
+<li><p><strong>I</strong>: People who are “infectious”, that is, capable of passing
+along the disease if they come into contact with someone
+susceptible.</p></li>
+<li><p><strong>R</strong>: People who are “recovered”. In the basic version of the
+model, people who have recovered are considered to be immune to
+reinfection. That is a reasonable model for some diseases, but not
+for others, so it should be on the list of assumptions to reconsider
+later.</p></li>
+</ul>
+<p>Let’s think about how the number of people in each category changes over time. Suppose we know that people with the disease are infectious for a period of 4 days, on average. If 100 people are infectious at a
+particular point in time, and we ignore the particular time each one
+became infected, we expect about 1 out of 4 to recover on any particular day.</p>
+<p>Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we’ll denote with the Greek letter gamma, <span class="math notranslate nohighlight">\(\gamma\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
+<p>If the total number of people in the population is <span class="math notranslate nohighlight">\(N\)</span>, and the fraction currently infectious is <span class="math notranslate nohighlight">\(i\)</span>, the total number of recoveries we expect per day is <span class="math notranslate nohighlight">\(\gamma i N\)</span>.</p>
+<p>Now let’s think about the number of new infections. Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in a way that would cause them to become infected if the other person is infected. We’ll denote this contact rate with the Greek letter beta, <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<p>It’s probably not reasonable to assume that we know <span class="math notranslate nohighlight">\(\beta\)</span> ahead of
+time, but later we’ll see how to estimate it based on data from previous outbreaks.</p>
+<p>If <span class="math notranslate nohighlight">\(s\)</span> is the fraction of the population that’s susceptible, <span class="math notranslate nohighlight">\(s N\)</span> is
+the number of susceptible people, <span class="math notranslate nohighlight">\(\beta s N\)</span> is the number of contacts per day, and <span class="math notranslate nohighlight">\(\beta s i N\)</span> is the number of those contacts where the other person is infectious.</p>
+<p>In summary:</p>
+<ul class="simple">
+<li><p>The number of recoveries we expect per day is <span class="math notranslate nohighlight">\(\gamma i N\)</span>; dividing by <span class="math notranslate nohighlight">\(N\)</span> yields the fraction of the population that recovers in a day, which is <span class="math notranslate nohighlight">\(\gamma i\)</span>.</p></li>
+<li><p>The number of new infections we expect per day is <span class="math notranslate nohighlight">\(\beta s i N\)</span>;
+dividing by <span class="math notranslate nohighlight">\(N\)</span> yields the fraction of the population that gets
+infected in a day, which is <span class="math notranslate nohighlight">\(\beta s i\)</span>.</p></li>
+</ul>
+<p>This model assumes that the population is closed; that is, no one
+arrives or departs, so the size of the population, <span class="math notranslate nohighlight">\(N\)</span>, is constant.</p>
+</div>
+<div class="section" id="the-sir-equations">
+<h2>The SIR equations<a class="headerlink" href="#the-sir-equations" title="Permalink to this headline">¶</a></h2>
+<p>If we treat time as a continuous quantity, we can write differential
+equations that describe the rates of change for <span class="math notranslate nohighlight">\(s\)</span>, <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(r\)</span> (where <span class="math notranslate nohighlight">\(r\)</span> is the fraction of the population that has recovered):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{ds}{dt} &amp;= -\beta s i \\
+\frac{di}{dt} &amp;= \beta s i - \gamma i\\
+\frac{dr}{dt} &amp;= \gamma i\end{aligned}\end{split}\]</div>
+<p>To avoid cluttering the equations, I leave it implied that <span class="math notranslate nohighlight">\(s\)</span> is a function of time, <span class="math notranslate nohighlight">\(s(t)\)</span>, and likewise for <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<p>SIR models are examples of <strong>compartment models</strong>, so-called because
+they divide the world into discrete categories, or compartments, and
+describe transitions from one compartment to another. Compartments are
+also called <strong>stocks</strong> and transitions between them are called
+<strong>flows</strong>.</p>
+<p>In this example, there are three stocks—susceptible, infectious, and
+recovered—and two flows—new infections and recoveries. Compartment
+models are often represented visually using stock and flow diagrams (see <a class="reference external" href="http://modsimpy.com/stock">http://modsimpy.com/stock</a>).</p>
+<p>The following figure shows the stock and flow diagram for an SIR
+model.</p>
+<p><img alt="Stock and flow diagram for an SIRmodel." src="figs/stock_flow1.pdf" />{width=”4in”}</p>
+<p>Stocks are represented by rectangles, flows by arrows. The widget in the middle of the arrows represents a valve that controls the rate of flow; the diagram shows the parameters that control the valves.</p>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>For a given physical system, there are many possible models, and for a
+given model, there are many ways to represent it. For example, we can
+represent an SIR model as a stock-and-flow diagram, as a set of
+differential equations, or as a Python program. The process of
+representing a model in these forms is called <strong>implementation</strong>. In
+this section, we implement the SIR model in Python.</p>
+<p>I’ll represent the initial state of the system using a <code class="docutils literal notranslate"><span class="pre">State</span></code> object
+with state variables <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>; they represent the fraction of
+the population in each compartment.</p>
+<p>We can initialize the <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the <em>number</em> of people in each compartment, assuming there is one infected student in a class of 90:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">init</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then convert the numbers to fractions by dividing by the total:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">sum</span>
+
+<span class="n">init</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+<span class="n">init</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For now, let’s assume we know the time between contacts and time between
+recoveries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="o">=</span> <span class="mi">3</span>             <span class="c1"># time between contacts in days </span>
+<span class="n">tr</span> <span class="o">=</span> <span class="mi">4</span>             <span class="c1"># recovery time in days</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use them to compute the parameters of the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tc</span>      <span class="c1"># contact rate in per day</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr</span>     <span class="c1"># recovery rate in per day</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters and initial
+conditions. The following function takes the system parameters and returns a new <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">init</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+
+    <span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">14</span>
+
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="n">t0</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span>
+                  <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The default value for <code class="docutils literal notranslate"><span class="pre">t_end</span></code> is 14 weeks, about the length of a
+semester.</p>
+<p>Here’s what the <code class="docutils literal notranslate"><span class="pre">System</span></code> object looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">system</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-update-function">
+<h2>The update function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
+<p>At any point in time, the state of the system is represented by a
+<code class="docutils literal notranslate"><span class="pre">State</span></code> object with three variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>. So I’ll define an
+update function that takes as parameters a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, the current
+time, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="n">infected</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">s</span>    
+    <span class="n">recovered</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">i</span>
+    
+    <span class="n">s</span> <span class="o">-=</span> <span class="n">infected</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="n">infected</span> <span class="o">-</span> <span class="n">recovered</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">recovered</span>
+    
+    <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first line uses a feature we have not seen before, <strong>multiple
+assignment</strong>. The value on the right side is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object that
+contains three values. The left side is a sequence of three variable
+names. The assignment does just what we want: it assigns the three
+values from the <code class="docutils literal notranslate"><span class="pre">State</span></code> object to the three variables, in order.</p>
+<p>The variables <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>, are lowercase to distinguish them
+from the state variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>The update function computes <code class="docutils literal notranslate"><span class="pre">infected</span></code> and <code class="docutils literal notranslate"><span class="pre">recovered</span></code> as a fraction of the population, then updates <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>. The return value is a <code class="docutils literal notranslate"><span class="pre">State</span></code> that contains the updated values.</p>
+<p>When we call <code class="docutils literal notranslate"><span class="pre">update_func</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You might notice that this version of <code class="docutils literal notranslate"><span class="pre">update_func</span></code> does not use one of its parameters, <code class="docutils literal notranslate"><span class="pre">t</span></code>. I include it anyway because update functions
+sometimes depend on time, and it is convenient if they all take the same parameters, whether they need them or not.</p>
+</div>
+<div class="section" id="running-the-simulation">
+<h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Now we can simulate the model over a sequence of time steps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
+
+<span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The parameters of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> are the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and the
+update function. The <code class="docutils literal notranslate"><span class="pre">System</span></code> object contains the parameters, initial
+conditions, and values of <code class="docutils literal notranslate"><span class="pre">t0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
+<p>We can call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the final state of the system:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This result indicates that after 14 weeks (98 days), about 52% of the
+population is still susceptible, which means they were never infected,
+less than 1% are actively infected, and 48% have recovered, which means they were infected at some point.</p>
+</div>
+<div class="section" id="collecting-the-results">
+<h2>Collecting the results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">¶</a></h2>
+<p>The previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> only returns the final state,
+but we might want to see how the state changes over time. We’ll consider two ways to do that: first, using three <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects, then using a new object called a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
+<p>Here’s the first version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">t0</span>
+    <span class="n">S</span><span class="p">[</span><span class="n">t0</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t0</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    
+    <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, we create <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects to store the results. Notice that
+the variables <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code> are <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects now.</p>
+<p>Next we initialize <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">t0</span></code>, and the first elements of <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and
+<code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>Inside the loop, we use <code class="docutils literal notranslate"><span class="pre">update_func</span></code> to compute the state of the system
+at the next time step, then use multiple assignment to unpack the
+elements of <code class="docutils literal notranslate"><span class="pre">state</span></code>, assigning each to the corresponding <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+<p>At the end of the function, we return the values <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>. This
+is the first example we have seen where a function returns more than one
+value.</p>
+<p>Now we can run the function like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll use the following function to plot the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_results</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Susceptible&#39;</span><span class="p">)</span>
+    <span class="n">I</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infected&#39;</span><span class="p">)</span>
+    <span class="n">R</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Resistant&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction of population&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And run it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_results</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
+</div>
+<div class="section" id="now-with-a-timeframe">
+<h2>Now with a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
+<p>If the number of state variables is small, storing them as separate
+<code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects might not be so bad. But a better alternative is to use a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which is another object defined in the ModSim
+library.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> is a kind of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which we used in.</p>
+<p>Here’s a more concise version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> using a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">TimeFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">frame</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first line creates an empty <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one column for each
+state variable. Then, before the loop starts, we store the initial
+conditions in the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> at <code class="docutils literal notranslate"><span class="pre">t0</span></code>. Based on the way we’ve been using
+<code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects, it is tempting to write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+</pre></div>
+</div>
+<p>But when you use the bracket operator with a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> or <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, it selects a column, not a row.</p>
+<p>To select a row, we have to use <code class="docutils literal notranslate"><span class="pre">loc</span></code>, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+</pre></div>
+</div>
+<p>Since the value on the right side is a <code class="docutils literal notranslate"><span class="pre">State</span></code>, the assignment matches
+up the index of the <code class="docutils literal notranslate"><span class="pre">State</span></code> with the columns of the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>; that
+is, it assigns the <code class="docutils literal notranslate"><span class="pre">S</span></code> value from <code class="docutils literal notranslate"><span class="pre">system.init</span></code> to the <code class="docutils literal notranslate"><span class="pre">S</span></code> column of
+<code class="docutils literal notranslate"><span class="pre">frame</span></code>, and likewise with <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>We use the same feature to write the loop more concisely, assigning the <code class="docutils literal notranslate"><span class="pre">State</span></code> we get from <code class="docutils literal notranslate"><span class="pre">update_func</span></code> directly to the next row of
+<code class="docutils literal notranslate"><span class="pre">frame</span></code>.</p>
+<p>Finally, we return <code class="docutils literal notranslate"><span class="pre">frame</span></code>. We can call this version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot the results like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As with a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we can use the dot operator to select columns
+from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise</strong>  Suppose the time between contacts is 4 days and the recovery time is 5 days.  After 14 weeks, how many students, total, have been infected?</p>
+<p>Hint: what is the change in <code class="docutils literal notranslate"><span class="pre">S</span></code> between the beginning and the end of the simulation?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap10.html" title="previous page">Chapter 10</a>
+    <a class='right-next' id="next-link" href="chap12.html" title="next page">Chapter 12</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

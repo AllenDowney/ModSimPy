@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 19 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 20" href="chap20.html" />
+    <link rel="prev" title="Chapter 18" href="chap18.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap19.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap19.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-glucose-minimal-model">
+   The glucose minimal model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-insulin-minimal-model">
+   The insulin minimal model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#low-pass-filter">
+   Low-Pass Filter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thermal-behavior-of-a-wall">
+   Thermal behavior of a wall
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hiv">
+   HIV
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-19">
+<h1>Chapter 19<a class="headerlink" href="#chapter-19" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-glucose-minimal-model">
+<h2>The glucose minimal model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
+<p>In the previous chapter we implemented the glucose minimal model using given parameters, but I didn’t say where those parameters came from.</p>
+<p>In the repository for this book, you will find a notebook,
+<code class="docutils literal notranslate"><span class="pre">glucose.ipynb</span></code>, that shows how we can find the parameters that best fit the data.</p>
+<p>It uses a SciPy function called <code class="docutils literal notranslate"><span class="pre">leastsq</span></code>, which stands for “least squares”; that is, it finds the parameters that minimize the sum of squared differences between the results of the model and the data.</p>
+<p>You can think of <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> as an optional tool for this book.  We won’t use it in the text itself, but it appears in a few of the case studies.</p>
+</div>
+<div class="section" id="the-insulin-minimal-model">
+<h2>The insulin minimal model<a class="headerlink" href="#the-insulin-minimal-model" title="Permalink to this headline">¶</a></h2>
+<p>Along with the glucose minimal model, Berman et al. developed an insulin minimal model, in which the concentration of insulin, <span class="math notranslate nohighlight">\(I\)</span>, is governed by this differential equation:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dI}{dt} = -k I(t) + \gamma \left[ G(t) - G_T \right] t\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(k\)</span> is a parameter that controls the rate of insulin disappearance
+independent of blood glucose.</p></li>
+<li><p><span class="math notranslate nohighlight">\(G(t)\)</span> is the measured concentration of blood glucose at time <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(G_T\)</span> is the glucose threshold; when blood glucose is above this
+level, it triggers an increase in blood insulin.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span> is a parameter that controls the rate of increase (or
+decrease) in blood insulin when glucose is above (or below) <span class="math notranslate nohighlight">\(G_T\)</span>.</p></li>
+</ul>
+<p>The initial condition is <span class="math notranslate nohighlight">\(I(0) = I_0\)</span>. As in the glucose minimal model, we treat the initial condition as a parameter which we’ll choose to fit the data.</p>
+<p>The parameters of this model can be used to estimate <span class="math notranslate nohighlight">\(\phi_1\)</span> and
+<span class="math notranslate nohighlight">\(\phi_2\)</span>, which are quantities that “describe the sensitivity to glucose of the first and second phase pancreatic responsivity”. These quantities are related to the parameters as follows:</p>
+<div class="math notranslate nohighlight">
+\[\phi_1 = \frac{I_{max} - I_b}{k (G_0 - G_b)}\]</div>
+<div class="math notranslate nohighlight">
+\[\phi_2 = \gamma \times 10^4\]</div>
+<p>where <span class="math notranslate nohighlight">\(I_{max}\)</span> is the maximum measured insulin level, and <span class="math notranslate nohighlight">\(I_b\)</span> and <span class="math notranslate nohighlight">\(G_b\)</span> are the basal levels of insulin and glucose.</p>
+<p>In the repository for this book, you will find a notebook,
+<code class="docutils literal notranslate"><span class="pre">insulin.ipynb</span></code>, that contains starter code for this case study. Use it to implement the insulin model, find the parameters that best fit the data, and estimate <span class="math notranslate nohighlight">\(\phi_1\)</span> and <span class="math notranslate nohighlight">\(\phi_2\)</span>.</p>
+</div>
+<div class="section" id="low-pass-filter">
+<h2>Low-Pass Filter<a class="headerlink" href="#low-pass-filter" title="Permalink to this headline">¶</a></h2>
+<p>The following circuit diagram (from <a class="reference external" href="http://modsimpy.com/divider">http://modsimpy.com/divider</a>) shows a low-pass filter built with one resistor and one capacitor.</p>
+<p><img alt="Circuit diagram of a low-pass filter" src="https://github.com/AllenDowney/ModSim/raw/main/figs/RC_Divider.svg" /></p>
+<p>A “filter” is a circuit takes a signal, <span class="math notranslate nohighlight">\(V_{in}\)</span>, as input and produces a signal, <span class="math notranslate nohighlight">\(V_{out}\)</span>, as output. In this context, a “signal” is a voltage that changes over time.</p>
+<p>A filter is “low-pass” if it allows low-frequency signals to pass from
+<span class="math notranslate nohighlight">\(V_{in}\)</span> to <span class="math notranslate nohighlight">\(V_{out}\)</span> unchanged, but it reduces the amplitude of
+high-frequency signals.</p>
+<p>By applying the laws of circuit analysis, we can derive a differential
+equation that describes the behavior of this system. By solving the
+differential equation, we can predict the effect of this circuit on any input signal.</p>
+<p>Suppose we are given <span class="math notranslate nohighlight">\(V_{in}\)</span> and <span class="math notranslate nohighlight">\(V_{out}\)</span> at a particular instant in
+time. By Ohm’s law, which is a simple model of the behavior of
+resistors, the instantaneous current through the resistor is:</p>
+<div class="math notranslate nohighlight">
+\[I_R = (V_{in} - V_{out}) / R\]</div>
+<p>where <span class="math notranslate nohighlight">\(R\)</span> is resistance in ohms (Ω).</p>
+<p>Assuming that no current flows through the output of the circuit,
+Kirchhoff’s current law implies that the current through the capacitor
+is:</p>
+<div class="math notranslate nohighlight">
+\[I_C = I_R\]</div>
+<p>According to a simple model of the behavior of
+capacitors, current through the capacitor causes a change in the voltage across the capacitor:</p>
+<div class="math notranslate nohighlight">
+\[I_C = C \frac{d V_{out}}{dt}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C\)</span> is capacitance in farads (F). Combining these equations yields a differential equation for <span class="math notranslate nohighlight">\(V_{out}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d V_{out}}{dt} = \frac{V_{in} - V_{out}}{R C}\]</div>
+<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">filter.ipynb</span></code>, which contains starter code for this case study. Follow the instructions to simulate the low-pass filter for input signals like this:</p>
+<div class="math notranslate nohighlight">
+\[V_{in}(t) = A \cos (2 \pi f t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(A\)</span> is the amplitude of the input signal, say 5 V, and <span class="math notranslate nohighlight">\(f\)</span> is the frequency of the signal in Hz.</p>
+<p>In the repository for this book, you will find a notebook,
+<code class="docutils literal notranslate"><span class="pre">filter.ipynb</span></code>, which contains starter code for this case study. Read
+the notebook, run the code, and work on the exercises.</p>
+</div>
+<div class="section" id="thermal-behavior-of-a-wall">
+<h2>Thermal behavior of a wall<a class="headerlink" href="#thermal-behavior-of-a-wall" title="Permalink to this headline">¶</a></h2>
+<p>This case study is based on a paper by Gori, et al[^2] that models the
+thermal behavior of a brick wall, with the goal of understanding the
+“performance gap between the expected energy use of buildings and their measured energy use”.</p>
+<p>The following figure shows the scenario and their model of the wall:</p>
+<p><img alt="Model of a wall as a series of thermal insulators" src="https://github.com/AllenDowney/ModSim/raw/main/figs/wall_model.png" /></p>
+<p>On the interior and exterior surfaces of the wall, they measure
+temperature and heat flux over a period of three days. They model the
+wall using two thermal masses connected to the surfaces, and to each
+other, by thermal resistors.</p>
+<p>The primary methodology of the paper is a Bayesian method for inferring the parameters of the system (two thermal masses and three thermal resistances).</p>
+<p>The primary result is a comparison of two models: the one shown here
+with two thermal masses, and a simpler model with only one thermal mass. They find that the two-mass model is able to reproduce the measured fluxes substantially better.</p>
+<p>For this case study we will implement their model and run it with the
+estimated parameters from the paper, and then use <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> to see
+if we can find parameters that yield lower errors.</p>
+<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">wall.ipynb</span></code> with the code and results for this case study.</p>
+<p>The authors put their paper under a Creative Commons license, and
+make their data available at <a class="reference external" href="http://modsimpy.com/wall">http://modsimpy.com/wall</a>. I thank them
+for their commitment to open, reproducible science, which made this
+case study possible.</p>
+<p>Gori, Marincioni, Biddulph, Elwell, “Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces”, <em>Energy and Buildings</em>, Volume 135, pages 398-409, <a class="reference external" href="http://modsimpy.com/wall2">http://modsimpy.com/wall2</a>.</p>
+</div>
+<div class="section" id="hiv">
+<h2>HIV<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
+<p>During the initial phase of HIV infection, the concentration of the virus in the bloodstream typically increases quickly and then decreases.
+The most obvious explanation for the decline is an immune response that destroys the virus or controls its replication.
+However, at least in some patients, the decline occurs even without any detectable immune response.</p>
+<p>In 1996 Andrew Phillips proposed another explanation for the decline (“Reduction of HIV Concentration During Acute Infection: Independence from a Specific Immune Response”, available from <a class="reference external" href="https://people.math.gatech.edu/~weiss/uploads/5/8/6/1/58618765/phillips1996.pdf">https://people.math.gatech.edu/~weiss/uploads/5/8/6/1/58618765/phillips1996.pdf</a>).</p>
+<p>Phillips presents a system of differential equations that models the concentrations of the HIV virus and the CD4 cells it infects.
+The model does not include an immune response; nevertheless, it demonstrates behavior that is qualitatively similar to what is seen in patients during the first few weeks after infection.</p>
+<p>His conclusion is that the observed decline in the concentration of HIV might not be caused by an immune response; it could be due to the dynamic interaction between HIV and the cells it infects.</p>
+<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">hiv_model.ipynb</span></code>, which you can use to implement Phillips’s model and consider whether it does the work it is meant to do.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap18.html" title="previous page">Chapter 18</a>
+    <a class='right-next' id="next-link" href="chap20.html" title="next page">Chapter 20</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

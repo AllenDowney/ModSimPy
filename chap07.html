@@ -1,0 +1,877 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 7 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 8" href="chap08.html" />
+    <link rel="prev" title="Chapter 6" href="chap06.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap07.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap07.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quadratic-growth">
+   Quadratic growth
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#net-growth">
+   Net growth
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equilibrium">
+   Equilibrium
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dysfunctions">
+   Dysfunctions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the hood
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-7">
+<h1>Chapter 7<a class="headerlink" href="#chapter-7" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we developed a population model where net growth during each time step is proportional to the current population. This model seems more realistic than the constant growth model, but it does not fit the data as well.</p>
+<p>There are a few things we could try to improve the model:</p>
+<ul class="simple">
+<li><p>Maybe net growth depends on the current population, but the
+relationship is quadratic, not linear.</p></li>
+<li><p>Maybe the net growth rate varies over time.</p></li>
+</ul>
+<p>In this chapter, we’ll explore the first option.
+In the exercises, you will have a chance to try the second.</p>
+<p>Here’s the code that reads the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
+
+<span class="n">tables</span> <span class="o">=</span> <span class="n">read_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
+<span class="n">table2</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">table2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">,</span> <span class="s1">&#39;maddison&#39;</span><span class="p">,</span> 
+                  <span class="s1">&#39;hyde&#39;</span><span class="p">,</span> <span class="s1">&#39;tanton&#39;</span><span class="p">,</span> <span class="s1">&#39;biraben&#39;</span><span class="p">,</span> <span class="s1">&#39;mj&#39;</span><span class="p">,</span> 
+                  <span class="s1">&#39;thomlinson&#39;</span><span class="p">,</span> <span class="s1">&#39;durand&#39;</span><span class="p">,</span> <span class="s1">&#39;clark&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">un</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">un</span> <span class="o">/</span> <span class="mf">1e9</span>
+<span class="n">census</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">census</span> <span class="o">/</span> <span class="mf">1e9</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the functions from the previous chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate the system using any update function.</span>
+<span class="sd">    </span>
+<span class="sd">    system: System object</span>
+<span class="sd">    growth_func: function that computes the population next year</span>
+<span class="sd">    </span>
+<span class="sd">    returns: TimeSeries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">growth</span> <span class="o">=</span> <span class="n">growth_func</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">growth</span>
+        
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_estimates</span><span class="p">():</span>
+    <span class="n">census</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;US Census&#39;</span><span class="p">)</span>
+    <span class="n">un</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UN DESA&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billion)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quadratic-growth">
+<h2>Quadratic growth<a class="headerlink" href="#quadratic-growth" title="Permalink to this headline">¶</a></h2>
+<p>It makes sense that net growth should depend on the current population, but maybe it’s not a linear relationship, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">net_growth</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span>
+</pre></div>
+</div>
+<p>Maybe it’s a quadratic relationship, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">net_growth</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">+</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">pop</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>We can test that conjecture with a new update function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func_quad</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">+</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">pop</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the <code class="docutils literal notranslate"><span class="pre">System</span></code> object we’ll use, initialized with <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, <code class="docutils literal notranslate"><span class="pre">p_0</span></code>, and <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_0</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">p_0</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">t_0</span><span class="o">=</span><span class="n">t_0</span><span class="p">,</span>
+                <span class="n">p_0</span><span class="o">=</span><span class="n">p_0</span><span class="p">,</span>
+                <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have to add the parameters <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> .
+I chose the following values by trial and error; we’ll see better ways to do it later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.8</span> <span class="o">/</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s how we run it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func_quad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plot_estimates</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quadratic Growth Model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The model fits the data well over the whole range, with just a bit of space between them in the 1960s.</p>
+<p>Of course, we should expect the quadratic model to fit better than the
+constant and proportional models because it has two parameters we can
+choose, where the other models have only one. In general, the more
+parameters you have to play with, the better you should expect the model
+to fit.</p>
+<p>But fitting the data is not the only reason to think the quadratic model
+might be a good choice. It also makes sense; that is, there is a
+legitimate reason to expect the relationship between growth and
+population to have this form.</p>
+<p>To understand it, let’s look at net growth as a function of population.</p>
+</div>
+<div class="section" id="net-growth">
+<h2>Net growth<a class="headerlink" href="#net-growth" title="Permalink to this headline">¶</a></h2>
+<p>Let’s plot the relationship between growth and population in the quadratic model.</p>
+<p>I’ll use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> to make an array of 101 populations from 0 to 15 billion.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+
+<span class="n">pop_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now I’ll use the quadratic model to compute net growth for each population.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">growth_array</span> <span class="o">=</span> <span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop_array</span> <span class="o">+</span> 
+                <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">pop_array</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To plot the growth rate versus population, we can import the <code class="docutils literal notranslate"><span class="pre">plot</span></code> function from Matplotlib:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And use it like this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">pop_array</span><span class="p">,</span> <span class="n">growth_array</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;growth&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Population (billions)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Net growth (billions)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Growth vs. Population&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the x-axis is not time, as in the previous figures, but population. We can divide this curve into four regimes of behavior:</p>
+<ul class="simple">
+<li><p>When the population is less than 3-4 billion, net growth is
+proportional to population, as in the proportional model. In this
+regime, the population grows slowly because the population is small.</p></li>
+<li><p>Between 4 billion and 10 billion, the population grows quickly
+because there are a lot of people.</p></li>
+<li><p>Above 10 billion, population grows more slowly; this behavior models
+the effect of resource limitations that decrease birth rates or
+increase death rates.</p></li>
+<li><p>Above 14 billion, resources are so limited that the death rate
+exceeds the birth rate and net growth becomes negative.</p></li>
+</ul>
+<p>Just below 14 billion, there is a point where net growth is 0, which
+means that the population does not change. At this point, the birth and death rates are equal, so the population is in <strong>equilibrium</strong>.</p>
+</div>
+<div class="section" id="equilibrium">
+<h2>Equilibrium<a class="headerlink" href="#equilibrium" title="Permalink to this headline">¶</a></h2>
+<p>To find the equilibrium point, we can find the roots, or zeros, of this equation:</p>
+<div class="math notranslate nohighlight">
+\[\Delta p = \alpha p + \beta p^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta p\)</span> is net
+population growth, <span class="math notranslate nohighlight">\(p\)</span> is current population, and <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>
+are the parameters of the model. We can rewrite the right hand side like
+this:</p>
+<div class="math notranslate nohighlight">
+\[\Delta p = p (\alpha + \beta p)\]</div>
+<p>which is <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(p=0\)</span> or <span class="math notranslate nohighlight">\(p=-\alpha/\beta\)</span>.
+We can use the parameters of the system to compute the second equilibrium point:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With these parameters, net growth is 0 when the population is about 13.9 billion.</p>
+<p>In the context of population modeling, the quadratic model is more
+conventionally written like this:</p>
+<div class="math notranslate nohighlight">
+\[\Delta p = r p (1 - p / K)\]</div>
+<p>This is the same model; it’s just a different way to <strong>parameterize</strong> it. Given <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, we can compute <span class="math notranslate nohighlight">\(r=\alpha\)</span> and <span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p>
+<p>In this version, it is easier to interpret the parameters: <span class="math notranslate nohighlight">\(r\)</span> is the
+maximum growth rate, observed when <span class="math notranslate nohighlight">\(p\)</span> is small, and <span class="math notranslate nohighlight">\(K\)</span> is the
+equilibrium point. <span class="math notranslate nohighlight">\(K\)</span> is also called the <strong>carrying capacity</strong>, since
+it indicates the maximum population the environment can sustain.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter we implemented a quadratic growth model where net growth depends on the current population and the population squared.</p>
+<p>This model fits the data well, and we saw one reason why: it is based on the assumption that there is a limit to the number of people the Earth can support.</p>
+<p>In the next chapter we’ll use the models we have developed to generate
+predictions.
+But first, I want to warn you about a few things that can go wrong when you write functions.</p>
+</div>
+<div class="section" id="dysfunctions">
+<h2>Dysfunctions<a class="headerlink" href="#dysfunctions" title="Permalink to this headline">¶</a></h2>
+<p>When people learn about functions, there are a few things they often
+find confusing. In this section I present and explain some common
+problems.</p>
+<p>As an example, suppose you want a function that takes a
+<code class="docutils literal notranslate"><span class="pre">System</span></code> object, with variables <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>, and computes the
+carrying capacity, <code class="docutils literal notranslate"><span class="pre">-alpha/beta</span></code>.
+Here’s a good solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
+    <span class="k">return</span> <span class="n">K</span>
+    
+<span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">carrying_capacity</span><span class="p">(</span><span class="n">sys1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s see all the ways that can go wrong.</p>
+<p>Dysfunction #1: Not using parameters. In the following version, the
+function doesn’t take any parameters; when <code class="docutils literal notranslate"><span class="pre">sys1</span></code> appears inside the
+function, it refers to the object we create outside the function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">():</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">sys1</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">sys1</span><span class="o">.</span><span class="n">beta</span>
+    <span class="k">return</span> <span class="n">K</span>
+    
+<span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">carrying_capacity</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This version actually works, but it is not as versatile as it could be.
+If there are several <code class="docutils literal notranslate"><span class="pre">System</span></code> objects, this function can only work with one of them, and only if it is named <code class="docutils literal notranslate"><span class="pre">sys1</span></code>.</p>
+<p>Dysfunction #2: Clobbering the parameters. When people first learn
+about parameters, they often write functions like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># WRONG</span>
+<span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
+    <span class="k">return</span> <span class="n">K</span>
+    
+<span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.002</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">carrying_capacity</span><span class="p">(</span><span class="n">sys1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, we have a <code class="docutils literal notranslate"><span class="pre">System</span></code> object named <code class="docutils literal notranslate"><span class="pre">sys1</span></code> that gets passed
+as an argument to <code class="docutils literal notranslate"><span class="pre">carrying_capacity</span></code>. But when the function runs, it
+ignores the argument and immediately replaces it with a new <code class="docutils literal notranslate"><span class="pre">System</span></code>
+object. As a result, this function always returns the same value, no
+matter what argument is passed.</p>
+<p>When you write a function, you generally don’t know what the values of
+the parameters will be. Your job is to write a function that works for
+any valid values. If you assign your own values to the parameters, you
+defeat the whole purpose of functions.</p>
+<p>Dysfunction #3: No return value. Here’s a version that computes the
+value of <code class="docutils literal notranslate"><span class="pre">K</span></code> but doesn’t return it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># WRONG</span>
+<span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
+    
+<span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">carrying_capacity</span><span class="p">(</span><span class="n">sys1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A function that doesn’t have a return statement actually returns a special value called <code class="docutils literal notranslate"><span class="pre">None</span></code>, so in this example the value of <code class="docutils literal notranslate"><span class="pre">pop</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>. If you are debugging a program and find that the value of a variable is <code class="docutils literal notranslate"><span class="pre">None</span></code> when it shouldn’t be, a function without a return statement is a likely cause.</p>
+<p>Dysfunction #4: Ignoring the return value. Finally, here’s a version
+where the function is correct, but the way it’s used is not.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
+    <span class="k">return</span> <span class="n">K</span>
+    
+<span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
+<span class="n">carrying_capacity</span><span class="p">(</span><span class="n">sys1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">carrying_capacity</span></code> runs and returns <code class="docutils literal notranslate"><span class="pre">K</span></code>, but the
+return value doesn’t get displayed or assigned to a variable.
+If we try to print <code class="docutils literal notranslate"><span class="pre">K</span></code>, we get a <code class="docutils literal notranslate"><span class="pre">NameError</span></code>, because <code class="docutils literal notranslate"><span class="pre">K</span></code> only exists inside the function.</p>
+<p>When you call a function that returns a value, you should do something
+with the result.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> In a previous section, we saw a different way to parameterize the quadratic model:</p>
+<div class="math notranslate nohighlight">
+\[ \Delta p = r p (1 - p / K) \]</div>
+<p>where <span class="math notranslate nohighlight">\(r=\alpha\)</span> and <span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p>
+<p>Write a version of <code class="docutils literal notranslate"><span class="pre">growth_func</span></code> that implements this version of the model.  Test it by computing the values of <code class="docutils literal notranslate"><span class="pre">r</span></code> and <code class="docutils literal notranslate"><span class="pre">K</span></code> that correspond to <code class="docutils literal notranslate"><span class="pre">alpha=0.025,</span> <span class="pre">beta=-0.0018</span></code>, and confirm that you get the same results.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong>  What happens if we start with an initial population above the carrying capacity, like 20 billion?  Run the model with initial populations between 1 and 20 billion, and plot the results on the same axes.</p>
+<p>Hint: If there are too many labels in the legend, you can plot results like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;_nolegend&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p>Explain the difference between the Pandas and Matplotlib <code class="docutils literal notranslate"><span class="pre">plot</span></code> functions.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap06.html" title="previous page">Chapter 6</a>
+    <a class='right-next' id="next-link" href="chap08.html" title="next page">Chapter 8</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

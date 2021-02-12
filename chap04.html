@@ -1,0 +1,903 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 4 &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 5" href="chap05.html" />
+    <link rel="prev" title="Chapter 3" href="chap03.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Chapter 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Chapter 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Chapter 3
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chapter 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   Chapter 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html#world-population">
+   World population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Chapter 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Chapter 7
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Chapter 8
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Chapter 9
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Chapter 10
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html#case-studies">
+   Case studies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Chapter 11
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Chapter 12
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Chapter 13
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Chapter 14
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Chapter 15
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Chapter 16
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Chapter 17
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Chapter 18
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Chapter 19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Chapter 20
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Chapter 21
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Chapter 22
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Chapter 23
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Chapter 24
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap04.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap04.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#functions-that-return-values">
+   Functions that return values
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loops-and-arrays">
+   Loops and arrays
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sweeping-parameters">
+   Sweeping parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#incremental-development">
+   Incremental development
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-exercises">
+   Optional Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="chapter-4">
+<h1>Chapter 4<a class="headerlink" href="#chapter-4" title="Permalink to this headline">¶</a></h1>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pint</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">!</span>pip install pint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
+    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here the code from previous chapters we’ll reuse.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    p1: probability of an Olin-&gt;Wellesley ride</span>
+<span class="sd">    p2: probability of a Wellesley-&gt;Olin ride</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p1</span><span class="p">):</span>
+        <span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p2</span><span class="p">):</span>
+        <span class="n">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wellesley_empty</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move one bike from Olin to Wellesley.</span>
+<span class="sd">    </span>
+<span class="sd">    state: bikeshare State object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">olin_empty</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous chapter we defined metrics that quantify the performance of bike sharing this system. In this chapter we see how those metrics depend on the parameters of the system, like the Customer rate of customers at bike stations.</p>
+<p>We also discuss a program development strategy, called incremental
+development, that might help you write programs faster and spend less
+time debugging.</p>
+<div class="section" id="functions-that-return-values">
+<h2>Functions that return values<a class="headerlink" href="#functions-that-return-values" title="Permalink to this headline">¶</a></h2>
+<p>We have seen several functions that return values; for example, when you run <code class="docutils literal notranslate"><span class="pre">sqrt</span></code>, it returns a number you can assign to a variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="n">root_2</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">root_2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When you run <code class="docutils literal notranslate"><span class="pre">State</span></code>, it returns a new <code class="docutils literal notranslate"><span class="pre">State</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bikeshare</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not all functions have return values. For example, when you run <code class="docutils literal notranslate"><span class="pre">step</span></code>,
+it updates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, but it doesn’t return a value.</p>
+<p>To write functions that return values, we can use a <code class="docutils literal notranslate"><span class="pre">return</span></code> statement, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_five</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">add_five</span></code> takes a parameter, <code class="docutils literal notranslate"><span class="pre">x</span></code>, which could be any number. It
+computes <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">5</span></code> and returns the result. So if we run it like this, the
+result is <code class="docutils literal notranslate"><span class="pre">8</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_five</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a more useful example, here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that
+creates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, runs a simulation, and then returns the
+<code class="docutils literal notranslate"><span class="pre">State</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                  <span class="n">olin_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wellesley_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object that represents the final state of the system, including the metrics we’ll use to evaluate the performance of the system:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">final_state</span><span class="o">.</span><span class="n">olin_empty</span><span class="p">,</span> 
+      <span class="n">final_state</span><span class="o">.</span><span class="n">wellesley_empty</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The simulation we just ran starts with <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and uses the values <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>.
+These five values are <strong>parameters of the model</strong>, which are quantities that determine the behavior of the system.</p>
+<p>It is easy to get the parameters of a model confused with the parameters of a function.
+In fact, it is common for the parameters of the model to appear as parameters in functions.</p>
+<p>For example, the previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> takes <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> as parameters.
+So we can call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> with different parameters and see how
+the metrics, like the number of unhappy customers, depend on the
+parameters. But before we do that, we need a new version of a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
+</div>
+<div class="section" id="loops-and-arrays">
+<h2>Loops and arrays<a class="headerlink" href="#loops-and-arrays" title="Permalink to this headline">¶</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, we use this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">range</span></code> creates a sequence of numbers from 0 to <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> (including <code class="docutils literal notranslate"><span class="pre">0</span></code> but not <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>).
+Each time through the loop, the next number in the sequence gets assigned to the loop variable, <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
+<p>But <code class="docutils literal notranslate"><span class="pre">range</span></code> only works with integers; to get a sequence of non-integer
+values, we can use <code class="docutils literal notranslate"><span class="pre">linspace</span></code>, which is defined NumPy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+
+<span class="n">p1_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">p1_array</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The arguments indicate where the sequence should start and stop, and how
+many elements it should contain. In this example, the sequence contains
+<code class="docutils literal notranslate"><span class="pre">5</span></code> equally-spaced numbers, starting at <code class="docutils literal notranslate"><span class="pre">0</span></code> and ending at <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>The result is a NumPy <strong>array</strong>, which is a new kind of object we have
+not seen before. An array is a container for a sequence of numbers.</p>
+<p>We can use an array in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When this loop runs, it</p>
+<ol class="simple">
+<li><p>Gets the first value from the array and assigns it to <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
+<li><p>Runs the body of the loop, which prints <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
+<li><p>Gets the next value from the array and assigns it to <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
+<li><p>Runs the body of the loop, which prints <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
+</ol>
+<p>And so on, until it gets to the end of the array. This will come in handy in the next section.</p>
+</div>
+<div class="section" id="sweeping-parameters">
+<h2>Sweeping parameters<a class="headerlink" href="#sweeping-parameters" title="Permalink to this headline">¶</a></h2>
+<p>If we know the actual values of parameters like <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code>, we can
+use them to make specific predictions, like how many bikes will be at
+Olin after one hour.</p>
+<p>But prediction is not the only goal; models like this are also used to
+explain why systems behave as they do and to evaluate alternative
+designs. For example, if we observe the system and notice that we often run out of bikes at a particular time, we could use the model to figure out why that happens. And if we are considering adding more bikes, or another station, we could evaluate the effect of various “what if” scenarios.</p>
+<p>As an example, suppose we have enough data to estimate that <code class="docutils literal notranslate"><span class="pre">p2</span></code> is
+about <code class="docutils literal notranslate"><span class="pre">0.2</span></code>, but we don’t have any information about <code class="docutils literal notranslate"><span class="pre">p1</span></code>. We could run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and see how the results vary. This process is called <strong>sweeping</strong> a parameter, in the sense that the value of the parameter “sweeps” through a range of possible values.</p>
+<p>Now that we know about loops and arrays, we can use them like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p1_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
+    <span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">final_state</span><span class="o">.</span><span class="n">olin_empty</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each time through the loop, we run a simulation with a different value
+of <code class="docutils literal notranslate"><span class="pre">p1</span></code> and the same value of <code class="docutils literal notranslate"><span class="pre">p2</span></code>, <code class="docutils literal notranslate"><span class="pre">0.2</span></code>. Then we print <code class="docutils literal notranslate"><span class="pre">p1</span></code> and the
+number of unhappy customers at Olin.</p>
+<p>To save and plot the results, we can use a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> object, which
+is similar to a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>; the difference is that the labels in a
+<code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> are parameter values rather than time values.</p>
+<p>We can create an empty <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And add values like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
+    <span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+    <span class="n">sweep</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">olin_empty</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> that maps from each value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> to the
+resulting number of unhappy customers. Then we can plot the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
+         <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Customer rate at Olin (p1 in customers/min)&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of unhappy customers&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>NumPy provides functions that compute a variety of summary statistics, like <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">median</span></code>, and <code class="docutils literal notranslate"><span class="pre">std</span></code> (which computes standard deviation).</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the average of the values in a series, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">mean</span>
+
+<span class="n">mean</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, computing the mean might not be useful, but in the exercises below, it will be.</p>
+</div>
+<div class="section" id="incremental-development">
+<h2>Incremental development<a class="headerlink" href="#incremental-development" title="Permalink to this headline">¶</a></h2>
+<p>When you start writing programs that are more than a few lines, you
+might find yourself spending more and more time debugging. The more code you write before you start debugging, the harder it is to find the problem.</p>
+<p><strong>Incremental development</strong> is a way of programming that tries to
+minimize the pain of debugging. The fundamental steps are:</p>
+<ol class="simple">
+<li><p>Always start with a working program. If you have an example from a
+book, or a program you wrote that is similar to what you are working
+on, start with that. Otherwise, start with something you <em>know</em> is
+correct, like <code class="docutils literal notranslate"><span class="pre">x=5</span></code>. Run the program and confirm that it does what
+you expect.</p></li>
+<li><p>Make one small, testable change at a time. A “testable” change is
+one that displays something or has some other effect you can check.
+Ideally, you should know what the correct answer is, or be able to
+check it by performing another computation.</p></li>
+<li><p>Run the program and see if the change worked. If so, go back to
+Step 2. If not, you will have to do some debugging, but if the
+change you made was small, it shouldn’t take long to find the
+problem.</p></li>
+</ol>
+<p>When this process works, your changes usually work the first time, or if they don’t, the problem is obvious. In practice, there are two problems with incremental development:</p>
+<ul class="simple">
+<li><p>Sometimes you have to write extra code to generate visible output
+that you can check. This extra code is called <strong>scaffolding</strong>
+because you use it to build the program and then remove it when you
+are done. That might seem like a waste, but time you spend on
+scaffolding is almost always time you save on debugging.</p></li>
+<li><p>When you are getting started, it might not be obvious how to choose
+the steps that get from <code class="docutils literal notranslate"><span class="pre">x=5</span></code> to the program you are trying to
+write. You will see more examples of this process as we go along,
+and you will get better with experience.</p></li>
+</ul>
+<p>If you find yourself writing more than a few lines of code before you
+start testing, and you are spending a lot of time debugging, try
+incremental development.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong> Write a function called <code class="docutils literal notranslate"><span class="pre">make_state</span></code> that creates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the state variables <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and then returns the new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
+<p>Write a line of code that calls <code class="docutils literal notranslate"><span class="pre">make_state</span></code> and assigns the result to a variable named <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Read the documentation of <code class="docutils literal notranslate"><span class="pre">linspace</span></code> at &lt;&gt;.
+Then use it to make an array of 101 equally spaced points between 0 and 1 (including both).</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Wrap the code from this chapter in a function named <code class="docutils literal notranslate"><span class="pre">sweep_p1</span></code> that takes an array called <code class="docutils literal notranslate"><span class="pre">p1_array</span></code> as a parameter.  It should create a new <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, run a simulation for each value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> in <code class="docutils literal notranslate"><span class="pre">p1_array</span></code>, store the results in the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, and return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+<p>Use your function to plot the number of unhappy customers at Olin as a function of <code class="docutils literal notranslate"><span class="pre">p1</span></code>.  Label the axes.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Write a function called <code class="docutils literal notranslate"><span class="pre">sweep_p2</span></code> that runs simulations with <code class="docutils literal notranslate"><span class="pre">p1=0.5</span></code> and a range of values for <code class="docutils literal notranslate"><span class="pre">p2</span></code>.  It should store the results in a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> and return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="optional-exercises">
+<h2>Optional Exercises<a class="headerlink" href="#optional-exercises" title="Permalink to this headline">¶</a></h2>
+<p>The following two exercises are a little more challenging.  If you are comfortable with what you have learned so far, you should give them a try.  If you feel like you have your hands full, you might want to skip them for now.</p>
+<p><strong>Exercise:</strong> Because our simulations are random, the results vary from one run to another, and the results of a parameter sweep tend to be noisy.  We can get a clearer picture of the relationship between a parameter and a metric by running multiple simulations with the same parameter and taking the average of the results.</p>
+<p>Write a function called <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> that takes as parameters <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_runs</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">num_runs</span></code> specifies how many times it should call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<p>After each run, it should store the total number of unhappy customers (at Olin or Wellesley) in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.
+At the end, it should return the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+<p>Test your function with parameters</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">num_runs</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Display the resulting <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and use the <code class="docutils literal notranslate"><span class="pre">mean</span></code> function from NumPy to compute the average number of unhappy customers.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong>  Continuting the previous exercise, use <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> to run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">num_runs</span> <span class="o">=</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<p>Store the results in a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, then plot the average number of unhappy customers as a function of <code class="docutils literal notranslate"><span class="pre">p1</span></code>.  Label the axes.</p>
+<p>What value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> minimizes the average number of unhappy customers?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chap03.html" title="previous page">Chapter 3</a>
+    <a class='right-next' id="next-link" href="chap05.html" title="next page">Chapter 5</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
