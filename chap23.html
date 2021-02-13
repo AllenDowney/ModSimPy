@@ -376,58 +376,6 @@
                 
   <div class="section" id="chapter-23">
 <h1>Chapter 23<a class="headerlink" href="#chapter-23" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from previous notebook</span>
-
-<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">params</span>
-<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">make_system</span>
-<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">slope_func</span>
-<span class="kn">from</span> <span class="nn">chap22</span> <span class="kn">import</span> <span class="n">event_func</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In the previous chapter we developed a model of the flight of a
 baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.</p>
 <p>In this chapter we apply that model to an optimization problem.</p>
@@ -480,6 +428,14 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>45 99.31829628352207
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99.31829628352207
+</pre></div>
+</div>
+</div>
 </div>
 <p>And we can sweep a sequence of angles like this:</p>
 <div class="cell docutils container">
@@ -490,6 +446,31 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
     <span class="n">x_dist</span> <span class="o">=</span> <span class="n">range_func</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">sweep</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_dist</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.0 78.09741067882733
+23.0 84.11542610650983
+26.0 89.13192412363966
+29.0 93.17466724082834
+32.0 96.27134737391354
+35.0 98.44725560273994
+38.0 99.72474586365274
+41.0 100.12347299697635
+44.0 99.66100302635328
+47.0 98.35354763684825
+50.0 96.21673516565134
+53.0 93.26623796736267
+56.0 89.51751617672976
+59.0 84.98724481958087
+62.0 79.69434524339994
+65.0 73.66129770133256
+68.0 66.91470886279748
+71.0 59.482694929397475
+74.0 51.402871099404315
+77.0 42.72047925533483
+80.0 33.48437980813934
 </pre></div>
 </div>
 </div>
@@ -504,12 +485,30 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap23_16_0.png" src="_images/chap23_16_0.png" />
+</div>
 </div>
 <p>It looks like the optimal angle is near 40°.</p>
 <p>We can find the optimal angle more precisely and more efficiently using <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">range_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 17.468795355645696
+34.37694101250946 98.06996498016366
+55.62305898749054 90.03182421721928
+21.246117974981075 80.72039493627986
+41.173855871044005 100.1200188931698
+40.980120907838035 100.12368377099199
+40.882137319070246 100.1241700443184
+40.87925420124324 100.12417043309694
+40.87928713865314 100.12417043314977
+40.879291078324286 100.12417043314917
+40.879283198981994 100.12417043314895
 </pre></div>
 </div>
 </div>
@@ -526,10 +525,25 @@ range, and <code class="docutils literal notranslate"><span class="pre">fun</spa
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: 100.12417043314977
+ message: &#39;Solution found.&#39;
+    nfev: 10
+  status: 0
+ success: True
+       x: 40.87928713865314
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(40.87928713865314, 100.12417043314977)
 </pre></div>
 </div>
 </div>
@@ -555,14 +569,26 @@ range of 100 m.</p>
 Test your function with the initial conditions.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">94.5</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="n">event_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-94.5
 </pre></div>
 </div>
 </div>
@@ -571,14 +597,30 @@ Test your function with the initial conditions.</p>
 Test your function with the initial conditions.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">height_func</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span> 
+                                     <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span>
+    <span class="k">return</span> <span class="n">height</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">height_func</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.647999317446594
 </pre></div>
 </div>
 </div>
@@ -586,14 +628,34 @@ Test your function with the initial conditions.</p>
 <p>Now use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the optimal angle.  Is it higher or lower than the angle that maximizes range?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">height_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: 7.202365708506381
+ message: &#39;Solution found.&#39;
+    nfev: 13
+  status: 0
+ success: True
+       x: 43.10026195980881
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(43.10026195980881, 7.202365708506381)
 </pre></div>
 </div>
 </div>
@@ -602,7 +664,13 @@ Test your function with the initial conditions.</p>
 <p>Write an error function that takes a velocity and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters.  It should use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the highest possible height of the ball at the wall, for the given velocity.  Then it should return the difference between that optimal height and 11.3 meters.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">error_func</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">height_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span> <span class="o">-</span> <span class="mf">11.3</span>
 </pre></div>
 </div>
 </div>
@@ -610,7 +678,17 @@ Test your function with the initial conditions.</p>
 <p>Test your error function before you call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">error_func</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.09763429149362
 </pre></div>
 </div>
 </div>
@@ -618,21 +696,54 @@ Test your function with the initial conditions.</p>
 <p>Then use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the answer to the problem, the minimum velocity that gets the ball out of the park.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">bracket</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="n">bracket</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+30.0
+50.0
+42.962168129362695
+41.040440411309014
+41.04880372501754
+41.04675128483029
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      converged: True
+           flag: &#39;converged&#39;
+ function_calls: 6
+     iterations: 5
+           root: 41.04880372501754
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">min_velocity</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+<span class="n">min_velocity</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.04880372501754
 </pre></div>
 </div>
 </div>
@@ -640,7 +751,17 @@ Test your function with the initial conditions.</p>
 <p>And just to check, run <code class="docutils literal notranslate"><span class="pre">error_func</span></code> with the value you found.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">error_func</span><span class="p">(</span><span class="n">min_velocity</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.04880372501754
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0010030680206689624
 </pre></div>
 </div>
 </div>

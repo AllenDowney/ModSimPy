@@ -386,46 +386,6 @@
                 
   <div class="section" id="chapter-24">
 <h1>Chapter 24<a class="headerlink" href="#chapter-24" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In this chapter and the next we’ll model systems that involve rotating objects.</p>
 <p>In general, rotation is complicated.
 In three dimensions, objects can rotate around three axes and many objects are easier to spin around some axes than others.</p>
@@ -518,12 +478,22 @@ Again, we can divide both sides by <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1253.3333333333335
+</pre></div>
+</div>
+</div>
 </div>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">k</span></code> is the total change in <code class="docutils literal notranslate"><span class="pre">r</span></code> divided by the total change in <code class="docutils literal notranslate"><span class="pre">theta</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_est</span> <span class="o">=</span> <span class="p">(</span><span class="n">Rmax</span> <span class="o">-</span> <span class="n">Rmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">theta</span>
 <span class="n">k_est</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.7925531914893616e-05
 </pre></div>
 </div>
 </div>
@@ -575,6 +545,11 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(300, 6.0, 0.008377659574468085)
+</pre></div>
+</div>
+</div>
 </div>
 <p>We’d like to stop the simulation when the length of paper on the roll is <code class="docutils literal notranslate"><span class="pre">L</span></code>. We can do that with an event function that passes through 0 when <code class="docutils literal notranslate"><span class="pre">y</span></code> equals <code class="docutils literal notranslate"><span class="pre">L</span></code>:</p>
 <div class="cell docutils container">
@@ -593,6 +568,11 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.0
+</pre></div>
+</div>
+</div>
 </div>
 <p>Now let’s run the simulation:</p>
 <div class="cell docutils container">
@@ -600,6 +580,11 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
                                   <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
 <span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
@@ -611,11 +596,74 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>theta</th>
+      <th>y</th>
+      <th>r</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4.010667</th>
+      <td>1203.200000</td>
+      <td>44.277760</td>
+      <td>0.05360</td>
+    </tr>
+    <tr>
+      <th>4.052444</th>
+      <td>1215.733333</td>
+      <td>44.951740</td>
+      <td>0.05395</td>
+    </tr>
+    <tr>
+      <th>4.094222</th>
+      <td>1228.266667</td>
+      <td>45.630107</td>
+      <td>0.05430</td>
+    </tr>
+    <tr>
+      <th>4.136000</th>
+      <td>1240.800000</td>
+      <td>46.312860</td>
+      <td>0.05465</td>
+    </tr>
+    <tr>
+      <th>4.177778</th>
+      <td>1253.333333</td>
+      <td>47.000000</td>
+      <td>0.05500</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The time it takes to complete one roll is about 4.2 seconds, which is consistent with what we see in the video.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.177777777777779
 </pre></div>
 </div>
 </div>
@@ -628,11 +676,21 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.00000000000001
+</pre></div>
+</div>
+</div>
 </div>
 <p>The final value of radius is 0.55 m, which is <code class="docutils literal notranslate"><span class="pre">Rmax</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span><span class="o">.</span><span class="n">r</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05500000000000001
 </pre></div>
 </div>
 </div>
@@ -643,6 +701,11 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">radians</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">theta</span>
 <span class="n">rotations</span> <span class="o">=</span> <span class="n">radians</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 <span class="n">rotations</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>199.47419534184218
 </pre></div>
 </div>
 </div>
@@ -663,6 +726,9 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_49_0.png" src="_images/chap24_49_0.png" />
+</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">theta</span></code> grows linearly, as we should expect with constant angular velocity.</p>
 <p>Here’s what <code class="docutils literal notranslate"><span class="pre">r</span></code> looks like over time.</p>
@@ -678,6 +744,9 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_51_0.png" src="_images/chap24_51_0.png" />
+</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">r</span></code> also increases linearly.</p>
 <p>But since the derivative of <code class="docutils literal notranslate"><span class="pre">y</span></code> depends on <code class="docutils literal notranslate"><span class="pre">r</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code> is increasing, <code class="docutils literal notranslate"><span class="pre">y</span></code> grows with increasing slope.</p>
@@ -692,6 +761,9 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 <span class="n">plot_y</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_53_0.png" src="_images/chap24_53_0.png" />
 </div>
 </div>
 <p>In the next section, we’ll see that we could have solved the
@@ -751,6 +823,11 @@ Dividing Equations 1 and 2, yields</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.7925531914893616e-05
+</pre></div>
+</div>
+</div>
 </div>
 <p>In this case the estimate turns out to be exact.</p>
 </div>
@@ -779,12 +856,20 @@ Dividing Equations 1 and 2, yields</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_62_0.png" src="_images/chap24_62_0.png" />
+</div>
 </div>
 <p>With constant angular velocity, linear velocity is increasing, reaching its maximum at the end.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_linear_velocity</span> <span class="o">=</span> <span class="n">dydt</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">max_linear_velocity</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16.447499999999934
 </pre></div>
 </div>
 </div>
@@ -795,51 +880,99 @@ Dividing Equations 1 and 2, yields</p>
 <p>Run the simulation and see how much faster we could finish rolling the paper.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
+    
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">max_linear_velocity</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">dydt</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="n">drdt</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">omega</span>
+    
+    <span class="k">return</span> <span class="n">omega</span><span class="p">,</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">drdt</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(822.3749999999967, 16.447499999999934, 0.022965259308510545)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span> 
+                                 <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">t_final</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.8575771393828964
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plot_theta</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_70_0.png" src="_images/chap24_70_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plot_r</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_71_0.png" src="_images/chap24_71_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plot_y</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
 </div>
 </div>
 </div>

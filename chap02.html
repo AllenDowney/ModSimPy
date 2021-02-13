@@ -406,46 +406,6 @@
                 
   <div class="section" id="chapter-2">
 <h1>Chapter 2<a class="headerlink" href="#chapter-2" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>This chapter presents a simple model of a bike share system and
 demonstrates the features of Python we’ll use to develop simulations of real-world systems.</p>
 <p>Along the way, we’ll make decisions about how to model the system. In
@@ -477,6 +437,11 @@ operator</strong>, like this:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+</div>
 </div>
 <p>And this:</p>
 <div class="cell docutils container">
@@ -485,11 +450,23 @@ operator</strong>, like this:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
 </div>
 <p>Or, to display the state variables and their values, you can just type the name of the object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>olin         10
+wellesley     2
+Name: state, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -502,6 +479,43 @@ operator</strong>, like this:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>olin</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>wellesley</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>You don’t have to use <code class="docutils literal notranslate"><span class="pre">show</span></code>, but I think it looks better.</p>
 <p>We can update the state by assigning new values to the variables.
@@ -575,12 +589,24 @@ displaying the new state.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>olin         6
+wellesley    6
+Name: state, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 <p>When you call a function, you have to include the parentheses. If you
 leave them out, you get this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bike_to_wellesley</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.bike_to_wellesley()&gt;
 </pre></div>
 </div>
 </div>
@@ -604,6 +630,11 @@ the last line of code. For example, if you run:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+</div>
 </div>
 <p>Jupyter runs both lines, but it only displays the value of the
 second. If you want to display more than one value, you can use
@@ -615,6 +646,12 @@ print statements:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+6
+</pre></div>
+</div>
+</div>
 </div>
 <p>When you call the <code class="docutils literal notranslate"><span class="pre">print</span></code> function, you can put a variable name in
 parentheses, as in the previous example, or you can provide a sequence
@@ -622,6 +659,11 @@ of variables separated by commas, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span><span class="p">,</span> <span class="n">bikeshare</span><span class="o">.</span><span class="n">wellesley</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6 6
 </pre></div>
 </div>
 </div>
@@ -664,6 +706,11 @@ bike from Wellesley to Olin:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Olin
+</pre></div>
+</div>
+</div>
 </div>
 <p>One benefit of defining functions is that you avoid repeating chunks of
 code, which makes programs smaller. Another benefit is that the name you
@@ -677,6 +724,11 @@ When you call it, you provide a probability between 0 and 1, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flip</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
 </pre></div>
 </div>
 </div>
@@ -713,6 +765,11 @@ happen if the result is <code class="docutils literal notranslate"><span class="
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;heads&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tails&#39;</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>heads
 </pre></div>
 </div>
 </div>
@@ -758,6 +815,11 @@ step</strong>, which is an interval of time, in this case one minute:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
 </pre></div>
 </div>
 </div>
@@ -808,6 +870,11 @@ function has the same effect as:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
+</pre></div>
+</div>
+</div>
 </div>
 <p>The advantage of using parameters is that you can call the same function many times, providing different arguments each time.</p>
 <p>Adding parameters to a function is called <strong>generalization</strong>, because it makes the function more general, that is, less specialized.</p>
@@ -822,6 +889,16 @@ loop</strong>. Here’s an example:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">bike_to_wellesley</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+Moving a bike to Wellesley
+1
+Moving a bike to Wellesley
+2
+Moving a bike to Wellesley
 </pre></div>
 </div>
 </div>
@@ -878,6 +955,18 @@ corresponding sequence of quantities.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+Moving a bike to Olin
+1
+Moving a bike to Wellesley
+Moving a bike to Olin
+2
+Moving a bike to Wellesley
+Moving a bike to Olin
+</pre></div>
+</div>
+</div>
 </div>
 <p>Each time through the loop, we print the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> and call <code class="docutils literal notranslate"><span class="pre">step</span></code>, which updates <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.
 Then we store the number of bikes at Olin in <code class="docutils literal notranslate"><span class="pre">results</span></code>.
@@ -893,6 +982,16 @@ The last time, the value of <code class="docutils literal notranslate"><span cla
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time
+0    10
+1    11
+2    11
+3    11
+Name: Quantity, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 <p>The left column is the time stamps; the right column is the quantities (which might be negative, depending on the state of the system).</p>
 <p>At the bottom, <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is the type of the data in the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>; you can ignore this for now.</p>
@@ -903,6 +1002,55 @@ The last time, the value of <code class="docutils literal notranslate"><span cla
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Quantity</th>
+    </tr>
+    <tr>
+      <th>Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 <div class="section" id="plotting">
@@ -918,6 +1066,9 @@ the results, and the ModSim library provides <code class="docutils literal notra
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of bikes&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap02_84_0.png" src="_images/chap02_84_0.png" />
 </div>
 </div>
 </div>
@@ -942,14 +1093,63 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
 </div>
 <p><strong>Exercise:</strong> Make a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with a third state variable, called <code class="docutils literal notranslate"><span class="pre">babson</span></code>, with initial value 0, and display the state of the system.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">babson</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>olin</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>wellesley</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>babson</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p><strong>Exercise:</strong> Wrap the code in the chapter in a function named <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that takes three parameters, named <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>.</p>
 <p>It should:</p>
@@ -967,16 +1167,66 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </ol>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">step</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span>
+        
+    <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
+             <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time step (min)&#39;</span><span class="p">,</span> 
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of bikes&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">run_simulation</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Olin
+Moving a bike to Olin
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Olin
+Moving a bike to Olin
+</pre></div>
+</div>
+<img alt="_images/chap02_93_1.png" src="_images/chap02_93_1.png" />
 </div>
 </div>
 </div>
@@ -1005,6 +1255,18 @@ For the list of keyword arguments you can pass to <code class="docutils literal 
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source_code</span><span class="p">(</span><span class="n">flip</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>def flip(p=0.5):
+    &quot;&quot;&quot;Flips a coin with the given probability.
+
+    p: float 0-1
+
+    returns: boolean (True or False)
+    &quot;&quot;&quot;
+    return np.random.random() &lt; p
 </pre></div>
 </div>
 </div>

@@ -386,46 +386,6 @@
                 
   <div class="section" id="chapter-18">
 <h1>Chapter 18<a class="headerlink" href="#chapter-18" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>The previous chapter present the minimal model of the glucose-insulin system, and introduces a tool we will need to implement it: interpolation.</p>
 <p>In this chapter, we’ll implement the model two ways:</p>
 <ul class="simple">
@@ -482,7 +442,7 @@ Then we’ll see how we can choose parameters that generate a series that fits t
 </div>
 </div>
 <p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">make_system</span></code> that takes <code class="docutils literal notranslate"><span class="pre">params</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code> as parameters.</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span> <span class="o">=</span> <span class="n">params</span>
@@ -565,6 +525,13 @@ function with the initial conditions:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>G    262.88
+X      0.00
+Name: state, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>If it runs without errors and there is nothing obviously wrong with the results, we are ready to run the simulation.</p>
 </div>
@@ -607,6 +574,58 @@ Here are the first few time steps.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>G</th>
+      <th>X</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.0</th>
+      <td>270.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2.0</th>
+      <td>262.880000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4.0</th>
+      <td>256.044800</td>
+      <td>0.000450</td>
+    </tr>
+    <tr>
+      <th>6.0</th>
+      <td>249.252568</td>
+      <td>0.004002</td>
+    </tr>
+    <tr>
+      <th>8.0</th>
+      <td>240.967447</td>
+      <td>0.006062</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The following plot shows the simulated glucose levels from the model along with the measured data.</p>
 <div class="cell docutils container">
@@ -618,6 +637,9 @@ Here are the first few time steps.</p>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap18_30_0.png" src="_images/chap18_30_0.png" />
 </div>
 </div>
 <p>With the parameters I chose, the model fits the data well, except during the first few minutes after the injection.
@@ -637,6 +659,9 @@ accurate. For this reason, we should not take the estimated value of <code class
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (arbitrary units)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap18_33_0.png" src="_images/chap18_33_0.png" />
 </div>
 </div>
 <p>Remember that <code class="docutils literal notranslate"><span class="pre">X</span></code> represents the concentration of insulin in the “remote compartment”, which is believed to be tissue fluid, so we can’t compare it to the measured concentration of insulin in the blood.</p>
@@ -658,7 +683,7 @@ The “ivp” in <code class="docutils literal notranslate"><span class="pre">so
 <p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> that makes <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> a little easier to use.</p>
 <p>To use it, we have to provide a “slope function”, which is similar to an update function; in fact, it takes the same parameters: a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <p>Here’s a slope function that evaluates the differential equations of the minimal model.</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">G</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">state</span>
@@ -694,10 +719,20 @@ object and a slope function as parameters.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">details</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The solver successfully reached the end of the integration interval.&#39;
 </pre></div>
 </div>
 </div>
@@ -711,6 +746,58 @@ Here are the first few time steps:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>G</th>
+      <th>X</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.0</th>
+      <td>270.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2.0</th>
+      <td>262.980942</td>
+      <td>0.000240</td>
+    </tr>
+    <tr>
+      <th>4.0</th>
+      <td>255.683455</td>
+      <td>0.002525</td>
+    </tr>
+    <tr>
+      <th>6.0</th>
+      <td>247.315442</td>
+      <td>0.005174</td>
+    </tr>
+    <tr>
+      <th>8.0</th>
+      <td>238.271851</td>
+      <td>0.006602</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Because we used <code class="docutils literal notranslate"><span class="pre">t_eval=results.index</span></code>, the time stamps in <code class="docutils literal notranslate"><span class="pre">results2</span></code> are the same as in <code class="docutils literal notranslate"><span class="pre">results</span></code>, which makes them easier to compare.</p>
 <p>Here are the results from <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> along with the results from <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
@@ -724,6 +811,9 @@ Here are the first few time steps:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap18_45_0.png" src="_images/chap18_45_0.png" />
+</div>
 </div>
 <p>The differences are barely visible.
 We can compute the relative differences like this:</p>
@@ -732,6 +822,19 @@ We can compute the relative differences like this:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">G</span> <span class="o">-</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span>
 <span class="n">percent_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span> <span class="o">*</span> <span class="mi">100</span>
 <span class="n">percent_diff</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    92.000000
+mean      0.649121
+std       0.392903
+min       0.000000
+25%       0.274854
+50%       0.684262
+75%       1.009868
+max       1.278168
+Name: G, dtype: float64
 </pre></div>
 </div>
 </div>
@@ -748,6 +851,9 @@ So in this example, the results from Euler’s method are probably good enough f
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (arbitrary units)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap18_50_0.png" src="_images/chap18_50_0.png" />
 </div>
 </div>
 <p>These differences are little bigger, especially at the beginning.
@@ -767,21 +873,50 @@ As one of the case studies in the next chapter, you’ll have a chance to see wh
 <p>If we make the step size smaller, we expect the solution to be more accurate.  Run the simulation with <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> and compare the results.  What is the largest relative error between the two solutions?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system3</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">dt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">results3</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system3</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;C2--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation (dt=2)&#39;</span><span class="p">)</span>
+<span class="n">results3</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;C3:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation (dt=1)&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap18_56_0.png" src="_images/chap18_56_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">diff</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">G</span> <span class="o">-</span> <span class="n">results3</span><span class="o">.</span><span class="n">G</span>
+<span class="n">percent_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">results3</span><span class="o">.</span><span class="n">G</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">percent_diff</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    92.000000
+mean      0.527015
+std       0.291531
+min       0.000000
+25%       0.292193
+50%       0.505702
+75%       0.801698
+max       0.970760
+Name: G, dtype: float64
 </pre></div>
 </div>
 </div>

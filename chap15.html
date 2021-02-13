@@ -396,46 +396,6 @@
                 
   <div class="section" id="chapter-15">
 <h1>Chapter 15<a class="headerlink" href="#chapter-15" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about. In the next few chapters, we’ll do some physics, starting with <strong>thermal systems</strong>, that is, systems where the temperature of objects changes as heat transfers from one to another.</p>
 <div class="section" id="the-coffee-cooling-problem">
 <h2>The coffee cooling problem<a class="headerlink" href="#the-coffee-cooling-problem" title="Permalink to this headline">¶</a></h2>
@@ -537,7 +497,7 @@ Newton’s model to be quite good.</p>
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
 <p>To get started, let’s forget about the milk temporarily and focus on the coffee.</p>
 <p>Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="n">T_init</span><span class="p">,</span>
@@ -570,7 +530,7 @@ Newton’s model to be quite good.</p>
 environment, <span class="math notranslate nohighlight">\(T - T_{env}\)</span>. To minimize confusion, I avoid this second
 use.</p>
 <p>The following function takes the current temperature, <code class="docutils literal notranslate"><span class="pre">T</span></code>, the current time <code class="docutils literal notranslate"><span class="pre">t</span></code>, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, and computes the change in temperature during a time step:</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_func</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">r</span><span class="p">,</span> <span class="n">T_env</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span>    
@@ -586,10 +546,15 @@ use.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.68
+</pre></div>
+</div>
+</div>
 </div>
 <p>With <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> minute, the temperature drops by about 0.7 °C/min, at least for this value of <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
 <p>Now here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that simulates a series of time steps from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>:</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">):</span>
     <span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
@@ -628,6 +593,17 @@ from <code class="docutils literal notranslate"><span class="pre">t_0</span></co
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time
+0.0    90.000000
+1.0    89.320000
+2.0    88.646800
+3.0    87.980332
+4.0    87.320529
+Name: Quantity, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>Here’s what the results look like.</p>
 <div class="cell docutils container">
@@ -640,11 +616,19 @@ from <code class="docutils literal notranslate"><span class="pre">t_0</span></co
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap15_29_0.png" src="_images/chap15_29_0.png" />
+</div>
 </div>
 <p>The temperature after 30 minutes is 72.3 °C, which is a little higher than what’s stated in the problem, 70 °C.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>72.2996253904031
 </pre></div>
 </div>
 </div>
@@ -676,6 +660,15 @@ write a function that evaluates <span class="math notranslate nohighlight">\(f\)
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      converged: True
+           flag: &#39;converged&#39;
+ function_calls: 3
+     iterations: 2
+           root: 2.0
+</pre></div>
+</div>
+</div>
 </div>
 <p>The first argument is the function whose roots we want. The second
 argument is an interval that contains or “brackets” a root. The result is an object that contains several variables, including <code class="docutils literal notranslate"><span class="pre">root</span></code>, which stores the root that was found.</p>
@@ -685,12 +678,22 @@ argument is an interval that contains or “brackets” a root. The result is an
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0
+</pre></div>
+</div>
+</div>
 </div>
 <p>If we provide a different interval, we find a different root.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
 <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.9999771663211003
 </pre></div>
 </div>
 </div>
@@ -726,12 +729,22 @@ With the right value of <code class="docutils literal notranslate"><span class="
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.2996253904030937
+</pre></div>
+</div>
+</div>
 </div>
 <p>The result is an error of 2.3 °C, because the final temperature with
 this value of <code class="docutils literal notranslate"><span class="pre">r</span></code> is too high.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_func</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-10.907066281994297
 </pre></div>
 </div>
 </div>
@@ -742,6 +755,11 @@ this value of <code class="docutils literal notranslate"><span class="pre">r</sp
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func</span><span class="p">,</span> <span class="n">coffee</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">])</span>
 <span class="n">res</span><span class="o">.</span><span class="n">flag</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;converged&#39;
 </pre></div>
 </div>
 </div>
@@ -757,6 +775,11 @@ The third argument is an interval that brackets the root.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.011543084190599507
+</pre></div>
+</div>
+</div>
 </div>
 <p>In this example, <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code> turns out to be about <code class="docutils literal notranslate"><span class="pre">0.0115</span></code>, in units of min<span class="math notranslate nohighlight">\(^{-1}\)</span> (inverse minutes).</p>
 <p>We can confirm that this value is correct by setting <code class="docutils literal notranslate"><span class="pre">r</span></code> to the root we found and running the simulation.</p>
@@ -765,6 +788,11 @@ The third argument is an interval that brackets the root.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
 <span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
 <span class="n">coffee</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.00000057308064
 </pre></div>
 </div>
 </div>
@@ -777,36 +805,78 @@ The third argument is an interval that brackets the root.</p>
 <p>By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">milk</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">results_milk</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">milk</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+<span class="n">milk</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18.499850754390966
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results_milk</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;milk&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (minutes)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Temperature (C)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap15_58_0.png" src="_images/chap15_58_0.png" />
 </div>
 </div>
 <p><strong>Exercise:</strong> Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">error_func2</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">-</span> <span class="mi">20</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func2</span><span class="p">,</span> <span class="n">milk</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      converged: True
+           flag: &#39;converged&#39;
+ function_calls: 6
+     iterations: 5
+           root: 0.011543084190599507
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">run_simulation</span><span class="p">(</span><span class="n">milk</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
+<span class="n">milk</span><span class="o">.</span><span class="n">T_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.000229743777304
 </pre></div>
 </div>
 </div>

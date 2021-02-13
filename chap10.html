@@ -383,46 +383,6 @@
                 
   <div class="section" id="chapter-10">
 <h1>Chapter 10<a class="headerlink" href="#chapter-10" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="case-studies">
 <h1>Case studies<a class="headerlink" href="#case-studies" title="Permalink to this headline">¶</a></h1>
@@ -452,6 +412,11 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+</div>
 </div>
 <p>Select <code class="docutils literal notranslate"><span class="pre">tables[1]</span></code>, which is the second table on the page.</p>
 <div class="cell docutils container">
@@ -461,6 +426,119 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Population Reference Bureau (1973–2016)[15]</th>
+      <th>United Nations Department of Economic and Social Affairs (2015)[16]</th>
+      <th>Maddison (2008)[17]</th>
+      <th>HYDE (2010)[citation needed]</th>
+      <th>Tanton (1994)[18]</th>
+      <th>Biraben (1980)[19]</th>
+      <th>McEvedy &amp; Jones (1978)[20]</th>
+      <th>Thomlinson (1975)[21]</th>
+      <th>Durand (1974)[22]</th>
+      <th>Clark (1967)[23]</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>-10000</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2M[24]</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>1–10M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>-9000</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>-8000</th>
+      <td>5.</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5–10M</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>-7000</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>8.</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>-6000</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>11.</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Not all researchers provide estimates for the same dates.</p>
 <p>Again, we’ll replace the long column names with more convenient abbreviations.</p>
@@ -492,6 +570,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap10_16_0.png" src="_images/chap10_16_0.png" />
+</div>
 </div>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">xlim</span></code> to zoom in on everything after Year 0.</p>
 <div class="cell docutils container">
@@ -503,21 +584,66 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap10_18_0.png" src="_images/chap10_18_0.png" />
+</div>
 </div>
 <p>See if you can find a model that fits these data well from Year 0 to 1950.</p>
 <p>How well does your best model predict actual population growth from 1950 to the present?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># The function I found that best matches the data has the form</span>
+<span class="c1"># a + b / (c - x)</span>
+
+<span class="c1"># This function is hard to explain physically; that is, it doesn&#39;t</span>
+<span class="c1"># correspond to a growth model that makes sense in terms of human </span>
+<span class="c1"># behavior.</span>
+
+<span class="c1"># And it implies that the population goes to infinity in 2040.</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1950</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="mi">110</span> <span class="o">+</span> <span class="mi">200000</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2040</span> <span class="o">-</span> <span class="n">xs</span><span class="p">)</span>
+<span class="n">table1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (millions)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;CE population estimates&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap10_20_0.png" src="_images/chap10_20_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># And it doesn&#39;t do a particularly good job of predicting</span>
+<span class="c1"># actual growth from 1940 to the present.</span>
+
+<span class="c1"># TODO: load these series from table2</span>
+<span class="c1">#plot(census, &#39;:&#39;, label=&#39;US Census&#39;)</span>
+<span class="c1">#plot(un, &#39;--&#39;, label=&#39;UN DESA&#39;)</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">1940</span><span class="p">,</span> <span class="mi">2020</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="mi">110</span> <span class="o">+</span> <span class="mi">200000</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2040</span> <span class="o">-</span> <span class="n">xs</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1950</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billions)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Prehistoric population estimates&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap10_21_0.png" src="_images/chap10_21_0.png" />
 </div>
 </div>
 </div>

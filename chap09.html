@@ -396,46 +396,6 @@
                 
   <div class="section" id="chapter-9">
 <h1>Chapter 9<a class="headerlink" href="#chapter-9" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In this chapter we express the models from previous chapters as
 difference equations and differential equations, solve the equations,
 and derive the functional forms of the solutions. We also discuss the
@@ -649,6 +609,10 @@ now run</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle t + 1\]</div>
+</div>
 </div>
 <p>Python doesn’t try to perform numerical addition; rather, it creates a
 new <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> that represents the sum of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code>. We can evaluate the
@@ -659,6 +623,10 @@ substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 3\]</div>
 </div>
 </div>
 <p>Functions in SymPy are represented by a special kind of <code class="docutils literal notranslate"><span class="pre">Symbol</span></code>:</p>
@@ -671,6 +639,11 @@ substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>f
+</pre></div>
+</div>
+</div>
 </div>
 <p>Now if we write <code class="docutils literal notranslate"><span class="pre">f(t)</span></code>, we get an object that represents the evaluation of a function, <span class="math notranslate nohighlight">\(f\)</span>, at a value, <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <div class="cell docutils container">
@@ -678,6 +651,10 @@ substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(t \right)}\]</div>
 </div>
 </div>
 <p>But again SymPy doesn’t actually
@@ -695,6 +672,10 @@ try to evaluate it.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d t} f{\left(t \right)}\]</div>
+</div>
 </div>
 <p>The result is a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> that represents the derivative of <code class="docutils literal notranslate"><span class="pre">f</span></code> with
 respect to <code class="docutils literal notranslate"><span class="pre">t</span></code>. But again, SymPy doesn’t try to compute the derivative
@@ -710,6 +691,10 @@ yet.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d t} f{\left(t \right)} = \alpha f{\left(t \right)}\]</div>
+</div>
 </div>
 <p>The result is an object that represents an equation.  Now
 we can use <code class="docutils literal notranslate"><span class="pre">dsolve</span></code> to solve this differential equation:</p>
@@ -721,6 +706,10 @@ we can use <code class="docutils literal notranslate"><span class="pre">dsolve</
 <span class="n">solution_eq</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(t \right)} = C_{1} e^{\alpha t}\]</div>
 </div>
 </div>
 <p>The result is the <strong>general
@@ -739,6 +728,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <span class="n">particular</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(t \right)} = p_{0} e^{\alpha t}\]</div>
 </div>
 </div>
 <p>The result is called the <strong>exponential growth curve</strong>; see
@@ -762,6 +755,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d t} f{\left(t \right)} = r \left(1 - \frac{f{\left(t \right)}}{K}\right) f{\left(t \right)}\]</div>
+</div>
 </div>
 <p>And solve it.</p>
 <div class="cell docutils container">
@@ -770,6 +767,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <span class="n">solution_eq</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(t \right)} = \frac{K e^{C_{1} K + r t}}{e^{C_{1} K + r t} - 1}\]</div>
 </div>
 </div>
 <p>The result, <code class="docutils literal notranslate"><span class="pre">solution_eq</span></code>, contains <code class="docutils literal notranslate"><span class="pre">rhs</span></code>, which is the right-hand side of the solution.</p>
@@ -780,6 +781,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{K e^{C_{1} K + r t}}{e^{C_{1} K + r t} - 1}\]</div>
+</div>
 </div>
 <p>We can evaluate the right-hand side at <span class="math notranslate nohighlight">\(t=0\)</span></p>
 <div class="cell docutils container">
@@ -788,6 +793,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <span class="n">at_0</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{K e^{C_{1} K}}{e^{C_{1} K} - 1}\]</div>
 </div>
 </div>
 <p>Now we want to find the value of <code class="docutils literal notranslate"><span class="pre">C1</span></code> that makes <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
@@ -808,6 +817,11 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(list, 1)
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -815,6 +829,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <span class="n">value_of_C1</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\log{\left(- \frac{p_{0}}{K - p_{0}} \right)}}{K}\]</div>
 </div>
 </div>
 <p>Now in the general solution, we want to replace <code class="docutils literal notranslate"><span class="pre">C1</span></code> with the value of <code class="docutils literal notranslate"><span class="pre">C1</span></code> we just figured out.</p>
@@ -825,6 +843,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle - \frac{K p_{0} e^{r t}}{\left(K - p_{0}\right) \left(- \frac{p_{0} e^{r t}}{K - p_{0}} - 1\right)}\]</div>
+</div>
 </div>
 <p>The result is complicated, but SymPy provides a function that tries to simplify it.</p>
 <div class="cell docutils container">
@@ -832,6 +854,10 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{K p_{0} e^{r t}}{K + p_{0} e^{r t} - p_{0}}\]</div>
 </div>
 </div>
 <p>This function is called the <strong>logistic growth curve</strong>; see
@@ -848,6 +874,10 @@ logistic function is often written like this:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{K - p_{0}}{p_{0}}\]</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -858,6 +888,10 @@ logistic function is often written like this:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{K}{1 + \frac{\left(K - p_{0}\right) e^{- r t}}{p_{0}}}\]</div>
+</div>
 </div>
 <p>To see whether two expressions are equivalent, we can check whether their difference simplifies to 0.</p>
 <div class="cell docutils container">
@@ -865,6 +899,10 @@ logistic function is often written like this:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">particular</span> <span class="o">-</span> <span class="n">logistic</span><span class="p">)</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 0\]</div>
 </div>
 </div>
 <p>This test only works one way: if SymPy says the difference reduces to 0, the expressions are definitely equivalent (and not just numerically close).</p>
@@ -893,51 +931,91 @@ logistic function is often written like this:</p>
 <p><span class="math notranslate nohighlight">\(\frac{df(t)}{dt} = \alpha f(t) + \beta f^2(t) \)</span></p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;alpha beta&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">eq3</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">),</span> <span class="n">alpha</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">beta</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">eq3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d t} f{\left(t \right)} = \alpha f{\left(t \right)} + \beta f^{2}{\left(t \right)}\]</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">solution_eq</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span><span class="n">eq3</span><span class="p">)</span>
+<span class="n">solution_eq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(t \right)} = \frac{\alpha e^{\alpha \left(C_{1} + t\right)}}{\beta \left(1 - e^{\alpha \left(C_{1} + t\right)}\right)}\]</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">general</span> <span class="o">=</span> <span class="n">solution_eq</span><span class="o">.</span><span class="n">rhs</span>
+<span class="n">general</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\alpha e^{\alpha \left(C_{1} + t\right)}}{\beta \left(1 - e^{\alpha \left(C_{1} + t\right)}\right)}\]</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">at_0</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">solutions</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">at_0</span><span class="p">,</span> <span class="n">p_0</span><span class="p">),</span> <span class="n">C1</span><span class="p">)</span>
+<span class="n">value_of_C1</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">value_of_C1</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\log{\left(\frac{\beta p_{0}}{\alpha + \beta p_{0}} \right)}}{\alpha}\]</div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">particular</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">value_of_C1</span><span class="p">)</span>
+<span class="n">particular</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
-</pre></div>
-</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
 </div>
 </div>
 <p><strong>Exercise:</strong>  Use <a class="reference external" href="https://www.wolframalpha.com/">WolframAlpha</a> to solve the quadratic growth model, using either or both forms of parameterization:</p>

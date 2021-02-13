@@ -386,46 +386,6 @@
                 
   <div class="section" id="chapter-6">
 <h1>Chapter 6<a class="headerlink" href="#chapter-6" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In the previous chapter we simulated a model of world population with
 constant growth. In this chapter we see if we can make a better model
 with growth proportional to the population.</p>
@@ -510,6 +470,48 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>System</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>t_0</th>
+      <td>1950.0</td>
+    </tr>
+    <tr>
+      <th>t_end</th>
+      <td>2016.0</td>
+    </tr>
+    <tr>
+      <th>p_0</th>
+      <td>2.557629</td>
+    </tr>
+    <tr>
+      <th>annual_growth</th>
+      <td>0.072248</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Next we’ll wrap the code from the previous chapter in a function:</p>
 <div class="cell docutils container">
@@ -558,6 +560,9 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap06_23_0.png" src="_images/chap06_23_0.png" />
 </div>
 </div>
 <p>It might not be obvious that using functions and <code class="docutils literal notranslate"><span class="pre">System</span></code> objects is a
@@ -609,6 +614,9 @@ I chose the birth rate by hand to fit the data.</p>
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Proportional Growth Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap06_30_0.png" src="_images/chap06_30_0.png" />
 </div>
 </div>
 <p>The proportional model fits
@@ -718,21 +726,49 @@ But first, you might want to work on some exercises.</p>
 <p>Test your function by calling it directly, then pass it to <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.  Plot the results.  Adjust the parameters <code class="docutils literal notranslate"><span class="pre">alpha1</span></code> and <code class="docutils literal notranslate"><span class="pre">alpha2</span></code> to fit the data as well as you can.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">growth_func3</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the population next year.</span>
+<span class="sd">    </span>
+<span class="sd">    pop: current population</span>
+<span class="sd">    t: current year</span>
+<span class="sd">    system: system object containing parameters of the model</span>
+<span class="sd">    </span>
+<span class="sd">    returns: population next year</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">1980</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha1</span> <span class="o">*</span> <span class="n">pop</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha2</span> <span class="o">*</span> <span class="n">pop</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system</span><span class="o">.</span><span class="n">alpha1</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">system</span><span class="o">.</span><span class="n">alpha2</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">/</span> <span class="mi">1000</span>
+
+<span class="n">results3</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func3</span><span class="p">)</span>
+<span class="n">results3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plot_estimates</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Proportional growth, parameter changes over time&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap06_50_0.png" src="_images/chap06_50_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># Using two parameters, we can make the model fit the data better.</span>
+<span class="c1"># But it still seems like the shape of the function is not right.</span>
 </pre></div>
 </div>
 </div>

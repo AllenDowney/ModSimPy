@@ -393,46 +393,6 @@
                 
   <div class="section" id="chapter-5">
 <h1>Chapter 5<a class="headerlink" href="#chapter-5" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In this chapter…</p>
 </div>
 <div class="section" id="world-population">
@@ -528,6 +488,126 @@ population estimates from 1950 to 2016.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>United States Census Bureau (2017)[28]</th>
+      <th>Population Reference Bureau (1973–2016)[15]</th>
+      <th>United Nations Department of Economic and Social Affairs (2015)[16]</th>
+      <th>Maddison (2008)[17]</th>
+      <th>HYDE (2007)[24]</th>
+      <th>Tanton (1994)[18]</th>
+      <th>Biraben (1980)[19]</th>
+      <th>McEvedy &amp; Jones (1978)[20]</th>
+      <th>Thomlinson (1975)[21]</th>
+      <th>Durand (1974)[22]</th>
+      <th>Clark (1967)[23]</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950</th>
+      <td>2557628654</td>
+      <td>2.516000e+09</td>
+      <td>2.525149e+09</td>
+      <td>2.544000e+09</td>
+      <td>2.527960e+09</td>
+      <td>2.400000e+09</td>
+      <td>2.527000e+09</td>
+      <td>2.500000e+09</td>
+      <td>2.400000e+09</td>
+      <td>NaN</td>
+      <td>2.486000e+09</td>
+    </tr>
+    <tr>
+      <th>1951</th>
+      <td>2594939877</td>
+      <td>NaN</td>
+      <td>2.572851e+09</td>
+      <td>2.571663e+09</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1952</th>
+      <td>2636772306</td>
+      <td>NaN</td>
+      <td>2.619292e+09</td>
+      <td>2.617949e+09</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1953</th>
+      <td>2682053389</td>
+      <td>NaN</td>
+      <td>2.665865e+09</td>
+      <td>2.665959e+09</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1954</th>
+      <td>2730228104</td>
+      <td>NaN</td>
+      <td>2.713172e+09</td>
+      <td>2.716927e+09</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The first column, which is labeled <code class="docutils literal notranslate"><span class="pre">Year</span></code>, is special.  It is the <strong>index</strong> for this <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which means it contains the labels for the rows.</p>
 <p>Some of the values use scientific notation; for example, <code class="docutils literal notranslate"><span class="pre">2.544000e+09</span></code> is shorthand for <span class="math notranslate nohighlight">\(2.544 \cdot 10^9\)</span> or 2.544 billion.</p>
@@ -564,6 +644,17 @@ From here on, we’ll express population estimates in terms of billions.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
+2012    7.013871
+2013    7.092128
+2014    7.169968
+2015    7.247893
+2016    7.325997
+Name: census, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>The left column is the <strong>index</strong> of the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; in this example it contains the dates.
 The right column contains the <strong>values</strong>, which are population estimates.
@@ -574,6 +665,17 @@ Department of Economic and Social Affairs (U.N. DESA):</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">un</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">un</span> <span class="o">/</span> <span class="mf">1e9</span>
 <span class="n">un</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
+2012    7.080072
+2013    7.162119
+2014    7.243784
+2015    7.349472
+2016         NaN
+Name: un, dtype: float64
 </pre></div>
 </div>
 </div>
@@ -601,6 +703,9 @@ The <code class="docutils literal notranslate"><span class="pre">label</span></c
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap05_30_0.png" src="_images/chap05_30_0.png" />
+</div>
 </div>
 <p>The lines overlap almost completely, but the most recent estimates diverge slightly.
 In the next section, we’ll quantify these differences.</p>
@@ -624,6 +729,17 @@ One way to characterize this difference is <strong>absolute error</strong>, whic
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
+2012    0.066201
+2013    0.069991
+2014    0.073816
+2015    0.101579
+2016         NaN
+dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>When you subtract two <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects, the result is a new <code class="docutils literal notranslate"><span class="pre">Series</span></code>.
 Because one of the estimates from 2016 is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, the result is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
@@ -636,6 +752,11 @@ Because one of the estimates from 2016 is <code class="docutils literal notransl
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.029034508242424265
+</pre></div>
+</div>
+</div>
 </div>
 <p>On average, the estimates differ by about 0.029 billion.
 But we can also use <code class="docutils literal notranslate"><span class="pre">max</span></code> to compute the maximum absolute error.</p>
@@ -644,6 +765,11 @@ But we can also use <code class="docutils literal notranslate"><span class="pre"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">max</span>
 
 <span class="nb">max</span><span class="p">(</span><span class="n">abs_error</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10157921199999986
 </pre></div>
 </div>
 </div>
@@ -659,12 +785,28 @@ But counting everyone is the world is hard, and we should not expect the estimat
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
+2012    0.943860
+2013    0.986888
+2014    1.029514
+2015    1.401500
+2016         NaN
+dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>I multiplied by 100 so we can interpret the results as a percentage.  In 2015, the difference between the estimates is about 1.4%, and that happens to be the maximum.</p>
 <p>Again, we can summarize the results by computing the mean.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span><span class="p">(</span><span class="n">rel_error</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5946585816022846
 </pre></div>
 </div>
 </div>
@@ -691,6 +833,11 @@ from 1950 to 2016. Since the UN and Census data are so close, we’ll use the Ce
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.557628654
+</pre></div>
+</div>
+</div>
 </div>
 <p>So we can get the total growth during the interval like this:</p>
 <div class="cell docutils container">
@@ -714,6 +861,11 @@ We can do that by selecting the index from <code class="docutils literal notrans
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1950
+</pre></div>
+</div>
+</div>
 </div>
 <p>So <code class="docutils literal notranslate"><span class="pre">t_0</span></code> is the label of the first element, which is 1950.
 We can get the label of the last element like this.</p>
@@ -724,6 +876,11 @@ We can get the label of the last element like this.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2016
+</pre></div>
+</div>
+</div>
 </div>
 <p>The value <code class="docutils literal notranslate"><span class="pre">-1</span></code> indicates the last element; <code class="docutils literal notranslate"><span class="pre">-2</span></code> indicates the second to last element, and so on.</p>
 <p>The difference between <code class="docutils literal notranslate"><span class="pre">t_0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> is the elapsed time between them.</p>
@@ -731,6 +888,11 @@ We can get the label of the last element like this.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_0</span>
 <span class="n">elapsed_time</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66
 </pre></div>
 </div>
 </div>
@@ -752,12 +914,22 @@ We can get the label of the last element like this.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.768368055
+</pre></div>
+</div>
+</div>
 </div>
 <p>Finally, we can compute average annual growth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">annual_growth</span> <span class="o">=</span> <span class="n">total_growth</span> <span class="o">/</span> <span class="n">elapsed_time</span>
 <span class="n">annual_growth</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.07224800083333333
 </pre></div>
 </div>
 </div>
@@ -794,6 +966,40 @@ These names don’t affect the computation, but they appear when we display or p
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Population</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950</th>
+      <td>2.557629</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Now we set the rest of the values by simulating annual growth:</p>
 <div class="cell docutils container">
@@ -815,6 +1021,9 @@ These names don’t affect the computation, but they appear when we display or p
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap05_70_0.png" src="_images/chap05_70_0.png" />
 </div>
 </div>
 <p>The keyword argument <code class="docutils literal notranslate"><span class="pre">color='gray'</span></code> specifies the color of the line.  For details on color specification see <a class="reference external" href="https://modsimpy.com/color">https://modsimpy.com/color</a>.</p>
@@ -865,6 +1074,9 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap05_76_0.png" src="_images/chap05_76_0.png" />
+</div>
 </div>
 <p><strong>Exercise:</strong>  Try fitting the model using data from 1970 to the present, and see if that does a better job.</p>
 <p>Suggestions:</p>
@@ -874,23 +1086,54 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </ol>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">t_0</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t_1</span> <span class="o">=</span> <span class="mi">1970</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_1</span>
+
+<span class="n">p_0</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+<span class="n">p_1</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_1</span><span class="p">]</span>
+<span class="n">p_end</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_end</span><span class="p">]</span>
+
+<span class="n">total_growth</span> <span class="o">=</span> <span class="n">p_end</span> <span class="o">-</span> <span class="n">p_1</span>
+<span class="n">annual_growth</span> <span class="o">=</span> <span class="n">total_growth</span> <span class="o">/</span> <span class="n">elapsed_time</span>
+<span class="n">annual_growth</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.07854997754347826
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Population&#39;</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_0</span> <span class="o">-</span> <span class="mf">0.45</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">annual_growth</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plot_estimates</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model, t1=1970&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap05_80_0.png" src="_images/chap05_80_0.png" />
 </div>
 </div>
 </div>

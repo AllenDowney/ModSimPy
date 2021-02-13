@@ -393,46 +393,6 @@
                 
   <div class="section" id="chapter-12">
 <h1>Chapter 12<a class="headerlink" href="#chapter-12" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import code from previous notebooks</span>
@@ -502,6 +462,9 @@ without immunization.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap12_14_0.png" src="_images/chap12_14_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="metrics">
@@ -516,7 +479,7 @@ students who will still be sick at the end of the semester, or the total number 
 <p>As an example, I will focus on the last one — the total number of sick students — and we will consider interventions intended to minimize it.</p>
 <p>When a person gets infected, they move from <code class="docutils literal notranslate"><span class="pre">S</span></code> to <code class="docutils literal notranslate"><span class="pre">I</span></code>, so we can get
 the total number of infections by computing the difference in <code class="docutils literal notranslate"><span class="pre">S</span></code> at the beginning and the end:</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">s_0</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span>
@@ -532,10 +495,20 @@ the total number of infections by computing the difference in <code class="docut
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.468320811028781
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results2</span><span class="p">,</span> <span class="n">system2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.30650802853979753
 </pre></div>
 </div>
 </div>
@@ -584,6 +557,9 @@ the x-axis is the immunization rate, not time.</p>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Fraction infected vs. immunization rate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap12_24_0.png" src="_images/chap12_24_0.png" />
 </div>
 </div>
 <p>As the immunization rate increases, the number of infections drops
@@ -703,6 +679,9 @@ change student behavior in a way that decreases the effective value of <code cla
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap12_37_0.png" src="_images/chap12_37_0.png" />
+</div>
 </div>
 <p>The result is the following function, which
 takes spending as a parameter and returns <code class="docutils literal notranslate"><span class="pre">factor</span></code>, which is the factor
@@ -767,6 +746,9 @@ to compute the effect:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap12_47_0.png" src="_images/chap12_47_0.png" />
+</div>
 </div>
 <p>Below $200, the campaign has little effect.</p>
 <p>At $800 it has a substantial effect, reducing total infections from more than 45% to about 20%.</p>
@@ -785,6 +767,11 @@ hand-washing campaign.</p>
 <span class="n">price_per_dose</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">max_doses</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">budget</span> <span class="o">/</span> <span class="n">price_per_dose</span><span class="p">)</span>
 <span class="n">max_doses</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
 </pre></div>
 </div>
 </div>
@@ -844,6 +831,9 @@ and store the number of infections.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap12_57_0.png" src="_images/chap12_57_0.png" />
+</div>
 </div>
 <p>If we buy no doses of vaccine and spend the entire budget on the campaign, the fraction infected is around 19%. At 4 doses, we have $800 left for the campaign, and this is the optimal point that minimizes the number of students who get sick.</p>
 <p>As we increase the number of doses, we have to cut campaign spending,
@@ -860,7 +850,47 @@ number of sick students goes down again.</p>
 <p>How might you incorporate the effect of quarantine in the SIR model?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="sd">&quot;&quot;&quot;There is no unique best answer to this question,</span>
+<span class="sd">but one simple option is to model quarantine as an</span>
+<span class="sd">effective reduction in gamma, on the assumption that</span>
+<span class="sd">quarantine reduces the number of infectious contacts</span>
+<span class="sd">per infected student.</span>
+
+<span class="sd">Another option would be to add a fourth compartment</span>
+<span class="sd">to the model to track the fraction of the population</span>
+<span class="sd">in quarantine at each point in time.  This approach</span>
+<span class="sd">would be more complex, and it is not obvious that it</span>
+<span class="sd">is substantially better.</span>
+
+<span class="sd">The following function could be used, like </span>
+<span class="sd">add_immunization and add_hand_washing, to adjust the</span>
+<span class="sd">parameters in order to model various interventions.</span>
+
+<span class="sd">In this example, `high` is the highest duration of</span>
+<span class="sd">the infection period, with no quarantine.  `low` is</span>
+<span class="sd">the lowest duration, on the assumption that it takes</span>
+<span class="sd">some time to identify infectious students.</span>
+
+<span class="sd">`fraction` is the fraction of infected students who </span>
+<span class="sd">are quarantined as soon as they are identified.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">add_quarantine</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Model the effect of quarantine by adjusting gamma.</span>
+<span class="sd">    </span>
+<span class="sd">    system: System object</span>
+<span class="sd">    fraction: fraction of students quarantined</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># `low` represents the number of days a student </span>
+    <span class="c1"># is infectious if quarantined.</span>
+    <span class="c1"># `high` is the number of days they are infectious</span>
+    <span class="c1"># if not quarantined</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">high</span> <span class="o">-</span> <span class="n">fraction</span> <span class="o">*</span> <span class="p">(</span><span class="n">high</span><span class="o">-</span><span class="n">low</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr</span>
 </pre></div>
 </div>
 </div>

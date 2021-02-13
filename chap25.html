@@ -391,46 +391,6 @@
                 
   <div class="section" id="chapter-25">
 <h1>Chapter 25<a class="headerlink" href="#chapter-25" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In the previous chapter we modeled a system with constant angular
 velocity.
 In this chapter we take the next step, modeling a system with constant angular acceleration and deceleration.</p>
@@ -593,6 +553,11 @@ acts in the direction of negative <code class="docutils literal notranslate"><sp
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 0.7583965330444203)
+</pre></div>
+</div>
+</div>
 </div>
 <p>We are almost ready to run the simulation, but first there’s a problem we have to address.</p>
 </div>
@@ -624,6 +589,11 @@ that checks the value of <code class="docutils literal notranslate"><span class=
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.5
+</pre></div>
+</div>
+</div>
 </div>
 <p>And run the first phase of the simulation.</p>
 <div class="cell docutils container">
@@ -631,6 +601,11 @@ that checks the value of <code class="docutils literal notranslate"><span class=
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results1</span><span class="p">,</span> <span class="n">details1</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
                                    <span class="n">events</span><span class="o">=</span><span class="n">event_func1</span><span class="p">)</span>
 <span class="n">details1</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
@@ -642,6 +617,58 @@ that checks the value of <code class="docutils literal notranslate"><span class=
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>theta</th>
+      <th>omega</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1.102359</th>
+      <td>0.46080</td>
+      <td>0.836025</td>
+    </tr>
+    <tr>
+      <th>1.113842</th>
+      <td>0.47045</td>
+      <td>0.844734</td>
+    </tr>
+    <tr>
+      <th>1.125325</th>
+      <td>0.48020</td>
+      <td>0.853442</td>
+    </tr>
+    <tr>
+      <th>1.136808</th>
+      <td>0.49005</td>
+      <td>0.862151</td>
+    </tr>
+    <tr>
+      <th>1.148291</th>
+      <td>0.50000</td>
+      <td>0.870860</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>It takes a little more than a second for me to rotate the table 0.5 rad.
 When I release the table, the angular velocity is about 0.87 rad / s.</p>
@@ -682,6 +709,11 @@ turntable stops; that is, when angular velocity is 0.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8708596517490182
+</pre></div>
+</div>
+</div>
 </div>
 <p>Now we can run the second phase.</p>
 <div class="cell docutils container">
@@ -689,6 +721,11 @@ turntable stops; that is, when angular velocity is 0.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results2</span><span class="p">,</span> <span class="n">details2</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system2</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
                                    <span class="n">events</span><span class="o">=</span><span class="n">event_func2</span><span class="p">)</span>
 <span class="n">details2</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
@@ -709,6 +746,58 @@ turntable stops; that is, when angular velocity is 0.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>theta</th>
+      <th>omega</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3.720462</th>
+      <td>1.664800</td>
+      <td>3.483439e-02</td>
+    </tr>
+    <tr>
+      <th>3.747255</th>
+      <td>1.665617</td>
+      <td>2.612579e-02</td>
+    </tr>
+    <tr>
+      <th>3.774049</th>
+      <td>1.666200</td>
+      <td>1.741719e-02</td>
+    </tr>
+    <tr>
+      <th>3.800842</th>
+      <td>1.666550</td>
+      <td>8.708597e-03</td>
+    </tr>
+    <tr>
+      <th>3.827636</th>
+      <td>1.666667</td>
+      <td>-2.220446e-16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>At the end, angular velocity is close to 0, and the total rotation is about 1.7 rad, a little farther than we were aiming for.</p>
 <p>We can plot <code class="docutils literal notranslate"><span class="pre">theta</span></code> for both phases.</p>
@@ -720,6 +809,9 @@ turntable stops; that is, when angular velocity is 0.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap25_51_0.png" src="_images/chap25_51_0.png" />
+</div>
 </div>
 <p>And <code class="docutils literal notranslate"><span class="pre">omega</span></code>.</p>
 <div class="cell docutils container">
@@ -729,6 +821,9 @@ turntable stops; that is, when angular velocity is 0.</p>
              <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Angular velocity (rad/s)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap25_53_0.png" src="_images/chap25_53_0.png" />
 </div>
 </div>
 <p>Angular velocity, <code class="docutils literal notranslate"><span class="pre">omega</span></code>, increases linearly while I am pushing, and decreases linearly after I let go. The angle, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, is the integral of angular velocity, so it forms a parabola during each phase.</p>
@@ -776,6 +871,58 @@ due to friction.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>theta</th>
+      <th>omega</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3.720462</th>
+      <td>1.664800</td>
+      <td>3.483439e-02</td>
+    </tr>
+    <tr>
+      <th>3.747255</th>
+      <td>1.665617</td>
+      <td>2.612579e-02</td>
+    </tr>
+    <tr>
+      <th>3.774049</th>
+      <td>1.666200</td>
+      <td>1.741719e-02</td>
+    </tr>
+    <tr>
+      <th>3.800842</th>
+      <td>1.666550</td>
+      <td>8.708597e-03</td>
+    </tr>
+    <tr>
+      <th>3.827636</th>
+      <td>1.666667</td>
+      <td>-2.220446e-16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>These results are the same as in the previous section.</p>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">run_two_phases</span></code> to write an error function we can use, with <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, to find the torque due to friction that yields the
@@ -800,12 +947,28 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16666666666666896
+</pre></div>
+</div>
+</div>
 </div>
 <p>With <code class="docutils literal notranslate"><span class="pre">torque_friction=0.4</span></code>, it doesn’t go far enough.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess2</span> <span class="o">=</span> <span class="mf">0.4</span>
 <span class="n">error_func1</span><span class="p">(</span><span class="n">guess2</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4 1.2499999999999996
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.25000000000000044
 </pre></div>
 </div>
 </div>
@@ -817,12 +980,28 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
+0.3 1.666666666666669
+0.4 1.2499999999999996
+0.3400000000000003 1.4705882352941169
+0.3340000000000002 1.4970059880239517
+0.3333320000000001 1.5000060000239976
+0.3333486666010001 1.4999310034693254
+</pre></div>
+</div>
+</div>
 </div>
 <p>The result is 0.333 N m, a little less than the initial guess.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actual_friction</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
 <span class="n">actual_friction</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333320000000001
 </pre></div>
 </div>
 </div>
@@ -866,6 +1045,9 @@ from 1.5 rad to 3.14 rad.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap25_73_0.png" src="_images/chap25_73_0.png" />
+</div>
 </div>
 <p>And here’s an animation of the first push.</p>
 <div class="cell docutils container">
@@ -902,47 +1084,114 @@ Use this <code class="docutils literal notranslate"><span class="pre">System</sp
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.6415926535897931
+</pre></div>
+</div>
+</div>
 </div>
 <p>Use your error function and <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the force needed for the second push.
 Run the simulation with the force you computed and confirm that the table stops at the target angle after both pushes.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">error_func2</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error function for root_scalar.</span>
+<span class="sd">    </span>
+<span class="sd">    force: hypothetical value</span>
+<span class="sd">    </span>
+<span class="sd">    returns: offset from target value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_two_phases</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">torque_friction</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    <span class="n">theta_final</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">theta</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">theta_final</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">theta_final</span> <span class="o">-</span> <span class="n">remaining_angle</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">guess1</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">error_func2</span><span class="p">(</span><span class="n">guess1</span><span class="p">,</span> <span class="n">system3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.14158665356579547
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">guess2</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">error_func2</span><span class="p">(</span><span class="n">guess2</span><span class="p">,</span> <span class="n">system3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0 2.250009000035999
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.608416346446206
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func2</span><span class="p">,</span> <span class="n">system3</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="n">guess1</span><span class="p">,</span> <span class="n">guess2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
+2.0 1.5000060000239976
+3.0 2.250009000035999
+2.1887814496255746 1.641592653589789
+2.188890888699056 1.6416747332232227
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">force</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_two_phases</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">actual_friction</span><span class="p">,</span> <span class="n">system3</span><span class="p">)</span>
+<span class="n">theta_final</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">theta</span>
+<span class="n">theta_final</span> <span class="o">+</span> <span class="n">theta_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.1415926535897887
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">theta_target</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.141592653589793
 </pre></div>
 </div>
 </div>

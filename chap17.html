@@ -381,46 +381,6 @@
                 
   <div class="section" id="chapter-17">
 <h1>Chapter 17<a class="headerlink" href="#chapter-17" title="Permalink to this headline">¶</a></h1>
-<p><em>Modeling and Simulation in Python</em></p>
-<p>Copyright 2021 Allen Downey</p>
-<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install Pint if necessary</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pint</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="o">!</span>pip install pint
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;modsim.py&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/ModSim/main/&#39;</span>
-    <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>In this chapter we start a new example, a model of how glucose and insulin interact to control blood sugar.  We will implement a widely used model called the “Minimal Model” because it is intended to include only the elements essential to explain the observed behavior of the system.</p>
 <p>This chapter presents the model itself and some background information we need to understand it.
 In the next chapter we’ll implement the model and compare the results to real data.</p>
@@ -534,6 +494,63 @@ immediately after the injection. In theory we could estimate <span class="math n
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>glucose</th>
+      <th>insulin</th>
+    </tr>
+    <tr>
+      <th>time</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>92</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>350</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>287</td>
+      <td>130</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>251</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>240</td>
+      <td>51</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">data</span></code> has two columns: <code class="docutils literal notranslate"><span class="pre">glucose</span></code> is the concentration of blood glucose in mg/dL; <code class="docutils literal notranslate"><span class="pre">insulin</span></code> is concentration of insulin in the blood in μU/mL (a medical “unit”, denoted U, is an amount defined by convention in context). The index is time in minutes.</p>
 <p>This dataset represents glucose and insulin concentrations over
@@ -555,6 +572,11 @@ immediately after the injection. In theory we could estimate <span class="math n
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(31.66666667)
 </pre></div>
 </div>
 </div>
@@ -597,6 +619,9 @@ immediately after the injection. In theory we could estimate <span class="math n
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_30_0.png" src="_images/chap17_30_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="summary">
@@ -615,7 +640,11 @@ The default is linear interpolation, which connects the data points with straigh
 <p>Pass a keyword argument to <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> to specify one of the other kinds of interpolation, and run the code again to see what it looks like.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">I</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">)</span>
+<span class="n">I_array</span> <span class="o">=</span> <span class="n">I</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+<span class="n">I_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">I_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -630,11 +659,18 @@ The default is linear interpolation, which connects the data points with straigh
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_35_0.png" src="_images/chap17_35_0.png" />
+</div>
 </div>
 <p><strong>Exercise:</strong> Interpolate the glucose data and generate a plot, similar to the previous one, that shows the data points and the interpolated curve evaluated at the time values in <code class="docutils literal notranslate"><span class="pre">t_array</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">glucose</span><span class="p">)</span>
+<span class="n">G_array</span> <span class="o">=</span> <span class="n">G</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+<span class="n">G_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">G_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -648,6 +684,9 @@ The default is linear interpolation, which connects the data points with straigh
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_38_0.png" src="_images/chap17_38_0.png" />
 </div>
 </div>
 </div>
