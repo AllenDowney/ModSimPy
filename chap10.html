@@ -657,7 +657,9 @@ for customers. You can make two lines, one for each counter, or one line that fe
 <p>So you’d like to check whether the single line is really better and by
 how much. Simulation can help answer this question.</p>
 <p>This figure shows the three scenarios we’ll consider:</p>
-<p><img alt="One queue, one server (left), one queue, two servers (middle), twoqueues, two servers (right)." src="figs/queue.pdf" />{width=”4.5in”}</p>
+<p><img alt="One queue, one server (left), one queue, two servers (middle), twoqueues, two servers (right)." src="https://github.com/AllenDowney/ModSim/raw/main/figs/queue.png" />
+<em>One queue, one server (left), one queue, two servers (middle), two
+queues, two servers (right).</em></p>
 <p>As we did in the bike share model, we’ll assume that a customer is equally likely to arrive during any time step. I’ll denote this probability using the Greek letter lambda, <span class="math notranslate nohighlight">\(\lambda\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">lam</span></code>. The value of <span class="math notranslate nohighlight">\(\lambda\)</span> probably varies from day to day, so we’ll have to consider a range of possibilities.</p>
 <p>Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average. But checkout times are variable: most customers take less than 5 minutes, but some take substantially more. A simple way to model this variability is to assume that when a customer is checking out, they always have the same probability of finishing during the next time step, regardless of how long they have been checking out. I’ll denote this probability using the Greek letter mu, <span class="math notranslate nohighlight">\(\mu\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
 <p>If we choose <span class="math notranslate nohighlight">\(\mu=1/5\)</span> per minute, the average time for each checkout
@@ -690,40 +692,12 @@ Flewelling, Collier, Gonyea, Marshall, and Turnblom.</p>
 expected height of the tallest tree in a stand of Douglas firs as a
 function of age, for a stand where the trees are the same age.</p>
 <p>Depending on the quality of the site, the trees might grow more quickly or slowing. So each curve is identified by a “site index” that indicates the quality of the site.</p>
-<p>The following figure shows site curves for three different site
-indices.</p>
-<p><img alt="Site index curves for treegrowth." src="figs/trees-fig01.pdf" />{height=”3in”}</p>
 <p>The goal of this case study is to explain the shape of these
-curves, that is, why trees grow the way they do.</p>
-<p>As a starting place, let’s assume that the ability of the tree to gain
-mass is limited by the area it exposes to sunlight, and that the growth rate (in mass) is proportional to that area. In that case we can write:</p>
-<div class="math notranslate nohighlight">
-\[m_{n+1} = m_n + \alpha A\]</div>
-<p>where <span class="math notranslate nohighlight">\(m_n\)</span> is the mass of the at time step <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(A\)</span> is the area exposed to sunlight, and <span class="math notranslate nohighlight">\(\alpha\)</span> is an unknown growth parameter.</p>
-<p>To get from <span class="math notranslate nohighlight">\(m\)</span> to <span class="math notranslate nohighlight">\(A\)</span>, I’ll make the additional assumption that mass is proportional to height raised to an unknown power: <span class="math notranslate nohighlight">\(m = \beta h^D\)</span> where <span class="math notranslate nohighlight">\(h\)</span> is height, <span class="math notranslate nohighlight">\(\beta\)</span> is an unknown constant of proportionality, and <span class="math notranslate nohighlight">\(D\)</span> is the dimension that relates height and mass. I start by assuming <span class="math notranslate nohighlight">\(D=3\)</span>, but then revisit that assumption.</p>
-<p>Finally, we’ll assume that area is proportional to height squared:</p>
-<div class="math notranslate nohighlight">
-\[A = \gamma h^2\]</div>
-<p>I specify height in feet, and choose units for mass and area so that
-<span class="math notranslate nohighlight">\(\beta=1\)</span> and <span class="math notranslate nohighlight">\(\gamma=1\)</span>. Putting all that together, we can write a
-difference equation for height:</p>
-<div class="math notranslate nohighlight">
-\[h_{n+1}^D = h_n^D + \alpha h_n^2\]</div>
-<p>With <span class="math notranslate nohighlight">\(D=3\)</span>, the solution to this equation is close to a straight line,
-which is not a bad model for the growth curves. But the model implies
-that trees can grow forever, and we know that’s not true. As trees get
-taller, it gets harder for them to move water and nutrients against the force of gravity, and their growth slows.</p>
-<p>We can model this effect by adding a factor to the model similar to what we saw in the logistic model of population growth. Instead of assuming:</p>
-<div class="math notranslate nohighlight">
-\[m_{n+1} = m_n + \alpha A\]</div>
-<p>Let’s assume</p>
-<div class="math notranslate nohighlight">
-\[m_{n+1} = m_n + \alpha A (1 - h / K)\]</div>
-<p>where <span class="math notranslate nohighlight">\(K\)</span> is similar to the carrying capacity of the logistic model. As <span class="math notranslate nohighlight">\(h\)</span> approaches <span class="math notranslate nohighlight">\(K\)</span>, the factor <span class="math notranslate nohighlight">\((1 - h/K)\)</span> goes to 0, causing growth to level off.</p>
+curves, that is, why trees grow the way they do.
+The answer I propose involved fractal dimensions, so you might find it interesting.</p>
 <p>In the repository for this book, you’ll find a notebook called
-<code class="docutils literal notranslate"><span class="pre">trees.ipynb</span></code> that implements both models and uses them to fit the data.</p>
-<p>There are no exercises in this case study; it is mostly meant as an
-example of what you can do with the tools we have so far, and a preview of what we will be able to do with the tools in the next few chapters.</p>
+<code class="docutils literal notranslate"><span class="pre">trees.ipynb</span></code> that incrementally develops a model of tree growth and uses it to fit the data.</p>
+<p>There are no exercises in this case study, but it is an example of what you can do with the tools we have so far and a preview of what you will be able to do with the tools in the next few chapters.</p>
 </div>
 </div>
 
