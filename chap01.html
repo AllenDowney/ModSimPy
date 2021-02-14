@@ -581,15 +581,34 @@ That’s why, if the output is <code class="docutils literal notranslate"><span 
 </div>
 <div class="section" id="computation-with-units">
 <h2>Computation with units<a class="headerlink" href="#computation-with-units" title="Permalink to this headline">¶</a></h2>
-<p>The computation in the previous section uses numbers without units.<br />
+<p>The computation in the previous section uses numbers without units.
 When we set <code class="docutils literal notranslate"><span class="pre">h=381</span></code>, we left out the meters, and when we set <code class="docutils literal notranslate"><span class="pre">a=9.8</span></code>, we left out the meters per second squared.
 And, when we got the result <code class="docutils literal notranslate"><span class="pre">v=86</span></code>, we added back the meters per second.</p>
 <p>Leaving units of out computation is common practice, but it tends to cause errors, including the very expensive failure of the <a class="reference external" href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter">Mars Climate Orbiter</a> in 1999.
 When possible, it is better to include units in the computation.</p>
 <p>To represent units, we’ll use a Python library called <a class="reference external" href="https://pint.readthedocs.io/en/latest/">Pint</a>.
-The ModSim library initializes Pint and provides an object called <code class="docutils literal notranslate"><span class="pre">units</span></code> that contains variables representing pretty much every unit you’ve ever heard of.</p>
-<p>We can import it like this:</p>
-<p>Now we can create variables named <code class="docutils literal notranslate"><span class="pre">meter</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code>.</p>
+The ModSim library initializes Pint and provides an object called <code class="docutils literal notranslate"><span class="pre">units</span></code> that contains variables representing pretty much every unit you’ve ever heard of.
+For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">league</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">league</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">fortnight</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">fortnight</div></div>
+</div>
+<p>But leagues and fortnights are not SI units.
+Instead, we will use <code class="docutils literal notranslate"><span class="pre">meter</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meter</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">meter</span>
@@ -644,7 +663,7 @@ The ModSim library initializes Pint and provides an object called <code class="d
 <div class="cell_output docutils container">
 <div class="output text_html">meter/second<sup>2</sup></div></div>
 </div>
-<p>Now we can create a quantity that represents <span class="math notranslate nohighlight">\(3.4\)</span> s.</p>
+<p>We can also create a quantity that represents <span class="math notranslate nohighlight">\(3.4\)</span> s.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">second</span>
@@ -674,7 +693,7 @@ If we create a quantity to represent the height of the Empire State Building:</p
 </div>
 </div>
 </div>
-<p>We can use it to compute the time to reach the sidewalk.</p>
+<p>We can use it to compute the time the penny would take to reach the sidewalk.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span>
@@ -722,13 +741,13 @@ And it might give you a sense that this model is not realistic.</p>
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>This chapter introduces a modeling framework that consists of three steps:</p>
 <ul class="simple">
-<li><p>Abstraction is the process of defining a model, deciding which elements of the real world to include and which can be left out.</p></li>
-<li><p>Analysis and simulation are ways to use a model to generate predictions, explain why things behave as they to, and design things that behave as we want.</p></li>
+<li><p>Abstraction is the process of defining a model by deciding which elements of the real world to include and which can be left out.</p></li>
+<li><p>Analysis and simulation are ways to use a model to generate predictions, explain why things behave as they do, and design things that behave as we want.</p></li>
 <li><p>Validation is how we test whether the model is right, often by comparing predictions with measurements from the real world.</p></li>
 </ul>
 <p>As a first example, we modeled a penny dropped from the Empire State building, including gravity but ignoring air resistance.
 In the exercises, you’ll have a chance to try a better model, including air resistance.</p>
-<p>This chapter also presents Pint, a library for doing computation with units, which is convenient for converting between different units and important for avoiding catastrophic errors.</p>
+<p>This chapter also presents Pint, a library for doing computation with units, which is convenient for converting between different units and helpful for avoiding catastrophic errors.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -737,8 +756,8 @@ But that doesn’t work in Python.  If you put two variables side-by-side, like 
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="n">t</span>
 </pre></div>
 </div>
-<p>you’ll get a <strong>syntax error</strong>, which means that something is wrong with the punctuation of the program.</p>
-<p>Try it out in the next cell so you see what the error message looks like.</p>
+<p>you’ll get a <strong>syntax error</strong>, which means that something is wrong with the structure of the program.
+Try it out in the next cell so you see what the error message looks like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="o">*</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">**</span><span class="mi">2</span>
@@ -832,13 +851,10 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 </div>
-<p>In this example, you should get a <code class="docutils literal notranslate"><span class="pre">DimensionalityError</span></code>, which is defined by Pint to indicate that you have violated a rules of dimensional analysis: you cannot add quantities with different dimensions.</p>
+<p>In this example, you should get a <code class="docutils literal notranslate"><span class="pre">DimensionalityError</span></code>, which indicates that you have violated a rule of dimensional analysis: you cannot add quantities with different dimensions.</p>
 <p>The error messages you get from Python are big and scary, but if you read them carefully, they contain a lot of useful information.</p>
-<ol class="simple">
-<li><p>Start from the bottom and read up.</p></li>
-<li><p>The last line usually tells you what type of error happened, and sometimes additional information.</p></li>
-<li><p>The previous lines are a “traceback” of what was happening when the error occurred.  The first section of the traceback shows the code you wrote.  The following sections are often from Python libraries.</p></li>
-</ol>
+<p>The last line usually tells you what type of error happened, and sometimes additional information, so you might want to start from the bottom and read up.</p>
+<p>The previous lines are a “traceback” of what was happening when the error occurred.  The first section of the traceback shows the code you wrote.  The following sections are often from Python libraries.</p>
 <p>Before you go on, you might want to delete the erroneous code so the notebook can run without errors.</p>
 <p><strong>Exercise:</strong> Suppose instead of dropping the penny, you throw it downward at its terminal velocity, <span class="math notranslate nohighlight">\(29\)</span> m/s.  How long would it take to fall <span class="math notranslate nohighlight">\(381\)</span> m?</p>
 <div class="cell tag_hide-cell docutils container">
@@ -946,8 +962,8 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> When I was in high school, the pitcher on the baseball team claimed that, when he threw a fastball, he was throwing the ball down; that is, the ball was leaving his hand at a downward angle.
-I was skeptical; watching from the side, I thought the ball was leaving his hand at an upward angle.</p>
+<p><strong>Exercise:</strong> When I was in high school, the pitcher on the baseball team claimed that when he threw a fastball he was throwing the ball down; that is, the ball left his hand at a downward angle.
+I was skeptical; watching from the side, I thought the ball left his hand at an upward angle.</p>
 <p>Can you think of a simple model you could use to settle the argument?  What factors would you include and what could you ignore?  What quantities would you have to look up or estimate?</p>
 <p>I suggest you convert all quantities to <a class="reference external" href="https://en.wikipedia.org/wiki/International_System_of_Units">SI units</a>: meters and seconds.</p>
 <div class="cell tag_hide-cell docutils container">
@@ -1024,7 +1040,7 @@ I was skeptical; watching from the side, I thought the ball was leaving his hand
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> Suppose I run a 10K race in 44:52.  What is my average page in minutes per mile?</p>
+<p><strong>Exercise:</strong> Suppose I run a 10K race in 44:52 (44 minutes and 52 seconds).  What is my average page in minutes per mile?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mile</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">mile</span>
@@ -1062,8 +1078,18 @@ I was skeptical; watching from the side, I thought the ball was leaving his hand
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">pace</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">minute</span> <span class="o">/</span> <span class="n">mile</span><span class="p">)</span>
-<span class="n">pace</span>
+<span class="n">pace_per_km</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">pace_per_km</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">269.2 second/kilometer</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pace_per_mile</span> <span class="o">=</span> <span class="n">pace_per_km</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">minute</span> <span class="o">/</span> <span class="n">mile</span><span class="p">)</span>
+<span class="n">pace_per_mile</span>
 </pre></div>
 </div>
 </div>
@@ -1079,7 +1105,7 @@ I was skeptical; watching from the side, I thought the ball was leaving his hand
 
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">round</span>
 
-<span class="nb">round</span><span class="p">(</span><span class="n">pace</span><span class="p">)</span>
+<span class="nb">round</span><span class="p">(</span><span class="n">pace_per_mile</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1090,7 +1116,7 @@ I was skeptical; watching from the side, I thought the ball was leaving his hand
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">remainder</span> <span class="o">=</span> <span class="n">pace</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">pace</span><span class="p">)</span>
+<span class="n">remainder</span> <span class="o">=</span> <span class="n">pace_per_mile</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">pace_per_mile</span><span class="p">)</span>
 <span class="n">remainder</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">second</span><span class="o">/</span><span class="n">mile</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1115,7 +1141,7 @@ I was skeptical; watching from the side, I thought the ball was leaving his hand
 </ol>
 <p>When you change the contents of a cell, you have to run it again for those changes to have an effect.  If you forget to do that, the results can be confusing, because the code you are looking at is not the code you ran.</p>
 <p>If you ever lose track of which cells have run, and in what order, you should go to the Kernel menu and select “Restart &amp; Run All”.  Restarting the kernel means that all of your variables get deleted, and running all the cells means all of your code will run again, in the right order.</p>
-<p><strong>Exercise:</strong>  Select “Restart &amp; Run All” now and confirm that it does what you want.</p>
+<p>Select “Restart &amp; Run All” now and confirm that it runs all of the cells.</p>
 </div>
 </div>
 

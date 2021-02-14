@@ -447,9 +447,8 @@ parameter. Here’s what that looks like:</p>
 </div>
 </div>
 </div>
-<p>The name of the parameter is <code class="docutils literal notranslate"><span class="pre">state</span></code> rather than <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code> as a
-reminder that the value of <code class="docutils literal notranslate"><span class="pre">state</span></code> could be any <code class="docutils literal notranslate"><span class="pre">State</span></code> object, not just
-<code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.</p>
+<p>The name of the parameter is <code class="docutils literal notranslate"><span class="pre">state</span></code>, rather than <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>, as a
+reminder that the value of <code class="docutils literal notranslate"><span class="pre">state</span></code> could be any <code class="docutils literal notranslate"><span class="pre">State</span></code> object, not just the one we called <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.</p>
 <p>This version of <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> requires a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a
 parameter, so we have to provide one when we call it:</p>
 <div class="cell docutils container">
@@ -492,12 +491,13 @@ simulations of the same system.</p>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>Another problem with the code we have so far is that it contains no
-<strong>documentation</strong>. Documentation is text we add to a program to help
+<strong>documentation</strong>.
+Documentation is text we add to a program to help
 other programmers read and understand it. It has no effect on the
 program when it runs.</p>
-<p>There are two forms of documentation, <strong>docstrings</strong> and <strong>comments</strong>:</p>
+<p>There are two kinds of documentation, <strong>docstrings</strong> and <strong>comments</strong>:</p>
 <ul class="simple">
-<li><p>A docstring is a string in triple-quotes that appears at the beginning of a function.</p></li>
+<li><p>A docstring is a string in triple quotes that appears at the beginning of a function.</p></li>
 <li><p>A comment is a line of text that begins with a hash symbol, <code class="docutils literal notranslate"><span class="pre">#</span></code>.</p></li>
 </ul>
 <p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> with a docstring and a comment.</p>
@@ -509,7 +509,7 @@ program when it runs.</p>
 <span class="sd">    state: bikeshare State object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># We decrease one state variable and increase the</span>
-    <span class="c1"># other, so the total number of bikes is unchanged.</span>
+    <span class="c1"># other so the total number of bikes is unchanged.</span>
     <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
 </pre></div>
@@ -528,10 +528,10 @@ know to <em>use</em> the function; it should not include details about how the f
 <div class="section" id="negative-bikes">
 <h2>Negative bikes<a class="headerlink" href="#negative-bikes" title="Permalink to this headline">¶</a></h2>
 <p>The changes we’ve made so far improve the quality of the code, but we
-haven’t done anything to improve the quality of the model yet. Let’s do that now.</p>
+haven’t done anything to improve the quality of the model. Let’s do that now.</p>
 <p>Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be
-negative. That’s not very realistic. Here’s a version of
-<code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that fixes the problem:</p>
+negative. That’s not very realistic.</p>
+<p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that fixes the problem:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
@@ -556,7 +556,7 @@ negative. That’s not very realistic. Here’s a version of
 <p>The state of the system should be unchanged.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -579,7 +579,7 @@ negative. That’s not very realistic. Here’s a version of
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>values</th>
+      <th>state</th>
     </tr>
   </thead>
   <tbody>
@@ -599,8 +599,8 @@ negative. That’s not very realistic. Here’s a version of
 </div>
 <div class="section" id="comparison-operators">
 <h2>Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
-<p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if they are equal and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
-<p>It is easy to confuse the equals operators with the assignment operator, <code class="docutils literal notranslate"><span class="pre">=</span></code>, which assigns a value to a variable. For example, the following statement creates a variable, <code class="docutils literal notranslate"><span class="pre">x</span></code>, if it doesn’t already exist, and gives it the value <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+<p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code>, if they are equal, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>It is easy to confuse the equals operator with the assignment operator, <code class="docutils literal notranslate"><span class="pre">=</span></code>, which assigns a value to a variable. For example, the following statement creates a variable, <code class="docutils literal notranslate"><span class="pre">x</span></code>, if it doesn’t already exist, and gives it the value <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
@@ -680,11 +680,8 @@ that do the same thing every time they run are <strong>deterministic</strong>.</
 <p>Suppose we want to use our model to predict how well the bike share
 system will work, or to design a system that works better. First, we
 have to decide what we mean by “how well” and “better”.</p>
-<p>From the customer’s point of view, we might like to know the probability of finding an available bike. From the system-owner’s point of view, we
-might want to minimize the number of customers who don’t get a bike when
-they want one, or maximize the number of bikes in use. Statistics like
-these that quantify how well the system works are called <strong>metrics</strong>.</p>
-<p>As a simple example, let’s measure the number of unhappy customers.
+<p>From the customer’s point of view, we might like to know the probability of finding an available bike. From the system-owner’s point of view, we might want to minimize the number of customers who don’t get a bike when they want one, or maximize the number of bikes in use. Statistics like these that quantify how well the system works are called <strong>metrics</strong>.</p>
+<p>As an example, let’s measure the number of unhappy customers.
 Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that keeps track of the number of
 customers who arrive at a station with no bikes:</p>
 <div class="cell docutils container">
@@ -720,10 +717,10 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </div>
 </div>
 </div>
-<p>There should be 12 bikes at Olin, no bikes at Wellesley, and one unhappy customer.</p>
+<p>After this update, there should be 12 bikes at Olin, no bikes at Wellesley, and one unhappy customer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -746,7 +743,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>values</th>
+      <th>state</th>
     </tr>
   </thead>
   <tbody>
@@ -807,7 +804,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
@@ -825,7 +822,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
@@ -897,7 +894,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">bikeshare</span>
+<span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -920,7 +917,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>values</th>
+      <th>state</th>
     </tr>
   </thead>
   <tbody>
@@ -944,70 +941,27 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </table>
 </div></div></div>
 </div>
-<p><strong>Exercise:</strong> Now run the simulation a few times and confirm that the number of bikes is never negative.  What’s the final state of the system?</p>
+<p><strong>Exercise:</strong> Now run the simulation with parameters <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>, and confirm that the number of bikes is never negative.</p>
+<p>Start with this initial state:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                  <span class="n">olin_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wellesley_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                  <span class="n">olin_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wellesley_empty</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">run_simulation</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap03_59_0.png" src="_images/chap03_59_0.png" />
+<img alt="_images/chap03_60_0.png" src="_images/chap03_60_0.png" />
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>values</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>olin</th>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>wellesley</th>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>olin_empty</th>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>wellesley_empty</th>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </div>
 </div>

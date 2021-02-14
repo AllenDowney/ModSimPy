@@ -363,6 +363,11 @@
    Optional Exercises
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the Hood
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -376,64 +381,15 @@
                 
   <div class="section" id="chapter-4">
 <h1>Chapter 4<a class="headerlink" href="#chapter-4" title="Permalink to this headline">¶</a></h1>
-<p>Here the code from previous chapters we’ll reuse.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    p1: probability of an Olin-&gt;Wellesley ride</span>
-<span class="sd">    p2: probability of a Wellesley-&gt;Olin ride</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p1</span><span class="p">):</span>
-        <span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p2</span><span class="p">):</span>
-        <span class="n">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wellesley_empty</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Move one bike from Olin to Wellesley.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">olin_empty</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>In the previous chapter we defined metrics that quantify the performance of bike sharing this system. In this chapter we see how those metrics depend on the parameters of the system, like the Customer rate of customers at bike stations.</p>
+<p>In the previous chapter we defined metrics that quantify the performance of a bike sharing system.
+In this chapter we’ll see how those metrics depend on the parameters of the system, like the arrival rate of customers at the stations.</p>
 <p>We also discuss a program development strategy, called incremental
 development, that might help you write programs faster and spend less
 time debugging.</p>
 <div class="section" id="functions-that-return-values">
 <h2>Functions that return values<a class="headerlink" href="#functions-that-return-values" title="Permalink to this headline">¶</a></h2>
-<p>We have seen several functions that return values; for example, when you run <code class="docutils literal notranslate"><span class="pre">sqrt</span></code>, it returns a number you can assign to a variable.</p>
+<p>We have used several functions that return values.
+For example, when you run <code class="docutils literal notranslate"><span class="pre">sqrt</span></code>, it returns a number you can assign to a variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
@@ -449,7 +405,7 @@ time debugging.</p>
 </div>
 </div>
 </div>
-<p>When you run <code class="docutils literal notranslate"><span class="pre">State</span></code>, it returns a new <code class="docutils literal notranslate"><span class="pre">State</span></code> object:</p>
+<p>And when you run <code class="docutils literal notranslate"><span class="pre">State</span></code>, it returns a new <code class="docutils literal notranslate"><span class="pre">State</span></code> object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -458,39 +414,12 @@ time debugging.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>values</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>olin</th>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>wellesley</th>
-      <td>2</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>olin         10
+wellesley     2
+Name: state, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 <p>Not all functions have return values. For example, when you run <code class="docutils literal notranslate"><span class="pre">step</span></code>,
 it updates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, but it doesn’t return a value.</p>
@@ -552,7 +481,7 @@ creates a <code class="docutils literal notranslate"><span class="pre">State</sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 0
 </pre></div>
 </div>
 </div>
@@ -560,7 +489,7 @@ creates a <code class="docutils literal notranslate"><span class="pre">State</sp
 <p>The simulation we just ran starts with <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and uses the values <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>.
 These five values are <strong>parameters of the model</strong>, which are quantities that determine the behavior of the system.</p>
 <p>It is easy to get the parameters of a model confused with the parameters of a function.
-In fact, it is common for the parameters of the model to appear as parameters in functions.</p>
+It is especially easy because the parameters of a model often appear as parameters of a function.</p>
 <p>For example, the previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> takes <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> as parameters.
 So we can call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> with different parameters and see how
 the metrics, like the number of unhappy customers, depend on the
@@ -573,7 +502,7 @@ parameters. But before we do that, we need a new version of a <code class="docut
         <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this example, <code class="docutils literal notranslate"><span class="pre">range</span></code> creates a sequence of numbers from 0 to <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> (including <code class="docutils literal notranslate"><span class="pre">0</span></code> but not <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>).
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">range</span></code> creates a sequence of numbers from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> (including <code class="docutils literal notranslate"><span class="pre">0</span></code> but not <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>).
 Each time through the loop, the next number in the sequence gets assigned to the loop variable, <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
 <p>But <code class="docutils literal notranslate"><span class="pre">range</span></code> only works with integers; to get a sequence of non-integer
 values, we can use <code class="docutils literal notranslate"><span class="pre">linspace</span></code>, which is defined NumPy:</p>
@@ -621,6 +550,7 @@ not seen before. An array is a container for a sequence of numbers.</p>
 <li><p>Runs the body of the loop, which prints <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
 <li><p>Gets the next value from the array and assigns it to <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
 <li><p>Runs the body of the loop, which prints <code class="docutils literal notranslate"><span class="pre">p1</span></code>.</p></li>
+<li><p>…</p></li>
 </ol>
 <p>And so on, until it gets to the end of the array. This will come in handy in the next section.</p>
 </div>
@@ -652,8 +582,8 @@ about <code class="docutils literal notranslate"><span class="pre">0.2</span></c
 0.12 0
 0.24 0
 0.36 0
-0.48 7
-0.6 7
+0.48 6
+0.6 21
 </pre></div>
 </div>
 </div>
@@ -675,7 +605,9 @@ is similar to a <code class="docutils literal notranslate"><span class="pre">Tim
 <p>And add values like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p1_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
     <span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
     <span class="n">sweep</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">olin_empty</span>
 </pre></div>
@@ -683,43 +615,32 @@ is similar to a <code class="docutils literal notranslate"><span class="pre">Tim
 </div>
 </div>
 <p>The result is a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> that maps from each value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> to the
-resulting number of unhappy customers. Then we can plot the results:</p>
+resulting number of unhappy customers.</p>
+<p>We can plot the results like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
          <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Customer rate at Olin (p1 in customers/min)&#39;</span><span class="p">,</span> 
-         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of unhappy customers&#39;</span><span class="p">)</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of unhappy customers at Olin&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap04_37_0.png" src="_images/chap04_37_0.png" />
+<img alt="_images/chap04_39_0.png" src="_images/chap04_39_0.png" />
 </div>
 </div>
-<p>NumPy provides functions that compute a variety of summary statistics, like <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">median</span></code>, and <code class="docutils literal notranslate"><span class="pre">std</span></code> (which computes standard deviation).</p>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the average of the values in a series, like this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">mean</span>
-
-<span class="n">mean</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.166666666666667
-</pre></div>
-</div>
-</div>
-</div>
-<p>In this example, computing the mean might not be useful, but in the exercises below, it will be.</p>
+<p>I use the keyword argument <code class="docutils literal notranslate"><span class="pre">color='C1'</span></code> to specify the color of the line.
+The <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> we have plotted so far use the default color, <code class="docutils literal notranslate"><span class="pre">C0</span></code>, which is blue.
+I want a different color for <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> to remind us that it is not a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+<p>When the arrival rate at Olin is low, there are plenty of bikes and no unhappy customers.
+As the arrival rate increases, we are more likely to run out of bikes and the number of unhappy customers increases.</p>
 </div>
 <div class="section" id="incremental-development">
 <h2>Incremental development<a class="headerlink" href="#incremental-development" title="Permalink to this headline">¶</a></h2>
 <p>When you start writing programs that are more than a few lines, you
-might find yourself spending more and more time debugging. The more code you write before you start debugging, the harder it is to find the problem.</p>
+might find yourself spending more time debugging. The more code you write before you start debugging, the harder it is to find the problem.</p>
 <p><strong>Incremental development</strong> is a way of programming that tries to
 minimize the pain of debugging. The fundamental steps are:</p>
 <ol class="simple">
@@ -733,7 +654,7 @@ one that displays something or has some other effect you can check.
 Ideally, you should know what the correct answer is, or be able to
 check it by performing another computation.</p></li>
 <li><p>Run the program and see if the change worked. If so, go back to
-Step 2. If not, you will have to do some debugging, but if the
+Step 2. If not, you have to do some debugging, but if the
 change you made was small, it shouldn’t take long to find the
 problem.</p></li>
 </ol>
@@ -755,6 +676,11 @@ incremental development.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter introduces functions that return values, which we use to write a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that returns a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the final state of the system.</p>
+<p>It also introduces <code class="docutils literal notranslate"><span class="pre">linspace</span></code>, which we use to create a NumPy array, and <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, which we use to store the results of a parameter sweep.</p>
+<p>We used a parameter sweep to explore the relationship between one of the parameters, <code class="docutils literal notranslate"><span class="pre">p1</span></code>, and the number of unhappy customers, which is a metric that quantifies how well (or badly) the system works.</p>
+<p>In the exercises, you’ll have a chance to sweep other parameters and compute other metrics.</p>
+<p>In the next chapter, we’ll move on to a new problem, modeling and predicting world population growth.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -776,32 +702,51 @@ incremental development.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">init</span> <span class="o">=</span> <span class="n">make_state</span><span class="p">()</span>
+<span class="n">show</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>olin</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>wellesley</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-<p><strong>Exercise:</strong> Read the documentation of <code class="docutils literal notranslate"><span class="pre">linspace</span></code> at &lt;&gt;.
-Then use it to make an array of 101 equally spaced points between 0 and 1 (including both).</p>
+<p><strong>Exercise:</strong> Read the documentation of <code class="docutils literal notranslate"><span class="pre">linspace</span></code> at <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html">https://numpy.org/doc/stable/reference/generated/numpy.linspace.html</a>. Then use it to make an array of 101 equally spaced points between 0 and 1 (including both).</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">p1_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">p1_array</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.  , 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 ,
-       0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2 , 0.21,
-       0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3 , 0.31, 0.32,
-       0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4 , 0.41, 0.42, 0.43,
-       0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5 , 0.51, 0.52, 0.53, 0.54,
-       0.55, 0.56, 0.57, 0.58, 0.59, 0.6 , 0.61, 0.62, 0.63, 0.64, 0.65,
-       0.66, 0.67, 0.68, 0.69, 0.7 , 0.71, 0.72, 0.73, 0.74, 0.75, 0.76,
-       0.77, 0.78, 0.79, 0.8 , 0.81, 0.82, 0.83, 0.84, 0.85, 0.86, 0.87,
-       0.88, 0.89, 0.9 , 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98,
-       0.99, 1.  ])
 </pre></div>
 </div>
 </div>
@@ -831,8 +776,8 @@ Then use it to make an array of 101 equally spaced points between 0 and 1 (inclu
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">p1_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">sweep</span> <span class="o">=</span> <span class="n">sweep_p1</span><span class="p">(</span><span class="n">p1_array</span><span class="p">)</span>
-<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
+<span class="n">sweep2</span> <span class="o">=</span> <span class="n">sweep_p1</span><span class="p">(</span><span class="n">p1_array</span><span class="p">)</span>
+<span class="n">sweep2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
          <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Customer rate at Olin (p1 in customers/min)&#39;</span><span class="p">,</span> 
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of unhappy customers&#39;</span><span class="p">)</span>
@@ -867,8 +812,8 @@ Then use it to make an array of 101 equally spaced points between 0 and 1 (inclu
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">p2_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">sweep</span> <span class="o">=</span> <span class="n">sweep_p2</span><span class="p">(</span><span class="n">p2_array</span><span class="p">)</span>
-<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
+<span class="n">sweep3</span> <span class="o">=</span> <span class="n">sweep_p2</span><span class="p">(</span><span class="n">p2_array</span><span class="p">)</span>
+<span class="n">sweep3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
          <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Customer rate at Wellesley (p2 in customers/min)&#39;</span><span class="p">,</span> 
@@ -885,8 +830,8 @@ Then use it to make an array of 101 equally spaced points between 0 and 1 (inclu
 <h2>Optional Exercises<a class="headerlink" href="#optional-exercises" title="Permalink to this headline">¶</a></h2>
 <p>The following two exercises are a little more challenging.  If you are comfortable with what you have learned so far, you should give them a try.  If you feel like you have your hands full, you might want to skip them for now.</p>
 <p><strong>Exercise:</strong> Because our simulations are random, the results vary from one run to another, and the results of a parameter sweep tend to be noisy.  We can get a clearer picture of the relationship between a parameter and a metric by running multiple simulations with the same parameter and taking the average of the results.</p>
-<p>Write a function called <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> that takes as parameters <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_runs</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">num_runs</span></code> specifies how many times it should call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<p>Write a function called <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> that takes as parameters <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_runs</span></code>.
+<code class="docutils literal notranslate"><span class="pre">num_runs</span></code> specifies how many times it should call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
 <p>After each run, it should store the total number of unhappy customers (at Olin or Wellesley) in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.
 At the end, it should return the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
 <p>Test your function with parameters</p>
@@ -916,8 +861,6 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-
 
 <span class="n">p1</span> <span class="o">=</span> <span class="mf">0.3</span>
 <span class="n">p2</span> <span class="o">=</span> <span class="mf">0.3</span>
@@ -957,39 +900,39 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
   <tbody>
     <tr>
       <th>0</th>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>6</th>
       <td>2</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
       <td>3</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>6</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>7</th>
       <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1003,12 +946,14 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">mean</span>
+
 <span class="n">mean</span><span class="p">(</span><span class="n">totals</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.8
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.4
 </pre></div>
 </div>
 </div>
@@ -1030,10 +975,10 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 <span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="n">num_runs</span> <span class="o">=</span> <span class="mi">20</span>
 
-<span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+<span class="n">sweep4</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">p1_array</span><span class="p">:</span>
     <span class="n">totals</span> <span class="o">=</span> <span class="n">run_multiple_simulations</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">num_runs</span><span class="p">)</span>
-    <span class="n">sweep</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">totals</span><span class="p">)</span>
+    <span class="n">sweep4</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">totals</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1042,7 +987,7 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;total&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">sweep4</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;total&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
     
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
          <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Customer rate at Olin (p1 in customers/min)&#39;</span><span class="p">,</span> 
@@ -1054,6 +999,19 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 <img alt="_images/chap04_62_0.png" src="_images/chap04_62_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p>The object you get when you call <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> is actually a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>, the same as the object you get from <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.
+I give them different names to help us remember that they play different roles.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Series</span></code> provides a number of functions, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
+<p>They include <code class="docutils literal notranslate"><span class="pre">mean</span></code>, which computes the average of the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>, so if you have a <code class="docutils literal notranslate"><span class="pre">Series</span></code> named <code class="docutils literal notranslate"><span class="pre">totals</span></code>, for example, you can compute the mean like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">totals</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Series</span></code> provides other statistical functions, like <code class="docutils literal notranslate"><span class="pre">std</span></code>, which computes the standard deviation of the values in the series.</p>
+<p>In this chapter I use the keyword argument <code class="docutils literal notranslate"><span class="pre">color</span></code> to specify the color of a line plot.
+You can read about the other available colors at <a class="reference external" href="https://matplotlib.org/3.3.2/tutorials/colors/colors.html">https://matplotlib.org/3.3.2/tutorials/colors/colors.html</a>.</p>
 </div>
 </div>
 
