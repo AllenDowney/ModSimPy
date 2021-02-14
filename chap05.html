@@ -124,11 +124,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#world-population">
-   World population
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
    Chapter 6
   </a>
@@ -151,11 +146,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
    Chapter 10
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chap10.html#case-studies">
-   Case studies
   </a>
  </li>
  <li class="toctree-l1">
@@ -338,47 +328,35 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Chapter 5
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#world-population-growth">
+   World Population Growth
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#world-population">
-   World population
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#absolute-and-relative-errors">
+   Absolute and relative errors
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#world-population-data">
-     World Population Data
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#absolute-and-relative-errors">
-     Absolute and relative errors
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#modeling-population-growth">
-     Modeling Population Growth
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#simulation">
-     Simulation
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#summary">
-     Summary
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercises">
-     Exercises
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling-population-growth">
+   Modeling Population Growth
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
  </li>
 </ul>
 
@@ -393,36 +371,25 @@
                 
   <div class="section" id="chapter-5">
 <h1>Chapter 5<a class="headerlink" href="#chapter-5" title="Permalink to this headline">¶</a></h1>
-<p>In this chapter…</p>
-</div>
-<div class="section" id="world-population">
-<h1>World population<a class="headerlink" href="#world-population" title="Permalink to this headline">¶</a></h1>
 <p>In 1968 Paul Erlich published <em>The Population Bomb</em>, in which he
 predicted that world population would grow quickly during the 1970s,
-that agricultural production could not keep up, and that mass starvation
-in the next two decades was inevitable (see
+that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see
 <a class="reference external" href="https://modsimpy.com/popbomb">https://modsimpy.com/popbomb</a>). As someone who grew up during those
 decades, I am happy to report that those predictions were wrong.</p>
 <p>But world population growth is still a topic of concern, and it is an
 open question how many people the earth can sustain while maintaining
 and improving our quality of life.</p>
-<p>In this chapter and the next, we use tools from the previous chapters to
-explain world population growth since 1950 and generate predictions for
-the next 50-100 years.</p>
+<p>In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50-100 years.</p>
 <p>For background on world population growth, watch this video from the
 American Museum of Natural History <a class="reference external" href="https://modsimpy.com/human">https://modsimpy.com/human</a>.</p>
-<div class="section" id="world-population-data">
-<h2>World Population Data<a class="headerlink" href="#world-population-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="world-population-growth">
+<h2>World Population Growth<a class="headerlink" href="#world-population-growth" title="Permalink to this headline">¶</a></h2>
 <p>The Wikipedia article on world population contains tables with estimates of world population from prehistory to the present, and projections for the future (<a class="reference external" href="https://modsimpy.com/worldpop">https://modsimpy.com/worldpop</a>).</p>
 <p>The following cell downloads a copy of https://en.wikipedia.org/wiki/World_population_estimates</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/&#39;</span> <span class="o">+</span>
+         <span class="s1">&#39;ModSimPy/master/data/World_population_estimates.html&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -704,7 +671,7 @@ The <code class="docutils literal notranslate"><span class="pre">label</span></c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_30_0.png" src="_images/chap05_30_0.png" />
+<img alt="_images/chap05_29_0.png" src="_images/chap05_29_0.png" />
 </div>
 </div>
 <p>The lines overlap almost completely, but the most recent estimates diverge slightly.
@@ -944,7 +911,7 @@ and add <code class="docutils literal notranslate"><span class="pre">annual_grow
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Population&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -985,10 +952,10 @@ These names don’t affect the computation, but they appear when we display or p
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Population</th>
+      <th>Quantity</th>
     </tr>
     <tr>
-      <th>Year</th>
+      <th>Time</th>
       <th></th>
     </tr>
   </thead>
@@ -1023,7 +990,7 @@ These names don’t affect the computation, but they appear when we display or p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_70_0.png" src="_images/chap05_70_0.png" />
+<img alt="_images/chap05_69_0.png" src="_images/chap05_69_0.png" />
 </div>
 </div>
 <p>The keyword argument <code class="docutils literal notranslate"><span class="pre">color='gray'</span></code> specifies the color of the line.  For details on color specification see <a class="reference external" href="https://modsimpy.com/color">https://modsimpy.com/color</a>.</p>
@@ -1065,6 +1032,27 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">36</span><span class="o">-</span><span class="n">f71f2ee46c24</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">annual_growth</span> <span class="o">=</span> <span class="n">total_growth</span> <span class="o">/</span> <span class="n">elapsed_time</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> 
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Population&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">results</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_0</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> 
+
+<span class="nn">~/ModSimPy/ModSimPySolutions/chapters/modsim.py</span> in <span class="ni">TimeSeries</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">662</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">663</span><span class="s2">     if args or kwargs:</span>
+<span class="ne">--&gt; </span><span class="mi">664</span><span class="s2">         series = pd.Series(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">665</span><span class="s2">     else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">666</span><span class="s2">         series = pd.Series([], dtype=np.float64)</span>
+
+<span class="ne">TypeError</span>: __init__() got an unexpected keyword argument &#39;time&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1075,7 +1063,7 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_76_0.png" src="_images/chap05_76_0.png" />
+<img alt="_images/chap05_75_0.png" src="_images/chap05_75_0.png" />
 </div>
 </div>
 <p><strong>Exercise:</strong>  Try fitting the model using data from 1970 to the present, and see if that does a better job.</p>
@@ -1113,7 +1101,7 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Population&#39;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="n">results</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_0</span> <span class="o">-</span> <span class="mf">0.45</span>
 
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
@@ -1133,7 +1121,7 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_80_0.png" src="_images/chap05_80_0.png" />
+<img alt="_images/chap05_79_0.png" src="_images/chap05_79_0.png" />
 </div>
 </div>
 </div>

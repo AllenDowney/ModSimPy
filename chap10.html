@@ -124,11 +124,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chap05.html#world-population">
-   World population
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
    Chapter 6
   </a>
@@ -151,11 +146,6 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Chapter 10
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#case-studies">
-   Case studies
   </a>
  </li>
  <li class="toctree-l1">
@@ -338,37 +328,25 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Chapter 10
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prehistoric-world-population">
+   Prehistoric World Population
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#case-studies">
-   Case studies
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-queue-or-two">
+   One queue or two?
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#prehistoric-world-population">
-     Prehistoric World Population
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#one-queue-or-two">
-     One queue or two?
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#predicting-salmon-populations">
-     Predicting salmon populations
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tree-growth">
-     Tree growth
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#predicting-salmon-populations">
+   Predicting salmon populations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tree-growth">
+   Tree growth
+  </a>
  </li>
 </ul>
 
@@ -383,198 +361,11 @@
                 
   <div class="section" id="chapter-10">
 <h1>Chapter 10<a class="headerlink" href="#chapter-10" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="case-studies">
-<h1>Case studies<a class="headerlink" href="#case-studies" title="Permalink to this headline">¶</a></h1>
-<p>This chapter presents case studies where you can practice the tools we have learned so far.</p>
+<p>This chapter presents case studies where you can apply the tools we have learned so far to problems involving the growth of human and salmon populations, queueing systems, and a model of tree growth.</p>
 <div class="section" id="prehistoric-world-population">
 <h2>Prehistoric World Population<a class="headerlink" href="#prehistoric-world-population" title="Permalink to this headline">¶</a></h2>
-<p>On the Wikipedia page about world population estimates, the first table contains estimates for prehistoric populations.  The following cells process this table and plot some of the results.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
-<span class="n">tables</span> <span class="o">=</span> <span class="n">read_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
-</pre></div>
-</div>
-</div>
-</div>
-<p>Select <code class="docutils literal notranslate"><span class="pre">tables[1]</span></code>, which is the second table on the page.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table1</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">table1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Population Reference Bureau (1973–2016)[15]</th>
-      <th>United Nations Department of Economic and Social Affairs (2015)[16]</th>
-      <th>Maddison (2008)[17]</th>
-      <th>HYDE (2010)[citation needed]</th>
-      <th>Tanton (1994)[18]</th>
-      <th>Biraben (1980)[19]</th>
-      <th>McEvedy &amp; Jones (1978)[20]</th>
-      <th>Thomlinson (1975)[21]</th>
-      <th>Durand (1974)[22]</th>
-      <th>Clark (1967)[23]</th>
-    </tr>
-    <tr>
-      <th>Year</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>-10000</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2M[24]</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4.0</td>
-      <td>1–10M</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>-9000</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4.</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>-8000</th>
-      <td>5.</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>5.</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>5–10M</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>-7000</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>8.</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>-6000</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>11.</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>Not all researchers provide estimates for the same dates.</p>
-<p>Again, we’ll replace the long column names with more convenient abbreviations.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PRB&#39;</span><span class="p">,</span> <span class="s1">&#39;UN&#39;</span><span class="p">,</span> <span class="s1">&#39;Maddison&#39;</span><span class="p">,</span> <span class="s1">&#39;HYDE&#39;</span><span class="p">,</span> <span class="s1">&#39;Tanton&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;Biraben&#39;</span><span class="p">,</span> <span class="s1">&#39;McEvedy &amp; Jones&#39;</span><span class="p">,</span> <span class="s1">&#39;Thomlinson&#39;</span><span class="p">,</span> <span class="s1">&#39;Durand&#39;</span><span class="p">,</span> <span class="s1">&#39;Clark&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Some of the estimates are in a form Pandas doesn’t recognize as numbers, but we can coerce them to be numeric.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">table1</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="n">table1</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">table1</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here are the results.  Notice that we are working in millions now, not billions.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
-         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (millions)&#39;</span><span class="p">,</span>
-         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Prehistoric population estimates&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;small&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/chap10_16_0.png" src="_images/chap10_16_0.png" />
-</div>
-</div>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">xlim</span></code> to zoom in on everything after Year 0.</p>
+<p>On the Wikipedia page about world population estimates, the second table contains estimates for prehistoric populations.</p>
+<p>The following figure shows the estimates of several research groups from 1 CE to the near present.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -585,11 +376,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_18_0.png" src="_images/chap10_18_0.png" />
+<img alt="_images/chap10_19_0.png" src="_images/chap10_19_0.png" />
 </div>
 </div>
-<p>See if you can find a model that fits these data well from Year 0 to 1950.</p>
-<p>How well does your best model predict actual population growth from 1950 to the present?</p>
+<p>See if you can find a model that fits these estimates.
+How well does your best model predict actual population growth from 1940 to the present?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -618,14 +409,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_20_0.png" src="_images/chap10_20_0.png" />
+<img alt="_images/chap10_21_0.png" src="_images/chap10_21_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="c1"># And it doesn&#39;t do a particularly good job of predicting</span>
+<span class="c1"># Also it doesn&#39;t do a particularly good job of predicting</span>
 <span class="c1"># actual growth from 1940 to the present.</span>
 
 <span class="c1"># TODO: load these series from table2</span>
@@ -643,7 +434,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_21_0.png" src="_images/chap10_21_0.png" />
+<img alt="_images/chap10_22_0.png" src="_images/chap10_22_0.png" />
 </div>
 </div>
 </div>
