@@ -1,6 +1,5 @@
 # Preface
 
-
 The essential skills of modeling — abstraction, analysis, simulation,
 and validation — are central in engineering, natural sciences, social
 sciences, medicine, and many other fields. Some students learn these
@@ -25,7 +24,7 @@ our predictions will be wrong and our designs won’t work.
 In most introductory physics classes, students don't make modeling
 decisions; sometimes they are not even aware of the decisions that have been made for them. Our goal is to teach the entire modeling process and give students a chance to practice it.
 
-How much programming do I need?
+**How much programming do I need?**
 
 If you have never programmed before, you should be able to read this
 book, understand it, and do the exercises. I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it is used. If you find that I have used a term without defining it, let me know.
@@ -81,7 +80,7 @@ complicated, and I tried to make it readable. Particularly if you have
 some programming experience, you might learn something by reverse
 engineering my design decisions.
 
-How much math and science do I need?
+**How much math and science do I need?**
 
 I assume that you know what derivatives and integrals are, but that's
 about all. In particular, you don’t need to know (or remember) much
@@ -97,7 +96,7 @@ between position, velocity, and acceleration, and that you are familiar with New
 I think that's everything you need, but if you find that I left
 something out, please let me know.
 
-Getting started
+**Getting started**
 
 To run the examples and work on the exercises in this book, you will need an environment where you can run Jupyter notebooks.
 
@@ -198,12 +197,8 @@ contributor list, unless you ask to be omitted.
 
 If you include at least part of the sentence the error appears in, that makes it easy for me to search. Page and section numbers are fine, too, but not as easy to work with. Thanks!
 
--   I am grateful to John Geddes and Mark Somerville for thethe work we did together to create Modeling and Simulation, the class
-    at Olin College this book is based on.
-
 -   My early work on this book benefited from conversations with my
-    amazing colleagues at Olin College, including John Geddes, Alison
-    Wood, Chris Lee, and Jason Woodard.
+    colleagues at Olin College, including John Geddes, Mark Somerville, Alison Wood, Chris Lee, and Jason Woodard.
 
 -   I am grateful to Lisa Downey and Jason Woodard for their thoughtful and careful copy editing.
 

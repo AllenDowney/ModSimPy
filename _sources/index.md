@@ -51,3 +51,15 @@ Or use these links to run the notebooks on Colab:
 * [Chapter 19](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap19.ipynb)
 
 * [Chapter 20](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap20.ipynb)
+
+* [Chapter 21](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap21.ipynb)
+
+* [Chapter 22](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap22.ipynb)
+
+* [Chapter 23](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap23.ipynb)
+
+* [Chapter 24](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap24.ipynb)
+
+* [Chapter 25](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap25.ipynb)
+
+* [Chapter 26](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap26.ipynb)
