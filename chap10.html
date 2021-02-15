@@ -361,6 +361,7 @@
                 
   <div class="section" id="chapter-10">
 <h1>Chapter 10<a class="headerlink" href="#chapter-10" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap10.ipynb">Click here to run this chapter on Colab</a></p>
 <p>This chapter presents case studies where you can apply the tools we have learned so far to problems involving the growth of human and salmon populations, queueing systems, and a model of tree growth.</p>
 <div class="section" id="prehistoric-world-population">
 <h2>Prehistoric World Population<a class="headerlink" href="#prehistoric-world-population" title="Permalink to this headline">¶</a></h2>
@@ -376,7 +377,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_19_0.png" src="_images/chap10_19_0.png" />
+<img alt="_images/chap10_20_0.png" src="_images/chap10_20_0.png" />
 </div>
 </div>
 <p>See if you can find a model that fits these estimates.
@@ -409,7 +410,7 @@ How well does your best model predict actual population growth from 1940 to the 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_21_0.png" src="_images/chap10_21_0.png" />
+<img alt="_images/chap10_22_0.png" src="_images/chap10_22_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -434,7 +435,7 @@ How well does your best model predict actual population growth from 1940 to the 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap10_22_0.png" src="_images/chap10_22_0.png" />
+<img alt="_images/chap10_23_0.png" src="_images/chap10_23_0.png" />
 </div>
 </div>
 </div>
@@ -448,7 +449,7 @@ for customers. You can make two lines, one for each counter, or one line that fe
 <p>So you’d like to check whether the single line is really better and by
 how much. Simulation can help answer this question.</p>
 <p>This figure shows the three scenarios we’ll consider:</p>
-<p><img alt="One queue, one server (left), one queue, two servers (middle), twoqueues, two servers (right)." src="https://github.com/AllenDowney/ModSim/raw/main/figs/queue.png" />
+<p><img alt="One queue, one server (left), one queue, two servers (middle), twoqueues, two servers (right)." src="https://github.com/AllenDowney/ModSim/raw/master/figs/queue.png" />
 <em>One queue, one server (left), one queue, two servers (middle), two
 queues, two servers (right).</em></p>
 <p>As we did in the bike share model, we’ll assume that a customer is equally likely to arrive during any time step. I’ll denote this probability using the Greek letter lambda, <span class="math notranslate nohighlight">\(\lambda\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">lam</span></code>. The value of <span class="math notranslate nohighlight">\(\lambda\)</span> probably varies from day to day, so we’ll have to consider a range of possibilities.</p>

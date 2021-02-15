@@ -12,42 +12,42 @@ Other Free Books by Allen Downey are available from [Green Tea Press](https://gr
 
 Or use these links to run the notebooks on Colab:
 
-* [Chapter 1](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap01.ipynb)
+* [Chapter 1](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap01.ipynb)
 
-* [Chapter 2](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap02.ipynb)
+* [Chapter 2](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap02.ipynb)
 
-* [Chapter 3](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap03.ipynb)
+* [Chapter 3](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap03.ipynb)
 
-* [Chapter 4](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap04.ipynb)
+* [Chapter 4](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap04.ipynb)
 
-* [Chapter 5](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap05.ipynb)
+* [Chapter 5](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap05.ipynb)
 
-* [Chapter 6](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap06.ipynb)
+* [Chapter 6](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap06.ipynb)
 
-* [Chapter 7](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap07.ipynb)
+* [Chapter 7](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap07.ipynb)
 
-* [Chapter 8](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap08.ipynb)
+* [Chapter 8](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap08.ipynb)
 
-* [Chapter 9](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap09.ipynb)
+* [Chapter 9](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap09.ipynb)
 
-* [Chapter 10](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap10.ipynb)
+* [Chapter 10](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap10.ipynb)
 
-* [Chapter 11](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap11.ipynb)
+* [Chapter 11](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap11.ipynb)
 
-* [Chapter 12](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap12.ipynb)
+* [Chapter 12](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap12.ipynb)
 
-* [Chapter 13](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap13.ipynb)
+* [Chapter 13](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap13.ipynb)
 
-* [Chapter 14](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap14.ipynb)
+* [Chapter 14](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap14.ipynb)
 
-* [Chapter 15](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap15.ipynb)
+* [Chapter 15](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap15.ipynb)
 
-* [Chapter 16](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap16.ipynb)
+* [Chapter 16](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap16.ipynb)
 
-* [Chapter 17](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap17.ipynb)
+* [Chapter 17](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap17.ipynb)
 
-* [Chapter 18](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap18.ipynb)
+* [Chapter 18](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap18.ipynb)
 
-* [Chapter 19](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap19.ipynb)
+* [Chapter 19](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap19.ipynb)
 
-* [Chapter 20](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/notebooks/chap20.ipynb)
+* [Chapter 20](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap20.ipynb)

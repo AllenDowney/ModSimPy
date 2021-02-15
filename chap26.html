@@ -370,6 +370,7 @@
                 
   <div class="section" id="chapter-26">
 <h1>Chapter 26<a class="headerlink" href="#chapter-26" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap26.ipynb">Click here to run this chapter on Colab</a></p>
 <p>You made it to the end of the book.  Congratulations!</p>
 <p>This last chapter is a collection of case studies you might want to read and work on.
 They are based on the methods in the last few chapters, including Newtonian mechanics in 1-D and 2-D, and rotation around a single axis.</p>
@@ -421,7 +422,7 @@ convince you: <a class="reference external" href="http://modsimpy.com/drop">http
 springy cable of webbing attached to the top of the Empire State
 Building. Initially, Spider-Man is at the top of a nearby building, as
 shown in this figure:</p>
-<p><img alt="Diagram of the initial state for the Spider-Man casestudy." src="https://github.com/AllenDowney/ModSim/raw/main/figs/spiderman.png" /></p>
+<p><img alt="Diagram of the initial state for the Spider-Man casestudy." src="https://github.com/AllenDowney/ModSim/raw/master/figs/spiderman.png" /></p>
 <p>The origin, <code class="docutils literal notranslate"><span class="pre">O</span></code>, is at the base of the Empire State Building. The vector <code class="docutils literal notranslate"><span class="pre">H</span></code> represents the position where the webbing is attached to the building, relative to <code class="docutils literal notranslate"><span class="pre">O</span></code>. The vector <code class="docutils literal notranslate"><span class="pre">P</span></code> is the position of Spider-Man relative to <code class="docutils literal notranslate"><span class="pre">O</span></code>. And <code class="docutils literal notranslate"><span class="pre">L</span></code> is the vector from the attachment point to Spider-Man.</p>
 <p>By following the arrows from <code class="docutils literal notranslate"><span class="pre">O</span></code>, along <code class="docutils literal notranslate"><span class="pre">H</span></code>, and along <code class="docutils literal notranslate"><span class="pre">L</span></code>, we can see
 that</p>
@@ -459,7 +460,7 @@ notebook and run the code. It uses <code class="docutils literal notranslate"><s
 And you might have wondered how long it would take a standard kitten to unroll 47 m of paper, the length of a standard roll.</p>
 <p>The interactions of the kitten and the paper rolls are complex.  To keep things simple, let’s assume that the kitten pulls down on the free end of the roll with constant force.  And let’s neglect the friction between the roll and the axle.</p>
 <p>This diagram shows the paper roll with the force applied by the kitten, <span class="math notranslate nohighlight">\(F\)</span>, the lever arm of the force around the axis of rotation, <span class="math notranslate nohighlight">\(r\)</span>, and the resulting torque, <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
-<p><img alt="Diagram of a roll of toilet paper, showing a force, lever arm, and the resulting torque." src="https://github.com/AllenDowney/ModSim/raw/main/figs/kitten.png" /></p>
+<p><img alt="Diagram of a roll of toilet paper, showing a force, lever arm, and the resulting torque." src="https://github.com/AllenDowney/ModSim/raw/master/figs/kitten.png" /></p>
 <p>Assuming that the force applied by the kitten is 0.002 N, how long would it take to unroll a standard roll of toilet paper?</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">kitten.ipynb</span></code>, which contains starter code for this case study. Use it to implement this model and check whether the results seem plausible.</p>
@@ -468,7 +469,7 @@ And you might have wondered how long it would take a standard kitten to unroll 4
 <h2>Simulating a yo-yo<a class="headerlink" href="#simulating-a-yo-yo" title="Permalink to this headline">¶</a></h2>
 <p>Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary. As gravity accelerates the yo-yo downward, tension in the string exerts a force upward. Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.</p>
 <p>The following diagram shows the forces on the yo-yo and the resulting torque. The outer shaded area shows the body of the yo-yo. The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.</p>
-<p><img alt="Diagram of a yo-yo showing forces due to gravity and tension in thestring, the lever arm of tension, and the resultingtorque." src="https://github.com/AllenDowney/ModSim/raw/main/figs/yoyo.png" /></p>
+<p><img alt="Diagram of a yo-yo showing forces due to gravity and tension in thestring, the lever arm of tension, and the resultingtorque." src="https://github.com/AllenDowney/ModSim/raw/master/figs/yoyo.png" /></p>
 <p>In this system, we can’t figure out the linear and angular acceleration independently; we have to solve a system of equations:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
