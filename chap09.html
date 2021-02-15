@@ -388,8 +388,7 @@
 <h1>Chapter 9<a class="headerlink" href="#chapter-9" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we express the models from previous chapters as
 difference equations and differential equations, solve the equations,
-and derive the functional forms of the solutions. We also discuss the
-complementary roles of mathematical analysis and simulation.</p>
+and derive the functional forms of the solutions. And I present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
 <div class="section" id="recurrence-relations">
 <h2>Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>The population models in the previous chapter and this one are simple
@@ -403,7 +402,8 @@ model like this:</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + c\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_n\)</span> is the population during year <span class="math notranslate nohighlight">\(n\)</span>,
-<span class="math notranslate nohighlight">\(x_0\)</span> is a given initial population, and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
+<span class="math notranslate nohighlight">\(x_{n+1}\)</span> is the population during year <span class="math notranslate nohighlight">\(n+1\)</span>,
+and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
 This way of representing the model is a <strong>recurrence relation</strong>; see
 <a class="reference external" href="http://modsimpy.com/recur">http://modsimpy.com/recur</a>.</p>
 <p>Sometimes it is possible to solve a recurrence relation by writing an
@@ -412,7 +412,7 @@ is, without computing the intervening values from <span class="math notranslate 
 <span class="math notranslate nohighlight">\(x_{n-1}\)</span>.</p>
 <p>In the case of constant growth we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 + c\)</span>, and
 <span class="math notranslate nohighlight">\(x_2 = x_1 + c\)</span>. Combining these, we get <span class="math notranslate nohighlight">\(x_2 = x_0 + 2c\)</span>, then
-<span class="math notranslate nohighlight">\(x_3 = x_0 + 3c\)</span>, and it is not hard to conclude that in general</p>
+<span class="math notranslate nohighlight">\(x_3 = x_0 + 3c\)</span>, and we can see that in general</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_0 + nc\]</div>
 <p>So if we want to know <span class="math notranslate nohighlight">\(x_{100}\)</span> and we don’t care
@@ -424,8 +424,7 @@ one addition.</p>
 <p>Or more conventionally as:</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n (1 + \alpha)\]</div>
-<p>Now we can see that</p>
-<p><span class="math notranslate nohighlight">\(x_1 = x_0 (1 + \alpha)\)</span>, and <span class="math notranslate nohighlight">\(x_2 = x_0 (1 + \alpha)^2\)</span>, and in general</p>
+<p>Now we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 (1 + \alpha)\)</span>, and <span class="math notranslate nohighlight">\(x_2 = x_0 (1 + \alpha)^2\)</span>, and in general</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_0 (1 + \alpha)^n\]</div>
 <p>This result is a <strong>geometric progression</strong>;
@@ -435,13 +434,10 @@ without bound.</p>
 <p>Finally, we can write the quadratic model like this:</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + \alpha x_n + \beta x_n^2\]</div>
-<p>or with the more
-conventional parameterization like this:</p>
+<p>or with the more conventional parameterization like this:</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + r x_n (1 - x_n / K)\]</div>
-<p>There is no analytic solution to
-this equation, but we can approximate it with a differential equation
-and solve that, which is what we’ll do in the next section.</p>
+<p>There is no analytic solution to this equation, but we can approximate it with a differential equation and solve that, which is what we’ll do in the next section.</p>
 </div>
 <div class="section" id="differential-equations">
 <h2>Differential equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h2>
@@ -499,13 +495,11 @@ integrate both sides, yielding:</p>
 <span class="math notranslate nohighlight">\(\exp(K)\)</span> is also an arbitrary constant, so we can write</p>
 <div class="math notranslate nohighlight">
 \[x = C \exp(\alpha t)\]</div>
-<p>where <span class="math notranslate nohighlight">\(C = \exp(K)\)</span>. There are many solutions
-to this differential equation, with different values of <span class="math notranslate nohighlight">\(C\)</span>. The
-particular solution we want is the one that has the value <span class="math notranslate nohighlight">\(x_0\)</span> when
-<span class="math notranslate nohighlight">\(t=0\)</span>.</p>
-<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, <span class="math notranslate nohighlight">\(x(t) = C\)</span>, so <span class="math notranslate nohighlight">\(C = x_0\)</span> and the solution we want is
-$<span class="math notranslate nohighlight">\(x(t) = x_0 \exp(\alpha t)\)</span>$ If you would like to see this derivation
-done more carefully, you might like this video:
+<p>where <span class="math notranslate nohighlight">\(C = \exp(K)\)</span>. There are many solutions to this differential equation, with different values of <span class="math notranslate nohighlight">\(C\)</span>. The particular solution we want is the one that has the value <span class="math notranslate nohighlight">\(x_0\)</span> when <span class="math notranslate nohighlight">\(t=0\)</span>.</p>
+<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, <span class="math notranslate nohighlight">\(x(t) = C\)</span>, so <span class="math notranslate nohighlight">\(C = x_0\)</span> and the solution we want is</p>
+<div class="math notranslate nohighlight">
+\[x(t) = x_0 \exp(\alpha t)\]</div>
+<p>If you would like to see this derivation done more carefully, you might like this video:
 <a class="reference external" href="http://modsimpy.com/khan1">http://modsimpy.com/khan1</a>.</p>
 </div>
 <div class="section" id="analysis-and-simulation">
@@ -518,10 +512,10 @@ parts of a program and test many versions of a model, as we have done in the pre
 <ul class="simple">
 <li><p>With analysis we can sometimes compute, exactly and efficiently, a
 value that we could only approximate, less efficiently, with
-simulation. For example, in the quadratic model we plotted growth rate versus population and saw net crossed through zero when the population is
+simulation. For example, in the quadratic model we plotted net growth versus population and saw it crosses through zero when the population is
 near 14 billion.  We could estimate the crossing point using a
 numerical search algorithm (more about that later). But with the
-analysis in Section xxx, we get the general result that
+analysis in Section xxx, we derived the general result that
 <span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p></li>
 <li><p>Analysis often provides “computational shortcuts”, that is, the
 ability to jump forward in time to compute the state of a system
@@ -537,7 +531,7 @@ qualitatively different behavior and key parameters that control
 those behaviors.</p></li>
 </ul>
 <p>When people see what analysis can do, they sometimes get drunk with
-power, and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe. When they analyze a model of a physical system, they talk about “the math behind it” as if our world is the mere shadow of a world of ideal mathematical entities (I am not making this up; see <a class="reference external" href="http://modsimpy.com/plato">http://modsimpy.com/plato</a>.).</p>
+power and imagine that it gives them a special ability to see past the veil of the material world and discern the laws of mathematics that govern the universe. When they analyze a model of a physical system, they talk about “the math behind it” as if our world is the mere shadow of a world of ideal mathematical entities (I am not making this up; see <a class="reference external" href="http://modsimpy.com/plato">http://modsimpy.com/plato</a>.).</p>
 <p>This is, of course, nonsense. Mathematical notation is a language
 designed by humans for a purpose, specifically to facilitate symbolic
 manipulations like algebra. Similarly, programming languages are
@@ -560,8 +554,7 @@ parameter; it classifies the query as a “first-order linear ordinary
 differential equation”, and reports the general solution:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = c_1 \exp(\alpha t)\]</div>
-<p>If you add a second equation to specify
-the initial condition:</p>
+<p>If you add a second equation to specify the initial condition:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">alpha</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>  <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">p_0</span>
 </pre></div>
 </div>
@@ -576,9 +569,7 @@ designed specifically for symbolic computation.</p>
 <p>Python has a library called SymPy that provides symbolic computation
 tools similar to Mathematica. They are not as easy to use as
 WolframAlpha, but they have some other advantages.</p>
-<p>Before we can use SymPy, we have to import it:</p>
-<p>SymPy defines a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> object that represents symbolic variable names,
-functions, and other mathematical entities.</p>
+<p>SymPy defines a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> object that represents symbolic variable names, functions, and other mathematical entities.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">symbols</span></code> function takes a string and returns <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects. So
 if we run this assignment:</p>
 <div class="cell docutils container">
@@ -729,7 +720,7 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </div>
 <div class="section" id="solving-the-quadratic-growth-model">
 <h2>Solving the quadratic growth model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
-<p>We’ll use the (r, K) parameterization, so we’ll need two more symbols:</p>
+<p>To solve the quadratic growth curve, we’ll use the <code class="docutils literal notranslate"><span class="pre">r,</span> <span class="pre">K</span></code> parameterization, so we’ll need two more symbols:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;r K&#39;</span><span class="p">)</span>
@@ -800,7 +791,7 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </div>
 </div>
 </div>
-<p>The result from <code class="docutils literal notranslate"><span class="pre">solve</span></code> is a list of solutions.  In this case, <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">we have reason to expect only one solution</a>, but we still get a list, so we have to use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[0]</span></code>, to select the first one.</p>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">solve</span></code> is a list of solutions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">solutions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">solutions</span><span class="p">)</span>
@@ -813,6 +804,7 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 </div>
 </div>
 </div>
+<p>In this case, <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">we have reason to expect only one solution</a>, but we still get a list, so we have to use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[0]</span></code>, to select the first one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value_of_C1</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -841,13 +833,14 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 <p>The result is complicated, but SymPy provides a function that tries to simplify it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simpler</span> <span class="o">=</span> <span class="n">particular</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+<span class="n">simpler</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_latex math notranslate nohighlight">
-\[\displaystyle \frac{K p_{0} e^{r t}}{K + p_{0} e^{r t} - p_{0}}\]</div>
+\[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
 </div>
 </div>
 <p>This function is called the <strong>logistic growth curve</strong>; see
@@ -856,47 +849,6 @@ logistic function is often written like this:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
-<p>We can use SymPy to confirm that these two forms are equivalent.  First we represent the alternative version of the logistic function:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">p_0</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_0</span>
-<span class="n">A</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_latex math notranslate nohighlight">
-\[\displaystyle \frac{K - p_{0}}{p_{0}}\]</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">exp</span>
-
-<span class="n">logistic</span> <span class="o">=</span> <span class="n">K</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">A</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
-<span class="n">logistic</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_latex math notranslate nohighlight">
-\[\displaystyle \frac{K}{1 + \frac{\left(K - p_{0}\right) e^{- r t}}{p_{0}}}\]</div>
-</div>
-</div>
-<p>To see whether two expressions are equivalent, we can check whether their difference simplifies to 0.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">particular</span> <span class="o">-</span> <span class="n">logistic</span><span class="p">)</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_latex math notranslate nohighlight">
-\[\displaystyle 0\]</div>
-</div>
-</div>
-<p>This test only works one way: if SymPy says the difference reduces to 0, the expressions are definitely equivalent (and not just numerically close).</p>
-<p>But if SymPy can’t find a way to simplify the result to 0, that doesn’t necessarily mean there isn’t one.  Testing whether two expressions are equivalent is a surprisingly hard problem; in fact, there is no algorithm that can solve it in general.</p>
 <p>If you would like to see this differential equation solved by hand, you might like this video: <a class="reference external" href="http://modsimpy.com/khan2">http://modsimpy.com/khan2</a></p>
 </div>
 <div class="section" id="summary">
@@ -904,8 +856,8 @@ logistic function is often written like this:</p>
 <p>In this chapter we wrote the growth models from the previous chapters in terms of difference and differential equations.</p>
 <p>What I called the constant growth model is more commonly called <strong>linear growth</strong> because the solution is a line.  If we model time as continuous, the solution is</p>
 <div class="math notranslate nohighlight">
-\[f(t) = p_0 + \alpha t\]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the growth rate.</p>
+\[f(t) = p_0 + c t\]</div>
+<p>where <span class="math notranslate nohighlight">\(c\)</span> is net annual growth.</p>
 <p>Similarly, the proportional growth model is usually called <strong>exponential growth</strong> because the solution is exponential:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = p_0 \exp{\alpha t}\]</div>
@@ -914,10 +866,12 @@ logistic function is often written like this:</p>
 \[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
 <p>I avoided these terms until now because they are based on results we had not derived yet.</p>
+<p>With that, we are done with modeling world population growth.
+The next chapter presents case studies where you can apply the tools we have learned so far.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Solve the quadratic growth equation using the alternative parameterization</p>
+<p><strong>Exercise:</strong> Use SymPy to solve the quadratic growth equation using the alternative parameterization</p>
 <p><span class="math notranslate nohighlight">\(\frac{df(t)}{dt} = \alpha f(t) + \beta f^2(t) \)</span></p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">

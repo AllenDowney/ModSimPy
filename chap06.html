@@ -380,33 +380,7 @@
 constant growth. In this chapter we see if we can make a better model
 with growth proportional to the population.</p>
 <p>But first, we’ll improve the code from the previous chapter by
-encapsulating it in a function and using <code class="docutils literal notranslate"><span class="pre">System</span></code> objects.</p>
-<p>Here’s the code that reads the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
-
-<span class="n">tables</span> <span class="o">=</span> <span class="n">read_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
-<span class="n">table2</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">table2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">,</span> <span class="s1">&#39;maddison&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;hyde&#39;</span><span class="p">,</span> <span class="s1">&#39;tanton&#39;</span><span class="p">,</span> <span class="s1">&#39;biraben&#39;</span><span class="p">,</span> <span class="s1">&#39;mj&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;thomlinson&#39;</span><span class="p">,</span> <span class="s1">&#39;durand&#39;</span><span class="p">,</span> <span class="s1">&#39;clark&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
+encapsulating it in a function and adding a new feature, a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <div class="section" id="system-objects">
 <h2>System objects<a class="headerlink" href="#system-objects" title="Permalink to this headline">¶</a></h2>
 <p>Like a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, a <code class="docutils literal notranslate"><span class="pre">System</span></code> object contains variables and their
@@ -417,8 +391,7 @@ values. The difference is:</p>
 </ul>
 <p>For example, in the bike share model, state variables include the number of bikes at each location, which get updated whenever a customer moves a bike. System parameters include the number of locations, total number of bikes, and arrival rates at each location.</p>
 <p>In the population model, the only state variable is the population.
-System parameters include the annual growth rate, the initial time and
-population, and the end time.</p>
+System parameters include the annual growth rate, the initial population, and the start and end times.</p>
 <p>Suppose we have the following variables, as computed in the previous
 chapter (assuming <code class="docutils literal notranslate"><span class="pre">table2</span></code> is the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> we read from the file):</p>
 <div class="cell docutils container">
@@ -440,7 +413,7 @@ chapter (assuming <code class="docutils literal notranslate"><span class="pre">t
 </div>
 </div>
 <p>Some of these are parameters we need to simulate the system; others are temporary values we can discard.
-To distinguish between them, we’ll put the parameters we need into a <code class="docutils literal notranslate"><span class="pre">System</span></code> object like this:</p>
+To distinguish between them, we’ll put the parameters we need in a <code class="docutils literal notranslate"><span class="pre">System</span></code> object like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">t_0</span><span class="o">=</span><span class="n">t_0</span><span class="p">,</span> 
@@ -456,7 +429,7 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
 <p>Here’s what <code class="docutils literal notranslate"><span class="pre">system</span></code> looks like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -479,17 +452,17 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>System</th>
+      <th>value</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>t_0</th>
-      <td>1950.0</td>
+      <td>1950.000000</td>
     </tr>
     <tr>
       <th>t_end</th>
-      <td>2016.0</td>
+      <td>2016.000000</td>
     </tr>
     <tr>
       <th>p_0</th>
@@ -519,9 +492,7 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">run_simulation1</span></code> takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and uses the parameters in it to determine <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, and <code class="docutils literal notranslate"><span class="pre">annual_growth</span></code>.</p>
-<p>Inside the loop, it stores the results in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> which it returns at the end.</p>
-<p>The following function plots the results along with the estimates
-<code class="docutils literal notranslate"><span class="pre">census</span></code> and <code class="docutils literal notranslate"><span class="pre">un</span></code>:</p>
+<p>It simulates population growth over time and returns the results in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
 <p>Here’s how we call it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -552,7 +523,7 @@ population, and <code class="docutils literal notranslate"><span class="pre">ann
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap06_23_0.png" src="_images/chap06_23_0.png" />
+<img alt="_images/chap06_22_0.png" src="_images/chap06_22_0.png" />
 </div>
 </div>
 <p>It might not be obvious that using functions and <code class="docutils literal notranslate"><span class="pre">System</span></code> objects is a
@@ -584,8 +555,10 @@ population like this:</p>
 </div>
 </div>
 </div>
-<p>Now we can choose the values of <code class="docutils literal notranslate"><span class="pre">birth_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">death_rate</span></code> that best fit the data.</p>
-<p>For the death rate, I’ll use 7.7 deaths per 1000 people, which was roughly the global death rate in 2020 (see <a class="reference external" href="https://www.indexmundi.com/world/death_rate.html">https://www.indexmundi.com/world/death_rate.html</a>).
+<p>Each time through the loop, we use the parameter <code class="docutils literal notranslate"><span class="pre">birth_rate</span></code> to compute the number of births, and <code class="docutils literal notranslate"><span class="pre">death_rate</span></code> to compute the number of deaths.
+The rest of the function is the same as <code class="docutils literal notranslate"><span class="pre">run_simulation1</span></code>.</p>
+<p>Now we can choose the values of <code class="docutils literal notranslate"><span class="pre">birth_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">death_rate</span></code> that best fit the data.
+For the death rate, I’ll use 7.7 deaths per 1000 people, which was roughly the global death rate in 2020 (see <a class="reference external" href="https://www.indexmundi.com/world/death_rate.html">https://www.indexmundi.com/world/death_rate.html</a>).
 I chose the birth rate by hand to fit the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -606,7 +579,7 @@ I chose the birth rate by hand to fit the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap06_30_0.png" src="_images/chap06_30_0.png" />
+<img alt="_images/chap06_29_0.png" src="_images/chap06_29_0.png" />
 </div>
 </div>
 <p>The proportional model fits
@@ -622,10 +595,10 @@ improvements to the code.</p>
 <h2>Factoring out the update function<a class="headerlink" href="#factoring-out-the-update-function" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">run_simulation1</span></code> and <code class="docutils literal notranslate"><span class="pre">run_simulation2</span></code> are nearly identical except for the body of the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, where we compute the population for the next year.</p>
 <p>Rather than repeat identical code, we can separate the things that
-change from the things that don’t. First, I’ll pull out the update code from <code class="docutils literal notranslate"><span class="pre">run_simulation2</span></code> and make it a function:</p>
+change from the things that don’t. First, I’ll pull out the births and deaths from <code class="docutils literal notranslate"><span class="pre">run_simulation2</span></code> and make a function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func1</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func1</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">births</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">birth_rate</span> <span class="o">*</span> <span class="n">pop</span>
     <span class="n">deaths</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">death_rate</span> <span class="o">*</span> <span class="n">pop</span>
     <span class="k">return</span> <span class="n">births</span> <span class="o">-</span> <span class="n">deaths</span>
@@ -633,18 +606,17 @@ change from the things that don’t. First, I’ll pull out the update code from
 </div>
 </div>
 </div>
-<p>This function takes as arguments the current population, current year,
-and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object; it returns the net population growth during the current year.</p>
-<p>This update function does not use <code class="docutils literal notranslate"><span class="pre">t</span></code>, so we could leave it out. But we will see other functions that need it, and it is convenient if they all take the same parameters, used or not.</p>
+<p><code class="docutils literal notranslate"><span class="pre">growth_func1</span></code> takes as arguments the current year, current population, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object; it returns the net population growth during the current year.</p>
+<p>This function does not use <code class="docutils literal notranslate"><span class="pre">t</span></code>, so we could leave it out. But we will see other growth functions that need it, and it is convenient if they all take the same parameters, used or not.</p>
 <p>Now we can write a function that runs any model:</p>
-<div class="cell docutils container">
+<div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func</span><span class="p">):</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
     <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
     
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
-        <span class="n">growth</span> <span class="o">=</span> <span class="n">growth_func</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">growth</span> <span class="o">=</span> <span class="n">growth_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">system</span><span class="p">)</span>
         <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">growth</span>
         
     <span class="k">return</span> <span class="n">results</span>
@@ -667,7 +639,7 @@ population for the next year.</p>
 <p>Passing a function as an argument is the same as passing any other
 value. The argument, which is <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code> in this example, gets
 assigned to the parameter, which is called <code class="docutils literal notranslate"><span class="pre">growth_func</span></code>. Inside
-<code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, we can run <code class="docutils literal notranslate"><span class="pre">growth_func</span></code> just like any other function.</p>
+<code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, we can call <code class="docutils literal notranslate"><span class="pre">growth_func</span></code> just like any other function.</p>
 <p>Each time through the loop, <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> calls <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code> to compute net growth, and uses it to compute the population during the next year.</p>
 </div>
 <div class="section" id="combining-birth-and-death">
@@ -686,7 +658,7 @@ proportional growth rate.</p>
 <p>Here’s the modified version of <code class="docutils literal notranslate"><span class="pre">growth_func1</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func2</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span>
 </pre></div>
 </div>
@@ -712,17 +684,17 @@ But first, you might want to work on some exercises.</p>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <p><strong>Exercise:</strong> Maybe the reason the proportional model doesn’t work very well is that the growth rate, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, is changing over time.  So let’s try a model with different growth rates before and after 1980 (as an arbitrary choice).</p>
-<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">pop</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters.  The system object, <code class="docutils literal notranslate"><span class="pre">system</span></code>, should contain two parameters: the growth rate before 1980, <code class="docutils literal notranslate"><span class="pre">alpha1</span></code>, and the growth rate after 1980, <code class="docutils literal notranslate"><span class="pre">alpha2</span></code>.  It should use <code class="docutils literal notranslate"><span class="pre">t</span></code> to determine which growth rate to use.</p>
+<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">pop</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters.  The system object, <code class="docutils literal notranslate"><span class="pre">system</span></code>, should contain two parameters: the growth rate before 1980, <code class="docutils literal notranslate"><span class="pre">alpha1</span></code>, and the growth rate after 1980, <code class="docutils literal notranslate"><span class="pre">alpha2</span></code>.  It should use <code class="docutils literal notranslate"><span class="pre">t</span></code> to determine which growth rate to use.</p>
 <p>Test your function by calling it directly, then pass it to <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.  Plot the results.  Adjust the parameters <code class="docutils literal notranslate"><span class="pre">alpha1</span></code> and <code class="docutils literal notranslate"><span class="pre">alpha2</span></code> to fit the data as well as you can.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">growth_func3</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">growth_func3</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute the population next year.</span>
 <span class="sd">    </span>
-<span class="sd">    pop: current population</span>
 <span class="sd">    t: current year</span>
+<span class="sd">    pop: current population</span>
 <span class="sd">    system: system object containing parameters of the model</span>
 <span class="sd">    </span>
 <span class="sd">    returns: population next year</span>
@@ -750,7 +722,7 @@ But first, you might want to work on some exercises.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap06_50_0.png" src="_images/chap06_50_0.png" />
+<img alt="_images/chap06_49_0.png" src="_images/chap06_49_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">

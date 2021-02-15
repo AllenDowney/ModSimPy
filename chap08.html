@@ -366,99 +366,34 @@ population growth from 1950 to 2016. It is a simple model, but it fits
 the data well and the mechanisms it’s based on are plausible.</p>
 <p>In this chapter we’ll use the quadratic model to generate projections of future growth, and compare our results to projections from actual
 demographers.</p>
-<p>Here’s the code that downloads the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;World_population_estimates.html&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/World_population_estimates.html
-</pre></div>
-</div>
-</div>
-</div>
-<p>And here’s the code that reads <code class="docutils literal notranslate"><span class="pre">table2</span></code>, which contains world populations estimates from the U.S. Census and U.N. DESA, among other organizations.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
-
-<span class="n">tables</span> <span class="o">=</span> <span class="n">read_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table2</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">table2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">,</span> <span class="s1">&#39;maddison&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;hyde&#39;</span><span class="p">,</span> <span class="s1">&#39;tanton&#39;</span><span class="p">,</span> <span class="s1">&#39;biraben&#39;</span><span class="p">,</span> <span class="s1">&#39;mj&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;thomlinson&#39;</span><span class="p">,</span> <span class="s1">&#39;durand&#39;</span><span class="p">,</span> <span class="s1">&#39;clark&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="section" id="generating-projections">
 <h2>Generating Projections<a class="headerlink" href="#generating-projections" title="Permalink to this headline">¶</a></h2>
-<p>Now let’s run the quadratic model, extending the results until 2100, and see how our projections compare to the professionals’.</p>
-<p>Here’s the code we’ll need from the previous chapter.</p>
+<p>Let’s run the quadratic model, extending the results until 2100, and see how our projections compare to the professionals’.</p>
+<p>Here’s the quadratic growth function again.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func</span><span class="p">):</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-    <span class="n">results</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">p_0</span>
-    
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
-        <span class="n">growth</span> <span class="o">=</span> <span class="n">growth_func</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
-        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">growth</span>
-        
-    <span class="k">return</span> <span class="n">results</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func_quad</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func_quad</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">+</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">pop</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">census</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">census</span> <span class="o">/</span> <span class="mf">1e9</span>
-<span class="n">un</span> <span class="o">=</span> <span class="n">table2</span><span class="o">.</span><span class="n">un</span> <span class="o">/</span> <span class="mf">1e9</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>And here are the system parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_0</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">p_0</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">t_0</span> <span class="o">=</span> <span class="n">t_0</span><span class="p">,</span>
+                <span class="n">p_0</span> <span class="o">=</span> <span class="n">p_0</span><span class="p">,</span>
+                <span class="n">alpha</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span>
+                <span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.8</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span>
+                <span class="n">t_end</span> <span class="o">=</span> <span class="mi">2100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">t_0</span><span class="o">=</span><span class="n">t_0</span><span class="p">,</span>
-                <span class="n">p_0</span><span class="o">=</span><span class="n">p_0</span><span class="p">,</span>
-                <span class="n">t_end</span><span class="o">=</span><span class="mi">2100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">/</span> <span class="mi">1000</span>
-<span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.8</span> <span class="o">/</span> <span class="mi">1000</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">t_end=2100</span></code>, we can generate the projection by calling <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> the usual way.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">growth_func_quad</span><span class="p">)</span>
@@ -466,6 +401,7 @@ demographers.</p>
 </div>
 </div>
 </div>
+<p>Here are the last few values in the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
@@ -523,7 +459,7 @@ demographers.</p>
 </table>
 </div></div></div>
 </div>
-<p>And here are the results.</p>
+<p>Here’s what the results look like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
@@ -537,20 +473,20 @@ demographers.</p>
 <img alt="_images/chap08_22_0.png" src="_images/chap08_22_0.png" />
 </div>
 </div>
-<p>According to the model, population growth will slow gradually after 2020, approaching 12.5 billion by 2100.</p>
+<p>According to the model, population growth will slow gradually after 2020, approaching 12.6 billion by 2100.</p>
 <p>I am using the word “projection” deliberately, rather than
 “prediction”, with the following distinction: “prediction” implies
 something like “this is what we should reasonably expect to happen, at
 least approximately”; “projection” implies something like “if this
-model is actually a good description of what is happening in this
-system, and if nothing in the future causes the parameters of the model to change, this is what would happen.”</p>
+model is a good description of what is happening in this
+system, and if nothing in the future causes the system parameters to change, this is what would happen.”</p>
 <p>Using “projection” leaves open the possibility that there are important things in the real world that are not captured in the model. It also suggests that, even if the model is good, the parameters we estimate based on the past might be different in the future.</p>
 <p>The quadratic model we’ve been working with is based on the assumption
 that population growth is limited by the availability of resources; in
 that scenario, as the population approaches carrying capacity, birth
 rates fall and death rates rise because resources become scarce.</p>
 <p>If that assumption is valid, we might be able to use actual population
-growth to estimate carrying capacity, especially if we observe the
+growth to estimate carrying capacity, provided we observe the
 transition into the regime where the growth rate starts to fall.</p>
 <p>But in the case of world population growth, those conditions don’t
 apply. Over the last 50 years, the net growth rate has leveled off, but not yet started to fall, so we don’t have enough data to make a credible estimate of carrying capacity. And resource limitations are probably <em>not</em> the primary reason growth has slowed. As evidence, consider:</p>
@@ -574,7 +510,7 @@ theirs.</p>
 </div>
 <div class="section" id="projections">
 <h2>Projections<a class="headerlink" href="#projections" title="Permalink to this headline">¶</a></h2>
-<p>From the same page where we got the past population estimates, we’ll read <code class="docutils literal notranslate"><span class="pre">table3</span></code>, which contains predictions for population growth over the next 50-100 years, generated by the U.S. Census, U.N. DESA, and the Population Reference Bureau.</p>
+<p>From the same Wikipedia page where we got the past population estimates, we’ll read <code class="docutils literal notranslate"><span class="pre">table3</span></code>, which contains predictions for population growth over the next 50-100 years, generated by the U.S. Census, U.N. DESA, and the Population Reference Bureau.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
@@ -676,7 +612,7 @@ theirs.</p>
 </div>
 </div>
 </div>
-<p>Here are their projections compared to the results of the quadratic model.</p>
+<p>Here are the professional projections compared to the results of the quadratic model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_projections</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
@@ -686,19 +622,20 @@ theirs.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_32_0.png" src="_images/chap08_32_0.png" />
+<img alt="_images/chap08_31_0.png" src="_images/chap08_31_0.png" />
 </div>
 </div>
 <p>The U.N. DESA expects the world population to reach 11 billion around 2100, and then level off.
 Projections by U.S. Census are a little lower, and they only go until 2050.</p>
-<p>Real demographers expect world population to grow more slowly than our model projects, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.</p>
-<p>Nevertheless, their projections are qualitatively similar to ours, and
-theirs differ from each other almost as much as they differ from ours.
-So the results from this model, simple as it is, are not entirely unreasonable.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>You might be interested in this <a class="reference external" href="https://www.youtube.com/watch?v=ezVk1ahRF78">video by Hans Rosling about the demographic changes we expect in this century</a>.</p>
+<p>In this chapter we use the quadratic growth model to project world population growth between now and 2100.</p>
+<p>Real demographers expect world population to grow more slowly than our model, probably because their models are broken down by region and country, where conditions are different, and they take into account expected economic development.</p>
+<p>Nevertheless, their projections are qualitatively similar to ours, and
+theirs differ from each other almost as much as they differ from ours.
+So the results from the model, simple as it is, are not entirely unreasonable.</p>
+<p>If you are interested in some of the factors that go into the professional predictions, you might like this <a class="reference external" href="https://www.youtube.com/watch?v=ezVk1ahRF78">video by Hans Rosling about the demographic changes we expect this century</a>.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -707,42 +644,120 @@ So the results from this model, simple as it is, are not entirely unreasonable.<
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
-<span class="n">diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">show</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
-1950         NaN
-1951    0.037311
-1952    0.041832
-1953    0.045281
-1954    0.048175
-Name: census, dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>census</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1951</th>
+      <td>0.037311</td>
+    </tr>
+    <tr>
+      <th>1952</th>
+      <td>0.041832</td>
+    </tr>
+    <tr>
+      <th>1953</th>
+      <td>0.045281</td>
+    </tr>
+    <tr>
+      <th>1954</th>
+      <td>0.048175</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
-<p>The first element is <code class="docutils literal notranslate"><span class="pre">NaN</span></code> because we don’t have the data for 1945, so we can’t compute the first difference.</p>
+<p>The first element is <code class="docutils literal notranslate"><span class="pre">NaN</span></code> because we don’t have the data for 1949, so we can’t compute the first difference.</p>
 <p>If we divide these differences by the populations, the result is an estimate of the growth rate during each year:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">/</span> <span class="n">census</span>
-<span class="n">alpha</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">show</span><span class="p">(</span><span class="n">alpha</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Year
-1950         NaN
-1951    0.014378
-1952    0.015865
-1953    0.016883
-1954    0.017645
-Name: census, dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>census</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1951</th>
+      <td>0.014378</td>
+    </tr>
+    <tr>
+      <th>1952</th>
+      <td>0.015865</td>
+    </tr>
+    <tr>
+      <th>1953</th>
+      <td>0.016883</td>
+    </tr>
+    <tr>
+      <th>1954</th>
+      <td>0.017645</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The following function computes and plots the growth rates for the <code class="docutils literal notranslate"><span class="pre">census</span></code> and <code class="docutils literal notranslate"><span class="pre">un</span></code> estimates:</p>
 <div class="cell docutils container">
@@ -759,7 +774,8 @@ Name: census, dtype: float64
 </div>
 </div>
 </div>
-<p>And here’s what it looks like.</p>
+<p>It uses <code class="docutils literal notranslate"><span class="pre">style='.'</span></code> to plot each data point with a small circle.
+And here’s what it looks like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_alpha</span><span class="p">()</span>
@@ -767,12 +783,12 @@ Name: census, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_42_0.png" src="_images/chap08_42_0.png" />
+<img alt="_images/chap08_41_0.png" src="_images/chap08_41_0.png" />
 </div>
 </div>
 <p>Other than a bump around 1990, net growth rate has been declining roughly linearly since 1970.</p>
-<p>We can model the decline by fitting a line to this data and extrapolating into the future.</p>
-<p>Here’s a function that takes a time stamp and computes a line that roughly fits the growth rates since 1970.</p>
+<p>We can model the decline by fitting a line to this data and extrapolating into the future.
+Here’s a function that takes a time stamp and computes a line that roughly fits the growth rates since 1970.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">alpha_func</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
@@ -783,13 +799,14 @@ Name: census, dtype: float64
 </div>
 </div>
 </div>
-<p>To see what it looks like, I’ll create an array of time stamps from 1960 to 2020 and use <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> to compute the corresponding growth rates.</p>
+<p>To see what it looks like, I’ll create an array of time stamps from 1960 to 2020, use <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> to compute the corresponding growth rates, and put the results into a <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
 
 <span class="n">t_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">1960</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">alpha_array</span> <span class="o">=</span> <span class="n">alpha_func</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
+<span class="n">alpha_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">alpha_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -800,23 +817,23 @@ Name: census, dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
 
 <span class="n">plot_alpha</span><span class="p">()</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">alpha_array</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">alpha_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Net growth rate&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Linear model of net growth rate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f968672d910&gt;]
-</pre></div>
-</div>
-<img alt="_images/chap08_48_1.png" src="_images/chap08_48_1.png" />
+<img alt="_images/chap08_47_0.png" src="_images/chap08_47_0.png" />
 </div>
 </div>
 <p>If you don’t like the <code class="docutils literal notranslate"><span class="pre">slope</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept</span></code> I chose, feel free to adjust them.</p>
-<p>Now, as an exercise, you can use this function to make a projection of world population until 2100.</p>
+<p>Now, as an exercise, you can use this function project world population until 2100.</p>
 <ol class="simple">
-<li><p>Create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that includes <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> as a system variable.</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that includes <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> as a system parameter.</p></li>
 <li><p>Define a growth function that uses <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> to compute the net growth rate at the given time <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
-<li><p>Run a simulation from 1960 to 2100 with your update function, and plot the results.</p></li>
+<li><p>Run a simulation from 1960 to 2100 with your growth function, and plot the results.</p></li>
 <li><p>Compare your projections with those from the US Census and UN.</p></li>
 </ol>
 <div class="cell tag_hide-cell docutils container">
@@ -846,7 +863,7 @@ Name: census, dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">growth_func_alpha</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">growth_func_alpha</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha_func</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">pop</span>
 </pre></div>
 </div>
@@ -856,7 +873,7 @@ Name: census, dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">growth_func_alpha</span><span class="p">(</span><span class="n">p_0</span><span class="p">,</span> <span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="n">growth_func_alpha</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span> <span class="n">p_0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -886,16 +903,20 @@ Name: census, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_55_0.png" src="_images/chap08_55_0.png" />
+<img alt="_images/chap08_54_0.png" src="_images/chap08_54_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="c1"># If the net growth rate continues to decrease linearly,</span>
-<span class="c1"># world population will peak around 2065 at about 9.8 billion,</span>
-<span class="c1"># and then start to decline.</span>
+<span class="c1"># By extrapolating the observed decline in growth rate,</span>
+<span class="c1"># we generate projections that are similar to the</span>
+<span class="c1"># professionals&#39; until about 2050.</span>
+
+<span class="c1"># After that, our model predicts that world population </span>
+<span class="c1"># will peak around 2065 at about 9.8 billion, and then </span>
+<span class="c1"># start to decline.</span>
 </pre></div>
 </div>
 </div>
@@ -904,12 +925,12 @@ Name: census, dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">results</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(),</span> <span class="n">results</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(),</span> <span class="n">results2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2100, 12.58671867833247)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2066, 9.75910331482456)
 </pre></div>
 </div>
 </div>
