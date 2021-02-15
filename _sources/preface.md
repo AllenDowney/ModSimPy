@@ -1,206 +1,211 @@
 # Preface
 
-The premise of this book, and the other books in the *Think X* series,
-is that if you know how to program, you can use that skill to learn
-other topics.
 
-Most books on Bayesian statistics use math notation and present
-ideas using mathematical concepts like calculus. This book uses
-Python code and discrete approximations instead of
-continuous mathematics. As a result, what would be an integral in a math
-book becomes a summation, and most operations on probability
-distributions are loops or array operations.
+The essential skills of modeling — abstraction, analysis, simulation,
+and validation — are central in engineering, natural sciences, social
+sciences, medicine, and many other fields. Some students learn these
+skills implicitly, but in most schools they are not taught explicitly,
+and students get little practice. That's the problem this book is meant to address.
 
-I think this presentation is easier to understand, at least for people
-with programming skills. It is also more general, because when we make
-modeling decisions, we can choose the most appropriate model without
-worrying too much about whether the model lends itself to mathematical
-analysis.
+At Olin College, we teach these skills in a class called "Modeling and
+Simulation", which all students take in their first semester. My
+colleagues, John Geddes and Mark Somerville, and I developed this class and taught it for the first time in 2009.
 
-Also, it provides a smooth development path from simple examples to
-real-world problems.
+It is based on our belief that modeling should be taught explicitly,
+early, and throughout the curriculum. It is also based on our conviction that computation is an essential part of this process.
 
-## Modeling
+If students are limited to the mathematical analysis they can do by
+hand, they are restricted to a small number of simple physical systems, like a projectile moving in a vacuum or a block on a frictionless plane.
 
-Most chapters in this book are motivated by a real-world problem, so
-they involve some degree of modeling.  Before we can apply Bayesian
-methods (or any other analysis), we have to make decisions about which
-parts of the real-world system to include in the model and which
-details we can abstract away.
+And they only see bad models; that is, models that are too
+simple for their intended purpose. In nearly every mechanical system,
+air resistance and friction are essential features; if we ignore them,
+our predictions will be wrong and our designs won’t work.
 
-For example, in Chapter xxx, the motivating problem is to
-predict the winner of a soccer (football) game.  I model goal-scoring as a
-Poisson process, which implies that a goal is equally likely at any
-point in the game.  That is not exactly true, but it is probably a
-good enough model for most purposes.
+In most introductory physics classes, students don't make modeling
+decisions; sometimes they are not even aware of the decisions that have been made for them. Our goal is to teach the entire modeling process and give students a chance to practice it.
 
-In Chapter xxx the motivating problem is interpreting SAT
-scores (the SAT is a standardized test used for college admissions in
-the United States).  I start with a simple model that assumes that all
-SAT questions are equally difficult, but in fact the designers of the
-SAT deliberately include some questions that are relatively easy and
-some that are relatively hard.  I present a second model that accounts
-for this aspect of the design, and show that it doesn't have a big
-effect on the results after all.
+How much programming do I need?
 
-I think it is important to include modeling as an explicit part
-of problem solving because it reminds us to think about modeling
-errors (that is, errors due to simplifications and assumptions
-of the model).
+If you have never programmed before, you should be able to read this
+book, understand it, and do the exercises. I will do my best to explain everything you need to know; in particular, I have chosen carefully the vocabulary I introduce, and I try to define each term the first time it is used. If you find that I have used a term without defining it, let me know.
 
-Many of the methods in this book are based on discrete distributions,
-which makes some people worry about numerical errors.  But for
-real-world problems, numerical errors are almost always
-smaller than modeling errors.
+If you have programmed before, you will have an easier time getting
+started, but you might be uncomfortable in some places. I take an
+approach to programming you have probably not seen before.
 
-Furthermore, the discrete approach often allows better modeling
-decisions, and I would rather have an approximate solution
-to a good model than an exact solution to a bad model.
+Most programming classes have two big problems:
 
-## Who is this book for?
+1.  They go "bottom up", starting with basic language features and
+    gradually adding more powerful tools. As a result, it takes a long
+    time before students can do anything more interesting than convert
+    Fahrenheit to Celsius.
 
-To start this book, you should be comfortable with Python.
-If you are familiar with NumPy and Pandas, that will help, but I'll
-explain what you need as we go.
+2.  They have no context. Students learn to program with no particular
+    goal in mind, so the exercises span an incoherent collection of
+    topics, and the exercises tend to be unmotivated.
 
-You don't need to know calculus or linear algebra.
-You don't need any prior knowledge of statistics.  
+In this book, you learn to program with an immediate goal in mind:
+writing simulations of physical systems. And we proceed "top down", by
+which I mean we use professional-strength data structures and language
+features right away. In particular, we use the following Python libraries:
 
-In Chapter 1, I define
-probability and introduce the idea of conditional probability, which is the
-foundation of Bayes's Theorem.
-Chapter 3 introduces the idea of a probability distribution, which is the
-foundation of Bayesian statistics.
+-   NumPy for basic numerical computation (see
+    <https://www.numpy.org/>).
 
-Along the way, we will use a variety of discrete and continuous distributions,
-including the binomial, exponential, Poisson, beta, gamma, and normal
-distributions.
-I will explain each distribution when it is introduced, and we will use
-SciPy to compute them, so you don't need to know anything about their
-mathematical properties.
+-   SciPy for scientific computation (see <https://www.scipy.org/>).
+
+-   Matplotlib for visualization (see <https://matplotlib.org/>).
+
+-   Pandas for working with data (see <https://pandas.pydata.org/>).
+
+-   SymPy for symbolic computation, (see <https://www.sympy.org>).
+
+-   Pint for units like kilograms and meters (see
+    <https://pint.readthedocs.io>).
+
+-   Jupyter for reading, running, and developing code (see
+    <https://jupyter.org>).
+
+These tools let you work on more interesting programs sooner, but there are some drawbacks: they can be hard to use, and it can be challenging to keep track of which library does what and how they interact.
+
+I have tried to mitigate these problems by providing a library that makes it easier to get started with these tools, and provides some
+additional capabilities.
+
+Some features in the ModSim library are like training wheels; at some
+point you will probably stop using them and start working with the
+underlying libraries directly. Other features you might find useful the whole time you are working through the book, and later.
+
+I encourage you to read the the ModSim library code. Most of it is not
+complicated, and I tried to make it readable. Particularly if you have
+some programming experience, you might learn something by reverse
+engineering my design decisions.
+
+How much math and science do I need?
+
+I assume that you know what derivatives and integrals are, but that's
+about all. In particular, you don’t need to know (or remember) much
+about finding derivatives or integrals of functions analytically. If you know the derivative of $x^2$ and you can integrate $2x~dx$, that will do it. More importantly, you should understand what those concepts *mean*; but if you don’t, this book might help you figure it out.
+
+You don't have to know anything about differential equations.
+
+As for science, we will cover topics from a variety of fields, including demography, epidemiology, medicine, thermodynamics, and mechanics. For the most part, I don’t assume you know anything about these topics. In fact, one of the skills you need to do modeling is the ability to learn enough about new fields to develop models and simulations.
+
+When we get to mechanics, I assume you understand the relationship
+between position, velocity, and acceleration, and that you are familiar with Newton’s laws of motion, especially the second law, which is often expressed as $F = ma$ (force equals mass times acceleration).
+
+I think that's everything you need, but if you find that I left
+something out, please let me know.
+
+Getting started
+
+To run the examples and work on the exercises in this book, you will need an environment where you can run Jupyter notebooks.
+
+Jupyter is a software development environment where you can run Python code, including the examples in this book, and write your own code.
+
+A Jupyter notebook is a document that contains text, code, and results from running the code.
+Each chapter of this book is a Jupyter notebook where you can run the examples and work on exercises.
+
+To run the notebooks, you have two options:
+
+1. You can install Python and Jupyter on your computer and download my notebooks.
+
+2. You can run the notebooks on Colab.
+
+To run the notebooks on Colab, go to [the landing page for this book](https://allendowney.github.io/ModSimPy/index.html) and follow the links to the chapters.
+
+To run the notebooks on your computer, there are three steps:
+
+1.  Download the notebooks and copy them to your computer.
+
+2.  Install Python, Jupyter, and some additional libraries.
+
+3.  Run Jupyter and open the notebooks.
+
+To get the notebooks, download [this Zip archive](http://modsimpy.com/zip). You will need a program like
+WinZip or gzip to unpack the Zip file. Make a note of the location of
+the files you download.
+
+The next two sections provide details for the other steps.
+Installing and running software can be challenging, especially if you are not familiar with the command line.
+If you run into problems, you might want to work on Colab, at least to get started.
 
 
-## Working with the code
+**Installing Python**
 
-Reading this book will only get you so far; to really understand it,
-you have to work with the code.
-The original form of this book is a series of Jupyter notebooks.
-After you read each chapter, I encourage you to run the notebook and work
-on the exercises.  
-If you need help, my solutions are available.
+You might already have Python installed on your computer, but you might not have the latest version. To use the code in this book, you need Python 3.6 or later. Even if you have the latest version, you probably don't have all of the libraries we need.
 
-There are several ways to run the notebooks:
+You could update Python and install these libraries, but I strongly
+recommend that you don’t go down that road. I think you will find it
+easier to use **Anaconda**, which is a free Python distribution that includes all the libraries you need for this book (and more).
 
-* If you have Python and Jupyter installed, you can download the notebooks
-    and run them on your computer.
+Anaconda is available for Linux, macOS, and Windows. By default, it puts all files in your home directory, so you don’t need administrator (root) permission to install it, and if you have a version of Python already, Anaconda will not remove or modify it.
 
-* If you don't have a programming environment where you can run
-    Jupyter notebooks, you can run them
-    on Colab, which lets you run Jupyter notebooks in a browser without
-    installing anything.
+Start at <https://www.anaconda.com/download>. Download the installer for your system and run it. I recommend you run the installer as a normal user, not as administrator or root.
 
-To run the notebooks on Colab, start from [this landing page](http://allendowney.github.io/ThinkBayes2/index.html),
-which has links to all of the notebooks.
+I suggest you accept the recommended options. On Windows you have the
+option to install Visual Studio Code, which is an interactive
+environment for writing programs. You won't need it for this book, but
+you might want it for other projects.
 
-If you already have Python and Jupyter, you can
-[download the notebooks as a Zip file](https://github.com/AllenDowney/ThinkBayes2/raw/master/ThinkBayes2Notebooks.zip).
+By default, Anaconda installs most of the packages you need, but there
+are a few more you have to add. Once the installation is complete, open a command window. On macOS or Linux, you can use Terminal. On Windows, open the Anaconda Prompt that should be in your Start menu.
 
-
-## Installing Jupyter
-
-If you don't have Python and Jupyter already, I recommend you
-install Anaconda, which is a free Python distribution that includes all
-the packages you'll need.
-I found Anaconda easy to install.
-By default it installs files in your home
-directory, so you don't need administrator privileges. You can download
-Anaconda from [this site](https://www.anaconda.com/products/individual).
-
-By default Anaconda installs most of the packages you need to
-run the code in this book.
-But there are a few additional packages you need to install.
-
-To make sure you have everything you need
-(and the right versions), the best option is to create a Conda
-environment.
+Run the following command (copy and paste it if you can, to avoid
+typos):
 
 ```
-        conda env create -f environment.yml
-        conda activate ThinkBayes2
+conda install jupyter pandas sympy
+conda install beautifulsoup4 lxml html5lib
+conda install -c unidata pint
 ```
 
-If you don't want to create an environment just for this book, you can
-install what you need using Conda. The following commands should get
-everything you need:
+That should be everything you need.
+
+
+**Running Jupyter**
+
+ If you have not used Jupyter before, you can read about it at <https://jupyter.org>.
+
+To start Jupyter on macOS or Linux, open a Terminal; on Windows, open
+Git Bash. Use `cd` to “change directory" into the directory that contains the notebooks.
 
 ```
-    conda install python jupyter pandas scipy matplotlib
-    pip install empiricaldist
+cd ModSimPy
 ```
 
-If you don't want to use Anaconda, you will need the following packages:
+Then launch the Jupyter notebook server:
 
--   Jupyter to run the notebooks, <https://jupyter.org/>;
+```
+jupyter notebook
+```
 
--   NumPy for basic numerical computation, <https://www.numpy.org/>;
+Jupyter should open a window in a browser, and you should see the list
+of notebooks in my repository. Click on the first notebook, and follow
+the instructions to run the first few "cells". The first time you run a notebook, it might take several seconds to start, while some Python
+files get initialized. After that, it should run faster.
 
--   SciPy for scientific computation, <https://www.scipy.org/>;
-
--   Pandas for working with data, <https://pandas.pydata.org/>;
-
--   matplotlib for visualization, <https://matplotlib.org/>;
-
--   empiricaldist for representing distributions, <https://pypi.org/project/empiricaldist/>. .
-
-Although these are commonly used packages, they are not included with
-all Python installations, and they can be hard to install in some
-environments. If you have trouble installing them, I recommend using
-Anaconda or one of the other Python distributions that include these
-packages.
+You can also launch Jupyter from the Start menu on Windows, the Dock on macOS, or the Anaconda Navigator on any system. If you do that, Jupyter might start in your home directory or somewhere else in your file system, so you might have to navigate to find the directory with the notebooks.
 
 
+**Contributor List**
 
+If you have a suggestion or correction, send it to
+<downey@allendowney.com>. Or if you are a Git user, open an issue, or send me a pull request on [this repository](https://github.com/AllenDowney/ModSimPy).
 
-### Contributor List
+If I make a change based on your feedback, I will add you to the
+contributor list, unless you ask to be omitted.
 
-If you have a suggestion or correction, please send email to
-*downey\@allendowney.com*. If I make a change based on your feedback, I
-will add you to the contributor list (unless you ask to be omitted).
+If you include at least part of the sentence the error appears in, that makes it easy for me to search. Page and section numbers are fine, too, but not as easy to work with. Thanks!
 
-If you include at least part of the sentence the error appears in, that
-makes it easy for me to search. Page and section numbers are fine, too,
-but not as easy to work with. Thanks!
+-   I am grateful to John Geddes and Mark Somerville for thethe work we did together to create Modeling and Simulation, the class
+    at Olin College this book is based on.
 
--   First, I have to acknowledge David MacKay's excellent book,
-    *Information Theory, Inference, and Learning Algorithms*, which is
-    where I first came to understand Bayesian methods. With his
-    permission, I use several problems from his book as examples.
+-   My early work on this book benefited from conversations with my
+    amazing colleagues at Olin College, including John Geddes, Alison
+    Wood, Chris Lee, and Jason Woodard.
 
--   This book also benefited from my interactions with Sanjoy Mahajan,
-    especially in Fall 2012, when I audited his class on Bayesian
-    Inference at Olin College.
+-   I am grateful to Lisa Downey and Jason Woodard for their thoughtful and careful copy editing.
 
--   I wrote parts of this book during project nights with the Boston
-    Python User Group, so I would like to thank them for their company
-    and pizza.
-
--   Jasmine Kwityn and Dan Fauxsmith at O'Reilly Media proofread the
-    first edition and found many opportunities for improvement.
-
--   Linda Pescatore found a typo and made some helpful suggestions.
-
--   Tomasz Miasko sent many excellent corrections and suggestions.
-
-Other people who spotted typos and small errors include
-Greg Marra,
-Matt Aasted,
-Marcus Ogren,
-Tom Pollard,
-Paul A. Giannaros, Jonathan Edwards, George Purkins, Robert Marcus, Ram
-Limbu, James Lawry, Ben Kahle, Jeffrey Law,
-Alvaro Sanchez,
-Olivier Yiptong,
-Yuriy Pasichnyk,
-Kristopher Overholt,
-Max Hailperin,
-Markus Dobler
+-   Thanks to Alessandra Ferzoco, Erhardt Graeff, Emily Tow, Kelsey
+    Houston-Edwards, Linda Vanasupa, Matt Neal, Joanne Pratt, and Steve Matsumoto for their helpful suggestions.
