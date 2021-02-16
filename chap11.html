@@ -395,7 +395,7 @@
 <p>In this chapter, we develop a model of an epidemic as it spreads in a
 susceptible population, and use it to evaluate the effectiveness of
 possible interventions.</p>
-<p>My presentation of the model in the next few chapters is based on an excellent article by David Smith and Lang Moore, [^1]: Smith and Moore, “The SIR Model for Spread of Disease,” Journal of Online Mathematics and its Applications, December 2001, available at <a class="reference external" href="http://modsimpy.com/sir">http://modsimpy.com/sir</a>.</p>
+<p>My presentation of the model in the next few chapters is based on an excellent article by David Smith and Lang Moore, “The SIR Model for Spread of Disease,” <em>Journal of Online Mathematics and its Applications</em>, December 2001, available at <a class="reference external" href="http://modsimpy.com/sir">http://modsimpy.com/sir</a>.</p>
 <div class="section" id="the-freshman-plague">
 <h2>The Freshman Plague<a class="headerlink" href="#the-freshman-plague" title="Permalink to this headline">¶</a></h2>
 <p>Every year at Olin College, about 90 new students come to campus from
@@ -413,8 +413,8 @@ limitations.</p>
 </div>
 <div class="section" id="the-sir-model">
 <h2>The SIR model<a class="headerlink" href="#the-sir-model" title="Permalink to this headline">¶</a></h2>
-<p>The Kermack-McKendrick model is a simple version of an <strong>SIR model</strong>,
-so-named because it considers three categories of people:</p>
+<p>The Kermack-McKendrick model is an example of an <strong>SIR model</strong>,
+so-named because it represents three categories of people:</p>
 <ul class="simple">
 <li><p><strong>S</strong>: People who are “susceptible”, that is, capable of
 contracting the disease if they come into contact with someone who
@@ -425,8 +425,7 @@ susceptible.</p></li>
 <li><p><strong>R</strong>: People who are “recovered”. In the basic version of the
 model, people who have recovered are considered to be immune to
 reinfection. That is a reasonable model for some diseases, but not
-for others, so it should be on the list of assumptions to reconsider
-later.</p></li>
+for others, so it should be on the list of assumptions to reconsider later.</p></li>
 </ul>
 <p>Let’s think about how the number of people in each category changes over time. Suppose we know that people with the disease are infectious for a period of 4 days, on average. If 100 people are infectious at a
 particular point in time, and we ignore the particular time each one
@@ -468,7 +467,7 @@ recovered—and two flows—new infections and recoveries. Compartment
 models are often represented visually using stock and flow diagrams (see <a class="reference external" href="http://modsimpy.com/stock">http://modsimpy.com/stock</a>).</p>
 <p>The following figure shows the stock and flow diagram for an SIR
 model.</p>
-<p><img alt="Stock and flow diagram for an SIRmodel." src="https://github.com/AllenDowney/ModSim/raw/master/figs/stock_flow1.png" /></p>
+<p><img alt="Stock and flow diagram for an SIRmodel." src="https://github.com/AllenDowney/ModSim/raw/main/figs/stock_flow1.png" /></p>
 <p>Stocks are represented by rectangles, flows by arrows. The widget in the middle of the arrows represents a valve that controls the rate of flow; the diagram shows the parameters that control the valves.</p>
 </div>
 <div class="section" id="implementation">
@@ -486,37 +485,95 @@ the population in each compartment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">init</span>
+<span class="n">show</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S    89
-I     1
-R     0
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>S</th>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>I</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>R</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>And then convert the numbers to fractions by dividing by the total:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">sum</span>
-
-<span class="n">init</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
-<span class="n">init</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">/=</span> <span class="n">init</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">show</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S    0.988889
-I    0.011111
-R    0.000000
-dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>S</th>
+      <td>0.988889</td>
+    </tr>
+    <tr>
+      <th>I</th>
+      <td>0.011111</td>
+    </tr>
+    <tr>
+      <th>R</th>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>For now, let’s assume we know the time between contacts and time between
 recoveries:</p>
@@ -537,18 +594,15 @@ recoveries:</p>
 </div>
 </div>
 </div>
-<p>Now we need a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters and initial
+<p>I’ll use a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters and initial
 conditions. The following function takes the system parameters and returns a new <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
     <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">init</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+    <span class="n">init</span> <span class="o">/=</span> <span class="n">init</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-    <span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">14</span>
-
-    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="n">t0</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">7</span><span class="o">*</span><span class="mi">14</span><span class="p">,</span>
                   <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -560,33 +614,65 @@ semester.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-<span class="n">system</span>
+<span class="n">show</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>namespace(init=S    0.988889
-               I    0.011111
-               R    0.000000
-               dtype: float64,
-          t0=0,
-          t_end=98,
-          beta=0.3333333333333333,
-          gamma=0.25)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>init</th>
+      <td>S    0.988889
+I    0.011111
+R    0.000000
+Name...</td>
+    </tr>
+    <tr>
+      <th>t_end</th>
+      <td>98</td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td>0.333333</td>
+    </tr>
+    <tr>
+      <th>gamma</th>
+      <td>0.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 <div class="section" id="the-update-function">
 <h2>The update function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
 <p>At any point in time, the state of the system is represented by a
-<code class="docutils literal notranslate"><span class="pre">State</span></code> object with three variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>. So I’ll define an
-update function that takes as parameters a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, the current
-time, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<code class="docutils literal notranslate"><span class="pre">State</span></code> object with three variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>. So I’ll define an update function that takes as parameters the current
+time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
 
     <span class="n">infected</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">s</span>    
@@ -609,38 +695,67 @@ values from the <code class="docutils literal notranslate"><span class="pre">Sta
 <p>The variables <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>, are lowercase to distinguish them
 from the state variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
 <p>The update function computes <code class="docutils literal notranslate"><span class="pre">infected</span></code> and <code class="docutils literal notranslate"><span class="pre">recovered</span></code> as a fraction of the population, then updates <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>. The return value is a <code class="docutils literal notranslate"><span class="pre">State</span></code> that contains the updated values.</p>
-<p>When we call <code class="docutils literal notranslate"><span class="pre">update_func</span></code> like this:</p>
+<p>We can call <code class="docutils literal notranslate"><span class="pre">update_func</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
-<span class="n">state</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S    0.985226
-I    0.011996
-R    0.002778
-dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>S</th>
+      <td>0.985226</td>
+    </tr>
+    <tr>
+      <th>I</th>
+      <td>0.011996</td>
+    </tr>
+    <tr>
+      <th>R</th>
+      <td>0.002778</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
+<p>The result is the new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
 <p>You might notice that this version of <code class="docutils literal notranslate"><span class="pre">update_func</span></code> does not use one of its parameters, <code class="docutils literal notranslate"><span class="pre">t</span></code>. I include it anyway because update functions
 sometimes depend on time, and it is convenient if they all take the same parameters, whether they need them or not.</p>
 </div>
 <div class="section" id="running-the-simulation">
 <h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>Now we can simulate the model over a sequence of time steps:</p>
-<div class="cell tag_export docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
-
-<span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
 
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">state</span>
 </pre></div>
@@ -649,35 +764,57 @@ sometimes depend on time, and it is convenient if they all take the same paramet
 </div>
 <p>The parameters of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> are the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and the
 update function. The <code class="docutils literal notranslate"><span class="pre">System</span></code> object contains the parameters, initial
-conditions, and values of <code class="docutils literal notranslate"><span class="pre">t0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
+conditions, and values of <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
 <p>We can call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-<span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The result is the final state of the system:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S    0.520568
-I    0.000666
-R    0.478766
-dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>S</th>
+      <td>0.520568</td>
+    </tr>
+    <tr>
+      <th>I</th>
+      <td>0.000666</td>
+    </tr>
+    <tr>
+      <th>R</th>
+      <td>0.478766</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
-<p>This result indicates that after 14 weeks (98 days), about 52% of the
+<p>The result indicates that after 14 weeks (98 days), about 52% of the
 population is still susceptible, which means they were never infected,
-less than 1% are actively infected, and 48% have recovered, which means they were infected at some point.</p>
+almost 48% have recovered, which means they were infected at some point, and less than 1% are actively infected.</p>
 </div>
 <div class="section" id="collecting-the-results">
 <h2>Collecting the results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">¶</a></h2>
@@ -686,17 +823,16 @@ but we might want to see how the state changes over time. We’ll consider two w
 <p>Here’s the first version:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation2</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
     <span class="n">I</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
     <span class="n">R</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
     <span class="n">state</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
-    <span class="n">t0</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">t0</span>
-    <span class="n">S</span><span class="p">[</span><span class="n">t0</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t0</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
         <span class="n">S</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
     
     <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span>
@@ -704,21 +840,15 @@ but we might want to see how the state changes over time. We’ll consider two w
 </div>
 </div>
 </div>
-<p>First, we create <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects to store the results. Notice that
-the variables <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code> are <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects now.</p>
-<p>Next we initialize <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">t0</span></code>, and the first elements of <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and
+<p>First, we create <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects to store the results.
+Next we initialize <code class="docutils literal notranslate"><span class="pre">state</span></code> and the first elements of <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and
 <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
-<p>Inside the loop, we use <code class="docutils literal notranslate"><span class="pre">update_func</span></code> to compute the state of the system
-at the next time step, then use multiple assignment to unpack the
-elements of <code class="docutils literal notranslate"><span class="pre">state</span></code>, assigning each to the corresponding <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
-<p>At the end of the function, we return the values <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>. This
-is the first example we have seen where a function returns more than one
-value.</p>
-<p>Now we can run the function like this:</p>
+<p>Inside the loop, we use <code class="docutils literal notranslate"><span class="pre">update_func</span></code> to compute the state of the system at the next time step, then use multiple assignment to unpack the elements of <code class="docutils literal notranslate"><span class="pre">state</span></code>, assigning each to the corresponding <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+<p>At the end of the function, we return the values <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>. This is the first example we have seen where a function returns more than one value.</p>
+<p>We can run the function like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-<span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">run_simulation2</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -744,26 +874,26 @@ value.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap11_44_0.png" src="_images/chap11_44_0.png" />
+<img alt="_images/chap11_43_0.png" src="_images/chap11_43_0.png" />
 </div>
 </div>
-<p>Notice that it takes about three weeks (21 days) for the outbreak to get going, and about six weeks (42 days) before it peaks. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
+<p>It takes about three weeks (21 days) for the outbreak to get going, and about five weeks (35 days) to peak. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
 </div>
 <div class="section" id="now-with-a-timeframe">
 <h2>Now with a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
 <p>If the number of state variables is small, storing them as separate
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects might not be so bad. But a better alternative is to use a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which is another object defined in the ModSim
-library.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> is a kind of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which we used in.</p>
+library.
+A <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> is a kind of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which we used earlier to store world population estimates.</p>
 <p>Here’s a more concise version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> using a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
     <span class="n">frame</span> <span class="o">=</span> <span class="n">TimeFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-    <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">arange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">system</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">frame</span>
 </pre></div>
@@ -772,14 +902,14 @@ library.</p>
 </div>
 <p>The first line creates an empty <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one column for each
 state variable. Then, before the loop starts, we store the initial
-conditions in the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> at <code class="docutils literal notranslate"><span class="pre">t0</span></code>. Based on the way we’ve been using
+conditions in the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> at <code class="docutils literal notranslate"><span class="pre">0</span></code>. Based on the way we’ve been using
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects, it is tempting to write:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
 </pre></div>
 </div>
-<p>But when you use the bracket operator with a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> or <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, it selects a column, not a row.</p>
-<p>To select a row, we have to use <code class="docutils literal notranslate"><span class="pre">loc</span></code>, like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
+<p>But when you use the bracket operator with a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> or <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, it selects a column, not a row.
+To select a row, we have to use <code class="docutils literal notranslate"><span class="pre">loc</span></code>, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span>
 </pre></div>
 </div>
 <p>Since the value on the right side is a <code class="docutils literal notranslate"><span class="pre">State</span></code>, the assignment matches
@@ -804,7 +934,7 @@ is, it assigns the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap11_51_0.png" src="_images/chap11_51_0.png" />
+<img alt="_images/chap11_50_0.png" src="_images/chap11_50_0.png" />
 </div>
 </div>
 <p>As with a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we can use the dot operator to select columns
@@ -812,6 +942,9 @@ from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</s
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter presents an SIR model of infectious disease and two ways to collect the results, using several <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects or a single <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
+<p>In the next chapter we’ll use the model to explore the effect of immunization and other interventions.</p>
+<p>But first you might want to work on these exercises.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -829,9 +962,39 @@ from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</s
 
 <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 <span class="n">s_0</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">S</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">final</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
-<span class="n">s_end</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
+<span class="c1"># If we use run_simulation1, it is easy to get the final</span>
+<span class="c1"># value of S</span>
+
+<span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+<span class="n">s_end</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">S</span>
+
+<span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3787177442414792
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># If we use run_simulation, it takes a little more</span>
+<span class="c1"># work to get the final value.</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+<span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
 
 <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
 </pre></div>

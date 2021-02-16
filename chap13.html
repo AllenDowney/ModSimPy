@@ -367,10 +367,11 @@
   <div class="section" id="chapter-13">
 <h1>Chapter 13<a class="headerlink" href="#chapter-13" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap13.ipynb">Click here to run this chapter on Colab</a></p>
-<p>In the previous chapters I presented an SIR model of infectious disease, specifically the Kermack-McKendrick model. We extended the model to include vaccination and the effect of a hand-washing campaign, and used the extended model to allocate a limited budget optimally, that is, to minimize the number of infections.</p>
+<p>In the previous chapter we extended the SIR model to include immunization and used it to demonstrate herd immunity.</p>
 <p>But we assumed that the parameters of the model, contact rate and
 recovery rate, were known. In this chapter, we explore the behavior of
-the model as we vary these parameters, use analysis to understand these relationships better, and propose a method for using data to estimate parameters.</p>
+the model as we vary these parameters.</p>
+<p>In the next chapter, we use analysis to understand these relationships better, and propose a method for using data to estimate parameters.</p>
 <div class="section" id="sweeping-beta">
 <h2>Sweeping beta<a class="headerlink" href="#sweeping-beta" title="Permalink to this headline">¶</a></h2>
 <p>Recall that <span class="math notranslate nohighlight">\(\beta\)</span> is the contact rate, which captures both the
@@ -391,34 +392,9 @@ for <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 </div>
 </div>
 </div>
-<p>Then run the simulation for each value and print the results.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">beta_array</span><span class="p">:</span>
-    <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1 0.0072309016649785285
-0.2 0.038410532615067994
-0.30000000000000004 0.33703425948982
-0.4 0.6502429153895082
-0.5 0.8045061124629623
-0.6 0.8862866308018508
-0.7000000000000001 0.9316695082755875
-0.8 0.9574278300784942
-0.9 0.9720993156325133
-1.0 0.9803437149675784
-1.1 0.9848347293510136
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can wrap that code in a function and store the results in a
-<code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> object:</p>
+<p>The following function takes this array as a parameter and a single value for <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
+<p>It runs the simulation for each value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and computes the same metric we used in the previous chapter, the fraction of the population that gets infected.</p>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> that contains the values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and the corresponding metrics.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_beta</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
@@ -432,7 +408,7 @@ for <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 </div>
 </div>
 </div>
-<p>Now we can run <code class="docutils literal notranslate"><span class="pre">sweep_beta</span></code> like this:</p>
+<p>We can run <code class="docutils literal notranslate"><span class="pre">sweep_beta</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep</span> <span class="o">=</span> <span class="n">sweep_beta</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
@@ -440,7 +416,7 @@ for <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 </div>
 </div>
 </div>
-<p>And plot the results:</p>
+<p>Before we plot the results, I will use a formatted string literal, also called an <strong>f-string</strong> to assemble a label that includes the value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;gamma = </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -454,17 +430,15 @@ for <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 </div>
 </div>
 </div>
-<p>The first line uses a formatted string literal, also called an <strong>f-string</strong> to assemble a label for the plotted line:</p>
-<ul class="simple">
-<li><p>An f-string starts with the letter “f” followed by a string in single or double quote.</p></li>
-<li><p>The string can contain any number of format specifiers in squiggly brackets, <code class="docutils literal notranslate"><span class="pre">{}</span></code>.</p></li>
-<li><p>When a variable name appears in a format specifier, it is replaced with the value of the variable.</p></li>
-</ul>
-<p>In this example, if the value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is <code class="docutils literal notranslate"><span class="pre">0.25</span></code>, the value of <code class="docutils literal notranslate"><span class="pre">label</span></code> is <code class="docutils literal notranslate"><span class="pre">'gamma</span> <span class="pre">=</span> <span class="pre">0.25'</span></code>.</p>
+<p>An f-string starts with the letter “f” followed by a string in single or double quotes.
+The string can contain any number of format specifiers in squiggly brackets, <code class="docutils literal notranslate"><span class="pre">{}</span></code>.
+When a variable name appears in a format specifier, it is replaced with the value of the variable.</p>
+<p>In this example, the value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is <code class="docutils literal notranslate"><span class="pre">0.25</span></code>, so the value of <code class="docutils literal notranslate"><span class="pre">label</span></code> is <code class="docutils literal notranslate"><span class="pre">'gamma</span> <span class="pre">=</span> <span class="pre">0.25'</span></code>.</p>
 <p>You can read more about f-strings at <a class="reference external" href="https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings">https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings</a>.</p>
+<p>Now let’s see the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">infected_sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Contact rate (beta)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction infected&#39;</span><span class="p">)</span>
@@ -487,10 +461,16 @@ infected students increases quickly. When <code class="docutils literal notransl
 <div class="section" id="sweeping-gamma">
 <h2>Sweeping gamma<a class="headerlink" href="#sweeping-gamma" title="Permalink to this headline">¶</a></h2>
 <p>Let’s see what that looks like for a few different values of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
-Again, we’ll use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> to make an array of values:</p>
+We’ll use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> to make an array of values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gamma_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">gamma_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.1, 0.3, 0.5, 0.7])
 </pre></div>
 </div>
 </div>
@@ -500,10 +480,11 @@ Again, we’ll use <code class="docutils literal notranslate"><span class="pre">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">gamma_array</span><span class="p">:</span>
     <span class="n">infected_sweep</span> <span class="o">=</span> <span class="n">sweep_beta</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;gamma = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;gamma = </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="n">infected_sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
     
-<span class="n">decorate</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Contact rate (beta)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction infected&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -589,10 +570,8 @@ for each pair of parameters, <code class="docutils literal notranslate"><span cl
 <p>This example demonstrates one use of a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>: we can run the analysis once, save the results, and then generate different visualizations.</p>
 <p>Another way to visualize the results of a two-dimensional sweep is a
 <strong>contour plot</strong>, which shows the parameters on the axes and contour
-lines, that is, lines of constant value. In this example, the value is
-the fraction of students infected.</p>
-<p>The ModSim library provides <code class="docutils literal notranslate"><span class="pre">contour</span></code>, which takes a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> as a
-parameter:</p>
+lines where the value of the metric is constant.</p>
+<p>The ModSim library provides <code class="docutils literal notranslate"><span class="pre">contour</span></code>, which takes a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> and uses Matplotlib to generate a contour plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contour</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
@@ -607,17 +586,27 @@ parameter:</p>
 <img alt="_images/chap13_35_0.png" src="_images/chap13_35_0.png" />
 </div>
 </div>
-<p>Infection rates are lowest in the lower right, where the contact rate is and the recovery rate is high. They increase as we move to the upper left, where the contact rate is high and the recovery rate is low.</p>
-<p>This figure suggests that there might be a relationship between <code class="docutils literal notranslate"><span class="pre">beta</span></code>
-and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> that determines the outcome of the model. In fact, there is.
-In the next chapter we’ll explore it by running simulations, then derive it by analysis.</p>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">gamma</span></code> are on the <span class="math notranslate nohighlight">\(x\)</span>-axis, corresponding to the columns of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>.
+The values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> are on the <span class="math notranslate nohighlight">\(y\)</span>-axis, corresponding to the rows of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>.</p>
+<p>Infection rates are lowest in the lower right, where the contact rate is low and the recovery rate is high. They increase as we move to the upper left, where the contact rate is high and the recovery rate is low.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter demonstrates a two-dimensional parameter sweep using a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> to store the results.</p>
+<p>We plotted the results three ways:</p>
+<ul class="simple">
+<li><p>First we plotted total infections versus <code class="docutils literal notranslate"><span class="pre">beta</span></code>, with one line for each value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p></li>
+<li><p>Then we plotted total infections versus <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, with one line for each value of <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p></li>
+<li><p>Finally, we made a contour plot with <code class="docutils literal notranslate"><span class="pre">beta</span></code> on the <span class="math notranslate nohighlight">\(y\)</span>-axis, <code class="docutils literal notranslate"><span class="pre">gamma</span></code> on the <span class="math notranslate nohighlight">\(x\)</span>-axis and contour lines where the metric is constant.</p></li>
+</ul>
+<p>These visualizations suggest that there is a relationship between <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> that determines the outcome of the model.
+In fact, there is.
+In the next chapter we’ll explore it by running simulations, then derive it by analysis.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong>  Suppose the infectious period for the Freshman Plague is known to be 2 days on average, and suppose during one particularly bad year, 40% of the class is infected at some point.  Estimate the time between contacts.</p>
+<p><strong>Exercise:</strong>  If we know <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, we can compute the fraction of the population that gets infected.  In general, we don’t know these parameters, but sometimes we can estimate them based on the behavior of an outbreak.</p>
+<p>Suppose the infectious period for the Freshman Plague is known to be 2 days on average, and suppose during one particularly bad year, 40% of the class is infected at some point.  Estimate the time between contacts, <code class="docutils literal notranslate"><span class="pre">1/beta</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
