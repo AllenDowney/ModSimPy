@@ -5,6 +5,8 @@ from modsim import *
 from chap11 import make_system
 from chap11 import update_func
 from chap11 import run_simulation
+from chap11 import plot_results
+
 from chap12 import calc_total_infected
 
 from modsim import *

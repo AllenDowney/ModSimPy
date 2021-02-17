@@ -12,7 +12,7 @@ def make_system(T_init, volume, r, t_end):
 
 from modsim import *
 
-def change_func(T, t, system):
+def change_func(t, T, system):
     r, T_env, dt = system.r, system.T_env, system.dt    
     return -r * (T - T_env) * dt
 
@@ -28,9 +28,8 @@ def run_simulation(system, change_func):
     for i in range(n-1):
         t = t_array[i]
         T = series.iloc[i]
-        series.iloc[i+1] = T + change_func(T, t, system)
+        series.iloc[i+1] = T + change_func(t, T, system)
     
-    system.t_end = t_array[-1]
     system.T_final = series.iloc[-1]
     return series
 

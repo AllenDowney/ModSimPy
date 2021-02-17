@@ -652,9 +652,12 @@ def make_series(x, y, **options):
 
     returns: Pandas Series
     """
+    underride(options, name='values')
     if isinstance(y, pd.Series):
         y = y.values
-    return pd.Series(y, index=x, **options)
+    series = pd.Series(y, index=x, **options)
+    series.index.name = 'index'
+    return series
 
 
 def TimeSeries(*args, **kwargs):
