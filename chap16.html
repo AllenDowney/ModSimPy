@@ -349,13 +349,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
+  <a class="reference internal nav-link" href="#summary">
+   Summary
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#under-the-hood">
-   Under the hood
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
   </a>
  </li>
 </ul>
@@ -374,13 +374,16 @@
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap16.ipynb">Click here to run this chapter on Colab</a></p>
 <p>In the previous chapter we wrote a simulation of a cooling cup of
 coffee. Given the initial temperature of the coffee, the temperature of the atmosphere, and the rate parameter, <code class="docutils literal notranslate"><span class="pre">r</span></code>, we can predict how the
-temperature of the coffee will change over time.</p>
-<p>…</p>
+temperature of the coffee will change over time.
+Then we used a root finding algorithm to estimate <code class="docutils literal notranslate"><span class="pre">r</span></code> based on data I invented for the example.</p>
+<p>If you did the exercises, you simulated the temperature of the milk as it warmed, and estimated its rate parameter as well.</p>
+<p>Now let’s put it together.
+In this chapter we’ll write a function that simulates mixing the two liquids and use it to answer the question we started with: is it better to mix the coffee and milk at the beginning, the end, or somewhere in the middle?</p>
 <div class="section" id="mixing-liquids">
 <h2>Mixing liquids<a class="headerlink" href="#mixing-liquids" title="Permalink to this headline">¶</a></h2>
 <p>When we mix two liquids, the temperature of the mixture depends on the
-temperatures of the ingredients, but it might not be obvious how to
-compute it.</p>
+temperatures of the ingredients as well as their volumes, densities, and specific heat capacities (as defined in the previous chapter).
+In this section I’ll explain how.</p>
 <p>Assuming there are no chemical reactions that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is <strong>conserved</strong>.</p>
 <p>If the temperature of the first liquid is <span class="math notranslate nohighlight">\(T_1\)</span>, the temperature of the second liquid is <span class="math notranslate nohighlight">\(T_2\)</span>, and the final temperature of the mixture is <span class="math notranslate nohighlight">\(T\)</span>, the heat transfer into the first liquid is <span class="math notranslate nohighlight">\(C_1 (T - T_1)\)</span> and the heat transfer into the second liquid is <span class="math notranslate nohighlight">\(C_2 (T - T_2)\)</span>, where <span class="math notranslate nohighlight">\(C_1\)</span> and <span class="math notranslate nohighlight">\(C_2\)</span> are the thermal masses of the liquids.</p>
 <p>In order to conserve energy, these heat transfers must add up to 0:</p>
@@ -399,7 +402,7 @@ compute it.</p>
 <p>As an approximation, I’ll assume that milk and coffee have the same
 density and specific heat. As an exercise, you can look up these
 quantities and see how good this assumption is.</p>
-<p>The following function takes two <code class="docutils literal notranslate"><span class="pre">System</span></code> objects that represent the
+<p>The following function takes two <code class="docutils literal notranslate"><span class="pre">System</span></code> objects, representing the
 coffee and milk, and creates a new <code class="docutils literal notranslate"><span class="pre">System</span></code> to represent the mixture:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -419,7 +422,7 @@ coffee and milk, and creates a new <code class="docutils literal notranslate"><s
 </div>
 </div>
 </div>
-<p>The first two lines extract volume and temperature from the two <code class="docutils literal notranslate"><span class="pre">System</span></code> objects. Then the following two lines compute the volume and temperature of the mixture. Finally, <code class="docutils literal notranslate"><span class="pre">mix</span></code> makes a new <code class="docutils literal notranslate"><span class="pre">System</span></code> object and returns it.</p>
+<p>The first two lines extract volume and temperature from the <code class="docutils literal notranslate"><span class="pre">System</span></code> objects. The next two lines compute the volume and temperature of the mixture. Finally, <code class="docutils literal notranslate"><span class="pre">mix</span></code> makes a new <code class="docutils literal notranslate"><span class="pre">System</span></code> object and returns it.</p>
 <p>This function uses the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> from <code class="docutils literal notranslate"><span class="pre">system1</span></code> as the value of <code class="docutils literal notranslate"><span class="pre">r</span></code>
 for the mixture. If <code class="docutils literal notranslate"><span class="pre">system1</span></code> represents the coffee, and we are adding
 the milk to the coffee, this is probably a reasonable choice. On the
@@ -431,7 +434,7 @@ revisit.</p>
 <div class="section" id="mix-first-or-last">
 <h2>Mix first or last?<a class="headerlink" href="#mix-first-or-last" title="Permalink to this headline">¶</a></h2>
 <p>First I’ll create objects to represent the coffee and milk.
-For <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code> and <code class="docutils literal notranslate"><span class="pre">r_milk</span></code>, I’ll use the values we computed in the previous chapter.</p>
+For <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code>, I’ll use the value we computed in the previous chapter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_coffee</span> <span class="o">=</span> <span class="mf">0.0115</span>
@@ -508,6 +511,8 @@ But is that the best we can do?</p>
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">run_and_mix</span></code> simulates both systems for the given time, <code class="docutils literal notranslate"><span class="pre">t_add</span></code>.
+Then it mixes them and simulates the mixture fir the remaining time, <code class="docutils literal notranslate"><span class="pre">t_total</span> <span class="pre">-</span> <span class="pre">t_add</span></code>.</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">t_add</span></code> is<code class="docutils literal notranslate"><span class="pre">0</span></code>, we add the milk immediately; when <code class="docutils literal notranslate"><span class="pre">t_add</span></code> is <code class="docutils literal notranslate"><span class="pre">30</span></code>, we add it at the end. Now we can sweep the range of values in between:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -529,21 +534,16 @@ But is that the best we can do?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap16_25_0.png" src="_images/chap16_25_0.png" />
+<img alt="_images/chap16_26_0.png" src="_images/chap16_26_0.png" />
 </div>
 </div>
 <p>Note that this is a parameter sweep, not a time series.</p>
 <p>The final temperature is maximized when <code class="docutils literal notranslate"><span class="pre">t_add=30</span></code>, so adding the milk
 at the end is optimal.</p>
-<p>As an exercise you will have a chance to explore a variation of the coffee cooling problem:</p>
-<blockquote>
-<div><p>Suppose the coffee shop won’t let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office. In that case is it better to add the milk at the coffee shop, or wait until I get to the office?</p>
-</div></blockquote>
-<p>But first, let’s do some analysis.</p>
 </div>
 <div class="section" id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
-<p>Simulating Newton’s law of cooling is almost silly, because we can solve the differential equation analytically. If</p>
+<p>Simulating Newton’s law of cooling isn’t really necessary because we can solve the differential equation analytically. If</p>
 <div class="math notranslate nohighlight">
 \[\frac{dT}{dt} = -r (T - T_{env})\]</div>
 <p>the general solution is</p>
@@ -592,12 +592,11 @@ observe the that temperature at <span class="math notranslate nohighlight">\(t_{
 </div>
 <p>This value is close to the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> we computed in the previous chapter, <code class="docutils literal notranslate"><span class="pre">0.115</span></code>, but not exactly the same.
 That’s because the simulations use discrete time steps, and the analysis uses continuous time.</p>
-<p>Nevertheless, the results of any analysis are consistent with the simulation.
+<p>Nevertheless, the results of the analysis are consistent with the simulation.
 To check, we’ll use the following function, which takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and uses the analytic result to compute a time series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
 
 <span class="k">def</span> <span class="nf">run_analysis</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">T_env</span><span class="p">,</span> <span class="n">T_init</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_init</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span>
@@ -631,28 +630,12 @@ The next two lines compute <code class="docutils literal notranslate"><span clas
 </div>
 <p>The final temperature is 70 °C, as it should be. In fact, the results
 are identical to what we got by simulation, with a small difference due to rounding.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">0.011543</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
-</pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">allclose</span>
-
-<span class="n">allclose</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">results2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-</pre></div>
-</div>
-</div>
-</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter we finished the coffee cooling problem from the previous chapter, and found that it is better to add the milk at the end, at least for the version of the problem I posed.</p>
+<p>As an exercise you will have a chance to explore a variation of the problem where the answer might be different.</p>
+<p>In the next chapter we’ll move on to a new example, a model of how glucose and insulin interact to control blood sugar.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -731,30 +714,6 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
-<p>ModSim provides <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make it easier to create a Pandas Series.  In this chapter, we used it like this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">T_array</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>If you import <code class="docutils literal notranslate"><span class="pre">Series</span></code> from Pandas, you can make a <code class="docutils literal notranslate"><span class="pre">Series</span></code> yourself, like this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
-
-<span class="n">Series</span><span class="p">(</span><span class="n">T_array</span><span class="p">,</span> <span class="n">t_array</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>I find that order counterintuitive, which is why I use <code class="docutils literal notranslate"><span class="pre">make_series</span></code>.
-<code class="docutils literal notranslate"><span class="pre">make_series</span></code> takes the same optional keyword arguments as <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
 </div>
 </div>
 

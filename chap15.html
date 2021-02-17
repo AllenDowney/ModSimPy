@@ -415,7 +415,7 @@ about temperature and heat, and we have to make some modeling decisions.</p>
 <h2>Temperature and heat<a class="headerlink" href="#temperature-and-heat" title="Permalink to this headline">¶</a></h2>
 <p>To understand how coffee cools (and milk warms), we need a model of
 temperature and heat. <strong>Temperature</strong> is a property of an object or a
-system; in SI units it is measured in degrees Celsius (°C). Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make up the object.</p>
+system; in SI units it is measured in degrees Celsius (°C). Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make it up.</p>
 <p>When particles in a hot object contact particles in a cold object, the
 hot object gets cooler and the cold object gets warmer as energy is
 transferred from one to the other. The transferred energy is called
@@ -467,11 +467,10 @@ smaller than the effects of conduction and convection, so we will ignore it.</p>
 </div>
 <div class="section" id="newton-s-law-of-cooling">
 <h2>Newton’s law of cooling<a class="headerlink" href="#newton-s-law-of-cooling" title="Permalink to this headline">¶</a></h2>
-<p>Newton’s law of cooling asserts that the temperature rate of change for an object is proportional to the difference in temperature between the
-object and the surrounding environment:</p>
+<p>Newton’s law of cooling asserts that the temperature rate of change for an object is proportional to the difference in temperature between the object and the surrounding environment:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dT}{dt} = -r (T - T_{env})\]</div>
-<p>where <span class="math notranslate nohighlight">\(T\)</span>, the temperature of the object, is a function of time, <span class="math notranslate nohighlight">\(t\)</span>; <span class="math notranslate nohighlight">\(T_{env}\)</span> is the temperature of the environment, and <span class="math notranslate nohighlight">\(r\)</span> is a constant that characterizes how quickly heat is transferred between the system and the environment.</p>
+<p>where <span class="math notranslate nohighlight">\(T\)</span>, the temperature of the object, is a function of time, <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(T_{env}\)</span> is the temperature of the environment, and <span class="math notranslate nohighlight">\(r\)</span> is a constant that characterizes how quickly heat is transferred between the system and the environment.</p>
 <p>Newton’s so-called “law ” is really a model: it is a good approximation in some conditions and less good in others.</p>
 <p>For example, if the primary mechanism of heat transfer is conduction,
 Newton’s law is “true”, which is to say that <span class="math notranslate nohighlight">\(r\)</span> is constant over a
@@ -503,7 +502,8 @@ Newton’s model to be quite good.</p>
 </div>
 </div>
 </div>
-<p>The values of <code class="docutils literal notranslate"><span class="pre">T_init</span></code>, <code class="docutils literal notranslate"><span class="pre">volume</span></code>, and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> come from the statement of the problem:</p>
+<p>In addition to the parameters, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, the initial time stamp, <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.</p>
+<p>Here’s a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the coffee.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
@@ -511,8 +511,8 @@ Newton’s model to be quite good.</p>
 </div>
 </div>
 </div>
-<p>I chose the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> arbitrarily for now; we will figure out how to estimate it soon.</p>
-<p>In addition, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.</p>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">T_init</span></code>, <code class="docutils literal notranslate"><span class="pre">volume</span></code>, and <code class="docutils literal notranslate"><span class="pre">t_end</span></code> come from the statement of the problem.
+I chose the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> arbitrarily for now; we will see how to estimate it soon.</p>
 <p>Strictly speaking, Newton’s law is a differential equation, but over a short period of time we can approximate it with a difference equation:</p>
 <div class="math notranslate nohighlight">
 \[\Delta T = -r (T - T_{env}) dt\]</div>
@@ -520,10 +520,10 @@ Newton’s model to be quite good.</p>
 <p>Note: I use <span class="math notranslate nohighlight">\(\Delta T\)</span> to denote a change in temperature over time, but in the context of heat transfer, you might also see <span class="math notranslate nohighlight">\(\Delta T\)</span> used to denote the difference in temperature between an object and its
 environment, <span class="math notranslate nohighlight">\(T - T_{env}\)</span>. To minimize confusion, I avoid this second
 use.</p>
-<p>The following function takes the current temperature, <code class="docutils literal notranslate"><span class="pre">T</span></code>, the current time <code class="docutils literal notranslate"><span class="pre">t</span></code>, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, and computes the change in temperature during a time step:</p>
+<p>The following function takes the current time <code class="docutils literal notranslate"><span class="pre">t</span></code>, the current temperature, <code class="docutils literal notranslate"><span class="pre">T</span></code>, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, and computes the change in temperature during a time step:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_func</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">r</span><span class="p">,</span> <span class="n">T_env</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span>    
     <span class="k">return</span> <span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">T_env</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
 </pre></div>
@@ -533,7 +533,7 @@ use.</p>
 <p>We can test it with the initial temperature of the coffee, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_func</span><span class="p">(</span><span class="n">coffee</span><span class="o">.</span><span class="n">T_init</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coffee</span><span class="o">.</span><span class="n">T_init</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -543,7 +543,7 @@ use.</p>
 </div>
 </div>
 </div>
-<p>With <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> minute, the temperature drops by about 0.7 °C/min, at least for this value of <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> minute, the temperature drops by about 0.7 °C, at least for this value of <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
 <p>Now here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that simulates a series of time steps from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -557,19 +557,29 @@ use.</p>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">T</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">change_func</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">change_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
     
-    <span class="n">system</span><span class="o">.</span><span class="n">t_end</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">series</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>This function is similar to previous versions of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
-<p>One difference is that it uses <code class="docutils literal notranslate"><span class="pre">linrange</span></code> to make an array of values
-from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code> with time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p>
-<p>We can run it like this:</p>
+<p>There are a two things here that are different from previous versions of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<p>First, we use  <code class="docutils literal notranslate"><span class="pre">linrange</span></code> to make an array of values from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code> with time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>.<br />
+<code class="docutils literal notranslate"><span class="pre">linrange</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">linspace</span></code>; they both take a start value and an end value and return an array of equally spaced values.
+The difference is the third argument: <code class="docutils literal notranslate"><span class="pre">linspace</span></code> takes an integer that indicates the number of points in the range; <code class="docutils literal notranslate"><span class="pre">linrange</span></code> takes a step size that indicates the interval between values.
+When we make the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>, we use the keyword argument <code class="docutils literal notranslate"><span class="pre">index</span></code> to indicate that the index of the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> is the array of time stamps, <code class="docutils literal notranslate"><span class="pre">t_array</span></code>.</p>
+<p>Second, this version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> uses <code class="docutils literal notranslate"><span class="pre">iloc</span></code> rather than <code class="docutils literal notranslate"><span class="pre">loc</span></code> to specify the rows in the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.
+Here’s the difference:</p>
+<ul class="simple">
+<li><p>With <code class="docutils literal notranslate"><span class="pre">loc</span></code>, the label in brackets can be any kind of value, with any start, end, and time step.  For example, in the world population model, the labels are years starting in 1960 and ending in 2016.</p></li>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">iloc</span></code>, the label in brackets is always an integer starting at 0.  So we can always get the first element with <code class="docutils literal notranslate"><span class="pre">iloc[0]</span></code> and the last element with <code class="docutils literal notranslate"><span class="pre">iloc[-1]</span></code>, regardless of what the labels are.</p></li>
+</ul>
+<p>In this version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, the loop variable is an integer, <code class="docutils literal notranslate"><span class="pre">i</span></code>, that goes from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">n-1</span></code>, including <code class="docutils literal notranslate"><span class="pre">0</span></code> but not including <code class="docutils literal notranslate"><span class="pre">n-1</span></code>.
+So the first time through the loop, <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code> and the value we add to the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> has index 1.
+The last time through the loop, <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">n-2</span></code> and the value we add has index <code class="docutils literal notranslate"><span class="pre">n-1</span></code>.</p>
+<p>We can run the simulation like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
@@ -577,26 +587,125 @@ from <code class="docutils literal notranslate"><span class="pre">t_0</span></co
 </div>
 </div>
 </div>
-<p>The result is a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> with one row per time step.</p>
+<p>The result is a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> with one row per time step.
+Here are the first few rows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time
-0.0    90.000000
-1.0    89.320000
-2.0    88.646800
-3.0    87.980332
-4.0    87.320529
-Name: Quantity, dtype: float64
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Quantity</th>
+    </tr>
+    <tr>
+      <th>Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.0</th>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>1.0</th>
+      <td>89.320000</td>
+    </tr>
+    <tr>
+      <th>2.0</th>
+      <td>88.646800</td>
+    </tr>
+    <tr>
+      <th>3.0</th>
+      <td>87.980332</td>
+    </tr>
+    <tr>
+      <th>4.0</th>
+      <td>87.320529</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And the last few rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Quantity</th>
+    </tr>
+    <tr>
+      <th>Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>26.0</th>
+      <td>74.362934</td>
+    </tr>
+    <tr>
+      <th>27.0</th>
+      <td>73.839305</td>
+    </tr>
+    <tr>
+      <th>28.0</th>
+      <td>73.320912</td>
+    </tr>
+    <tr>
+      <th>29.0</th>
+      <td>72.807702</td>
+    </tr>
+    <tr>
+      <th>30.0</th>
+      <td>72.299625</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-<p>Here’s what the results look like.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">t_0=0</span></code>, <code class="docutils literal notranslate"><span class="pre">t_end=30</span></code>, and <code class="docutils literal notranslate"><span class="pre">dt=1</span></code>, the time stamps go from <code class="docutils literal notranslate"><span class="pre">0.0</span></code> to <code class="docutils literal notranslate"><span class="pre">30.0</span></code>.</p>
+<p>Here’s what the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> looks like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;coffee&#39;</span><span class="p">)</span>
@@ -608,7 +717,7 @@ Name: Quantity, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap15_30_0.png" src="_images/chap15_30_0.png" />
+<img alt="_images/chap15_34_0.png" src="_images/chap15_34_0.png" />
 </div>
 </div>
 <p>The temperature after 30 minutes is 72.3 °C, which is a little higher than what’s stated in the problem, 70 °C.</p>
@@ -629,10 +738,10 @@ But it is more efficient to use a root-finding algorithm.</p>
 </div>
 <div class="section" id="finding-roots">
 <h2>Finding roots<a class="headerlink" href="#finding-roots" title="Permalink to this headline">¶</a></h2>
-<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> that finds the roots of non-linear equations. As a simple example, suppose you want to find the roots of the polynomial</p>
+<p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> that finds the roots of non-linear equations. As an example, suppose you want to find the roots of the polynomial</p>
 <div class="math notranslate nohighlight">
 \[f(x) = (x - 1)(x - 2)(x - 3)\]</div>
-<p>A <strong>root</strong> is a value of <span class="math notranslate nohighlight">\(x\)</span> that makes <span class="math notranslate nohighlight">\(f(x)=0\)</span>. Because of the way I wrote the polynomial, we can see that if <span class="math notranslate nohighlight">\(x=1\)</span>, the first factor is 0; if <span class="math notranslate nohighlight">\(x=2\)</span>, the second factor is 0; and if <span class="math notranslate nohighlight">\(x=3\)</span>, the third factor is 0, so those are the roots.</p>
+<p>A <strong>root</strong> is a value of <span class="math notranslate nohighlight">\(x\)</span> that makes <span class="math notranslate nohighlight">\(f(x)=0\)</span>. Because of the way I wrote this polynomial, we can see that if <span class="math notranslate nohighlight">\(x=1\)</span>, the first factor is 0; if <span class="math notranslate nohighlight">\(x=2\)</span>, the second factor is 0; and if <span class="math notranslate nohighlight">\(x=3\)</span>, the third factor is 0, so those are the roots.</p>
 <p>I’ll use this example to demonstrate <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>. First, we have to
 write a function that evaluates <span class="math notranslate nohighlight">\(f\)</span>:</p>
 <div class="cell docutils container">
@@ -662,7 +771,7 @@ write a function that evaluates <span class="math notranslate nohighlight">\(f\)
 </div>
 </div>
 <p>The first argument is the function whose roots we want. The second
-argument is an interval that contains or “brackets” a root. The result is an object that contains several variables, including <code class="docutils literal notranslate"><span class="pre">root</span></code>, which stores the root that was found.</p>
+argument is an interval that contains or “brackets” a root. The result is an object that contains several variables, including <code class="docutils literal notranslate"><span class="pre">root</span></code>, which is the root that was found.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">root</span>
@@ -726,8 +835,7 @@ With the right value of <code class="docutils literal notranslate"><span class="
 </div>
 </div>
 </div>
-<p>The result is an error of 2.3 °C, because the final temperature with
-this value of <code class="docutils literal notranslate"><span class="pre">r</span></code> is too high.</p>
+<p>The result is an error of 2.3 °C, which means the final temperature with <code class="docutils literal notranslate"><span class="pre">r=0.01</span></code> is too high.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_func</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">coffee</span><span class="p">)</span>
@@ -741,7 +849,7 @@ this value of <code class="docutils literal notranslate"><span class="pre">r</sp
 </div>
 </div>
 <p>With <code class="docutils literal notranslate"><span class="pre">r=0.02</span></code>, the error is  about -11°C, which means that the final temperature is too low. So we know that the correct value must be in between.</p>
-<p>So we can call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> like this:</p>
+<p>Now we can call <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">error_func</span><span class="p">,</span> <span class="n">coffee</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">])</span>
@@ -822,7 +930,7 @@ The third argument is an interval that brackets the root.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap15_59_0.png" src="_images/chap15_59_0.png" />
+<img alt="_images/chap15_63_0.png" src="_images/chap15_63_0.png" />
 </div>
 </div>
 <p><strong>Exercise:</strong> Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
