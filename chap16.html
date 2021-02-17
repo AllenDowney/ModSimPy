@@ -353,6 +353,11 @@
    Exercises
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-the-hood">
+   Under the hood
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -608,7 +613,7 @@ To check, we’ll use the following function, which takes a <code class="docutil
 </div>
 <p>The first line unpacks the system variables.
 The next two lines compute <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, which is a NumPy array of time stamps, and <code class="docutils literal notranslate"><span class="pre">T_array</span></code>, which is an array of the corresponding temperatures.</p>
-<p>The last two lines store the final temperature in the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and return the results in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<p>The last two lines store the final temperature in the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to return the results in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
 <p>We can run it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -726,6 +731,30 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="under-the-hood">
+<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+<p>ModSim provides <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make it easier to create a Pandas Series.  In this chapter, we used it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">T_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you import <code class="docutils literal notranslate"><span class="pre">Series</span></code> from Pandas, you can make a <code class="docutils literal notranslate"><span class="pre">Series</span></code> yourself, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
+
+<span class="n">Series</span><span class="p">(</span><span class="n">T_array</span><span class="p">,</span> <span class="n">t_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>I find that order counterintuitive, which is why I use <code class="docutils literal notranslate"><span class="pre">make_series</span></code>.
+<code class="docutils literal notranslate"><span class="pre">make_series</span></code> takes the same optional keyword arguments as <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
 </div>
 </div>
 

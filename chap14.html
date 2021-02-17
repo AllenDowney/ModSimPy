@@ -354,6 +354,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
@@ -372,53 +377,44 @@
   <div class="section" id="chapter-14">
 <h1>Chapter 14<a class="headerlink" href="#chapter-14" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap14.ipynb">Click here to run this chapter on Colab</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import code from previous notebooks</span>
-
-<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">make_system</span>
-<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">update_func</span>
-<span class="kn">from</span> <span class="nn">chap11</span> <span class="kn">import</span> <span class="n">run_simulation</span>
-
-<span class="kn">from</span> <span class="nn">chap12</span> <span class="kn">import</span> <span class="n">calc_total_infected</span>
-
-<span class="kn">from</span> <span class="nn">chap13</span> <span class="kn">import</span> <span class="n">sweep_beta</span>
-<span class="kn">from</span> <span class="nn">chap13</span> <span class="kn">import</span> <span class="n">sweep_parameters</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>In the previous chapters we used simulation to predict the effect of an infectious disease in a susceptible population and to design
-interventions that would minimize the effect.</p>
-<p>In this chapter we use analysis to investigate the relationship between the parameters, <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and the outcome of the simulation.</p>
+<p>In the previous chapter we swept the parameters of the SIR model: the contact rate, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, and the recovery rate, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
+For each pair of parameters, we ran a simulation and computed the total fraction of the population infected.</p>
+<p>In this chapter we investigate the relationship between the parameters and this metric, using both simulation and analysis.</p>
 <div class="section" id="nondimensionalization">
 <h2>Nondimensionalization<a class="headerlink" href="#nondimensionalization" title="Permalink to this headline">¶</a></h2>
-<p>The figures in
-Section <a class="reference external" href="#sweepframe">[sweepframe]</a>{reference-type=”ref”
-reference=”sweepframe”} suggest that there is a relationship between the parameters of the SIR model, <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, that determines the outcome of the simulation, the fraction of students infected. Let’s think what that relationship might be.</p>
+<p>The figures in the previous chapter suggest that there is a relationship between the parameters of the SIR model, <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and the fraction of the population that is infected. Let’s think what that relationship might be.</p>
 <ul class="simple">
-<li><p>When <code class="docutils literal notranslate"><span class="pre">beta</span></code> exceeds <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, that means there are more contacts
-(that is, potential infections) than recoveries during each day (or other unit of time). The difference between <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> might be called the “excess contact rate”, in units of contacts per day.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">beta</span></code> exceeds <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, there are more contacts
+than recoveries during each day. The difference between <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> might be called the “excess contact rate”, in units of contacts per day.</p></li>
 <li><p>As an alternative, we might consider the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>, which
 is the number of contacts per recovery. Because the numerator and
 denominator are in the same units, this ratio is <strong>dimensionless</strong>, which means it has no units.</p></li>
 </ul>
 <p>Describing physical systems using dimensionless parameters is often a
-useful move in the modeling and simulation game. It is so useful, in
-fact, that it has a name: <strong>nondimensionalization</strong> (see
+useful move in the modeling and simulation game. In fact, it is so useful that it has a name: <strong>nondimensionalization</strong> (see
 <a class="reference external" href="http://modsimpy.com/nondim">http://modsimpy.com/nondim</a>).</p>
 <p>So we’ll try the second option first.</p>
 </div>
 <div class="section" id="exploring-the-results">
 <h2>Exploring the results<a class="headerlink" href="#exploring-the-results" title="Permalink to this headline">¶</a></h2>
-<p>Suppose we have a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> with one row for each value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and one column for each value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. Each element in the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> is the fraction of students infected in a simulation with a given pair of parameters.</p>
-<p>We can print the values in the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> like this:</p>
+<p>In the previous chapter, we wrote a function, <code class="docutils literal notranslate"><span class="pre">sweep_parameters</span></code>,
+that takes an array of values for <code class="docutils literal notranslate"><span class="pre">beta</span></code> and an array of values for <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
+It runs a simulation for each pair of parameters and returns a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> with the results.</p>
+<p>I’ll run it again with the following arrays of parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_array</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_array</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> 
+              <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
 <span class="n">gamma_array</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 <span class="n">frame</span> <span class="o">=</span> <span class="n">sweep_parameters</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma_array</span><span class="p">)</span>
-<span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the first few rows look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -494,13 +490,15 @@ fact, that it has a name: <strong>nondimensionalization</strong> (see
 </table>
 </div></div></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> has one row for each value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and one column for each value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
+<p>We can print the values in the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
     <span class="n">column</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">column</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-        <span class="n">frac_infected</span> <span class="o">=</span> <span class="n">column</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">frac_infected</span><span class="p">)</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">column</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -556,32 +554,29 @@ fact, that it has a name: <strong>nondimensionalization</strong> (see
 <p>This is the first example we’ve seen with one <code class="docutils literal notranslate"><span class="pre">for</span></code> loop inside another:</p>
 <ul class="simple">
 <li><p>Each time the outer loop runs, it selects a value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code> from
-the columns of the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> and extracts the corresponding
+the columns of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> and extracts the corresponding
 column.</p></li>
-<li><p>Each time the inner loop runs, it selects a value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> from the
-column and selects the corresponding element, which is the fraction
-of students infected.</p></li>
+<li><p>Each time the inner loop runs, it selects a value of <code class="docutils literal notranslate"><span class="pre">beta</span></code> from the index of the column and selects the corresponding element, which is the fraction of the population that got infected.</p></li>
 </ul>
-<p>In the example from the previous chapter, <code class="docutils literal notranslate"><span class="pre">frame</span></code> has 4 columns, one for
-each value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and 11 rows, one for each value of <code class="docutils literal notranslate"><span class="pre">beta</span></code>. So
-these loops print 44 lines, one for each pair of parameters.</p>
-<p>The following function encapulates the previous loop and plots the
-fraction infected as a function of the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>:</p>
+<p>Since there are 11 rows and 4 columns, the total number of lines in the output is 44.</p>
+<p>The following function uses the same loop to enumerate the elements of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>, but instead of printing a line for each element, it plots a point.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
 
 <span class="k">def</span> <span class="nf">plot_sweep_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">series</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-            <span class="n">frac_infected</span> <span class="o">=</span> <span class="n">series</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
-            <span class="n">plot</span><span class="p">(</span><span class="n">beta</span><span class="o">/</span><span class="n">gamma</span><span class="p">,</span> <span class="n">frac_infected</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> 
-                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">column</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="n">column</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+            <span class="n">plot</span><span class="p">(</span><span class="n">beta</span><span class="o">/</span><span class="n">gamma</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>On the <span class="math notranslate nohighlight">\(x\)</span>-axis, it plots the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>.
+On the <span class="math notranslate nohighlight">\(y\)</span>-axis, it plots the fraction of the population that’s infected.</p>
+<p>Here’s what it looks like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_sweep_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
@@ -592,10 +587,10 @@ fraction infected as a function of the ratio <code class="docutils literal notra
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_14_0.png" src="_images/chap14_14_0.png" />
+<img alt="_images/chap14_21_0.png" src="_images/chap14_21_0.png" />
 </div>
 </div>
-<p>The results fall on a single curve, at least approximately. That means that we can predict the fraction of students who will be infected based on a single parameter, the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>. We don’t need to know the values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> separately.</p>
+<p>The results fall on a single curve, at least approximately. That means that we can predict the fraction of the population that will be infected based on a single parameter, the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>. We don’t need to know the values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> separately.</p>
 </div>
 <div class="section" id="contact-number">
 <h2>Contact number<a class="headerlink" href="#contact-number" title="Permalink to this headline">¶</a></h2>
@@ -605,7 +600,7 @@ given day is <span class="math notranslate nohighlight">\(\beta s i N\)</span>, 
 <span class="math notranslate nohighlight">\(\beta s / \gamma\)</span>, which is the number of new infections per recovery
 (as a fraction of the population).</p>
 <p>When a new disease is introduced to a susceptible population, <span class="math notranslate nohighlight">\(s\)</span> is
-approximately 1, so the number of people infected by each sick person is <span class="math notranslate nohighlight">\(\beta / \gamma\)</span>. This ratio is called the “contact number” or “basic reproduction number” (see <a class="reference external" href="http://modsimpy.com/contact">http://modsimpy.com/contact</a>). By convention it is usually denoted <span class="math notranslate nohighlight">\(R_0\)</span>, but in the context of an SIR model, this notation is confusing, so we’ll use <span class="math notranslate nohighlight">\(c\)</span> instead.</p>
+approximately 1, so the number of people infected by each sick person is <span class="math notranslate nohighlight">\(\beta / \gamma\)</span>. This ratio is called the “contact number” or “basic reproduction number” (see <a class="reference external" href="http://modsimpy.com/contact">http://modsimpy.com/contact</a>). By convention it is usually denoted <span class="math notranslate nohighlight">\(R_0\)</span>, but in the context of an SIR model, that notation is confusing, so we’ll use <span class="math notranslate nohighlight">\(c\)</span> instead.</p>
 <p>The results in the previous section suggest that there is a relationship between <span class="math notranslate nohighlight">\(c\)</span> and the total number of infections. We can derive this relationship by analyzing the differential equations from
 Section xxx:</p>
 <div class="math notranslate nohighlight">
@@ -617,7 +612,13 @@ Section xxx:</p>
 contact rate by the infection rate to get the dimensionless quantity
 <span class="math notranslate nohighlight">\(c\)</span>, now we’ll divide <span class="math notranslate nohighlight">\(di/dt\)</span> by <span class="math notranslate nohighlight">\(ds/dt\)</span> to get a ratio of rates:</p>
 <div class="math notranslate nohighlight">
-\[\frac{di}{ds} = -1 + \frac{1}{cs}\]</div>
+\[\frac{di}{ds} = \frac{\beta s i - \gamma i}{-\beta s i}\]</div>
+<p>Which we can simplify as</p>
+<div class="math notranslate nohighlight">
+\[\frac{di}{ds} = -1 + \frac{\gamma}{\beta s}\]</div>
+<p>Replacing <span class="math notranslate nohighlight">\(\beta/\gamma\)</span> with <span class="math notranslate nohighlight">\(c\)</span>, we can write</p>
+<div class="math notranslate nohighlight">
+\[\frac{di}{ds} = -1 + \frac{1}{c s}\]</div>
 <p>Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(c\)</span> that does not depend on time. From that relationship, we can derive an equation that relates <span class="math notranslate nohighlight">\(c\)</span> to the final value of <span class="math notranslate nohighlight">\(s\)</span>. In theory, this equation makes it possible to infer <span class="math notranslate nohighlight">\(c\)</span> by observing the course of an epidemic.</p>
 <p>Here’s how the derivation goes. We multiply both sides of the previous
 equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
@@ -640,12 +641,10 @@ equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
 </div>
 <div class="section" id="analysis-and-simulation">
 <h2>Analysis and simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
-<p>Let’s compare this analytic result to the results from simulation. I’ll create an array of values for <span class="math notranslate nohighlight">\(s_{\infty}\)</span></p>
+<p>Let’s compare this analytic result to the results from simulation. I’ll create an array of values for <span class="math notranslate nohighlight">\(s_{\infty}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
-
-<span class="n">s_inf_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_inf_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.003</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -669,8 +668,7 @@ equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
 </div>
 </div>
 </div>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to put <code class="docutils literal notranslate"><span class="pre">c_array</span></code>
-and <code class="docutils literal notranslate"><span class="pre">frac_infected</span></code> in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">make_series</span></code> we can use to put <code class="docutils literal notranslate"><span class="pre">c_array</span></code> and <code class="docutils literal notranslate"><span class="pre">frac_infected</span></code> in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frac_infected_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">c_array</span><span class="p">,</span> <span class="n">frac_infected</span><span class="p">)</span>
@@ -690,38 +688,43 @@ and <code class="docutils literal notranslate"><span class="pre">frac_infected</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_29_0.png" src="_images/chap14_29_0.png" />
+<img alt="_images/chap14_37_0.png" src="_images/chap14_37_0.png" />
 </div>
 </div>
 <p>When the contact number exceeds 1, analysis and simulation agree. When
 the contact number is less than 1, they do not: analysis indicates there should be no infections; in the simulations there are a small number of infections.</p>
 <p>The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a
-continuous quantity. In other words, the two methods are actually based on different models. So which model is better?</p>
-<p>Probably neither. When the contact number is small, the early progress
-of the epidemic depends on details of the scenario. If we are lucky, the original infected person, “patient zero”, infects no one and there is no epidemic. If we are unlucky, patient zero might have a large number of close friends, or might work in the dining hall (and fail to observe safe food handling procedures).</p>
-<p>For contact numbers near or less than 1, we might need a more detailed
-model. But for higher contact numbers the SIR model might be good
-enough.</p>
+continuous quantity.
+When the contact number is large, these two models agree; when it is small, they diverge.</p>
 </div>
 <div class="section" id="estimating-contact-number">
 <h2>Estimating contact number<a class="headerlink" href="#estimating-contact-number" title="Permalink to this headline">¶</a></h2>
-<p>Figure xxx shows that if we know the contact number, we can compute the fraction infected. But we can also read the figure the other way; that is, at the end of an epidemic, if we can estimate the fraction of the population that was ever infected, we can use it to estimate the contact number.</p>
-<p>Well, in theory we can. In practice, it might not work very well,
-because of the shape of the curve. When the contact number is near 2,
-the curve is quite steep, which means that small changes in <span class="math notranslate nohighlight">\(c\)</span> yield
-big changes in the number of infections. If we observe that the total
-fraction infected is anywhere from 20% to 80%, we would conclude that
-<span class="math notranslate nohighlight">\(c\)</span> is near 2.</p>
-<p>On the other hand, for larger contact numbers, nearly the entire
-population is infected, so the curve is nearly flat. In that case we
-would not be able to estimate <span class="math notranslate nohighlight">\(c\)</span> precisely, because any value greater
-than 3 would yield effectively the same results. Fortunately, this is
-unlikely to happen in the real world; very few epidemics affect anything close to 90% of the population.</p>
-<p>So the SIR model has limitations; nevertheless, it provides insight into the behavior of infectious disease, especially the phenomenon of herd immunity. As we saw in Chapter xxx, if we know the parameters of the model, we can use it to evaluate possible interventions. And as we saw in this chapter, we might be able to use data from earlier outbreaks to estimate the parameters.</p>
+<p>The previous figure shows that if we know the contact number, we can estimate the fraction of the population that will be infected with just a few arithmetic operations.
+We don’t have to run a simulation.</p>
+<p>Also, we can read the figure the other way; if we know what fraction of the population was affected by a past outbreak, we can estimate the contact number.
+Then, if we know one of the parameters, like <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, we can use the contact number to estimate the other parameter, like <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
+<p>At least in theory, we can.
+In practice, it might not work very well, because of the shape of the curve.</p>
+<ul class="simple">
+<li><p>When the contact number is low, the curve is quite steep, which means that small changes in <span class="math notranslate nohighlight">\(c\)</span> yield big changes in the number of infections. If we observe that the total fraction infected is anywhere from 20% to 80%, we would conclude that <span class="math notranslate nohighlight">\(c\)</span> is near 2.</p></li>
+<li><p>And when the contact number is high, the curve is nearly flat, which means that it’s hard to see the difference between values of <span class="math notranslate nohighlight">\(c\)</span> between 3 and 6.</p></li>
+</ul>
+<p>So it might not be practical to use this curve to estimate <span class="math notranslate nohighlight">\(c\)</span>.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter we used simulations to explore the relationship between <code class="docutils literal notranslate"><span class="pre">beta</span></code>, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and the fraction infected.
+Then we used analysis to explain that relationship.</p>
+<p>With that, we are done with the SIR model.
+In the next chapter we move on to thermal systems and the notorious coffee cooling problem.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong>  If we didn’t know about contact numbers, we might have explored other possibilities, like the difference between <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, rather than their ratio.</p>
+<p><strong>Exercise:</strong> At the beginning of this chapter, I suggested two ways to relate <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>: we could compute their difference or their ratio.</p>
+<p>Because the ratio is dimensionless, I suggested we explore it first, and that led us to discover the contact number, which is <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>.
+When we plotted the fraction infected as a function of the contact number, we found that this metric falls on a single curve, at least approximately.
+That indicates that the ratio is enough to predict the results; we don’t have to know <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> individually.</p>
+<p>But that leaves a question open: what happens if we do the same thing using the difference instead of the ratio?</p>
 <p>Write a version of <code class="docutils literal notranslate"><span class="pre">plot_sweep_frame</span></code>, called <code class="docutils literal notranslate"><span class="pre">plot_sweep_frame_difference</span></code>, that plots the fraction infected versus the difference <code class="docutils literal notranslate"><span class="pre">beta-gamma</span></code>.</p>
 <p>What do the results look like, and what does that imply?</p>
 <div class="cell tag_hide-cell docutils container">
@@ -732,9 +735,8 @@ unlikely to happen in the real world; very few epidemics affect anything close t
     <span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">column</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">column</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-            <span class="n">frac_infected</span> <span class="o">=</span> <span class="n">column</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
-            <span class="n">plot</span><span class="p">(</span><span class="n">beta</span> <span class="o">-</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">frac_infected</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> 
-                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="n">column</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+            <span class="n">plot</span><span class="p">(</span><span class="n">beta</span> <span class="o">-</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -751,14 +753,14 @@ unlikely to happen in the real world; very few epidemics affect anything close t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_35_0.png" src="_images/chap14_35_0.png" />
+<img alt="_images/chap14_44_0.png" src="_images/chap14_44_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="c1"># The results don&#39;t fall on a line, which means that if we </span>
+<span class="c1"># The results don&#39;t fall on a curve, which means that if we </span>
 <span class="c1"># know the difference between `beta` and `gamma`, </span>
 <span class="c1"># but not their ratio, that&#39;s not enough to predict </span>
 <span class="c1"># the fraction infected.</span>
@@ -768,51 +770,245 @@ unlikely to happen in the real world; very few epidemics affect anything close t
 </div>
 <p><strong>Exercise:</strong> Suppose you run a survey at the end of the semester and find that 26% of students had the Freshman Plague at some point.</p>
 <p>What is your best estimate of <code class="docutils literal notranslate"><span class="pre">c</span></code>?</p>
-<p>Hint: if you print <code class="docutils literal notranslate"><span class="pre">frac_infected_series</span></code>, you can read off the answer.</p>
+<p>Hint: if you display <code class="docutils literal notranslate"><span class="pre">frac_infected_series</span></code>, you can read off the answer.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">frac_infected_series</span>
+<span class="n">show</span><span class="p">(</span><span class="n">frac_infected_series</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9.211261    0.999900
-3.516747    0.966603
-2.901137    0.933307
-2.558511    0.900010
-2.325167    0.866713
-2.150496    0.833417
-2.012246    0.800120
-1.898689    0.766823
-1.802908    0.733527
-1.720492    0.700230
-1.648460    0.666933
-1.584709    0.633637
-1.527703    0.600340
-1.476285    0.567043
-1.429566    0.533747
-1.386847    0.500450
-1.347569    0.467153
-1.311281    0.433857
-1.277610    0.400560
-1.246247    0.367263
-1.216935    0.333967
-1.189452    0.300670
-1.163613    0.267373
-1.139256    0.234077
-1.116242    0.200780
-1.094449    0.167483
-1.073772    0.134187
-1.054117    0.100890
-1.035401    0.067593
-1.017551    0.034297
-1.000500    0.001000
-dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>values</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5.826623</th>
+      <td>0.997000</td>
+    </tr>
+    <tr>
+      <th>3.855292</th>
+      <td>0.976857</td>
+    </tr>
+    <tr>
+      <th>3.281996</th>
+      <td>0.956714</td>
+    </tr>
+    <tr>
+      <th>2.944613</th>
+      <td>0.936571</td>
+    </tr>
+    <tr>
+      <th>2.708398</th>
+      <td>0.916429</td>
+    </tr>
+    <tr>
+      <th>2.528340</th>
+      <td>0.896286</td>
+    </tr>
+    <tr>
+      <th>2.383888</th>
+      <td>0.876143</td>
+    </tr>
+    <tr>
+      <th>2.263951</th>
+      <td>0.856000</td>
+    </tr>
+    <tr>
+      <th>2.161874</th>
+      <td>0.835857</td>
+    </tr>
+    <tr>
+      <th>2.073358</th>
+      <td>0.815714</td>
+    </tr>
+    <tr>
+      <th>1.995467</th>
+      <td>0.795571</td>
+    </tr>
+    <tr>
+      <th>1.926111</th>
+      <td>0.775429</td>
+    </tr>
+    <tr>
+      <th>1.863750</th>
+      <td>0.755286</td>
+    </tr>
+    <tr>
+      <th>1.807220</th>
+      <td>0.735143</td>
+    </tr>
+    <tr>
+      <th>1.755617</th>
+      <td>0.715000</td>
+    </tr>
+    <tr>
+      <th>1.708229</th>
+      <td>0.694857</td>
+    </tr>
+    <tr>
+      <th>1.664484</th>
+      <td>0.674714</td>
+    </tr>
+    <tr>
+      <th>1.623917</th>
+      <td>0.654571</td>
+    </tr>
+    <tr>
+      <th>1.586142</th>
+      <td>0.634429</td>
+    </tr>
+    <tr>
+      <th>1.550839</th>
+      <td>0.614286</td>
+    </tr>
+    <tr>
+      <th>1.517739</th>
+      <td>0.594143</td>
+    </tr>
+    <tr>
+      <th>1.486613</th>
+      <td>0.574000</td>
+    </tr>
+    <tr>
+      <th>1.457264</th>
+      <td>0.553857</td>
+    </tr>
+    <tr>
+      <th>1.429523</th>
+      <td>0.533714</td>
+    </tr>
+    <tr>
+      <th>1.403242</th>
+      <td>0.513571</td>
+    </tr>
+    <tr>
+      <th>1.378295</th>
+      <td>0.493429</td>
+    </tr>
+    <tr>
+      <th>1.354567</th>
+      <td>0.473286</td>
+    </tr>
+    <tr>
+      <th>1.331959</th>
+      <td>0.453143</td>
+    </tr>
+    <tr>
+      <th>1.310383</th>
+      <td>0.433000</td>
+    </tr>
+    <tr>
+      <th>1.289761</th>
+      <td>0.412857</td>
+    </tr>
+    <tr>
+      <th>1.270022</th>
+      <td>0.392714</td>
+    </tr>
+    <tr>
+      <th>1.251104</th>
+      <td>0.372571</td>
+    </tr>
+    <tr>
+      <th>1.232948</th>
+      <td>0.352429</td>
+    </tr>
+    <tr>
+      <th>1.215505</th>
+      <td>0.332286</td>
+    </tr>
+    <tr>
+      <th>1.198727</th>
+      <td>0.312143</td>
+    </tr>
+    <tr>
+      <th>1.182573</th>
+      <td>0.292000</td>
+    </tr>
+    <tr>
+      <th>1.167003</th>
+      <td>0.271857</td>
+    </tr>
+    <tr>
+      <th>1.151982</th>
+      <td>0.251714</td>
+    </tr>
+    <tr>
+      <th>1.137479</th>
+      <td>0.231571</td>
+    </tr>
+    <tr>
+      <th>1.123464</th>
+      <td>0.211429</td>
+    </tr>
+    <tr>
+      <th>1.109908</th>
+      <td>0.191286</td>
+    </tr>
+    <tr>
+      <th>1.096788</th>
+      <td>0.171143</td>
+    </tr>
+    <tr>
+      <th>1.084080</th>
+      <td>0.151000</td>
+    </tr>
+    <tr>
+      <th>1.071762</th>
+      <td>0.130857</td>
+    </tr>
+    <tr>
+      <th>1.059815</th>
+      <td>0.110714</td>
+    </tr>
+    <tr>
+      <th>1.048220</th>
+      <td>0.090571</td>
+    </tr>
+    <tr>
+      <th>1.036960</th>
+      <td>0.070429</td>
+    </tr>
+    <tr>
+      <th>1.026019</th>
+      <td>0.050286</td>
+    </tr>
+    <tr>
+      <th>1.015381</th>
+      <td>0.030143</td>
+    </tr>
+    <tr>
+      <th>1.005034</th>
+      <td>0.010000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -822,6 +1018,107 @@ dtype: float64
 <span class="c1"># number is about 1.16</span>
 </pre></div>
 </div>
+</div>
+</div>
+<p><strong>Exercise</strong>: So far the only metric we have considered is the total fraction of the population that gets infected over the course of an epidemic.  That is an important metric, but it is not the only one we care about.</p>
+<p>For example, if we have limited resources to deal with infected people, we might also be concerned about the number of people who are sick at the peak of the epidemic, which is the maximum of <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
+<p>Write a version of <code class="docutils literal notranslate"><span class="pre">sweep_beta</span></code> that computes this metric, and use it to compute a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> for a range of values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
+Make a contour plot that shows the value of this metric as a function of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
+<p>Then use <code class="docutils literal notranslate"><span class="pre">plot_sweep_frame</span></code> to plot the maximum of <code class="docutils literal notranslate"><span class="pre">I</span></code> as a function of the contact number, <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>.
+Do the results fall on a single curve?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">sweep_beta_max</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">beta_array</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+        <span class="n">sweep</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">I</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sweep</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">sweep_parameters_max</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma_array</span><span class="p">):</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">SweepFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">gamma_array</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">gamma_array</span><span class="p">:</span>
+        <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span> <span class="o">=</span> <span class="n">sweep_beta_max</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">frame</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">frame_max</span> <span class="o">=</span> <span class="n">sweep_parameters_max</span><span class="p">(</span><span class="n">beta_array</span><span class="p">,</span> <span class="n">gamma_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">contour</span><span class="p">(</span><span class="n">frame_max</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Recovery rate (gamma)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Contact rate (beta)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Contour plot, maximum I&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap14_53_0.png" src="_images/chap14_53_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+<span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap14_54_0.png" src="_images/chap14_54_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
+
+<span class="k">def</span> <span class="nf">plot_sweep_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">series</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">gamma</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="n">series</span><span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+            <span class="n">plot</span><span class="p">(</span><span class="n">beta</span><span class="o">/</span><span class="n">gamma</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plot_sweep_frame</span><span class="p">(</span><span class="n">frame_max</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap14_56_0.png" src="_images/chap14_56_0.png" />
 </div>
 </div>
 </div>

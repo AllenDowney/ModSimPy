@@ -358,11 +358,6 @@
    Exercises
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#under-the-hood">
-   Under the hood
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -484,23 +479,23 @@ population to have this form.</p>
 </div>
 </div>
 </div>
-<p>In order to plot growth rate versus population, we’ll use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<p>To plot growth rate versus population, we’ll use the <code class="docutils literal notranslate"><span class="pre">plot</span></code> function from Matplotlib.
+First we have to import it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">growth_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">pop_array</span><span class="p">,</span> <span class="n">growth_array</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Which we can plot like this:</p>
+<p>Now we can use it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">growth_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;growth&#39;</span><span class="p">)</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">pop_array</span><span class="p">,</span> <span class="n">growth_array</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;net growth&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Population (billions)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Net growth (billions)&#39;</span><span class="p">,</span>
-         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Growth vs. Population&#39;</span><span class="p">)</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Net Growth vs. Population&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -759,30 +754,6 @@ with the result.</p>
 <img alt="_images/chap07_57_0.png" src="_images/chap07_57_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
-<p>ModSim provides <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make it easier to create a Pandas Series.  In this chapter, we used it like this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">growth_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">pop_array</span><span class="p">,</span> <span class="n">growth_array</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>If you import <code class="docutils literal notranslate"><span class="pre">Series</span></code> from Pandas, you can make a <code class="docutils literal notranslate"><span class="pre">Series</span></code> yourself, like this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
-
-<span class="n">growth_series</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">growth_array</span><span class="p">,</span> <span class="n">pop_array</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>I find that order counterintuitive, which is why I use <code class="docutils literal notranslate"><span class="pre">make_series</span></code>.
-<code class="docutils literal notranslate"><span class="pre">make_series</span></code> takes the same optional keyword arguments as <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
 </div>
 </div>
 
