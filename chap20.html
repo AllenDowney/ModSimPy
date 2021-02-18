@@ -355,11 +355,6 @@
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#under-the-hood">
-   Under the hood
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -376,21 +371,19 @@
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap20.ipynb">Click here to run this chapter on Colab</a></p>
 <p>So far the differential equations we’ve worked with have been <strong>first
 order</strong>, which means they involve only first derivatives. In this
-chapter, we turn our attention to second order ODEs, which can involve
-both first and second derivatives.</p>
-<p>We’ll revisit the falling penny example from
-Chapter xxx, and use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to find the position and velocity of the penny as it falls, with and without air resistance.</p>
+chapter, we turn our attention to second order differential equations, which can involve both first and second derivatives.</p>
+<p>We’ll revisit the falling penny example from Chapter 1, and use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to find the position and velocity of the penny as it falls, with and without air resistance.</p>
 <div class="section" id="newton-s-second-law-of-motion">
 <h2>Newton’s second law of motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h2>
-<p>First order ODEs can be written</p>
+<p>First order differential equations (DEs) can be written</p>
 <div class="math notranslate nohighlight">
 \[\frac{dy}{dx} = G(x, y)\]</div>
-<p>where <span class="math notranslate nohighlight">\(G\)</span> is some function of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> (see <a class="reference external" href="http://modsimpy.com/ode">http://modsimpy.com/ode</a>). Second order ODEs can be written</p>
+<p>where <span class="math notranslate nohighlight">\(G\)</span> is some function of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> (see <a class="reference external" href="http://modsimpy.com/ode">http://modsimpy.com/ode</a>). Second order DEs can be written</p>
 <div class="math notranslate nohighlight">
 \[\frac{d^2y}{dx^2} = H(x, y, \frac{dy}{dt})\]</div>
 <p>where <span class="math notranslate nohighlight">\(H\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(dy/dx\)</span>.</p>
 <p>In this chapter, we will work with one of the most famous and useful
-second order ODEs, Newton’s second law of motion:</p>
+second order DEs, Newton’s second law of motion:</p>
 <div class="math notranslate nohighlight">
 \[F = m a\]</div>
 <p>where <span class="math notranslate nohighlight">\(F\)</span> is a force or the total of a set of forces, <span class="math notranslate nohighlight">\(m\)</span> is the mass of a moving object, and <span class="math notranslate nohighlight">\(a\)</span> is its acceleration.</p>
@@ -402,7 +395,7 @@ realize that acceleration, <span class="math notranslate nohighlight">\(a\)</spa
 <p>Newton’s law can be written</p>
 <div class="math notranslate nohighlight">
 \[\frac{d^2y}{dt^2} = F / m\]</div>
-<p>And that’s definitely a second order ODE.
+<p>And that’s definitely a second order DE.
 In general, <span class="math notranslate nohighlight">\(F\)</span> can be a function of time, position, and velocity.</p>
 <p>Of course, this “law” is really a model in the sense that it is a
 simplification of the real world. Although it is often approximately
@@ -423,8 +416,7 @@ will move.</p>
 </div>
 <div class="section" id="dropping-pennies">
 <h2>Dropping pennies<a class="headerlink" href="#dropping-pennies" title="Permalink to this headline">¶</a></h2>
-<p>As a first example, let’s get back to the penny falling from the Empire State Building, which we considered in
-Chapter xxx. We will implement two models of this system: first without air resistance, then with.</p>
+<p>As a first example, let’s get back to the penny falling from the Empire State Building, which we considered in Chapter 1. We will implement two models of this system: first without air resistance, then with.</p>
 <p>Given that the Empire State Building is 381 m high, and assuming that
 the penny is dropped from a standstill, the initial conditions are:</p>
 <div class="cell docutils container">
@@ -435,37 +427,17 @@ the penny is dropped from a standstill, the initial conditions are:</p>
 </div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">y</span></code> is height above the sidewalk and <code class="docutils literal notranslate"><span class="pre">v</span></code> is velocity.</p>
-<p>The units <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">s</span></code> are from the <code class="docutils literal notranslate"><span class="pre">units</span></code> object provided by Pint:</p>
-<p>The only system parameter is the acceleration of gravity:</p>
+<p>I’ll put the initial conditions in a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, along with the magnitude of acceleration due to gravity, <code class="docutils literal notranslate"><span class="pre">g</span></code>, and the duration of the simulations, <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> 
+                <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">,</span> 
+                <span class="n">t_end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>In addition, we’ll specify the duration of the simulation and the step
-size:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>With these parameters, the number of time steps is 100, which is good
-enough for many problems. Once we have a solution, we will increase the
-number of steps and see what effect it has on the results.</p>
-<p>We need a <code class="docutils literal notranslate"><span class="pre">System</span></code> object to store the parameters:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now we need a slope function, and here’s where things get tricky. As we have seen, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can solve systems of first order ODEs, but Newton’s law is a second order ODE. However, if we recognize that</p>
+<p>Now we need a slope function, and here’s where things get tricky. As we have seen, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can solve systems of first order DEs, but Newton’s law is a second order DE. However, if we recognize that</p>
 <ol class="simple">
 <li><p>Velocity, <span class="math notranslate nohighlight">\(v\)</span>, is the derivative of position, <span class="math notranslate nohighlight">\(dy/dt\)</span>, and</p></li>
 <li><p>Acceleration, <span class="math notranslate nohighlight">\(a\)</span>, is the derivative of velocity, <span class="math notranslate nohighlight">\(dv/dt\)</span>,</p></li>
@@ -490,53 +462,44 @@ equations into a slope function:</p>
 </div>
 </div>
 </div>
-<p>The first parameter, <code class="docutils literal notranslate"><span class="pre">state</span></code>, contains the position and velocity of the
-penny. The last parameter, <code class="docutils literal notranslate"><span class="pre">system</span></code>, contains the system parameter <code class="docutils literal notranslate"><span class="pre">g</span></code>,
-which is the magnitude of acceleration due to gravity.</p>
-<p>The second parameter, <code class="docutils literal notranslate"><span class="pre">t</span></code>, is time. It is not used in this slope
-function because none of the factors of the model are time dependent. I include it anyway because this function will be called by <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, which always provides the same arguments,
-whether they are needed or not.</p>
-<p>The rest of the function is a straightforward translation of the
-differential equations, with the substitution <span class="math notranslate nohighlight">\(a = -g\)</span>, which indicates that acceleration due to gravity is in the direction of decreasing <span class="math notranslate nohighlight">\(y\)</span>. <code class="docutils literal notranslate"><span class="pre">slope_func</span></code> returns a sequence containing the two derivatives.</p>
+<p>As usual, the parameters are a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>The first line unpacks the state variables, <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+<p>The next two lines compute the derivatives of the state variables, <code class="docutils literal notranslate"><span class="pre">dydt</span></code> and <code class="docutils literal notranslate"><span class="pre">dvdt</span></code>.
+The derivative of position is velocity, and the derivative of velocity is acceleration.
+In this case, <span class="math notranslate nohighlight">\(a = -g\)</span>, which indicates that acceleration due to gravity is in the direction of decreasing <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">slope_func</span></code> returns a sequence containing the two derivatives.</p>
 <p>Before calling <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, it is a good idea to test the slope
 function with the initial conditions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dydt</span><span class="p">,</span> <span class="n">dvdt</span> <span class="o">=</span> <span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dydt</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dvdt</span><span class="p">)</span>
+<span class="n">dydt</span><span class="p">,</span> <span class="n">dvdt</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
--9.8
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, -9.8)
 </pre></div>
 </div>
 </div>
 </div>
-<p>The result is 0 m/s for velocity and 9.8 m/s<span class="math notranslate nohighlight">\(^2\)</span> for acceleration. Now we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> like this:</p>
+<p>The result is 0 m/s for velocity and -9.8 m/s<span class="math notranslate nohighlight">\(^2\)</span> for acceleration.</p>
+<p>Now we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">)</span>
-<span class="n">details</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: &#39;The solver successfully reached the end of the integration interval.&#39;
-     nfev: 38
-     njev: 0
-      nlu: 0
-      sol: None
-   status: 0
-  success: True
- t_events: None
- y_events: None
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The solver successfully reached the end of the integration interval.&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with two columns: <code class="docutils literal notranslate"><span class="pre">y</span></code> contains the height of the penny; <code class="docutils literal notranslate"><span class="pre">v</span></code> contains its velocity.
+Here are the first few rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -573,31 +536,29 @@ function with the initial conditions:</p>
       <td>0.00</td>
     </tr>
     <tr>
+      <th>0.1</th>
+      <td>380.951</td>
+      <td>-0.98</td>
+    </tr>
+    <tr>
       <th>0.2</th>
       <td>380.804</td>
       <td>-1.96</td>
+    </tr>
+    <tr>
+      <th>0.3</th>
+      <td>380.559</td>
+      <td>-2.94</td>
     </tr>
     <tr>
       <th>0.4</th>
       <td>380.216</td>
       <td>-3.92</td>
     </tr>
-    <tr>
-      <th>0.6</th>
-      <td>379.236</td>
-      <td>-5.88</td>
-    </tr>
-    <tr>
-      <th>0.8</th>
-      <td>377.864</td>
-      <td>-7.84</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with two columns: <code class="docutils literal notranslate"><span class="pre">y</span></code> contains the height of
-the penny; <code class="docutils literal notranslate"><span class="pre">v</span></code> contains its velocity.</p>
 <p>We can plot the results like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -609,20 +570,19 @@ the penny; <code class="docutils literal notranslate"><span class="pre">v</span>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap20_27_0.png" src="_images/chap20_27_0.png" />
+<img alt="_images/chap20_23_0.png" src="_images/chap20_23_0.png" />
 </div>
 </div>
 <p>Since acceleration is constant, velocity increases linearly and position decreases quadratically; as a result, the height curve is a parabola.</p>
 <p>The last value of <code class="docutils literal notranslate"><span class="pre">results.y</span></code> is negative, which means we ran the simulation too long.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_end</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-108.99999999999869
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-108.99999999999983
 </pre></div>
 </div>
 </div>
@@ -651,10 +611,7 @@ the simulation again with <code class="docutils literal notranslate"><span class
 <p>As an option, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can take an <strong>event function</strong>, which
 detects an “event”, like the penny hitting the sidewalk, and ends the
 simulation.</p>
-<p>Event functions take the same parameters as slope functions, <code class="docutils literal notranslate"><span class="pre">state</span></code>,
-<code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code>. They should return a value that passes through <code class="docutils literal notranslate"><span class="pre">0</span></code>
-when the event occurs. Here’s an event function that detects the penny
-hitting the sidewalk:</p>
+<p>Event functions take the same parameters as slope functions, <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code>. They should return a value that passes through <code class="docutils literal notranslate"><span class="pre">0</span></code> when the event occurs. Here’s an event function that detects the penny hitting the sidewalk:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
@@ -671,20 +628,12 @@ hitting the sidewalk:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
                                  <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
-<span class="n">details</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: &#39;A termination event occurred.&#39;
-     nfev: 38
-     njev: 0
-      nlu: 0
-      sol: None
-   status: 1
-  success: True
- t_events: [array([8.81788535])]
- y_events: [array([[ 5.68434189e-14, -8.64152764e+01]])]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
@@ -706,24 +655,25 @@ hitting the sidewalk:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">v</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5440000000007217
--86.24000000000001
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, -86.41527642726145)
 </pre></div>
 </div>
 </div>
 </div>
-<p>If there were no air resistance, the penny would hit the sidewalk (or someone’s head) at more than 300 km/h.</p>
-<p>So it’s a good thing there is air resistance.</p>
+<p>If there were no air resistance, the penny would hit the sidewalk (or someone’s head) at about 86 m/s. So it’s a good thing there is air resistance.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>But air resistance…</p>
+<p>In this chapter, we wrote Newton’s second law, which is a second order DE, as a system of first order DEs.
+Then we used <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to simulate a penny dropping from the Empire State Building in the absence of air resistance.
+And we used an event function to stop the simulation when the penny reaches the sidewalk.</p>
+<p>In the next chapter we’ll add air resistance to the model.
+But first you might want to work on this exercise.</p>
 <div class="section" id="exercises">
 <h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
 <p><strong>Exercise:</strong> Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
@@ -766,21 +716,11 @@ hitting the sidewalk:</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_0</span> <span class="o">/</span> <span class="n">r_final</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>213.56265216338966
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="mf">1e7</span>  <span class="c1"># seconds</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">t_end</span> <span class="o">=</span> <span class="mf">1e7</span>  <span class="c1"># seconds</span>
 
 <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
                 <span class="n">G</span><span class="o">=</span><span class="mf">6.674e-11</span><span class="p">,</span>   <span class="c1"># N m^2 / kg^2</span>
@@ -830,14 +770,6 @@ hitting the sidewalk:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute derivatives of the state.</span>
-<span class="sd">    </span>
-<span class="sd">    state: position, velocity</span>
-<span class="sd">    t: time</span>
-<span class="sd">    system: System object containing `m2`</span>
-<span class="sd">    </span>
-<span class="sd">    returns: derivatives of y and v</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
     <span class="n">m2</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">m2</span>    
 
@@ -895,7 +827,7 @@ hitting the sidewalk:</p>
 
 <span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span> 
                                  <span class="n">events</span><span class="o">=</span><span class="n">event_func</span><span class="p">)</span>
-<span class="n">details</span>
+<span class="n">details</span><span class="o">.</span><span class="n">message</span>
 </pre></div>
 </div>
 </div>
@@ -931,8 +863,6 @@ hitting the sidewalk:</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-
 
 <span class="n">seconds</span> <span class="o">=</span> <span class="n">t_event</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span>
 <span class="n">days</span> <span class="o">=</span> <span class="n">seconds</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
@@ -970,23 +900,10 @@ hitting the sidewalk:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap20_58_0.png" src="_images/chap20_58_0.png" />
+<img alt="_images/chap20_53_0.png" src="_images/chap20_53_0.png" />
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code></p>
-<p>Here is the source code for <code class="docutils literal notranslate"><span class="pre">crossings</span></code> so you can see what’s happening under the hood:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">psource</span> crossings
-</pre></div>
-</div>
-</div>
-</div>
-<p>The <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.InterpolatedUnivariateSpline.html">documentation of InterpolatedUnivariateSpline is here</a>.</p>
 </div>
 </div>
 

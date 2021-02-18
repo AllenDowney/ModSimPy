@@ -344,6 +344,16 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#drag-force">
+   Drag Force
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#trajectories">
    Trajectories
   </a>
@@ -357,13 +367,6 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#under-the-hood">
-     Under the hood
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -379,7 +382,7 @@
   <div class="section" id="chapter-22">
 <h1>Chapter 22<a class="headerlink" href="#chapter-22" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap22.ipynb">Click here to run this chapter on Colab</a></p>
-<p>In the previous chapter we modeled objects moving in one dimension, with and without drag. Now let’s move on to two dimensions, and baseball!</p>
+<p>In the previous chapter we modeled an object moving in one dimension, with and without drag. Now let’s move on to two dimensions, and baseball!</p>
 <p>In this chapter we model the flight of a baseball including the effect
 of air resistance. In the next chapter we use this model to solve an
 optimization problem.</p>
@@ -387,8 +390,6 @@ optimization problem.</p>
 <h2>Baseball<a class="headerlink" href="#baseball" title="Permalink to this headline">¶</a></h2>
 <p>To model the flight of a baseball, we have to make some
 decisions. To get started, we’ll ignore any spin that might be on the ball, and the resulting Magnus force (see <a class="reference external" href="http://modsimpy.com/magnus">http://modsimpy.com/magnus</a>). Under this assumption, the ball travels in a vertical plane, so we’ll run simulations in two dimensions, rather than three.</p>
-<p>Air resistance has a substantial effect on most projectiles in air, so
-we will include a drag force.</p>
 <p>To model air resistance, we’ll need the mass, frontal area, and drag
 coefficient of a baseball. Mass and diameter are easy to find (see
 <a class="reference external" href="http://modsimpy.com/baseball">http://modsimpy.com/baseball</a>). Drag coefficient is only a little
@@ -397,31 +398,58 @@ harder; according to <em><a class="reference external" href="https://books.googl
 might be as high as 0.5, and at high velocities as low as 0.28.
 Furthermore, the transition between these regimes typically happens
 exactly in the range of velocities we are interested in, between 20 m/s and 40 m/s.</p>
-<p>Nevertheless, we’ll start with a simple model where the drag coefficient does not depend on velocity; as an exercise at the end of the chapter, you will have a chance to implement a more detailed model and see what effect is has on the results.</p>
+<p>Nevertheless, we’ll start with a simple model where the drag coefficient does not depend on velocity; as an exercise at the end of the chapter, you can implement a more detailed model and see what effect it has on the results.</p>
 <p>But first we need a new computational tool, the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> object.</p>
 </div>
 <div class="section" id="vectors">
 <h2>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline">¶</a></h2>
 <p>Now that we are working in two dimensions, it will be useful to
 work with <strong>vector quantities</strong>, that is, quantities that represent both a magnitude and a direction. We will use vectors to represent positions, velocities, accelerations, and forces in two and three dimensions.</p>
-<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">Vector</span></code> the creates a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> that contains the <strong>components</strong> of the vector.
+<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that creates a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> that contains the <strong>components</strong> of the vector.
 In a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents a position in space, the components are the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates in 2-D, plus a <span class="math notranslate nohighlight">\(z\)</span> coordinate if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is in 3-D.</p>
 <p>You can create a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> by specifying its components. The following
 <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a point 3 units to the right (or east) and 4 units up (or north) from an implicit origin:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">A</span>
+<span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    3
-y    4
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>You can access the components of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> by name using the dot
 operator, like this:</p>
@@ -455,50 +483,90 @@ addition and subtraction:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">B</span>
+<span class="n">show</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    1
-y    2
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    4
-y    6
-dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    2
-y    2
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>For the definition and graphical interpretation of these operations, see <a class="reference external" href="http://modsimpy.com/vecops">http://modsimpy.com/vecops</a>.</p>
 <p>We can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with coordinates <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, as in the previous examples.
 Equivalently, we can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with a magnitude and angle.</p>
-<p><strong>Magnitude</strong> is the length of the vector: if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a position, magnitude is the distance from the origin; if it represents a velocity, magnitude is speed, that is, how fast the object is moving, regardless of direction.</p>
+<p><strong>Magnitude</strong> is the length of the vector: if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a position, magnitude is its distance from the origin; if it represents a velocity, magnitude is its speed.</p>
 <p>The <strong>angle</strong> of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is its direction, expressed as an angle in radians from the positive <span class="math notranslate nohighlight">\(x\)</span> axis. In the Cartesian plane, the angle 0 rad is due east, and the angle <span class="math notranslate nohighlight">\(\pi\)</span> rad is due west.</p>
 <p>ModSim provides functions to compute the magnitude and angle of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>.  For example, here are the magnitude and angle of <code class="docutils literal notranslate"><span class="pre">A</span></code>:</p>
 <div class="cell docutils container">
@@ -516,8 +584,9 @@ Equivalently, we can specify a <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <p>The magnitude is 5 because the length of <code class="docutils literal notranslate"><span class="pre">A</span></code> is the hypotenuse of a 3-4-5 triangle.</p>
-<p>The result from <code class="docutils literal notranslate"><span class="pre">vector_angle</span></code> is in radians, and most Python functions, like <code class="docutils literal notranslate"><span class="pre">sin</span></code> and <code class="docutils literal notranslate"><span class="pre">cos</span></code>, work with radians.
-But many people think more naturally in degrees.
+<p>The result from <code class="docutils literal notranslate"><span class="pre">vector_angle</span></code> is in radians.
+Most Python functions, like <code class="docutils literal notranslate"><span class="pre">sin</span></code> and <code class="docutils literal notranslate"><span class="pre">cos</span></code>, work with radians,
+but many people find it more natural to work with degrees.
 Fortunately, NumPy provides a function to convert radians to degrees:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -550,23 +619,51 @@ Fortunately, NumPy provides a function to convert radians to degrees:</p>
 </div>
 </div>
 </div>
-<p>Following convention, I’ll use <code class="docutils literal notranslate"><span class="pre">angle</span></code> for a value in degrees and <code class="docutils literal notranslate"><span class="pre">theta</span></code> for a value in radians.</p>
-<p>If you are given an angle and velocity, you can make a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> using
+<p>To avoid confusion, I’ll use the variable name <code class="docutils literal notranslate"><span class="pre">angle</span></code> for a value in degrees and <code class="docutils literal notranslate"><span class="pre">theta</span></code> for a value in radians.</p>
+<p>If you are given an angle and magnitude, you can make a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> using
 <code class="docutils literal notranslate"><span class="pre">pol2cart</span></code>, which converts from polar to Cartesian coordinates. For example, here’s a new <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with the same angle and magnitude of <code class="docutils literal notranslate"><span class="pre">A</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pol2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">mag</span><span class="p">)</span>
-<span class="n">Vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    3.0
-y    4.0
-dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Another way to represent the direction of <code class="docutils literal notranslate"><span class="pre">A</span></code> is a <strong>unit vector</strong>,
 which is a vector with magnitude 1 that points in the same direction as
@@ -574,46 +671,102 @@ which is a vector with magnitude 1 that points in the same direction as
 magnitude:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">/</span> <span class="n">vector_mag</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">vector_mag</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    0.6
-y    0.8
-dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>0.6</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>0.8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
-<p>We can do the same thing using the <code class="docutils literal notranslate"><span class="pre">vector_hat</span></code> function, so named because unit vectors are conventionally decorated with a hat, like this: <span class="math notranslate nohighlight">\(\hat{A}\)</span>.</p>
+<p>ModSim provides a function that does the same thing, called <code class="docutils literal notranslate"><span class="pre">vector_hat</span></code> because unit vectors are conventionally decorated with a hat, like this: <span class="math notranslate nohighlight">\(\hat{A}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_hat</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_hat</span> <span class="o">=</span> <span class="n">vector_hat</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">A_hat</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    0.6
-y    0.8
-dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>0.6</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>0.8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Now let’s get back to the game.</p>
 </div>
 <div class="section" id="simulating-baseball-flight">
 <h2>Simulating baseball flight<a class="headerlink" href="#simulating-baseball-flight" title="Permalink to this headline">¶</a></h2>
 <p>Let’s simulate the flight of a baseball that is batted from home plate
-at an angle of 45° and initial speed 40 m/s. We’ll use the center of home plate as the origin, a horizontal x-axis (parallel to the ground), and vertical y-axis (perpendicular to the ground). The initial height is about 1 m.</p>
+at an angle of 45° and initial speed 40 m/s. We’ll use the center of home plate as the origin, a horizontal x-axis (parallel to the ground), and a vertical y-axis (perpendicular to the ground). The initial height is 1 m.</p>
+<p>Here’s a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with the parameters we’ll need.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span>
     <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>          <span class="c1"># m</span>
     <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>          <span class="c1"># m</span>
     <span class="n">angle</span> <span class="o">=</span> <span class="mi">45</span><span class="p">,</span>     <span class="c1"># degree</span>
-    <span class="n">velocity</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>  <span class="c1"># m / s</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>  <span class="c1"># m / s</span>
 
     <span class="n">mass</span> <span class="o">=</span> <span class="mf">145e-3</span><span class="p">,</span>    <span class="c1"># kg </span>
     <span class="n">diameter</span> <span class="o">=</span> <span class="mf">73e-3</span><span class="p">,</span> <span class="c1"># m </span>
@@ -627,9 +780,10 @@ at an angle of 45° and initial speed 40 m/s. We’ll use the center of home pl
 </div>
 </div>
 </div>
-<p>I got the mass and diameter of the baseball from <a class="reference external" href="https://en.wikipedia.org/wiki/Baseball_(ball)">Wikipedia</a> and the coefficient of drag is from <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>:</p>
+<p>I got the mass and diameter of the baseball from <a class="reference external" href="https://en.wikipedia.org/wiki/Baseball_(ball)">Wikipedia</a> and the coefficient of drag from <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>:</p>
 <p>The density of air, <code class="docutils literal notranslate"><span class="pre">rho</span></code>, is based on a temperature of 20 °C at sea level (see <a class="reference external" href="http://modsimpy.com/tempress">http://modsimpy.com/tempress</a>).
-And we’ll need the acceleration of gravity, <code class="docutils literal notranslate"><span class="pre">g</span></code>.</p>
+As usual, <code class="docutils literal notranslate"><span class="pre">g</span></code> is acceleration due to gravity.</p>
+<p><code class="docutils literal notranslate"><span class="pre">t_end</span></code> is 10 seconds, which is long enough for the ball to land on the ground.</p>
 <p>The following function uses these quantities to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -641,7 +795,7 @@ And we’ll need the acceleration of gravity, <code class="docutils literal notr
     <span class="n">theta</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
     
     <span class="c1"># compute x and y components of velocity</span>
-    <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">pol2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+    <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">pol2cart</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
     
     <span class="c1"># make the initial state</span>
     <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="o">=</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="o">=</span><span class="n">vy</span><span class="p">)</span>
@@ -651,8 +805,7 @@ And we’ll need the acceleration of gravity, <code class="docutils literal notr
 
     <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
                   <span class="n">init</span> <span class="o">=</span> <span class="n">init</span><span class="p">,</span>
-                  <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="p">,</span>
-                 <span class="p">)</span>
+                  <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -665,8 +818,8 @@ velocity.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are the components of position.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> are the components of velocity.</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">System</span></code> object also contains <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, which is 10 seconds, long enough for the ball to land on the ground.
-Here’s the <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>When we call <code class="docutils literal notranslate"><span class="pre">System</span></code>, we pass <code class="docutils literal notranslate"><span class="pre">Params</span></code> as the first argument, which means that the variables in <code class="docutils literal notranslate"><span class="pre">Params</span></code> are copied to the new <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>Here’s how we make the <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
@@ -677,20 +830,56 @@ Here’s the <code class="docutils literal notranslate"><span class="pre">System
 <p>And here’s the initial <code class="docutils literal notranslate"><span class="pre">State</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">init</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x      0.000000
-y      1.000000
-vx    28.284271
-vy    28.284271
-Name: state, dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>vx</th>
+      <td>28.284271</td>
+    </tr>
+    <tr>
+      <th>vy</th>
+      <td>28.284271</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
-</div>
+<div class="section" id="drag-force">
+<h2>Drag Force<a class="headerlink" href="#drag-force" title="Permalink to this headline">¶</a></h2>
 <p>Next we need a function to compute drag force:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -718,17 +907,45 @@ and the drag equation to compute the magnitude of the drag force, <code class="d
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">vx</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">vy</span>
 <span class="n">V_test</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">)</span>
-<span class="n">drag_force</span><span class="p">(</span><span class="n">V_test</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="n">f_drag</span> <span class="o">=</span> <span class="n">drag_force</span><span class="p">(</span><span class="n">V_test</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">f_drag</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x   -0.937574
-y   -0.937574
-dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>-0.937574</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>-0.937574</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The result is a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents the drag force on the baseball, in Newtons, under the initial conditions.</p>
 <p>Now we’re ready for a slope function:</p>
@@ -749,10 +966,10 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>As usual, the parameters of the slope function are a time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
-In this example, we don’t use <code class="docutils literal notranslate"><span class="pre">t</span></code>, but we can’t leave it out because when <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> calls the slope function, it always provides the same arguments, whether they are needed or not.</p>
+<p>As usual, the parameters of the slope function are a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
+We don’t use <code class="docutils literal notranslate"><span class="pre">t</span></code> in this example, but we can’t leave it out because when <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> calls the slope function, it always provides the same arguments, whether they are needed or not.</p>
 <p><code class="docutils literal notranslate"><span class="pre">slope_func</span></code> unpacks the <code class="docutils literal notranslate"><span class="pre">State</span></code> object into variables <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">vx</span></code>, and <code class="docutils literal notranslate"><span class="pre">vy</span></code>.
-Then it packs <code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> into a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>, which it uses to compute drag force and acceleration due to drag, <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>.</p>
+Then it packs <code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> into a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>, which it uses to compute drag force, <code class="docutils literal notranslate"><span class="pre">f_drag</span></code>,  and acceleration due to drag, <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>.</p>
 <p>To represent acceleration due to gravity, it makes a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with magnitude <code class="docutils literal notranslate"><span class="pre">g</span></code> in the negative <span class="math notranslate nohighlight">\(y\)</span> direction.</p>
 <p>The total acceleration of the baseball, <code class="docutils literal notranslate"><span class="pre">A</span></code>, is the sum of accelerations due to gravity and drag.</p>
 <p>The return value is a sequence that contains:</p>
@@ -760,7 +977,7 @@ Then it packs <code class="docutils literal notranslate"><span class="pre">vx</s
 <li><p>The components of velocity, <code class="docutils literal notranslate"><span class="pre">V.x</span></code> and <code class="docutils literal notranslate"><span class="pre">V.y</span></code>.</p></li>
 <li><p>The components of acceleration, <code class="docutils literal notranslate"><span class="pre">A.x</span></code> and <code class="docutils literal notranslate"><span class="pre">A.y</span></code>.</p></li>
 </ul>
-<p>Together, these components represent the slope of the state variables, because <code class="docutils literal notranslate"><span class="pre">V</span></code> is the derivative of position and <code class="docutils literal notranslate"><span class="pre">A</span></code> is the derivative of velocity.</p>
+<p>These components represent the slope of the state variables, because <code class="docutils literal notranslate"><span class="pre">V</span></code> is the derivative of position and <code class="docutils literal notranslate"><span class="pre">A</span></code> is the derivative of velocity.</p>
 <p>As always, we can test the slope function by running it with the initial conditions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -777,6 +994,9 @@ Then it packs <code class="docutils literal notranslate"><span class="pre">vx</s
 <p>Using vectors to represent forces and accelerations makes the code
 concise, readable, and less error-prone. In particular, when we add
 <code class="docutils literal notranslate"><span class="pre">a_grav</span></code> and <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>, the directions are likely to be correct, because they are encoded in the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects.</p>
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
 <p>We’re almost ready to run the simulation.  The last thing we need is an event function that stops when the ball hits the ground.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -816,8 +1036,9 @@ concise, readable, and less error-prone. In particular, when we add
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">details</span></code> contains information about the simulation, including a message that indicates that a “termination event” occurred; that is, the simulated ball reached the ground.</p>
-<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one column for each of the state variables:</p>
+<p>The message in <code class="docutils literal notranslate"><span class="pre">details</span></code> indicates that a “termination event” occurred; that is, the simulated ball reached the ground.</p>
+<p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one row for each time step and one column for each of the state variables.
+Here are the last few rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
@@ -907,19 +1128,52 @@ concise, readable, and less error-prone. In particular, when we add
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_state</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">final_state</span>
+<span class="n">show</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x     99.318296
-y      0.000000
-vx    14.165894
-vy   -22.058763
-Name: 5.004887034868346, dtype: float64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>5.004887</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>99.318296</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>vx</th>
+      <td>14.165894</td>
+    </tr>
+    <tr>
+      <th>vy</th>
+      <td>-22.058763</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The final value of <code class="docutils literal notranslate"><span class="pre">y</span></code> is close to 0, as it should be.  The final value of <code class="docutils literal notranslate"><span class="pre">x</span></code> tells us how far the ball flew, in meters.</p>
 <div class="cell docutils container">
@@ -939,19 +1193,46 @@ Name: 5.004887034868346, dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_V</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">final_state</span><span class="o">.</span><span class="n">vx</span><span class="p">,</span> <span class="n">final_state</span><span class="o">.</span><span class="n">vy</span><span class="p">)</span>
-<span class="n">final_V</span>
+<span class="n">show</span><span class="p">(</span><span class="n">final_V</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    14.165894
-y   -22.058763
-dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>14.165894</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>-22.058763</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
-<p>The speed of the ball on impact is about 26 m/s, which is substantially slower than the initial velocity, 40 m/s.</p>
+<p>The magnitude of final velocity is the speed of the ball when it lands.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_mag</span><span class="p">(</span><span class="n">final_V</span><span class="p">)</span>
@@ -964,6 +1245,7 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>The final speed is about 26 m/s, which is substantially slower than the initial speed, 40 m/s.</p>
 </div>
 <div class="section" id="trajectories">
 <h2>Trajectories<a class="headerlink" href="#trajectories" title="Permalink to this headline">¶</a></h2>
@@ -979,12 +1261,12 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_71_0.png" src="_images/chap22_71_0.png" />
+<img alt="_images/chap22_69_0.png" src="_images/chap22_69_0.png" />
 </div>
 </div>
 <p>As expected, the <span class="math notranslate nohighlight">\(x\)</span> component increases as the ball moves away from home plate. The <span class="math notranslate nohighlight">\(y\)</span> position climbs initially and then descends, falling to 0 m near 5.0 s.</p>
 <p>Another way to view the results is to plot the <span class="math notranslate nohighlight">\(x\)</span> component on the
-x-axis and the <span class="math notranslate nohighlight">\(y\)</span> component on the y-axis, so the plotted line follows the trajectory of the ball through the plane:</p>
+<span class="math notranslate nohighlight">\(x\)</span>-axis and the <span class="math notranslate nohighlight">\(y\)</span> component on the <span class="math notranslate nohighlight">\(y\)</span>-axis, so the plotted line follows the trajectory of the ball through the plane:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_trajectory</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
@@ -1000,7 +1282,7 @@ x-axis and the <span class="math notranslate nohighlight">\(y\)</span> component
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_73_0.png" src="_images/chap22_73_0.png" />
+<img alt="_images/chap22_71_0.png" src="_images/chap22_71_0.png" />
 </div>
 </div>
 <p>This way of visualizing the results is called a <strong>trajectory plot</strong> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).</p>
@@ -1008,13 +1290,26 @@ x-axis and the <span class="math notranslate nohighlight">\(y\)</span> component
 because it shows what the motion of the projectile would look like (at
 least from one point of view). Both plots can be useful, but don’t get
 them mixed up! If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.</p>
+<p>Notice that the trajectory is not symmetric.
+With a launch angle of 45°, the landing angle is closer to vertical, about 57° degrees.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rad2deg</span><span class="p">(</span><span class="n">vector_angle</span><span class="p">(</span><span class="n">final_V</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-57.29187097821225
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="animation">
 <h2>Animation<a class="headerlink" href="#animation" title="Permalink to this headline">¶</a></h2>
 <p>One of the best ways to visualize the results of a physical model is animation.  If there are problems with the model, animation can make them apparent.</p>
 <p>The ModSimPy library provides <code class="docutils literal notranslate"><span class="pre">animate</span></code>, which takes as parameters a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a draw function.</p>
-<p>The draw function should take as parameters a <code class="docutils literal notranslate"><span class="pre">State</span></code> object and the time.  It should draw a single frame of the animation.</p>
-<p>Inside the draw function, you almost always have to call <code class="docutils literal notranslate"><span class="pre">set_xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">set_ylim</span></code>.  Otherwise <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> auto-scales the axes, which is usually not what you want.</p>
+<p>The draw function should take as parameters a time stamps and a <code class="docutils literal notranslate"><span class="pre">State</span></code>.  It should draw a single frame of the animation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
@@ -1032,14 +1327,14 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </div>
 </div>
 </div>
+<p>Inside the draw function, should use <code class="docutils literal notranslate"><span class="pre">decorate</span></code> to set the limits of the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes.
+Otherwise <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> auto-scales the axes, which is usually not what you want.</p>
+<p>To run the animation, uncomment the following line of code and run the cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># animate(results, draw_func)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/chap22_78_0.png" src="_images/chap22_78_0.png" />
 </div>
 </div>
 </div>
@@ -1081,7 +1376,7 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_83_0.png" src="_images/chap22_83_0.png" />
+<img alt="_images/chap22_82_0.png" src="_images/chap22_82_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -1113,7 +1408,7 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / meter<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same velocity and launch angle travel?</p>
+<p><strong>Exercise:</strong> The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / m<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same initial speed and launch angle travel?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hint</span>
@@ -1157,72 +1452,13 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </div>
 <p><strong>Exercise:</strong> The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC"><em>The Physics of Baseball</em></a>, shows coefficient of drag as a function of velocity.</p>
 <img src="https://github.com/AllenDowney/ModSimPy/raw/master/figs/baseball_drag.png" width="400">
-<p>I used <a class="reference external" href="https://automeris.io/WebPlotDigitizer/">an online graph digitizer</a> to extract the data and save it in a CSV file.  Here’s how we can read it:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;baseball_drag.csv&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/baseball_drag.csv
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
-
-
-<span class="n">baseball_drag</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<span class="n">mph</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">baseball_drag</span><span class="p">[</span><span class="s1">&#39;Velocity in mph&#39;</span><span class="p">],</span> <span class="n">units</span><span class="o">.</span><span class="n">mph</span><span class="p">)</span>
-<span class="n">mps</span> <span class="o">=</span> <span class="n">mph</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
-<span class="n">baseball_drag</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mps</span><span class="o">.</span><span class="n">magnitude</span>
-<span class="n">baseball_drag</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Velocity in meters per second&#39;</span>
-<span class="n">baseball_drag</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">46</span><span class="o">-</span><span class="mi">190</span><span class="n">b39a4677f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">baseball_drag</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">mph</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">baseball_drag</span><span class="p">[</span><span class="s1">&#39;Velocity in mph&#39;</span><span class="p">],</span> <span class="n">units</span><span class="o">.</span><span class="n">mph</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">mps</span> <span class="o">=</span> <span class="n">mph</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">baseball_drag</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mps</span><span class="o">.</span><span class="n">magnitude</span>
-
-<span class="ne">NameError</span>: name &#39;Quantity&#39; is not defined
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drag_interp</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">baseball_drag</span><span class="p">[</span><span class="s1">&#39;Drag coefficient&#39;</span><span class="p">])</span>
-<span class="n">vs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-<span class="n">cds</span> <span class="o">=</span> <span class="n">drag_interp</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span>
-<span class="n">make_series</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">cds</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Velocity (m/s)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;C_d&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>I used <a class="reference external" href="https://automeris.io/WebPlotDigitizer/">an online graph digitizer</a> to extract the data and save it in a CSV file.</p>
 <p>Modify the model to include the dependence of <code class="docutils literal notranslate"><span class="pre">C_d</span></code> on velocity, and see how much it affects the results.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="k">def</span> <span class="nf">drag_force2</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes drag force in the opposite direction of `v`.</span>
-<span class="sd">    </span>
-<span class="sd">    v: velocity</span>
-<span class="sd">    system: System object with rho, C_d, area</span>
-<span class="sd">    </span>
-<span class="sd">    returns: Vector drag force</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rho</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">area</span>
     
     <span class="n">C_d</span> <span class="o">=</span> <span class="n">drag_interp</span><span class="p">(</span><span class="n">vector_mag</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
@@ -1268,16 +1504,55 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 
 <span class="n">V</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
 <span class="n">f_drag</span> <span class="o">=</span> <span class="n">drag_force</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">system4</span><span class="p">)</span>
-<span class="n">f_drag</span>
+<span class="n">show</span><span class="p">(</span><span class="n">f_drag</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>-1.054771</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>-1.054771</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system4</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(28.284271247461902, 28.2842712474619, -6.466030881564545, -16.266030881564546)
 </pre></div>
 </div>
 </div>
@@ -1292,6 +1567,11 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -1301,6 +1581,70 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>vx</th>
+      <th>vy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4.722631</th>
+      <td>87.869695</td>
+      <td>3.989943e+00</td>
+      <td>12.094833</td>
+      <td>-19.677696</td>
+    </tr>
+    <tr>
+      <th>4.771825</th>
+      <td>88.462327</td>
+      <td>3.013834e+00</td>
+      <td>11.980462</td>
+      <td>-19.973270</td>
+    </tr>
+    <tr>
+      <th>4.821019</th>
+      <td>89.049363</td>
+      <td>2.023337e+00</td>
+      <td>11.866567</td>
+      <td>-20.265039</td>
+    </tr>
+    <tr>
+      <th>4.870213</th>
+      <td>89.630803</td>
+      <td>1.018656e+00</td>
+      <td>11.753207</td>
+      <td>-20.553016</td>
+    </tr>
+    <tr>
+      <th>4.919407</th>
+      <td>90.206647</td>
+      <td>1.065814e-14</td>
+      <td>11.640440</td>
+      <td>-20.837214</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -1311,19 +1655,28 @@ them mixed up! If you are looking at a time series plot and interpreting it as a
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.20664656623305
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
+<span class="c1"># Taking into account variation in C_d, the ball</span>
+<span class="c1"># would travel about 9 m less far.</span>
+
 <span class="n">x_dist4</span> <span class="o">-</span> <span class="n">x_dist</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289026
+</pre></div>
 </div>
-<div class="section" id="under-the-hood">
-<h3>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Vector</span></code></p>
+</div>
 </div>
 </div>
 </div>

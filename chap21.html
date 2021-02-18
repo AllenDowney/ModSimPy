@@ -353,11 +353,6 @@
    Exercises
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#under-the-hood">
-   Under the Hood
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -390,9 +385,9 @@ travel, and its magnitude is given by the drag equation (see
 <p>where</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(F_d\)</span> is force due to drag, in newtons (N).</p></li>
-<li><p><span class="math notranslate nohighlight">\(\rho\)</span> is the density of the fluid in kg/m^3^.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho\)</span> is the density of the fluid in kg/m<span class="math notranslate nohighlight">\(^3\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(v\)</span> is the magnitude of velocity in m/s.</p></li>
-<li><p><span class="math notranslate nohighlight">\(A\)</span> is the <strong>reference area</strong> of the object, in m^2^. In this
+<li><p><span class="math notranslate nohighlight">\(A\)</span> is the <strong>reference area</strong> of the object, in m<span class="math notranslate nohighlight">\(^2\)</span>. In this
 context, the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of
 travel (and far away).</p></li>
 <li><p><span class="math notranslate nohighlight">\(C_d\)</span> is the <strong>drag coefficient</strong>, a dimensionless quantity that
@@ -424,12 +419,12 @@ the speed where drag force equals force due to gravity:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span>
     <span class="n">mass</span> <span class="o">=</span> <span class="mf">0.0025</span><span class="p">,</span>      <span class="c1"># kg</span>
     <span class="n">diameter</span> <span class="o">=</span> <span class="mf">0.019</span><span class="p">,</span>   <span class="c1"># m</span>
-    <span class="n">rho</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span>     <span class="c1"># kg/m**3</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">,</span>       <span class="c1"># m/s**2</span>
-    <span class="n">v_init</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1"># m / s</span>
-    <span class="n">v_term</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span>   <span class="c1"># m / s</span>
-    <span class="n">height</span> <span class="o">=</span> <span class="mi">381</span><span class="p">,</span>  <span class="c1"># m</span>
-    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>    <span class="c1"># s</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span>          <span class="c1"># kg/m**3</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">,</span>            <span class="c1"># m/s**2</span>
+    <span class="n">v_init</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>         <span class="c1"># m / s</span>
+    <span class="n">v_term</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span>        <span class="c1"># m / s</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">381</span><span class="p">,</span>       <span class="c1"># m</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>         <span class="c1"># s</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -459,8 +454,7 @@ Then it returns a <code class="docutils literal notranslate"><span class="pre">S
                   <span class="n">mass</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span>
                   <span class="n">rho</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span>
                   <span class="n">g</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
-                  <span class="n">t_end</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">t_end</span>
-    <span class="p">)</span>
+                  <span class="n">t_end</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">t_end</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -537,13 +531,17 @@ And that makes sense, since lower drag implies faster terminal velocity.</p>
 </div>
 </div>
 </div>
+<p>As usual, the parameters of the slope function are a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
+We don’t use <code class="docutils literal notranslate"><span class="pre">t</span></code> in this example, but we can’t leave it out because when <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> calls the slope function, it always provides the same arguments, whether they are needed or not.</p>
 <p><code class="docutils literal notranslate"><span class="pre">f_drag</span></code> is force due to drag, based on the drag equation. <code class="docutils literal notranslate"><span class="pre">a_drag</span></code> is
 acceleration due to drag, based on Newton’s second law.</p>
 <p>To compute total acceleration, we add accelerations due to gravity and
-drag. <code class="docutils literal notranslate"><span class="pre">g</span></code> is negated because it is in the direction of decreasing <code class="docutils literal notranslate"><span class="pre">y</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">a_drag</span></code> is positive because it is in the direction of increasing
-<code class="docutils literal notranslate"><span class="pre">y</span></code>. In the next chapter we will use <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects to keep track of
+drag.
+<code class="docutils literal notranslate"><span class="pre">g</span></code> is negated because it is in the direction of decreasing <code class="docutils literal notranslate"><span class="pre">y</span></code>; <code class="docutils literal notranslate"><span class="pre">a_drag</span></code> is positive because it is in the direction of increasing
+<code class="docutils literal notranslate"><span class="pre">y</span></code>.
+In the next chapter we will use <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects to keep track of
 the direction of forces and add them up in a less error-prone way.</p>
+<p>As usual, let’s test the slope function with the initial conditions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
@@ -556,25 +554,14 @@ the direction of forces and add them up in a less error-prone way.</p>
 </div>
 </div>
 </div>
+<p>Because the initial velocity is 0, so is the drag force, so the initial acceleration is still <code class="docutils literal notranslate"><span class="pre">g</span></code>.</p>
 <p>To stop the simulation when the penny hits the sidewalk, we’ll use the
-event function from Section xxx:</p>
+event function from the previous chapter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
     <span class="k">return</span> <span class="n">y</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_func</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>381
 </pre></div>
 </div>
 </div>
@@ -626,24 +613,24 @@ event function from Section xxx:</p>
   </thead>
   <tbody>
     <tr>
-      <th>20.644308</th>
-      <td>3.229229e+01</td>
-      <td>-17.988889</td>
-    </tr>
-    <tr>
-      <th>21.093097</th>
-      <td>2.421654e+01</td>
-      <td>-17.991564</td>
-    </tr>
-    <tr>
       <th>21.541886</th>
       <td>1.614743e+01</td>
       <td>-18.001510</td>
     </tr>
     <tr>
+      <th>21.766281</th>
+      <td>1.211265e+01</td>
+      <td>-18.006240</td>
+    </tr>
+    <tr>
       <th>21.990676</th>
       <td>8.076745e+00</td>
       <td>-18.009752</td>
+    </tr>
+    <tr>
+      <th>22.215070</th>
+      <td>4.039275e+00</td>
+      <td>-18.011553</td>
     </tr>
     <tr>
       <th>22.439465</th>
@@ -655,7 +642,7 @@ event function from Section xxx:</p>
 </div></div></div>
 </div>
 <p>The final height is close to 0, as expected.</p>
-<p>Interestingly, the final velocity is not exactly terminal velocity, which suggests that there are some numerical errors.</p>
+<p>Interestingly, the final velocity is not exactly terminal velocity, which is a reminder that the simulation results are only approximate.</p>
 <p>We can get the flight time from <code class="docutils literal notranslate"><span class="pre">results</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -670,7 +657,8 @@ event function from Section xxx:</p>
 </div>
 </div>
 </div>
-<p>Here’s the plot of position as a function of time.</p>
+<p>With air resistance, it takes about 22 seconds for the penny to reach the sidewalk.</p>
+<p>Here’s a plot of position as a function of time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_position</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
@@ -684,7 +672,7 @@ event function from Section xxx:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap21_36_0.png" src="_images/chap21_36_0.png" />
+<img alt="_images/chap21_35_0.png" src="_images/chap21_35_0.png" />
 </div>
 </div>
 <p>And velocity as a function of time:</p>
@@ -702,13 +690,16 @@ event function from Section xxx:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap21_38_0.png" src="_images/chap21_38_0.png" />
+<img alt="_images/chap21_37_0.png" src="_images/chap21_37_0.png" />
 </div>
 </div>
 <p>From an initial velocity of 0, the penny accelerates downward until it reaches terminal velocity; after that, velocity is constant.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter presents a model of drag force, which we use to estimate the coefficient of drag for a penny, and then simulate, one more time, dropping a penny from the Empire State building.</p>
+<p>In the next chapter we’ll move from one dimension to two, simulating the flight of a baseball.</p>
+<p>But first you might want to work on these exercises.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -741,9 +732,11 @@ event function from Section xxx:</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_sidewalk</span> <span class="o">=</span> <span class="n">results2</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">t_sidewalk</span> <span class="o">=</span> <span class="n">results2</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">t_sidewalk</span>
 </pre></div>
 </div>
@@ -754,14 +747,16 @@ event function from Section xxx:</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_position</span><span class="p">(</span><span class="n">results2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plot_position</span><span class="p">(</span><span class="n">results2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap21_46_0.png" src="_images/chap21_46_0.png" />
+<img alt="_images/chap21_45_0.png" src="_images/chap21_45_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -773,7 +768,7 @@ event function from Section xxx:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap21_47_0.png" src="_images/chap21_47_0.png" />
+<img alt="_images/chap21_46_0.png" src="_images/chap21_46_0.png" />
 </div>
 </div>
 <p><strong>Exercise:</strong> Suppose we drop a quarter from the Empire State Building and find that its flight time is 19.1 seconds.  Use this measurement to estimate terminal velocity and coefficient of drag.</p>
@@ -786,7 +781,7 @@ event function from Section xxx:</p>
 <li><p>Optionally, write an error function and use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to improve your estimate.</p></li>
 <li><p>Use your best estimate of <code class="docutils literal notranslate"><span class="pre">v_term</span></code> to compute <code class="docutils literal notranslate"><span class="pre">C_d</span></code>.</p></li>
 </ol>
-<p>Note: I fabricated the observed flight time, so don’t take the results of this exercise too seriously.</p>
+<p>Note: I fabricated the “observed” flight time, so don’t take the results of this exercise too seriously.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -967,11 +962,6 @@ event function from Section xxx:</p>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Params</span></code> is a <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code>, like <code class="docutils literal notranslate"><span class="pre">System</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Params</span></code> and <code class="docutils literal notranslate"><span class="pre">System</span></code> are actually the same; I have given them different names to document the different roles they play.</p>
 </div>
 </div>
 

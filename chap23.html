@@ -382,12 +382,100 @@ most famous features is the “Green Monster”, which is a wall in left
 field that is unusually close to home plate, only 310 feet away. To
 compensate for the short distance, the wall is unusually high, at 37
 feet (see <a class="reference external" href="http://modsimpy.com/wally">http://modsimpy.com/wally</a>).</p>
-<p>We want to find the minimum velocity at which a ball can leave home
-plate and still go over the Green Monster. We’ll proceed in the
+<p>Starting with <code class="docutils literal notranslate"><span class="pre">params</span></code> from the previous chapter, I’ll make a new <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with two additional parameters, <code class="docutils literal notranslate"><span class="pre">wall_distance</span></code> and <code class="docutils literal notranslate"><span class="pre">wall_height</span></code>, in meters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feet_to_meter</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">feet</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">wall_distance</span> <span class="o">=</span> <span class="mi">310</span> <span class="o">*</span> <span class="n">feet_to_meter</span><span class="p">,</span>
+    <span class="n">wall_height</span> <span class="o">=</span> <span class="mi">37</span> <span class="o">*</span> <span class="n">feet_to_meter</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>angle</th>
+      <td>45.0000</td>
+    </tr>
+    <tr>
+      <th>speed</th>
+      <td>40.0000</td>
+    </tr>
+    <tr>
+      <th>mass</th>
+      <td>0.1450</td>
+    </tr>
+    <tr>
+      <th>diameter</th>
+      <td>0.0730</td>
+    </tr>
+    <tr>
+      <th>C_d</th>
+      <td>0.3300</td>
+    </tr>
+    <tr>
+      <th>rho</th>
+      <td>1.2000</td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td>9.8000</td>
+    </tr>
+    <tr>
+      <th>t_end</th>
+      <td>10.0000</td>
+    </tr>
+    <tr>
+      <th>wall_distance</th>
+      <td>94.4880</td>
+    </tr>
+    <tr>
+      <th>wall_height</th>
+      <td>11.2776</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The answer we want is the minimum speed at which a ball can leave home plate and still go over the Green Monster. We’ll proceed in the
 following steps:</p>
 <ol class="simple">
-<li><p>For a given velocity, we’ll find the optimal <strong>launch angle</strong>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
-<li><p>Then we’ll find the minimal velocity that clears the wall, given
+<li><p>For a given speed, we’ll find the optimal <strong>launch angle</strong>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
+<li><p>Then we’ll find the minimum speed that clears the wall, given
 that it has the optimal launch angle.</p></li>
 </ol>
 </div>
@@ -428,8 +516,9 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 </div>
-<p>And we can sweep a sequence of angles like this:</p>
-<div class="cell docutils container">
+<p>With launch angle 45°, the ball lands about 99 meters from home plate.</p>
+<p>Now we can sweep a sequence of angles like this:</p>
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
 <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
@@ -437,31 +526,6 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
     <span class="n">x_dist</span> <span class="o">=</span> <span class="n">range_func</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">sweep</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_dist</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.0 78.09741067882733
-23.0 84.11542610650983
-26.0 89.13192412363966
-29.0 93.17466724082834
-32.0 96.27134737391354
-35.0 98.44725560273994
-38.0 99.72474586365274
-41.0 100.12347299697635
-44.0 99.66100302635328
-47.0 98.35354763684825
-50.0 96.21673516565134
-53.0 93.26623796736267
-56.0 89.51751617672976
-59.0 84.98724481958087
-62.0 79.69434524339994
-65.0 73.66129770133256
-68.0 66.91470886279748
-71.0 59.482694929397475
-74.0 51.402871099404315
-77.0 42.72047925533483
-80.0 33.48437980813934
 </pre></div>
 </div>
 </div>
@@ -477,11 +541,11 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap23_17_0.png" src="_images/chap23_17_0.png" />
+<img alt="_images/chap23_18_0.png" src="_images/chap23_18_0.png" />
 </div>
 </div>
-<p>It looks like the optimal angle is near 40°.</p>
-<p>We can find the optimal angle more precisely and more efficiently using <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, like this:</p>
+<p>It looks like the range is maximized when the initial angle is near 40°.
+We can find the optimal angle more precisely and more efficiently using <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">range_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
@@ -508,8 +572,8 @@ returns the final value of <code class="docutils literal notranslate"><span clas
 the range of values we want to search; in this case, it’s the range of
 angles from 0° to 90°.</p>
 <p>The return value from <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> is an object that contains the
-results, including <code class="docutils literal notranslate"><span class="pre">x</span></code>, which is the angle that yielded the highest
-range, and <code class="docutils literal notranslate"><span class="pre">fun</span></code>, which is the value of <code class="docutils literal notranslate"><span class="pre">range_func</span></code> when it’s evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code>, that is, range when the baseball is launched at the optimal angle.</p>
+results, including <code class="docutils literal notranslate"><span class="pre">x</span></code>, which is the angle that yielded the maximum
+range, and <code class="docutils literal notranslate"><span class="pre">fun</span></code>, which is the range when the ball is launched at the optimal angle.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span>
@@ -544,8 +608,11 @@ range of 100 m.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter introduces the Manny Ramirez problem and starts to solve it.
+As an exercise, you can finish it off.</p>
 <p>If you enjoy this exercise, you might be interested in this paper: “How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories”, by Sawicki, Hubbard, and Stronge, at
 <a class="reference external" href="http://modsimpy.com/runs">http://modsimpy.com/runs</a>.</p>
+<p>In the next chapter, we start a new topic: rotation!</p>
 </div>
 <div class="section" id="exercise">
 <h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
@@ -553,10 +620,10 @@ range of 100 m.</p>
 <blockquote>
 <div><p>What is the minimum effort required to hit a home run in Fenway Park?</p>
 </div></blockquote>
-<p>Although the problem asks for a minimum, it is not an optimization problem.  Rather, we want to solve for the initial velocity that just barely gets the ball to the top of the wall, given that it is launched at the optimal angle.</p>
-<p>And we have to be careful about what we mean by “optimal”.  For this problem, we don’t want the longest range, we want the maximum height at the point where it reaches the wall.</p>
+<p>Although the problem asks for a minimum, it is not an optimization problem.  Rather, we want to solve for the initial speed that just barely gets the ball to the top of the wall, given that it is launched at the optimal angle.</p>
+<p>And we have to be careful about what we mean by “optimal”.  For this problem, we don’t want the longest range; we want the maximum height at the point where it reaches the wall.</p>
 <p>If you are ready to solve the problem on your own, go ahead.  Otherwise I will walk you through the process with an outline and some starter code.</p>
-<p>As a first step, write an <code class="docutils literal notranslate"><span class="pre">event_func</span></code> that stops the simulation when the ball reaches the wall at 310 feet (94.5 m).
+<p>As a first step, write an <code class="docutils literal notranslate"><span class="pre">event_func</span></code> that stops the simulation when the ball reaches the wall at <code class="docutils literal notranslate"><span class="pre">wall_distance</span></code>, which is a parameter in <code class="docutils literal notranslate"><span class="pre">params</span></code>.
 Test your function with the initial conditions.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -564,7 +631,7 @@ Test your function with the initial conditions.</p>
 
 <span class="k">def</span> <span class="nf">event_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">94.5</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">system</span><span class="o">.</span><span class="n">wall_distance</span>
 </pre></div>
 </div>
 </div>
@@ -579,7 +646,7 @@ Test your function with the initial conditions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-94.5
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-94.48799999999999
 </pre></div>
 </div>
 </div>
@@ -611,7 +678,7 @@ Test your function with the initial conditions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.647999317446594
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.661045303535705
 </pre></div>
 </div>
 </div>
@@ -627,12 +694,12 @@ Test your function with the initial conditions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: 7.202365708506381
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: 7.217049532932801
  message: &#39;Solution found.&#39;
     nfev: 13
   status: 0
  success: True
-       x: 43.10026195980881
+       x: 43.105080979149434
 </pre></div>
 </div>
 </div>
@@ -646,22 +713,24 @@ Test your function with the initial conditions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(43.10026195980881, 7.202365708506381)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(43.105080979149434, 7.217049532932801)
 </pre></div>
 </div>
 </div>
 </div>
-<p>Even though we are finding the “minimum” velocity, we are not really solving a minimization problem.  Rather, we want to find the velocity that makes the height at the wall exactly 37 feet (11.3 m), given that it’s launched at the optimal angle.  And that’s a job for <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>.</p>
-<p>Write an error function that takes a velocity and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters.  It should use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the highest possible height of the ball at the wall, for the given velocity.  Then it should return the difference between that optimal height and 11.3 meters.</p>
+<p>The angle that maximizes the height at the wall is a little higher than the angle that maximizes range.</p>
+<p>Now, let’s find the initial speed that makes the height at the wall exactly 37 feet, given that it’s launched at the optimal angle.
+This is a root-finding problem, so we’ll use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>.</p>
+<p>Write an error function that takes a speed and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters.  It should use <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> to find the highest possible height of the ball at the wall, for the given speed.  Then it should return the difference between that optimal height and <code class="docutils literal notranslate"><span class="pre">wall_height</span></code>, which is a parameter in <code class="docutils literal notranslate"><span class="pre">params</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">error_func</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">error_func</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">speed</span><span class="o">=</span><span class="n">speed</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">maximize_scalar</span><span class="p">(</span><span class="n">height_func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span> <span class="o">-</span> <span class="mf">11.3</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span> <span class="o">-</span> <span class="n">params</span><span class="o">.</span><span class="n">wall_height</span>
 </pre></div>
 </div>
 </div>
@@ -679,12 +748,29 @@ Test your function with the initial conditions.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.09763429149362
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.060550467067197
 </pre></div>
 </div>
 </div>
 </div>
-<p>Then use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the answer to the problem, the minimum velocity that gets the ball out of the park.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">error_func</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30.230189540329683
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the answer to the problem, the minimum speed that gets the ball out of the park.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -698,10 +784,10 @@ Test your function with the initial conditions.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
 30.0
 50.0
-42.962168129362695
-41.040440411309014
-41.04880372501754
-41.04675128483029
+42.95327159575888
+41.030931458411445
+41.039294634028856
+41.037242669296155
 </pre></div>
 </div>
 </div>
@@ -719,7 +805,7 @@ Test your function with the initial conditions.</p>
            flag: &#39;converged&#39;
  function_calls: 6
      iterations: 5
-           root: 41.04880372501754
+           root: 41.039294634028856
 </pre></div>
 </div>
 </div>
@@ -728,13 +814,13 @@ Test your function with the initial conditions.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">min_velocity</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
-<span class="n">min_velocity</span>
+<span class="n">min_speed</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
+<span class="n">min_speed</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.04880372501754
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.039294634028856
 </pre></div>
 </div>
 </div>
@@ -744,15 +830,15 @@ Test your function with the initial conditions.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">error_func</span><span class="p">(</span><span class="n">min_velocity</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">error_func</span><span class="p">(</span><span class="n">min_speed</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.04880372501754
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.039294634028856
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0010030680206689624
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0010039392295357885
 </pre></div>
 </div>
 </div>

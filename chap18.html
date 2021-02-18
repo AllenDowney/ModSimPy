@@ -358,11 +358,6 @@
    Exercises
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#under-the-hood">
-   Under the hood
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -377,42 +372,19 @@
   <div class="section" id="chapter-18">
 <h1>Chapter 18<a class="headerlink" href="#chapter-18" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap18.ipynb">Click here to run this chapter on Colab</a></p>
-<p>The previous chapter present the minimal model of the glucose-insulin system, and introduces a tool we will need to implement it: interpolation.</p>
+<p>The previous chapter presents the minimal model of the glucose-insulin system and introduces a tool we will need to implement it, interpolation.</p>
 <p>In this chapter, we’ll implement the model two ways:</p>
 <ul class="simple">
-<li><p>We’ll start by rewriting the differential equations as difference equations; then we’ll solve the difference equations using a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, similar to what we have used in previous chapters.</p></li>
-<li><p>Then we’ll use a new SciPy function, called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>, to solve the differential equation.</p></li>
+<li><p>We’ll start by rewriting the differential equations as difference equations; then we’ll solve the difference equations using a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> similar to what we have used in previous chapters.</p></li>
+<li><p>Then we’ll use a new SciPy function, called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>, to solve the differential equation using a better algorithm.</p></li>
 </ul>
 <p>We’ll see that <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> is faster and more accurate than <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.
-As a result, we will us it for every model in the rest of the book.</p>
-<p>The following cell downloads the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;glucose_insulin.csv&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/data/glucose_insulin.csv
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can use Pandas to read the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-</div>
+As a result, we will use it for the models in the rest of the book.</p>
 <div class="section" id="implementing-the-model">
 <h2>Implementing the Model<a class="headerlink" href="#implementing-the-model" title="Permalink to this headline">¶</a></h2>
 <p>To get started, let’s assume that the parameters of the model are known.
 We’ll implement the model and use it to generate time series for <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.
-Then we’ll see how we can choose parameters that generate a series that fits the data.</p>
+Then we’ll see how we can choose parameters that make the simulation fit the data.</p>
 <p>Here are the parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -473,7 +445,7 @@ packs everything into a <code class="docutils literal notranslate"><span class="
 \[\frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)\]</div>
 <div class="math notranslate nohighlight">
 \[\frac{dX}{dt} = k_3 \left[I(t) - I_b \right] - k_2 X(t)\]</div>
-<p>To simulate this system, we will rewriting them as difference equations.
+<p>To simulate this system, we will rewrite them as difference equations.
 If we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</span>, we have:</p>
 <div class="math notranslate nohighlight">
 \[dG = \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] dt\]</div>
@@ -483,7 +455,7 @@ If we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</
 <p>Here’s an update function that computes these changes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">G</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">state</span>
     <span class="n">G0</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">params</span> 
     <span class="n">I</span><span class="p">,</span> <span class="n">Ib</span><span class="p">,</span> <span class="n">Gb</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Ib</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">Gb</span>
@@ -500,19 +472,17 @@ If we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</
 </div>
 </div>
 </div>
-<p>As usual, the update function takes a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, a time, and a
-<code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters. The first line uses multiple assignment
-to extract the current values of <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>As usual, the update function takes a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object as parameters. The first line uses multiple assignment to extract the current values of <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 <p>The following lines unpack the parameters we need from the <code class="docutils literal notranslate"><span class="pre">System</span></code>
 object.</p>
-<p>Computing the derivatives <code class="docutils literal notranslate"><span class="pre">dGdt</span></code> and <code class="docutils literal notranslate"><span class="pre">dXdt</span></code> is straightforward; we just translate the equations from math notation to Python.
-Then, to perform the update, we multiply each derivative by the discrete time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which is 2 min in this example.</p>
+<p>To compute the derivatives <code class="docutils literal notranslate"><span class="pre">dGdt</span></code> and <code class="docutils literal notranslate"><span class="pre">dXdt</span></code> we translate the equations from math notation to Python.
+Then, to perform the update, we multiply each derivative by the time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which is 2 min in this example.</p>
 <p>The return value is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the new values of <code class="docutils literal notranslate"><span class="pre">G</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 <p>Before running the simulation, it is a good idea to run the update
 function with the initial conditions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">update_func</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">update_func</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -542,13 +512,16 @@ Name: state, dtype: float64
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">frame</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>This version is similar to the one we used for the coffee cooling problem.
+The biggest difference is that it makes and returns a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> rather than a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+<p>When we make the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>, we use <code class="docutils literal notranslate"><span class="pre">index</span></code> to indicate that the index is the array of time stamps, <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, and <code class="docutils literal notranslate"><span class="pre">columns</span></code> to indicate that the column names are the state variables we get from <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
 <p>We can run it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -633,7 +606,7 @@ Here are the first few time steps.</p>
 <img alt="_images/chap18_31_0.png" src="_images/chap18_31_0.png" />
 </div>
 </div>
-<p>With the parameters I chose, the model fits the data well, except during the first few minutes after the injection.
+<p>With the parameters I chose, the model fits the data well except during the first few minutes after the injection.
 But we don’t expect the model to do well in this regime.</p>
 <p>The problem is that the model is <strong>non-spatial</strong>; that is, it does not
 take into account different concentrations in different parts of the
@@ -665,13 +638,13 @@ accurate. For this reason, we should not take the estimated value of <code class
 But in our simulations, <span class="math notranslate nohighlight">\(dt\)</span> is 2 min, which is not very small, and definitely not infinitesimal.</p>
 <p>In effect, the simulations assume that the derivatives <span class="math notranslate nohighlight">\(dG/dt\)</span> and <span class="math notranslate nohighlight">\(dX/dt\)</span> are constant during each 2 min time step.
 This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called <strong>Euler’s method</strong> (see <a class="reference external" href="http://modsimpy.com/euler">http://modsimpy.com/euler</a>).</p>
-<p>Euler’s method is good enough for many simple problems, but sometimes it is not very accurate.
-In that case, sometimes we can make it more accurate by decreasing the size of <code class="docutils literal notranslate"><span class="pre">dt</span></code>.
+<p>Euler’s method is good enough for many problems, but sometimes it is not very accurate.
+In that case, we can usually make it more accurate by decreasing the size of <code class="docutils literal notranslate"><span class="pre">dt</span></code>.
 But then it is not very efficient.</p>
 <p>There are other methods that are more accurate and more efficient than Euler’s method.
-SciPy provides several of them as a function called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>
+SciPy provides several of them wrapped in a function called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>.
 The “ivp” in <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> stands for “initial value problem”, which is the term for problems like the ones we’ve been solving, where we are given the initial conditions and try to predict what will happen.</p>
-<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> that makes <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> a little easier to use.</p>
+<p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> that makes <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> a little easier to use.</p>
 <p>To use it, we have to provide a “slope function”, which is similar to an update function; in fact, it takes the same parameters: a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <p>Here’s a slope function that evaluates the differential equations of the minimal model.</p>
 <div class="cell tag_export docutils container">
@@ -791,7 +764,7 @@ Here are the first few time steps:</p>
 </div></div></div>
 </div>
 <p>Because we used <code class="docutils literal notranslate"><span class="pre">t_eval=results.index</span></code>, the time stamps in <code class="docutils literal notranslate"><span class="pre">results2</span></code> are the same as in <code class="docutils literal notranslate"><span class="pre">results</span></code>, which makes them easier to compare.</p>
-<p>Here are the results from <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> along with the results from <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
+<p>The following figure shows the results from <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> along with the results from <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
@@ -812,7 +785,14 @@ We can compute the relative differences like this:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">G</span> <span class="o">-</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span>
 <span class="n">percent_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">results2</span><span class="o">.</span><span class="n">G</span> <span class="o">*</span> <span class="mi">100</span>
-<span class="n">percent_diff</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can use <code class="docutils literal notranslate"><span class="pre">describe</span></code> to compute summary statistics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">percent_diff</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -830,7 +810,8 @@ Name: G, dtype: float64
 </div>
 </div>
 </div>
-<p>The biggest differences are a little more than 1%.
+<p>The mean relative difference is about 0.65%;
+the maximum is a little more than 1%.
 So in this example, the results from Euler’s method are probably good enough for practical purposes.</p>
 <p>Here are the results for <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 <div class="cell docutils container">
@@ -844,7 +825,7 @@ So in this example, the results from Euler’s method are probably good enough f
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_51_0.png" src="_images/chap18_51_0.png" />
+<img alt="_images/chap18_53_0.png" src="_images/chap18_53_0.png" />
 </div>
 </div>
 <p>These differences are little bigger, especially at the beginning.
@@ -885,7 +866,7 @@ As one of the case studies in the next chapter, you’ll have a chance to see wh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_57_0.png" src="_images/chap18_57_0.png" />
+<img alt="_images/chap18_60_0.png" src="_images/chap18_60_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -912,12 +893,6 @@ Name: G, dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
-<p>The documentation for <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> is at <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html</a>.</p>
-<p>It uses a Runge-Kutta method…
-<a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods">RK45</a>.</p>
 </div>
 </div>
 
