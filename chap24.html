@@ -377,16 +377,15 @@
   <div class="section" id="chapter-24">
 <h1>Chapter 24<a class="headerlink" href="#chapter-24" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap24.ipynb">Click here to run this chapter on Colab</a></p>
-<p>In this chapter and the next we’ll model systems that involve rotating objects.</p>
-<p>In general, rotation is complicated.
+<p>In this chapter and the next we’ll model systems that involve rotating objects.
+In general, rotation is complicated.
 In three dimensions, objects can rotate around three axes and many objects are easier to spin around some axes than others.</p>
 <p>If the configuration of an object changes over time, it might become
 easier or harder to spin, which explains the surprising dynamics of
 gymnasts, divers, ice skaters, etc.</p>
 <p>And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.
 For an example, see this video on gyroscopic precession <a class="reference external" href="http://modsimpy.com/precess">http://modsimpy.com/precess</a>.</p>
-<p>In this book, we will not take on the physics of rotation in all its glory.
-Rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.
+<p>We will not take on the physics of rotation in all its glory; rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.
 In that case, we can treat some vector quantities as if they were scalars, in the same way that we sometimes treat velocity as a scalar with an implicit direction.</p>
 <p>The fundamental ideas in these examples are angular velocity, angular acceleration, torque, and moment of inertia.
 If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.</p>
@@ -396,7 +395,7 @@ If you are not already familiar with these concepts, I will define them as we go
 Starting with a cardboard tube at the center, we will roll up 47 m of paper, a typical length for a roll of toilet paper in the U.S. (see <a class="reference external" href="http://modsimpy.com/paper">http://modsimpy.com/paper</a>).</p>
 <p>The following figure shows a diagram of the system: <span class="math notranslate nohighlight">\(r\)</span> represents
 the radius of the roll at a point in time. Initially, <span class="math notranslate nohighlight">\(r\)</span> is the radius of the cardboard core, <span class="math notranslate nohighlight">\(R_{min}\)</span>. When the roll is complete, <span class="math notranslate nohighlight">\(r\)</span> is <span class="math notranslate nohighlight">\(R_{max}\)</span>.</p>
-<p><img alt="Diagram of a roll of toilet paper, showing change in paper length as a result of a small rotation, ." src="https://github.com/AllenDowney/ModSim/raw/master/figs/paper_roll.png" /></p>
+<p><img alt="Diagram of a roll of toilet paper, showing change in paper length as a result of a small rotation, ." src="https://github.com/AllenDowney/ModSim/raw/main/figs/paper_roll.png" /></p>
 <p>I’ll use <span class="math notranslate nohighlight">\(\theta\)</span> to represent the total rotation of the roll in
 radians. In the diagram, <span class="math notranslate nohighlight">\(d\theta\)</span> represents a small increase in
 <span class="math notranslate nohighlight">\(\theta\)</span>, which corresponds to a distance along the circumference of <span class="math notranslate nohighlight">\(r~d\theta\)</span>.</p>
@@ -718,7 +717,7 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_50_0.png" src="_images/chap24_50_0.png" />
+<img alt="_images/chap24_49_0.png" src="_images/chap24_49_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">theta</span></code> grows linearly, as we should expect with constant angular velocity.</p>
@@ -736,7 +735,7 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_52_0.png" src="_images/chap24_52_0.png" />
+<img alt="_images/chap24_51_0.png" src="_images/chap24_51_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">r</span></code> also increases linearly.</p>
@@ -754,7 +753,7 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_54_0.png" src="_images/chap24_54_0.png" />
+<img alt="_images/chap24_53_0.png" src="_images/chap24_53_0.png" />
 </div>
 </div>
 <p>In the next section, we’ll see that we could have solved the
@@ -827,7 +826,7 @@ Dividing Equations 1 and 2, yields</p>
 <p>This chapter introduces rotation, starting with an example where angular velocity is constant.</p>
 <p>We simulated the manufacture of a roll of toilet paper, then we solved the same problem analytically.</p>
 <p>In the next chapter, we’ll see a more interesting example where angular velocity is not constant.  And we’ll introduce three new concepts: torque, angular acceleration, and moment of inertia.</p>
-<p>But first, you might want to work on the following exercises.</p>
+<p>But first, you might want to work on the following exercise.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -848,7 +847,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_63_0.png" src="_images/chap24_63_0.png" />
+<img alt="_images/chap24_62_0.png" src="_images/chap24_62_0.png" />
 </div>
 </div>
 <p>With constant angular velocity, linear velocity is increasing, reaching its maximum at the end.</p>
@@ -939,7 +938,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_71_0.png" src="_images/chap24_71_0.png" />
+<img alt="_images/chap24_70_0.png" src="_images/chap24_70_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -951,7 +950,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
+<img alt="_images/chap24_71_0.png" src="_images/chap24_71_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -963,7 +962,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_73_0.png" src="_images/chap24_73_0.png" />
+<img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
 </div>
 </div>
 </div>

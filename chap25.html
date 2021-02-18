@@ -384,7 +384,7 @@
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap25.ipynb">Click here to run this chapter on Colab</a></p>
 <p>In the previous chapter we modeled a system with constant angular
 velocity.
-In this chapter we take the next step, modeling a system with constant angular acceleration and deceleration.</p>
+In this chapter we take the next step, modeling a system with angular acceleration and deceleration.</p>
 <div class="section" id="angular-acceleration">
 <h2>Angular acceleration<a class="headerlink" href="#angular-acceleration" title="Permalink to this headline">¶</a></h2>
 <p>Just as linear acceleration is the derivative of velocity, <strong>angular
@@ -439,7 +439,7 @@ directly opposite me?</p>
 <li><p>The teapot weights 0.3 kg, and it sits 0.4 m from the center of the turntable.</p></li>
 </ol>
 <p>The following figure shows the scenario, where <span class="math notranslate nohighlight">\(F\)</span> is the force I apply to the turntable at the perimeter, perpendicular to the lever arm, <span class="math notranslate nohighlight">\(r\)</span>, and <span class="math notranslate nohighlight">\(\tau\)</span> is the resulting torque. The blue circle near the bottom is the teapot.</p>
-<p><img alt="Diagram of a turntable with ateapot." src="https://github.com/AllenDowney/ModSim/raw/master/figs/teapot.png" /></p>
+<p><img alt="Diagram of a turntable with ateapot." src="https://github.com/AllenDowney/ModSim/raw/main/figs/teapot.png" /></p>
 <p>Here are the parameters from the statement of the problem:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -801,7 +801,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_52_0.png" src="_images/chap25_52_0.png" />
+<img alt="_images/chap25_51_0.png" src="_images/chap25_51_0.png" />
 </div>
 </div>
 <p>And <code class="docutils literal notranslate"><span class="pre">omega</span></code>.</p>
@@ -814,7 +814,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_54_0.png" src="_images/chap25_54_0.png" />
+<img alt="_images/chap25_53_0.png" src="_images/chap25_53_0.png" />
 </div>
 </div>
 <p>Angular velocity, <code class="docutils literal notranslate"><span class="pre">omega</span></code>, increases linearly while I am pushing, and decreases linearly after I let go. The angle, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, is the integral of angular velocity, so it forms a parabola during each phase.</p>
@@ -1037,7 +1037,7 @@ from 1.5 rad to 3.14 rad.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_74_0.png" src="_images/chap25_74_0.png" />
+<img alt="_images/chap25_73_0.png" src="_images/chap25_73_0.png" />
 </div>
 </div>
 <p>And here’s an animation of the first push.</p>
@@ -1051,9 +1051,9 @@ from 1.5 rad to 3.14 rad.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>The example in this chapter demonstrates the concepts of torque, angular acceleration, and moment of inertia.</p>
-<p>We used these concepts to simulate a turntable, using a hypothetical observation to estimating torque due to friction.</p>
-<p>As an exercise, you can finish off the example, estimating the force needed to rotate the table to a given target angle.</p>
+<p>The example in this chapter demonstrates the concepts of torque, angular acceleration, and moment of inertia.
+We used these concepts to simulate a turntable, using a hypothetical observation to estimating torque due to friction.
+As an exercise, you can finish off the example, estimating the force needed to rotate the table to a given target angle.</p>
 <p>The next chapter describes several case studies you can work on to practice the tools from the last few chapters, including projectiles, rotating objects, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>.</p>
 </div>
 <div class="section" id="exercises">

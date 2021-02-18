@@ -370,7 +370,6 @@
                 
   <div class="section" id="chapter-26">
 <h1>Chapter 26<a class="headerlink" href="#chapter-26" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap26.ipynb">Click here to run this chapter on Colab</a></p>
 <p>You made it to the end of the book.  Congratulations!</p>
 <p>This last chapter is a collection of case studies you might want to read and work on.
 They are based on the methods in the last few chapters, including Newtonian mechanics in 1-D and 2-D, and rotation around a single axis.</p>
@@ -390,6 +389,8 @@ point 80 m above a cup of tea.</p></li>
 constant, <code class="docutils literal notranslate"><span class="pre">k</span></code>, so that the jumper falls all the way to the tea cup, but no farther!</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">bungee1.ipynb</span></code>, which contains starter code and exercises for this case study.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/bungee1.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/bungee1.ipynb">click here to run it on Colab</a>.</p>
 </div>
 <div class="section" id="bungee-dunk-revisited">
 <h2>Bungee dunk revisited<a class="headerlink" href="#bungee-dunk-revisited" title="Permalink to this headline">¶</a></h2>
@@ -407,6 +408,8 @@ function of position, <span class="math notranslate nohighlight">\(y\)</span>, a
 convince you: <a class="reference external" href="http://modsimpy.com/drop">http://modsimpy.com/drop</a>.</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">bungee2.ipynb</span></code>, which contains starter code and exercises for this case study. How does the behavior of the system change as we vary the mass of the cord? When the mass of the cord equals the mass of the jumper, what is the net effect on the lowest point in the jump?</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/bungee2.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/bungee2.ipynb">click here to run it on Colab</a>.</p>
 </div>
 <div class="section" id="orbiting-the-sun">
 <h2>Orbiting the Sun<a class="headerlink" href="#orbiting-the-sun" title="Permalink to this headline">¶</a></h2>
@@ -415,6 +418,8 @@ convince you: <a class="reference external" href="http://modsimpy.com/drop">http
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">orbit.ipynb</span></code>, which contains starter code and exercises for this case study.</p>
 <p>Among other things, you will have a chance to experiment with different algorithms and see what effect they have on the accuracy of the results.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/orbit.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/orbit.ipynb">click here to run it on Colab</a>.</p>
 </div>
 <div class="section" id="spider-man">
 <h2>Spider-Man<a class="headerlink" href="#spider-man" title="Permalink to this headline">¶</a></h2>
@@ -453,6 +458,8 @@ let go of the webbing, to maximize range.</p></li>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">spiderman.ipynb</span></code>, which contains starter code. Read through the
 notebook and run the code. It uses <code class="docutils literal notranslate"><span class="pre">minimize</span></code>, which is a SciPy function that can search for an optimal set of parameters (as contrasted with <code class="docutils literal notranslate"><span class="pre">minimize_scalar</span></code>, which can only search along a single axis).</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/spiderman.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/spiderman.ipynb">click here to run it on Colab</a>.</p>
 </div>
 <div class="section" id="kittens">
 <h2>Kittens<a class="headerlink" href="#kittens" title="Permalink to this headline">¶</a></h2>
@@ -460,16 +467,18 @@ notebook and run the code. It uses <code class="docutils literal notranslate"><s
 And you might have wondered how long it would take a standard kitten to unroll 47 m of paper, the length of a standard roll.</p>
 <p>The interactions of the kitten and the paper rolls are complex.  To keep things simple, let’s assume that the kitten pulls down on the free end of the roll with constant force.  And let’s neglect the friction between the roll and the axle.</p>
 <p>This diagram shows the paper roll with the force applied by the kitten, <span class="math notranslate nohighlight">\(F\)</span>, the lever arm of the force around the axis of rotation, <span class="math notranslate nohighlight">\(r\)</span>, and the resulting torque, <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
-<p><img alt="Diagram of a roll of toilet paper, showing a force, lever arm, and the resulting torque." src="https://github.com/AllenDowney/ModSim/raw/master/figs/kitten.png" /></p>
+<p><img alt="Diagram of a roll of toilet paper, showing a force, lever arm, and the resulting torque." src="https://github.com/AllenDowney/ModSim/raw/main/figs/kitten.png" /></p>
 <p>Assuming that the force applied by the kitten is 0.002 N, how long would it take to unroll a standard roll of toilet paper?</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">kitten.ipynb</span></code>, which contains starter code for this case study. Use it to implement this model and check whether the results seem plausible.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/kitten.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/kitten.ipynb">click here to run it on Colab</a>.</p>
 </div>
 <div class="section" id="simulating-a-yo-yo">
 <h2>Simulating a yo-yo<a class="headerlink" href="#simulating-a-yo-yo" title="Permalink to this headline">¶</a></h2>
 <p>Suppose you are holding a yo-yo with a length of string wound around its axle, and you drop it while holding the end of the string stationary. As gravity accelerates the yo-yo downward, tension in the string exerts a force upward. Since this force acts on a point offset from the center of mass, it exerts a torque that causes the yo-yo to spin.</p>
 <p>The following diagram shows the forces on the yo-yo and the resulting torque. The outer shaded area shows the body of the yo-yo. The inner shaded area shows the rolled up string, the radius of which changes as the yo-yo unrolls.</p>
-<p><img alt="Diagram of a yo-yo showing forces due to gravity and tension in thestring, the lever arm of tension, and the resultingtorque." src="https://github.com/AllenDowney/ModSim/raw/master/figs/yoyo.png" /></p>
+<p><img alt="Diagram of a yo-yo showing forces due to gravity and tension in thestring, the lever arm of tension, and the resultingtorque." src="https://github.com/AllenDowney/ModSim/raw/main/figs/yoyo.png" /></p>
 <p>In this system, we can’t figure out the linear and angular acceleration independently; we have to solve a system of equations:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -531,6 +540,8 @@ a      &amp;= -m g r^2 / I^* \\
 <p>where <span class="math notranslate nohighlight">\(I^*\)</span> is the augmented moment of inertia, <span class="math notranslate nohighlight">\(I + m r^2\)</span>.
 We can use these equations for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(\alpha\)</span> to write a slope function and simulate this system.</p>
 <p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">yoyo.ipynb</span></code>, which contains starter code for this case study. Use it to implement and test this model.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/yoyo.ipynb">Click here to download it</a> or
+<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/yoyo.ipynb">click here to run it on Colab</a>.</p>
 </div>
 </div>
 

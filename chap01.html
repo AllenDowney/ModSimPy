@@ -587,8 +587,18 @@ When we set <code class="docutils literal notranslate"><span class="pre">h=381</
 And, when we got the result <code class="docutils literal notranslate"><span class="pre">v=86</span></code>, we added back the meters per second.</p>
 <p>Leaving units of out computation is common practice, but it tends to cause errors, including the very expensive failure of the <a class="reference external" href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter">Mars Climate Orbiter</a> in 1999.
 When possible, it is better to include units in the computation.</p>
-<p>To represent units, we’ll use a Python library called <a class="reference external" href="https://pint.readthedocs.io/en/latest/">Pint</a>.
-The ModSim library initializes Pint and provides an object called <code class="docutils literal notranslate"><span class="pre">units</span></code> that contains variables representing pretty much every unit you’ve ever heard of.
+<p>To represent units, we’ll use a Python library called <a class="reference external" href="https://pint.readthedocs.io/en/latest/">Pint</a>.</p>
+<p>To use it, we have to import a function called <code class="docutils literal notranslate"><span class="pre">UnitRegistry</span></code> and call it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+
+<span class="n">units</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is an object that contains variables representing pretty much every unit you’ve heard of.
 For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -630,7 +640,9 @@ Instead, we will use <code class="docutils literal notranslate"><span class="pre
 <div class="cell_output docutils container">
 <div class="output text_html">second</div></div>
 </div>
-<p>To find out what other units are defined, type <code class="docutils literal notranslate"><span class="pre">units.</span></code> (including the period) in the next cell and then press TAB.  You should see a pop-up menu with a list of units.</p>
+<p>To find out what other units are defined, type <code class="docutils literal notranslate"><span class="pre">units.</span></code> (including the period) in the next cell.</p>
+<p>If you are on Colab, a pop-up menu should appear with a list of units.
+In other Jupyter environments, you might have to press <code class="docutils literal notranslate"><span class="pre">TAB</span></code> to get the menu.</p>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">meter</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code> to create a variable named <code class="docutils literal notranslate"><span class="pre">a</span></code> and give it the value of acceleration due to gravity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -715,6 +727,13 @@ If we create a quantity to represent the height of the Empire State Building:</p
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">86.41527642726142 meter/second</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">-</span> <span class="mf">86.41527642726142</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e7</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>As in the previous section, the result is about <span class="math notranslate nohighlight">\(86\)</span>, but now it has the correct units, m/s.</p>
 <p>With Pint quantities, we can convert from one set of units to another like this:</p>
@@ -1087,9 +1106,11 @@ I was skeptical; watching from the side, I thought the ball left his hand at an 
 <div class="cell_output docutils container">
 <div class="output text_html">269.2 second/kilometer</div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pace_per_mile</span> <span class="o">=</span> <span class="n">pace_per_km</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">minute</span> <span class="o">/</span> <span class="n">mile</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pace_per_mile</span> <span class="o">=</span> <span class="n">pace_per_km</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">minute</span> <span class="o">/</span> <span class="n">mile</span><span class="p">)</span>
 <span class="n">pace_per_mile</span>
 </pre></div>
 </div>

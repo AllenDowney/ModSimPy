@@ -592,7 +592,7 @@ On the <span class="math notranslate nohighlight">\(y\)</span>-axis, it plots th
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_21_0.png" src="_images/chap14_21_0.png" />
+<img alt="_images/chap14_20_0.png" src="_images/chap14_20_0.png" />
 </div>
 </div>
 <p>The results fall on a single curve, at least approximately. That means that we can predict the fraction of the population that will be infected based on a single parameter, the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>. We don’t need to know the values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> separately.</p>
@@ -693,7 +693,7 @@ equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_37_0.png" src="_images/chap14_37_0.png" />
+<img alt="_images/chap14_36_0.png" src="_images/chap14_36_0.png" />
 </div>
 </div>
 <p>When the contact number exceeds 1, analysis and simulation agree. When
@@ -758,7 +758,7 @@ That indicates that the ratio is enough to predict the results; we don’t have 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_44_0.png" src="_images/chap14_44_0.png" />
+<img alt="_images/chap14_43_0.png" src="_images/chap14_43_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -1081,7 +1081,7 @@ Do the results fall on a single curve?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_53_0.png" src="_images/chap14_53_0.png" />
+<img alt="_images/chap14_52_0.png" src="_images/chap14_52_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -1095,7 +1095,7 @@ Do the results fall on a single curve?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_54_0.png" src="_images/chap14_54_0.png" />
+<img alt="_images/chap14_53_0.png" src="_images/chap14_53_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -1123,7 +1123,7 @@ Do the results fall on a single curve?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap14_56_0.png" src="_images/chap14_56_0.png" />
+<img alt="_images/chap14_55_0.png" src="_images/chap14_55_0.png" />
 </div>
 </div>
 </div>
@@ -1132,7 +1132,7 @@ Do the results fall on a single curve?</p>
 <p>ModSim provides <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make it easier to create a Pandas Series.  In this chapter, we used it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_series</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">T_array</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frac_infected_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">c_array</span><span class="p">,</span> <span class="n">frac_infected</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1142,7 +1142,7 @@ Do the results fall on a single curve?</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span>
 
-<span class="n">Series</span><span class="p">(</span><span class="n">T_array</span><span class="p">,</span> <span class="n">t_array</span><span class="p">)</span>
+<span class="n">frac_infected_series</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">frac_infected</span><span class="p">,</span> <span class="n">c_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
