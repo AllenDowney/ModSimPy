@@ -688,7 +688,7 @@ def show(obj):
     if isinstance(obj, pd.Series):
         df = pd.DataFrame(obj)
         return df
-    elif hasattr(obj, __dict__):
+    elif hasattr(obj, '__dict__'):
         return pd.DataFrame(pd.Series(obj.__dict__),
                             columns=['value'])
     else:
