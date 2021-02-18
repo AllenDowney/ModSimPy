@@ -4,7 +4,7 @@ params = Params(
     x = 0,          # m
     y = 1,          # m
     angle = 45,     # degree
-    velocity = 40,  # m / s
+    speed = 40,  # m / s
 
     mass = 145e-3,    # kg 
     diameter = 73e-3, # m 
@@ -25,7 +25,7 @@ def make_system(params):
     theta = deg2rad(params.angle)
     
     # compute x and y components of velocity
-    vx, vy = pol2cart(theta, params.velocity)
+    vx, vy = pol2cart(theta, params.speed)
     
     # make the initial state
     init = State(x=params.x, y=params.y, vx=vx, vy=vy)
@@ -35,8 +35,7 @@ def make_system(params):
 
     return System(params,
                   init = init,
-                  area = area,
-                 )
+                  area = area)
 
 from modsim import *
 

@@ -33,11 +33,6 @@ from scipy.integrate import solve_ivp
 from types import SimpleNamespace
 from copy import copy
 
-import pint
-
-units = pint.UnitRegistry()
-#Quantity = units.Quantity
-
 
 def flip(p=0.5):
     """Flips a coin with the given probability.
@@ -691,8 +686,9 @@ def SweepSeries(*args, **kwargs):
 def show(obj):
     """Display a Series or Namespace as a DataFrame."""
     if isinstance(obj, pd.Series):
-        return pd.DataFrame(obj)
-    elif isinstance(obj, SimpleNamespace):
+        df = pd.DataFrame(obj)
+        return df
+    elif hasattr(obj, __dict__):
         return pd.DataFrame(pd.Series(obj.__dict__),
                             columns=['value'])
     else:
@@ -716,6 +712,7 @@ def SweepFrame(*args, **kwargs):
 def Vector(x, y, z=None, **options):
     """
     """
+    underride(options, name='component')
     if z is None:
         return pd.Series(dict(x=x, y=y), **options)
     else:
