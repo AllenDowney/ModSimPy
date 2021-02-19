@@ -386,18 +386,8 @@ American Museum of Natural History <a class="reference external" href="https://m
 <div class="section" id="world-population-growth">
 <h2>World Population Growth<a class="headerlink" href="#world-population-growth" title="Permalink to this headline">¶</a></h2>
 <p>The Wikipedia article on world population contains tables with estimates of world population from prehistory to the present, and projections for the future (<a class="reference external" href="https://modsimpy.com/worldpop">https://modsimpy.com/worldpop</a>).</p>
-<p>The following cell downloads a copy of https://en.wikipedia.org/wiki/World_population_estimates</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/&#39;</span> <span class="o">+</span>
-         <span class="s1">&#39;ModSimPy/master/data/World_population_estimates.html&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>To read this data, we will use Pandas, which provides functions for
-working with data. The function we’ll use is <code class="docutils literal notranslate"><span class="pre">read_html</span></code>, which can read a web page and extract data from any tables it contains. Before we can use it, we have to import it. You have already seen this import
-statement:</p>
+working with data. The function we’ll use is <code class="docutils literal notranslate"><span class="pre">read_html</span></code>, which can read a web page and extract data from any tables it contains. Before we can use it, we have to import it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_html</span>
