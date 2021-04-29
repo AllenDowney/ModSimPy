@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,12 +350,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mixing-liquids">
-   Mixing liquids
+   Mixing Liquids
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mix-first-or-last">
-   Mix first or last?
+   Mix First Or Last?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -357,6 +377,18 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -380,11 +412,11 @@ Then we used a root finding algorithm to estimate <code class="docutils literal 
 <p>Now let’s put it together.
 In this chapter we’ll write a function that simulates mixing the two liquids and use it to answer the question we started with: is it better to mix the coffee and milk at the beginning, the end, or somewhere in the middle?</p>
 <div class="section" id="mixing-liquids">
-<h2>Mixing liquids<a class="headerlink" href="#mixing-liquids" title="Permalink to this headline">¶</a></h2>
+<h2>Mixing Liquids<a class="headerlink" href="#mixing-liquids" title="Permalink to this headline">¶</a></h2>
 <p>When we mix two liquids, the temperature of the mixture depends on the
 temperatures of the ingredients as well as their volumes, densities, and specific heat capacities (as defined in the previous chapter).
 In this section I’ll explain how.</p>
-<p>Assuming there are no chemical reactions that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is <strong>conserved</strong>.</p>
+<p>Assuming there are no chemical reactions that either produce or consume heat, the total thermal energy of the system is the same before and after mixing; in other words, thermal energy is <em>conserved</em>.</p>
 <p>If the temperature of the first liquid is <span class="math notranslate nohighlight">\(T_1\)</span>, the temperature of the second liquid is <span class="math notranslate nohighlight">\(T_2\)</span>, and the final temperature of the mixture is <span class="math notranslate nohighlight">\(T\)</span>, the heat transfer into the first liquid is <span class="math notranslate nohighlight">\(C_1 (T - T_1)\)</span> and the heat transfer into the second liquid is <span class="math notranslate nohighlight">\(C_2 (T - T_2)\)</span>, where <span class="math notranslate nohighlight">\(C_1\)</span> and <span class="math notranslate nohighlight">\(C_2\)</span> are the thermal masses of the liquids.</p>
 <p>In order to conserve energy, these heat transfers must add up to 0:</p>
 <div class="math notranslate nohighlight">
@@ -432,7 +464,7 @@ revisit.</p>
 <p>Now we have everything we need to solve the problem.</p>
 </div>
 <div class="section" id="mix-first-or-last">
-<h2>Mix first or last?<a class="headerlink" href="#mix-first-or-last" title="Permalink to this headline">¶</a></h2>
+<h2>Mix First Or Last?<a class="headerlink" href="#mix-first-or-last" title="Permalink to this headline">¶</a></h2>
 <p>First I’ll create objects to represent the coffee and milk.
 For <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code>, I’ll use the value we computed in the previous chapter.</p>
 <div class="cell docutils container">
@@ -639,7 +671,9 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Use <code class="docutils literal notranslate"><span class="pre">compute_r</span></code> to compute <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> according to the analytic solution.  Run the analysis with this value of <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> and confirm that the results are consistent with the simulation.</p>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">compute_r</span></code> to compute <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> according to the analytic solution.  Run the analysis with this value of <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> and confirm that the results are consistent with the simulation.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -699,7 +733,10 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong>  Suppose the coffee shop won’t let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?</p>
+</div>
+<div class="section" id="id1">
+<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Suppose the coffee shop won’t let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?</p>
 <p>Hint: Think about the simplest way to represent the behavior of a refrigerator in this model.  The change you make to test this variation of the problem should be very small!</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -711,6 +748,7 @@ are identical to what we got by simulation, with a small difference due to round
 <span class="c1"># With T_init=5 and r_milk = 0, </span>
 <span class="c1"># it is best to add the milk at the beginning.</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

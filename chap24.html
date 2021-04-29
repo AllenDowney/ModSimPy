@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,7 +350,7 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-physics-of-toilet-paper">
-   The physics of toilet paper
+   The Physics of Toilet Paper
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -362,6 +382,13 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -390,7 +417,7 @@ In that case, we can treat some vector quantities as if they were scalars, in th
 <p>The fundamental ideas in these examples are angular velocity, angular acceleration, torque, and moment of inertia.
 If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.</p>
 <div class="section" id="the-physics-of-toilet-paper">
-<h2>The physics of toilet paper<a class="headerlink" href="#the-physics-of-toilet-paper" title="Permalink to this headline">¶</a></h2>
+<h2>The Physics of Toilet Paper<a class="headerlink" href="#the-physics-of-toilet-paper" title="Permalink to this headline">¶</a></h2>
 <p>As an example of a system with rotation, we’ll simulate the manufacture of a roll of toilet paper, as shown in this video <a class="reference external" href="https://youtu.be/Z74OfpUbeac?t=231">https://youtu.be/Z74OfpUbeac?t=231</a>.
 Starting with a cardboard tube at the center, we will roll up 47 m of paper, a typical length for a roll of toilet paper in the U.S. (see <a class="reference external" href="http://modsimpy.com/paper">http://modsimpy.com/paper</a>).</p>
 <p>The following figure shows a diagram of the system: <span class="math notranslate nohighlight">\(r\)</span> represents
@@ -418,7 +445,7 @@ Again, we can divide both sides by <span class="math notranslate nohighlight">\(
 <p>Finally, let’s assume that <span class="math notranslate nohighlight">\(\theta\)</span> increases at a constant rate of <span class="math notranslate nohighlight">\(\omega = 300\)</span> rad/s (about 2900 revolutions per minute):</p>
 <div class="math notranslate nohighlight">
 \[\frac{d\theta}{dt} = \omega\]</div>
-<p>This rate of change is called an <strong>angular velocity</strong>. Now we have a system of differential equations we can use to simulate the system.</p>
+<p>This rate of change is called an <em>angular velocity</em>. Now we have a system of differential equations we can use to simulate the system.</p>
 </div>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
@@ -830,7 +857,9 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Since we keep <code class="docutils literal notranslate"><span class="pre">omega</span></code> constant, the linear velocity of the paper increases with radius.  We can use <code class="docutils literal notranslate"><span class="pre">gradient</span></code> to estimate the derivative of <code class="docutils literal notranslate"><span class="pre">results.y</span></code>.</p>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Since we keep <code class="docutils literal notranslate"><span class="pre">omega</span></code> constant, the linear velocity of the paper increases with radius.  We can use <code class="docutils literal notranslate"><span class="pre">gradient</span></code> to estimate the derivative of <code class="docutils literal notranslate"><span class="pre">results.y</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dydt</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
@@ -963,6 +992,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
+</div>
 </div>
 </div>
 </div>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 9 &#8212; Modeling and Simulation in Python</title>
+    <title>Analysis &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Chapter 10" href="chap10.html" />
-    <link rel="prev" title="Chapter 8" href="chap08.html" />
+    <link rel="prev" title="Projections" href="chap08.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,17 +350,17 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#recurrence-relations">
-   Recurrence relations
+   Recurrence Relations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#differential-equations">
-   Differential equations
+   Differential Equations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#analysis-and-simulation">
-   Analysis and simulation
+   Analysis and Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -355,12 +375,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#differential-equations-in-sympy">
-   Differential equations in SymPy
+   Differential Equations In SymPy
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#solving-the-quadratic-growth-model">
-   Solving the quadratic growth model
+   Solving the Quadratic Growth Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -372,6 +392,18 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -384,14 +416,15 @@
         
               <div>
                 
-  <div class="section" id="chapter-9">
-<h1>Chapter 9<a class="headerlink" href="#chapter-9" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap09.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="analysis">
+<h1>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h1>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In this chapter we express the models from previous chapters as
 difference equations and differential equations, solve the equations,
 and derive the functional forms of the solutions. And I present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
 <div class="section" id="recurrence-relations">
-<h2>Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<h2>Recurrence Relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>The population models in the previous chapter and this one are simple
 enough that we didn’t really need to run simulations. We could have
 solved them mathematically. For example, we wrote the constant growth
@@ -405,7 +438,7 @@ model like this:</p>
 <p>where <span class="math notranslate nohighlight">\(x_n\)</span> is the population during year <span class="math notranslate nohighlight">\(n\)</span>,
 <span class="math notranslate nohighlight">\(x_{n+1}\)</span> is the population during year <span class="math notranslate nohighlight">\(n+1\)</span>,
 and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
-This way of representing the model is a <strong>recurrence relation</strong>; see
+This way of representing the model is a <em>recurrence relation</em>; see
 <a class="reference external" href="http://modsimpy.com/recur">http://modsimpy.com/recur</a>.</p>
 <p>Sometimes it is possible to solve a recurrence relation by writing an
 equation that computes <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
@@ -428,7 +461,7 @@ one addition.</p>
 <p>Now we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 (1 + \alpha)\)</span>, and <span class="math notranslate nohighlight">\(x_2 = x_0 (1 + \alpha)^2\)</span>, and in general</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_0 (1 + \alpha)^n\]</div>
-<p>This result is a <strong>geometric progression</strong>;
+<p>This result is a <em>geometric progression</em>;
 see <a class="reference external" href="http://modsimpy.com/geom">http://modsimpy.com/geom</a>. When <span class="math notranslate nohighlight">\(\alpha\)</span> is positive, the factor
 <span class="math notranslate nohighlight">\(1+\alpha\)</span> is greater than 1, so the elements of the sequence grow
 without bound.</p>
@@ -441,7 +474,7 @@ without bound.</p>
 <p>There is no analytic solution to this equation, but we can approximate it with a differential equation and solve that, which is what we’ll do in the next section.</p>
 </div>
 <div class="section" id="differential-equations">
-<h2>Differential equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h2>
+<h2>Differential Equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h2>
 <p>Starting again with the constant growth model</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + c\]</div>
@@ -453,15 +486,15 @@ without bound.</p>
 write the rate of change per unit of time like this:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\Delta x}{\Delta t} = c\]</div>
-<p>This model is <strong>discrete</strong>, which
+<p>This model is <em>discrete</em>, which
 means it is only defined at integer values of <span class="math notranslate nohighlight">\(n\)</span> and not in between.
 But in reality, people are born and die all the time, not once a year,
-so a <strong>continuous</strong> model might be more realistic.</p>
+so a <em>continuous</em> model might be more realistic.</p>
 <p>We can make this model continuous by writing the rate of change in the
 form of a derivative:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dx}{dt} = c\]</div>
-<p>This way of representing the model is a <strong>differential equation</strong>; see <a class="reference external" href="http://modsimpy.com/diffeq">http://modsimpy.com/diffeq</a>.</p>
+<p>This way of representing the model is a <em>differential equation</em>; see <a class="reference external" href="http://modsimpy.com/diffeq">http://modsimpy.com/diffeq</a>.</p>
 <p>We can solve this differential equation if we multiply both sides by
 <span class="math notranslate nohighlight">\(dt\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -488,8 +521,8 @@ integrate both sides, yielding:</p>
 <p>Exponentiating both sides, we have</p>
 <div class="math notranslate nohighlight">
 \[\exp(\ln(x)) = \exp(\alpha t + K)\]</div>
-<p>The exponential function can be written <span class="math notranslate nohighlight">\(\exp(x)\)</span> or <span class="math notranslate nohighlight">\(e^x\)</span>. In this book I use the first form because it resembles the Python code.</p>
-<p>We can rewrite the previous equation as</p>
+<p>The exponential function can be written <span class="math notranslate nohighlight">\(\exp(x)\)</span> or <span class="math notranslate nohighlight">\(e^x\)</span>. In this book I use the first form because it resembles the Python code.
+We can rewrite the previous equation as</p>
 <div class="math notranslate nohighlight">
 \[x = \exp(\alpha t) \exp(K)\]</div>
 <p>Since <span class="math notranslate nohighlight">\(K\)</span> is an arbitrary constant,
@@ -504,21 +537,18 @@ integrate both sides, yielding:</p>
 <a class="reference external" href="http://modsimpy.com/khan1">http://modsimpy.com/khan1</a>.</p>
 </div>
 <div class="section" id="analysis-and-simulation">
-<h2>Analysis and simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
-<p>Once you have designed a model, there are generally two ways to proceed: simulation and analysis. Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place. Analysis often comes in the form of algebra; that is, symbolic manipulation using mathematical notation.</p>
+<h2>Analysis and Simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Once you have designed a model, there are generally two ways to proceed: simulation and analysis. Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place. Analysis often comes in the form of algebra and calculus; that is, symbolic manipulation using mathematical notation.</p>
 <p>Analysis and simulation have different capabilities and limitations.
-Simulation is generally more versatile; it is easy to add and remove
-parts of a program and test many versions of a model, as we have done in the previous examples.</p>
+Simulation is generally more versatile; it is easy to add and remove parts of a program and test many versions of a model, as we have done in the previous examples.</p>
 <p>But there are several things we can do with analysis that are harder or impossible with simulations:</p>
 <ul class="simple">
 <li><p>With analysis we can sometimes compute, exactly and efficiently, a
 value that we could only approximate, less efficiently, with
 simulation. For example, in the quadratic model we plotted net growth versus population and saw it crosses through zero when the population is
 near 14 billion.  We could estimate the crossing point using a
-numerical search algorithm (more about that later). But with the
-analysis in Section xxx, we derived the general result that
-<span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p></li>
-<li><p>Analysis often provides “computational shortcuts”, that is, the
+numerical search algorithm (more about that later). But with a bit of algebra, we derived the general result that <span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p></li>
+<li><p>Analysis sometimes provides “computational shortcuts”, that is, the
 ability to jump forward in time to compute the state of a system
 many time steps in the future without computing the intervening
 states.</p></li>
@@ -546,7 +576,7 @@ and run programs.</p>
 pulp, a process that is laborious and error-prone. A useful
 alternative is symbolic computation. If you have used services like
 WolframAlpha, you have used symbolic computation.</p>
-<p>For example, if you go to <a class="reference external" href="https://www.wolframalpha.com/">https://www.wolframalpha.com/</a> and type</p>
+<p>For example, if you go to <a class="reference external" href="https://www.wolframalpha.com/">https://www.wolframalpha.com/</a> and enter</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">alpha</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -570,9 +600,9 @@ designed specifically for symbolic computation.</p>
 <p>Python has a library called SymPy that provides symbolic computation
 tools similar to Mathematica. They are not as easy to use as
 WolframAlpha, but they have some other advantages.</p>
-<p>SymPy defines a <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> object that represents symbolic variable names, functions, and other mathematical entities.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">symbols</span></code> function takes a string and returns <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects. So
-if we run this assignment:</p>
+<p>To use it, we’ll define <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects that represent variable names and functions.
+The <code class="docutils literal notranslate"><span class="pre">symbols</span></code> function takes a string and returns <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects.
+So if we run this assignment:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span>
@@ -643,7 +673,7 @@ substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t
 try to evaluate it.</p>
 </div>
 <div class="section" id="differential-equations-in-sympy">
-<h2>Differential equations in SymPy<a class="headerlink" href="#differential-equations-in-sympy" title="Permalink to this headline">¶</a></h2>
+<h2>Differential Equations In SymPy<a class="headerlink" href="#differential-equations-in-sympy" title="Permalink to this headline">¶</a></h2>
 <p>SymPy provides a function, <code class="docutils literal notranslate"><span class="pre">diff</span></code>, that can differentiate a function. We can apply it to <code class="docutils literal notranslate"><span class="pre">f(t)</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -694,8 +724,8 @@ we can use <code class="docutils literal notranslate"><span class="pre">dsolve</
 \[\displaystyle f{\left(t \right)} = C_{1} e^{\alpha t}\]</div>
 </div>
 </div>
-<p>The result is the <strong>general
-solution</strong>, which still contains an unspecified constant, <span class="math notranslate nohighlight">\(C_1\)</span>. To get the <strong>particular solution</strong> where <span class="math notranslate nohighlight">\(f(0) = p_0\)</span>, we substitute <code class="docutils literal notranslate"><span class="pre">p_0</span></code> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>. First, we have to create two more symbols:</p>
+<p>The result is the <em>general
+solution</em>, which still contains an unspecified constant, <span class="math notranslate nohighlight">\(C_1\)</span>. To get the <em>particular solution</em> where <span class="math notranslate nohighlight">\(f(0) = p_0\)</span>, we substitute <code class="docutils literal notranslate"><span class="pre">p_0</span></code> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>. First, we have to create two more symbols:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C1</span><span class="p">,</span> <span class="n">p_0</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;C1 p_0&#39;</span><span class="p">)</span>
@@ -716,11 +746,11 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 \[\displaystyle f{\left(t \right)} = p_{0} e^{\alpha t}\]</div>
 </div>
 </div>
-<p>The result is called the <strong>exponential growth curve</strong>; see
+<p>The result is called the <em>exponential growth curve</em>; see
 <a class="reference external" href="http://modsimpy.com/expo">http://modsimpy.com/expo</a>.</p>
 </div>
 <div class="section" id="solving-the-quadratic-growth-model">
-<h2>Solving the quadratic growth model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
+<h2>Solving the Quadratic Growth Model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
 <p>To solve the quadratic growth curve, we’ll use the <code class="docutils literal notranslate"><span class="pre">r,</span> <span class="pre">K</span></code> parameterization, so we’ll need two more symbols:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -844,7 +874,7 @@ solution</strong>, which still contains an unspecified constant, <span class="ma
 \[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
 </div>
 </div>
-<p>This function is called the <strong>logistic growth curve</strong>; see
+<p>This function is called the <em>logistic growth curve</em>; see
 <a class="reference external" href="http://modsimpy.com/logistic">http://modsimpy.com/logistic</a>. In the context of growth models, the
 logistic function is often written like this:</p>
 <div class="math notranslate nohighlight">
@@ -854,25 +884,27 @@ logistic function is often written like this:</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>In this chapter we wrote the growth models from the previous chapters in terms of difference and differential equations.</p>
-<p>What I called the constant growth model is more commonly called <strong>linear growth</strong> because the solution is a line.  If we model time as continuous, the solution is</p>
+<p>In this chapter we wrote the growth models from the previous chapters in terms of difference and differential equations. We solved some of these equations by hand; for others, we used WolframAlpha and SymPy.</p>
+<p>What I called the “constant growth” model is more commonly called <em>linear growth</em> because the solution is a line.  If we model time as continuous, the solution is</p>
 <div class="math notranslate nohighlight">
 \[f(t) = p_0 + c t\]</div>
 <p>where <span class="math notranslate nohighlight">\(c\)</span> is net annual growth.</p>
-<p>Similarly, the proportional growth model is usually called <strong>exponential growth</strong> because the solution is exponential:</p>
+<p>Similarly, the proportional growth model is usually called <em>exponential growth</em> because the solution is exponential:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = p_0 \exp{\alpha t}\]</div>
-<p>Finally, the quadratic growth model is called <strong>logistic growth</strong> because the solution is the logistic function:</p>
+<p>Finally, the quadratic growth model is called <em>logistic growth</em> because the solution is the logistic function:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
 <p>I avoided these terms until now because they are based on results we had not derived yet.</p>
-<p>With that, we are done with modeling world population growth.
+<p>With that, we are done modeling world population growth.
 The next chapter presents case studies where you can apply the tools we have learned so far.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Use SymPy to solve the quadratic growth equation using the alternative parameterization</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Use SymPy to solve the quadratic growth equation using the alternative parameterization</p>
 <div class="math notranslate nohighlight">
 \[ \frac{df(t)}{dt} = \alpha f(t) + \beta f^2(t) \]</div>
 <div class="cell tag_hide-cell docutils container">
@@ -964,7 +996,10 @@ The next chapter presents case studies where you can apply the tools we have lea
 \[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
 </div>
 </div>
-<p><strong>Exercise:</strong>  Use <a class="reference external" href="https://www.wolframalpha.com/">WolframAlpha</a> to solve the quadratic growth model, using either or both forms of parameterization:</p>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Use <a class="reference external" href="https://www.wolframalpha.com/">WolframAlpha</a> to solve the quadratic growth model, using either or both forms of parameterization:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df(t) / dt = alpha f(t) + beta f(t)^2
 </pre></div>
 </div>
@@ -973,6 +1008,7 @@ The next chapter presents case studies where you can apply the tools we have lea
 </pre></div>
 </div>
 <p>Find the general solution and also the particular solution where <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
+</div>
 </div>
 </div>
 
@@ -1004,7 +1040,7 @@ The next chapter presents case studies where you can apply the tools we have lea
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Chapter 8</a>
+    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Projections</a>
     <a class='right-next' id="next-link" href="chap10.html" title="next page">Chapter 10</a>
 
     </div>

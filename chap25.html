@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,17 +350,17 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#angular-acceleration">
-   Angular acceleration
+   Angular Acceleration
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#moment-of-inertia">
-   Moment of inertia
+   Moment of Inertia
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#teapots-and-turntables">
-   Teapots and turntables
+   Teapots and Turntables
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -367,6 +387,13 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -386,12 +413,12 @@
 velocity.
 In this chapter we take the next step, modeling a system with angular acceleration and deceleration.</p>
 <div class="section" id="angular-acceleration">
-<h2>Angular acceleration<a class="headerlink" href="#angular-acceleration" title="Permalink to this headline">¶</a></h2>
-<p>Just as linear acceleration is the derivative of velocity, <strong>angular
-acceleration</strong> is the derivative of angular velocity. And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, <strong>torque</strong>. If you are not familiar with torque, you can read about it at <a class="reference external" href="http://modsimpy.com/torque">http://modsimpy.com/torque</a>.</p>
-<p>In general, torque is a vector quantity, defined as the <strong>cross
-product</strong> of <span class="math notranslate nohighlight">\(\vec{r}\)</span> and <span class="math notranslate nohighlight">\(\vec{F}\)</span>, where <span class="math notranslate nohighlight">\(\vec{r}\)</span> is the <strong>lever
-arm</strong>, a vector from the center of rotation to the point where the force is applied, and <span class="math notranslate nohighlight">\(\vec{F}\)</span> is the vector that represents the magnitude and direction of the force.</p>
+<h2>Angular Acceleration<a class="headerlink" href="#angular-acceleration" title="Permalink to this headline">¶</a></h2>
+<p>Just as linear acceleration is the derivative of velocity, <em><em>angular
+acceleration</em> is the derivative of angular velocity. And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, <em>torque</em></em>. If you are not familiar with torque, you can read about it at <a class="reference external" href="http://modsimpy.com/torque">http://modsimpy.com/torque</a>.</p>
+<p>In general, torque is a vector quantity, defined as the <em><em>cross
+product</em> of <span class="math notranslate nohighlight">\(\vec{r}\)</span> and <span class="math notranslate nohighlight">\(\vec{F}\)</span>, where <span class="math notranslate nohighlight">\(\vec{r}\)</span> is the <em>lever
+arm</em></em>, a vector from the center of rotation to the point where the force is applied, and <span class="math notranslate nohighlight">\(\vec{F}\)</span> is the vector that represents the magnitude and direction of the force.</p>
 <p>However, for the problems in this chapter, we only need the <em>magnitude</em> of torque; we don’t care about the direction. In that case, we can compute</p>
 <div class="math notranslate nohighlight">
 \[\tau = r F \sin \theta\]</div>
@@ -399,11 +426,11 @@ arm</strong>, a vector from the center of rotation to the point where the force 
 <p>Since torque is the product of a length and a force, it is expressed in newton meters (Nm).</p>
 </div>
 <div class="section" id="moment-of-inertia">
-<h2>Moment of inertia<a class="headerlink" href="#moment-of-inertia" title="Permalink to this headline">¶</a></h2>
+<h2>Moment of Inertia<a class="headerlink" href="#moment-of-inertia" title="Permalink to this headline">¶</a></h2>
 <p>In the same way that linear acceleration is related to force by Newton’s second law of motion, <span class="math notranslate nohighlight">\(F=ma\)</span>, angular acceleration is related to torque by another form of Newton’s law:</p>
 <div class="math notranslate nohighlight">
 \[\tau = I \alpha\]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is angular acceleration and <span class="math notranslate nohighlight">\(I\)</span> is <strong>moment of inertia</strong>. Just as mass is what makes it hard to accelerate an object, moment of inertia is what makes it hard to spin an object.</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is angular acceleration and <span class="math notranslate nohighlight">\(I\)</span> is <em>moment of inertia</em>. Just as mass is what makes it hard to accelerate an object, moment of inertia is what makes it hard to spin an object.</p>
 <p>In the most general case, a 3-D object rotating around an arbitrary
 axis, moment of inertia is a tensor, which is a function that takes a
 vector as a parameter and returns a vector as a result.</p>
@@ -416,7 +443,7 @@ calculations; you can just look up the answers. For example, see
 <a class="reference external" href="http://modsimpy.com/moment">http://modsimpy.com/moment</a>.</p>
 </div>
 <div class="section" id="teapots-and-turntables">
-<h2>Teapots and turntables<a class="headerlink" href="#teapots-and-turntables" title="Permalink to this headline">¶</a></h2>
+<h2>Teapots and Turntables<a class="headerlink" href="#teapots-and-turntables" title="Permalink to this headline">¶</a></h2>
 <p>Tables in Chinese restaurants often have a rotating tray or turntable
 that makes it easy for customers to share dishes. These turntables are
 supported by low-friction bearings that allow them to turn easily and
@@ -1058,7 +1085,9 @@ As an exercise, you can finish off the example, estimating the force needed to r
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Continuing the example from this chapter, estimate the force that delivers the teapot to the desired position.
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Continuing the example from this chapter, estimate the force that delivers the teapot to the desired position.
 Use this <code class="docutils literal notranslate"><span class="pre">System</span></code> object, with the friction we computed in the previous section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1184,6 +1213,7 @@ Run the simulation with the force you computed and confirm that the table stops 
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.141592653589793
 </pre></div>
+</div>
 </div>
 </div>
 </div>

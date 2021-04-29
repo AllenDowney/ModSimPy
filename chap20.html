@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,12 +350,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#newton-s-second-law-of-motion">
-   Newton’s second law of motion
+   Newton’s Second Law of Motion
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dropping-pennies">
-   Dropping pennies
+   Dropping Pennies
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -351,6 +371,11 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercises">
      Exercises
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
     </a>
    </li>
   </ul>
@@ -374,7 +399,7 @@ order</strong>, which means they involve only first derivatives. In this
 chapter, we turn our attention to second order differential equations, which can involve both first and second derivatives.</p>
 <p>We’ll revisit the falling penny example from Chapter 1, and use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to find the position and velocity of the penny as it falls, with and without air resistance.</p>
 <div class="section" id="newton-s-second-law-of-motion">
-<h2>Newton’s second law of motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h2>
+<h2>Newton’s Second Law of Motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h2>
 <p>First order differential equations (DEs) can be written</p>
 <div class="math notranslate nohighlight">
 \[\frac{dy}{dx} = G(x, y)\]</div>
@@ -415,7 +440,7 @@ quantify the forces that act on such an object, we can predict how it
 will move.</p>
 </div>
 <div class="section" id="dropping-pennies">
-<h2>Dropping pennies<a class="headerlink" href="#dropping-pennies" title="Permalink to this headline">¶</a></h2>
+<h2>Dropping Pennies<a class="headerlink" href="#dropping-pennies" title="Permalink to this headline">¶</a></h2>
 <p>As a first example, let’s get back to the penny falling from the Empire State Building, which we considered in Chapter 1. We will implement two models of this system: first without air resistance, then with.</p>
 <p>Given that the Empire State Building is 381 m high, and assuming that
 the penny is dropped from a standstill, the initial conditions are:</p>
@@ -608,7 +633,7 @@ the simulation again with <code class="docutils literal notranslate"><span class
 </div>
 <div class="section" id="events">
 <h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
-<p>As an option, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can take an <strong>event function</strong>, which
+<p>As an option, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> can take an <em>event function</em>, which
 detects an “event”, like the penny hitting the sidewalk, and ends the
 simulation.</p>
 <p>Event functions take the same parameters as slope functions, <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code>. They should return a value that passes through <code class="docutils literal notranslate"><span class="pre">0</span></code> when the event occurs. Here’s an event function that detects the penny hitting the sidewalk:</p>
@@ -676,7 +701,10 @@ And we used an event function to stop the simulation when the penny reaches the 
 But first you might want to work on this exercise.</p>
 <div class="section" id="exercises">
 <h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
-<p><strong>Exercise:</strong> Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
+</div>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
 <p>“If the Earth suddenly stopped orbiting the Sun, I know eventually it would be pulled in by the Sun’s gravity and hit it. How long would it take the Earth to hit the Sun? I imagine it would go slowly at first and then pick up speed.”</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to answer this question.</p>
 <p>Here are some suggestions about how to proceed:</p>

@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,27 +350,27 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-glucose-minimal-model">
-   The glucose minimal model
+   The Glucose Minimal Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-insulin-minimal-model">
-   The insulin minimal model
+   The Insulin Minimal Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#low-pass-filter">
-   Low-Pass Filter
+   Low-pass Filter
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#thermal-behavior-of-a-wall">
-   Thermal behavior of a wall
+   Thermal Behavior of a Wall
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hiv">
-   HIV
+   Hiv
   </a>
  </li>
 </ul>
@@ -369,7 +389,7 @@
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap19.ipynb">Click here to run this chapter on Colab</a></p>
 <p>This chapter presents case studies where you can apply the tools we have learned so far to the glucose-insulin minimal model, an electronic circuit, a thermal model of a wall, and the interaction of HIV and T cells.</p>
 <div class="section" id="the-glucose-minimal-model">
-<h2>The glucose minimal model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
+<h2>The Glucose Minimal Model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
 <p>In the previous chapter we implemented the glucose minimal model using given parameters, but I didn’t say where those parameters came from.</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">glucose.ipynb</span></code>, that shows how we can find the parameters that best fit the data.</p>
@@ -379,7 +399,7 @@
 <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb">click here to run it on Colab</a></p>
 </div>
 <div class="section" id="the-insulin-minimal-model">
-<h2>The insulin minimal model<a class="headerlink" href="#the-insulin-minimal-model" title="Permalink to this headline">¶</a></h2>
+<h2>The Insulin Minimal Model<a class="headerlink" href="#the-insulin-minimal-model" title="Permalink to this headline">¶</a></h2>
 <p>Along with the glucose minimal model, Berman et al. developed an insulin minimal model, in which the concentration of insulin, <span class="math notranslate nohighlight">\(I\)</span>, is governed by this differential equation:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dI}{dt} = -k I(t) + \gamma \left[ G(t) - G_T \right] t\]</div>
@@ -407,7 +427,7 @@ decrease) in blood insulin when glucose is above (or below) <span class="math no
 <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb">click here to run it on Colab</a></p>
 </div>
 <div class="section" id="low-pass-filter">
-<h2>Low-Pass Filter<a class="headerlink" href="#low-pass-filter" title="Permalink to this headline">¶</a></h2>
+<h2>Low-pass Filter<a class="headerlink" href="#low-pass-filter" title="Permalink to this headline">¶</a></h2>
 <p>The following circuit diagram (from <a class="reference external" href="https://commons.wikimedia.org/wiki/File:1st_Order_Lowpass_Filter_RC.svg">Wikipedia</a>) shows a low-pass filter built with one resistor and one capacitor.</p>
 <p><img alt="Circuit diagram of a low-pass filter" src="https://github.com/AllenDowney/ModSim/raw/main/figs/Lowpass_Filter_RC.png" /></p>
 <p>A “filter” is a circuit takes a signal, <span class="math notranslate nohighlight">\(V_{in}\)</span>, as input and produces a signal, <span class="math notranslate nohighlight">\(V_{out}\)</span>, as output. In this context, a “signal” is a voltage that changes over time.</p>
@@ -446,7 +466,7 @@ the notebook, run the code, and work on the exercises.</p>
 <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb">click here to run it on Colab</a></p>
 </div>
 <div class="section" id="thermal-behavior-of-a-wall">
-<h2>Thermal behavior of a wall<a class="headerlink" href="#thermal-behavior-of-a-wall" title="Permalink to this headline">¶</a></h2>
+<h2>Thermal Behavior of a Wall<a class="headerlink" href="#thermal-behavior-of-a-wall" title="Permalink to this headline">¶</a></h2>
 <p>This case study is based on a paper that models the thermal behavior of a brick wall with the goal of understanding the “performance gap between the expected energy use of buildings and their measured energy use”.</p>
 <p>The following figure shows the scenario and their model of the wall:</p>
 <p><img alt="Model of a wall as a series of thermal insulators" src="https://github.com/AllenDowney/ModSim/raw/main/figs/wall_model.png" /></p>
@@ -469,7 +489,7 @@ case study possible.</p>
 <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb">click here to run it on Colab</a></p>
 </div>
 <div class="section" id="hiv">
-<h2>HIV<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
+<h2>Hiv<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
 <p>During the initial phase of HIV infection, the concentration of the virus in the bloodstream typically increases quickly and then decreases.
 The most obvious explanation for the decline is an immune response that destroys the virus or controls its replication.
 However, at least in some patients, the decline occurs even without any detectable immune response.</p>

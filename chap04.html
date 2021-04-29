@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 4 &#8212; Modeling and Simulation in Python</title>
+    <title>Sweeping Parameters &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 5" href="chap05.html" />
-    <link rel="prev" title="Chapter 3" href="chap03.html" />
+    <link rel="next" title="World Population" href="chap05.html" />
+    <link rel="prev" title="Iteration" href="chap03.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,22 +350,22 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#functions-that-return-values">
-   Functions that return values
+   Functions That Return Values
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loops-and-arrays">
-   Loops and arrays
+   Loops and Arrays
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sweeping-parameters">
-   Sweeping parameters
+  <a class="reference internal nav-link" href="#id1">
+   Sweeping Parameters
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#incremental-development">
-   Incremental development
+   Incremental Development
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -357,11 +377,45 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-4">
+     Exercise 4
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#optional-exercises">
-   Optional Exercises
+  <a class="reference internal nav-link" href="#challenge-exercises">
+   Challenge Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-5">
+     Exercise 5
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-6">
+     Exercise 6
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#under-the-hood">
@@ -379,16 +433,17 @@
         
               <div>
                 
-  <div class="section" id="chapter-4">
-<h1>Chapter 4<a class="headerlink" href="#chapter-4" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap04.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="sweeping-parameters">
+<h1>Sweeping Parameters<a class="headerlink" href="#sweeping-parameters" title="Permalink to this headline">¶</a></h1>
 <p>In the previous chapter we defined metrics that quantify the performance of a bike sharing system.
 In this chapter we’ll see how those metrics depend on the parameters of the system, like the arrival rate of customers at the stations.</p>
-<p>We also discuss a program development strategy, called incremental
+<p>And I will present a program development strategy, called incremental
 development, that might help you write programs faster and spend less
 time debugging.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="functions-that-return-values">
-<h2>Functions that return values<a class="headerlink" href="#functions-that-return-values" title="Permalink to this headline">¶</a></h2>
+<h2>Functions That Return Values<a class="headerlink" href="#functions-that-return-values" title="Permalink to this headline">¶</a></h2>
 <p>We have used several functions that return values.
 For example, when you run <code class="docutils literal notranslate"><span class="pre">sqrt</span></code>, it returns a number you can assign to a variable.</p>
 <div class="cell docutils container">
@@ -488,7 +543,7 @@ creates a <code class="docutils literal notranslate"><span class="pre">State</sp
 </div>
 </div>
 <p>The simulation we just ran starts with <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and uses the values <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>.
-These five values are <strong>parameters of the model</strong>, which are quantities that determine the behavior of the system.</p>
+These five values are <em>parameters of the model</em>, which are quantities that determine the behavior of the system.</p>
 <p>It is easy to get the parameters of a model confused with the parameters of a function.
 It is especially easy because the parameters of a model often appear as parameters of a function.</p>
 <p>For example, the previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> takes <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code> as parameters.
@@ -497,7 +552,7 @@ the metrics, like the number of unhappy customers, depend on the
 parameters. But before we do that, we need a new version of a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
 </div>
 <div class="section" id="loops-and-arrays">
-<h2>Loops and arrays<a class="headerlink" href="#loops-and-arrays" title="Permalink to this headline">¶</a></h2>
+<h2>Loops and Arrays<a class="headerlink" href="#loops-and-arrays" title="Permalink to this headline">¶</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, we use this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
         <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
@@ -525,7 +580,7 @@ values, we can use <code class="docutils literal notranslate"><span class="pre">
 <p>The arguments indicate where the sequence should start and stop, and how
 many elements it should contain. In this example, the sequence contains
 <code class="docutils literal notranslate"><span class="pre">5</span></code> equally-spaced numbers, starting at <code class="docutils literal notranslate"><span class="pre">0</span></code> and ending at <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
-<p>The result is a NumPy <strong>array</strong>, which is a new kind of object we have
+<p>The result is a NumPy <em>array</em>, which is a new kind of object we have
 not seen before. An array is a container for a sequence of numbers.</p>
 <p>We can use an array in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop like this:</p>
 <div class="cell docutils container">
@@ -555,8 +610,8 @@ not seen before. An array is a container for a sequence of numbers.</p>
 </ol>
 <p>And so on, until it gets to the end of the array. This will come in handy in the next section.</p>
 </div>
-<div class="section" id="sweeping-parameters">
-<h2>Sweeping parameters<a class="headerlink" href="#sweeping-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>Sweeping Parameters<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>If we know the actual values of parameters like <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code>, we can
 use them to make specific predictions, like how many bikes will be at
 Olin after one hour.</p>
@@ -564,7 +619,7 @@ Olin after one hour.</p>
 explain why systems behave as they do and to evaluate alternative
 designs. For example, if we observe the system and notice that we often run out of bikes at a particular time, we could use the model to figure out why that happens. And if we are considering adding more bikes, or another station, we could evaluate the effect of various “what if” scenarios.</p>
 <p>As an example, suppose we have enough data to estimate that <code class="docutils literal notranslate"><span class="pre">p2</span></code> is
-about <code class="docutils literal notranslate"><span class="pre">0.2</span></code>, but we don’t have any information about <code class="docutils literal notranslate"><span class="pre">p1</span></code>. We could run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and see how the results vary. This process is called <strong>sweeping</strong> a parameter, in the sense that the value of the parameter “sweeps” through a range of possible values.</p>
+about <code class="docutils literal notranslate"><span class="pre">0.2</span></code>, but we don’t have any information about <code class="docutils literal notranslate"><span class="pre">p1</span></code>. We could run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and see how the results vary. This process is called <em>sweeping</em> a parameter, in the sense that the value of the parameter “sweeps” through a range of possible values.</p>
 <p>Now that we know about loops and arrays, we can use them like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -632,17 +687,17 @@ resulting number of unhappy customers.</p>
 <img alt="_images/chap04_40_0.png" src="_images/chap04_40_0.png" />
 </div>
 </div>
-<p>I use the keyword argument <code class="docutils literal notranslate"><span class="pre">color='C1'</span></code> to specify the color of the line.
+<p>The keyword argument <code class="docutils literal notranslate"><span class="pre">color='C1'</span></code> specifies the color of the line.
 The <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> we have plotted so far use the default color, <code class="docutils literal notranslate"><span class="pre">C0</span></code>, which is blue.
-I want a different color for <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> to remind us that it is not a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+I use a different color for <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> to remind us that it is not a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
 <p>When the arrival rate at Olin is low, there are plenty of bikes and no unhappy customers.
-As the arrival rate increases, we are more likely to run out of bikes and the number of unhappy customers increases.</p>
+As the arrival rate increases, we are more likely to run out of bikes and the number of unhappy customers increases. The line is jagged because the simulation is based on random numbers. Sometime we get lucky and there are relatively few unhappy customers; other times are are unlucky and there are more.</p>
 </div>
 <div class="section" id="incremental-development">
-<h2>Incremental development<a class="headerlink" href="#incremental-development" title="Permalink to this headline">¶</a></h2>
+<h2>Incremental Development<a class="headerlink" href="#incremental-development" title="Permalink to this headline">¶</a></h2>
 <p>When you start writing programs that are more than a few lines, you
 might find yourself spending more time debugging. The more code you write before you start debugging, the harder it is to find the problem.</p>
-<p><strong>Incremental development</strong> is a way of programming that tries to
+<p><em>Incremental development</em> is a way of programming that tries to
 minimize the pain of debugging. The fundamental steps are:</p>
 <ol class="simple">
 <li><p>Always start with a working program. If you have an example from a
@@ -662,7 +717,7 @@ problem.</p></li>
 <p>When this process works, your changes usually work the first time, or if they don’t, the problem is obvious. In practice, there are two problems with incremental development:</p>
 <ul class="simple">
 <li><p>Sometimes you have to write extra code to generate visible output
-that you can check. This extra code is called <strong>scaffolding</strong>
+that you can check. This extra code is called <em>scaffolding</em>
 because you use it to build the program and then remove it when you
 are done. That might seem like a waste, but time you spend on
 scaffolding is almost always time you save on debugging.</p></li>
@@ -685,7 +740,9 @@ incremental development.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Write a function called <code class="docutils literal notranslate"><span class="pre">make_state</span></code> that creates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the state variables <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and then returns the new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Write a function called <code class="docutils literal notranslate"><span class="pre">make_state</span></code> that creates a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the state variables <code class="docutils literal notranslate"><span class="pre">olin=10</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley=2</span></code>, and then returns the new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
 <p>Write a line of code that calls <code class="docutils literal notranslate"><span class="pre">make_state</span></code> and assigns the result to a variable named <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -742,7 +799,10 @@ incremental development.</p>
 </table>
 </div></div></div>
 </div>
-<p><strong>Exercise:</strong> Read the documentation of <code class="docutils literal notranslate"><span class="pre">linspace</span></code> at <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html">https://numpy.org/doc/stable/reference/generated/numpy.linspace.html</a>. Then use it to make an array of 101 equally spaced points between 0 and 1 (including both).</p>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Read the documentation of <code class="docutils literal notranslate"><span class="pre">linspace</span></code> at <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html">https://numpy.org/doc/stable/reference/generated/numpy.linspace.html</a>. Then use it to make an array of 101 equally spaced points between 0 and 1 (including both).</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -752,7 +812,11 @@ incremental development.</p>
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> Wrap the code from this chapter in a function named <code class="docutils literal notranslate"><span class="pre">sweep_p1</span></code> that takes an array called <code class="docutils literal notranslate"><span class="pre">p1_array</span></code> as a parameter.  It should create a new <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, run a simulation for each value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> in <code class="docutils literal notranslate"><span class="pre">p1_array</span></code>, store the results in the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, and return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Wrap the code from this chapter in a function named <code class="docutils literal notranslate"><span class="pre">sweep_p1</span></code> that takes an array called <code class="docutils literal notranslate"><span class="pre">p1_array</span></code> as a parameter.  It should create a new <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> and run a simulation for each value of <code class="docutils literal notranslate"><span class="pre">p1</span></code> in <code class="docutils literal notranslate"><span class="pre">p1_array</span></code>, with <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code> and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>.
+It should store the results in the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> and return it.</p>
 <p>Use your function to plot the number of unhappy customers at Olin as a function of <code class="docutils literal notranslate"><span class="pre">p1</span></code>.  Label the axes.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -789,7 +853,10 @@ incremental development.</p>
 <img alt="_images/chap04_52_0.png" src="_images/chap04_52_0.png" />
 </div>
 </div>
-<p><strong>Exercise:</strong> Write a function called <code class="docutils literal notranslate"><span class="pre">sweep_p2</span></code> that runs simulations with <code class="docutils literal notranslate"><span class="pre">p1=0.5</span></code> and a range of values for <code class="docutils literal notranslate"><span class="pre">p2</span></code>.  It should store the results in a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> and return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<p>Write a function called <code class="docutils literal notranslate"><span class="pre">sweep_p2</span></code> that runs simulations with <code class="docutils literal notranslate"><span class="pre">p1=0.5</span></code> and a range of values for <code class="docutils literal notranslate"><span class="pre">p2</span></code>.  It should store the results in a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code> and return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -827,10 +894,13 @@ incremental development.</p>
 </div>
 </div>
 </div>
-<div class="section" id="optional-exercises">
-<h2>Optional Exercises<a class="headerlink" href="#optional-exercises" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="challenge-exercises">
+<h2>Challenge Exercises<a class="headerlink" href="#challenge-exercises" title="Permalink to this headline">¶</a></h2>
 <p>The following two exercises are a little more challenging.  If you are comfortable with what you have learned so far, you should give them a try.  If you feel like you have your hands full, you might want to skip them for now.</p>
-<p><strong>Exercise:</strong> Because our simulations are random, the results vary from one run to another, and the results of a parameter sweep tend to be noisy.  We can get a clearer picture of the relationship between a parameter and a metric by running multiple simulations with the same parameter and taking the average of the results.</p>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<p>Because our simulations are random, the results vary from one run to another, and the results of a parameter sweep tend to be noisy.  We can get a clearer picture of the relationship between a parameter and a metric by running multiple simulations with the same parameter and taking the average of the results.</p>
 <p>Write a function called <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> that takes as parameters <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_runs</span></code>.
 <code class="docutils literal notranslate"><span class="pre">num_runs</span></code> specifies how many times it should call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
 <p>After each run, it should store the total number of unhappy customers (at Olin or Wellesley) in a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.
@@ -959,7 +1029,10 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong>  Continuting the previous exercise, use <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> to run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and</p>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<p>Continuing the previous exercise, use <code class="docutils literal notranslate"><span class="pre">run_multiple_simulations</span></code> to run simulations with a range of values for <code class="docutils literal notranslate"><span class="pre">p1</span></code> and</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span> <span class="o">=</span> <span class="mf">0.3</span>
 <span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="n">num_runs</span> <span class="o">=</span> <span class="mi">20</span>
@@ -998,6 +1071,7 @@ At the end, it should return the <code class="docutils literal notranslate"><spa
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/chap04_63_0.png" src="_images/chap04_63_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -1044,8 +1118,8 @@ You can read about the other available colors at <a class="reference external" h
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap03.html" title="previous page">Chapter 3</a>
-    <a class='right-next' id="next-link" href="chap05.html" title="next page">Chapter 5</a>
+    <a class='left-prev' id="prev-link" href="chap03.html" title="previous page">Iteration</a>
+    <a class='right-next' id="next-link" href="chap05.html" title="next page">World Population</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,12 +350,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-manny-ramirez-problem">
-   The Manny Ramirez problem
+   The Manny Ramirez Problem
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#finding-the-range">
-   Finding the range
+   Finding the Range
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -347,6 +367,13 @@
   <a class="reference internal nav-link" href="#exercise">
    Exercise
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#under-the-hood">
@@ -371,7 +398,7 @@
 baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.</p>
 <p>In this chapter we apply that model to an optimization problem.</p>
 <div class="section" id="the-manny-ramirez-problem">
-<h2>The Manny Ramirez problem<a class="headerlink" href="#the-manny-ramirez-problem" title="Permalink to this headline">¶</a></h2>
+<h2>The Manny Ramirez Problem<a class="headerlink" href="#the-manny-ramirez-problem" title="Permalink to this headline">¶</a></h2>
 <p>Manny Ramirez is a former member of the Boston Red Sox (an American
 baseball team) who was notorious for his relaxed attitude and taste for practical jokes. Our objective in this chapter is to solve the following Manny-inspired problem:</p>
 <blockquote>
@@ -474,14 +501,14 @@ feet (see <a class="reference external" href="http://modsimpy.com/wally">http://
 <p>The answer we want is the minimum speed at which a ball can leave home plate and still go over the Green Monster. We’ll proceed in the
 following steps:</p>
 <ol class="simple">
-<li><p>For a given speed, we’ll find the optimal <strong>launch angle</strong>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
+<li><p>For a given speed, we’ll find the optimal <em>launch angle</em>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
 <li><p>Then we’ll find the minimum speed that clears the wall, given
 that it has the optimal launch angle.</p></li>
 </ol>
 </div>
 <div class="section" id="finding-the-range">
-<h2>Finding the range<a class="headerlink" href="#finding-the-range" title="Permalink to this headline">¶</a></h2>
-<p>Suppose we want to find the launch angle that maximizes <strong>range</strong>, that is, the distance the ball travels in the air before landing. We’ll use a function in the ModSim library, <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, which takes a function and finds its maximum.</p>
+<h2>Finding the Range<a class="headerlink" href="#finding-the-range" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to find the launch angle that maximizes <em>range</em>, that is, the distance the ball travels in the air before landing. We’ll use a function in the ModSim library, <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, which takes a function and finds its maximum.</p>
 <p>The function we pass to <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> should take launch angle in degrees, simulate the flight of a ball launched at that angle, and return the distance the ball travels along the <span class="math notranslate nohighlight">\(x\)</span> axis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -616,7 +643,9 @@ As an exercise, you can finish it off.</p>
 </div>
 <div class="section" id="exercise">
 <h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Let’s finish off the Manny Ramirez problem:</p>
+<div class="section" id="id1">
+<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Let’s finish off the Manny Ramirez problem:</p>
 <blockquote>
 <div><p>What is the minimum effort required to hit a home run in Fenway Park?</p>
 </div></blockquote>
@@ -840,6 +869,7 @@ This is a root-finding problem, so we’ll use <code class="docutils literal not
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0010039392295357885
 </pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -335,12 +355,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-sir-model">
-   The SIR model
+   The Sir Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-sir-equations">
-   The SIR equations
+   The Sir Equations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -350,22 +370,22 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-update-function">
-   The update function
+   The Update Function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#running-the-simulation">
-   Running the simulation
+   Running the Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#collecting-the-results">
-   Collecting the results
+   Collecting the Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#now-with-a-timeframe">
-   Now with a TimeFrame
+   Now With a Timeframe
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -412,17 +432,17 @@ decisions that went into it and identify its capabilities and
 limitations.</p>
 </div>
 <div class="section" id="the-sir-model">
-<h2>The SIR model<a class="headerlink" href="#the-sir-model" title="Permalink to this headline">¶</a></h2>
-<p>The Kermack-McKendrick model is an example of an <strong>SIR model</strong>,
+<h2>The Sir Model<a class="headerlink" href="#the-sir-model" title="Permalink to this headline">¶</a></h2>
+<p>The Kermack-McKendrick model is an example of an <em>SIR model</em>,
 so-named because it represents three categories of people:</p>
 <ul class="simple">
-<li><p><strong>S</strong>: People who are “susceptible”, that is, capable of
+<li><p><em>S</em>: People who are “susceptible”, that is, capable of
 contracting the disease if they come into contact with someone who
 is infected.</p></li>
-<li><p><strong>I</strong>: People who are “infectious”, that is, capable of passing
+<li><p><em>I</em>: People who are “infectious”, that is, capable of passing
 along the disease if they come into contact with someone
 susceptible.</p></li>
-<li><p><strong>R</strong>: People who are “recovered”. In the basic version of the
+<li><p><em>R</em>: People who are “recovered”. In the basic version of the
 model, people who have recovered are considered to be immune to
 reinfection. That is a reasonable model for some diseases, but not
 for others, so it should be on the list of assumptions to reconsider later.</p></li>
@@ -448,7 +468,7 @@ infected in a day, which is <span class="math notranslate nohighlight">\(\beta s
 arrives or departs, so the size of the population, <span class="math notranslate nohighlight">\(N\)</span>, is constant.</p>
 </div>
 <div class="section" id="the-sir-equations">
-<h2>The SIR equations<a class="headerlink" href="#the-sir-equations" title="Permalink to this headline">¶</a></h2>
+<h2>The Sir Equations<a class="headerlink" href="#the-sir-equations" title="Permalink to this headline">¶</a></h2>
 <p>If we treat time as a continuous quantity, we can write differential
 equations that describe the rates of change for <span class="math notranslate nohighlight">\(s\)</span>, <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(r\)</span> (where <span class="math notranslate nohighlight">\(r\)</span> is the fraction of the population that has recovered):</p>
 <div class="math notranslate nohighlight">
@@ -457,11 +477,11 @@ equations that describe the rates of change for <span class="math notranslate no
 \frac{di}{dt} &amp;= \beta s i - \gamma i\\
 \frac{dr}{dt} &amp;= \gamma i\end{aligned}\end{split}\]</div>
 <p>To avoid cluttering the equations, I leave it implied that <span class="math notranslate nohighlight">\(s\)</span> is a function of time, <span class="math notranslate nohighlight">\(s(t)\)</span>, and likewise for <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(r\)</span>.</p>
-<p>SIR models are examples of <strong>compartment models</strong>, so-called because
+<p>SIR models are examples of <em>compartment models</em>, so-called because
 they divide the world into discrete categories, or compartments, and
 describe transitions from one compartment to another. Compartments are
-also called <strong>stocks</strong> and transitions between them are called
-<strong>flows</strong>.</p>
+also called <em>stocks</em> and transitions between them are called
+<em>flows</em>.</p>
 <p>In this example, there are three stocks—susceptible, infectious, and
 recovered—and two flows—new infections and recoveries. Compartment
 models are often represented visually using stock and flow diagrams (see <a class="reference external" href="http://modsimpy.com/stock">http://modsimpy.com/stock</a>).</p>
@@ -476,7 +496,7 @@ model.</p>
 given model, there are many ways to represent it. For example, we can
 represent an SIR model as a stock-and-flow diagram, as a set of
 differential equations, or as a Python program. The process of
-representing a model in these forms is called <strong>implementation</strong>. In
+representing a model in these forms is called <em>implementation</em>. In
 this section, we implement the SIR model in Python.</p>
 <p>I’ll represent the initial state of the system using a <code class="docutils literal notranslate"><span class="pre">State</span></code> object
 with state variables <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>; they represent the fraction of
@@ -666,7 +686,7 @@ Name...</td>
 </div>
 </div>
 <div class="section" id="the-update-function">
-<h2>The update function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
+<h2>The Update Function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
 <p>At any point in time, the state of the system is represented by a
 <code class="docutils literal notranslate"><span class="pre">State</span></code> object with three variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>. So I’ll define an update function that takes as parameters the current
 time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
@@ -747,7 +767,7 @@ from the state variables, <code class="docutils literal notranslate"><span class
 sometimes depend on time, and it is convenient if they all take the same parameters, whether they need them or not.</p>
 </div>
 <div class="section" id="running-the-simulation">
-<h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<h2>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>Now we can simulate the model over a sequence of time steps:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -817,7 +837,7 @@ population is still susceptible, which means they were never infected,
 almost 48% have recovered, which means they were infected at some point, and less than 1% are actively infected.</p>
 </div>
 <div class="section" id="collecting-the-results">
-<h2>Collecting the results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">¶</a></h2>
+<h2>Collecting the Results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">¶</a></h2>
 <p>The previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> only returns the final state,
 but we might want to see how the state changes over time. We’ll consider two ways to do that: first, using three <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects, then using a new object called a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
 <p>Here’s the first version:</p>
@@ -880,7 +900,7 @@ Next we initialize <code class="docutils literal notranslate"><span class="pre">
 <p>It takes about three weeks (21 days) for the outbreak to get going, and about five weeks (35 days) to peak. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
 </div>
 <div class="section" id="now-with-a-timeframe">
-<h2>Now with a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
+<h2>Now With a Timeframe<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
 <p>If the number of state variables is small, storing them as separate
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects might not be so bad. But a better alternative is to use a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which is another object defined in the ModSim
 library.
@@ -948,7 +968,7 @@ from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</s
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise</strong>  Suppose the time between contacts is 4 days and the recovery time is 5 days.  After 14 weeks, how many students, total, have been infected?</p>
+<p><em>Exercise</em>  Suppose the time between contacts is 4 days and the recovery time is 5 days.  After 14 weeks, how many students, total, have been infected?</p>
 <p>Hint: what is the change in <code class="docutils literal notranslate"><span class="pre">S</span></code> between the beginning and the end of the simulation?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">

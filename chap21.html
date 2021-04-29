@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,7 +350,7 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#drag-force">
-   Drag force
+   Drag Force
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -352,6 +372,18 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -373,11 +405,11 @@ very general; it is easy to add additional forces, including drag.</p>
 <p>In this chapter, I present a model of drag force and add it to the
 simulation.</p>
 <div class="section" id="drag-force">
-<h2>Drag force<a class="headerlink" href="#drag-force" title="Permalink to this headline">¶</a></h2>
+<h2>Drag Force<a class="headerlink" href="#drag-force" title="Permalink to this headline">¶</a></h2>
 <p>As an object moves through a fluid, like air, the object applies force
 to the air and, in accordance with Newton’s third law of motion, the air applies an equal and opposite force to the object (see
 <a class="reference external" href="http://modsimpy.com/newton">http://modsimpy.com/newton</a>).</p>
-<p>The direction of this <strong>drag force</strong> is opposite the direction of
+<p>The direction of this <em>drag force</em> is opposite the direction of
 travel, and its magnitude is given by the drag equation (see
 <a class="reference external" href="http://modsimpy.com/drageq">http://modsimpy.com/drageq</a>):</p>
 <div class="math notranslate nohighlight">
@@ -387,10 +419,10 @@ travel, and its magnitude is given by the drag equation (see
 <li><p><span class="math notranslate nohighlight">\(F_d\)</span> is force due to drag, in newtons (N).</p></li>
 <li><p><span class="math notranslate nohighlight">\(\rho\)</span> is the density of the fluid in kg/m<span class="math notranslate nohighlight">\(^3\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(v\)</span> is the magnitude of velocity in m/s.</p></li>
-<li><p><span class="math notranslate nohighlight">\(A\)</span> is the <strong>reference area</strong> of the object, in m<span class="math notranslate nohighlight">\(^2\)</span>. In this
+<li><p><span class="math notranslate nohighlight">\(A\)</span> is the <em>reference area</em> of the object, in m<span class="math notranslate nohighlight">\(^2\)</span>. In this
 context, the reference area is the projected frontal area, that is, the visible area of the object as seen from a point on its line of
 travel (and far away).</p></li>
-<li><p><span class="math notranslate nohighlight">\(C_d\)</span> is the <strong>drag coefficient</strong>, a dimensionless quantity that
+<li><p><span class="math notranslate nohighlight">\(C_d\)</span> is the <em>drag coefficient</em>, a dimensionless quantity that
 depends on the shape of the object (including length but not frontal area), its surface properties, and how it interacts with the fluid.</p></li>
 </ul>
 <p>For objects moving at moderate speeds through air, typical drag
@@ -399,7 +431,7 @@ coefficients are between 0.1 and 1.0, with blunt objects at the high end of the 
 <p>For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate <span class="math notranslate nohighlight">\(C_d\)</span> from data.</p>
 <p>Of course, the drag equation is itself a model, based on the assumption that <span class="math notranslate nohighlight">\(C_d\)</span> does not depend on the other terms in the equation: density, velocity, and area. For objects moving in air at moderate speeds (below 45 mph or 20 m/s), this model might be good enough, but we should remember to revisit this assumption.</p>
 <p>For the falling penny, we can use measurements to estimate <span class="math notranslate nohighlight">\(C_d\)</span>. In
-particular, we can measure <strong>terminal velocity</strong>, <span class="math notranslate nohighlight">\(v_{term}\)</span>, which is
+particular, we can measure <em>terminal velocity</em>, <span class="math notranslate nohighlight">\(v_{term}\)</span>, which is
 the speed where drag force equals force due to gravity:</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{2}~\rho~v_{term}^2~C_d~A = m g\]</div>
@@ -703,7 +735,9 @@ event function from the previous chapter.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Run the simulation with a downward initial velocity that exceeds the penny’s terminal velocity.</p>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Run the simulation with a downward initial velocity that exceeds the penny’s terminal velocity.</p>
 <p>What do you expect to happen?  Plot velocity and position as a function of time, and see if they are consistent with your prediction.</p>
 <p>Hint: Use <code class="docutils literal notranslate"><span class="pre">params.set</span></code> to make a new <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with a different initial velocity.</p>
 <div class="cell tag_hide-cell docutils container">
@@ -771,7 +805,10 @@ event function from the previous chapter.</p>
 <img alt="_images/chap21_45_0.png" src="_images/chap21_45_0.png" />
 </div>
 </div>
-<p><strong>Exercise:</strong> Suppose we drop a quarter from the Empire State Building and find that its flight time is 19.1 seconds.  Use this measurement to estimate terminal velocity and coefficient of drag.</p>
+</div>
+<div class="section" id="id1">
+<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Suppose we drop a quarter from the Empire State Building and find that its flight time is 19.1 seconds.  Use this measurement to estimate terminal velocity and coefficient of drag.</p>
 <p>You can get the relevant dimensions of a quarter from https://en.wikipedia.org/wiki/Quarter_(United_States_coin).</p>
 <ol class="simple">
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with new values of <code class="docutils literal notranslate"><span class="pre">mass</span></code> and <code class="docutils literal notranslate"><span class="pre">diameter</span></code>. We don’t know <code class="docutils literal notranslate"><span class="pre">v_term</span></code>, so we’ll start with the initial guess 18 m/s.</p></li>
@@ -959,6 +996,7 @@ event function from the previous chapter.</p>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.54345826868176
 </pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -340,7 +360,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simulating-baseball-flight">
-   Simulating baseball flight
+   Simulating Baseball Flight
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -367,6 +387,23 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -404,8 +441,8 @@ exactly in the range of velocities we are interested in, between 20 m/s and 40�
 <div class="section" id="vectors">
 <h2>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline">¶</a></h2>
 <p>Now that we are working in two dimensions, it will be useful to
-work with <strong>vector quantities</strong>, that is, quantities that represent both a magnitude and a direction. We will use vectors to represent positions, velocities, accelerations, and forces in two and three dimensions.</p>
-<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that creates a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> that contains the <strong>components</strong> of the vector.
+work with <em>vector quantities</em>, that is, quantities that represent both a magnitude and a direction. We will use vectors to represent positions, velocities, accelerations, and forces in two and three dimensions.</p>
+<p>ModSim provides a function called <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that creates a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> that contains the <em>components</em> of the vector.
 In a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents a position in space, the components are the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates in 2-D, plus a <span class="math notranslate nohighlight">\(z\)</span> coordinate if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is in 3-D.</p>
 <p>You can create a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> by specifying its components. The following
 <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a point 3 units to the right (or east) and 4 units up (or north) from an implicit origin:</p>
@@ -566,8 +603,8 @@ addition and subtraction:</p>
 <p>For the definition and graphical interpretation of these operations, see <a class="reference external" href="http://modsimpy.com/vecops">http://modsimpy.com/vecops</a>.</p>
 <p>We can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with coordinates <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, as in the previous examples.
 Equivalently, we can specify a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with a magnitude and angle.</p>
-<p><strong>Magnitude</strong> is the length of the vector: if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a position, magnitude is its distance from the origin; if it represents a velocity, magnitude is its speed.</p>
-<p>The <strong>angle</strong> of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is its direction, expressed as an angle in radians from the positive <span class="math notranslate nohighlight">\(x\)</span> axis. In the Cartesian plane, the angle 0 rad is due east, and the angle <span class="math notranslate nohighlight">\(\pi\)</span> rad is due west.</p>
+<p><em>Magnitude</em> is the length of the vector: if the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> represents a position, magnitude is its distance from the origin; if it represents a velocity, magnitude is its speed.</p>
+<p>The <em>angle</em> of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> is its direction, expressed as an angle in radians from the positive <span class="math notranslate nohighlight">\(x\)</span> axis. In the Cartesian plane, the angle 0 rad is due east, and the angle <span class="math notranslate nohighlight">\(\pi\)</span> rad is due west.</p>
 <p>ModSim provides functions to compute the magnitude and angle of a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>.  For example, here are the magnitude and angle of <code class="docutils literal notranslate"><span class="pre">A</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -665,7 +702,7 @@ Fortunately, NumPy provides a function to convert radians to degrees:</p>
 </table>
 </div></div></div>
 </div>
-<p>Another way to represent the direction of <code class="docutils literal notranslate"><span class="pre">A</span></code> is a <strong>unit vector</strong>,
+<p>Another way to represent the direction of <code class="docutils literal notranslate"><span class="pre">A</span></code> is a <em>unit vector</em>,
 which is a vector with magnitude 1 that points in the same direction as
 <code class="docutils literal notranslate"><span class="pre">A</span></code>. You can compute a unit vector by dividing a vector by its
 magnitude:</p>
@@ -756,7 +793,7 @@ magnitude:</p>
 <p>Now let’s get back to the game.</p>
 </div>
 <div class="section" id="simulating-baseball-flight">
-<h2>Simulating baseball flight<a class="headerlink" href="#simulating-baseball-flight" title="Permalink to this headline">¶</a></h2>
+<h2>Simulating Baseball Flight<a class="headerlink" href="#simulating-baseball-flight" title="Permalink to this headline">¶</a></h2>
 <p>Let’s simulate the flight of a baseball that is batted from home plate
 at an angle of 45° and initial speed 40 m/s. We’ll use the center of home plate as the origin, a horizontal x-axis (parallel to the ground), and a vertical y-axis (perpendicular to the ground). The initial height is 1 m.</p>
 <p>Here’s a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with the parameters we’ll need.</p>
@@ -1285,7 +1322,7 @@ Here are the last few rows.</p>
 <img alt="_images/chap22_71_0.png" src="_images/chap22_71_0.png" />
 </div>
 </div>
-<p>This way of visualizing the results is called a <strong>trajectory plot</strong> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).</p>
+<p>This way of visualizing the results is called a <em>trajectory plot</em> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).</p>
 <p>A trajectory plot can be easier to interpret than a time series plot,
 because it shows what the motion of the projectile would look like (at
 least from one point of view). Both plots can be useful, but don’t get
@@ -1340,7 +1377,9 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> Run the simulation with and without air resistance.  How wrong would we be if we ignored drag?</p>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Run the simulation with and without air resistance.  How wrong would we be if we ignored drag?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hint</span>
@@ -1408,7 +1447,10 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / m<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same initial speed and launch angle travel?</p>
+</div>
+<div class="section" id="id1">
+<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / m<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same initial speed and launch angle travel?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hint</span>
@@ -1450,7 +1492,10 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC"><em>The Physics of Baseball</em></a>, shows coefficient of drag as a function of velocity.</p>
+</div>
+<div class="section" id="id2">
+<h3>Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC"><em>The Physics of Baseball</em></a>, shows coefficient of drag as a function of velocity.</p>
 <p><img alt="Graph of drag coefficient versus velocity" src="https://github.com/AllenDowney/ModSimPy/raw/master/figs/baseball_drag.png" /></p>
 <p>I used <a class="reference external" href="https://automeris.io/WebPlotDigitizer/">an online graph digitizer</a> to extract the data and save it in a CSV file.</p>
 <p>Modify the model to include the dependence of <code class="docutils literal notranslate"><span class="pre">C_d</span></code> on velocity, and see how much it affects the results.</p>
@@ -1675,6 +1720,7 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289026
 </pre></div>
+</div>
 </div>
 </div>
 </div>

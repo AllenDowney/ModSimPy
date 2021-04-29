@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 2 &#8212; Modeling and Simulation in Python</title>
+    <title>Bike Share System &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 3" href="chap03.html" />
-    <link rel="prev" title="Chapter 1" href="chap01.html" />
+    <link rel="next" title="Iteration" href="chap03.html" />
+    <link rel="prev" title="The Modeling Framework" href="chap01.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -335,17 +355,17 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#defining-functions">
-   Defining functions
+   Defining Functions
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#print-statements">
-   Print statements
+   Print Statements
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#if-statements">
-   If statements
+   If Statements
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -355,12 +375,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#for-loops">
-   For loops
+   For Loops
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#timeseries">
-   TimeSeries
+   Timeseries
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -377,6 +397,23 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#under-the-hood">
@@ -394,16 +431,17 @@
         
               <div>
                 
-  <div class="section" id="chapter-2">
-<h1>Chapter 2<a class="headerlink" href="#chapter-2" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap02.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="bike-share-system">
+<h1>Bike Share System<a class="headerlink" href="#bike-share-system" title="Permalink to this headline">¶</a></h1>
 <p>This chapter presents a simple model of a bike share system and
 demonstrates the features of Python we’ll use to develop simulations of real-world systems.</p>
 <p>Along the way, we’ll make decisions about how to model the system. In
 the next chapter we’ll review these decisions and gradually improve the model.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="modeling-a-bike-share-system">
 <h2>Modeling a Bike Share System<a class="headerlink" href="#modeling-a-bike-share-system" title="Permalink to this headline">¶</a></h2>
-<p>Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about 3 miles apart in eastern Massachusetts.</p>
+<p>Imagine a bike share system for students traveling between Olin College and Wellesley College, which are about three miles apart in eastern Massachusetts.</p>
 <p>Suppose the system contains 12 bikes and two bike racks, one at Olin and one at Wellesley, each with the capacity to hold 12 bikes.</p>
 <p>As students arrive, check out a bike, and ride to the other campus, the number of bikes in each location changes. In the simulation, we’ll need to keep track of where the bikes are. To do that, we’ll use a function called <code class="docutils literal notranslate"><span class="pre">State</span></code>, which is defined in the ModSim library.</p>
 <div class="cell docutils container">
@@ -413,15 +451,14 @@ the next chapter we’ll review these decisions and gradually improve the model.
 </div>
 </div>
 </div>
-<p>The expressions in parentheses are <strong>keyword arguments</strong>.
-They create two variables, <code class="docutils literal notranslate"><span class="pre">olin</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley</span></code>, and give them values.</p>
-<p>Then we call the <code class="docutils literal notranslate"><span class="pre">State</span></code> function.
-The result is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, which is a collection of <strong>state variables</strong>.</p>
+<p>The expressions in parentheses are <em>keyword arguments</em>.
+They create two variables, <code class="docutils literal notranslate"><span class="pre">olin</span></code> and <code class="docutils literal notranslate"><span class="pre">wellesley</span></code>, and give them values.
+Then we call the <code class="docutils literal notranslate"><span class="pre">State</span></code> function.
+The result is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, which is a collection of <em>state variables</em>.</p>
 <p>In this example, the state variables represent the number of
-bikes at each location. The initial values are 10 and 2, indicating that there are 10 bikes at Olin and 2 at Wellesley.</p>
+bikes at each location. The initial values are <code class="docutils literal notranslate"><span class="pre">10</span></code> and <code class="docutils literal notranslate"><span class="pre">2</span></code>, indicating that there are 10 bikes at Olin and 2 at Wellesley.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">State</span></code> object is assigned to a new variable named <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.
-We can read the variables inside a <code class="docutils literal notranslate"><span class="pre">State</span></code> object using the <strong>dot
-operator</strong>, like this:</p>
+We can read the variables inside a <code class="docutils literal notranslate"><span class="pre">State</span></code> object using the <em>dot operator</em>, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span>
@@ -447,7 +484,7 @@ operator</strong>, like this:</p>
 </div>
 </div>
 </div>
-<p>Or, to display the state variables and their values, you can just type the name of the object:</p>
+<p>Or, to display the state variables and their values, you can just enter the name of the object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span>
@@ -462,50 +499,7 @@ Name: state, dtype: int64
 </div>
 </div>
 </div>
-<p>These values make up the <strong>state</strong> of the system.</p>
-<p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">show</span></code> that displays a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a table.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>state</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>olin</th>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>wellesley</th>
-      <td>2</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>You don’t have to use <code class="docutils literal notranslate"><span class="pre">show</span></code>, but I think the results look better.</p>
+<p>These values make up the <em>state</em> of the system.</p>
 <p>We can update the state by assigning new values to the variables.
 For example, if a student moves a bike from Olin to Wellesley, we can figure out the new values and assign them:</p>
 <div class="cell docutils container">
@@ -516,7 +510,7 @@ For example, if a student moves a bike from Olin to Wellesley, we can figure out
 </div>
 </div>
 </div>
-<p>Or we can use <strong>update operators</strong>, <code class="docutils literal notranslate"><span class="pre">-=</span></code> and <code class="docutils literal notranslate"><span class="pre">+=</span></code>, to subtract 1 from
+<p>Or we can use <em>update operators</em>, <code class="docutils literal notranslate"><span class="pre">-=</span></code> and <code class="docutils literal notranslate"><span class="pre">+=</span></code>, to subtract 1 from
 <code class="docutils literal notranslate"><span class="pre">olin</span></code> and add 1 to <code class="docutils literal notranslate"><span class="pre">wellesley</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -529,7 +523,7 @@ For example, if a student moves a bike from Olin to Wellesley, we can figure out
 <p>The result is the same either way.</p>
 </div>
 <div class="section" id="defining-functions">
-<h2>Defining functions<a class="headerlink" href="#defining-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Defining Functions<a class="headerlink" href="#defining-functions" title="Permalink to this headline">¶</a></h2>
 <p>So far we have used functions defined in NumPy and the ModSim library. Now we’re going to define our own functions.</p>
 <p>When you are developing code in Jupyter, it is often efficient to write a few lines of code, test them to confirm they do what you intend, and then use them to define a new function. For example, these lines move a bike from Olin to Wellesley:</p>
 <div class="cell docutils container">
@@ -555,11 +549,11 @@ function:</p>
 function. The name of the function is <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>. The empty
 parentheses indicate that this function requires no additional
 information when it runs. The colon indicates the beginning of an
-indented <strong>code block</strong>.</p>
-<p>The next two lines are the <strong>body</strong> of the function. They have to be
-indented; by convention, the indentation is 4 spaces.</p>
+indented <em>code block</em>.</p>
+<p>The next two lines are the <em>body</em> of the function. They have to be
+indented; by convention, the indentation is four spaces.</p>
 <p>When you define a function, it has no immediate effect. The body of the
-function doesn’t run until you <strong>call</strong> the function. Here’s how to call
+function doesn’t run until you <em>call</em> the function. Here’s how to call
 this function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -630,10 +624,9 @@ leave them out, you get this:</p>
 So don’t forget the parentheses.</p>
 </div>
 <div class="section" id="print-statements">
-<h2>Print statements<a class="headerlink" href="#print-statements" title="Permalink to this headline">¶</a></h2>
+<h2>Print Statements<a class="headerlink" href="#print-statements" title="Permalink to this headline">¶</a></h2>
 <p>As you write more complicated programs, it is easy to lose track of what
-is going on. One of the most useful tools for debugging is the <strong>print
-statement</strong>, which displays text in the Jupyter notebook.</p>
+is going on. One of the most useful tools for debugging is the <em>print statement</em>, which displays text in the Jupyter notebook.</p>
 <p>Normally when Jupyter runs the code in a cell, it displays the value of
 the last line of code. For example, if you run:</p>
 <div class="cell docutils container">
@@ -698,7 +691,7 @@ add a print statement to <code class="docutils literal notranslate"><span class=
 </div>
 <p>Each time we call this version of the function, it displays a message,
 which can help us keep track of what the program is doing.
-The message in this example is a <strong>string</strong>, which is a sequence of
+The message in this example is a <em>string</em>, which is a sequence of
 letters and other symbols in quotes.</p>
 <p>Just like <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>, we can define a function that moves a
 bike from Wellesley to Olin:</p>
@@ -731,7 +724,8 @@ give the function documents what it does, which makes programs more
 readable.</p>
 </div>
 <div class="section" id="if-statements">
-<h2>If statements<a class="headerlink" href="#if-statements" title="Permalink to this headline">¶</a></h2>
+<h2>If Statements<a class="headerlink" href="#if-statements" title="Permalink to this headline">¶</a></h2>
+<p>At this point we have functions that simulate moving bikes; now let’s think about simulating customers. As a simple model of customer behavior, I will use a random number generator to determine when customers arrive at each station.</p>
 <p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">flip</span></code> that generates random “coin tosses”.
 When you call it, you provide a probability between 0 and 1, like this:</p>
 <div class="cell docutils container">
@@ -741,7 +735,7 @@ When you call it, you provide a probability between 0 and 1, like this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -751,19 +745,14 @@ with probability 0.3. If you run <code class="docutils literal notranslate"><spa
 get <code class="docutils literal notranslate"><span class="pre">True</span></code> about 70 times and <code class="docutils literal notranslate"><span class="pre">False</span></code> about 30 times. But the results
 are random, so they might differ from these expectations.</p>
 <p><code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> are special values defined by Python.
-They are called <strong>boolean</strong> values because they are
+They are called <em>boolean</em> values because they are
 related to Boolean algebra (<a class="reference external" href="https://modsimpy.com/boolean">https://modsimpy.com/boolean</a>).</p>
 <p>Note that they are not strings. There is a difference between <code class="docutils literal notranslate"><span class="pre">True</span></code>, which is a boolean value, and <code class="docutils literal notranslate"><span class="pre">'True'</span></code>, which is a string.</p>
-<p>We can use boolean values to control the behavior of the program, using an <strong>if statement</strong>:</p>
+<p>We can use boolean values to control the behavior of the program, using an <em>if statement</em>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="mf">0.5</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;heads&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>heads
 </pre></div>
 </div>
 </div>
@@ -773,7 +762,7 @@ related to Boolean algebra (<a class="reference external" href="https://modsimpy
 <p>The syntax for <code class="docutils literal notranslate"><span class="pre">if</span></code> statements is similar to the syntax for
 function definitions: the first line has to end with a colon, and the
 lines inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement have to be indented.</p>
-<p>Optionally, you can add an <strong>else clause</strong> to indicate what should
+<p>Optionally, you can add an <em>else clause</em> to indicate what should
 happen if the result is <code class="docutils literal notranslate"><span class="pre">False</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -785,14 +774,14 @@ happen if the result is <code class="docutils literal notranslate"><span class="
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tails
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>heads
 </pre></div>
 </div>
 </div>
 </div>
 <p>If you run the previous cell a few times, it should print <code class="docutils literal notranslate"><span class="pre">heads</span></code> about half the time, and <code class="docutils literal notranslate"><span class="pre">tails</span></code> about half the time.</p>
-<p>Now we can use <code class="docutils literal notranslate"><span class="pre">flip</span></code> to simulate the arrival of students who want to
-borrow a bike. Suppose students arrive at the Olin station every 2
+<p>Now we can use <code class="docutils literal notranslate"><span class="pre">flip</span></code> to simulate the arrival of customers who want to
+borrow a bike. Suppose students arrive at the Olin station every two
 minutes on average.
 In that case, the chance of an arrival during any one-minute period is 50%, and we can simulate it like this:</p>
 <div class="cell docutils container">
@@ -802,13 +791,8 @@ In that case, the chance of an arrival during any one-minute period is 50%, and 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
-</pre></div>
 </div>
-</div>
-</div>
-<p>If students arrive at the Wellesley station every 3 minutes, on average,
+<p>If students arrive at the Wellesley station every three minutes, on average,
 the chance of an arrival during any one-minute period is 33%, and we can
 simulate it like this:</p>
 <div class="cell docutils container">
@@ -819,8 +803,7 @@ simulate it like this:</p>
 </div>
 </div>
 </div>
-<p>We can combine these snippets into a function that simulates a <strong>time
-step</strong>, which is an interval of time, in this case one minute:</p>
+<p>We can combine these snippets into a function that simulates a <em>time step</em>, which is an interval of time, in this case one minute:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">():</span>
@@ -852,7 +835,7 @@ step</strong>, which is an interval of time, in this case one minute:</p>
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <p>The previous version of <code class="docutils literal notranslate"><span class="pre">step</span></code> is fine if the arrival probabilities
 never change, but in reality they vary over time.</p>
-<p>So instead of putting the constant values 0.5 and 0.33 in <code class="docutils literal notranslate"><span class="pre">step</span></code>, we can replace them with <strong>parameters</strong>.
+<p>So instead of putting the constant values 0.5 and 0.33 in <code class="docutils literal notranslate"><span class="pre">step</span></code>, we can replace them with <em>parameters</em>.
 Parameters are variables whose values are set when a function is called.</p>
 <p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">step</span></code> that takes two parameters, <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code>:</p>
 <div class="cell docutils container">
@@ -882,7 +865,7 @@ they are provided when the function is called, like this:</p>
 </div>
 </div>
 <p>The values you provide when you call the function are called
-<strong>arguments</strong>. The arguments, <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">0.33</span></code> in this example, get
+<em>arguments</em>. The arguments, <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">0.33</span></code> in this example, get
 assigned to the parameters, <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code>, in order. So running this
 function has the same effect as:</p>
 <div class="cell docutils container">
@@ -898,20 +881,14 @@ function has the same effect as:</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
-</pre></div>
-</div>
-</div>
 </div>
 <p>The advantage of using parameters is that you can call the same function many times, providing different arguments each time.</p>
-<p>Adding parameters to a function is called <strong>generalization</strong>, because it makes the function more general, that is, less specialized.</p>
+<p>Adding parameters to a function is called <em>generalization</em>, because it makes the function more general; without parameters, the function always does the same thing; with parameters, it can do a range of things.</p>
 </div>
 <div class="section" id="for-loops">
-<h2>For loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h2>
+<h2>For Loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h2>
 <p>At some point you will get sick of running cells over and over.
-Fortunately, there is an easy way to repeat a chunk of code, the <strong>for
-loop</strong>. Here’s an example:</p>
+Fortunately, there is an easy way to repeat a chunk of code, the <em>for loop</em>. Here’s an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
@@ -938,13 +915,13 @@ elements of the loop are:</p>
 <li><p>The words <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code> are special words we have to use in a for
 loop.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> is a Python function we use to control the number of times the loop runs.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> is a <strong>loop variable</strong> that gets created when the for loop runs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> is a <em>loop variable</em> that gets created when the for loop runs.</p></li>
 </ul>
 <p>When this loop runs, it runs the statements inside the loop three times.  The first time, the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code>; the second time, it is <code class="docutils literal notranslate"><span class="pre">1</span></code>; the third time, it is <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
 <p>Each time through the loop, it prints the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> and moves one bike to Wellesley.</p>
 </div>
 <div class="section" id="timeseries">
-<h2>TimeSeries<a class="headerlink" href="#timeseries" title="Permalink to this headline">¶</a></h2>
+<h2>Timeseries<a class="headerlink" href="#timeseries" title="Permalink to this headline">¶</a></h2>
 <p>When we run a simulation, we often want to save the results for later analysis. The ModSim library provides a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object for this purpose. A <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> contains a sequence of time stamps and a
 corresponding sequence of quantities.</p>
 <p>In this example, the time stamps are integers representing minutes and the quantities are the number of bikes at one location.</p>
@@ -972,7 +949,7 @@ corresponding sequence of quantities.</p>
 </div>
 </div>
 </div>
-<p>The number in brackets is the time stamp, also called a <strong>label</strong>.</p>
+<p>The number in brackets is the time stamp, also called a <em>label</em>.</p>
 <p>We can use a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> inside a for loop to store the results of the simulation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -980,16 +957,6 @@ corresponding sequence of quantities.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">step</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
     <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bikeshare</span><span class="o">.</span><span class="n">olin</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
-1
-Moving a bike to Wellesley
-2
-Moving a bike to Wellesley
-Moving a bike to Olin
 </pre></div>
 </div>
 </div>
@@ -1008,52 +975,6 @@ The last time, the value of <code class="docutils literal notranslate"><span cla
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Quantity</th>
-    </tr>
-    <tr>
-      <th>Time</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>9</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>The left column is the time stamps; the right column is the quantities.</p>
 </div>
@@ -1071,9 +992,6 @@ the results, and the ModSim library provides <code class="docutils literal notra
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/chap02_83_0.png" src="_images/chap02_83_0.png" />
-</div>
 </div>
 <p>The result should be a plot with time on the <span class="math notranslate nohighlight">\(x\)</span>-axis and the number of bikes on the <span class="math notranslate nohighlight">\(y\)</span>-axis.
 Since we only ran three time steps, it might not be very interesting.</p>
@@ -1089,8 +1007,11 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong> What happens if you spell the name of a state variable wrong?  Edit the following cell, change the spelling of <code class="docutils literal notranslate"><span class="pre">wellesley</span></code>, and run it.</p>
-<p>The error message uses the word “attribute”, which is another name for what we are calling a state variable.</p>
+<p>Before you go on, you might want to work on the following exercises.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>What happens if you spell the name of a state variable wrong?  Edit the following cell, change the spelling of <code class="docutils literal notranslate"><span class="pre">wellesley</span></code>, and run it.</p>
+<p>The error message uses the word <em>attribute</em>, which is another name for what we are calling a state variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -1099,18 +1020,16 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
-</pre></div>
 </div>
 </div>
-</div>
-<p><strong>Exercise:</strong> Make a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with a third state variable, called <code class="docutils literal notranslate"><span class="pre">babson</span></code>, with initial value 0, and display the state of the system.</p>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Make a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with a third state variable, called <code class="docutils literal notranslate"><span class="pre">downtown</span></code>, with initial value 0, and display the state of the system.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">babson</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">downtown</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">bikeshare</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1147,14 +1066,17 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
       <td>2</td>
     </tr>
     <tr>
-      <th>babson</th>
+      <th>downtown</th>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p><strong>Exercise:</strong> Wrap the code in the chapter in a function named <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that takes three parameters, named <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>.</p>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Wrap the code in the chapter in a function named <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that takes three parameters, named <code class="docutils literal notranslate"><span class="pre">p1</span></code>, <code class="docutils literal notranslate"><span class="pre">p2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>.</p>
 <p>It should:</p>
 <ol class="simple">
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object to hold the results.</p></li>
@@ -1197,44 +1119,6 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Olin
-</pre></div>
-</div>
-<img alt="_images/chap02_93_1.png" src="_images/chap02_93_1.png" />
 </div>
 </div>
 </div>
@@ -1243,10 +1127,8 @@ Moving a bike to Olin
 <p>This section contains additional information about the functions we’ve used and pointers to their documentation.</p>
 <p>You don’t need to know anything in this section, so if you are already feeling overwhelmed, you might want to skip it.
 But if you are curious, read on.</p>
-<p><code class="docutils literal notranslate"><span class="pre">State</span></code> and <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects are based on the <code class="docutils literal notranslate"><span class="pre">Series</span></code> object defined by a the Pandas library.
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code> and <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects are based on the <code class="docutils literal notranslate"><span class="pre">Series</span></code> object defined by the Pandas library.
 The documentation is at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">show</span></code> works by creating another Pandas object, called a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which can be displayed as a table.
-We’ll use <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> objects in future chapters.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Series</span></code> objects provide their own <code class="docutils literal notranslate"><span class="pre">plot</span></code> function which is why we call it like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
@@ -1267,20 +1149,7 @@ For the list of keyword arguments you can pass to <code class="docutils literal 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>def flip(p=0.5):
-    &quot;&quot;&quot;Flips a coin with the given probability.
-
-    p: float 0-1
-
-    returns: boolean (True or False)
-    &quot;&quot;&quot;
-    return np.random.random() &lt; p
-</pre></div>
 </div>
-</div>
-</div>
-<p>You might not understand everything in this function yet, but you will.</p>
 </div>
 </div>
 
@@ -1312,8 +1181,8 @@ For the list of keyword arguments you can pass to <code class="docutils literal 
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap01.html" title="previous page">Chapter 1</a>
-    <a class='right-next' id="next-link" href="chap03.html" title="next page">Chapter 3</a>
+    <a class='left-prev' id="prev-link" href="chap01.html" title="previous page">The Modeling Framework</a>
+    <a class='right-next' id="next-link" href="chap03.html" title="next page">Iteration</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

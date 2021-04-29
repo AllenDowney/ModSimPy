@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 5 &#8212; Modeling and Simulation in Python</title>
+    <title>World Population &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 6" href="chap06.html" />
-    <link rel="prev" title="Chapter 4" href="chap04.html" />
+    <link rel="next" title="Proportional Growth" href="chap06.html" />
+    <link rel="prev" title="Sweeping Parameters" href="chap04.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -335,7 +355,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#absolute-and-relative-errors">
-   Absolute and relative errors
+   Absolute and Relative Errors
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -344,8 +364,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation">
-   Simulation
+  <a class="reference internal nav-link" href="#simulating-population-growth">
+   Simulating Population Growth
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -357,6 +377,13 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -369,9 +396,8 @@
         
               <div>
                 
-  <div class="section" id="chapter-5">
-<h1>Chapter 5<a class="headerlink" href="#chapter-5" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap05.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="world-population">
+<h1>World Population<a class="headerlink" href="#world-population" title="Permalink to this headline">¶</a></h1>
 <p>In 1968 Paul Erlich published <em>The Population Bomb</em>, in which he
 predicted that world population would grow quickly during the 1970s,
 that agricultural production could not keep up, and that mass starvation in the next two decades was inevitable (see
@@ -380,13 +406,15 @@ decades, I am happy to report that those predictions were wrong.</p>
 <p>But world population growth is still a topic of concern, and it is an
 open question how many people the earth can sustain while maintaining
 and improving our quality of life.</p>
-<p>In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50-100 years.</p>
-<p>For background on world population growth, watch this video from the
+<p>In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50-100 years.
+For background on world population growth, watch this video from the
 American Museum of Natural History <a class="reference external" href="https://modsimpy.com/human">https://modsimpy.com/human</a>.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="world-population-growth">
 <h2>World Population Growth<a class="headerlink" href="#world-population-growth" title="Permalink to this headline">¶</a></h2>
 <p>The Wikipedia article on world population contains tables with estimates of world population from prehistory to the present, and projections for the future (<a class="reference external" href="https://modsimpy.com/worldpop">https://modsimpy.com/worldpop</a>).</p>
-<p>To read this data, we will use Pandas, which provides functions for
+<p>To read this data, we will use the Pandas library, which provides functions for
 working with data. The function we’ll use is <code class="docutils literal notranslate"><span class="pre">read_html</span></code>, which can read a web page and extract data from any tables it contains. Before we can use it, we have to import it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -412,10 +440,10 @@ working with data. The function we’ll use is <code class="docutils literal not
 <li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: The name of the file (including the directory it’s in)
 as a string. This argument can also be a URL starting with <code class="docutils literal notranslate"><span class="pre">http</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">header</span></code>: Indicates which row of each table should be considered the
-header, that is, the set of labels that identify the columns. In
+<em>header</em>, that is, the set of labels that identify the columns. In
 this case it is the first row (numbered 0).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">index_col</span></code>: Indicates which column of each table should be
-considered the <strong>index</strong>, that is, the set of labels that identify
+considered the <em>index</em>, that is, the set of labels that identify
 the rows. In this case it is the first column, which contains the
 years.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">decimal</span></code>: Normally this argument is used to indicate which
@@ -567,7 +595,7 @@ population estimates from 1950 to 2016.</p>
 </table>
 </div></div></div>
 </div>
-<p>The first column, which is labeled <code class="docutils literal notranslate"><span class="pre">Year</span></code>, is special.  It is the <strong>index</strong> for this <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which means it contains the labels for the rows.</p>
+<p>The first column, which is labeled <code class="docutils literal notranslate"><span class="pre">Year</span></code>, is special.  It is the <em>index</em> for this <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which means it contains the labels for the rows.</p>
 <p>Some of the values use scientific notation; for example, <code class="docutils literal notranslate"><span class="pre">2.544000e+09</span></code> is shorthand for <span class="math notranslate nohighlight">\(2.544 \cdot 10^9\)</span> or 2.544 billion.</p>
 <p><code class="docutils literal notranslate"><span class="pre">NaN</span></code> is a special value that indicates missing data.</p>
 <p>The column labels are long strings, which makes them hard to work with.
@@ -614,8 +642,8 @@ Name: census, dtype: float64
 </div>
 </div>
 </div>
-<p>The left column is the <strong>index</strong> of the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; in this example it contains the dates.
-The right column contains the <strong>values</strong>, which are population estimates.
+<p>The left column is the <em>index</em> of the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; in this example it contains the dates.
+The right column contains the <em>values</em>, which are population estimates.
 In 2016 the world population was about 7.3 billion.</p>
 <p>Here are the estimates from the United Nations
 Department of Economic and Social Affairs (U.N. DESA):</p>
@@ -669,10 +697,10 @@ The <code class="docutils literal notranslate"><span class="pre">label</span></c
 In the next section, we’ll quantify these differences.</p>
 </div>
 <div class="section" id="absolute-and-relative-errors">
-<h2>Absolute and relative errors<a class="headerlink" href="#absolute-and-relative-errors" title="Permalink to this headline">¶</a></h2>
+<h2>Absolute and Relative Errors<a class="headerlink" href="#absolute-and-relative-errors" title="Permalink to this headline">¶</a></h2>
 <p>Estimates of world population from the U.S. Census and the U.N. DESA differ slightly.
-One way to characterize this difference is <strong>absolute error</strong>, which is the absolute value of the difference between the two.</p>
-<p>To compute absolute value, we can import <code class="docutils literal notranslate"><span class="pre">abs</span></code> from NumPy:</p>
+One way to characterize this difference is <em>absolute error</em>, which is the absolute value of the difference between the estimates.</p>
+<p>To compute absolute errors, we can import <code class="docutils literal notranslate"><span class="pre">abs</span></code> from NumPy:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">abs</span>
@@ -680,6 +708,7 @@ One way to characterize this difference is <strong>absolute error</strong>, whic
 </div>
 </div>
 </div>
+<p>And use it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">abs_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">un</span> <span class="o">-</span> <span class="n">census</span><span class="p">)</span>
@@ -700,8 +729,8 @@ dtype: float64
 </div>
 </div>
 <p>When you subtract two <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects, the result is a new <code class="docutils literal notranslate"><span class="pre">Series</span></code>.
-Because one of the estimates from 2016 is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, the result is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
-<p>To summarize the results, we can compute the <strong>mean absolute error</strong>.</p>
+Because one of the estimates for 2016 is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, the result for 2016 is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<p>To summarize the results, we can compute the <em>mean absolute error</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">mean</span>
@@ -735,7 +764,7 @@ But we can also use <code class="docutils literal notranslate"><span class="pre"
 <p>In the worst case, they differ by about 0.1 billion.</p>
 <p>Now 0.1 billion is a lot of people, so that might sound like a serious discrepancy.
 But counting everyone is the world is hard, and we should not expect the estimates to be exact.</p>
-<p>Another way to quantify the magnitude of the difference is <strong>relative error</strong>, which is the size of the error divided by the estimates themselves.</p>
+<p>Another way to quantify the magnitude of the difference is <em>relative error</em>, which is the size of the error divided by the estimates themselves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rel_error</span> <span class="o">=</span> <span class="n">abs_error</span> <span class="o">/</span> <span class="n">census</span> <span class="o">*</span> <span class="mi">100</span>
@@ -805,11 +834,9 @@ from 1950 to 2016. Since the UN and Census data are so close, we’ll use the Ce
 </div>
 </div>
 </div>
-<p>The numbers in brackets are called <strong>labels</strong>, because they label the
-rows of the <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
 <p>In this example, the labels 2016 and 1950 are part of the data, so it
 would be better not to make them part of the program.
-Putting values like these in the program is called <strong>hard coding</strong>; it is considered bad practice because if the data change in the future, we have to change the program (see <a class="reference external" href="https://modsimpy.com/hardcode">https://modsimpy.com/hardcode</a>).</p>
+Putting values like these in the program is called <em>hard coding</em>; it is considered bad practice because if the data change in the future, we have to change the program (see <a class="reference external" href="https://modsimpy.com/hardcode">https://modsimpy.com/hardcode</a>).</p>
 <p>It would be better to get the labels from the <code class="docutils literal notranslate"><span class="pre">Series</span></code>.
 We can do that by selecting the index from <code class="docutils literal notranslate"><span class="pre">census</span></code> and then selecting the first element.</p>
 <div class="cell docutils container">
@@ -895,8 +922,8 @@ We can get the label of the last element like this.</p>
 <p>From 1950 to 2016, world population grew by about 0.07 billion people per year, on average.
 The next step is to use this estimate to simulate population growth.</p>
 </div>
-<div class="section" id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simulating-population-growth">
+<h2>Simulating Population Growth<a class="headerlink" href="#simulating-population-growth" title="Permalink to this headline">¶</a></h2>
 <p>Our simulation will start with the observed population in 1950, <code class="docutils literal notranslate"><span class="pre">p_0</span></code>,
 and add <code class="docutils literal notranslate"><span class="pre">annual_growth</span></code> each year. To store the results, we’ll use a
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object:</p>
@@ -981,7 +1008,7 @@ These names don’t affect the computation, but they appear when we display or p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_70_0.png" src="_images/chap05_70_0.png" />
+<img alt="_images/chap05_71_0.png" src="_images/chap05_71_0.png" />
 </div>
 </div>
 <p>From 1950 to 1990, the model does not fit the data particularly well, but after that, it’s pretty good.</p>
@@ -1001,41 +1028,9 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p>Here’s the code from this chapter all in one place.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_0</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">t_end</span> <span class="o">=</span> <span class="n">census</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_0</span>
-
-<span class="n">p_0</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span>
-<span class="n">p_end</span> <span class="o">=</span> <span class="n">census</span><span class="p">[</span><span class="n">t_end</span><span class="p">]</span>
-
-<span class="n">total_growth</span> <span class="o">=</span> <span class="n">p_end</span> <span class="o">-</span> <span class="n">p_0</span>
-<span class="n">annual_growth</span> <span class="o">=</span> <span class="n">total_growth</span> <span class="o">/</span> <span class="n">elapsed_time</span>
-
-<span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-<span class="n">results</span><span class="p">[</span><span class="n">t_0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_0</span>
-
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
-    <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">annual_growth</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
-<span class="n">plot_estimates</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/chap05_76_0.png" src="_images/chap05_76_0.png" />
-</div>
-</div>
-<p><strong>Exercise:</strong>  Try fitting the model using data from 1970 to the present, and see if that does a better job.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Try fitting the model using data from 1970 to the present, and see if that does a better job.</p>
 <p>Suggestions:</p>
 <ol class="simple">
 <li><p>Define <code class="docutils literal notranslate"><span class="pre">t_1</span></code> to be 1970 and <code class="docutils literal notranslate"><span class="pre">p_1</span></code> to be the population in 1970.  Use <code class="docutils literal notranslate"><span class="pre">t_1</span></code> and <code class="docutils literal notranslate"><span class="pre">p_1</span></code> to compute annual growth, but use <code class="docutils literal notranslate"><span class="pre">t_0</span></code> and <code class="docutils literal notranslate"><span class="pre">p_0</span></code> to run the simulation.</p></li>
@@ -1090,7 +1085,8 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap05_80_0.png" src="_images/chap05_80_0.png" />
+<img alt="_images/chap05_81_0.png" src="_images/chap05_81_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -1124,8 +1120,8 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap04.html" title="previous page">Chapter 4</a>
-    <a class='right-next' id="next-link" href="chap06.html" title="next page">Chapter 6</a>
+    <a class='left-prev' id="prev-link" href="chap04.html" title="previous page">Sweeping Parameters</a>
+    <a class='right-next' id="next-link" href="chap06.html" title="next page">Proportional Growth</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

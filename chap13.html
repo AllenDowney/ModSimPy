@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap03.html">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,17 +350,17 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sweeping-beta">
-   Sweeping beta
+   Sweeping Beta
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sweeping-gamma">
-   Sweeping gamma
+   Sweeping Gamma
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sweepframe">
-   SweepFrame
+   Sweepframe
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -352,6 +372,13 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -373,7 +400,7 @@ recovery rate, were known. In this chapter, we explore the behavior of
 the model as we vary these parameters.</p>
 <p>In the next chapter, we use analysis to understand these relationships better, and propose a method for using data to estimate parameters.</p>
 <div class="section" id="sweeping-beta">
-<h2>Sweeping beta<a class="headerlink" href="#sweeping-beta" title="Permalink to this headline">¶</a></h2>
+<h2>Sweeping Beta<a class="headerlink" href="#sweeping-beta" title="Permalink to this headline">¶</a></h2>
 <p>Recall that <span class="math notranslate nohighlight">\(\beta\)</span> is the contact rate, which captures both the
 frequency of interaction between people and the fraction of those
 interactions that result in a new infection. If <span class="math notranslate nohighlight">\(N\)</span> is the size of the
@@ -416,7 +443,7 @@ for <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 </div>
 </div>
 </div>
-<p>Before we plot the results, I will use a formatted string literal, also called an <strong>f-string</strong> to assemble a label that includes the value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>:</p>
+<p>Before we plot the results, I will use a formatted string literal, also called an <em>f-string</em> to assemble a label that includes the value of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;gamma = </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -459,7 +486,7 @@ infected students increases quickly. When <code class="docutils literal notransl
 80% of the population gets sick.</p>
 </div>
 <div class="section" id="sweeping-gamma">
-<h2>Sweeping gamma<a class="headerlink" href="#sweeping-gamma" title="Permalink to this headline">¶</a></h2>
+<h2>Sweeping Gamma<a class="headerlink" href="#sweeping-gamma" title="Permalink to this headline">¶</a></h2>
 <p>Let’s see what that looks like for a few different values of <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
 We’ll use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> to make an array of values:</p>
 <div class="cell docutils container">
@@ -497,10 +524,10 @@ In that case, even a low contact rate (<code class="docutils literal notranslate
 <p>When <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is high, <code class="docutils literal notranslate"><span class="pre">beta</span></code> has to be even higher to get things going.</p>
 </div>
 <div class="section" id="sweepframe">
-<h2>SweepFrame<a class="headerlink" href="#sweepframe" title="Permalink to this headline">¶</a></h2>
+<h2>Sweepframe<a class="headerlink" href="#sweepframe" title="Permalink to this headline">¶</a></h2>
 <p>In the previous section, we swept a range of values for <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and for
 each value, we swept a range of values for <code class="docutils literal notranslate"><span class="pre">beta</span></code>. This process is a
-<strong>two-dimensional sweep</strong>.</p>
+<em>two-dimensional sweep</em>.</p>
 <p>If we want to store the results, rather than plot them, we can use a
 <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>, which is a kind of <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> where the rows sweep one
 parameter, the columns sweep another parameter, and the values contain
@@ -571,7 +598,7 @@ for each pair of parameters, <code class="docutils literal notranslate"><span cl
 </div>
 <p>This example demonstrates one use of a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code>: we can run the analysis once, save the results, and then generate different visualizations.</p>
 <p>Another way to visualize the results of a two-dimensional sweep is a
-<strong>contour plot</strong>, which shows the parameters on the axes and contour
+<em>contour plot</em>, which shows the parameters on the axes and contour
 lines where the value of the metric is constant.</p>
 <p>The ModSim library provides <code class="docutils literal notranslate"><span class="pre">contour</span></code>, which takes a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> and uses Matplotlib to generate a contour plot.</p>
 <div class="cell docutils container">
@@ -607,7 +634,9 @@ In the next chapter we’ll explore it by running simulations, then derive it by
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p><strong>Exercise:</strong>  If we know <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, we can compute the fraction of the population that gets infected.  In general, we don’t know these parameters, but sometimes we can estimate them based on the behavior of an outbreak.</p>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>If we know <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, we can compute the fraction of the population that gets infected.  In general, we don’t know these parameters, but sometimes we can estimate them based on the behavior of an outbreak.</p>
 <p>Suppose the infectious period for the Freshman Plague is known to be 2 days on average, and suppose during one particularly bad year, 40% of the class is infected at some point.  Estimate the time between contacts, <code class="docutils literal notranslate"><span class="pre">1/beta</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -672,6 +701,7 @@ Name: Metric, dtype: float64
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.59875429])
 </pre></div>
+</div>
 </div>
 </div>
 </div>

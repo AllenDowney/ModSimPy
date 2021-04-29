@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 3 &#8212; Modeling and Simulation in Python</title>
+    <title>Iteration &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 4" href="chap04.html" />
-    <link rel="prev" title="Chapter 2" href="chap02.html" />
+    <link rel="next" title="Sweeping Parameters" href="chap04.html" />
+    <link rel="prev" title="Bike Share System" href="chap02.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,47 +100,67 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap01.html">
-   Chapter 1
+   The Modeling Framework
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#the-falling-penny-myth">
+   The Falling Penny Myth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#computation-in-python">
+   Computation In Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap02.html">
-   Chapter 2
+   Bike Share System
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 3
+   Iteration
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap04.html">
-   Chapter 4
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap05.html">
-   Chapter 5
+   World Population
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap06.html">
-   Chapter 6
+   Proportional Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap07.html">
-   Chapter 7
+   Limits to Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Chapter 8
+   Projections
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Chapter 9
+   Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -330,12 +350,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#iterative-modeling">
-   Iterative modeling
+   Iterative Modeling
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#more-than-one-state-object">
-   More than one State object
+   More Than One State Object
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -345,12 +365,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#negative-bikes">
-   Negative bikes
+   Negative Bikes
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#comparison-operators">
-   Comparison operators
+   Comparison Operators
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -367,6 +387,18 @@
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -379,18 +411,19 @@
         
               <div>
                 
-  <div class="section" id="chapter-3">
-<h1>Chapter 3<a class="headerlink" href="#chapter-3" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap03.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="iteration">
+<h1>Iteration<a class="headerlink" href="#iteration" title="Permalink to this headline">¶</a></h1>
 <p>To paraphrase two Georges, “All models are wrong, but some models are
-more wrong than others.” In this chapter, I demonstrate the process we
+more wrong than others.” This chapter demonstrates the process we
 use to make models less wrong.</p>
 <p>As an example, we’ll review the bikeshare model from the previous
 chapter, consider its strengths and weaknesses, and gradually improve
 it. We’ll also see ways to use the model to understand the behavior of
 the system and evaluate designs intended to make it work better.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="iterative-modeling">
-<h2>Iterative modeling<a class="headerlink" href="#iterative-modeling" title="Permalink to this headline">¶</a></h2>
+<h2>Iterative Modeling<a class="headerlink" href="#iterative-modeling" title="Permalink to this headline">¶</a></h2>
 <p>The model we have so far is simple, but it is based on unrealistic
 assumptions. Before you go on, take a minute to review the model from
 the previous chapter. What assumptions is it based on? Make a list of
@@ -411,14 +444,14 @@ the first assumption might be reasonable if we simulate the system for a short p
 relatively easy to fix. In this chapter, we will.</p>
 <p>This process, starting with a simple model, identifying the most
 important problems, and making gradual improvements, is called
-<strong>iterative modeling</strong>.</p>
+<em>iterative modeling</em>.</p>
 <p>For any physical system, there are many possible models, based on
 different assumptions and simplifications. It often takes several
 iterations to develop a model that is good enough for the intended
 purpose, but no more complicated than necessary.</p>
 </div>
 <div class="section" id="more-than-one-state-object">
-<h2>More than one State object<a class="headerlink" href="#more-than-one-state-object" title="Permalink to this headline">¶</a></h2>
+<h2>More Than One State Object<a class="headerlink" href="#more-than-one-state-object" title="Permalink to this headline">¶</a></h2>
 <p>Before we go on, I want to make a few changes to the code from the
 previous chapter. First I’ll generalize the functions we wrote so they
 take a <code class="docutils literal notranslate"><span class="pre">State</span></code> object as a parameter. Then, I’ll make the code more
@@ -492,11 +525,11 @@ simulations of the same system.</p>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>Another problem with the code we have so far is that it contains no
-<strong>documentation</strong>.
+<em>documentation</em>.
 Documentation is text we add to a program to help
 other programmers read and understand it. It has no effect on the
 program when it runs.</p>
-<p>There are two kinds of documentation, <strong>docstrings</strong> and <strong>comments</strong>:</p>
+<p>There are two kinds of documentation, <em>docstrings</em> and <em>comments</em>:</p>
 <ul class="simple">
 <li><p>A docstring is a string in triple quotes that appears at the beginning of a function.</p></li>
 <li><p>A comment is a line of text that begins with a hash symbol, <code class="docutils literal notranslate"><span class="pre">#</span></code>.</p></li>
@@ -527,7 +560,7 @@ know to <em>use</em> the function; it should not include details about how the f
 <p>Comments provide details about how the function works, especially if there is something that would not be obvious to someone reading the program.</p>
 </div>
 <div class="section" id="negative-bikes">
-<h2>Negative bikes<a class="headerlink" href="#negative-bikes" title="Permalink to this headline">¶</a></h2>
+<h2>Negative Bikes<a class="headerlink" href="#negative-bikes" title="Permalink to this headline">¶</a></h2>
 <p>The changes we’ve made so far improve the quality of the code, but we
 haven’t done anything to improve the quality of the model. Let’s do that now.</p>
 <p>Currently the simulation does not check whether a bike is available when a customer arrives, so the number of bikes at a location can be
@@ -544,7 +577,7 @@ negative. That’s not very realistic.</p>
 </div>
 </div>
 </div>
-<p>The first line checks whether the number of bikes at Wellesley is zero. If so, it uses a <strong>return statement</strong>, which causes the function to end immediately, without running the rest of the statements. So if there are no bikes at Wellesley, we “return” from <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> without changing the state.</p>
+<p>The first line checks whether the number of bikes at Wellesley is zero. If so, it uses a <em>return statement</em>, which causes the function to end immediately, without running the rest of the statements. So if there are no bikes at Wellesley, we return from <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> without changing the state.</p>
 <p>We can test it by initializing the state with no bikes at Wellesley And calling <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -599,7 +632,7 @@ negative. That’s not very realistic.</p>
 <p>No more negative bikes (at least at Wellesley).</p>
 </div>
 <div class="section" id="comparison-operators">
-<h2>Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
+<h2>Comparison Operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
 <p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code>, if they are equal, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>It is easy to confuse the equals operator with the assignment operator, <code class="docutils literal notranslate"><span class="pre">=</span></code>, which assigns a value to a variable. For example, the following statement creates a variable, <code class="docutils literal notranslate"><span class="pre">x</span></code>, if it doesn’t already exist, and gives it the value <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
 <div class="cell docutils container">
@@ -642,8 +675,8 @@ returns <code class="docutils literal notranslate"><span class="pre">True</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yes, x is 5&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>That’s a <strong>syntax error</strong>, which means that the structure of the program is invalid. Python will print an error message and the program won’t run.</p>
-<p>The equals operator is one of the <strong>comparison operators</strong>. The others
+<p>That’s a <em>syntax error</em>, which means that the structure of the program is invalid. Python will print an error message and the program won’t run.</p>
+<p>The equals operator is one of Python’s <em>comparison operators</em>. The others
 are:</p>
 <table class="colwidths-auto table">
 <thead>
@@ -676,12 +709,12 @@ are:</p>
 <div class="section" id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
 <p>Getting back to the bike share system, at this point we have the ability to simulate the behavior of the system. Since the arrival of customers is random, the state of the system is different each time we run a
-simulation. Models like this are called random or <strong>stochastic</strong>; models
-that do the same thing every time they run are <strong>deterministic</strong>.</p>
+simulation. Models like this are called random or <em>stochastic</em>; models
+that do the same thing every time they run are <em>deterministic</em>.</p>
 <p>Suppose we want to use our model to predict how well the bike share
 system will work, or to design a system that works better. First, we
 have to decide what we mean by “how well” and “better”.</p>
-<p>From the customer’s point of view, we might like to know the probability of finding an available bike. From the system-owner’s point of view, we might want to minimize the number of customers who don’t get a bike when they want one, or maximize the number of bikes in use. Statistics like these that quantify how well the system works are called <strong>metrics</strong>.</p>
+<p>From the customer’s point of view, we might like to know the probability of finding an available bike. From the system-owner’s point of view, we might want to minimize the number of customers who don’t get a bike when they want one, or maximize the number of bikes in use. Statistics like these that quantify how well the system works are called <em>metrics</em>.</p>
 <p>As an example, let’s measure the number of unhappy customers.
 Here’s a version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> that keeps track of the number of
 customers who arrive at a station with no bikes:</p>
@@ -698,7 +731,7 @@ customers who arrive at a station with no bikes:</p>
 </div>
 </div>
 <p>If a customer arrives at the Wellesley station and finds no bike
-available, <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> updates <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code> which counts the
+available, <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> updates <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code>, which counts the
 number of unhappy customers.</p>
 <p>This function only works if we initialize <code class="docutils literal notranslate"><span class="pre">wellesley_empty</span></code> when we
 create the <code class="docutils literal notranslate"><span class="pre">State</span></code> object, like this:</p>
@@ -779,80 +812,9 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p>Here’s the code we have so far, with docstrings, all in one place.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Simulate the given number of time steps.</span>
-<span class="sd">    </span>
-<span class="sd">    state: State object</span>
-<span class="sd">    p1: probability of an Olin-&gt;Wellesley customer arrival</span>
-<span class="sd">    p2: probability of a Wellesley-&gt;Olin customer arrival</span>
-<span class="sd">    num_steps: number of time steps</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span>
-    
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
-        <span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
-        <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">olin</span>
-        
-    <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Olin&#39;</span><span class="p">)</span>
-    <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
-             <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time step (min)&#39;</span><span class="p">,</span> 
-             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of bikes&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_export docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    p1: probability of an Olin-&gt;Wellesley ride</span>
-<span class="sd">    p2: probability of a Wellesley-&gt;Olin ride</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p1</span><span class="p">):</span>
-        <span class="n">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">p2</span><span class="p">):</span>
-        <span class="n">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_export docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_olin</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Move one bike from Wellesley to Olin.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wellesley_empty</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Move one bike from Olin to Wellesley.</span>
-<span class="sd">    </span>
-<span class="sd">    state: bikeshare State object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">olin</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">state</span><span class="o">.</span><span class="n">wellesley</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Exercise:</strong> Modify <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> so it checks whether a bike is available at Olin.  If not, it should add one to <code class="docutils literal notranslate"><span class="pre">olin_empty</span></code>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code> so it checks whether a bike is available at Olin.  If not, it should add one to <code class="docutils literal notranslate"><span class="pre">olin_empty</span></code>.</p>
 <p>To test it, create a <code class="docutils literal notranslate"><span class="pre">State</span></code> that initializes <code class="docutils literal notranslate"><span class="pre">olin</span></code> and <code class="docutils literal notranslate"><span class="pre">olin_empty</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>, run <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>, and check the result.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -942,7 +904,10 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </table>
 </div></div></div>
 </div>
-<p><strong>Exercise:</strong> Now run the simulation with parameters <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>, and confirm that the number of bikes is never negative.</p>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Now run the simulation with parameters <code class="docutils literal notranslate"><span class="pre">p1=0.3</span></code>, <code class="docutils literal notranslate"><span class="pre">p2=0.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">num_steps=60</span></code>, and confirm that the number of bikes is never negative.</p>
 <p>Start with this initial state:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -962,6 +927,7 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/chap03_61_0.png" src="_images/chap03_61_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -995,8 +961,8 @@ create the <code class="docutils literal notranslate"><span class="pre">State</s
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap02.html" title="previous page">Chapter 2</a>
-    <a class='right-next' id="next-link" href="chap04.html" title="next page">Chapter 4</a>
+    <a class='left-prev' id="prev-link" href="chap02.html" title="previous page">Bike Share System</a>
+    <a class='right-next' id="next-link" href="chap04.html" title="next page">Sweeping Parameters</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
