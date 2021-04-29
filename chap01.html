@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Modeling Framework &#8212; Modeling and Simulation in Python</title>
+    <title>Modeling &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -100,27 +100,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   The Modeling Framework
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#the-falling-penny-myth">
-   The Falling Penny Myth
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#computation-in-python">
-   Computation In Python
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#summary">
-   Summary
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#exercises">
-   Exercises
+   Modeling
   </a>
  </li>
  <li class="toctree-l1">
@@ -348,79 +328,79 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-modeling-framework">
    The Modeling Framework
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-falling-penny-myth">
    The Falling Penny Myth
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computation-in-python">
    Computation In Python
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#false-precision">
      False Precision
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#computation-with-units">
      Computation With Units
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#summary">
    Summary
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-1">
      Exercise 1
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-2">
      Exercise 2
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-3">
      Exercise 3
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-4">
      Exercise 4
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-5">
      Exercise 5
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-6">
      Exercise 6:
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-7">
      Exercise 7
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise-8">
      Exercise 8
     </a>
@@ -438,11 +418,13 @@
         
               <div>
                 
-  <p>This chapter introduces the modeling framework we will use throughout the book, and works through our first example, using a simple model of physics to evaluate the claim that a penny falling from the height of the Empire State Building could kill someone if it hit them on the head. Also, you’ll see how to do computation in Python with units like meters and seconds.</p>
+  <div class="section" id="modeling">
+<h1>Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">¶</a></h1>
+<p>This chapter introduces the modeling framework we will use throughout the book, and works through our first example, using a simple model of physics to evaluate the claim that a penny falling from the height of the Empire State Building could kill someone if it hit them on the head. Also, you’ll see how to do computation in Python with units like meters and seconds.</p>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="the-modeling-framework">
-<h1>The Modeling Framework<a class="headerlink" href="#the-modeling-framework" title="Permalink to this headline">¶</a></h1>
+<h2>The Modeling Framework<a class="headerlink" href="#the-modeling-framework" title="Permalink to this headline">¶</a></h2>
 <p>This book is about modeling and simulating physical systems. The
 following diagram shows what I mean by <em>modeling</em>:</p>
 <p><img alt="Diagram of the modeling framework." src="https://github.com/AllenDowney/ModSim/raw/main/figs/modeling_framework.png" /></p>
@@ -500,7 +482,7 @@ validation</em>, which is generally the strongest test.</p>
 <p>The modeling framework is pretty abstract; the following example might make it clearer.</p>
 </div>
 <div class="section" id="the-falling-penny-myth">
-<h1>The Falling Penny Myth<a class="headerlink" href="#the-falling-penny-myth" title="Permalink to this headline">¶</a></h1>
+<h2>The Falling Penny Myth<a class="headerlink" href="#the-falling-penny-myth" title="Permalink to this headline">¶</a></h2>
 <p>You might have heard that a
 penny dropped from the top of the Empire State Building would be going
 so fast when it hit the pavement that it would be embedded in the
@@ -536,7 +518,7 @@ penny more carefully; you can view the results at
 <a class="reference external" href="https://modsimpy.com/myth/">https://modsimpy.com/myth/</a>. Their work is based on a mathematical model of motion, measurements to determine the force of air resistance on a penny, and a physical model of a human head.</p>
 </div>
 <div class="section" id="computation-in-python">
-<h1>Computation In Python<a class="headerlink" href="#computation-in-python" title="Permalink to this headline">¶</a></h1>
+<h2>Computation In Python<a class="headerlink" href="#computation-in-python" title="Permalink to this headline">¶</a></h2>
 <p>Let me show you how I computed the results from the
 previous section using Python.
 First we’ll create a variable to represent acceleration due to gravity in meters per second squared (m/s<span class="math notranslate nohighlight">\(^2\)</span>).</p>
@@ -639,7 +621,7 @@ Before we can use it, we have to import it like this:</p>
 </div>
 <p>And its velocity on impact would be about <span class="math notranslate nohighlight">\(86\)</span> m/s.</p>
 <div class="section" id="false-precision">
-<h2>False Precision<a class="headerlink" href="#false-precision" title="Permalink to this headline">¶</a></h2>
+<h3>False Precision<a class="headerlink" href="#false-precision" title="Permalink to this headline">¶</a></h3>
 <p>Python displays results with about 16 digits, which gives the impression that they are very precise, but don’t be fooled.
 The numbers we get out are only as good as the numbers we put in.</p>
 <p>For example, the “roof height” of the Empire State Building is <span class="math notranslate nohighlight">\(380\)</span> m (according to Wikipedia: <a class="reference external" href="https://en.wikipedia.org/wiki/Empire_State_Building">https://en.wikipedia.org/wiki/Empire_State_Building</a>).
@@ -649,7 +631,7 @@ But that’s probably not right, so we should treat this value as an approximati
 That’s why, if the output is <code class="docutils literal notranslate"><span class="pre">86.41527642726142</span></code>, I report it as “about 86”.</p>
 </div>
 <div class="section" id="computation-with-units">
-<h2>Computation With Units<a class="headerlink" href="#computation-with-units" title="Permalink to this headline">¶</a></h2>
+<h3>Computation With Units<a class="headerlink" href="#computation-with-units" title="Permalink to this headline">¶</a></h3>
 <p>The computations we just did use numbers without units.
 When we set <code class="docutils literal notranslate"><span class="pre">h=381</span></code>, we left out the meters, and when we set <code class="docutils literal notranslate"><span class="pre">a=9.8</span></code>, we left out the meters per second squared.
 And, when we got the result <code class="docutils literal notranslate"><span class="pre">v=86</span></code>, we added back the meters per second.</p>
@@ -817,7 +799,7 @@ And it might give you a sense that this model is not realistic.</p>
 </div>
 </div>
 <div class="section" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h1>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>This chapter introduces a modeling framework that consists of three steps:</p>
 <ul class="simple">
 <li><p>Abstraction is the process of defining a model by deciding which elements of the real world to include and which can be left out.</p></li>
@@ -829,10 +811,10 @@ In the exercises, you’ll have a chance to try a better model, including air re
 <p>This chapter also presents Pint, a library for doing computation with units, which is convenient for converting between different units and helpful for avoiding catastrophic errors.</p>
 </div>
 <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <p>Before you go on, you might want to work on the following exercises.</p>
 <div class="section" id="exercise-1">
-<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>In mathematical notation, we can write an equation like <span class="math notranslate nohighlight">\(v = a t\)</span> and it’s understood that we are multiplying <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(t\)</span>.
 But that doesn’t work in Python.  If you put two variables side-by-side, like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="n">t</span>
@@ -855,7 +837,7 @@ Try it out in the next cell so you see what the error message looks like.</p>
 </div>
 </div>
 <div class="section" id="exercise-2">
-<h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>In this chapter we used the <code class="docutils literal notranslate"><span class="pre">sqrt</span></code> function from the NumPy library.  NumPy also provides a variable named <code class="docutils literal notranslate"><span class="pre">pi</span></code> that contains an approximation of the mathematical constant <span class="math notranslate nohighlight">\(\pi\)</span>.
 We can import it like this:</p>
 <div class="cell docutils container">
@@ -894,7 +876,7 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 <div class="section" id="exercise-3">
-<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you bring a 10 foot pole to the top of the Empire State Building and use it to drop the penny from <code class="docutils literal notranslate"><span class="pre">h</span></code> plus 10 feet.</p>
 <p>Define a variable named <code class="docutils literal notranslate"><span class="pre">foot</span></code> that contains the unit <code class="docutils literal notranslate"><span class="pre">foot</span></code> provided by <code class="docutils literal notranslate"><span class="pre">UNITS</span></code>.  Define a variable named <code class="docutils literal notranslate"><span class="pre">pole_height</span></code> and give it the value 10 feet.</p>
 <p>What happens if you add <code class="docutils literal notranslate"><span class="pre">h</span></code>, which is in units of meters, to <code class="docutils literal notranslate"><span class="pre">pole_height</span></code>, which is in units of feet?  What happens if you write the addition the other way around?</p>
@@ -932,7 +914,7 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 <div class="section" id="exercise-4">
-<h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
 <p>Why would it be nonsensical to add <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>? What happens if you try?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -948,7 +930,7 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 <p>The previous lines are a <em>traceback</em> of what was happening when the error occurred.  The first section of the traceback shows the code you wrote.  The following sections are often from Python libraries.</p>
 </div>
 <div class="section" id="exercise-5">
-<h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
 <p>Suppose instead of dropping the penny, you throw it downward at its terminal velocity, <span class="math notranslate nohighlight">\(29\)</span> m/s.  How long would it take to fall <span class="math notranslate nohighlight">\(381\)</span> m?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -967,7 +949,7 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 <div class="section" id="exercise-6">
-<h2>Exercise 6:<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 6:<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
 <p>So far we have considered two models of a falling penny:</p>
 <ul class="simple">
 <li><p>If we ignore air resistance, the penny falls with constant acceleration, and we can compute the time to reach the sidewalk and the velocity of the penny when it gets there.</p></li>
@@ -1060,7 +1042,7 @@ Import <code class="docutils literal notranslate"><span class="pre">sin</span></
 </div>
 </div>
 <div class="section" id="exercise-7">
-<h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h3>
 <p>When I was in high school, the pitcher on the baseball team claimed that when he threw a fastball he was throwing the ball down; that is, the ball left his hand at a downward angle.
 I was skeptical; watching from the side, I thought the ball left his hand at an upward angle.</p>
 <p>Can you think of a simple model you could use to settle the argument?  What factors would you include and what could you ignore?  What quantities would you have to look up or estimate?</p>
@@ -1141,7 +1123,7 @@ I was skeptical; watching from the side, I thought the ball left his hand at an 
 </div>
 </div>
 <div class="section" id="exercise-8">
-<h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h3>
 <p>Suppose I run a 10K race in 44:52 (44 minutes and 52 seconds).  What is my average page in minutes per mile?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1227,6 +1209,7 @@ I was skeptical; watching from the side, I thought the ball left his hand at an 
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">13.235404800000055 second/mile</div></div>
+</div>
 </div>
 </div>
 </div>
