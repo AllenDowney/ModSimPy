@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -359,8 +359,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
   </ul>
@@ -378,7 +378,8 @@
                 
   <div class="section" id="chapter-18">
 <h1>Chapter 18<a class="headerlink" href="#chapter-18" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap18.ipynb">Click here to run this chapter on Colab</a></p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>The previous chapter presents the minimal model of the glucose-insulin system and introduces a tool we will need to implement it, interpolation.</p>
 <p>In this chapter, we’ll implement the model two ways:</p>
 <ul class="simple">
@@ -458,8 +459,8 @@ If we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</
 \[dG = \left[ -k_1 \left[ G(t) - G_b \right] - X(t) G(t) \right] dt\]</div>
 <div class="math notranslate nohighlight">
 \[dX = \left[ k_3 \left[I(t) - I_b \right] - k_2 X(t) \right] dt\]</div>
-<p>If we think of <span class="math notranslate nohighlight">\(dt\)</span> as a small step in time, these equations tell us how to compute the corresponding changes in <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(X\)</span>.</p>
-<p>Here’s an update function that computes these changes:</p>
+<p>If we think of <span class="math notranslate nohighlight">\(dt\)</span> as a small step in time, these equations tell us how to compute the corresponding changes in <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(X\)</span>.
+Here’s an update function that computes these changes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
@@ -610,7 +611,7 @@ Here are the first few time steps.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_31_0.png" src="_images/chap18_31_0.png" />
+<img alt="_images/chap18_30_0.png" src="_images/chap18_30_0.png" />
 </div>
 </div>
 <p>With the parameters I chose, the model fits the data well except during the first few minutes after the injection.
@@ -632,7 +633,7 @@ accurate. For this reason, we should not take the estimated value of <code class
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_34_0.png" src="_images/chap18_34_0.png" />
+<img alt="_images/chap18_33_0.png" src="_images/chap18_33_0.png" />
 </div>
 </div>
 <p>Remember that <code class="docutils literal notranslate"><span class="pre">X</span></code> represents the concentration of insulin in the “remote compartment”, which is believed to be tissue fluid, so we can’t compare it to the measured concentration of insulin in the blood.</p>
@@ -640,8 +641,8 @@ accurate. For this reason, we should not take the estimated value of <code class
 </div>
 <div class="section" id="solving-differential-equations">
 <h2>Solving Differential Equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
-<p>To implement the minimal model, we rewrote the differential equations as difference equations with a finite time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p>
-<p>When <span class="math notranslate nohighlight">\(dt\)</span> is very small, or more precisely <em>infinitesimal</em>, the difference equations are the same as the differential equations.
+<p>To implement the minimal model, we rewrote the differential equations as difference equations with a finite time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>.
+When <span class="math notranslate nohighlight">\(dt\)</span> is very small, or more precisely <em>infinitesimal</em>, the difference equations are the same as the differential equations.
 But in our simulations, <span class="math notranslate nohighlight">\(dt\)</span> is 2 min, which is not very small, and definitely not infinitesimal.</p>
 <p>In effect, the simulations assume that the derivatives <span class="math notranslate nohighlight">\(dG/dt\)</span> and <span class="math notranslate nohighlight">\(dX/dt\)</span> are constant during each 2 min time step.
 This method, evaluating derivatives at discrete time steps and assuming that they are constant in between, is called <em>Euler’s method</em> (see <a class="reference external" href="http://modsimpy.com/euler">http://modsimpy.com/euler</a>).</p>
@@ -783,7 +784,7 @@ Here are the first few time steps:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_46_0.png" src="_images/chap18_46_0.png" />
+<img alt="_images/chap18_45_0.png" src="_images/chap18_45_0.png" />
 </div>
 </div>
 <p>The differences are barely visible.
@@ -832,7 +833,7 @@ So in this example, the results from Euler’s method are probably good enough f
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_53_0.png" src="_images/chap18_53_0.png" />
+<img alt="_images/chap18_51_0.png" src="_images/chap18_51_0.png" />
 </div>
 </div>
 <p>These differences are little bigger, especially at the beginning.
@@ -848,10 +849,10 @@ As one of the case studies in the next chapter, you’ll have a chance to see wh
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
-<p>Our solution to the differential equations is only approximate because we used a finite step size, <code class="docutils literal notranslate"><span class="pre">dt=2</span></code> minutes.</p>
-<p>If we make the step size smaller, we expect the solution to be more accurate.  Run the simulation with <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> and compare the results.  What is the largest relative error between the two solutions?</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Our solution to the differential equations is only approximate because we used a finite step size, <code class="docutils literal notranslate"><span class="pre">dt=2</span></code> minutes.
+If we make the step size smaller, we expect the solution to be more accurate.  Run the simulation with <code class="docutils literal notranslate"><span class="pre">dt=1</span></code> and compare the results.  What is the largest relative error between the two solutions?</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -875,7 +876,7 @@ As one of the case studies in the next chapter, you’ll have a chance to see wh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_60_0.png" src="_images/chap18_60_0.png" />
+<img alt="_images/chap18_58_0.png" src="_images/chap18_58_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">

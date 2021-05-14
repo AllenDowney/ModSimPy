@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -364,13 +364,18 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
     </a>
    </li>
   </ul>
@@ -393,7 +398,8 @@
                 
   <div class="section" id="chapter-14">
 <h1>Chapter 14<a class="headerlink" href="#chapter-14" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap14.ipynb">Click here to run this chapter on Colab</a></p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In the previous chapter we swept the parameters of the SIR model: the contact rate, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, and the recovery rate, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
 For each pair of parameters, we ran a simulation and computed the total fraction of the population infected.</p>
 <p>In this chapter we investigate the relationship between the parameters and this metric, using both simulation and analysis.</p>
@@ -737,8 +743,10 @@ In the next chapter we move on to thermal systems and the notorious coffee cooli
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>At the beginning of this chapter, I suggested two ways to relate <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>: we could compute their difference or their ratio.</p>
 <p>Because the ratio is dimensionless, I suggested we explore it first, and that led us to discover the contact number, which is <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>.
 When we plotted the fraction infected as a function of the contact number, we found that this metric falls on a single curve, at least approximately.
@@ -788,8 +796,8 @@ That indicates that the ratio is enough to predict the results; we don’t have 
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you run a survey at the end of the semester and find that 26% of students had the Freshman Plague at some point.</p>
 <p>What is your best estimate of <code class="docutils literal notranslate"><span class="pre">c</span></code>?</p>
 <p>Hint: if you display <code class="docutils literal notranslate"><span class="pre">frac_infected_series</span></code>, you can read off the answer.</p>
@@ -1042,7 +1050,10 @@ That indicates that the ratio is enough to predict the results; we don’t have 
 </div>
 </div>
 </div>
-<p><em>Exercise</em>: So far the only metric we have considered is the total fraction of the population that gets infected over the course of an epidemic.  That is an important metric, but it is not the only one we care about.</p>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>So far the only metric we have considered is the total fraction of the population that gets infected over the course of an epidemic.  That is an important metric, but it is not the only one we care about.</p>
 <p>For example, if we have limited resources to deal with infected people, we might also be concerned about the number of people who are sick at the peak of the epidemic, which is the maximum of <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
 <p>Write a version of <code class="docutils literal notranslate"><span class="pre">sweep_beta</span></code> that computes this metric, and use it to compute a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> for a range of values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
 Make a contour plot that shows the value of this metric as a function of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
@@ -1165,7 +1176,7 @@ Do the results fall on a single curve?</p>
 </div>
 </div>
 </div>
-<p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the index.</p>
 <p>I find that order counterintuitive, which is why I use <code class="docutils literal notranslate"><span class="pre">make_series</span></code>.
 <code class="docutils literal notranslate"><span class="pre">make_series</span></code> takes the same optional keyword arguments as <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
 </div>

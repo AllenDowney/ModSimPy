@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analysis &#8212; Modeling and Simulation in Python</title>
+    <title>Analysis of Population Growth &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 10" href="chap10.html" />
-    <link rel="prev" title="Projections" href="chap08.html" />
+    <link rel="next" title="Case Studies Part 1" href="chap10.html" />
+    <link rel="prev" title="Projecting Population Growth" href="chap08.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -396,13 +396,13 @@
         
               <div>
                 
-  <div class="section" id="analysis">
-<h1>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="analysis-of-population-growth">
+<h1>Analysis of Population Growth<a class="headerlink" href="#analysis-of-population-growth" title="Permalink to this headline">¶</a></h1>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<p>In this chapter we express the models from previous chapters as
+<p>In this chapter we’ll express the models from previous chapters as
 difference equations and differential equations, solve the equations,
-and derive the functional forms of the solutions. And I present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
+and derive the functional forms of the solutions. And I’ll present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
 <div class="section" id="recurrence-relations">
 <h2>Recurrence Relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>The population models in the previous chapter and this one are simple
@@ -418,7 +418,7 @@ model like this:</p>
 <p>where <span class="math notranslate nohighlight">\(x_n\)</span> is the population during year <span class="math notranslate nohighlight">\(n\)</span>,
 <span class="math notranslate nohighlight">\(x_{n+1}\)</span> is the population during year <span class="math notranslate nohighlight">\(n+1\)</span>,
 and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
-This way of representing the model is a <em>recurrence relation</em>; see
+This way of representing the model, where future population is a function of current population, is a <em>recurrence relation</em>; see
 <a class="reference external" href="http://modsimpy.com/recur">http://modsimpy.com/recur</a>.</p>
 <p>Sometimes it is possible to solve a recurrence relation by writing an
 equation that computes <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
@@ -441,7 +441,7 @@ one addition.</p>
 <p>Now we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 (1 + \alpha)\)</span>, and <span class="math notranslate nohighlight">\(x_2 = x_0 (1 + \alpha)^2\)</span>, and in general</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_0 (1 + \alpha)^n\]</div>
-<p>This result is a <em>geometric progression</em>;
+<p>A sequence with this functional form is called a <em>geometric progression</em>;
 see <a class="reference external" href="http://modsimpy.com/geom">http://modsimpy.com/geom</a>. When <span class="math notranslate nohighlight">\(\alpha\)</span> is positive, the factor
 <span class="math notranslate nohighlight">\(1+\alpha\)</span> is greater than 1, so the elements of the sequence grow
 without bound.</p>
@@ -466,17 +466,17 @@ without bound.</p>
 write the rate of change per unit of time like this:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\Delta x}{\Delta t} = c\]</div>
-<p>This model is <em>discrete</em>, which
-means it is only defined at integer values of <span class="math notranslate nohighlight">\(n\)</span> and not in between.
+<p>This is a <em>discrete</em> model, which
+means time is only defined at integer values of <span class="math notranslate nohighlight">\(n\)</span> and not in between.
 But in reality, people are born and die all the time, not once a year,
-so a <em>continuous</em> model might be more realistic.</p>
-<p>We can make this model continuous by writing the rate of change in the
+so it might be more realistic use a <em>continuous</em> model, which means
+time is defined at all values of <span class="math notranslate nohighlight">\(t\)</span>, not just integers.</p>
+<p>In a continuous model, we write the rate of change in the
 form of a derivative:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dx}{dt} = c\]</div>
-<p>This way of representing the model is a <em>differential equation</em>; see <a class="reference external" href="http://modsimpy.com/diffeq">http://modsimpy.com/diffeq</a>.</p>
-<p>We can solve this differential equation if we multiply both sides by
-<span class="math notranslate nohighlight">\(dt\)</span>:</p>
+<p>This way of representing the model is a <em>differential equation</em>, which is an equation that involves at least one derivative (see <a class="reference external" href="http://modsimpy.com/diffeq">http://modsimpy.com/diffeq</a>).
+To solve this equation, we multiply both sides by <span class="math notranslate nohighlight">\(dt\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[dx = c dt\]</div>
 <p>And then integrate both sides:</p>
@@ -592,8 +592,7 @@ So if we run this assignment:</p>
 </div>
 </div>
 </div>
-<p>Python understands that <code class="docutils literal notranslate"><span class="pre">t</span></code> is a symbol, not a numerical value. If we
-now run</p>
+<p>Now when we use <code class="docutils literal notranslate"><span class="pre">t</span></code>, Python understands that it is a symbol, not a numerical value. For example, if we use <code class="docutils literal notranslate"><span class="pre">t</span></code> as part of an expression, like this,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
@@ -726,8 +725,7 @@ solution</em>, which still contains an unspecified constant, <span class="math n
 \[\displaystyle f{\left(t \right)} = p_{0} e^{\alpha t}\]</div>
 </div>
 </div>
-<p>The result is called the <em>exponential growth curve</em>; see
-<a class="reference external" href="http://modsimpy.com/expo">http://modsimpy.com/expo</a>.</p>
+<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, <span class="math notranslate nohighlight">\(e^{\alpha t}\)</span> is <span class="math notranslate nohighlight">\(1\)</span>, so <span class="math notranslate nohighlight">\(f(t)\)</span> is <span class="math notranslate nohighlight">\(p_0\)</span>, which is what we wanted.</p>
 </div>
 <div class="section" id="solving-the-quadratic-growth-model">
 <h2>Solving the Quadratic Growth Model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
@@ -815,7 +813,7 @@ solution</em>, which still contains an unspecified constant, <span class="math n
 </div>
 </div>
 </div>
-<p>In this case, <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">we have reason to expect only one solution</a>, but we still get a list, so we have to use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[0]</span></code>, to select the first one.</p>
+<p>In this case, there is only one solution, but we still get a list, so we have to use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[0]</span></code>, to select the first one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value_of_C1</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -869,10 +867,10 @@ logistic function is often written like this:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = p_0 + c t\]</div>
 <p>where <span class="math notranslate nohighlight">\(c\)</span> is net annual growth.</p>
-<p>Similarly, the proportional growth model is usually called <em>exponential growth</em> because the solution is exponential:</p>
+<p>Similarly, the proportional growth model is usually called <em>exponential growth</em> because the solution is an exponential function:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = p_0 \exp{\alpha t}\]</div>
-<p>Finally, the quadratic growth model is called <em>logistic growth</em> because the solution is the logistic function:</p>
+<p>Finally, the quadratic growth model is called <em>logistic growth</em> because the solution is a logistic function:</p>
 <div class="math notranslate nohighlight">
 \[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
@@ -1020,8 +1018,8 @@ The next chapter presents case studies where you can apply the tools we have lea
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Projections</a>
-    <a class='right-next' id="next-link" href="chap10.html" title="next page">Chapter 10</a>
+    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Projecting Population Growth</a>
+    <a class='right-next' id="next-link" href="chap10.html" title="next page">Case Studies Part 1</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

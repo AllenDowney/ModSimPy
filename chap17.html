@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -359,13 +359,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
     </a>
    </li>
   </ul>
@@ -383,7 +383,8 @@
                 
   <div class="section" id="chapter-17">
 <h1>Chapter 17<a class="headerlink" href="#chapter-17" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap17.ipynb">Click here to run this chapter on Colab</a></p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In this chapter we start a new example, a model of how glucose and insulin interact to control blood sugar.<br />
 We will implement a widely used model called the “Minimal Model” because it is intended to include only the elements essential to explain the observed behavior of the system.</p>
 <p>This chapter presents the model and some background information we need to understand it.
@@ -426,7 +427,7 @@ disposal, as seen in the data, happens more slowly than we would expect if it de
 might, or might not, represent something physical. Later, according to
 Bergman, it was “shown to be interstitial fluid”, that is, the fluid
 that surrounds tissue cells.</p>
-<p>In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.  One notable example is [the gene] https://en.wikipedia.org/wiki/Gene#Discovery_of_discrete_inherited_units).</p>
+<p>In the history of mathematical modeling, it is common for hypothetical entities, added to models to achieve particular effects, to be found later to correspond to physical entities.  One notable example is the gene (see <a class="reference external" href="https://en.wikipedia.org/wiki/Gene#Discovery_of_discrete_inherited_units">https://en.wikipedia.org/wiki/Gene#Discovery_of_discrete_inherited_units</a>).</p>
 <p>The glucose model consists of two differential equations:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dG}{dt} = -k_1 \left[ G(t) - G_b \right] - X(t) G(t)\]</div>
@@ -467,17 +468,7 @@ immediately after the injection. In theory we could estimate <span class="math n
 </div>
 <div class="section" id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
-<p>To develop and test the model, we’ll use data from <a class="reference external" href="https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT">Pacini and Bergman</a>, “MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test”, <em>Computer Methods and Programs in Biomedicine</em>, 1986.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ModSim/raw/main/data/&#39;</span> <span class="o">+</span>
-         <span class="s1">&#39;glucose_insulin.csv&#39;</span><span class="p">)</span>
-
-<span class="s1">&#39;https://github.com/AllenDowney/ModSim/raw/main/data/glucose_insulin.csv&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>To develop and test the model, we’ll use data from Pacini and Bergman, “MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test”, <em>Computer Methods and Programs in Biomedicine</em>, 1986 (see <a class="reference external" href="https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT">https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT</a>).</p>
 <p>We can use Pandas to read the data file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -503,8 +494,8 @@ immediately after the injection. In theory we could estimate <span class="math n
 <div class="section" id="interpolation">
 <h2>Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this headline">¶</a></h2>
 <p>Before we are ready to implement the model, there’s one problem we have to solve. In the differential equations, <span class="math notranslate nohighlight">\(I\)</span> is a function that can be evaluated at any time, <span class="math notranslate nohighlight">\(t\)</span>. But in the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we only have measurements at discrete times. This is a job for interpolation!</p>
-<p>The ModSim library provides an <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> function that takes a <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a parameter and returns a function. That’s right, I said it returns a <em>function</em>.</p>
-<p>We can call <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> like this:</p>
+<p>The ModSim library provides an <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> function that takes a <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a parameter and returns a function. That’s right, I said it returns a <em>function</em>.
+We can call <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="p">)</span>
@@ -520,8 +511,8 @@ immediately after the injection. In theory we could estimate <span class="math n
 </div>
 </div>
 </div>
-<p>In this example the interpolated value is about 31.7, which is a linear interpolation between the actual measurements at <code class="docutils literal notranslate"><span class="pre">t=16</span></code> and <code class="docutils literal notranslate"><span class="pre">t=19</span></code>.</p>
-<p>We can also pass an array as an argument to <code class="docutils literal notranslate"><span class="pre">I</span></code>.  Here’s an array of equally-spaced values from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
+<p>In this example the interpolated value is about 31.7, which is a linear interpolation between the actual measurements at <code class="docutils literal notranslate"><span class="pre">t=16</span></code> and <code class="docutils literal notranslate"><span class="pre">t=19</span></code>.
+We can also pass an array as an argument to <code class="docutils literal notranslate"><span class="pre">I</span></code>.  Here’s an array of equally-spaced values from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -569,8 +560,8 @@ And it introduces a new tool, interpolation, which we’ll need to implement the
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">interpolate</span></code> is a wrapper for the SciPy function <code class="docutils literal notranslate"><span class="pre">interp1d</span></code>.
 Read the documentation of <code class="docutils literal notranslate"><span class="pre">interp1d</span></code> at <a class="reference external" href="http://modsimpy.com/interp">http://modsimpy.com/interp</a>.</p>
 <p>In particular, notice the <code class="docutils literal notranslate"><span class="pre">kind</span></code> argument, which specifies a kind of interpolation.
@@ -599,8 +590,8 @@ The default is linear interpolation, which connects the data points with straigh
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>Interpolate the glucose data and generate a plot, similar to the previous one, that shows the data points and the interpolated curve evaluated at the time values in <code class="docutils literal notranslate"><span class="pre">t_array</span></code>.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">

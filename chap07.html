@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Projections" href="chap08.html" />
+    <link rel="next" title="Projecting Population Growth" href="chap08.html" />
     <link rel="prev" title="Proportional Growth" href="chap06.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -339,8 +339,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#equilibrium">
-   Equilibrium
+  <a class="reference internal nav-link" href="#finding-equilibrium">
+   Finding Equilibrium
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -459,9 +459,9 @@ I chose the following values by trial and error; we’ll see better ways to do i
 </div>
 </div>
 <p>The model fits the data well over the whole range, with just a bit of space between them in the 1960s.</p>
-<p>Of course, we should expect the quadratic model to fit better than the
-constant and proportional models because it has two parameters we can
-choose, where the other models have only one. In general, the more
+<p>It is not entirely surprising that the quadratic model fits better than the
+constant and proportional models, because it has two parameters we can
+choose where the other models have only one. In general, the more
 parameters you have to play with, the better you should expect the model
 to fit.</p>
 <p>But fitting the data is not the only reason to think the quadratic model
@@ -516,11 +516,11 @@ First we have to import it:</p>
 <img alt="_images/chap07_31_0.png" src="_images/chap07_31_0.png" />
 </div>
 </div>
-<p>Note that the x-axis is not time, as in the previous figures, but population. We can divide this curve into four regimes of behavior:</p>
+<p>Note that the x-axis is not time, as in the previous figures, but population. We can divide this curve into four kinds of behavior:</p>
 <ul class="simple">
 <li><p>When the population is less than 3 billion, net growth is
 proportional to population, as in the proportional model. In this
-regime, the population grows slowly because the population is small.</p></li>
+range, the population grows slowly because the population is small.</p></li>
 <li><p>Between 3 billion and 10 billion, the population grows quickly
 because there are a lot of people.</p></li>
 <li><p>Above 10 billion, population grows more slowly; this behavior models
@@ -532,19 +532,18 @@ exceeds the birth rate and net growth becomes negative.</p></li>
 <p>Just below 14 billion, there is a point where net growth is 0, which
 means that the population does not change. At this point, the birth and death rates are equal, so the population is in <em>equilibrium</em>.</p>
 </div>
-<div class="section" id="equilibrium">
-<h2>Equilibrium<a class="headerlink" href="#equilibrium" title="Permalink to this headline">¶</a></h2>
-<p>To find the equilibrium point, we can find the roots, or zeros, of this equation:</p>
+<div class="section" id="finding-equilibrium">
+<h2>Finding Equilibrium<a class="headerlink" href="#finding-equilibrium" title="Permalink to this headline">¶</a></h2>
+<p>The equilibrium point is the population, <span class="math notranslate nohighlight">\(p\)</span>, where net population growth, <span class="math notranslate nohighlight">\(\Delta p\)</span>, is 0.
+We can compute it by finding the roots, or zeros, of this equation:</p>
 <div class="math notranslate nohighlight">
 \[\Delta p = \alpha p + \beta p^2\]</div>
-<p>where <span class="math notranslate nohighlight">\(\Delta p\)</span> is net
-population growth, <span class="math notranslate nohighlight">\(p\)</span> is current population, and <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>
-are the parameters of the model. We can rewrite the right hand side like
-this:</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are the parameters of the model.
+If rewrite the right hand side like this:</p>
 <div class="math notranslate nohighlight">
 \[\Delta p = p (\alpha + \beta p)\]</div>
-<p>which is <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(p=0\)</span> or <span class="math notranslate nohighlight">\(p=-\alpha/\beta\)</span>.
-We can use the parameters of the system to compute the second equilibrium point:</p>
+<p>we can see that net growth is <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(p=0\)</span> or <span class="math notranslate nohighlight">\(p=-\alpha/\beta\)</span>.
+So we can compute the (non-zero) equilibrium point like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
@@ -579,7 +578,7 @@ But first, I want to warn you about a few things that can go wrong when you writ
 <div class="section" id="dysfunctions">
 <h2>Dysfunctions<a class="headerlink" href="#dysfunctions" title="Permalink to this headline">¶</a></h2>
 <p>When people learn about functions, there are a few things they often
-find confusing. In this section I present and explain some common
+find confusing. In this section I’ll present and explain some common
 problems.</p>
 <p>As an example, suppose you want a function that takes a
 <code class="docutils literal notranslate"><span class="pre">System</span></code> object, with variables <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>, and computes the
@@ -805,7 +804,7 @@ with the result.</p>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap06.html" title="previous page">Proportional Growth</a>
-    <a class='right-next' id="next-link" href="chap08.html" title="next page">Projections</a>
+    <a class='right-next' id="next-link" href="chap08.html" title="next page">Projecting Population Growth</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

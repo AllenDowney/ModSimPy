@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -374,13 +374,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
     </a>
    </li>
   </ul>
@@ -398,8 +398,9 @@
                 
   <div class="section" id="chapter-15">
 <h1>Chapter 15<a class="headerlink" href="#chapter-15" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap15.ipynb">Click here to run this chapter on Colab</a></p>
-<p>So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics, in the sense of what physics classes are usually about. In the next few chapters, we’ll do some physics, starting with <em>thermal systems</em>, that is, systems where the temperature of objects changes as heat transfers from one to another.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<p>So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics in the sense of what physics classes are usually about. In the next few chapters, we’ll do some physics, starting with <em>thermal systems</em>, that is, systems where the temperature of objects changes as heat transfers from one to another.</p>
 <div class="section" id="the-coffee-cooling-problem">
 <h2>The Coffee Cooling Problem<a class="headerlink" href="#the-coffee-cooling-problem" title="Permalink to this headline">¶</a></h2>
 <p>The coffee cooling problem was discussed by Jearl Walker in
@@ -497,8 +498,8 @@ Newton’s model to be quite good.</p>
 </div>
 <div class="section" id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
-<p>To get started, let’s forget about the milk temporarily and focus on the coffee.</p>
-<p>Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<p>To get started, let’s forget about the milk temporarily and focus on the coffee.
+Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
@@ -514,8 +515,8 @@ Newton’s model to be quite good.</p>
 </div>
 </div>
 </div>
-<p>In addition to the parameters, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, the initial time stamp, <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.</p>
-<p>Here’s a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the coffee.</p>
+<p>In addition to the parameters, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, the initial time stamp, <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.
+Here’s a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the coffee.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
@@ -729,7 +730,7 @@ Here are the first few rows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap15_34_0.png" src="_images/chap15_34_0.png" />
+<img alt="_images/chap15_32_0.png" src="_images/chap15_32_0.png" />
 </div>
 </div>
 <p>The temperature after 30 minutes is 72.3 °C, which is a little higher than what’s stated in the problem, 70 °C.</p>
@@ -892,8 +893,8 @@ The third argument is an interval that brackets the root.</p>
 </div>
 </div>
 </div>
-<p>In this example, <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code> turns out to be about <code class="docutils literal notranslate"><span class="pre">0.0115</span></code>, in units of min<span class="math notranslate nohighlight">\(^{-1}\)</span> (inverse minutes).</p>
-<p>We can confirm that this value is correct by setting <code class="docutils literal notranslate"><span class="pre">r</span></code> to the root we found and running the simulation.</p>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code> turns out to be about <code class="docutils literal notranslate"><span class="pre">0.0115</span></code>, in units of min<span class="math notranslate nohighlight">\(^{-1}\)</span> (inverse minutes).
+We can confirm that this value is correct by setting <code class="docutils literal notranslate"><span class="pre">r</span></code> to the root we found and running the simulation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">root</span>
@@ -912,10 +913,10 @@ The third argument is an interval that brackets the root.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
-<p>Simulate the temperature of 50 mL of milk with a starting temperature of 5 °C, in a vessel with <code class="docutils literal notranslate"><span class="pre">r=0.1</span></code>, for 15 minutes, and plot the results.</p>
-<p>By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Simulate the temperature of 50 mL of milk with a starting temperature of 5 °C, in a vessel with <code class="docutils literal notranslate"><span class="pre">r=0.1</span></code>, for 15 minutes, and plot the results.
+By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -944,12 +945,12 @@ The third argument is an interval that brackets the root.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap15_63_0.png" src="_images/chap15_63_0.png" />
+<img alt="_images/chap15_62_0.png" src="_images/chap15_62_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">

@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -350,7 +350,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hiv">
-   Hiv
+   HIV
   </a>
  </li>
 </ul>
@@ -366,7 +366,6 @@
                 
   <div class="section" id="chapter-19">
 <h1>Chapter 19<a class="headerlink" href="#chapter-19" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap19.ipynb">Click here to run this chapter on Colab</a></p>
 <p>This chapter presents case studies where you can apply the tools we have learned so far to the glucose-insulin minimal model, an electronic circuit, a thermal model of a wall, and the interaction of HIV and T cells.</p>
 <div class="section" id="the-glucose-minimal-model">
 <h2>The Glucose Minimal Model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
@@ -375,8 +374,7 @@
 <code class="docutils literal notranslate"><span class="pre">glucose.ipynb</span></code>, that shows how we can find the parameters that best fit the data.</p>
 <p>It uses a SciPy function called <code class="docutils literal notranslate"><span class="pre">leastsq</span></code>, which stands for “least squares”; so-named because it finds the parameters that minimize the sum of squared differences between the results of the model and the data.</p>
 <p>You can think of <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> as an optional tool for this book.  We won’t use it in the text itself, but it appears in a few of the case studies.</p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb">Click here to download it</a> or
-<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb">click here to run it on Colab</a></p>
+<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb</a>.</p>
 </div>
 <div class="section" id="the-insulin-minimal-model">
 <h2>The Insulin Minimal Model<a class="headerlink" href="#the-insulin-minimal-model" title="Permalink to this headline">¶</a></h2>
@@ -403,12 +401,11 @@ decrease) in blood insulin when glucose is above (or below) <span class="math no
 <p>where <span class="math notranslate nohighlight">\(I_{max}\)</span> is the maximum measured insulin level, and <span class="math notranslate nohighlight">\(I_b\)</span> and <span class="math notranslate nohighlight">\(G_b\)</span> are the basal levels of insulin and glucose.</p>
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">insulin.ipynb</span></code>, that contains starter code for this case study. Use it to implement the insulin model, find the parameters that best fit the data, and estimate <span class="math notranslate nohighlight">\(\phi_1\)</span> and <span class="math notranslate nohighlight">\(\phi_2\)</span>.</p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb">Click here to download it</a> or
-<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb">click here to run it on Colab</a></p>
+<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb</a>.</p>
 </div>
 <div class="section" id="low-pass-filter">
 <h2>Low-pass Filter<a class="headerlink" href="#low-pass-filter" title="Permalink to this headline">¶</a></h2>
-<p>The following circuit diagram (from <a class="reference external" href="https://commons.wikimedia.org/wiki/File:1st_Order_Lowpass_Filter_RC.svg">Wikipedia</a>) shows a low-pass filter built with one resistor and one capacitor.</p>
+<p>The following circuit diagram (from <a class="reference external" href="https://commons.wikimedia.org/wiki/File:1st_Order_Lowpass_Filter_RC.svg">https://commons.wikimedia.org/wiki/File:1st_Order_Lowpass_Filter_RC.svg</a>) shows a low-pass filter built with one resistor and one capacitor.</p>
 <p><img alt="Circuit diagram of a low-pass filter" src="https://github.com/AllenDowney/ModSim/raw/main/figs/Lowpass_Filter_RC.png" /></p>
 <p>A “filter” is a circuit takes a signal, <span class="math notranslate nohighlight">\(V_{in}\)</span>, as input and produces a signal, <span class="math notranslate nohighlight">\(V_{out}\)</span>, as output. In this context, a “signal” is a voltage that changes over time.</p>
 <p>A filter is “low-pass” if it allows low-frequency signals to pass from
@@ -442,8 +439,7 @@ capacitors, current through the capacitor causes a change in the voltage across 
 <p>In the repository for this book, you will find a notebook,
 <code class="docutils literal notranslate"><span class="pre">filter.ipynb</span></code>, which contains starter code for this case study. Read
 the notebook, run the code, and work on the exercises.</p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb">Click here to download it</a> or
-<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb">click here to run it on Colab</a></p>
+<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb</a>.</p>
 </div>
 <div class="section" id="thermal-behavior-of-a-wall">
 <h2>Thermal Behavior of a Wall<a class="headerlink" href="#thermal-behavior-of-a-wall" title="Permalink to this headline">¶</a></h2>
@@ -465,11 +461,10 @@ Gori, Marincioni, Biddulph, Elwell, “Inferring the thermal resistance and effe
 make their data available at <a class="reference external" href="http://modsimpy.com/wall">http://modsimpy.com/wall</a>. I thank them
 for their commitment to open, reproducible science, which made this
 case study possible.</p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/owall.ipynb">Click here to download it</a> or
-<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb">click here to run it on Colab</a></p>
+<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/owall.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/owall.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb</a>.</p>
 </div>
 <div class="section" id="hiv">
-<h2>Hiv<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
+<h2>HIV<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
 <p>During the initial phase of HIV infection, the concentration of the virus in the bloodstream typically increases quickly and then decreases.
 The most obvious explanation for the decline is an immune response that destroys the virus or controls its replication.
 However, at least in some patients, the decline occurs even without any detectable immune response.</p>
@@ -478,8 +473,7 @@ However, at least in some patients, the decline occurs even without any detectab
 The model does not include an immune response; nevertheless, it demonstrates behavior that is qualitatively similar to what is seen in patients during the first few weeks after infection.</p>
 <p>His conclusion is that the observed decline in the concentration of HIV might not be caused by an immune response; it could be due to the dynamic interaction between HIV and the cells it infects.</p>
 <p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">hiv_model.ipynb</span></code>, which you can use to implement Phillips’s model and consider whether it does the work it is meant to do.</p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb">Click here to download it</a> or
-<a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb">click here to run it on Colab</a></p>
+<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb</a>.</p>
 </div>
 </div>
 

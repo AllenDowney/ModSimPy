@@ -135,22 +135,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap08.html">
-   Projections
+   Projecting Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap09.html">
-   Analysis
+   Analysis of Population Growth
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap10.html">
-   Chapter 10
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap11.html">
-   Chapter 11
+   Epidemiology
   </a>
  </li>
  <li class="toctree-l1">
@@ -335,7 +335,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mix-first-or-last">
-   Mix First Or Last?
+   Mix First or Last?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -359,13 +359,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
     </a>
    </li>
   </ul>
@@ -383,7 +383,8 @@
                 
   <div class="section" id="chapter-16">
 <h1>Chapter 16<a class="headerlink" href="#chapter-16" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap16.ipynb">Click here to run this chapter on Colab</a></p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In the previous chapter we wrote a simulation of a cooling cup of
 coffee. Given the initial temperature of the coffee, the temperature of the atmosphere, and the rate parameter, <code class="docutils literal notranslate"><span class="pre">r</span></code>, we can predict how the
 temperature of the coffee will change over time.
@@ -444,7 +445,7 @@ revisit.</p>
 <p>Now we have everything we need to solve the problem.</p>
 </div>
 <div class="section" id="mix-first-or-last">
-<h2>Mix First Or Last?<a class="headerlink" href="#mix-first-or-last" title="Permalink to this headline">¶</a></h2>
+<h2>Mix First or Last?<a class="headerlink" href="#mix-first-or-last" title="Permalink to this headline">¶</a></h2>
 <p>First I’ll create objects to represent the coffee and milk.
 For <code class="docutils literal notranslate"><span class="pre">r_coffee</span></code>, I’ll use the value we computed in the previous chapter.</p>
 <div class="cell docutils container">
@@ -546,7 +547,7 @@ Then it mixes them and simulates the mixture fir the remaining time, <code class
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap16_26_0.png" src="_images/chap16_26_0.png" />
+<img alt="_images/chap16_25_0.png" src="_images/chap16_25_0.png" />
 </div>
 </div>
 <p>Note that this is a parameter sweep, not a time series.</p>
@@ -623,8 +624,8 @@ To check, we’ll use the following function, which takes a <code class="docutil
 </div>
 </div>
 <p>The first line unpacks the system variables.
-The next two lines compute <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, which is a NumPy array of time stamps, and <code class="docutils literal notranslate"><span class="pre">T_array</span></code>, which is an array of the corresponding temperatures.</p>
-<p>The last two lines store the final temperature in the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to return the results in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+The next two lines compute <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, which is a NumPy array of time stamps, and <code class="docutils literal notranslate"><span class="pre">T_array</span></code>, which is an array of the corresponding temperatures.
+The last two lines store the final temperature in the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and use <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to return the results in a Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
 <p>We can run it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -651,8 +652,8 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Use <code class="docutils literal notranslate"><span class="pre">compute_r</span></code> to compute <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> according to the analytic solution.  Run the analysis with this value of <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> and confirm that the results are consistent with the simulation.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -714,8 +715,8 @@ are identical to what we got by simulation, with a small difference due to round
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>Suppose the coffee shop won’t let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?</p>
 <p>Hint: Think about the simplest way to represent the behavior of a refrigerator in this model.  The change you make to test this variation of the problem should be very small!</p>
 <div class="cell tag_hide-cell docutils container">
