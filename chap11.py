@@ -1,7 +1,7 @@
 from modsim import *
 
 def make_system(beta, gamma):
-    init = State(S=89, I=1, R=0)
+    init = State(s=89, i=1, r=0)
     init /= init.sum()
 
     return System(init=init, t_end=7*14,
@@ -10,7 +10,7 @@ def make_system(beta, gamma):
 from modsim import *
 
 def update_func(t, state, system):
-    s, i, r = state
+    s, i, r = state.s, state.i, state.r
 
     infected = system.beta * i * s    
     recovered = system.gamma * i
@@ -19,7 +19,7 @@ def update_func(t, state, system):
     i += infected - recovered
     r += recovered
     
-    return State(S=s, I=i, R=r)
+    return State(s=s, i=i, r=r)
 
 from modsim import *
 
