@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 12" href="chap12.html" />
+    <link rel="next" title="Modeling Vaccination" href="chap12.html" />
     <link rel="prev" title="Case Studies Part 1" href="chap10.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -155,17 +155,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap12.html">
-   Chapter 12
+   Modeling Vaccination
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap13.html">
-   Chapter 13
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap14.html">
-   Chapter 14
+   Nondimensionalization
   </a>
  </li>
  <li class="toctree-l1">
@@ -334,18 +334,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-sir-model">
-   The Sir Model
+  <a class="reference internal nav-link" href="#the-kermack-mckendrick-model">
+   The Kermack-McKendrick Model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-sir-equations">
-   The Sir Equations
+  <a class="reference internal nav-link" href="#the-km-equations">
+   The KM Equations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#implementation">
-   Implementation
+  <a class="reference internal nav-link" href="#implementing-the-km-model">
+   Implementing the KM model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -365,7 +365,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#now-with-a-timeframe">
-   Now With a Timeframe
+   Now With a TimeFrame
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -398,16 +398,14 @@
                 
   <div class="section" id="epidemiology">
 <h1>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">¶</a></h1>
-<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
-Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<p>In this chapter, we develop a model of an epidemic as it spreads in a
+<p>In this chapter, we’ll develop a model of an epidemic as it spreads in a
 susceptible population, and use it to evaluate the effectiveness of
 possible interventions.</p>
 <p>My presentation of the model in the next few chapters is based on an excellent article by David Smith and Lang Moore, “The SIR Model for Spread of Disease,” <em>Journal of Online Mathematics and its Applications</em>, December 2001, available at <a class="reference external" href="http://modsimpy.com/sir">http://modsimpy.com/sir</a>.</p>
 <div class="section" id="the-freshman-plague">
 <h2>The Freshman Plague<a class="headerlink" href="#the-freshman-plague" title="Permalink to this headline">¶</a></h2>
 <p>Every year at Olin College, about 90 new students come to campus from
-around the country and the world. Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease. A few weeks later, predictably, some fraction of the incoming class comes down with what we call “The Freshman Plague”.</p>
+around the country and the world. Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease. A few weeks later, predictably, some fraction of the incoming class comes down with what we call the “Freshman Plague”.</p>
 <p>In this chapter we introduce a well-known model of infectious disease,
 the Kermack-McKendrick model, and use it to explain the progression of
 the disease over the course of the semester, predict the effect of
@@ -419,9 +417,9 @@ model and reverse-engineer it. Along the way, we consider the modeling
 decisions that went into it and identify its capabilities and
 limitations.</p>
 </div>
-<div class="section" id="the-sir-model">
-<h2>The Sir Model<a class="headerlink" href="#the-sir-model" title="Permalink to this headline">¶</a></h2>
-<p>The Kermack-McKendrick model is an example of an <em>SIR model</em>,
+<div class="section" id="the-kermack-mckendrick-model">
+<h2>The Kermack-McKendrick Model<a class="headerlink" href="#the-kermack-mckendrick-model" title="Permalink to this headline">¶</a></h2>
+<p>The Kermack-McKendrick (KM) model is an example of an <em>SIR model</em>,
 so-named because it represents three categories of people:</p>
 <ul class="simple">
 <li><p><em>S</em>: People who are “susceptible”, that is, capable of
@@ -440,7 +438,7 @@ particular point in time, and we ignore the particular time each one
 became infected, we expect about 1 out of 4 to recover on any particular day.</p>
 <p>Putting that a different way, if the time between recoveries is 4 days, the recovery rate is about 0.25 recoveries per day, which we’ll denote with the Greek letter gamma, <span class="math notranslate nohighlight">\(\gamma\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
 <p>If the total number of people in the population is <span class="math notranslate nohighlight">\(N\)</span>, and the fraction currently infectious is <span class="math notranslate nohighlight">\(i\)</span>, the total number of recoveries we expect per day is <span class="math notranslate nohighlight">\(\gamma i N\)</span>.</p>
-<p>Now let’s think about the number of new infections. Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in a way that would cause them to become infected if the other person is infected. We’ll denote this contact rate with the Greek letter beta, <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<p>Now let’s think about the number of new infections. Suppose we know that each susceptible person comes into contact with 1 person every 3 days, on average, in a way that would cause them to become infected if the other person is infected. We’ll denote this contact rate with the Greek letter beta, <span class="math notranslate nohighlight">\(\beta\)</span>, or the variables name <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
 <p>It’s probably not reasonable to assume that we know <span class="math notranslate nohighlight">\(\beta\)</span> ahead of
 time, but later we’ll see how to estimate it based on data from previous outbreaks.</p>
 <p>If <span class="math notranslate nohighlight">\(s\)</span> is the fraction of the population that’s susceptible, <span class="math notranslate nohighlight">\(s N\)</span> is
@@ -452,11 +450,11 @@ the number of susceptible people, <span class="math notranslate nohighlight">\(\
 dividing by <span class="math notranslate nohighlight">\(N\)</span> yields the fraction of the population that gets
 infected in a day, which is <span class="math notranslate nohighlight">\(\beta s i\)</span>.</p></li>
 </ul>
-<p>This model assumes that the population is closed; that is, no one
+<p>The KM model assumes that the population is closed; that is, no one
 arrives or departs, so the size of the population, <span class="math notranslate nohighlight">\(N\)</span>, is constant.</p>
 </div>
-<div class="section" id="the-sir-equations">
-<h2>The Sir Equations<a class="headerlink" href="#the-sir-equations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-km-equations">
+<h2>The KM Equations<a class="headerlink" href="#the-km-equations" title="Permalink to this headline">¶</a></h2>
 <p>If we treat time as a continuous quantity, we can write differential
 equations that describe the rates of change for <span class="math notranslate nohighlight">\(s\)</span>, <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(r\)</span> (where <span class="math notranslate nohighlight">\(r\)</span> is the fraction of the population that has recovered):</p>
 <div class="math notranslate nohighlight">
@@ -473,26 +471,25 @@ also called <em>stocks</em> and transitions between them are called
 <p>In this example, there are three stocks—susceptible, infectious, and
 recovered—and two flows—new infections and recoveries. Compartment
 models are often represented visually using stock and flow diagrams (see <a class="reference external" href="http://modsimpy.com/stock">http://modsimpy.com/stock</a>).</p>
-<p>The following figure shows the stock and flow diagram for an SIR
-model.</p>
+<p>The following figure shows the stock and flow diagram for the KM model.</p>
 <p><img alt="Stock and flow diagram for an SIRmodel." src="https://github.com/AllenDowney/ModSim/raw/main/figs/stock_flow1.png" /></p>
 <p>Stocks are represented by rectangles, flows by arrows. The widget in the middle of the arrows represents a valve that controls the rate of flow; the diagram shows the parameters that control the valves.</p>
 </div>
-<div class="section" id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="implementing-the-km-model">
+<h2>Implementing the KM model<a class="headerlink" href="#implementing-the-km-model" title="Permalink to this headline">¶</a></h2>
 <p>For a given physical system, there are many possible models, and for a
 given model, there are many ways to represent it. For example, we can
 represent an SIR model as a stock-and-flow diagram, as a set of
 differential equations, or as a Python program. The process of
 representing a model in these forms is called <em>implementation</em>. In
-this section, we implement the SIR model in Python.</p>
+this section, we implement the KM model in Python.</p>
 <p>I’ll represent the initial state of the system using a <code class="docutils literal notranslate"><span class="pre">State</span></code> object
-with state variables <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>, and <code class="docutils literal notranslate"><span class="pre">R</span></code>; they represent the fraction of
+with state variables <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code>; they represent the fraction of
 the population in each compartment.</p>
-<p>We can initialize the <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the <em>number</em> of people in each compartment, assuming there is one infected student in a class of 90:</p>
+<p>We can initialize the <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the <em>number</em> of people in each compartment; for example, here is the initial state with one infected student in a class of 90:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -521,22 +518,22 @@ the population in each compartment.</p>
   </thead>
   <tbody>
     <tr>
-      <th>S</th>
+      <th>s</th>
       <td>89</td>
     </tr>
     <tr>
-      <th>I</th>
+      <th>i</th>
       <td>1</td>
     </tr>
     <tr>
-      <th>R</th>
+      <th>r</th>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>And then convert the numbers to fractions by dividing by the total:</p>
+<p>We can convert the numbers to fractions by dividing by the total:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">/=</span> <span class="n">init</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -568,15 +565,15 @@ the population in each compartment.</p>
   </thead>
   <tbody>
     <tr>
-      <th>S</th>
+      <th>s</th>
       <td>0.988889</td>
     </tr>
     <tr>
-      <th>I</th>
+      <th>i</th>
       <td>0.011111</td>
     </tr>
     <tr>
-      <th>R</th>
+      <th>r</th>
       <td>0.000000</td>
     </tr>
   </tbody>
@@ -607,7 +604,7 @@ conditions. The following function takes the system parameters and returns a new
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
-    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="mi">89</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">init</span> <span class="o">/=</span> <span class="n">init</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">7</span><span class="o">*</span><span class="mi">14</span><span class="p">,</span>
@@ -651,9 +648,9 @@ semester.</p>
   <tbody>
     <tr>
       <th>init</th>
-      <td>S    0.988889
-I    0.011111
-R    0.000000
+      <td>s    0.988889
+i    0.011111
+r    0.000000
 Name...</td>
     </tr>
     <tr>
@@ -672,16 +669,16 @@ Name...</td>
 </table>
 </div></div></div>
 </div>
+<p>Now that we have object to represent the system and it’s state, we are ready for the update function.</p>
 </div>
 <div class="section" id="the-update-function">
 <h2>The Update Function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
-<p>At any point in time, the state of the system is represented by a
-<code class="docutils literal notranslate"><span class="pre">State</span></code> object with three variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>. So I’ll define an update function that takes as parameters the current
-time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
+<p>The purpose of an update function is to take the current state of a system and compute the state during the next time step.
+Here’s the update function we’ll use for the KM model:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
-    <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">r</span>
 
     <span class="n">infected</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">s</span>    
     <span class="n">recovered</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">i</span>
@@ -690,18 +687,17 @@ time, a <code class="docutils literal notranslate"><span class="pre">State</span
     <span class="n">i</span> <span class="o">+=</span> <span class="n">infected</span> <span class="o">-</span> <span class="n">recovered</span>
     <span class="n">r</span> <span class="o">+=</span> <span class="n">recovered</span>
     
-    <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The first line uses a feature we have not seen before, <strong>multiple
-assignment</strong>. The value on the right side is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object that
-contains three values. The left side is a sequence of three variable
-names. The assignment does just what we want: it assigns the three
-values from the <code class="docutils literal notranslate"><span class="pre">State</span></code> object to the three variables, in order.</p>
-<p>The variables <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>, are lowercase to distinguish them
-from the state variables, <code class="docutils literal notranslate"><span class="pre">S</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">update_func</span></code> takes as parameters the current time, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>The first line unpacks the <code class="docutils literal notranslate"><span class="pre">State</span></code> object, assigning the values of the state variables to new variables with the same names.
+This is an example of <em>multiple assignment</em>.
+The left side is a sequence of variables; the right side is a sequence of expressions.
+The values on the right side are assigned to the variables on the left side, in order.
+By creating these variables, we avoid repeating <code class="docutils literal notranslate"><span class="pre">state</span></code> several times, which makes the code easier to read.</p>
 <p>The update function computes <code class="docutils literal notranslate"><span class="pre">infected</span></code> and <code class="docutils literal notranslate"><span class="pre">recovered</span></code> as a fraction of the population, then updates <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>. The return value is a <code class="docutils literal notranslate"><span class="pre">State</span></code> that contains the updated values.</p>
 <p>We can call <code class="docutils literal notranslate"><span class="pre">update_func</span></code> like this:</p>
 <div class="cell docutils container">
@@ -735,15 +731,15 @@ from the state variables, <code class="docutils literal notranslate"><span class
   </thead>
   <tbody>
     <tr>
-      <th>S</th>
+      <th>s</th>
       <td>0.985226</td>
     </tr>
     <tr>
-      <th>I</th>
+      <th>i</th>
       <td>0.011996</td>
     </tr>
     <tr>
-      <th>R</th>
+      <th>r</th>
       <td>0.002778</td>
     </tr>
   </tbody>
@@ -805,15 +801,15 @@ conditions, and values of <code class="docutils literal notranslate"><span class
   </thead>
   <tbody>
     <tr>
-      <th>S</th>
+      <th>s</th>
       <td>0.520568</td>
     </tr>
     <tr>
-      <th>I</th>
+      <th>i</th>
       <td>0.000666</td>
     </tr>
     <tr>
-      <th>R</th>
+      <th>r</th>
       <td>0.478766</td>
     </tr>
   </tbody>
@@ -841,7 +837,7 @@ but we might want to see how the state changes over time. We’ll consider two w
     
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
-        <span class="n">S</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">r</span>
     
     <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">R</span>
 </pre></div>
@@ -888,7 +884,7 @@ Next we initialize <code class="docutils literal notranslate"><span class="pre">
 <p>It takes about three weeks (21 days) for the outbreak to get going, and about five weeks (35 days) to peak. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
 </div>
 <div class="section" id="now-with-a-timeframe">
-<h2>Now With a Timeframe<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
+<h2>Now With a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
 <p>If the number of state variables is small, storing them as separate
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects might not be so bad. But a better alternative is to use a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which is another object defined in the ModSim
 library.
@@ -922,11 +918,11 @@ To select a row, we have to use <code class="docutils literal notranslate"><span
 </div>
 <p>Since the value on the right side is a <code class="docutils literal notranslate"><span class="pre">State</span></code>, the assignment matches
 up the index of the <code class="docutils literal notranslate"><span class="pre">State</span></code> with the columns of the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>; that
-is, it assigns the <code class="docutils literal notranslate"><span class="pre">S</span></code> value from <code class="docutils literal notranslate"><span class="pre">system.init</span></code> to the <code class="docutils literal notranslate"><span class="pre">S</span></code> column of
-<code class="docutils literal notranslate"><span class="pre">frame</span></code>, and likewise with <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
-<p>We use the same feature to write the loop more concisely, assigning the <code class="docutils literal notranslate"><span class="pre">State</span></code> we get from <code class="docutils literal notranslate"><span class="pre">update_func</span></code> directly to the next row of
-<code class="docutils literal notranslate"><span class="pre">frame</span></code>.</p>
-<p>Finally, we return <code class="docutils literal notranslate"><span class="pre">frame</span></code>. We can call this version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
+is, it assigns the <code class="docutils literal notranslate"><span class="pre">s</span></code> value from <code class="docutils literal notranslate"><span class="pre">system.init</span></code> to the <code class="docutils literal notranslate"><span class="pre">s</span></code> column of
+<code class="docutils literal notranslate"><span class="pre">frame</span></code>, and likewise with <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+<p>Each time through the loop, we assign the <code class="docutils literal notranslate"><span class="pre">State</span></code> we get from <code class="docutils literal notranslate"><span class="pre">update_func</span></code> to the next row of <code class="docutils literal notranslate"><span class="pre">frame</span></code>.
+At the end, we return <code class="docutils literal notranslate"><span class="pre">frame</span></code>.</p>
+<p>We can call this version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
@@ -934,30 +930,97 @@ is, it assigns the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 </div>
-<p>And plot the results like this:</p>
+<p>Here are the first few rows of the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">I</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap11_50_0.png" src="_images/chap11_50_0.png" />
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>s</th>
+      <th>i</th>
+      <th>r</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.988889</td>
+      <td>0.011111</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.985226</td>
+      <td>0.011996</td>
+      <td>0.002778</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.981287</td>
+      <td>0.012936</td>
+      <td>0.005777</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.977055</td>
+      <td>0.013934</td>
+      <td>0.009011</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.972517</td>
+      <td>0.014988</td>
+      <td>0.012494</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The columns in the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> correspond to the state variables, <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code>.
+As with a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we can use the dot operator to select columns
+from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, so we can plot the results like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
-<p>As with a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we can use the dot operator to select columns
-from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
+<div class="cell_output docutils container">
+<img alt="_images/chap11_52_0.png" src="_images/chap11_52_0.png" />
+</div>
+</div>
+<p>The results are the same as before, now in a more convenient form.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>This chapter presents an SIR model of infectious disease and two ways to collect the results, using several <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects or a single <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
-<p>In the next chapter we’ll use the model to explore the effect of immunization and other interventions.</p>
+<p>This chapter presents an SIR model of infectious disease and two ways to collect the results, using several <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects or a single <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.
+In the next chapter we’ll use the model to explore the effect of immunization.</p>
 <p>But first you might want to work on these exercises.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
-Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="exercise-1">
 <h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Suppose the time between contacts is 4 days and the recovery time is 5 days.  After 14 weeks, how many students, total, have been infected?</p>
@@ -973,7 +1036,7 @@ Click here to access the notebooks: <a class="reference external" href="https://
 <span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr</span>     <span class="c1"># recovery rate in per day</span>
 
 <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-<span class="n">s_0</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">S</span>
+<span class="n">s_0</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">s</span>
 </pre></div>
 </div>
 </div>
@@ -986,7 +1049,7 @@ Click here to access the notebooks: <a class="reference external" href="https://
 <span class="c1"># value of S</span>
 
 <span class="n">final_state</span> <span class="o">=</span> <span class="n">run_simulation1</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
-<span class="n">s_end</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">S</span>
+<span class="n">s_end</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">s</span>
 
 <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
 </pre></div>
@@ -1006,7 +1069,7 @@ Click here to access the notebooks: <a class="reference external" href="https://
 <span class="c1"># work to get the final value.</span>
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
-<span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
+<span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
 
 <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
 </pre></div>
@@ -1051,7 +1114,7 @@ Click here to access the notebooks: <a class="reference external" href="https://
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap10.html" title="previous page">Case Studies Part 1</a>
-    <a class='right-next' id="next-link" href="chap12.html" title="next page">Chapter 12</a>
+    <a class='right-next' id="next-link" href="chap12.html" title="next page">Modeling Vaccination</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

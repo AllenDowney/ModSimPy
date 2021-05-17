@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 12 &#8212; Modeling and Simulation in Python</title>
+    <title>Modeling Vaccination &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 13" href="chap13.html" />
+    <link rel="next" title="Sweeping Parameters" href="chap13.html" />
     <link rel="prev" title="Epidemiology" href="chap11.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -155,17 +155,17 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 12
+   Modeling Vaccination
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap13.html">
-   Chapter 13
+   Sweeping Parameters
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap14.html">
-   Chapter 14
+   Nondimensionalization
   </a>
  </li>
  <li class="toctree-l1">
@@ -371,11 +371,9 @@
         
               <div>
                 
-  <div class="section" id="chapter-12">
-<h1>Chapter 12<a class="headerlink" href="#chapter-12" title="Permalink to this headline">¶</a></h1>
-<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
-Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<p>In the previous chapter I presented the SIR model of infectious disease and used it to model the Freshman Plague at Olin. In this chapter we’ll consider metrics intended to quantify the effects of the disease and interventions intended to reduce those effects.</p>
+  <div class="section" id="modeling-vaccination">
+<h1>Modeling Vaccination<a class="headerlink" href="#modeling-vaccination" title="Permalink to this headline">¶</a></h1>
+<p>In the previous chapter I presented the Kermack-McKendrick (KM) model of infectious disease and used it to model the Freshman Plague at Olin. In this chapter we’ll consider metrics intended to quantify the effects of the disease and interventions intended to reduce those effects.</p>
 <p>We’ll use some of the functions from the previous chapter: <code class="docutils literal notranslate"><span class="pre">make_system</span></code>, <code class="docutils literal notranslate"><span class="pre">update_func</span></code>, and the last version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>, which returns the results in a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> object.</p>
 <div class="section" id="immunization">
 <h2>Immunization<a class="headerlink" href="#immunization" title="Permalink to this headline">¶</a></h2>
@@ -388,8 +386,8 @@ feature like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_immunization</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
-    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">S</span> <span class="o">-=</span> <span class="n">fraction</span>
-    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">R</span> <span class="o">+=</span> <span class="n">fraction</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">s</span> <span class="o">-=</span> <span class="n">fraction</span>
+    <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">r</span> <span class="o">+=</span> <span class="n">fraction</span>
 </pre></div>
 </div>
 </div>
@@ -429,12 +427,12 @@ I’ll make another <code class="docutils literal notranslate"><span class="pre"
 </div>
 </div>
 </div>
-<p>The following figure shows <code class="docutils literal notranslate"><span class="pre">S</span></code> as a function of time, with and
+<p>The following figure shows <code class="docutils literal notranslate"><span class="pre">s</span></code> as a function of time, with and
 without immunization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;No immunization&#39;</span><span class="p">)</span>
-<span class="n">results2</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;10</span><span class="si">% i</span><span class="s1">mmunization&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;No immunization&#39;</span><span class="p">)</span>
+<span class="n">results2</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;10</span><span class="si">% i</span><span class="s1">mmunization&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction of population&#39;</span><span class="p">)</span>
@@ -442,10 +440,10 @@ without immunization.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap12_17_0.png" src="_images/chap12_17_0.png" />
+<img alt="_images/chap12_16_0.png" src="_images/chap12_16_0.png" />
 </div>
 </div>
-<p>With immunization, there is a smaller change in <code class="docutils literal notranslate"><span class="pre">S</span></code>; that is, fewer people are infected.
+<p>With immunization, there is a smaller change in <code class="docutils literal notranslate"><span class="pre">s</span></code>; that is, fewer people are infected.
 In the next section we’ll compute this change and use it to quantify the effect of immunization.</p>
 </div>
 <div class="section" id="metrics">
@@ -454,21 +452,22 @@ In the next section we’ll compute this change and use it to quantify the effec
 when the model ran, but often we want to boil it down to a few numbers
 that summarize the outcome. These summary statistics are called
 <em>metrics</em>.</p>
-<p>In the SIR model, we might want to know the time until the peak of the
+<p>In the KM model, we might want to know the time until the peak of the
 outbreak, the number of people who are sick at the peak, the number of
 students who will still be sick at the end of the semester, or the total number of students who get sick at any point.</p>
 <p>As an example, I will focus on the last one — the total number of sick students — and we will consider interventions intended to minimize it.</p>
-<p>We can get the total number of infections by computing the difference in <code class="docutils literal notranslate"><span class="pre">S</span></code> at the beginning and the end of the simulation.</p>
+<p>We can get the total number of infections by computing the difference in <code class="docutils literal notranslate"><span class="pre">s</span></code> at the beginning and the end of the simulation.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
-    <span class="n">s_0</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
+    <span class="n">s_0</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>And here are the results from the two simulations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
@@ -559,15 +558,15 @@ immunization to 60%, that might not be too bad. But if we drop from 40% to 20%, 
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>In general, models are used to predict, explain, and design.
-In this chapter, we use an SIR predict the effect of immunization and to explain the phenomenon of herd immunity.</p>
-<p>In the repository for this book, you will find a file called <code class="docutils literal notranslate"><span class="pre">plague.ipynb</span></code> that uses this model for design, that is, for making public health decisions intended to achieve a goal.</p>
+In this chapter, we use an SIR model to predict the effect of immunization and to explain the phenomenon of herd immunity.</p>
+<p>In the repository for this book, you will find a file called <em>plague.ipynb</em> that uses this model for design, that is, for making public health decisions intended to achieve a goal.</p>
 <p>In the next chapter, we’ll explore the SIR model further by sweeping the parameters.</p>
 <p>But first you might want to work on this exercise.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
-Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="exercise-1">
 <h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Suppose we have the option to quarantine infected students.  For example, a student who feels ill might be moved to an infirmary or a private dorm room until they are no longer infectious.</p>
@@ -695,7 +694,7 @@ Click here to access the notebooks: <a class="reference external" href="https://
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap11.html" title="previous page">Epidemiology</a>
-    <a class='right-next' id="next-link" href="chap13.html" title="next page">Chapter 13</a>
+    <a class='right-next' id="next-link" href="chap13.html" title="next page">Sweeping Parameters</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
