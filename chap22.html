@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 22 &#8212; Modeling and Simulation in Python</title>
+    <title>Baseball &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 23" href="chap23.html" />
-    <link rel="prev" title="Chapter 21" href="chap21.html" />
+    <link rel="next" title="Optimization" href="chap23.html" />
+    <link rel="prev" title="Drag" href="chap21.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -170,47 +170,47 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap15.html">
-   Chapter 15
+   Cooling Coffee
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap16.html">
-   Chapter 16
+   Adding Milk
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Chapter 17
+   Glucose
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Chapter 18
+   Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Chapter 19
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Chapter 20
+   Pennies
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap21.html">
-   Chapter 21
+   Drag
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 22
+   Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Chapter 23
+   Optimization
   </a>
  </li>
  <li class="toctree-l1">
@@ -329,7 +329,7 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#baseball">
+  <a class="reference internal nav-link" href="#id1">
    Baseball
   </a>
  </li>
@@ -369,18 +369,18 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
     </a>
    </li>
   </ul>
@@ -396,15 +396,15 @@
         
               <div>
                 
-  <div class="section" id="chapter-22">
-<h1>Chapter 22<a class="headerlink" href="#chapter-22" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="baseball">
+<h1>Baseball<a class="headerlink" href="#baseball" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap22.ipynb">Click here to run this chapter on Colab</a></p>
 <p>In the previous chapter we modeled an object moving in one dimension, with and without drag. Now let’s move on to two dimensions, and baseball!</p>
 <p>In this chapter we model the flight of a baseball including the effect
 of air resistance. In the next chapter we use this model to solve an
 optimization problem.</p>
-<div class="section" id="baseball">
-<h2>Baseball<a class="headerlink" href="#baseball" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>Baseball<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>To model the flight of a baseball, we have to make some
 decisions. To get started, we’ll ignore any spin that might be on the ball, and the resulting Magnus force (see <a class="reference external" href="http://modsimpy.com/magnus">http://modsimpy.com/magnus</a>). Under this assumption, the ball travels in a vertical plane, so we’ll run simulations in two dimensions, rather than three.</p>
 <p>To model air resistance, we’ll need the mass, frontal area, and drag
@@ -1357,8 +1357,10 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Run the simulation with and without air resistance.  How wrong would we be if we ignored drag?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1428,8 +1430,8 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>The baseball stadium in Denver, Colorado is 1,580 meters above sea level, where the density of air is about 1.0 kg / m<span class="math notranslate nohighlight">\(^3\)</span>.  How much farther would a ball hit with the same initial speed and launch angle travel?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1473,11 +1475,11 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h3>Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC"><em>The Physics of Baseball</em></a>, shows coefficient of drag as a function of velocity.</p>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <em>The Physics of Baseball</em>, shows coefficient of drag as a function of velocity (see <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC</a>).</p>
 <p><img alt="Graph of drag coefficient versus velocity" src="https://github.com/AllenDowney/ModSimPy/raw/master/figs/baseball_drag.png" /></p>
-<p>I used <a class="reference external" href="https://automeris.io/WebPlotDigitizer/">an online graph digitizer</a> to extract the data and save it in a CSV file.</p>
+<p>I used an online graph digitizer (<a class="reference external" href="https://automeris.io/WebPlotDigitizer">https://automeris.io/WebPlotDigitizer</a>) to extract the data and save it in a CSV file.</p>
 <p>Modify the model to include the dependence of <code class="docutils literal notranslate"><span class="pre">C_d</span></code> on velocity, and see how much it affects the results.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -1735,8 +1737,8 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap21.html" title="previous page">Chapter 21</a>
-    <a class='right-next' id="next-link" href="chap23.html" title="next page">Chapter 23</a>
+    <a class='left-prev' id="prev-link" href="chap21.html" title="previous page">Drag</a>
+    <a class='right-next' id="next-link" href="chap23.html" title="next page">Optimization</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

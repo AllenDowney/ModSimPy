@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 19 &#8212; Modeling and Simulation in Python</title>
+    <title>Case Studies Part 1 &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 20" href="chap20.html" />
-    <link rel="prev" title="Chapter 18" href="chap18.html" />
+    <link rel="next" title="Pennies" href="chap20.html" />
+    <link rel="prev" title="Insulin" href="chap18.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -170,47 +170,47 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap15.html">
-   Chapter 15
+   Cooling Coffee
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap16.html">
-   Chapter 16
+   Adding Milk
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Chapter 17
+   Glucose
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Chapter 18
+   Insulin
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 19
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Chapter 20
+   Pennies
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap21.html">
-   Chapter 21
+   Drag
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap22.html">
-   Chapter 22
+   Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Chapter 23
+   Optimization
   </a>
  </li>
  <li class="toctree-l1">
@@ -364,17 +364,19 @@
         
               <div>
                 
-  <div class="section" id="chapter-19">
-<h1>Chapter 19<a class="headerlink" href="#chapter-19" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="case-studies-part-1">
+<h1>Case Studies Part 1<a class="headerlink" href="#case-studies-part-1" title="Permalink to this headline">¶</a></h1>
 <p>This chapter presents case studies where you can apply the tools we have learned so far to the glucose-insulin minimal model, an electronic circuit, a thermal model of a wall, and the interaction of HIV and T cells.</p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="the-glucose-minimal-model">
 <h2>The Glucose Minimal Model<a class="headerlink" href="#the-glucose-minimal-model" title="Permalink to this headline">¶</a></h2>
 <p>In the previous chapter we implemented the glucose minimal model using given parameters, but I didn’t say where those parameters came from.</p>
 <p>In the repository for this book, you will find a notebook,
-<code class="docutils literal notranslate"><span class="pre">glucose.ipynb</span></code>, that shows how we can find the parameters that best fit the data.</p>
+<code class="docutils literal notranslate"><span class="pre">glucose.ipynb</span></code>, that shows how we can find the parameters that best fit the data.
+You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb</a>.</p>
 <p>It uses a SciPy function called <code class="docutils literal notranslate"><span class="pre">leastsq</span></code>, which stands for “least squares”; so-named because it finds the parameters that minimize the sum of squared differences between the results of the model and the data.</p>
 <p>You can think of <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> as an optional tool for this book.  We won’t use it in the text itself, but it appears in a few of the case studies.</p>
-<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/glucose.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/glucose.ipynb</a>.</p>
 </div>
 <div class="section" id="the-insulin-minimal-model">
 <h2>The Insulin Minimal Model<a class="headerlink" href="#the-insulin-minimal-model" title="Permalink to this headline">¶</a></h2>
@@ -400,8 +402,8 @@ decrease) in blood insulin when glucose is above (or below) <span class="math no
 \[\phi_2 = \gamma \times 10^4\]</div>
 <p>where <span class="math notranslate nohighlight">\(I_{max}\)</span> is the maximum measured insulin level, and <span class="math notranslate nohighlight">\(I_b\)</span> and <span class="math notranslate nohighlight">\(G_b\)</span> are the basal levels of insulin and glucose.</p>
 <p>In the repository for this book, you will find a notebook,
-<code class="docutils literal notranslate"><span class="pre">insulin.ipynb</span></code>, that contains starter code for this case study. Use it to implement the insulin model, find the parameters that best fit the data, and estimate <span class="math notranslate nohighlight">\(\phi_1\)</span> and <span class="math notranslate nohighlight">\(\phi_2\)</span>.</p>
-<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb</a>.</p>
+<code class="docutils literal notranslate"><span class="pre">insulin.ipynb</span></code>, that contains starter code for this case study. Use it to implement the insulin model, find the parameters that best fit the data, and estimate <span class="math notranslate nohighlight">\(\phi_1\)</span> and <span class="math notranslate nohighlight">\(\phi_2\)</span>.
+You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/insulin.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/insulin.ipynb</a>.</p>
 </div>
 <div class="section" id="low-pass-filter">
 <h2>Low-pass Filter<a class="headerlink" href="#low-pass-filter" title="Permalink to this headline">¶</a></h2>
@@ -437,9 +439,8 @@ capacitors, current through the capacitor causes a change in the voltage across 
 \[V_{in}(t) = A \cos (2 \pi f t)\]</div>
 <p>where <span class="math notranslate nohighlight">\(A\)</span> is the amplitude of the input signal, say 5 V, and <span class="math notranslate nohighlight">\(f\)</span> is the frequency of the signal in Hz.</p>
 <p>In the repository for this book, you will find a notebook,
-<code class="docutils literal notranslate"><span class="pre">filter.ipynb</span></code>, which contains starter code for this case study. Read
-the notebook, run the code, and work on the exercises.</p>
-<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb</a>.</p>
+<code class="docutils literal notranslate"><span class="pre">filter.ipynb</span></code>, which contains starter code for this case study.
+You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/filter.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/filter.ipynb</a>.</p>
 </div>
 <div class="section" id="thermal-behavior-of-a-wall">
 <h2>Thermal Behavior of a Wall<a class="headerlink" href="#thermal-behavior-of-a-wall" title="Permalink to this headline">¶</a></h2>
@@ -454,14 +455,14 @@ with two thermal masses, and a simpler model with only one thermal mass. They fi
 <p>For this case study we will implement their model and run it with the
 estimated parameters from the paper, and then use <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> to see
 if we can find parameters that yield lower errors.</p>
-<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">wall.ipynb</span></code> with the code and results for this case study.</p>
+<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">wall.ipynb</span></code> with the code and results for this case study.
+You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/wall.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/wall.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/wall.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/wall.ipynb</a>.</p>
 <p>The paper this case study is based on is
 Gori, Marincioni, Biddulph, Elwell, “Inferring the thermal resistance and effective thermal mass distribution of a wall from in situ measurements to characterise heat transfer at both the interior and exterior surfaces”, <em>Energy and Buildings</em>, 2017, available from <a class="reference external" href="http://modsimpy.com/wall2">http://modsimpy.com/wall2</a>.</p>
 <p>The authors put their paper under a Creative Commons license, and
 make their data available at <a class="reference external" href="http://modsimpy.com/wall">http://modsimpy.com/wall</a>. I thank them
 for their commitment to open, reproducible science, which made this
 case study possible.</p>
-<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/owall.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/owall.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/owall.ipynb</a>.</p>
 </div>
 <div class="section" id="hiv">
 <h2>HIV<a class="headerlink" href="#hiv" title="Permalink to this headline">¶</a></h2>
@@ -472,8 +473,8 @@ However, at least in some patients, the decline occurs even without any detectab
 <p>Phillips presents a system of differential equations that models the concentrations of the HIV virus and the CD4 cells it infects.
 The model does not include an immune response; nevertheless, it demonstrates behavior that is qualitatively similar to what is seen in patients during the first few weeks after infection.</p>
 <p>His conclusion is that the observed decline in the concentration of HIV might not be caused by an immune response; it could be due to the dynamic interaction between HIV and the cells it infects.</p>
-<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">hiv_model.ipynb</span></code>, which you can use to implement Phillips’s model and consider whether it does the work it is meant to do.</p>
-<p>You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb</a>.</p>
+<p>In the repository for this book, you will find a notebook, <code class="docutils literal notranslate"><span class="pre">hiv_model.ipynb</span></code>, which you can use to implement Phillips’s model and consider whether it does the work it is meant to do.
+You can download it from <a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb">https://github.com/AllenDowney/ModSimPy/raw/master/examples/hiv_model.ipynb</a> or run it on Colab at <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb">https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/examples/hiv_model.ipynb</a>.</p>
 </div>
 </div>
 
@@ -505,8 +506,8 @@ The model does not include an immune response; nevertheless, it demonstrates beh
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap18.html" title="previous page">Chapter 18</a>
-    <a class='right-next' id="next-link" href="chap20.html" title="next page">Chapter 20</a>
+    <a class='left-prev' id="prev-link" href="chap18.html" title="previous page">Insulin</a>
+    <a class='right-next' id="next-link" href="chap20.html" title="next page">Pennies</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

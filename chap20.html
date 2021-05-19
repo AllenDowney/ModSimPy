@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 20 &#8212; Modeling and Simulation in Python</title>
+    <title>Pennies &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 21" href="chap21.html" />
-    <link rel="prev" title="Chapter 19" href="chap19.html" />
+    <link rel="next" title="Drag" href="chap21.html" />
+    <link rel="prev" title="Case Studies Part 1" href="chap19.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -170,47 +170,47 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap15.html">
-   Chapter 15
+   Cooling Coffee
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap16.html">
-   Chapter 16
+   Adding Milk
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Chapter 17
+   Glucose
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Chapter 18
+   Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Chapter 19
+   Case Studies Part 1
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 20
+   Pennies
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap21.html">
-   Chapter 21
+   Drag
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap22.html">
-   Chapter 22
+   Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Chapter 23
+   Optimization
   </a>
  </li>
  <li class="toctree-l1">
@@ -347,15 +347,15 @@
   <a class="reference internal nav-link" href="#summary">
    Summary
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercises">
-     Exercises
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
   </ul>
@@ -371,9 +371,8 @@
         
               <div>
                 
-  <div class="section" id="chapter-20">
-<h1>Chapter 20<a class="headerlink" href="#chapter-20" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap20.ipynb">Click here to run this chapter on Colab</a></p>
+  <div class="section" id="pennies">
+<h1>Pennies<a class="headerlink" href="#pennies" title="Permalink to this headline">¶</a></h1>
 <p>So far the differential equations we’ve worked with have been <strong>first
 order</strong>, which means they involve only first derivatives. In this
 chapter, we turn our attention to second order differential equations, which can involve both first and second derivatives.</p>
@@ -679,11 +678,13 @@ Then we used <code class="docutils literal notranslate"><span class="pre">run_so
 And we used an event function to stop the simulation when the penny reaches the sidewalk.</p>
 <p>In the next chapter we’ll add air resistance to the model.
 But first you might want to work on this exercise.</p>
-<div class="section" id="exercises">
-<h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
 <p>“If the Earth suddenly stopped orbiting the Sun, I know eventually it would be pulled in by the Sun’s gravity and hit it. How long would it take the Earth to hit the Sun? I imagine it would go slowly at first and then pick up speed.”</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to answer this question.</p>
@@ -908,7 +909,7 @@ But first you might want to work on this exercise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap20_53_0.png" src="_images/chap20_53_0.png" />
+<img alt="_images/chap20_54_0.png" src="_images/chap20_54_0.png" />
 </div>
 </div>
 </div>
@@ -943,8 +944,8 @@ But first you might want to work on this exercise.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap19.html" title="previous page">Chapter 19</a>
-    <a class='right-next' id="next-link" href="chap21.html" title="next page">Chapter 21</a>
+    <a class='left-prev' id="prev-link" href="chap19.html" title="previous page">Case Studies Part 1</a>
+    <a class='right-next' id="next-link" href="chap21.html" title="next page">Drag</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
