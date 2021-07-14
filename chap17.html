@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Glucose &#8212; Modeling and Simulation in Python</title>
+    <title>Pharmacokinetics &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Insulin" href="chap18.html" />
+    <link rel="next" title="Glucose and Insulin" href="chap18.html" />
     <link rel="prev" title="Adding Milk" href="chap16.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -339,8 +339,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data">
-   Data
+  <a class="reference internal nav-link" href="#getting-the-data">
+   Getting the Data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -381,12 +381,12 @@
         
               <div>
                 
-  <div class="section" id="glucose">
-<h1>Glucose<a class="headerlink" href="#glucose" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pharmacokinetics">
+<h1>Pharmacokinetics<a class="headerlink" href="#pharmacokinetics" title="Permalink to this headline">¶</a></h1>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<p>In this chapter we start a new example, a model of how glucose and insulin interact to control blood sugar.<br />
-We will implement a widely used model called the “Minimal Model” because it is intended to include only the elements essential to explain the observed behavior of the system.</p>
+<p>In this chapter we’ll start a new example, a model of how glucose and insulin interact to control blood sugar.
+We will implement a widely used model called the “minimal model” because it is intended to include only the elements essential to explain the observed behavior of the system.</p>
 <p>This chapter presents the model and some background information we need to understand it.
 In the next chapter we’ll implement the model and compare the results to real data.</p>
 <p>My presentation in this chapter follows Bergman (2005) “Minimal Model”
@@ -394,15 +394,14 @@ In the next chapter we’ll implement the model and compare the results to real 
 <a class="reference external" href="http://modsimpy.com/minmod">http://modsimpy.com/minmod</a>).</p>
 <div class="section" id="the-minimal-model">
 <h2>The Minimal Model<a class="headerlink" href="#the-minimal-model" title="Permalink to this headline">¶</a></h2>
-<p><em>Pharmacokinetics</em> is the study of how drugs and other substances move around the body, react, and are eliminated. In this chapter, I present a widely used pharmacokinetic models: the so-called “minimal model” of glucose and insulin in the blood stream.</p>
+<p><em>Pharmacokinetics</em> is the study of how drugs and other substances move around the body, react, and are eliminated. In this chapter, I present a widely used pharmacokinetic model of glucose and insulin in the blood stream.</p>
 <p><em>Glucose</em> is a form of sugar that circulates in the blood of animals; it is used as fuel for muscles, the brain, and other organs. The concentration of blood sugar is controlled by the hormone system, and especially by <em>insulin</em>, which is produced by the pancreas and has the effect of reducing blood sugar.</p>
 <p>In people with normal pancreatic function, the hormone system maintains <em>homeostasis</em>; that is, it keeps the concentration of blood sugar in a range that is neither too high or too low.</p>
 <p>But if the pancreas does not produce enough insulin, or if the cells
 that should respond to insulin become insensitive, blood sugar can
 become elevated, a condition called <em>hyperglycemia</em>. Long term, severe hyperglycemia is the defining symptom of <em>diabetes mellitus</em>, a serious disease that affects almost 10% of the population in the U.S. (see <a class="reference external" href="http://modsimpy.com/cdc">http://modsimpy.com/cdc</a>).</p>
 <p>A widely used test for hyperglycemia and diabetes is the
-frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently); then blood samples are collected at intervals of 2–10 minutes for 3 hours. The samples are analyzed to
-measure the concentrations of glucose and insulin.</p>
+frequently sampled intravenous glucose tolerance test (FSIGT), in which glucose is injected into the blood stream of a fasting subject (someone who has not eaten recently); then blood samples are collected at intervals of 2–10 minutes for 3 hours. The samples are analyzed to measure the concentrations of glucose and insulin.</p>
 <p>Using these measurements, we can estimate several parameters of
 the subject’s response; the most important is a parameter denoted <span class="math notranslate nohighlight">\(S_I\)</span>, which quantifies the effect of insulin on the rate of reduction in blood sugar.</p>
 </div>
@@ -419,7 +418,10 @@ variations and extensions have been proposed. Bergman’s comments on the develo
 <p>Bergman discusses the features he and his colleagues thought were
 essential:</p>
 <blockquote>
-<div><p>(1) Glucose, once elevated by injection, returns to basal level due to two effects: the effect of glucose itself to normalize its own concentration […] as well as the catalytic effect of insulin to allow glucose to self-normalize (2) Also, we discovered that the effect of insulin on net glucose disappearance must be sluggish — that is, that insulin acts slowly because insulin must first move from plasma to a remote compartment […] to exert its action on glucose disposal.</p>
+<div><ol class="simple">
+<li><p>Glucose, once elevated by injection, returns to basal level due to two effects: the effect of glucose itself to normalize its own concentration […] as well as the catalytic effect of insulin to allow glucose to self-normalize.</p></li>
+<li><p>Also, we discovered that the effect of insulin on net glucose disappearance must be sluggish — that is, that insulin acts slowly because insulin must first move from plasma to a remote compartment […] to exert its action on glucose disposal.</p></li>
+</ol>
 </div></blockquote>
 <p>To paraphrase the second point, the effect of insulin on glucose
 disposal, as seen in the data, happens more slowly than we would expect if it depended primarily on the the concentration of insulin in the blood. Bergman’s group hypothesized that insulin must move relatively slowly from the blood to a remote compartment where it has its effect.</p>
@@ -466,8 +468,8 @@ blood.</p></li>
 <span class="math notranslate nohighlight">\(G_0\)</span> is a constant that represents the concentration of blood sugar
 immediately after the injection. In theory we could estimate <span class="math notranslate nohighlight">\(G_0\)</span> based on measurements, but in practice it takes time for the injected glucose to spread through the blood volume. Since <span class="math notranslate nohighlight">\(G_0\)</span> is not measurable, it is treated as a <em>free parameter</em> of the model, which means that we are free to choose it to fit the data.</p>
 </div>
-<div class="section" id="data">
-<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-the-data">
+<h2>Getting the Data<a class="headerlink" href="#getting-the-data" title="Permalink to this headline">¶</a></h2>
 <p>To develop and test the model, we’ll use data from Pacini and Bergman, “MINMOD: a computer program to calculate insulin sensitivity and pancreatic responsivity from the frequently sampled intravenous glucose tolerance test”, <em>Computer Methods and Programs in Biomedicine</em>, 1986 (see <a class="reference external" href="https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT">https://www.researchgate.net/publication/13707725_Insulin_sensitivity_and_glucose_effectiveness_Minimal_model_analysis_of_regular_and_insulin-modified_FSIGT</a>).</p>
 <p>We can use Pandas to read the data file.</p>
 <div class="cell docutils container">
@@ -486,6 +488,63 @@ immediately after the injection. In theory we could estimate <span class="math n
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>glucose</th>
+      <th>insulin</th>
+    </tr>
+    <tr>
+      <th>time</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>92</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>350</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>287</td>
+      <td>130</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>251</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>240</td>
+      <td>51</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">data</span></code> has two columns: <code class="docutils literal notranslate"><span class="pre">glucose</span></code> is the concentration of blood glucose in mg/dL; <code class="docutils literal notranslate"><span class="pre">insulin</span></code> is the concentration of insulin in the blood in <span class="math notranslate nohighlight">\(\mu\)</span>U/mL (a medical “unit”, denoted U, is an amount defined by convention in context). The index is time in minutes.</p>
 <p>This dataset represents glucose and insulin concentrations over
@@ -493,7 +552,7 @@ immediately after the injection. In theory we could estimate <span class="math n
 </div>
 <div class="section" id="interpolation">
 <h2>Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this headline">¶</a></h2>
-<p>Before we are ready to implement the model, there’s one problem we have to solve. In the differential equations, <span class="math notranslate nohighlight">\(I\)</span> is a function that can be evaluated at any time, <span class="math notranslate nohighlight">\(t\)</span>. But in the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we only have measurements at discrete times. This is a job for interpolation!</p>
+<p>Before we are ready to implement the model, there’s one problem we have to solve. In the differential equations, <span class="math notranslate nohighlight">\(I\)</span> is a function that can be evaluated at any time, <span class="math notranslate nohighlight">\(t\)</span>. But in the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we only have measurements at discrete times. The solution is interpolation, which estimates the value of <span class="math notranslate nohighlight">\(I\)</span> for values of <span class="math notranslate nohighlight">\(t\)</span> between the measurements.</p>
 <p>The ModSim library provides an <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> function that takes a <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a parameter and returns a function. That’s right, I said it returns a <em>function</em>.
 We can call <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> like this:</p>
 <div class="cell docutils container">
@@ -507,6 +566,11 @@ We can call <code class="docutils literal notranslate"><span class="pre">interpo
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(31.66666667)
 </pre></div>
 </div>
 </div>
@@ -549,7 +613,11 @@ We can also pass an array as an argument to <code class="docutils literal notran
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_33_0.png" src="_images/chap17_33_0.png" />
 </div>
+</div>
+<p>Linear interpolation connects the dots with straight lines, and for this dataset that’s probably good enough. As an exercise, below, you can try out other kinds of interpolation.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -580,13 +648,33 @@ The default is linear interpolation, which connects the data points with straigh
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;insulin data&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here&#39;s the plotting code again.</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">insulin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;insulin data&#39;</span><span class="p">)</span>
 <span class="n">I_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">)</span>
 
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration ($\mu$U/mL)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_39_0.png" src="_images/chap17_39_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># Cubic interpolation is smoother, which might be appropriate for data</span>
+<span class="c1"># like this, which we expect to vary smoothly over time.</span>
+<span class="c1"># But notice that it can extend beyond the range of the data; in this</span>
+<span class="c1"># example, some of the interpolated values are negative, which is not</span>
+<span class="c1"># meaningful because a concentration cannot be negative.</span>
+<span class="c1"># So in this case, it&#39;s probably best to keep it simple and use linear</span>
+<span class="c1"># interpolation.</span>
 </pre></div>
 </div>
 </div>
@@ -617,6 +705,9 @@ The default is linear interpolation, which connects the data points with straigh
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Concentration (mg/dL)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap17_43_0.png" src="_images/chap17_43_0.png" />
 </div>
 </div>
 </div>
@@ -652,7 +743,7 @@ The default is linear interpolation, which connects the data points with straigh
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap16.html" title="previous page">Adding Milk</a>
-    <a class='right-next' id="next-link" href="chap18.html" title="next page">Insulin</a>
+    <a class='right-next' id="next-link" href="chap18.html" title="next page">Glucose and Insulin</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Drag" href="chap21.html" />
-    <link rel="prev" title="Case Studies Part 1" href="chap19.html" />
+    <link rel="prev" title="Case Studies Part 2" href="chap19.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -373,9 +373,9 @@
                 
   <div class="section" id="pennies">
 <h1>Pennies<a class="headerlink" href="#pennies" title="Permalink to this headline">¶</a></h1>
-<p>So far the differential equations we’ve worked with have been <strong>first
-order</strong>, which means they involve only first derivatives. In this
-chapter, we turn our attention to second order differential equations, which can involve both first and second derivatives.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap20.ipynb">Click here to run this chapter on Colab</a></p>
+<p>So far the differential equations we’ve worked with have been <em>first order</em>, which means they involve only first derivatives. In this
+chapter, we turn our attention to <em>second order</em> differential equations, which can involve both first and second derivatives.</p>
 <p>We’ll revisit the falling penny example from Chapter 1, and use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to find the position and velocity of the penny as it falls, with and without air resistance.</p>
 <div class="section" id="newton-s-second-law-of-motion">
 <h2>Newton’s Second Law of Motion<a class="headerlink" href="#newton-s-second-law-of-motion" title="Permalink to this headline">¶</a></h2>
@@ -586,7 +586,7 @@ Here are the first few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-108.99999999999983
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-108.99999999999869
 </pre></div>
 </div>
 </div>
@@ -642,7 +642,7 @@ simulation.</p>
 </div>
 </div>
 </div>
-<p>Then we can get the flight time and final velocity like this:</p>
+<p>Then we can get the flight time like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -651,11 +651,12 @@ simulation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.8
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.81788534972056
 </pre></div>
 </div>
 </div>
 </div>
+<p>And the final velocity like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -664,7 +665,7 @@ simulation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, -86.41527642726145)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5.684341886080802e-14, -86.4152764272615)
 </pre></div>
 </div>
 </div>
@@ -685,8 +686,10 @@ But first you might want to work on this exercise.</p>
 You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <div class="section" id="exercise-1">
 <h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
-<p>Here’s a question from the web site <a class="reference external" href="http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate">Ask an Astronomer</a>:</p>
-<p>“If the Earth suddenly stopped orbiting the Sun, I know eventually it would be pulled in by the Sun’s gravity and hit it. How long would it take the Earth to hit the Sun? I imagine it would go slowly at first and then pick up speed.”</p>
+<p>Here’s a question from the web site <em>Ask an Astronomer</em> (see http://curious.astro.cornell.edu/about-us/39-our-solar-system/the-earth/other-catastrophes/57-how-long-would-it-take-the-earth-to-fall-into-the-sun-intermediate):</p>
+<blockquote>
+<div><p>“If the Earth suddenly stopped orbiting the Sun, I know eventually it would be pulled in by the Sun’s gravity and hit it. How long would it take the Earth to hit the Sun? I imagine it would go slowly at first and then pick up speed.”</p>
+</div></blockquote>
 <p>Use <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> to answer this question.</p>
 <p>Here are some suggestions about how to proceed:</p>
 <ol class="simple">
@@ -695,7 +698,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <li><p>Express your answer in days, and plot the results as millions of kilometers versus days.</p></li>
 </ol>
 <p>If you read the reply by Dave Rothstein, you will see other ways to solve the problem, and a good discussion of the modeling decisions behind them.</p>
-<p>You might also be interested to know that <a class="reference external" href="https://www.theatlantic.com/science/archive/2018/08/parker-solar-probe-launch-nasa/567197/">it’s actually not that easy to get to the Sun</a>.</p>
+<p>You might also be interested to know that it’s not that easy to get to the Sun; see https://www.theatlantic.com/science/archive/2018/08/parker-solar-probe-launch-nasa/567197/.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -841,15 +844,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: &#39;A termination event occurred.&#39;
-     nfev: 188
-     njev: 0
-      nlu: 0
-      sol: None
-   status: 1
-  success: True
- t_events: [array([5599828.17941854])]
- y_events: [array([[ 7.02370000e+08, -6.13362867e+05]])]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A termination event occurred.&#39;
 </pre></div>
 </div>
 </div>
@@ -864,7 +859,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5400000.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5599828.179418537
 </pre></div>
 </div>
 </div>
@@ -909,7 +904,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap20_54_0.png" src="_images/chap20_54_0.png" />
+<img alt="_images/chap20_55_0.png" src="_images/chap20_55_0.png" />
 </div>
 </div>
 </div>
@@ -944,7 +939,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap19.html" title="previous page">Case Studies Part 1</a>
+    <a class='left-prev' id="prev-link" href="chap19.html" title="previous page">Case Studies Part 2</a>
     <a class='right-next' id="next-link" href="chap21.html" title="next page">Drag</a>
 
     </div>

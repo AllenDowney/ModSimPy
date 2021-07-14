@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 24 &#8212; Modeling and Simulation in Python</title>
+    <title>Rotation &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Chapter 25" href="chap25.html" />
-    <link rel="prev" title="Optimization" href="chap23.html" />
+    <link rel="prev" title="Optimal Baseball" href="chap23.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -334,18 +334,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parameters">
-   Parameters
+  <a class="reference internal nav-link" href="#setting-parameters">
+   Setting Parameters
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation">
-   Simulation
+  <a class="reference internal nav-link" href="#simulating-the-system">
+   Simulating the System
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plotting">
-   Plotting
+  <a class="reference internal nav-link" href="#plotting-the-results">
+   Plotting the Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -364,8 +364,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
   </ul>
@@ -381,8 +381,8 @@
         
               <div>
                 
-  <div class="section" id="chapter-24">
-<h1>Chapter 24<a class="headerlink" href="#chapter-24" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="rotation">
+<h1>Rotation<a class="headerlink" href="#rotation" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap24.ipynb">Click here to run this chapter on Colab</a></p>
 <p>In this chapter and the next we’ll model systems that involve rotating objects.
 In general, rotation is complicated.
@@ -391,21 +391,19 @@ In three dimensions, objects can rotate around three axes and many objects are e
 easier or harder to spin, which explains the surprising dynamics of
 gymnasts, divers, ice skaters, etc.</p>
 <p>And when you apply a twisting force to a rotating object, the effect is often contrary to intuition.
-For an example, see this video on gyroscopic precession <a class="reference external" href="http://modsimpy.com/precess">http://modsimpy.com/precess</a>.</p>
+For an example, see this video on gyroscopic precession: <a class="reference external" href="http://modsimpy.com/precess">http://modsimpy.com/precess</a>.</p>
 <p>We will not take on the physics of rotation in all its glory; rather, we will focus on simple scenarios where all rotation and all twisting forces are around a single axis.
 In that case, we can treat some vector quantities as if they were scalars, in the same way that we sometimes treat velocity as a scalar with an implicit direction.</p>
 <p>The fundamental ideas in these examples are angular velocity, angular acceleration, torque, and moment of inertia.
 If you are not already familiar with these concepts, I will define them as we go along, and I will point to additional reading.</p>
 <div class="section" id="the-physics-of-toilet-paper">
 <h2>The Physics of Toilet Paper<a class="headerlink" href="#the-physics-of-toilet-paper" title="Permalink to this headline">¶</a></h2>
-<p>As an example of a system with rotation, we’ll simulate the manufacture of a roll of toilet paper, as shown in this video <a class="reference external" href="https://youtu.be/Z74OfpUbeac?t=231">https://youtu.be/Z74OfpUbeac?t=231</a>.
+<p>As an example of a system with rotation, we’ll simulate the manufacture of a roll of toilet paper, as shown in this video: <a class="reference external" href="https://youtu.be/Z74OfpUbeac?t=231">https://youtu.be/Z74OfpUbeac?t=231</a>.
 Starting with a cardboard tube at the center, we will roll up 47 m of paper, a typical length for a roll of toilet paper in the U.S. (see <a class="reference external" href="http://modsimpy.com/paper">http://modsimpy.com/paper</a>).</p>
 <p>The following figure shows a diagram of the system: <span class="math notranslate nohighlight">\(r\)</span> represents
 the radius of the roll at a point in time. Initially, <span class="math notranslate nohighlight">\(r\)</span> is the radius of the cardboard core, <span class="math notranslate nohighlight">\(R_{min}\)</span>. When the roll is complete, <span class="math notranslate nohighlight">\(r\)</span> is <span class="math notranslate nohighlight">\(R_{max}\)</span>.</p>
 <p><img alt="Diagram of a roll of toilet paper, showing change in paper length as a result of a small rotation, ." src="https://github.com/AllenDowney/ModSim/raw/main/figs/paper_roll.png" /></p>
-<p>I’ll use <span class="math notranslate nohighlight">\(\theta\)</span> to represent the total rotation of the roll in
-radians. In the diagram, <span class="math notranslate nohighlight">\(d\theta\)</span> represents a small increase in
-<span class="math notranslate nohighlight">\(\theta\)</span>, which corresponds to a distance along the circumference of <span class="math notranslate nohighlight">\(r~d\theta\)</span>.</p>
+<p>I’ll use <span class="math notranslate nohighlight">\(\theta\)</span> to represent the total rotation of the roll in radians. In the diagram, <span class="math notranslate nohighlight">\(d\theta\)</span> represents a small increase in <span class="math notranslate nohighlight">\(\theta\)</span>, which corresponds to a distance along the circumference of <span class="math notranslate nohighlight">\(r~d\theta\)</span>.</p>
 <p>I’ll use <span class="math notranslate nohighlight">\(y\)</span> to represent the total length of paper that’s been rolled.
 Initially, <span class="math notranslate nohighlight">\(\theta=0\)</span> and <span class="math notranslate nohighlight">\(y=0\)</span>.
 For each small increase in <span class="math notranslate nohighlight">\(\theta\)</span>, there is a corresponding increase in <span class="math notranslate nohighlight">\(y\)</span>:</p>
@@ -427,8 +425,8 @@ Again, we can divide both sides by <span class="math notranslate nohighlight">\(
 \[\frac{d\theta}{dt} = \omega\]</div>
 <p>This rate of change is called an <em>angular velocity</em>. Now we have a system of differential equations we can use to simulate the system.</p>
 </div>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setting-parameters">
+<h2>Setting Parameters<a class="headerlink" href="#setting-parameters" title="Permalink to this headline">¶</a></h2>
 <p>Here are the parameters of the system:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -497,8 +495,8 @@ Again, we can divide both sides by <span class="math notranslate nohighlight">\(
 </div>
 <p>At the end of the chapter, we’ll derive <code class="docutils literal notranslate"><span class="pre">k</span></code> analytically, but this estimate is enough to get started.</p>
 </div>
-<div class="section" id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simulating-the-system">
+<h2>Simulating the System<a class="headerlink" href="#simulating-the-system" title="Permalink to this headline">¶</a></h2>
 <p>The state variables we’ll use are, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">r</span></code>.
 Here are the initial conditions:</p>
 <div class="cell docutils container">
@@ -674,7 +672,7 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.00000000000001
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.000000000000014
 </pre></div>
 </div>
 </div>
@@ -709,8 +707,8 @@ The derivatives of <code class="docutils literal notranslate"><span class="pre">
 </div>
 <p>As an exercise, we’ll see how fast the paper is moving.  But first, let’s take a closer look at the results.</p>
 </div>
-<div class="section" id="plotting">
-<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="plotting-the-results">
+<h2>Plotting the Results<a class="headerlink" href="#plotting-the-results" title="Permalink to this headline">¶</a></h2>
 <p>Here’s what <code class="docutils literal notranslate"><span class="pre">theta</span></code> looks like over time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -837,8 +835,10 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Since we keep <code class="docutils literal notranslate"><span class="pre">omega</span></code> constant, the linear velocity of the paper increases with radius.  We can use <code class="docutils literal notranslate"><span class="pre">gradient</span></code> to estimate the derivative of <code class="docutils literal notranslate"><span class="pre">results.y</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -856,7 +856,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_62_0.png" src="_images/chap24_62_0.png" />
+<img alt="_images/chap24_63_0.png" src="_images/chap24_63_0.png" />
 </div>
 </div>
 <p>With constant angular velocity, linear velocity is increasing, reaching its maximum at the end.</p>
@@ -868,7 +868,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16.447499999999934
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16.4475000000001
 </pre></div>
 </div>
 </div>
@@ -902,7 +902,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(822.3749999999967, 16.447499999999934, 0.022965259308510545)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(822.375000000005, 16.4475000000001, 0.022965259308510778)
 </pre></div>
 </div>
 </div>
@@ -933,7 +933,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.8575771393828964
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.8575771393828675
 </pre></div>
 </div>
 </div>
@@ -947,7 +947,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_70_0.png" src="_images/chap24_70_0.png" />
+<img alt="_images/chap24_71_0.png" src="_images/chap24_71_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -959,7 +959,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_71_0.png" src="_images/chap24_71_0.png" />
+<img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -971,7 +971,7 @@ Dividing Equations 1 and 2, yields</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap24_72_0.png" src="_images/chap24_72_0.png" />
+<img alt="_images/chap24_73_0.png" src="_images/chap24_73_0.png" />
 </div>
 </div>
 </div>
@@ -1006,7 +1006,7 @@ Dividing Equations 1 and 2, yields</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap23.html" title="previous page">Optimization</a>
+    <a class='left-prev' id="prev-link" href="chap23.html" title="previous page">Optimal Baseball</a>
     <a class='right-next' id="next-link" href="chap25.html" title="next page">Chapter 25</a>
 
     </div>

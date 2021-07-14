@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Under the Hood &#8212; Modeling and Simulation in Python</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Modeling and Simulation in Python
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Bike Share System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Iteration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Sweeping Parameters
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   World Population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Proportional Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Limits to Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Projecting Population Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Analysis of Population Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Case Studies Part 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Epidemiology
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Modeling Vaccination
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Sweeping Parameters
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Nondimensionalization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Cooling Coffee
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Adding Milk
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Pharmacokinetics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Glucose and Insulin
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Case Studies Part 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   Pennies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Drag
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Baseball
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Optimal Baseball
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Rotation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Chapter 25
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Chapter 26
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/chap27.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap27.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-run-solve-ivp-works">
+   How run_solve_ivp Works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-root-scalar-works">
+   How root_scalar Works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-maximize-scalar-works">
+   How maximize_scalar Works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#chapter-review">
+   Chapter Review
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="under-the-hood">
+<h1>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
+
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+    
+<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/&#39;</span> <span class="o">+</span>
+         <span class="s1">&#39;ModSimPy/master/modsim.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
+
+<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this chapter we “open the hood,” looking more closely at how some of
+the tools we have used—<code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>—work.</p>
+<p>Most of the time you don’t need to know, which is why I left this chapter for last.
+But you might be curious. And if nothing else, I have found that I can remember how to use these tools more easily because I know something about how they work.</p>
+<div class="section" id="how-run-solve-ivp-works">
+<h2>How run_solve_ivp Works<a class="headerlink" href="#how-run-solve-ivp-works" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is a function in the ModSimPy library that checks for common errors in the parameters and then calls <code class="docutils literal notranslate"><span class="pre">solve_ip</span></code>, which is the function in the SciPy library that does the actual work.</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> uses the Dormand-Prince method, which is a kind of Runge-Kutta method. You can read about it at
+<a class="reference external" href="https://en.wikipedia.org/wiki/Dormand-Prince_method">https://en.wikipedia.org/wiki/Dormand-Prince_method</a>, but I’ll give you a sense of
+it here.</p>
+<p>The key idea behind all Runge-Kutta methods is to evaluate the slope function several times at each time step and use a weighted average of the computed slopes to estimate the value at the next time step.
+Different methods evaluate the slope function in different places and compute the average with different weights.</p>
+<p>So let’s see if we can figure out how <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> works.
+As an example, we’ll solve the following differential equation:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dy}{dt}(t) = y \sin t\]</div>
+<p>Here’s the slope function we’ll use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dydt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll create a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with the initial state and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with the end time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">t_end</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">)</span>
+<span class="n">details</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: &#39;The solver successfully reached the end of the integration interval.&#39;
+     nfev: 50
+     njev: 0
+      nlu: 0
+      sol: &lt;scipy.integrate._ivp.common.OdeSolution object at 0x7fb975e24b50&gt;
+   status: 0
+  success: True
+ t_events: None
+ y_events: None
+</pre></div>
+</div>
+</div>
+</div>
+<p>One of the variables in <code class="docutils literal notranslate"><span class="pre">details</span></code> is <code class="docutils literal notranslate"><span class="pre">nfev</span></code>, which stands for “number of function evaluations”, that is, the number of times <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> called the slope function.
+This example took 50 evaluations.
+Keep that in mind.</p>
+<p>Here are the first few time steps in <code class="docutils literal notranslate"><span class="pre">results</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.00</th>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>0.03</th>
+      <td>1.000450</td>
+    </tr>
+    <tr>
+      <th>0.06</th>
+      <td>1.001801</td>
+    </tr>
+    <tr>
+      <th>0.09</th>
+      <td>1.004055</td>
+    </tr>
+    <tr>
+      <th>0.12</th>
+      <td>1.007217</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And here is the number of time steps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>101
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">results</span></code> contains 101 points that are equally spaced in time.
+Now you might wonder, if <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> ran the slope function 50 times, how did we get 101 time steps?</p>
+<p>To answer that question, we need to know more how the solver works.
+There are actually three steps:</p>
+<ol class="simple">
+<li><p>For each time step, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> evaluates the slope function seven times, with different values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+<li><p>Using the results, it computes the best estimate for the value <code class="docutils literal notranslate"><span class="pre">y</span></code> at the next time step.</p></li>
+<li><p>After computing all of the time steps, it uses interpolation to compute equally spaced points that connect the estimates from the previous step.</p></li>
+</ol>
+<p>So we can see what’s happening, I will run <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> with the keyword argument <code class="docutils literal notranslate"><span class="pre">dense_output=False</span></code>, which skips the interpolation step and returns time steps that are not equally spaced (that is, not “dense”).</p>
+<p>While we’re at it, I’ll modify the slope function so that every time it runs, it adds the values of <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">dydt</span></code> to a list called <code class="docutils literal notranslate"><span class="pre">evals</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">,</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">evals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dydt</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dydt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, before we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> again, I’ll initialize <code class="docutils literal notranslate"><span class="pre">evals</span></code> with an empty list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">results2</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span> <span class="n">dense_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.000000</th>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>0.000100</th>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>0.001100</th>
+      <td>1.000001</td>
+    </tr>
+    <tr>
+      <th>0.011100</th>
+      <td>1.000062</td>
+    </tr>
+    <tr>
+      <th>0.111100</th>
+      <td>1.006184</td>
+    </tr>
+    <tr>
+      <th>1.111100</th>
+      <td>1.744448</td>
+    </tr>
+    <tr>
+      <th>2.343272</th>
+      <td>5.464568</td>
+    </tr>
+    <tr>
+      <th>3.000000</th>
+      <td>7.318271</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It turns out there are only eight time steps, and the first five of them only cover 0.11 seconds.</p>
+<p>The time steps are not equal because the Dormand-Prince method is <em>adaptive</em>.
+At each time step, it actually computes two estimates of the next
+value. By comparing them, it can estimate the magnitude of the error,
+which it uses to adjust the time step. If the error is too big, it uses
+a smaller time step; if the error is small enough, it uses a bigger time
+step. By adjusting the time step in this way, it minimizes the number
+of times it calls the slope function to achieve a given level of
+accuracy.</p>
+<p>Because we saved the values of <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>, we can plot the locations where the slope function was evaluated.
+I’ll need to use a couple of features we have not seen before, if you don’t mind.</p>
+<p>First we’ll unpack the values from <code class="docutils literal notranslate"><span class="pre">evals</span></code> using <code class="docutils literal notranslate"><span class="pre">np.transpose</span></code>.
+Then we can use trigonometry to convert the slope, <code class="docutils literal notranslate"><span class="pre">dydt</span></code>, to components called <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">evals</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using these values, we can generate a <em>quiver plot</em> that shows an arrow for each time the slope function ran.
+The location of the each arrow represents the values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>; the orientation of the arrow shows the slope that was computed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> 
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;evaluation points&#39;</span><span class="p">)</span>
+<span class="n">results2</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;solution points&#39;</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap27_24_0.png" src="_images/chap27_24_0.png" />
+</div>
+</div>
+<p>In this figure, the arrows show where the slope function was executed;
+the dots show the best estimate of <code class="docutils literal notranslate"><span class="pre">y</span></code> for each time step; and the line shows the interpolation that connects the estimates.</p>
+<p>Notice that many of the arrows do not fall on the line; <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> evaluated the slope function at these locations in order to compute the solution, but as it turned out, they are not part of the solution.</p>
+<p>This is good to know when you are writing a slope function; you should not assume that the time and state you get as input variables are correct.</p>
+</div>
+<div class="section" id="how-root-scalar-works">
+<h2>How root_scalar Works<a class="headerlink" href="#how-root-scalar-works" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> in the ModSim library is a wrapper for a function in the SciPy library with the same name.
+Like <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, it checks for common errors and changes some of the parameters in a way that makes the SciPy function easier to use (I hope).</p>
+<p>According to the documentation, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> uses “a combination of bisection, secant, and inverse quadratic interpolation methods.” (See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html</a>)</p>
+<p>To understand what that means, suppose we’re trying to find a root of a
+function of one variable, <span class="math notranslate nohighlight">\(f(x)\)</span>, and assume we have evaluated the
+function at two places, <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>, and found that the results have
+opposite signs. Specifically, assume <span class="math notranslate nohighlight">\(f(x_1) &gt; 0\)</span> and <span class="math notranslate nohighlight">\(f(x_2) &lt; 0\)</span>, as
+shown in the following diagram:</p>
+<p><img alt="Initial state of a root-finding search" src="https://github.com/AllenDowney/ModSim/raw/main/figs/secant.png" /></p>
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is a continuous function, there must be at least one root in this
+interval. In this case we would say that <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> <em>bracket</em> a
+root.</p>
+<p>If this were all you knew about <span class="math notranslate nohighlight">\(f\)</span>, where would you go looking for a
+root? If you said “halfway between <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>,” congratulations!
+`You just invented a numerical method called <em>bisection</em>!</p>
+<p>If you said, “I would connect the dots with a straight line and compute
+the zero of the line,” congratulations! You just invented the <em>secant
+method</em>!</p>
+<p>And if you said, “I would evaluate <span class="math notranslate nohighlight">\(f\)</span> at a third point, find the
+parabola that passes through all three points, and compute the zeros of
+the parabola,” congratulations, you just invented <em>inverse quadratic
+interpolation</em>!</p>
+<p>That’s most of how <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> works. The details of how these methods are
+combined are interesting, but beyond the scope of this book. You can
+read more at <a class="reference external" href="https://en.wikipedia.org/wiki/Brents_method">https://en.wikipedia.org/wiki/Brents_method</a>.</p>
+</div>
+<div class="section" id="how-maximize-scalar-works">
+<h2>How maximize_scalar Works<a class="headerlink" href="#how-maximize-scalar-works" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> in the ModSim library is a wrapper for a function in the SciPy library called <code class="docutils literal notranslate"><span class="pre">minimize_scalar</span></code>.
+You can read about it at <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html</a>.</p>
+<p>By default, it uses Brent’s method, which is related to the method I described in the previous section for root-finding.
+Brent’s method for finding a maximum or minimum is based on a simpler algorithm:
+the <em>golden-section search</em>, which I will explain.</p>
+<p>Suppose we’re trying to find the minimum of a function of a single variable, <span class="math notranslate nohighlight">\(f(x)\)</span>.
+As a starting place, assume that we have evaluated the function at three
+places, <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, and <span class="math notranslate nohighlight">\(x_3\)</span>, and found that <span class="math notranslate nohighlight">\(x_2\)</span> yields the lowest
+value. The following diagram shows this initial state.</p>
+<p><img alt="Initial state of a golden-sectionsearch" src="https://github.com/AllenDowney/ModSim/raw/main/figs/golden1.png" /></p>
+<p>We will assume that <span class="math notranslate nohighlight">\(f(x)\)</span> is continuous and <em>unimodal</em> in this range,
+which means that there is exactly one minimum between <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>.</p>
+<p>The next step is to choose a fourth point, <span class="math notranslate nohighlight">\(x_4\)</span>, and evaluate <span class="math notranslate nohighlight">\(f(x_4)\)</span>.
+There are two possible outcomes, depending on whether <span class="math notranslate nohighlight">\(f(x_4)\)</span> is
+greater than <span class="math notranslate nohighlight">\(f(x_2)\)</span> or not.
+The following figure shows the two possible states.</p>
+<p><img alt="Possible states of a golden-section search after evaluating" src="https://github.com/AllenDowney/ModSim/raw/main/figs/golden2.png" /></p>
+<p>If <span class="math notranslate nohighlight">\(f(x_4)\)</span> is less than <span class="math notranslate nohighlight">\(f(x_2)\)</span> (shown on the left), the minimum must
+be between <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, so we would discard <span class="math notranslate nohighlight">\(x_1\)</span> and proceed with
+the new bracket <span class="math notranslate nohighlight">\((x_2, x_4, x_3)\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(f(x_4)\)</span> is greater than <span class="math notranslate nohighlight">\(f(x_2)\)</span> (shown on the right), the local
+minimum must be between <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_4\)</span>, so we would discard <span class="math notranslate nohighlight">\(x_3\)</span> and
+proceed with the new bracket <span class="math notranslate nohighlight">\((x_1, x_2, x_4)\)</span>.</p>
+<p>Either way, the range gets smaller and our estimate of the optimal value
+of <span class="math notranslate nohighlight">\(x\)</span> gets better.</p>
+<p>This method works for almost any value of <span class="math notranslate nohighlight">\(x_4\)</span>, but some choices are
+better than others. You might be tempted to bisect the interval between
+<span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, but that turns out not to be optimal. You can
+read about a better option at <a class="reference external" href="https://greenteapress.com/matlab/golden">https://greenteapress.com/matlab/golden</a>.</p>
+</div>
+<div class="section" id="chapter-review">
+<h2>Chapter Review<a class="headerlink" href="#chapter-review" title="Permalink to this headline">¶</a></h2>
+<p>The information in this chapter is not strictly necessary; you can use
+these methods without knowing much about how they work. But there are
+two reasons you might want to know.</p>
+<p>One reason is pure curiosity. If you use these methods, and especially
+if you come to rely on them, you might find it unsatisfying to treat
+them as “black boxes.” At the risk of mixing metaphors, I hope you
+enjoyed opening the hood.</p>
+<p>The other reason is that these methods are not infallible; sometimes
+things go wrong. If you know how they work, at least in a general sense,
+you might find it easier to debug them.</p>
+<p>With that, you have reached the end of the book, so congratulations! I
+hope you enjoyed it and learned a lot. I think the tools in this book
+are useful, and the ways of thinking are important, not just in
+engineering and science, but in practically every field of inquiry.</p>
+<p>Models are the tools we use to understand the world: if you build good
+models, you are more likely to get things right. Good luck!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

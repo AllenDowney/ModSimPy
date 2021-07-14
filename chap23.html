@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Optimization &#8212; Modeling and Simulation in Python</title>
+    <title>Optimal Baseball &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Chapter 24" href="chap24.html" />
+    <link rel="next" title="Rotation" href="chap24.html" />
     <link rel="prev" title="Baseball" href="chap22.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -371,12 +371,12 @@
         
               <div>
                 
-  <div class="section" id="optimization">
-<h1>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="optimal-baseball">
+<h1>Optimal Baseball<a class="headerlink" href="#optimal-baseball" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap23.ipynb">Click here to run this chapter on Colab</a></p>
 <p>In the previous chapter we developed a model of the flight of a
 baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.</p>
-<p>In this chapter we apply that model to an optimization problem.</p>
+<p>In this chapter we apply that model to an optimization problem. In general, <em>optimization</em> is a process for improving a design by searching for the parameters that maximize a benefit or minimize a cost. For example, in this chapter we’ll find the angle you should hit a baseball to maximize the distance it travels. And we’ll use a new function, called <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code> that searches for this angle efficiently.</p>
 <div class="section" id="the-manny-ramirez-problem">
 <h2>The Manny Ramirez Problem<a class="headerlink" href="#the-manny-ramirez-problem" title="Permalink to this headline">¶</a></h2>
 <p>Manny Ramirez is a former member of the Boston Red Sox (an American
@@ -610,15 +610,13 @@ range, and <code class="docutils literal notranslate"><span class="pre">fun</spa
 </div>
 </div>
 </div>
-<p>For these parameters, the optimal angle is about 41°, which yields a
-range of 100 m.</p>
+<p>For these parameters, the optimal angle is about 41°, which yields a range of 100 m.
+Now we have what we need to finish the problem; the last step is to find the minimum velocity needed to get the ball over the wall. In the exercises at the end of the chapter, I provide some suggestions. Then it’s up to you!</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>This chapter introduces the Manny Ramirez problem and starts to solve it.
-As an exercise, you can finish it off.</p>
-<p>If you enjoy this exercise, you might be interested in this paper: “How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories”, by Sawicki, Hubbard, and Stronge, at
-<a class="reference external" href="http://modsimpy.com/runs">http://modsimpy.com/runs</a>.</p>
+<p>This chapter introduces an new tool, <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, that provides an efficient way to search for the maximum of a function. We used it to find the launch angle that maximizes the distance a baseball flies through the air, given its initial velocity.</p>
+<p>If you enjoy this example, you might be interested in this paper: “How to hit home runs: Optimum baseball bat swing parameters for maximum range trajectories”, by Sawicki, Hubbard, and Stronge, at <a class="reference external" href="http://modsimpy.com/runs">http://modsimpy.com/runs</a>.</p>
 <p>In the next chapter, we start a new topic: rotation!</p>
 </div>
 <div class="section" id="exercises">
@@ -892,7 +890,7 @@ You can read more about it at <a class="reference external" href="http://modsimp
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap22.html" title="previous page">Baseball</a>
-    <a class='right-next' id="next-link" href="chap24.html" title="next page">Chapter 24</a>
+    <a class='right-next' id="next-link" href="chap24.html" title="next page">Rotation</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

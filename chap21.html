@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -339,8 +339,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation">
-   Simulation
+  <a class="reference internal nav-link" href="#simulating-the-penny-drop">
+   Simulating the Penny Drop
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -409,7 +409,7 @@ depends on the shape of the object (including length but not frontal area), its 
 coefficients are between 0.1 and 1.0, with blunt objects at the high end of the range and streamlined objects at the low end (see
 <a class="reference external" href="http://modsimpy.com/dragco">http://modsimpy.com/dragco</a>).</p>
 <p>For simple geometric objects we can sometimes guess the drag coefficient with reasonable accuracy; for more complex objects we usually have to take measurements and estimate <span class="math notranslate nohighlight">\(C_d\)</span> from data.</p>
-<p>Of course, the drag equation is itself a model, based on the assumption that <span class="math notranslate nohighlight">\(C_d\)</span> does not depend on the other terms in the equation: density, velocity, and area. For objects moving in air at moderate speeds (below 45 mph or 20 m/s), this model might be good enough, but we should remember to revisit this assumption.</p>
+<p>Of course, the drag equation is itself a model, based on the assumption that <span class="math notranslate nohighlight">\(C_d\)</span> does not depend on the other terms in the equation: density, velocity, and area. For objects moving in air at moderate speeds (below 45 mph or 20 m/s), this model might be good enough, but we will revisit this assumption in the next chapter.</p>
 <p>For the falling penny, we can use measurements to estimate <span class="math notranslate nohighlight">\(C_d\)</span>. In
 particular, we can measure <em>terminal velocity</em>, <span class="math notranslate nohighlight">\(v_{term}\)</span>, which is
 the speed where drag force equals force due to gravity:</p>
@@ -420,7 +420,7 @@ the speed where drag force equals force due to gravity:</p>
 <div class="math notranslate nohighlight">
 \[C_d = \frac{2~m g}{\rho~v_{term}^2~A}\]</div>
 <p>According to <em>Mythbusters</em>, the terminal velocity of a penny is between 35 and 65 mph (see <a class="reference external" href="http://modsimpy.com/mythbust">http://modsimpy.com/mythbust</a>). Using the low end of their range, 40 mph or about 18 m/s, the estimated value of <span class="math notranslate nohighlight">\(C_d\)</span> is 0.44, which is close to the drag coefficient of a smooth sphere.</p>
-<p>Now we are ready to add air resistance to the model.</p>
+<p>Now we are ready to add air resistance to the model. But first I want to introduce one more computational tool, the <code class="docutils literal notranslate"><span class="pre">Params</span></code> object.</p>
 </div>
 <div class="section" id="the-params-object">
 <h2>The Params Object<a class="headerlink" href="#the-params-object" title="Permalink to this headline">¶</a></h2>
@@ -444,8 +444,8 @@ the speed where drag force equals force due to gravity:</p>
 </div>
 <p>The mass and diameter are from <a class="reference external" href="http://modsimpy.com/penny">http://modsimpy.com/penny</a>. The density
 of air depends on temperature, barometric pressure (which depends on
-altitude), humidity, and composition (<a class="reference external" href="http://modsimpy.com/density">http://modsimpy.com/density</a>). I
-chose a value that might be typical in Boston, Massachusetts at 20 °C.</p>
+altitude), humidity, and composition (see <a class="reference external" href="http://modsimpy.com/density">http://modsimpy.com/density</a>).
+I chose a value that might be typical in New York City at 20 °C.</p>
 <p>Here’s a version of <code class="docutils literal notranslate"><span class="pre">make_system</span></code> that takes the <code class="docutils literal notranslate"><span class="pre">Params</span></code> object and computes the inital state, <code class="docutils literal notranslate"><span class="pre">init</span></code>, the area, and the coefficient of drag.
 Then it returns a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with the quantities we’ll need for the simulation.</p>
 <div class="cell docutils container">
@@ -522,8 +522,8 @@ If we pass <code class="docutils literal notranslate"><span class="pre">params2<
 And that makes sense, since lower drag implies faster terminal velocity.</p>
 <p>Using <code class="docutils literal notranslate"><span class="pre">Params</span></code> objects to make <code class="docutils literal notranslate"><span class="pre">System</span></code> objects helps make sure that relationships like this are consistent.  And since we are always making new objects, rather than modifying existing objects, we are less likely to make a mistake.</p>
 </div>
-<div class="section" id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simulating-the-penny-drop">
+<h2>Simulating the Penny Drop<a class="headerlink" href="#simulating-the-penny-drop" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s get to the simulation.  Here’s a version of the slope function that includes drag:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -646,7 +646,7 @@ event function from the previous chapter.</p>
     </tr>
     <tr>
       <th>22.439465</th>
-      <td>2.131628e-14</td>
+      <td>7.105427e-15</td>
       <td>-18.011383</td>
     </tr>
   </tbody>
@@ -664,7 +664,7 @@ event function from the previous chapter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22.439465058044306
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22.43946505804431
 </pre></div>
 </div>
 </div>
@@ -709,9 +709,9 @@ event function from the previous chapter.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>This chapter presents a model of drag force, which we use to estimate the coefficient of drag for a penny, and then simulate, one more time, dropping a penny from the Empire State building.</p>
-<p>In the next chapter we’ll move from one dimension to two, simulating the flight of a baseball.</p>
-<p>But first you might want to work on these exercises.</p>
+<p>This chapter presents a model of drag force, which we use to estimate the coefficient of drag for a penny, and then simulate, one more time, dropping a penny from the Empire State Building.</p>
+<p>In the next chapter we’ll move from one dimension to two, simulating the flight of a baseball.
+But first you might want to work on these exercises.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -758,7 +758,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.635183673114156
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.635183673114202
 </pre></div>
 </div>
 </div>
@@ -791,7 +791,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <div class="section" id="exercise-2">
 <h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
 <p>Suppose we drop a quarter from the Empire State Building and find that its flight time is 19.1 seconds.  Use this measurement to estimate terminal velocity and coefficient of drag.</p>
-<p>You can get the relevant dimensions of a quarter from https://en.wikipedia.org/wiki/Quarter_(United_States_coin).</p>
+<p>You can get the relevant dimensions of a quarter from <a class="reference external" href="https://en.wikipedia.org/wiki/Quarter_(United_States_coin)">https://en.wikipedia.org/wiki/Quarter_(United_States_coin)</a>.</p>
 <ol class="simple">
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">Params</span></code> object with new values of <code class="docutils literal notranslate"><span class="pre">mass</span></code> and <code class="docutils literal notranslate"><span class="pre">diameter</span></code>. We don’t know <code class="docutils literal notranslate"><span class="pre">v_term</span></code>, so we’ll start with the initial guess 18 m/s.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">make_system</span></code> to create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p></li>
@@ -853,7 +853,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.635183673114057
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.63518367311417
 </pre></div>
 </div>
 </div>
@@ -901,7 +901,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5351836731140551
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5351836731141688
 </pre></div>
 </div>
 </div>
@@ -919,7 +919,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.1591256962719925
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.1591256962719996
 </pre></div>
 </div>
 </div>
@@ -940,10 +940,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
 18.0
 22.0
-19.66221452468036
-19.475274945870474
-19.45967387499707
-19.46064685869182
+19.662214524680426
+19.475274945870567
+19.459673874997012
+19.460646858691764
 </pre></div>
 </div>
 </div>
@@ -958,7 +958,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>19.45967387499707
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>19.459673874997012
 </pre></div>
 </div>
 </div>
@@ -976,7 +976,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.54345826868176
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5434582686817631
 </pre></div>
 </div>
 </div>

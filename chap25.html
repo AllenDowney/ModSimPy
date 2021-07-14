@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Chapter 26" href="chap26.html" />
-    <link rel="prev" title="Chapter 24" href="chap24.html" />
+    <link rel="prev" title="Rotation" href="chap24.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -369,8 +369,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
     </a>
    </li>
   </ul>
@@ -708,7 +708,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8708596517490182
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8708596517490179
 </pre></div>
 </div>
 </div>
@@ -791,7 +791,7 @@ turntable stops; that is, when angular velocity is 0.</p>
     <tr>
       <th>3.827636</th>
       <td>1.666667</td>
-      <td>-2.220446e-16</td>
+      <td>-1.110223e-16</td>
     </tr>
   </tbody>
 </table>
@@ -916,7 +916,7 @@ due to friction.</p>
     <tr>
       <th>3.827636</th>
       <td>1.666667</td>
-      <td>-2.220446e-16</td>
+      <td>-1.110223e-16</td>
     </tr>
   </tbody>
 </table>
@@ -946,10 +946,10 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.6666666666666663
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16666666666666896
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1666666666666663
 </pre></div>
 </div>
 </div>
@@ -979,13 +979,13 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
-0.3 1.666666666666669
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.6666666666666663
+0.3 1.6666666666666663
 0.4 1.2499999999999996
-0.3400000000000003 1.4705882352941169
-0.3340000000000002 1.4970059880239517
-0.3333320000000001 1.5000060000239976
-0.3333486666010001 1.4999310034693254
+0.3399999999999999 1.4705882352941178
+0.3339999999999999 1.4970059880239512
+0.3333319999999997 1.5000060000239999
+0.3333486666009997 1.4999310034693287
 </pre></div>
 </div>
 </div>
@@ -999,7 +999,7 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333320000000001
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333319999999997
 </pre></div>
 </div>
 </div>
@@ -1065,8 +1065,10 @@ As an exercise, you can finish off the example, estimating the force needed to r
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
 <p>Continuing the example from this chapter, estimate the force that delivers the teapot to the desired position.
 Use this <code class="docutils literal notranslate"><span class="pre">System</span></code> object, with the friction we computed in the previous section.</p>
 <div class="cell docutils container">
@@ -1121,10 +1123,10 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239999
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.14158665356579547
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.14158665356579325
 </pre></div>
 </div>
 </div>
@@ -1139,10 +1141,10 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0 2.250009000035999
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0 2.250009000036007
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.608416346446206
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.608416346446214
 </pre></div>
 </div>
 </div>
@@ -1156,11 +1158,11 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
-2.0 1.5000060000239976
-3.0 2.250009000035999
-2.1887814496255746 1.641592653589789
-2.188890888699056 1.6416747332232227
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239999
+2.0 1.5000060000239999
+3.0 2.250009000036007
+2.18878144962557 1.6415926535897978
+2.188672010552089 1.6415105739563627
 </pre></div>
 </div>
 </div>
@@ -1177,7 +1179,7 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.1415926535897887
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.1415926535897976
 </pre></div>
 </div>
 </div>
@@ -1228,7 +1230,7 @@ Run the simulation with the force you computed and confirm that the table stops 
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap24.html" title="previous page">Chapter 24</a>
+    <a class='left-prev' id="prev-link" href="chap24.html" title="previous page">Rotation</a>
     <a class='right-next' id="next-link" href="chap26.html" title="next page">Chapter 26</a>
 
     </div>

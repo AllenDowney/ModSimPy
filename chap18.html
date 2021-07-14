@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Insulin &#8212; Modeling and Simulation in Python</title>
+    <title>Glucose and Insulin &#8212; Modeling and Simulation in Python</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Case Studies Part 1" href="chap19.html" />
-    <link rel="prev" title="Glucose" href="chap17.html" />
+    <link rel="next" title="Case Studies Part 2" href="chap19.html" />
+    <link rel="prev" title="Pharmacokinetics" href="chap17.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -339,8 +339,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-simulation">
-   The Simulation
+  <a class="reference internal nav-link" href="#running-the-simulation">
+   Running the Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -376,8 +376,10 @@
         
               <div>
                 
-  <div class="section" id="insulin">
-<h1>Insulin<a class="headerlink" href="#insulin" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="glucose-and-insulin">
+<h1>Glucose and Insulin<a class="headerlink" href="#glucose-and-insulin" title="Permalink to this headline">¶</a></h1>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>The previous chapter presents the minimal model of the glucose-insulin system and introduces a tool we will need to implement it, interpolation.</p>
 <p>In this chapter, we’ll implement the model two ways:</p>
 <ul class="simple">
@@ -502,8 +504,8 @@ Name: state, dtype: float64
 </div>
 <p>If it runs without errors and there is nothing obviously wrong with the results, we are ready to run the simulation.</p>
 </div>
-<div class="section" id="the-simulation">
-<h2>The Simulation<a class="headerlink" href="#the-simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-the-simulation">
+<h2>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>We’ll use the following version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -526,8 +528,8 @@ Name: state, dtype: float64
 </div>
 </div>
 <p>This version is similar to the one we used for the coffee cooling problem.
-The biggest difference is that it makes and returns a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> rather than a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
-<p>When we make the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>, we use <code class="docutils literal notranslate"><span class="pre">index</span></code> to indicate that the index is the array of time stamps, <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, and <code class="docutils literal notranslate"><span class="pre">columns</span></code> to indicate that the column names are the state variables we get from <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
+The biggest difference is that it makes and returns a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which contains one column for each state variable, rather than a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>, which can only store one state variable.</p>
+<p>When we make the <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, we use <code class="docutils literal notranslate"><span class="pre">index</span></code> to indicate that the index is the array of time stamps, <code class="docutils literal notranslate"><span class="pre">t_array</span></code>, and <code class="docutils literal notranslate"><span class="pre">columns</span></code> to indicate that the column names are the state variables we get from <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
 <p>We can run it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -609,11 +611,11 @@ Here are the first few time steps.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_29_0.png" src="_images/chap18_29_0.png" />
+<img alt="_images/chap18_30_0.png" src="_images/chap18_30_0.png" />
 </div>
 </div>
 <p>With the parameters I chose, the model fits the data well except during the first few minutes after the injection.
-But we don’t expect the model to do well in this regime.</p>
+But we don’t expect the model to do well in this part of the time series.</p>
 <p>The problem is that the model is <em>non-spatial</em>; that is, it does not
 take into account different concentrations in different parts of the
 body. Instead, it assumes that the concentrations of glucose and insulin in blood, and insulin in tissue fluid, are the same throughout the body. This way of representing the body is known among experts as the “bag of blood” model.</p>
@@ -631,7 +633,7 @@ accurate. For this reason, we should not take the estimated value of <code class
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_32_0.png" src="_images/chap18_32_0.png" />
+<img alt="_images/chap18_33_0.png" src="_images/chap18_33_0.png" />
 </div>
 </div>
 <p>Remember that <code class="docutils literal notranslate"><span class="pre">X</span></code> represents the concentration of insulin in the “remote compartment”, which is believed to be tissue fluid, so we can’t compare it to the measured concentration of insulin in the blood.</p>
@@ -649,9 +651,9 @@ In that case, we can usually make it more accurate by decreasing the size of <co
 But then it is not very efficient.</p>
 <p>There are other methods that are more accurate and more efficient than Euler’s method.
 SciPy provides several of them wrapped in a function called <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>.
-The “ivp” in <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> stands for “initial value problem”, which is the term for problems like the ones we’ve been solving, where we are given the initial conditions and try to predict what will happen.</p>
+The <code class="docutils literal notranslate"><span class="pre">ivp</span></code> stands for <em>initial value problem</em>, which is the term for problems like the ones we’ve been solving, where we are given the initial conditions and try to predict what will happen.</p>
 <p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> that makes <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> a little easier to use.</p>
-<p>To use it, we have to provide a “slope function”, which is similar to an update function; in fact, it takes the same parameters: a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>To use it, we have to provide a <em>slope function</em>, which is similar to an update function; in fact, it takes the same parameters: a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <p>Here’s a slope function that evaluates the differential equations of the minimal model.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -782,7 +784,7 @@ Here are the first few time steps:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_44_0.png" src="_images/chap18_44_0.png" />
+<img alt="_images/chap18_45_0.png" src="_images/chap18_45_0.png" />
 </div>
 </div>
 <p>The differences are barely visible.
@@ -816,10 +818,8 @@ Name: G, dtype: float64
 </div>
 </div>
 </div>
-<p>The mean relative difference is about 0.65%;
-the maximum is a little more than 1%.
-So in this example, the results from Euler’s method are probably good enough for practical purposes.</p>
-<p>Here are the results for <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>The mean relative difference is about 0.65% and the maximum is a little more than 1%.
+Here are the results for <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
@@ -831,11 +831,14 @@ So in this example, the results from Euler’s method are probably good enough f
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_50_0.png" src="_images/chap18_50_0.png" />
+<img alt="_images/chap18_51_0.png" src="_images/chap18_51_0.png" />
 </div>
 </div>
-<p>These differences are little bigger, especially at the beginning.
-As an exercise, you can experiment with <code class="docutils literal notranslate"><span class="pre">dt</span></code> and see what effect it has on these results.</p>
+<p>These differences are little bigger, especially at the beginning.</p>
+<p>If we use <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> with smaller time steps, the results are more accurate, but they take longer to compute.
+For some problems, we can find a value of <code class="docutils literal notranslate"><span class="pre">dt</span></code> that produces accurate results in a reasonable time. However, if <code class="docutils literal notranslate"><span class="pre">dt</span></code> is <em>too</em> small, the results can be inaccurate again. So it can be tricky to get it right.</p>
+<p>The advantage of <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is that it chooses the step size automatically in order to balance accuracy and efficiency.
+You can use keyword arguments to adjust this balance, but most of the time the results are accurate enough, and the computation is fast enough, without any intervention.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -876,7 +879,7 @@ If we make the step size smaller, we expect the solution to be more accurate.  R
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap18_57_0.png" src="_images/chap18_57_0.png" />
+<img alt="_images/chap18_58_0.png" src="_images/chap18_58_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -935,8 +938,8 @@ Name: G, dtype: float64
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="chap17.html" title="previous page">Glucose</a>
-    <a class='right-next' id="next-link" href="chap19.html" title="next page">Case Studies Part 1</a>
+    <a class='left-prev' id="prev-link" href="chap17.html" title="previous page">Pharmacokinetics</a>
+    <a class='right-next' id="next-link" href="chap19.html" title="next page">Case Studies Part 2</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

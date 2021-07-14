@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -329,8 +329,8 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recurrence-relations">
-   Recurrence Relations
+  <a class="reference internal nav-link" href="#difference-equations">
+   Difference Equations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -401,8 +401,8 @@
 <p>In this chapter we’ll express the models from previous chapters as
 difference equations and differential equations, solve the equations,
 and derive the functional forms of the solutions. And I’ll present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
-<div class="section" id="recurrence-relations">
-<h2>Recurrence Relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="difference-equations">
+<h2>Difference Equations<a class="headerlink" href="#difference-equations" title="Permalink to this headline">¶</a></h2>
 <p>The population models in the previous chapter and this one are simple
 enough that we didn’t really need to run simulations. We could have
 solved them mathematically. For example, we wrote the constant growth
@@ -416,21 +416,17 @@ model like this:</p>
 <p>where <span class="math notranslate nohighlight">\(x_n\)</span> is the population during year <span class="math notranslate nohighlight">\(n\)</span>,
 <span class="math notranslate nohighlight">\(x_{n+1}\)</span> is the population during year <span class="math notranslate nohighlight">\(n+1\)</span>,
 and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
-This way of representing the model, where future population is a function of current population, is a <em>recurrence relation</em>; see
-<a class="reference external" href="http://modsimpy.com/recur">http://modsimpy.com/recur</a>.</p>
-<p>Sometimes it is possible to solve a recurrence relation by writing an
-equation that computes <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
-is, without computing the intervening values from <span class="math notranslate nohighlight">\(x_1\)</span> through
-<span class="math notranslate nohighlight">\(x_{n-1}\)</span>.</p>
+This way of representing the model, where future population is a function of current population, is a <em>difference equation</em>; see
+<a class="reference external" href="https://en.wikipedia.org/wiki/Linear_difference_equation">https://en.wikipedia.org/wiki/Linear_difference_equation</a>.</p>
+<p>Sometimes it is possible to compute <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
+is, without computing the intervening values from <span class="math notranslate nohighlight">\(x_1\)</span> through <span class="math notranslate nohighlight">\(x_{n-1}\)</span>.</p>
 <p>In the case of constant growth we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 + c\)</span>, and
 <span class="math notranslate nohighlight">\(x_2 = x_1 + c\)</span>. Combining these, we get <span class="math notranslate nohighlight">\(x_2 = x_0 + 2c\)</span>, then
 <span class="math notranslate nohighlight">\(x_3 = x_0 + 3c\)</span>, and we can see that in general</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_0 + nc\]</div>
-<p>So if we want to know <span class="math notranslate nohighlight">\(x_{100}\)</span> and we don’t care
-about the other values, we can compute it with one multiplication and
-one addition.</p>
-<p>We can also write the proportional model as a recurrence relation:</p>
+<p>So if we want to know <span class="math notranslate nohighlight">\(x_{100}\)</span> and we don’t care about the other values, we can compute it with one multiplication and one addition.</p>
+<p>We can also write the proportional model as a difference equation:</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + \alpha x_n\]</div>
 <p>Or more conventionally as:</p>

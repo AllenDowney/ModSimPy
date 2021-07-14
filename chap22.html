@@ -56,7 +56,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Optimization" href="chap23.html" />
+    <link rel="next" title="Optimal Baseball" href="chap23.html" />
     <link rel="prev" title="Drag" href="chap21.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,17 +180,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap17.html">
-   Glucose
+   Pharmacokinetics
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap18.html">
-   Insulin
+   Glucose and Insulin
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap19.html">
-   Case Studies Part 1
+   Case Studies Part 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -210,12 +210,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap23.html">
-   Optimization
+   Optimal Baseball
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap24.html">
-   Chapter 24
+   Rotation
   </a>
  </li>
  <li class="toctree-l1">
@@ -349,18 +349,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation">
-   Simulation
+  <a class="reference internal nav-link" href="#adding-an-event-function">
+   Adding an Event Function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#trajectories">
-   Trajectories
+  <a class="reference internal nav-link" href="#visualizing-trajectories">
+   Visualizing Trajectories
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#animation">
-   Animation
+  <a class="reference internal nav-link" href="#animating-the-baseball">
+   Animating the Baseball
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -405,12 +405,11 @@ of air resistance. In the next chapter we use this model to solve an
 optimization problem.</p>
 <div class="section" id="id1">
 <h2>Baseball<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>To model the flight of a baseball, we have to make some
-decisions. To get started, we’ll ignore any spin that might be on the ball, and the resulting Magnus force (see <a class="reference external" href="http://modsimpy.com/magnus">http://modsimpy.com/magnus</a>). Under this assumption, the ball travels in a vertical plane, so we’ll run simulations in two dimensions, rather than three.</p>
+<p>To model the flight of a baseball, we have to make some decisions. To get started, we’ll ignore any spin that might be on the ball, and the resulting Magnus force (see <a class="reference external" href="http://modsimpy.com/magnus">http://modsimpy.com/magnus</a>). Under this assumption, the ball travels in a vertical plane, so we’ll run simulations in two dimensions, rather than three.</p>
 <p>To model air resistance, we’ll need the mass, frontal area, and drag
 coefficient of a baseball. Mass and diameter are easy to find (see
 <a class="reference external" href="http://modsimpy.com/baseball">http://modsimpy.com/baseball</a>). Drag coefficient is only a little
-harder; according to <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>, the drag coefficient of a baseball is approximately 0.33 (with no units).</p>
+harder; according to <em>The Physics of Baseball</em> (see https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC), the drag coefficient of a baseball is approximately 0.33 (with no units).</p>
 <p>However, this value <em>does</em> depend on velocity. At low velocities it
 might be as high as 0.5, and at high velocities as low as 0.28.
 Furthermore, the transition between these regimes typically happens
@@ -472,12 +471,24 @@ In a <code class="docutils literal notranslate"><span class="pre">Vector</span><
 operator, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 4)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
 </pre></div>
 </div>
 </div>
@@ -485,18 +496,30 @@ operator, like this:</p>
 <p>You can also access them by index using brackets, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 4)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects support most mathematical operations, including
-addition and subtraction:</p>
+addition:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -539,6 +562,7 @@ addition and subtraction:</p>
 </table>
 </div></div></div>
 </div>
+<p>And subtraction:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
@@ -797,10 +821,10 @@ at an angle of 45° and initial speed 40 m/s. We’ll use the center of home pl
 </div>
 </div>
 </div>
-<p>I got the mass and diameter of the baseball from <a class="reference external" href="https://en.wikipedia.org/wiki/Baseball_(ball)">Wikipedia</a> and the coefficient of drag from <em><a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">The Physics of Baseball</a></em>:</p>
-<p>The density of air, <code class="docutils literal notranslate"><span class="pre">rho</span></code>, is based on a temperature of 20 °C at sea level (see <a class="reference external" href="http://modsimpy.com/tempress">http://modsimpy.com/tempress</a>).
-As usual, <code class="docutils literal notranslate"><span class="pre">g</span></code> is acceleration due to gravity.</p>
-<p><code class="docutils literal notranslate"><span class="pre">t_end</span></code> is 10 seconds, which is long enough for the ball to land on the ground.</p>
+<p>I got the mass and diameter of the baseball from Wikipedia (see <a class="reference external" href="https://en.wikipedia.org/wiki/Baseball_(ball)">https://en.wikipedia.org/wiki/Baseball_(ball)</a>) and the coefficient of drag from <em>The Physics of Baseball</em> (see <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC</a>):
+The density of air, <code class="docutils literal notranslate"><span class="pre">rho</span></code>, is based on a temperature of 20 °C at sea level (see <a class="reference external" href="http://modsimpy.com/tempress">http://modsimpy.com/tempress</a>).
+As usual, <code class="docutils literal notranslate"><span class="pre">g</span></code> is acceleration due to gravity.
+<code class="docutils literal notranslate"><span class="pre">t_end</span></code> is 10 seconds, which is long enough for the ball to land on the ground.</p>
 <p>The following function uses these quantities to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -965,7 +989,7 @@ and the drag equation to compute the magnitude of the drag force, <code class="d
 </div></div></div>
 </div>
 <p>The result is a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> that represents the drag force on the baseball, in Newtons, under the initial conditions.</p>
-<p>Now we’re ready for a slope function:</p>
+<p>Now we can add drag to the slope function.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
@@ -1012,8 +1036,8 @@ Then it packs <code class="docutils literal notranslate"><span class="pre">vx</s
 concise, readable, and less error-prone. In particular, when we add
 <code class="docutils literal notranslate"><span class="pre">a_grav</span></code> and <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>, the directions are likely to be correct, because they are encoded in the <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects.</p>
 </div>
-<div class="section" id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="adding-an-event-function">
+<h2>Adding an Event Function<a class="headerlink" href="#adding-an-event-function" title="Permalink to this headline">¶</a></h2>
 <p>We’re almost ready to run the simulation.  The last thing we need is an event function that stops when the ball hits the ground.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
@@ -1038,7 +1062,7 @@ concise, readable, and less error-prone. In particular, when we add
 </div>
 </div>
 </div>
-<p>Now we’re ready to run the simulation:</p>
+<p>Here’s how we run the simulation with this event function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">run_solve_ivp</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">slope_func</span><span class="p">,</span>
@@ -1053,7 +1077,7 @@ concise, readable, and less error-prone. In particular, when we add
 </div>
 </div>
 </div>
-<p>The message in <code class="docutils literal notranslate"><span class="pre">details</span></code> indicates that a “termination event” occurred; that is, the simulated ball reached the ground.</p>
+<p>The message in indicates that a “termination event” occurred; that is, the simulated ball reached the ground.</p>
 <p><code class="docutils literal notranslate"><span class="pre">results</span></code> is a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code> with one row for each time step and one column for each of the state variables.
 Here are the last few rows.</p>
 <div class="cell docutils container">
@@ -1091,35 +1115,35 @@ Here are the last few rows.</p>
     <tr>
       <th>4.804692</th>
       <td>96.438515</td>
-      <td>4.284486</td>
+      <td>4.284486e+00</td>
       <td>14.590855</td>
       <td>-20.726780</td>
     </tr>
     <tr>
       <th>4.854740</th>
       <td>97.166460</td>
-      <td>3.238415</td>
+      <td>3.238415e+00</td>
       <td>14.484772</td>
       <td>-21.065476</td>
     </tr>
     <tr>
       <th>4.904789</th>
       <td>97.889087</td>
-      <td>2.175515</td>
+      <td>2.175515e+00</td>
       <td>14.378566</td>
       <td>-21.400392</td>
     </tr>
     <tr>
       <th>4.954838</th>
       <td>98.606374</td>
-      <td>1.095978</td>
+      <td>1.095978e+00</td>
       <td>14.272264</td>
       <td>-21.731499</td>
     </tr>
     <tr>
       <th>5.004887</th>
       <td>99.318296</td>
-      <td>0.000000</td>
+      <td>-7.105427e-15</td>
       <td>14.165894</td>
       <td>-22.058763</td>
     </tr>
@@ -1136,7 +1160,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.004887034868346
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.004887034868351
 </pre></div>
 </div>
 </div>
@@ -1174,19 +1198,19 @@ Here are the last few rows.</p>
   <tbody>
     <tr>
       <th>x</th>
-      <td>99.318296</td>
+      <td>9.931830e+01</td>
     </tr>
     <tr>
       <th>y</th>
-      <td>0.000000</td>
+      <td>-7.105427e-15</td>
     </tr>
     <tr>
       <th>vx</th>
-      <td>14.165894</td>
+      <td>1.416589e+01</td>
     </tr>
     <tr>
       <th>vy</th>
-      <td>-22.058763</td>
+      <td>-2.205876e+01</td>
     </tr>
   </tbody>
 </table>
@@ -1201,7 +1225,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99.31829628352207
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99.31829628352206
 </pre></div>
 </div>
 </div>
@@ -1257,15 +1281,15 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.215674453237572
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.215674453237636
 </pre></div>
 </div>
 </div>
 </div>
 <p>The final speed is about 26 m/s, which is substantially slower than the initial speed, 40 m/s.</p>
 </div>
-<div class="section" id="trajectories">
-<h2>Trajectories<a class="headerlink" href="#trajectories" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="visualizing-trajectories">
+<h2>Visualizing Trajectories<a class="headerlink" href="#visualizing-trajectories" title="Permalink to this headline">¶</a></h2>
 <p>To visualize the results, we can plot the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of position like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1278,7 +1302,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_69_0.png" src="_images/chap22_69_0.png" />
+<img alt="_images/chap22_72_0.png" src="_images/chap22_72_0.png" />
 </div>
 </div>
 <p>As expected, the <span class="math notranslate nohighlight">\(x\)</span> component increases as the ball moves away from home plate. The <span class="math notranslate nohighlight">\(y\)</span> position climbs initially and then descends, falling to 0 m near 5.0 s.</p>
@@ -1299,11 +1323,11 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_71_0.png" src="_images/chap22_71_0.png" />
+<img alt="_images/chap22_74_0.png" src="_images/chap22_74_0.png" />
 </div>
 </div>
-<p>This way of visualizing the results is called a <em>trajectory plot</em> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).</p>
-<p>A trajectory plot can be easier to interpret than a time series plot,
+<p>This way of visualizing the results is called a <em>trajectory plot</em> (see <a class="reference external" href="http://modsimpy.com/trajec">http://modsimpy.com/trajec</a>).
+A trajectory plot can be easier to interpret than a time series plot,
 because it shows what the motion of the projectile would look like (at
 least from one point of view). Both plots can be useful, but don’t get
 them mixed up! If you are looking at a time series plot and interpreting it as a trajectory, you will be very confused.</p>
@@ -1316,14 +1340,14 @@ With a launch angle of 45°, the landing angle is closer to vertical, about 57°
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-57.29187097821225
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-57.2918709782124
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="animation">
-<h2>Animation<a class="headerlink" href="#animation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="animating-the-baseball">
+<h2>Animating the Baseball<a class="headerlink" href="#animating-the-baseball" title="Permalink to this headline">¶</a></h2>
 <p>One of the best ways to visualize the results of a physical model is animation.  If there are problems with the model, animation can make them apparent.</p>
 <p>The ModSimPy library provides <code class="docutils literal notranslate"><span class="pre">animate</span></code>, which takes as parameters a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a draw function.</p>
 <p>The draw function should take as parameters a time stamps and a <code class="docutils literal notranslate"><span class="pre">State</span></code>.  It should draw a single frame of the animation.</p>
@@ -1346,8 +1370,12 @@ With a launch angle of 45°, the landing angle is closer to vertical, about 57°
 </div>
 <p>Inside the draw function, should use <code class="docutils literal notranslate"><span class="pre">decorate</span></code> to set the limits of the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes.
 Otherwise <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> auto-scales the axes, which is usually not what you want.</p>
+<p>Now we can run the animation like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">draw_func</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>To run the animation, uncomment the following line of code and run the cell.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-print docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># animate(results, draw_func)</span>
 </pre></div>
@@ -1397,7 +1425,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_82_0.png" src="_images/chap22_82_0.png" />
+<img alt="_images/chap22_86_0.png" src="_images/chap22_86_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -1410,7 +1438,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>164.2592550241319
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>164.25925502413202
 </pre></div>
 </div>
 </div>
@@ -1424,7 +1452,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64.94095874060983
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64.94095874060996
 </pre></div>
 </div>
 </div>
@@ -1455,7 +1483,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>105.78838005859785
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>105.78838005859807
 </pre></div>
 </div>
 </div>
@@ -1469,7 +1497,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.4700837750757785
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.470083775076006
 </pre></div>
 </div>
 </div>
@@ -1700,7 +1728,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289026
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289012
 </pre></div>
 </div>
 </div>
@@ -1738,7 +1766,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="chap21.html" title="previous page">Drag</a>
-    <a class='right-next' id="next-link" href="chap23.html" title="next page">Optimization</a>
+    <a class='right-next' id="next-link" href="chap23.html" title="next page">Optimal Baseball</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
