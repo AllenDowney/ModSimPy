@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Under the Hood &#8212; Modeling and Simulation in Python</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,37 +31,42 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Case Studies Part 3" href="chap26.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
 
-
-
+    <!-- Google Analytics -->
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -73,25 +75,26 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="index.html">
    Modeling and Simulation in Python
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -194,7 +197,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Pennies
+   The Empire State Building Strikes Back
   </a>
  </li>
  <li class="toctree-l1">
@@ -234,6 +237,7 @@
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -249,21 +253,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -277,11 +281,11 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -296,14 +300,14 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -322,16 +326,16 @@
     </div>
 </div>
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-run-solve-ivp-works">
    How run_solve_ivp Works
@@ -347,60 +351,66 @@
    How maximize_scalar Works
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#chapter-review">
-   Chapter Review
-  </a>
- </li>
 </ul>
 
-        </nav>
-        
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Under the Hood</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-run-solve-ivp-works">
+   How run_solve_ivp Works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-root-scalar-works">
+   How root_scalar Works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-maximize-scalar-works">
+   How maximize_scalar Works
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="under-the-hood">
+  <div class="tex2jax_ignore mathjax_ignore section" id="under-the-hood">
 <h1>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download modsim.py if necessary</span>
-
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
-
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-    
-<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/&#39;</span> <span class="o">+</span>
-         <span class="s1">&#39;ModSimPy/master/modsim.py&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import functions from modsim</span>
-
-<span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>In this chapter we “open the hood,” looking more closely at how some of
-the tools we have used—<code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>—work.</p>
-<p>Most of the time you don’t need to know, which is why I left this chapter for last.
-But you might be curious. And if nothing else, I have found that I can remember how to use these tools more easily because I know something about how they work.</p>
+<p>In this appendix we “open the hood,” looking more closely at how some of
+the tools we have used work: specifically, <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>.</p>
+<p>Most of the time you don’t need to know, you can use these methods without knowing much about how they work.
+But there are a few reasons you might <em>want</em> to know.</p>
+<p>One reason is pure curiosity.
+If you use these methods, and especially if you come to rely on them, you might find it unsatisfying to treat them as black boxes.
+In that case, you might enjoy opening the hood.</p>
+<p>Another is that these methods are not infallible; sometimes things go wrong.
+If you know how they work, at least in a general sense, you might find it easier to debug them.</p>
+<p>And if nothing else, I have found that I can remember how to use these tools more easily because I know something about how they work.</p>
 <div class="section" id="how-run-solve-ivp-works">
 <h2>How run_solve_ivp Works<a class="headerlink" href="#how-run-solve-ivp-works" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is a function in the ModSimPy library that checks for common errors in the parameters and then calls <code class="docutils literal notranslate"><span class="pre">solve_ip</span></code>, which is the function in the SciPy library that does the actual work.</p>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> uses the Dormand-Prince method, which is a kind of Runge-Kutta method. You can read about it at
+<p>By default, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> uses the <em>Dormand-Prince method</em>, which is a kind of <em>Runge-Kutta method</em>. You can read about it at
 <a class="reference external" href="https://en.wikipedia.org/wiki/Dormand-Prince_method">https://en.wikipedia.org/wiki/Dormand-Prince_method</a>, but I’ll give you a sense of
 it here.</p>
 <p>The key idea behind all Runge-Kutta methods is to evaluate the slope function several times at each time step and use a weighted average of the computed slopes to estimate the value at the next time step.
@@ -444,7 +454,7 @@ As an example, we’ll solve the following differential equation:</p>
      nfev: 50
      njev: 0
       nlu: 0
-      sol: &lt;scipy.integrate._ivp.common.OdeSolution object at 0x7fb975e24b50&gt;
+      sol: &lt;scipy.integrate._ivp.common.OdeSolution object at 0x7f0e337d6b50&gt;
    status: 0
   success: True
  t_events: None
@@ -526,14 +536,13 @@ Keep that in mind.</p>
 <p><code class="docutils literal notranslate"><span class="pre">results</span></code> contains 101 points that are equally spaced in time.
 Now you might wonder, if <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> ran the slope function 50 times, how did we get 101 time steps?</p>
 <p>To answer that question, we need to know more how the solver works.
-There are actually three steps:</p>
+There are actually three stages:</p>
 <ol class="simple">
 <li><p>For each time step, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> evaluates the slope function seven times, with different values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
 <li><p>Using the results, it computes the best estimate for the value <code class="docutils literal notranslate"><span class="pre">y</span></code> at the next time step.</p></li>
 <li><p>After computing all of the time steps, it uses interpolation to compute equally spaced points that connect the estimates from the previous step.</p></li>
 </ol>
-<p>So we can see what’s happening, I will run <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> with the keyword argument <code class="docutils literal notranslate"><span class="pre">dense_output=False</span></code>, which skips the interpolation step and returns time steps that are not equally spaced (that is, not “dense”).</p>
-<p>While we’re at it, I’ll modify the slope function so that every time it runs, it adds the values of <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">dydt</span></code> to a list called <code class="docutils literal notranslate"><span class="pre">evals</span></code>.</p>
+<p>To show the first two steps, I’ll modify the slope function so that every time it runs, it adds the values of <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">dydt</span></code> to a list called <code class="docutils literal notranslate"><span class="pre">evals</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slope_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
@@ -545,7 +554,8 @@ There are actually three steps:</p>
 </div>
 </div>
 </div>
-<p>Now, before we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> again, I’ll initialize <code class="docutils literal notranslate"><span class="pre">evals</span></code> with an empty list.</p>
+<p>Before we call <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code>, I’ll initialize <code class="docutils literal notranslate"><span class="pre">evals</span></code> with an empty list.
+And I’ll use the keyword argument <code class="docutils literal notranslate"><span class="pre">dense_output=False</span></code>, which skips the interpolation step and returns time steps that are not equally spaced (that is, not “dense”).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evals</span> <span class="o">=</span> <span class="p">[]</span>
@@ -620,15 +630,18 @@ There are actually three steps:</p>
 </table>
 </div></div></div>
 </div>
-<p>It turns out there are only eight time steps, and the first five of them only cover 0.11 seconds.</p>
+<p>Because we skipped the interpolation step, we can see that <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> computed only seven time steps, not including the initial condition.
+Also, we see that the time steps are different sizes.
+The first is only 100 microseconds, the second is about 10 times bigger, and the third is 10 times bigger than that.</p>
 <p>The time steps are not equal because the Dormand-Prince method is <em>adaptive</em>.
-At each time step, it actually computes two estimates of the next
+At each time step, it computes two estimates of the next
 value. By comparing them, it can estimate the magnitude of the error,
 which it uses to adjust the time step. If the error is too big, it uses
 a smaller time step; if the error is small enough, it uses a bigger time
 step. By adjusting the time step in this way, it minimizes the number
 of times it calls the slope function to achieve a given level of
-accuracy.</p>
+accuracy.
+In this example, it takes five steps to simulate the first second, but then only two more steps to compute the remaining two seconds.</p>
 <p>Because we saved the values of <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>, we can plot the locations where the slope function was evaluated.
 I’ll need to use a couple of features we have not seen before, if you don’t mind.</p>
 <p>First we’ll unpack the values from <code class="docutils literal notranslate"><span class="pre">evals</span></code> using <code class="docutils literal notranslate"><span class="pre">np.transpose</span></code>.
@@ -654,16 +667,17 @@ The location of the each arrow represents the values of <code class="docutils li
 <span class="n">results2</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;solution points&#39;</span><span class="p">)</span>
 <span class="n">results</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (t)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Quantity (y)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap27_24_0.png" src="_images/chap27_24_0.png" />
+<img alt="_images/chap27_25_0.png" src="_images/chap27_25_0.png" />
 </div>
 </div>
-<p>In this figure, the arrows show where the slope function was executed;
-the dots show the best estimate of <code class="docutils literal notranslate"><span class="pre">y</span></code> for each time step; and the line shows the interpolation that connects the estimates.</p>
+<p>In this figure, there are 50 arrows, one for each time the slope function was evaluated, and 8 dots, one for each time step (although several of them overlap).
+The line shows the 101 points in the interpolation that connects the estimates.</p>
 <p>Notice that many of the arrows do not fall on the line; <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> evaluated the slope function at these locations in order to compute the solution, but as it turned out, they are not part of the solution.</p>
 <p>This is good to know when you are writing a slope function; you should not assume that the time and state you get as input variables are correct.</p>
 </div>
@@ -714,7 +728,7 @@ which means that there is exactly one minimum between <span class="math notransl
 There are two possible outcomes, depending on whether <span class="math notranslate nohighlight">\(f(x_4)\)</span> is
 greater than <span class="math notranslate nohighlight">\(f(x_2)\)</span> or not.
 The following figure shows the two possible states.</p>
-<p><img alt="Possible states of a golden-section search after evaluating" src="https://github.com/AllenDowney/ModSim/raw/main/figs/golden2.png" /></p>
+<p><img alt="" src="https://github.com/AllenDowney/ModSim/raw/main/figs/golden2.png" /></p>
 <p>If <span class="math notranslate nohighlight">\(f(x_4)\)</span> is less than <span class="math notranslate nohighlight">\(f(x_2)\)</span> (shown on the left), the minimum must
 be between <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, so we would discard <span class="math notranslate nohighlight">\(x_1\)</span> and proceed with
 the new bracket <span class="math notranslate nohighlight">\((x_2, x_4, x_3)\)</span>.</p>
@@ -727,25 +741,6 @@ of <span class="math notranslate nohighlight">\(x\)</span> gets better.</p>
 better than others. You might be tempted to bisect the interval between
 <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, but that turns out not to be optimal. You can
 read about a better option at <a class="reference external" href="https://greenteapress.com/matlab/golden">https://greenteapress.com/matlab/golden</a>.</p>
-</div>
-<div class="section" id="chapter-review">
-<h2>Chapter Review<a class="headerlink" href="#chapter-review" title="Permalink to this headline">¶</a></h2>
-<p>The information in this chapter is not strictly necessary; you can use
-these methods without knowing much about how they work. But there are
-two reasons you might want to know.</p>
-<p>One reason is pure curiosity. If you use these methods, and especially
-if you come to rely on them, you might find it unsatisfying to treat
-them as “black boxes.” At the risk of mixing metaphors, I hope you
-enjoyed opening the hood.</p>
-<p>The other reason is that these methods are not infallible; sometimes
-things go wrong. If you know how they work, at least in a general sense,
-you might find it easier to debug them.</p>
-<p>With that, you have reached the end of the book, so congratulations! I
-hope you enjoyed it and learned a lot. I think the tools in this book
-are useful, and the ways of thinking are important, not just in
-engineering and science, but in practically every field of inquiry.</p>
-<p>Models are the tools we use to understand the world: if you build good
-models, you are more likely to get things right. Good luck!</p>
 </div>
 </div>
 
@@ -771,35 +766,35 @@ models, you are more likely to get things right. Good luck!</p>
 
               </div>
               
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="chap26.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Case Studies Part 3</p>
+        </div>
+    </a>
+</div>
+            
         </div>
     </div>
+    <footer class="footer">
+  <p>
     
+      By Allen B. Downey<br/>
     
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="chap26.html" title="previous page">Case Studies Part 3</a>
-
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
   </body>
 </html>

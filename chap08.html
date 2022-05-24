@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projecting Population Growth &#8212; Modeling and Simulation in Python</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,38 +31,41 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Analysis of Population Growth" href="chap09.html" />
     <link rel="prev" title="Limits to Growth" href="chap07.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
 
-
-
+    <!-- Google Analytics -->
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -74,25 +74,26 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="index.html">
    Modeling and Simulation in Python
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -195,7 +196,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Pennies
+   The Empire State Building Strikes Back
   </a>
  </li>
  <li class="toctree-l1">
@@ -235,6 +236,7 @@
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -250,21 +252,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -278,11 +280,11 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -297,14 +299,14 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -323,16 +325,16 @@
     </div>
 </div>
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generating-projections">
    Generating Projections
@@ -362,16 +364,61 @@
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Projecting Population Growth</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-projections">
+   Generating Projections
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparing-projections">
+   Comparing Projections
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="projecting-population-growth">
+  <div class="tex2jax_ignore mathjax_ignore section" id="projecting-population-growth">
 <h1>Projecting Population Growth<a class="headerlink" href="#projecting-population-growth" title="Permalink to this headline">¶</a></h1>
 <p>In the previous chapter we developed a quadratic model of world
 population growth from 1950 to 2016. It is a simple model, but it fits
@@ -486,12 +533,11 @@ demographers.</p>
 </div>
 </div>
 <p>According to the model, population growth will slow gradually after 2020, approaching 12.6 billion by 2100.</p>
-<p>I am using the word “projection” deliberately, rather than
-“prediction”, with the following distinction: “prediction” implies
-something like “this is what we should reasonably expect to happen, at
+<p>I am using the word <em>projection</em> deliberately, rather than
+<em>prediction</em>, with the following distinction: “prediction” implies
+something like “this is what we expect to happen, at
 least approximately”; “projection” implies something like “if this
-model is a good description of what is happening in this
-system, and if nothing in the future causes the system parameters to change, this is what would happen.”</p>
+model is a good description of the system, and if nothing in the future causes the system parameters to change, this is what would happen.”</p>
 <p>Using “projection” leaves open the possibility that there are important things in the real world that are not captured in the model. It also suggests that, even if the model is good, the parameters we estimate based on the past might be different in the future.</p>
 <p>The quadratic model we’ve been working with is based on the assumption
 that population growth is limited by the availability of resources; in
@@ -522,11 +568,26 @@ theirs.</p>
 </div>
 <div class="section" id="comparing-projections">
 <h2>Comparing Projections<a class="headerlink" href="#comparing-projections" title="Permalink to this headline">¶</a></h2>
-<p>From the same Wikipedia page where we got the past population estimates, we’ll read <code class="docutils literal notranslate"><span class="pre">table3</span></code>, which contains predictions for population growth over the next 50-100 years, generated by the U.S. Census, U.N. DESA, and the Population Reference Bureau.</p>
+<p>From the same Wikipedia page where we got the past population estimates, we’ll read <code class="docutils literal notranslate"><span class="pre">table3</span></code>, which contains projections for population growth over the next 50-100 years, generated by the U.S. Census, U.N. DESA, and the Population Reference Bureau.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">table3</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The column names are long strings; for convenience, I’ll replace them with abbreviations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the first few rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -549,9 +610,9 @@ theirs.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>United States Census Bureau (2015)[28]</th>
-      <th>Population Reference Bureau (1973-2015)[15]</th>
-      <th>United Nations Department of Economic and Social Affairs (2015)[16]</th>
+      <th>census</th>
+      <th>prb</th>
+      <th>un</th>
     </tr>
     <tr>
       <th>Year</th>
@@ -595,16 +656,8 @@ theirs.</p>
 </table>
 </div></div></div>
 </div>
-<p>Some values are <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, which indicates missing data, because some organizations did not publish projections for some years.</p>
-<p>The column names are long strings; for convenience, I’ll replace them with abbreviations.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;census&#39;</span><span class="p">,</span> <span class="s1">&#39;prb&#39;</span><span class="p">,</span> <span class="s1">&#39;un&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The following function plots projections from the U.N. DESA and U.S. Census.  It uses <code class="docutils literal notranslate"><span class="pre">dropna</span></code> to remove the <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values from each series before plotting it.</p>
+<p>Some values are <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, which indicates missing data, because some organizations did not publish projections for some years.
+The following function plots projections from the U.N. DESA and U.S. Census.  It uses <code class="docutils literal notranslate"><span class="pre">dropna</span></code> to remove the <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values from each series before plotting it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_projections</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
@@ -634,7 +687,7 @@ theirs.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_32_0.png" src="_images/chap08_32_0.png" />
+<img alt="_images/chap08_34_0.png" src="_images/chap08_34_0.png" />
 </div>
 </div>
 <p>The U.N. DESA expects the world population to reach 11 billion around 2100, and then level off.
@@ -647,7 +700,7 @@ Projections by U.S. Census are a little lower, and they only go until 2050.</p>
 <p>Nevertheless, their projections are qualitatively similar to ours, and
 theirs differ from each other almost as much as they differ from ours.
 So the results from the model, simple as it is, are not entirely unreasonable.</p>
-<p>If you are interested in some of the factors that go into the professional predictions, you might like this video by Hans Rosling about the demographic changes we expect this century: <a class="reference external" href="https://www.youtube.com/watch?v=ezVk1ahRF78">https://www.youtube.com/watch?v=ezVk1ahRF78</a>.</p>
+<p>If you are interested in some of the factors that go into the professional projections, you might like this video by Hans Rosling about the demographic changes we expect this century: <a class="reference external" href="https://www.youtube.com/watch?v=ezVk1ahRF78">https://www.youtube.com/watch?v=ezVk1ahRF78</a>.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
@@ -799,10 +852,10 @@ And here’s what it looks like.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_43_0.png" src="_images/chap08_43_0.png" />
+<img alt="_images/chap08_45_0.png" src="_images/chap08_45_0.png" />
 </div>
 </div>
-<p>Other than a bump around 1990, net growth rate has been declining roughly linearly since 1970.</p>
+<p>Other than a bump around 1990, the net growth rate has been declining roughly linearly since 1970.</p>
 <p>We can model the decline by fitting a line to this data and extrapolating into the future.
 Here’s a function that takes a time stamp and computes a line that roughly fits the growth rates since 1970.</p>
 <div class="cell docutils container">
@@ -838,11 +891,11 @@ Here’s a function that takes a time stamp and computes a line that roughly fit
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_49_0.png" src="_images/chap08_49_0.png" />
+<img alt="_images/chap08_51_0.png" src="_images/chap08_51_0.png" />
 </div>
 </div>
 <p>If you don’t like the <code class="docutils literal notranslate"><span class="pre">slope</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept</span></code> I chose, feel free to adjust them.</p>
-<p>Now, as an exercise, you can use this function project world population until 2100.</p>
+<p>Now, as an exercise, you can use this function to project world population until 2100.</p>
 <ol class="simple">
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that includes <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> as a system parameter.</p></li>
 <li><p>Define a growth function that uses <code class="docutils literal notranslate"><span class="pre">alpha_func</span></code> to compute the net growth rate at the given time <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
@@ -916,7 +969,7 @@ Here’s a function that takes a time stamp and computes a line that roughly fit
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap08_56_0.png" src="_images/chap08_56_0.png" />
+<img alt="_images/chap08_58_0.png" src="_images/chap08_58_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
@@ -974,36 +1027,42 @@ Here’s a function that takes a time stamp and computes a line that roughly fit
 
               </div>
               
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="chap07.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Limits to Growth</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="chap09.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Analysis of Population Growth</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
         </div>
     </div>
+    <footer class="footer">
+  <p>
     
+      By Allen B. Downey<br/>
     
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="chap07.html" title="previous page">Limits to Growth</a>
-    <a class='right-next' id="next-link" href="chap09.html" title="next page">Analysis of Population Growth</a>
-
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
   </body>
 </html>

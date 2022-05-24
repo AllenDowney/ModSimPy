@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analysis of Population Growth &#8212; Modeling and Simulation in Python</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,38 +31,43 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Case Studies Part 1" href="chap10.html" />
     <link rel="prev" title="Projecting Population Growth" href="chap08.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
 
-
-
+    <!-- Google Analytics -->
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -74,25 +76,26 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="index.html">
    Modeling and Simulation in Python
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -195,7 +198,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Pennies
+   The Empire State Building Strikes Back
   </a>
  </li>
  <li class="toctree-l1">
@@ -235,6 +238,7 @@
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -250,21 +254,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -278,11 +282,11 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -297,14 +301,14 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -323,16 +327,16 @@
     </div>
 </div>
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#difference-equations">
    Difference Equations
@@ -392,16 +396,91 @@
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Analysis of Population Growth</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#difference-equations">
+   Difference Equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differential-equations">
+   Differential Equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-and-simulation">
+   Analysis and Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-with-wolframalpha">
+   Analysis with WolframAlpha
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-with-sympy">
+   Analysis with SymPy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differential-equations-in-sympy">
+   Differential Equations In SymPy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-quadratic-growth-model">
+   Solving the Quadratic Growth Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="analysis-of-population-growth">
+  <div class="tex2jax_ignore mathjax_ignore section" id="analysis-of-population-growth">
 <h1>Analysis of Population Growth<a class="headerlink" href="#analysis-of-population-growth" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we’ll express the models from previous chapters as
 difference equations and differential equations, solve the equations,
@@ -423,7 +502,7 @@ model like this:</p>
 and <span class="math notranslate nohighlight">\(c\)</span> is constant annual growth.
 This way of representing the model, where future population is a function of current population, is a <em>difference equation</em>; see
 <a class="reference external" href="https://en.wikipedia.org/wiki/Linear_difference_equation">https://en.wikipedia.org/wiki/Linear_difference_equation</a>.</p>
-<p>Sometimes it is possible to compute <span class="math notranslate nohighlight">\(x_n\)</span>, for a given value of <span class="math notranslate nohighlight">\(n\)</span>, directly; that
+<p>For a given value of <span class="math notranslate nohighlight">\(n\)</span>, sometimes it is possible to compute <span class="math notranslate nohighlight">\(x_n\)</span> directly; that
 is, without computing the intervening values from <span class="math notranslate nohighlight">\(x_1\)</span> through <span class="math notranslate nohighlight">\(x_{n-1}\)</span>.</p>
 <p>In the case of constant growth we can see that <span class="math notranslate nohighlight">\(x_1 = x_0 + c\)</span>, and
 <span class="math notranslate nohighlight">\(x_2 = x_1 + c\)</span>. Combining these, we get <span class="math notranslate nohighlight">\(x_2 = x_0 + 2c\)</span>, then
@@ -468,7 +547,7 @@ write the rate of change per unit of time like this:</p>
 <p>This is a <em>discrete</em> model, which
 means time is only defined at integer values of <span class="math notranslate nohighlight">\(n\)</span> and not in between.
 But in reality, people are born and die all the time, not once a year,
-so it might be more realistic use a <em>continuous</em> model, which means
+so it might be more realistic to use a <em>continuous</em> model, which means
 time is defined at all values of <span class="math notranslate nohighlight">\(t\)</span>, not just integers.</p>
 <p>In a continuous model, we write the rate of change in the
 form of a derivative:</p>
@@ -536,8 +615,8 @@ for example, we might prove that certain results will always or
 never occur. With simulations, we can show examples and sometimes
 find counterexamples, but it is hard to write proofs.</p></li>
 <li><p>Analysis can provide insight into models and the systems they
-describe; for example, sometimes we can identify regimes of
-qualitatively different behavior and key parameters that control
+describe; for example, sometimes we can identify
+qualitatively different ways the system can behave and key parameters that control
 those behaviors.</p></li>
 </ul>
 <p>When people see what analysis can do, they sometimes get drunk with
@@ -579,7 +658,7 @@ designed specifically for symbolic computation.</p>
 <p>Python has a library called SymPy that provides symbolic computation
 tools similar to Mathematica. They are not as easy to use as
 WolframAlpha, but they have some other advantages.</p>
-<p>To use it, we’ll define <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects that represent variable names and functions.
+<p>To use it, we’ll define <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects that represent names of variables and functions.
 The <code class="docutils literal notranslate"><span class="pre">symbols</span></code> function takes a string and returns <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> objects.
 So if we run this assignment:</p>
 <div class="cell docutils container">
@@ -591,7 +670,8 @@ So if we run this assignment:</p>
 </div>
 </div>
 </div>
-<p>Now when we use <code class="docutils literal notranslate"><span class="pre">t</span></code>, Python understands that it is a symbol, not a numerical value. For example, if we use <code class="docutils literal notranslate"><span class="pre">t</span></code> as part of an expression, like this,</p>
+<p>Now when we use <code class="docutils literal notranslate"><span class="pre">t</span></code>, Python treats it like a variable name rather than a specific number.
+For example, if we use <code class="docutils literal notranslate"><span class="pre">t</span></code> as part of an expression, like this,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
@@ -702,29 +782,42 @@ we can use <code class="docutils literal notranslate"><span class="pre">dsolve</
 \[\displaystyle f{\left(t \right)} = C_{1} e^{\alpha t}\]</div>
 </div>
 </div>
-<p>The result is the <em>general
-solution</em>, which still contains an unspecified constant, <span class="math notranslate nohighlight">\(C_1\)</span>. To get the <em>particular solution</em> where <span class="math notranslate nohighlight">\(f(0) = p_0\)</span>, we substitute <code class="docutils literal notranslate"><span class="pre">p_0</span></code> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>. First, we have to create two more symbols:</p>
+<p>The result is the <em>general solution</em>, which still contains an unspecified constant, <span class="math notranslate nohighlight">\(C_1\)</span>.
+To get the <em>particular solution</em> where <span class="math notranslate nohighlight">\(f(0) = p_0\)</span>, we substitute <span class="math notranslate nohighlight">\(p_0\)</span> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>.
+First, we have to tell Python that <code class="docutils literal notranslate"><span class="pre">C1</span></code> is a symbol.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C1</span><span class="p">,</span> <span class="n">p_0</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;C1 p_0&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C1</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we can perform the substitution:</p>
+<p>Now we can substitute the value of <span class="math notranslate nohighlight">\(p_0\)</span> for <code class="docutils literal notranslate"><span class="pre">C1</span></code>.
+For example, if <span class="math notranslate nohighlight">\(p_0\)</span> is 1000:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span> <span class="o">=</span> <span class="n">solution_eq</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">p_0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span> <span class="o">=</span> <span class="n">solution_eq</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="n">particular</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_latex math notranslate nohighlight">
-\[\displaystyle f{\left(t \right)} = p_{0} e^{\alpha t}\]</div>
+\[\displaystyle f{\left(t \right)} = 1000 e^{\alpha t}\]</div>
 </div>
 </div>
-<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, <span class="math notranslate nohighlight">\(e^{\alpha t}\)</span> is <span class="math notranslate nohighlight">\(1\)</span>, so <span class="math notranslate nohighlight">\(f(t)\)</span> is <span class="math notranslate nohighlight">\(p_0\)</span>, which is what we wanted.</p>
+<p>When <span class="math notranslate nohighlight">\(t=0\)</span>, the value of <span class="math notranslate nohighlight">\(f(0)\)</span> is <span class="math notranslate nohighlight">\(p_0\)</span>, which confirms that this is the solution we want.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">particular</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle f{\left(0 \right)} = 1000\]</div>
+</div>
+</div>
 </div>
 <div class="section" id="solving-the-quadratic-growth-model">
 <h2>Solving the Quadratic Growth Model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
@@ -789,11 +882,12 @@ solution</em>, which still contains an unspecified constant, <span class="math n
 </div>
 </div>
 <p>Now we want to find the value of <code class="docutils literal notranslate"><span class="pre">C1</span></code> that makes <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
-<p>So we’ll create the equation <code class="docutils literal notranslate"><span class="pre">at_0</span> <span class="pre">=</span> <span class="pre">p_0</span></code> and solve for <code class="docutils literal notranslate"><span class="pre">C1</span></code>.  Because this is just an algebraic identity, not a differential equation, we use <code class="docutils literal notranslate"><span class="pre">solve</span></code>, not <code class="docutils literal notranslate"><span class="pre">dsolve</span></code>.</p>
+<p>So we’ll create the equation <code class="docutils literal notranslate"><span class="pre">at_0</span> <span class="pre">=</span> <span class="pre">p_0</span></code> and solve for <code class="docutils literal notranslate"><span class="pre">C1</span></code>.  Because this is just an algebraic equation, not a differential equation, we use <code class="docutils literal notranslate"><span class="pre">solve</span></code>, not <code class="docutils literal notranslate"><span class="pre">dsolve</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">solve</span>
 
+<span class="n">p_0</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;p_0&#39;</span><span class="p">)</span>
 <span class="n">solutions</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">at_0</span><span class="p">,</span> <span class="n">p_0</span><span class="p">),</span> <span class="n">C1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -848,7 +942,7 @@ solution</em>, which still contains an unspecified constant, <span class="math n
 </div>
 <div class="cell_output docutils container">
 <div class="output text_latex math notranslate nohighlight">
-\[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
+\[\displaystyle \frac{K p_{0} e^{r t}}{K + p_{0} e^{r t} - p_{0}}\]</div>
 </div>
 </div>
 <p>This function is called the <em>logistic growth curve</em>; see
@@ -1013,36 +1107,42 @@ You can access the notebooks at <a class="reference external" href="https://alle
 
               </div>
               
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Projecting Population Growth</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="chap10.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Case Studies Part 1</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
         </div>
     </div>
+    <footer class="footer">
+  <p>
     
+      By Allen B. Downey<br/>
     
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">Projecting Population Growth</a>
-    <a class='right-next' id="next-link" href="chap10.html" title="next page">Case Studies Part 1</a>
-
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
   </body>
 </html>

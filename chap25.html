@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Torque &#8212; Modeling and Simulation in Python</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,38 +31,43 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Case Studies Part 3" href="chap26.html" />
     <link rel="prev" title="Rotation" href="chap24.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
 
-
-
+    <!-- Google Analytics -->
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -74,25 +76,26 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="index.html">
    Modeling and Simulation in Python
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -195,7 +198,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chap20.html">
-   Pennies
+   The Empire State Building Strikes Back
   </a>
  </li>
  <li class="toctree-l1">
@@ -235,6 +238,7 @@
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -250,21 +254,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -278,11 +282,11 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -297,14 +301,14 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -323,16 +327,16 @@
     </div>
 </div>
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#angular-acceleration">
    Angular Acceleration
@@ -352,6 +356,23 @@
   <a class="reference internal nav-link" href="#two-phase-simulation">
    Two Phase Simulation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#phase-1">
+     Phase 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#phase-2">
+     Phase 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#combining-the-results">
+     Combining the Results
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#estimating-friction">
@@ -359,8 +380,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#animation">
-   Animation
+  <a class="reference internal nav-link" href="#animating-the-turntable">
+   Animating the Turntable
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -382,29 +403,112 @@
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Torque</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#angular-acceleration">
+   Angular Acceleration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#moment-of-inertia">
+   Moment of Inertia
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#teapots-and-turntables">
+   Teapots and Turntables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#two-phase-simulation">
+   Two Phase Simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#phase-1">
+     Phase 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#phase-2">
+     Phase 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#combining-the-results">
+     Combining the Results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#estimating-friction">
+   Estimating Friction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#animating-the-turntable">
+   Animating the Turntable
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="torque">
+  <div class="tex2jax_ignore mathjax_ignore section" id="torque">
 <h1>Torque<a class="headerlink" href="#torque" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master//chapters/chap25.ipynb">Click here to run this chapter on Colab</a></p>
+<p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
+Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In the previous chapter we modeled a system with constant angular
 velocity.
 In this chapter we take the next step, modeling a system with angular acceleration and deceleration.</p>
 <div class="section" id="angular-acceleration">
 <h2>Angular Acceleration<a class="headerlink" href="#angular-acceleration" title="Permalink to this headline">¶</a></h2>
-<p>Just as linear acceleration is the derivative of velocity, <em><em>angular
-acceleration</em> is the derivative of angular velocity. And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, <em>torque</em></em>. If you are not familiar with torque, you can read about it at <a class="reference external" href="http://modsimpy.com/torque">http://modsimpy.com/torque</a>.</p>
-<p>In general, torque is a vector quantity, defined as the <em><em>cross
+<p>Just as linear acceleration is the derivative of velocity, <em>angular
+acceleration</em> is the derivative of angular velocity. And just as linear acceleration is caused by force, angular acceleration is caused by the rotational version of force, <em>torque</em>. If you are not familiar with torque, you can read about it at <a class="reference external" href="http://modsimpy.com/torque">http://modsimpy.com/torque</a>.</p>
+<p>In general, torque is a vector quantity, defined as the <em>cross
 product</em> of <span class="math notranslate nohighlight">\(\vec{r}\)</span> and <span class="math notranslate nohighlight">\(\vec{F}\)</span>, where <span class="math notranslate nohighlight">\(\vec{r}\)</span> is the <em>lever
-arm</em></em>, a vector from the center of rotation to the point where the force is applied, and <span class="math notranslate nohighlight">\(\vec{F}\)</span> is the vector that represents the magnitude and direction of the force.</p>
-<p>However, for the problems in this chapter, we only need the <em>magnitude</em> of torque; we don’t care about the direction. In that case, we can compute</p>
+arm</em>, a vector from the center of rotation to the point where the force is applied, and <span class="math notranslate nohighlight">\(\vec{F}\)</span> is the vector that represents the magnitude and direction of the force.</p>
+<p>For the problems in this chapter, however, we only need the <em>magnitude</em> of torque; we don’t care about the direction. In that case, we can compute this product of scalar quantities:</p>
 <div class="math notranslate nohighlight">
 \[\tau = r F \sin \theta\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau\)</span> is torque, <span class="math notranslate nohighlight">\(r\)</span> is the length of the lever arm, <span class="math notranslate nohighlight">\(F\)</span> is the magnitude of force, and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{r}\)</span> and <span class="math notranslate nohighlight">\(\vec{F}\)</span>.</p>
@@ -417,13 +521,13 @@ arm</em></em>, a vector from the center of rotation to the point where the force
 \[\tau = I \alpha\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is angular acceleration and <span class="math notranslate nohighlight">\(I\)</span> is <em>moment of inertia</em>. Just as mass is what makes it hard to accelerate an object, moment of inertia is what makes it hard to spin an object.</p>
 <p>In the most general case, a 3-D object rotating around an arbitrary
-axis, moment of inertia is a tensor, which is a function that takes a
+axis, moment of inertia is a <em>tensor</em>, which is a function that takes a
 vector as a parameter and returns a vector as a result.</p>
 <p>Fortunately, in a system where all rotation and torque happens around a single axis, we don’t have to deal with the most general case. We can treat moment of inertia as a scalar quantity.</p>
 <p>For a small object with mass <span class="math notranslate nohighlight">\(m\)</span>, rotating around a point at distance
 <span class="math notranslate nohighlight">\(r\)</span>, the moment of inertia is <span class="math notranslate nohighlight">\(I = m r^2\)</span>. For more complex objects, we can compute <span class="math notranslate nohighlight">\(I\)</span> by dividing the object into small masses, computing
-moments of inertia for each mass, and adding them up.</p>
-<p>However, for most simple shapes, people have already done the
+moments of inertia for each mass, and adding them up.
+For most simple shapes, people have already done the
 calculations; you can just look up the answers. For example, see
 <a class="reference external" href="http://modsimpy.com/moment">http://modsimpy.com/moment</a>.</p>
 </div>
@@ -450,7 +554,7 @@ directly opposite me?</p>
 <li><p>The radius of the turntable is 0.5 m, and its weight is 7 kg.</p></li>
 <li><p>The teapot weights 0.3 kg, and it sits 0.4 m from the center of the turntable.</p></li>
 </ol>
-<p>The following figure shows the scenario, where <span class="math notranslate nohighlight">\(F\)</span> is the force I apply to the turntable at the perimeter, perpendicular to the lever arm, <span class="math notranslate nohighlight">\(r\)</span>, and <span class="math notranslate nohighlight">\(\tau\)</span> is the resulting torque. The blue circle near the bottom is the teapot.</p>
+<p>The following figure shows the scenario, where <span class="math notranslate nohighlight">\(F\)</span> is the force I apply to the turntable at the perimeter, perpendicular to the lever arm, <span class="math notranslate nohighlight">\(r\)</span>, and <span class="math notranslate nohighlight">\(\tau\)</span> is the resulting torque. The  circle near the bottom is the teapot.</p>
 <p><img alt="Diagram of a turntable with ateapot." src="https://github.com/AllenDowney/ModSim/raw/main/figs/teapot.png" /></p>
 <p>Here are the parameters from the statement of the problem:</p>
 <div class="cell docutils container">
@@ -575,6 +679,8 @@ that checks the value of <code class="docutils literal notranslate"><span class=
 </ol>
 <p>Then we can combine the results of the two phases into a single
 <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
+<div class="section" id="phase-1">
+<h3>Phase 1<a class="headerlink" href="#phase-1" title="Permalink to this headline">¶</a></h3>
 <p>Here’s the event function I’ll use for Phase 1; it stops the simulation when <code class="docutils literal notranslate"><span class="pre">theta</span></code> reaches <code class="docutils literal notranslate"><span class="pre">theta_push</span></code>, which is when I stop pushing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -685,6 +791,9 @@ state of the first phase.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="phase-2">
+<h3>Phase 2<a class="headerlink" href="#phase-2" title="Permalink to this headline">¶</a></h3>
 <p>Now we can make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object for Phase 2 with the initial state
 from Phase 1 and with <code class="docutils literal notranslate"><span class="pre">force=0</span></code>.</p>
 <div class="cell docutils container">
@@ -718,6 +827,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 </div>
+<p>The result is the angular velocity at the beginning of Phase 2, in rad/s.</p>
 <p>Now we can run the second phase.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -733,6 +843,9 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="combining-the-results">
+<h3>Combining the Results<a class="headerlink" href="#combining-the-results" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> provides <code class="docutils literal notranslate"><span class="pre">append</span></code>, which appends <code class="docutils literal notranslate"><span class="pre">results2</span></code> to the end of
 <code class="docutils literal notranslate"><span class="pre">results1</span></code>.</p>
 <div class="cell docutils container">
@@ -813,7 +926,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_51_0.png" src="_images/chap25_51_0.png" />
+<img alt="_images/chap25_52_0.png" src="_images/chap25_52_0.png" />
 </div>
 </div>
 <p>And <code class="docutils literal notranslate"><span class="pre">omega</span></code>.</p>
@@ -826,12 +939,13 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_53_0.png" src="_images/chap25_53_0.png" />
+<img alt="_images/chap25_54_0.png" src="_images/chap25_54_0.png" />
 </div>
 </div>
 <p>Angular velocity, <code class="docutils literal notranslate"><span class="pre">omega</span></code>, increases linearly while I am pushing, and decreases linearly after I let go. The angle, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, is the integral of angular velocity, so it forms a parabola during each phase.</p>
 <p>In the next section, we’ll use this simulation to estimate the torque
 due to friction.</p>
+</div>
 </div>
 <div class="section" id="estimating-friction">
 <h2>Estimating Friction<a class="headerlink" href="#estimating-friction" title="Permalink to this headline">¶</a></h2>
@@ -942,7 +1056,12 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </div>
 </div>
 </div>
-<p>With <code class="docutils literal notranslate"><span class="pre">torque_friction=0.3</span></code>, the table rotates a bit too far:</p>
+<p>This error function takes torque due to friction as an input.
+It extracts <code class="docutils literal notranslate"><span class="pre">force</span></code> from the <code class="docutils literal notranslate"><span class="pre">System</span></code> object and runs the simulation.
+From the results, it extracts the last value of <code class="docutils literal notranslate"><span class="pre">theta</span></code> and returns the difference between the result of the simulation and the result of the experiment.
+When this difference is 0, the value of <code class="docutils literal notranslate"><span class="pre">torque_friction</span></code> is an estimate for the friction in the experiment.</p>
+<p>To bracket the root, we need one value that’s too low and one that’s too high.
+With <code class="docutils literal notranslate"><span class="pre">torque_friction=0.3</span></code>, the table rotates a bit too far:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess1</span> <span class="o">=</span> <span class="mf">0.3</span>
@@ -1011,11 +1130,11 @@ observed results from the first push, a total rotation of 1.5 rad.</p>
 </div>
 <p>Now that we know the torque due to friction, we can compute the force
 needed to rotate the turntable through the remaining angle, that is,
-from 1.5 rad to 3.14 rad.</p>
-<p>But first, let’s animate the results.</p>
+from 1.5 rad to 3.14 rad.
+You’ll have a chance to do that as an exercise, but first, let’s animate the results.</p>
 </div>
-<div class="section" id="animation">
-<h2>Animation<a class="headerlink" href="#animation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="animating-the-turntable">
+<h2>Animating the Turntable<a class="headerlink" href="#animating-the-turntable" title="Permalink to this headline">¶</a></h2>
 <p>Here’s a function that takes the state of the system and draws it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1049,10 +1168,10 @@ from 1.5 rad to 3.14 rad.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap25_73_0.png" src="_images/chap25_73_0.png" />
+<img alt="_images/chap25_74_0.png" src="_images/chap25_74_0.png" />
 </div>
 </div>
-<p>And here’s an animation of the first push.</p>
+<p>And here’s how we call it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># animate(results, draw_func)</span>
@@ -1064,7 +1183,7 @@ from 1.5 rad to 3.14 rad.</p>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>The example in this chapter demonstrates the concepts of torque, angular acceleration, and moment of inertia.
-We used these concepts to simulate a turntable, using a hypothetical observation to estimating torque due to friction.
+We used these concepts to simulate a turntable, using a hypothetical observation to estimate torque due to friction.
 As an exercise, you can finish off the example, estimating the force needed to rotate the table to a given target angle.</p>
 <p>The next chapter describes several case studies you can work on to practice the tools from the last few chapters, including projectiles, rotating objects, <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>.</p>
 </div>
@@ -1229,36 +1348,42 @@ Run the simulation with the force you computed and confirm that the table stops 
 
               </div>
               
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="chap24.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Rotation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="chap26.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Case Studies Part 3</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
         </div>
     </div>
+    <footer class="footer">
+  <p>
     
+      By Allen B. Downey<br/>
     
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="chap24.html" title="previous page">Rotation</a>
-    <a class='right-next' id="next-link" href="chap26.html" title="next page">Case Studies Part 3</a>
-
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
   </body>
 </html>
