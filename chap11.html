@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Epidemiology &#8212; Modeling and Simulation in Python</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -88,14 +102,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Modeling and Simulation in Python
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Modeling and Simulation in Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -239,104 +254,177 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/chap11.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap11.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap11.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/AllenDowney/ModSimPy"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/chap11.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-freshman-plague">
    The Freshman Plague
@@ -396,12 +484,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Epidemiology</h1>
@@ -477,17 +564,18 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="epidemiology">
-<h1>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="epidemiology">
+<h1>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">#</a></h1>
 <p>In this chapter, we’ll develop a model of an epidemic as it spreads in a
 susceptible population, and use it to evaluate the effectiveness of
 possible interventions.</p>
 <p>My presentation of the model in the next few chapters is based on an excellent article by David Smith and Lang Moore, “The SIR Model for Spread of Disease,” <em>Journal of Online Mathematics and its Applications</em>, December 2001, available at <a class="reference external" href="http://modsimpy.com/sir">http://modsimpy.com/sir</a>.</p>
-<div class="section" id="the-freshman-plague">
-<h2>The Freshman Plague<a class="headerlink" href="#the-freshman-plague" title="Permalink to this headline">¶</a></h2>
+<section id="the-freshman-plague">
+<h2>The Freshman Plague<a class="headerlink" href="#the-freshman-plague" title="Permalink to this headline">#</a></h2>
 <p>Every year at Olin College, about 90 new students come to campus from
 around the country and the world. Most of them arrive healthy and happy, but usually at least one brings with them some kind of infectious disease. A few weeks later, predictably, some fraction of the incoming class comes down with what we call the “Freshman Plague”.</p>
 <p>In this chapter we introduce a well-known model of infectious disease,
@@ -500,9 +588,9 @@ about how to represent them. In this chapter we start with an existing
 model and reverse-engineer it. Along the way, we consider the modeling
 decisions that went into it and identify its capabilities and
 limitations.</p>
-</div>
-<div class="section" id="the-kermack-mckendrick-model">
-<h2>The Kermack-McKendrick Model<a class="headerlink" href="#the-kermack-mckendrick-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-kermack-mckendrick-model">
+<h2>The Kermack-McKendrick Model<a class="headerlink" href="#the-kermack-mckendrick-model" title="Permalink to this headline">#</a></h2>
 <p>The Kermack-McKendrick (KM) model is an example of an <em>SIR model</em>,
 so-named because it represents three categories of people:</p>
 <ul class="simple">
@@ -534,9 +622,9 @@ infected in a day, which is <span class="math notranslate nohighlight">\(\beta s
 </ul>
 <p>The KM model assumes that the population is closed; that is, no one
 arrives or departs, so the size of the population, <span class="math notranslate nohighlight">\(N\)</span>, is constant.</p>
-</div>
-<div class="section" id="the-km-equations">
-<h2>The KM Equations<a class="headerlink" href="#the-km-equations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-km-equations">
+<h2>The KM Equations<a class="headerlink" href="#the-km-equations" title="Permalink to this headline">#</a></h2>
 <p>If we treat time as a continuous quantity, we can write differential
 equations that describe the rates of change for <span class="math notranslate nohighlight">\(s\)</span>, <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(r\)</span> (where <span class="math notranslate nohighlight">\(r\)</span> is the fraction of the population that has recovered):</p>
 <div class="math notranslate nohighlight">
@@ -556,9 +644,9 @@ models are often represented visually using stock and flow diagrams (see <a clas
 <p>The following figure shows the stock and flow diagram for the KM model.</p>
 <p><img alt="Stock and flow diagram for an SIRmodel." src="https://github.com/AllenDowney/ModSim/raw/main/figs/stock_flow1.png" /></p>
 <p>Stocks are represented by rectangles, flows by arrows. The widget in the middle of the arrows represents a valve that controls the rate of flow; the diagram shows the parameters that control the valves.</p>
-</div>
-<div class="section" id="implementing-the-km-model">
-<h2>Implementing the KM model<a class="headerlink" href="#implementing-the-km-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="implementing-the-km-model">
+<h2>Implementing the KM model<a class="headerlink" href="#implementing-the-km-model" title="Permalink to this headline">#</a></h2>
 <p>For a given physical system, there are many possible models, and for a
 given model, there are many ways to represent it. For example, we can
 represent an SIR model as a stock-and-flow diagram, as a set of
@@ -752,9 +840,9 @@ Name...</td>
 </div></div></div>
 </div>
 <p>Now that we have object to represent the system and its state, we are ready for the update function.</p>
-</div>
-<div class="section" id="the-update-function">
-<h2>The Update Function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-update-function">
+<h2>The Update Function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">#</a></h2>
 <p>The purpose of an update function is to take the current state of a system and compute the state during the next time step.
 Here’s the update function we’ll use for the KM model:</p>
 <div class="cell tag_export docutils container">
@@ -831,9 +919,9 @@ By creating these variables, we avoid repeating <code class="docutils literal no
 <p>The result is the new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
 <p>You might notice that this version of <code class="docutils literal notranslate"><span class="pre">update_func</span></code> does not use one of its parameters, <code class="docutils literal notranslate"><span class="pre">t</span></code>. I include it anyway because update functions
 sometimes depend on time, and it is convenient if they all take the same parameters, whether they need them or not.</p>
-</div>
-<div class="section" id="running-the-simulation">
-<h2>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="running-the-simulation">
+<h2>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">#</a></h2>
 <p>Now we can simulate the model over a sequence of time steps:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -901,9 +989,9 @@ conditions, and values of <code class="docutils literal notranslate"><span class
 <p>The result indicates that after 14 weeks (98 days), about 52% of the
 population is still susceptible, which means they were never infected,
 almost 48% have recovered, which means they were infected at some point, and less than 1% are actively infected.</p>
-</div>
-<div class="section" id="collecting-the-results">
-<h2>Collecting the Results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="collecting-the-results">
+<h2>Collecting the Results<a class="headerlink" href="#collecting-the-results" title="Permalink to this headline">#</a></h2>
 <p>The previous version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> returns only the final state,
 but we might want to see how the state changes over time. We’ll consider two ways to do that: first, using three <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects, then using a new object called a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.</p>
 <p>Here’s the first version:</p>
@@ -964,9 +1052,9 @@ Next we initialize <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <p>It takes about three weeks (21 days) for the outbreak to get going, and about five weeks (35 days) to peak. The fraction of the population that’s infected is never very high, but it adds up. In total, almost half the population gets sick.</p>
-</div>
-<div class="section" id="now-with-a-timeframe">
-<h2>Now With a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="now-with-a-timeframe">
+<h2>Now With a TimeFrame<a class="headerlink" href="#now-with-a-timeframe" title="Permalink to this headline">#</a></h2>
 <p>If the number of state variables is small, storing them as separate
 <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects might not be so bad. But a better alternative is to use a <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>, which is another object defined in the ModSim
 library.
@@ -1092,19 +1180,19 @@ from a <code class="docutils literal notranslate"><span class="pre">TimeFrame</s
 </div>
 </div>
 <p>The results are the same as before, now in a more convenient form.</p>
-</div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>This chapter presents an SIR model of infectious disease and two ways to collect the results, using several <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> objects or a single <code class="docutils literal notranslate"><span class="pre">TimeFrame</span></code>.
 In the next chapter we’ll use the model to explore the effect of immunization.</p>
 <p>But first you might want to work on these exercises.</p>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<div class="section" id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
 <p>Suppose the time between contacts is 4 days and the recovery time is 5 days.  After 14 weeks, how many students, total, have been infected?</p>
 <p>Hint: what is the change in <code class="docutils literal notranslate"><span class="pre">S</span></code> between the beginning and the end of the simulation?</p>
 <div class="cell tag_hide-cell docutils container">
@@ -1163,9 +1251,9 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1189,9 +1277,11 @@ You can access the notebooks at <a class="reference external" href="https://alle
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="chap10.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1207,24 +1297,28 @@ You can access the notebooks at <a class="reference external" href="https://alle
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Allen B. Downey<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Allen B. Downey<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

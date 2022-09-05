@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Analysis of Population Growth &#8212; Modeling and Simulation in Python</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -88,14 +102,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Modeling and Simulation in Python
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Modeling and Simulation in Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -239,104 +254,177 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/chap09.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap09.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap09.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/AllenDowney/ModSimPy"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/chap09.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#difference-equations">
    Difference Equations
@@ -396,12 +484,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Analysis of Population Growth</h1>
@@ -477,16 +564,17 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="analysis-of-population-growth">
-<h1>Analysis of Population Growth<a class="headerlink" href="#analysis-of-population-growth" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="analysis-of-population-growth">
+<h1>Analysis of Population Growth<a class="headerlink" href="#analysis-of-population-growth" title="Permalink to this headline">#</a></h1>
 <p>In this chapter we’ll express the models from previous chapters as
 difference equations and differential equations, solve the equations,
 and derive the functional forms of the solutions. And I’ll present some thoughts about the complementary roles of mathematical analysis and simulation.</p>
-<div class="section" id="difference-equations">
-<h2>Difference Equations<a class="headerlink" href="#difference-equations" title="Permalink to this headline">¶</a></h2>
+<section id="difference-equations">
+<h2>Difference Equations<a class="headerlink" href="#difference-equations" title="Permalink to this headline">#</a></h2>
 <p>The population models in the previous chapter and this one are simple
 enough that we didn’t really need to run simulations. We could have
 solved them mathematically. For example, we wrote the constant growth
@@ -530,9 +618,9 @@ without bound.</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + r x_n (1 - x_n / K)\]</div>
 <p>There is no analytic solution to this equation, but we can approximate it with a differential equation and solve that, which is what we’ll do in the next section.</p>
-</div>
-<div class="section" id="differential-equations">
-<h2>Differential Equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="differential-equations">
+<h2>Differential Equations<a class="headerlink" href="#differential-equations" title="Permalink to this headline">#</a></h2>
 <p>Starting again with the constant growth model</p>
 <div class="math notranslate nohighlight">
 \[x_{n+1} = x_n + c\]</div>
@@ -593,9 +681,9 @@ We can rewrite the previous equation as</p>
 \[x(t) = x_0 \exp(\alpha t)\]</div>
 <p>If you would like to see this derivation done more carefully, you might like this video:
 <a class="reference external" href="http://modsimpy.com/khan1">http://modsimpy.com/khan1</a>.</p>
-</div>
-<div class="section" id="analysis-and-simulation">
-<h2>Analysis and Simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="analysis-and-simulation">
+<h2>Analysis and Simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">#</a></h2>
 <p>Once you have designed a model, there are generally two ways to proceed: simulation and analysis. Simulation often comes in the form of a computer program that models changes in a system over time, like births and deaths, or bikes moving from place to place. Analysis often comes in the form of algebra and calculus; that is, symbolic manipulation using mathematical notation.</p>
 <p>Analysis and simulation have different capabilities and limitations.
 Simulation is generally more versatile; it is easy to add and remove parts of a program and test many versions of a model, as we have done in the previous examples.</p>
@@ -627,9 +715,9 @@ manipulations like algebra. Similarly, programming languages are
 designed for a purpose, specifically to represent computational ideas
 and run programs.</p>
 <p>Each of these languages is good for the purposes it was designed for and less good for other purposes. But they are often complementary, and one of the goals of this book is to show how they can be used together.</p>
-</div>
-<div class="section" id="analysis-with-wolframalpha">
-<h2>Analysis with WolframAlpha<a class="headerlink" href="#analysis-with-wolframalpha" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="analysis-with-wolframalpha">
+<h2>Analysis with WolframAlpha<a class="headerlink" href="#analysis-with-wolframalpha" title="Permalink to this headline">#</a></h2>
 <p>Until recently, most analysis was done by rubbing graphite on wood
 pulp, a process that is laborious and error-prone. A useful
 alternative is symbolic computation. If you have used services like
@@ -652,9 +740,9 @@ differential equation”, and reports the general solution:</p>
 \[f(t) = p_0 \exp(\alpha t)\]</div>
 <p>WolframAlpha is based on Mathematica, a powerful programming language
 designed specifically for symbolic computation.</p>
-</div>
-<div class="section" id="analysis-with-sympy">
-<h2>Analysis with SymPy<a class="headerlink" href="#analysis-with-sympy" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="analysis-with-sympy">
+<h2>Analysis with SymPy<a class="headerlink" href="#analysis-with-sympy" title="Permalink to this headline">#</a></h2>
 <p>Python has a library called SymPy that provides symbolic computation
 tools similar to Mathematica. They are not as easy to use as
 WolframAlpha, but they have some other advantages.</p>
@@ -729,9 +817,9 @@ substitutes 2 for <code class="docutils literal notranslate"><span class="pre">t
 </div>
 <p>But again SymPy doesn’t actually
 try to evaluate it.</p>
-</div>
-<div class="section" id="differential-equations-in-sympy">
-<h2>Differential Equations In SymPy<a class="headerlink" href="#differential-equations-in-sympy" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="differential-equations-in-sympy">
+<h2>Differential Equations In SymPy<a class="headerlink" href="#differential-equations-in-sympy" title="Permalink to this headline">#</a></h2>
 <p>SymPy provides a function, <code class="docutils literal notranslate"><span class="pre">diff</span></code>, that can differentiate a function. We can apply it to <code class="docutils literal notranslate"><span class="pre">f(t)</span></code> like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -818,9 +906,9 @@ For example, if <span class="math notranslate nohighlight">\(p_0\)</span> is 100
 \[\displaystyle f{\left(0 \right)} = 1000\]</div>
 </div>
 </div>
-</div>
-<div class="section" id="solving-the-quadratic-growth-model">
-<h2>Solving the Quadratic Growth Model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="solving-the-quadratic-growth-model">
+<h2>Solving the Quadratic Growth Model<a class="headerlink" href="#solving-the-quadratic-growth-model" title="Permalink to this headline">#</a></h2>
 <p>To solve the quadratic growth curve, we’ll use the <code class="docutils literal notranslate"><span class="pre">r,</span> <span class="pre">K</span></code> parameterization, so we’ll need two more symbols:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -952,9 +1040,9 @@ logistic function is often written like this:</p>
 \[f(t) = \frac{K}{1 + A \exp(-rt)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A = (K - p_0) / p_0\)</span>.</p>
 <p>If you would like to see this differential equation solved by hand, you might like this video: <a class="reference external" href="http://modsimpy.com/khan2">http://modsimpy.com/khan2</a></p>
-</div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>In this chapter we wrote the growth models from the previous chapters in terms of difference and differential equations. We solved some of these equations by hand; for others, we used WolframAlpha and SymPy.</p>
 <p>What I called the “constant growth” model is more commonly called <em>linear growth</em> because the solution is a line.  If we model time as continuous, the solution is</p>
 <div class="math notranslate nohighlight">
@@ -970,13 +1058,13 @@ logistic function is often written like this:</p>
 <p>I avoided these terms until now because they are based on results we had not derived yet.</p>
 <p>With that, we are done modeling world population growth.
 The next chapter presents case studies where you can apply the tools we have learned so far.</p>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<div class="section" id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
 <p>Use SymPy to solve the quadratic growth equation using the alternative parameterization</p>
 <div class="math notranslate nohighlight">
 \[ \frac{df(t)}{dt} = \alpha f(t) + \beta f^2(t) \]</div>
@@ -1069,9 +1157,9 @@ You can access the notebooks at <a class="reference external" href="https://alle
 \[\displaystyle \frac{\alpha p_{0} e^{\alpha t}}{\alpha - \beta p_{0} e^{\alpha t} + \beta p_{0}}\]</div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
 <p>Use <a class="reference external" href="https://www.wolframalpha.com/">WolframAlpha</a> to solve the quadratic growth model, using either or both forms of parameterization:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df(t) / dt = alpha f(t) + beta f(t)^2
 </pre></div>
@@ -1081,9 +1169,9 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </pre></div>
 </div>
 <p>Find the general solution and also the particular solution where <code class="docutils literal notranslate"><span class="pre">f(0)</span> <span class="pre">=</span> <span class="pre">p_0</span></code>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1107,9 +1195,11 @@ You can access the notebooks at <a class="reference external" href="https://alle
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="chap08.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1125,24 +1215,28 @@ You can access the notebooks at <a class="reference external" href="https://alle
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Allen B. Downey<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Allen B. Downey<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Nondimensionalization &#8212; Modeling and Simulation in Python</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -88,14 +102,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Modeling and Simulation in Python
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Modeling and Simulation in Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -239,104 +254,177 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/chap14.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/AllenDowney/ModSimPy"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap14.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/chap14.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/AllenDowney/ModSimPy"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/chap14.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exploring-the-results">
    Exploring the Results
@@ -391,12 +479,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Nondimensionalization</h1>
@@ -467,11 +554,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="nondimensionalization">
-<h1>Nondimensionalization<a class="headerlink" href="#nondimensionalization" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="nondimensionalization">
+<h1>Nondimensionalization<a class="headerlink" href="#nondimensionalization" title="Permalink to this headline">#</a></h1>
 <p>In the previous chapter we swept the parameters of the Kermack-McKendrick (KM) model: the contact rate, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, and the recovery rate, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
 For each pair of parameters, we ran a simulation and computed the total fraction of the population infected.</p>
 <p>In this chapter we’ll investigate the relationship between the parameters and this metric, using both simulation and analysis.</p>
@@ -487,8 +575,8 @@ denominator are in the same units, this ratio is <em>dimensionless</em>, which m
 useful move in the modeling and simulation game. In fact, it is so useful that it has a name: <em>nondimensionalization</em> (see
 <a class="reference external" href="http://modsimpy.com/nondim">http://modsimpy.com/nondim</a>).
 So that’s what we’ll try first.</p>
-<div class="section" id="exploring-the-results">
-<h2>Exploring the Results<a class="headerlink" href="#exploring-the-results" title="Permalink to this headline">¶</a></h2>
+<section id="exploring-the-results">
+<h2>Exploring the Results<a class="headerlink" href="#exploring-the-results" title="Permalink to this headline">#</a></h2>
 <p>In the previous chapter, we wrote a function, <code class="docutils literal notranslate"><span class="pre">sweep_parameters</span></code>,
 that takes an array of values for <code class="docutils literal notranslate"><span class="pre">beta</span></code> and an array of values for <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
 It runs a simulation for each pair of parameters and returns a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> with the results.</p>
@@ -682,9 +770,9 @@ column.</p></li>
 </div>
 </div>
 <p>The results fall on a single curve, at least approximately. That means that we can predict the fraction of the population that will be infected based on a single parameter, the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>. We don’t need to know the values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> separately.</p>
-</div>
-<div class="section" id="contact-number">
-<h2>Contact Number<a class="headerlink" href="#contact-number" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="contact-number">
+<h2>Contact Number<a class="headerlink" href="#contact-number" title="Permalink to this headline">#</a></h2>
 <p>From Chapter 11, recall that the number of new infections in a
 given day is <span class="math notranslate nohighlight">\(\beta s i N\)</span>, and the number of recoveries is
 <span class="math notranslate nohighlight">\(\gamma i N\)</span>. If we divide these quantities, the result is
@@ -732,9 +820,9 @@ equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[c = \frac{\log s_{\infty}}{s_{\infty}- 1}\]</div>
 <p>By relating <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(s_{\infty}\)</span>, this equation makes it possible to estimate <span class="math notranslate nohighlight">\(c\)</span> based on data, and possibly predict the behavior of future epidemics.</p>
-</div>
-<div class="section" id="analysis-and-simulation">
-<h2>Analysis and Simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="analysis-and-simulation">
+<h2>Analysis and Simulation<a class="headerlink" href="#analysis-and-simulation" title="Permalink to this headline">#</a></h2>
 <p>Let’s compare this analytic result to the results from simulation. I’ll create an array of values for <span class="math notranslate nohighlight">\(s_{\infty}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -790,9 +878,9 @@ the contact number is less than 1, they do not: analysis indicates there should 
 <p>The reason for the discrepancy is that the simulation divides time into a discrete series of days, whereas the analysis treats time as a
 continuous quantity.
 When the contact number is large, these two models agree; when it is small, they diverge.</p>
-</div>
-<div class="section" id="estimating-contact-number">
-<h2>Estimating Contact Number<a class="headerlink" href="#estimating-contact-number" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="estimating-contact-number">
+<h2>Estimating Contact Number<a class="headerlink" href="#estimating-contact-number" title="Permalink to this headline">#</a></h2>
 <p>The previous figure shows that if we know the contact number, we can estimate the fraction of the population that will be infected with just a few arithmetic operations.
 We don’t have to run a simulation.</p>
 <p>We can also read the figure the other way; if we know what fraction of the population was affected by a past outbreak, we can estimate the contact number.
@@ -805,20 +893,20 @@ In practice, it might not work very well, because of the shape of the curve.</p>
 </ul>
 <p>With the uncertainty of real data, we might not be able to estimate <span class="math notranslate nohighlight">\(c\)</span> with much precision.
 But as one of the exercises below, you’ll have a chance to try.</p>
-</div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>In this chapter we used simulations to explore the relationship between <code class="docutils literal notranslate"><span class="pre">beta</span></code>, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, and the fraction infected.
 Then we used analysis to explain that relationship.</p>
 <p>With that, we are done with the Kermack-McKendrick model.
 In the next chapter we’ll move on to thermal systems and the notorious coffee cooling problem.</p>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
-<div class="section" id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
 <p>At the beginning of this chapter, I suggested two ways to relate <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>: we could compute their difference or their ratio.</p>
 <p>Because the ratio is dimensionless, I suggested we explore it first, and that led us to discover the contact number, which is <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code>.
 When we plotted the fraction infected as a function of the contact number, we found that this metric falls on a single curve, at least approximately.
@@ -867,9 +955,9 @@ That indicates that the ratio is enough to predict the results; we don’t have 
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
 <p>Suppose you run a survey at the end of the semester and find that 26% of students had the Freshman Plague at some point.
 What is your best estimate of <code class="docutils literal notranslate"><span class="pre">c</span></code>?</p>
 <p>Hint: if you display <code class="docutils literal notranslate"><span class="pre">frac_infected_series</span></code>, you can read off the answer.</p>
@@ -1122,9 +1210,9 @@ What is your best estimate of <code class="docutils literal notranslate"><span c
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-3">
-<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">#</a></h3>
 <p>So far the only metric we have considered is the total fraction of the population that gets infected over the course of an epidemic.  That is an important metric, but it is not the only one we care about.</p>
 <p>For example, if we have limited resources to deal with infected people, we might also be concerned about the number of people who are sick at the peak of the epidemic, which is the maximum of <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
 <p>Write a version of <code class="docutils literal notranslate"><span class="pre">sweep_beta</span></code> that computes this metric, and use it to compute a <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> for a range of values of <code class="docutils literal notranslate"><span class="pre">beta</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
@@ -1226,10 +1314,10 @@ Do the results fall on a single curve?</p>
 <img alt="_images/chap14_54_0.png" src="_images/chap14_54_0.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="under-the-hood">
-<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="under-the-hood">
+<h2>Under the Hood<a class="headerlink" href="#under-the-hood" title="Permalink to this headline">#</a></h2>
 <p>ModSim provides <code class="docutils literal notranslate"><span class="pre">make_series</span></code> to make it easier to create a Pandas Series.  In this chapter, we used it like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1251,8 +1339,8 @@ Do the results fall on a single curve?</p>
 <p>The difference is that the arguments are in reverse order: the first argument is stored as the values in the <code class="docutils literal notranslate"><span class="pre">Series</span></code>; the second argument is stored as the index.</p>
 <p>I find that order counterintuitive, which is why I use <code class="docutils literal notranslate"><span class="pre">make_series</span></code>.
 <code class="docutils literal notranslate"><span class="pre">make_series</span></code> takes the same optional keyword arguments as <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which you can read about at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html</a>.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1276,9 +1364,11 @@ Do the results fall on a single curve?</p>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="chap13.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1294,24 +1384,28 @@ Do the results fall on a single curve?</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Allen B. Downey<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Allen B. Downey<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
