@@ -1,4 +1,3 @@
 pandoc
 jupyter-book
 ghp-import
-nbformat
