@@ -11,5 +11,4 @@ html5lib
 beautifulsoup4
 tables
 yapf
-pip
 modsimpy
