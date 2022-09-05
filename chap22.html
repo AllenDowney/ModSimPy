@@ -461,6 +461,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercises">
    Exercises
   </a>
@@ -534,6 +539,11 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#animating-the-baseball">
    Animating the Baseball
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1522,8 +1532,8 @@ With a launch angle of 45°, the landing angle is closer to vertical, about 57°
 <section id="animating-the-baseball">
 <h2>Animating the Baseball<a class="headerlink" href="#animating-the-baseball" title="Permalink to this headline">#</a></h2>
 <p>One of the best ways to visualize the results of a physical model is animation.  If there are problems with the model, animation can make them apparent.</p>
-<p>The ModSimPy library provides <code class="docutils literal notranslate"><span class="pre">animate</span></code>, which takes as parameters a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a draw function.</p>
-<p>The draw function should take as parameters a time stamp and a <code class="docutils literal notranslate"><span class="pre">State</span></code>.  It should draw a single frame of the animation.</p>
+<p>The ModSimPy library provides <code class="docutils literal notranslate"><span class="pre">animate</span></code>, which takes as parameters a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> and a draw function.
+The draw function should take as parameters a time stamp and a <code class="docutils literal notranslate"><span class="pre">State</span></code>.  It should draw a single frame of the animation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
@@ -1547,6 +1557,7 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">draw_func</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>You can see the results when you run the code from this chapter.</p>
 <p>To run the animation, uncomment the following line of code and run the cell.</p>
 <div class="cell tag_remove-print docutils container">
 <div class="cell_input docutils container">
@@ -1555,6 +1566,14 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">matplotli
 </div>
 </div>
 </div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<p>This chapter introduces <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects, which we use to represent position, velocity, and acceleration in two dimensions.
+We also represent forces using vectors, which make it easier to add up forces acting in different directions.</p>
+<p>Our ODE solver doesn’t work with <code class="docutils literal notranslate"><span class="pre">Vector</span></code> objects, so it takes some work to pack and unpack their components.
+Nevertheless, we were able to run simulations with vectors and display the results.</p>
+<p>In the next chapter we’ll use these simulations to solve an optimization problem.</p>
 </section>
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
@@ -1598,7 +1617,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chap22_86_0.png" src="_images/chap22_86_0.png" />
+<img alt="_images/chap22_87_0.png" src="_images/chap22_87_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
