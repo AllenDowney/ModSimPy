@@ -19,6 +19,11 @@ if sys.version_info < (3, 6):
 import inspect
 
 import matplotlib.pyplot as plt
+
+plt.rcParams['figure.dpi'] = 75
+plt.rcParams['savefig.dpi'] = 300
+plt.rcParams['figure.figsize'] = 6, 4
+
 import numpy as np
 import pandas as pd
 import scipy
@@ -656,9 +661,10 @@ def make_series(x, y, **options):
 
 
 def TimeSeries(*args, **kwargs):
-    """
+    """Make a pd.Series object to represent a time series.
     """
     if args or kwargs:
+        underride(kwargs, dtype=float)
         series = pd.Series(*args, **kwargs)
     else:
         series = pd.Series([], dtype=np.float64)
@@ -670,9 +676,10 @@ def TimeSeries(*args, **kwargs):
 
 
 def SweepSeries(*args, **kwargs):
-    """
+    """Make a pd.Series object to store results from a parameter sweep.
     """
     if args or kwargs:
+        underride(kwargs, dtype=float)
         series = pd.Series(*args, **kwargs)
     else:
         series = pd.Series([], dtype=np.float64)
