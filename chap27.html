@@ -542,7 +542,7 @@ As an example, we’ll solve the following differential equation:</p>
      nfev: 50
      njev: 0
       nlu: 0
-      sol: &lt;scipy.integrate._ivp.common.OdeSolution object at 0x7f0e337d6b50&gt;
+      sol: &lt;scipy.integrate._ivp.common.OdeSolution object at 0x7ff89741a3e0&gt;
    status: 0
   success: True
  t_events: None
@@ -623,7 +623,7 @@ Keep that in mind.</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">results</span></code> contains 101 points that are equally spaced in time.
 Now you might wonder, if <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> ran the slope function 50 times, how did we get 101 time steps?</p>
-<p>To answer that question, we need to know more how the solver works.
+<p>To answer that question, we need to know more about how the solver works.
 There are actually three stages:</p>
 <ol class="simple">
 <li><p>For each time step, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> evaluates the slope function seven times, with different values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
@@ -745,7 +745,7 @@ Then we can use trigonometry to convert the slope, <code class="docutils literal
 </div>
 </div>
 <p>Using these values, we can generate a <em>quiver plot</em> that shows an arrow for each time the slope function ran.
-The location of the each arrow represents the values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>; the orientation of the arrow shows the slope that was computed.</p>
+The location of each arrow represents the values of <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>; the orientation of the arrow shows the slope that was computed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>

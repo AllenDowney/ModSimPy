@@ -611,8 +611,8 @@ demographers.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
-         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billion)&#39;</span><span class="p">,</span>
-         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quadratic Model Projection&#39;</span><span class="p">)</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billions)&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quadratic model projection&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -760,7 +760,7 @@ The following function plots projections from the U.N. DESA and U.S. Census.  It
     <span class="n">un_proj</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UN DESA&#39;</span><span class="p">)</span>
     
     <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
-             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billion)&#39;</span><span class="p">)</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billions)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -768,9 +768,9 @@ The following function plots projections from the U.N. DESA and U.S. Census.  It
 <p>Here are the professional projections compared to the results of the quadratic model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_projections</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
-<span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quadratic Model Projection&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plot_projections</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quadratic model projection, with UN and Census&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -926,7 +926,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
     <span class="n">alpha_un</span> <span class="o">=</span> <span class="n">un</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">/</span> <span class="n">un</span>
     <span class="n">alpha_un</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UN DESA&#39;</span><span class="p">)</span>
 
-    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Net growth rate&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Net growth rate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1050,8 +1050,8 @@ Here’s a function that takes a time stamp and computes a line that roughly fit
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="n">plot_projections</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
 <span class="n">results2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plot_projections</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
 <span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Proportional model, linearly decreasing rate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>

@@ -699,8 +699,8 @@ Then it mixes them and simulates the mixture for the remaining time, <code class
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mixture&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time until mixing (minutes)&#39;</span><span class="p">,</span>
-         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Final emperature (C)&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time until mixing (min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Final temperature (C)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -725,7 +725,7 @@ at the end is optimal.</p>
 \[T_{env} + \left(- T_{env} + T_{init}\right) \exp(-r t)\]</div>
 <p>If you would like to see this solution done by hand, you can watch this video: <a class="reference external" href="http://modsimpy.com/khan3">http://modsimpy.com/khan3</a>.</p>
 <p>Now we can use the observed data to estimate the parameter <span class="math notranslate nohighlight">\(r\)</span>. If we
-observe the that temperature at <span class="math notranslate nohighlight">\(t_{end}\)</span> is <span class="math notranslate nohighlight">\(T_{final}\)</span>, we can plug these values into the particular solution and solve for <span class="math notranslate nohighlight">\(r\)</span>. The result is:</p>
+observe the that the temperature at <span class="math notranslate nohighlight">\(t_{end}\)</span> is <span class="math notranslate nohighlight">\(T_{final}\)</span>, we can plug these values into the particular solution and solve for <span class="math notranslate nohighlight">\(r\)</span>. The result is:</p>
 <div class="math notranslate nohighlight">
 \[r = \frac{1}{t_{end}} \log{\left (\frac{T_{init} - T_{env}}{T_{final} - T_{env}} \right )}\]</div>
 <p>The following function takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and computes <code class="docutils literal notranslate"><span class="pre">r</span></code>:</p>

@@ -457,7 +457,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#timeseries">
-   Timeseries
+   TimeSeries
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -548,7 +548,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#timeseries">
-   Timeseries
+   TimeSeries
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -844,7 +844,7 @@ of variables separated by commas, like this:</p>
 example, it displays two values on the same line, with a space between
 them.</p>
 <p>Print statements are useful for debugging functions. For example, we can
-add a print statement to <code class="docutils literal notranslate"><span class="pre">move_bike</span></code>, like this:</p>
+add a print statement to <code class="docutils literal notranslate"><span class="pre">bike_to_wellesley</span></code>, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bike_to_wellesley</span><span class="p">():</span>
@@ -1092,10 +1092,10 @@ loop.</p></li>
 <p>Each time through the loop, it prints the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> and moves one bike to Wellesley.</p>
 </section>
 <section id="timeseries">
-<h2>Timeseries<a class="headerlink" href="#timeseries" title="Permalink to this headline">#</a></h2>
-<p>When we run a simulation, we often want to save the results for later analysis. The ModSim library provides a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object for this purpose. A <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> contains a sequence of time stamps and a
+<h2>TimeSeries<a class="headerlink" href="#timeseries" title="Permalink to this headline">#</a></h2>
+<p>When we run a simulation, we often want to save the results for later analysis. The ModSim library provides a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object for this purpose. A <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> contains a sequence of timestamps and a
 corresponding sequence of quantities.</p>
-<p>In this example, the time stamps are integers representing minutes and the quantities are the number of bikes at one location.</p>
+<p>In this example, the timestamps are integers representing minutes and the quantities are the number of bikes at one location.</p>
 <p>Since we have moved a number of bikes around, let’s start again with a new <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1120,7 +1120,7 @@ corresponding sequence of quantities.</p>
 </div>
 </div>
 </div>
-<p>The number in brackets is the time stamp, also called a <em>label</em>.</p>
+<p>The number in brackets is the timestamp, also called a <em>label</em>.</p>
 <p>We can use a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> inside a for loop to store the results of the simulation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1144,10 +1144,10 @@ Moving a bike to Olin
 </div>
 <p>Each time through the loop, we print the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> and call <code class="docutils literal notranslate"><span class="pre">step</span></code>, which updates <code class="docutils literal notranslate"><span class="pre">bikeshare</span></code>.
 Then we store the number of bikes at Olin in <code class="docutils literal notranslate"><span class="pre">results</span></code>.
-We use the loop variable, <code class="docutils literal notranslate"><span class="pre">i</span></code>, to compute the time stamp, <code class="docutils literal notranslate"><span class="pre">i+1</span></code>.</p>
-<p>The first time through the loop, the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so the time stamp is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-The last time, the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">2</span></code>, so the time stamp is <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
-<p>When the loop exits, <code class="docutils literal notranslate"><span class="pre">results</span></code> contains 4 time stamps, from 0 through
+We use the loop variable, <code class="docutils literal notranslate"><span class="pre">i</span></code>, to compute the timestamp, <code class="docutils literal notranslate"><span class="pre">i+1</span></code>.</p>
+<p>The first time through the loop, the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so the timestamp is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+The last time, the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">2</span></code>, so the timestamp is <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<p>When the loop exits, <code class="docutils literal notranslate"><span class="pre">results</span></code> contains 4 timestamps, from 0 through
 3, and the number of bikes at Olin at the end of each time step.</p>
 <p>We can display the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> like this:</p>
 <div class="cell docutils container">
@@ -1203,7 +1203,7 @@ The last time, the value of <code class="docutils literal notranslate"><span cla
 </table>
 </div></div></div>
 </div>
-<p>The left column is the time stamps; the right column is the quantities.</p>
+<p>The left column is the timestamps; the right column is the quantities.</p>
 </section>
 <section id="plotting">
 <h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">#</a></h2>
@@ -1213,7 +1213,7 @@ the results, and the ModSim library provides <code class="docutils literal notra
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley Bikeshare&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Olin-Wellesley bikeshare&#39;</span><span class="p">,</span>
          <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time step (min)&#39;</span><span class="p">,</span> 
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of bikes&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1355,36 +1355,35 @@ Finally, we used <code class="docutils literal notranslate"><span class="pre">pl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Olin
-Moving a bike to Olin
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moving a bike to Wellesley
 Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
-Moving a bike to Olin
-Moving a bike to Olin
-Moving a bike to Olin
-Moving a bike to Wellesley
-Moving a bike to Wellesley
-Moving a bike to Olin
 Moving a bike to Olin
 Moving a bike to Wellesley
 Moving a bike to Wellesley
 Moving a bike to Olin
 Moving a bike to Wellesley
 Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Olin
 Moving a bike to Olin
 Moving a bike to Olin
 Moving a bike to Wellesley
 Moving a bike to Wellesley
-Moving a bike to Olin
 Moving a bike to Wellesley
 Moving a bike to Olin
 Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Wellesley
+Moving a bike to Olin
+Moving a bike to Wellesley
+Moving a bike to Wellesley
 Moving a bike to Olin
 Moving a bike to Olin
-Moving a bike to Olin
+Moving a bike to Wellesley
 </pre></div>
 </div>
 <img alt="_images/chap02_96_1.png" src="_images/chap02_96_1.png" />
@@ -1408,7 +1407,7 @@ The documentation is at <a class="reference external" href="https://pandas.pydat
 </pre></div>
 </div>
 <p>You can read the documentation of <code class="docutils literal notranslate"><span class="pre">Series.plot</span></code> at <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.html</a>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">decorate</span></code> is based on Matplotlib, which is a widely-used plotting library for Python.  Matplotlib provides separate functions for <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">xlabel</span></code>, and <code class="docutils literal notranslate"><span class="pre">ylabel</span></code>.
+<p><code class="docutils literal notranslate"><span class="pre">decorate</span></code> is based on Matplotlib, which is a widely used plotting library for Python.  Matplotlib provides separate functions for <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">xlabel</span></code>, and <code class="docutils literal notranslate"><span class="pre">ylabel</span></code>.
 <code class="docutils literal notranslate"><span class="pre">decorate</span></code> makes them a little easier to use.
 For the list of keyword arguments you can pass to <code class="docutils literal notranslate"><span class="pre">decorate</span></code>, see <a class="reference external" href="https://matplotlib.org/3.2.2/api/axes_api.html?highlight=axes#module-matplotlib.axes">https://matplotlib.org/3.2.2/api/axes_api.html?highlight=axes#module-matplotlib.axes</a>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">flip</span></code> function uses NumPy’s <code class="docutils literal notranslate"><span class="pre">random</span></code> function to generate a random number between 0 and 1, then returns <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> with the given probability.</p>

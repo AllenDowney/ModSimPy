@@ -536,7 +536,7 @@ that agricultural production could not keep up, and that mass starvation in the 
 <a class="reference external" href="https://modsimpy.com/popbomb">https://modsimpy.com/popbomb</a>). As someone who grew up during those
 decades, I am happy to report that those predictions were wrong.</p>
 <p>But world population growth is still a topic of concern, and it is an
-open question how many people the earth can sustain while maintaining
+open question how many people Earth can sustain while maintaining
 and improving our quality of life.</p>
 <p>In this chapter and the next, we use tools from the previous chapters to model world population growth since 1950 and generate predictions for the next 50-100 years.
 For background on world population growth, watch this video from the
@@ -806,7 +806,7 @@ Name: un, dtype: float64
     <span class="n">census</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;US Census&#39;</span><span class="p">)</span>
     <span class="n">un</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UN DESA&#39;</span><span class="p">)</span>
     <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> 
-             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billion)&#39;</span><span class="p">)</span> 
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;World population (billions)&#39;</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
@@ -1125,7 +1125,7 @@ and add <code class="docutils literal notranslate"><span class="pre">annual_grow
 </div>
 </div>
 </div>
-<p>The values of <code class="docutils literal notranslate"><span class="pre">t</span></code> go from from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, including the first but not the last.</p>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">t</span></code> go from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>, including the first but not the last.</p>
 <p>Inside the loop, we compute the population for the next year by adding the population for the current year and <code class="docutils literal notranslate"><span class="pre">annual_growth</span></code>.</p>
 <p>The last time through the loop, the value of <code class="docutils literal notranslate"><span class="pre">t</span></code> is 2015, so the last label in <code class="docutils literal notranslate"><span class="pre">results</span></code> is 2016.</p>
 <p>Here’s what the results look like, compared to the estimates.</p>

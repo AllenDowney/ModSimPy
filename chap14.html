@@ -754,7 +754,7 @@ column.</p></li>
 </div>
 </div>
 </div>
-<p>For each element of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> is plots a point with the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code> as the <span class="math notranslate nohighlight">\(x\)</span> coordinate and <code class="docutils literal notranslate"><span class="pre">metric</span></code> – which is the fraction of the population that’s infected – as the <span class="math notranslate nohighlight">\(y\)</span> coordinate.</p>
+<p>For each element of the <code class="docutils literal notranslate"><span class="pre">SweepFrame</span></code> it plots a point with the ratio <code class="docutils literal notranslate"><span class="pre">beta/gamma</span></code> as the <span class="math notranslate nohighlight">\(x\)</span> coordinate and <code class="docutils literal notranslate"><span class="pre">metric</span></code> – which is the fraction of the population that’s infected – as the <span class="math notranslate nohighlight">\(y\)</span> coordinate.</p>
 <p>Here’s what it looks like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -798,7 +798,7 @@ contact rate by the infection rate to get the dimensionless quantity
 <p>Replacing <span class="math notranslate nohighlight">\(\beta/\gamma\)</span> with <span class="math notranslate nohighlight">\(c\)</span>, we can write</p>
 <div class="math notranslate nohighlight">
 \[\frac{di}{ds} = -1 + \frac{1}{c s}\]</div>
-<p>Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(c\)</span> that does not depend on time. From that relationship, we can derive an equation that relates <span class="math notranslate nohighlight">\(c\)</span> to the final value of <span class="math notranslate nohighlight">\(s\)</span>. In theory, this equation makes it possible to infer <span class="math notranslate nohighlight">\(c\)</span> by observing the course of an epidemic.</p>
+<p>Dividing one differential equation by another is not an obvious move, but in this case it is useful because it gives us a relationship between <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(s\)</span>, and <span class="math notranslate nohighlight">\(c\)</span> that does not depend on time. From that relationship, we can derive an equation that relates <span class="math notranslate nohighlight">\(c\)</span> to the final value of <span class="math notranslate nohighlight">\(s\)</span>. In theory, this equation makes it possible to infer <span class="math notranslate nohighlight">\(c\)</span> by observing the course of an epidemic.</p>
 <p>Here’s how the derivation goes. We multiply both sides of the previous
 equation by <span class="math notranslate nohighlight">\(ds\)</span>:</p>
 <div class="math notranslate nohighlight">

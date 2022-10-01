@@ -609,7 +609,7 @@ transferred from one to the other. The transferred energy is called
 <a class="reference external" href="http://modsimpy.com/thermass">http://modsimpy.com/thermass</a>):</p>
 <div class="math notranslate nohighlight">
 \[Q = C~\Delta T\]</div>
-<p>where <span class="math notranslate nohighlight">\(Q\)</span> is the amount of heat transferred to an object, <span class="math notranslate nohighlight">\(\Delta T\)</span> is resulting change in temperature, and <span class="math notranslate nohighlight">\(C\)</span> is the object’s <em>thermal mass</em>, which is a property of the object that determines how much energy it takes to heat or cool it. In SI units, thermal mass is measured in joules per degree Celsius (J/°C).</p>
+<p>where <span class="math notranslate nohighlight">\(Q\)</span> is the amount of heat transferred to an object, <span class="math notranslate nohighlight">\(\Delta T\)</span> is the resulting change in temperature, and <span class="math notranslate nohighlight">\(C\)</span> is the object’s <em>thermal mass</em>, which is a property of the object that determines how much energy it takes to heat or cool it. In SI units, thermal mass is measured in joules per degree Celsius (J/°C).</p>
 <p>For objects made primarily from one material, thermal mass can be
 computed like this:</p>
 <div class="math notranslate nohighlight">
@@ -686,7 +686,7 @@ hundred degrees Celsius, say).</p>
 </div>
 </div>
 </div>
-<p>In addition to the parameters, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, the initial time stamp, <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use use to simulate the cooling process.
+<p>In addition to the parameters, <code class="docutils literal notranslate"><span class="pre">make_system</span></code> sets the temperature of the environment, <code class="docutils literal notranslate"><span class="pre">T_env</span></code>, the initial time stamp, <code class="docutils literal notranslate"><span class="pre">t_0</span></code>, and the time step, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, which we will use to simulate the cooling process.
 Here’s a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the coffee.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -749,7 +749,7 @@ use.</p>
 </div>
 </div>
 </div>
-<p>There are a two things here that are different from previous versions of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<p>There are two things here that are different from previous versions of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
 <p>First, we use  <code class="docutils literal notranslate"><span class="pre">linrange</span></code> to make an array of values from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code> with time step <code class="docutils literal notranslate"><span class="pre">dt</span></code>.
 <code class="docutils literal notranslate"><span class="pre">linrange</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">linspace</span></code>; they both take a start value and an end value and return an array of equally spaced values.
 The difference is the third argument: <code class="docutils literal notranslate"><span class="pre">linspace</span></code> takes an integer that indicates the number of points in the range; <code class="docutils literal notranslate"><span class="pre">linrange</span></code> takes a step size that indicates the interval between values.
@@ -894,7 +894,7 @@ Here are the first few rows:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;coffee&#39;</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (minute)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Temperature (C)&#39;</span><span class="p">,</span>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Coffee Cooling&#39;</span><span class="p">)</span>
 </pre></div>
@@ -917,7 +917,7 @@ Here are the first few rows:</p>
 </div>
 </div>
 </div>
-<p>To find the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> where the final temperature is precisely 70 °C, we could proceed by by trial and error, but it is more efficient to use a root-finding algorithm.</p>
+<p>To find the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> where the final temperature is precisely 70 °C, we could proceed by trial and error, but it is more efficient to use a root-finding algorithm.</p>
 </section>
 <section id="finding-roots">
 <h2>Finding Roots<a class="headerlink" href="#finding-roots" title="Permalink to this headline">#</a></h2>
@@ -1118,7 +1118,7 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 
 <span class="n">results_milk</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;milk&#39;</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (minutes)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Temperature (C)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>

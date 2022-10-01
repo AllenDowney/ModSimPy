@@ -561,7 +561,7 @@ title="Print to PDF"
 <p>To paraphrase two Georges, “All models are wrong, but some models are
 more wrong than others.” This chapter demonstrates the process we
 use to make models less wrong.</p>
-<p>As an example, we’ll review the bikeshare model from the previous
+<p>As an example, we’ll review the bike share model from the previous
 chapter, consider its strengths and weaknesses, and gradually improve
 it. We’ll also see ways to use the model to understand the behavior of
 the system and evaluate designs intended to make it work better.</p>
@@ -723,7 +723,7 @@ negative. That’s not very realistic.</p>
 </div>
 </div>
 <p>The first line checks whether the number of bikes at Wellesley is zero. If so, it uses a <em>return statement</em>, which causes the function to end immediately, without running the rest of the statements. So if there are no bikes at Wellesley, we return from <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> without changing the state.</p>
-<p>We can test it by initializing the state with no bikes at Wellesley And calling <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>.</p>
+<p>We can test it by initializing the state with no bikes at Wellesley and calling <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bikeshare</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">olin</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">wellesley</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -778,7 +778,7 @@ negative. That’s not very realistic.</p>
 </section>
 <section id="comparison-operators">
 <h2>Comparison Operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">#</a></h2>
-<p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code>, if they are equal, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>The updated version of <code class="docutils literal notranslate"><span class="pre">bike_to_olin</span></code> uses the equals operator, <code class="docutils literal notranslate"><span class="pre">==</span></code>, which compares two values and returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if they are equal, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>It is easy to confuse the equals operator with the assignment operator, <code class="docutils literal notranslate"><span class="pre">=</span></code>, which assigns a value to a variable. For example, the following statement creates a variable, <code class="docutils literal notranslate"><span class="pre">x</span></code>, if it doesn’t already exist, and gives it the value <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

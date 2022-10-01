@@ -910,7 +910,7 @@ turntable stops; that is, when angular velocity is 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8708596517490179
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8708596517490182
 </pre></div>
 </div>
 </div>
@@ -934,11 +934,11 @@ turntable stops; that is, when angular velocity is 0.</p>
 </section>
 <section id="combining-the-results">
 <h3>Combining the Results<a class="headerlink" href="#combining-the-results" title="Permalink to this headline">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> provides <code class="docutils literal notranslate"><span class="pre">append</span></code>, which appends <code class="docutils literal notranslate"><span class="pre">results2</span></code> to the end of
-<code class="docutils literal notranslate"><span class="pre">results1</span></code>.</p>
+<p>Pandas provides a function called <code class="docutils literal notranslate"><span class="pre">concat</span></code>, which makes a
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> with the rows from <code class="docutils literal notranslate"><span class="pre">results1</span></code> followed by the rows from <code class="docutils literal notranslate"><span class="pre">results2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">results1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">results1</span><span class="p">,</span> <span class="n">results2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -997,7 +997,7 @@ turntable stops; that is, when angular velocity is 0.</p>
     <tr>
       <th>3.827636</th>
       <td>1.666667</td>
-      <td>-1.110223e-16</td>
+      <td>-2.220446e-16</td>
     </tr>
   </tbody>
 </table>
@@ -1060,7 +1060,7 @@ due to friction.</p>
                                        <span class="n">events</span><span class="o">=</span><span class="n">event_func2</span><span class="p">)</span>
     
     <span class="c1"># combine and return the results</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">results1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results2</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">results1</span><span class="p">,</span> <span class="n">results2</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">results</span>
 </pre></div>
 </div>
@@ -1123,7 +1123,7 @@ due to friction.</p>
     <tr>
       <th>3.827636</th>
       <td>1.666667</td>
-      <td>-1.110223e-16</td>
+      <td>-2.220446e-16</td>
     </tr>
   </tbody>
 </table>
@@ -1158,10 +1158,10 @@ With <code class="docutils literal notranslate"><span class="pre">torque_frictio
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.6666666666666663
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1666666666666663
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16666666666666896
 </pre></div>
 </div>
 </div>
@@ -1191,13 +1191,13 @@ With <code class="docutils literal notranslate"><span class="pre">torque_frictio
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.6666666666666663
-0.3 1.6666666666666663
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 1.666666666666669
+0.3 1.666666666666669
 0.4 1.2499999999999996
-0.3399999999999999 1.4705882352941178
-0.3339999999999999 1.4970059880239512
-0.3333319999999997 1.5000060000239999
-0.3333486666009997 1.4999310034693287
+0.3400000000000003 1.4705882352941169
+0.3340000000000002 1.4970059880239517
+0.3333320000000001 1.5000060000239976
+0.3333486666010001 1.4999310034693254
 </pre></div>
 </div>
 </div>
@@ -1211,7 +1211,7 @@ With <code class="docutils literal notranslate"><span class="pre">torque_frictio
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333319999999997
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333320000000001
 </pre></div>
 </div>
 </div>
@@ -1335,10 +1335,10 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239999
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.14158665356579325
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.14158665356579547
 </pre></div>
 </div>
 </div>
@@ -1353,10 +1353,10 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0 2.250009000036007
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0 2.250009000035999
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.608416346446214
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.608416346446206
 </pre></div>
 </div>
 </div>
@@ -1370,11 +1370,11 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239999
-2.0 1.5000060000239999
-3.0 2.250009000036007
-2.18878144962557 1.6415926535897978
-2.188672010552089 1.6415105739563627
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0 1.5000060000239976
+2.0 1.5000060000239976
+3.0 2.250009000035999
+2.1887814496255746 1.641592653589789
+2.188890888699056 1.6416747332232227
 </pre></div>
 </div>
 </div>
@@ -1391,7 +1391,7 @@ Run the simulation with the force you computed and confirm that the table stops 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.1415926535897976
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.1415926535897887
 </pre></div>
 </div>
 </div>
