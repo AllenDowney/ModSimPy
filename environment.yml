@@ -1,13 +1,11 @@
 name: ModSimPy
 channels:
   - conda-forge
-  - defaults
 dependencies:
-  - python=3.7
+  - python
   - jupyter
   - numpy
   - matplotlib
-  - seaborn
   - pandas
   - scipy
   - pint
@@ -16,7 +14,8 @@ dependencies:
   - html5lib
   - beautifulsoup4
   - pytables
-  - yapf
   - pip
-  - pip:
-      - modsimpy
+
+# pip install pytest nbmake
+# pip install jupyter-book ghp-import
+# pip install pypandoc fastdoc
