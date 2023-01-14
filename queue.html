@@ -1,0 +1,1129 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>One Queue or Two &#8212; Modeling and Simulation in Python</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Under the Hood" href="chap27.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Modeling and Simulation in Python</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Modeling and Simulation in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Chapters
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   Preface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap01.html">
+   Modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap02.html">
+   Bike Share System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap03.html">
+   Iteration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap04.html">
+   Sweeping Parameters
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap05.html">
+   World Population
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap06.html">
+   Proportional Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap07.html">
+   Limits to Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap08.html">
+   Projecting Population Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap09.html">
+   Analysis of Population Growth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap10.html">
+   Case Studies Part 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap11.html">
+   Epidemiology
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap12.html">
+   Modeling Vaccination
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap13.html">
+   Sweeping Parameters
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap14.html">
+   Nondimensionalization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap15.html">
+   Cooling Coffee
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap16.html">
+   Adding Milk
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap17.html">
+   Pharmacokinetics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap18.html">
+   Glucose and Insulin
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap19.html">
+   Case Studies Part 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap20.html">
+   The Empire State Building Strikes Back
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap21.html">
+   Drag
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap22.html">
+   Baseball
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap23.html">
+   Optimal Baseball
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap24.html">
+   Rotation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap25.html">
+   Torque
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap26.html">
+   Case Studies Part 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chap27.html">
+   Under the Hood
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   One Queue or Two
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/AllenDowney/ModSimPy/master?urlpath=tree/queue.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/AllenDowney/ModSimPy"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/queue.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-server-one-queue">
+   One server, one queue
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parameter-sweep">
+     Parameter sweep
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-servers">
+   Multiple servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-queues">
+   Multiple queues
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>One Queue or Two</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-server-one-queue">
+   One server, one queue
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parameter-sweep">
+     Parameter sweep
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-servers">
+   Multiple servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-queues">
+   Multiple queues
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="one-queue-or-two">
+<h1>One Queue or Two<a class="headerlink" href="#one-queue-or-two" title="Permalink to this headline">#</a></h1>
+<p>This notebook presents a case study from <em>Modeling and Simulation in Python</em>.  It explores a question related to queueing theory, which is the study of systems that involve waiting in lines, also known as “queues”.</p>
+<p>Suppose you are designing the checkout area for a new store.  There is room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that serves both counters.</p>
+<p>In theory, you might expect a single line to be better, but it has some practical drawbacks: in order to maintain a single line, you would have to install rope barriers, and customers might be put off by what seems to be a longer line, even if it moves faster.</p>
+<p>So you’d like to check whether the single line is really better and by how much.  Simulation can help answer this question.</p>
+<p>As we did in the bikeshare model, we’ll assume that a customer is equally likely to arrive during any timestep.  I’ll denote this probability using the Greek letter lambda, <span class="math notranslate nohighlight">\(\lambda\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">lam</span></code>.  The value of <span class="math notranslate nohighlight">\(\lambda\)</span> probably varies from day to day, so we’ll have to consider a range of possibilities.</p>
+<p>Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are highly variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they have the same probability of finishing up during each time step.  I’ll denote this probability using the Greek letter mu, <span class="math notranslate nohighlight">\(\mu\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
+<p>If we choose <span class="math notranslate nohighlight">\(\mu=1/5\)</span>, the average number of time steps for each checkout will be 5 minutes, which is consistent with the data.</p>
+<section id="one-server-one-queue">
+<h2>One server, one queue<a class="headerlink" href="#one-server-one-queue" title="Permalink to this headline">#</a></h2>
+<p>Write a function called <code class="docutils literal notranslate"><span class="pre">make_system</span></code> that takes <code class="docutils literal notranslate"><span class="pre">lam</span></code> and <code class="docutils literal notranslate"><span class="pre">mu</span></code> as parameters and returns a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with variables <code class="docutils literal notranslate"><span class="pre">lam</span></code>, <code class="docutils literal notranslate"><span class="pre">mu</span></code>, and <code class="docutils literal notranslate"><span class="pre">duration</span></code>.  Set <code class="docutils literal notranslate"><span class="pre">duration</span></code>, which is the number of time steps to simulate, to 10 hours, expressed in minutes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">modsim</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a System object.</span>
+<span class="sd">    </span>
+<span class="sd">    lam: arrival rate, per minute</span>
+<span class="sd">    mu: service completion rate, per minute</span>
+<span class="sd">    </span>
+<span class="sd">    returns: System object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># duration is 10 hours, expressed in minutes</span>
+    <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> 
+                  <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> 
+                  <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test this function by creating a <code class="docutils literal notranslate"><span class="pre">System</span></code> object with <code class="docutils literal notranslate"><span class="pre">lam=1/8</span></code> and <code class="docutils literal notranslate"><span class="pre">mu=1/5</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">interarrival_time</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">service_time</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">lam</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">interarrival_time</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">service_time</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Write an update function that takes as parameters <code class="docutils literal notranslate"><span class="pre">x</span></code>, which is the total number of customer in the store, including the one checking out; <code class="docutils literal notranslate"><span class="pre">t</span></code>, which is the number of minutes that have elapsed in the simulation, and <code class="docutils literal notranslate"><span class="pre">system</span></code>, which is a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>If there’s a customer checking out, it should use <code class="docutils literal notranslate"><span class="pre">flip</span></code> to decide whether they are done.  And it should use <code class="docutils literal notranslate"><span class="pre">flip</span></code> to decide if a new customer has arrived.</p>
+<p>It should return the total number of customers at the end of the time step.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">update_func1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    x: number of people in the shop</span>
+<span class="sd">    t: time step</span>
+<span class="sd">    system: System object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if there&#39;s a customer in service, check if they&#39;re done</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+            
+    <span class="c1"># check for an arrival</span>
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">lam</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test your function by calling it with <code class="docutils literal notranslate"><span class="pre">x=1</span></code>, <code class="docutils literal notranslate"><span class="pre">t=0</span></code>, and the <code class="docutils literal notranslate"><span class="pre">System</span></code> object you created.  If you run it a few times, you should see different results.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">update_func1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can run the simulation.  Here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that creates a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> with the total number of customers in the store, including the one checking out.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate a queueing system.</span>
+<span class="sd">    </span>
+<span class="sd">    system: System object</span>
+<span class="sd">    update_func: function object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Queue length&#39;</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">linrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">duration</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Call <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> with your update function and plot the results.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func1</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Customers&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/queue_16_0.png" src="_images/queue_16_0.png" />
+</div>
+</div>
+<p>After the simulation, we can compute <code class="docutils literal notranslate"><span class="pre">L</span></code>, which is the average number of customers in the system, and <code class="docutils literal notranslate"><span class="pre">W</span></code>, which is the average time customers spend in the store.  <code class="docutils literal notranslate"><span class="pre">L</span></code> and <code class="docutils literal notranslate"><span class="pre">W</span></code> are related by Little’s Law:</p>
+<p><span class="math notranslate nohighlight">\(L = \lambda W\)</span></p>
+<p>Where <span class="math notranslate nohighlight">\(\lambda\)</span> is the arrival rate.  Here’s a function that computes them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute average number of customers and wait time.</span>
+<span class="sd">    </span>
+<span class="sd">    results: TimeSeries of queue lengths</span>
+<span class="sd">    system: System object</span>
+<span class="sd">    </span>
+<span class="sd">    returns: L, W</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">lam</span>
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">W</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Call <code class="docutils literal notranslate"><span class="pre">compute_metrics</span></code> with the results from your simulation.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.669435215946844, 13.355481727574752)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="parameter-sweep">
+<h3>Parameter sweep<a class="headerlink" href="#parameter-sweep" title="Permalink to this headline">#</a></h3>
+<p>Since we don’t know the actual value of <span class="math notranslate nohighlight">\(\lambda\)</span>, we can sweep through a range of possibilities, from 10% to 80% of the completion rate, <span class="math notranslate nohighlight">\(\mu\)</span>.  (If customers arrive faster than the completion rate, the queue grows without bound.  In that case the metrics <code class="docutils literal notranslate"><span class="pre">L</span></code> and <code class="docutils literal notranslate"><span class="pre">W</span></code> just depend on how long the store is open.)</p>
+<p>Create an array of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">num_vals</span> <span class="o">=</span> <span class="mi">101</span>
+<span class="n">lam_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="mf">0.8</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="n">num_vals</span><span class="p">)</span>
+<span class="n">lam_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.02  , 0.0214, 0.0228, 0.0242, 0.0256, 0.027 , 0.0284, 0.0298,
+       0.0312, 0.0326, 0.034 , 0.0354, 0.0368, 0.0382, 0.0396, 0.041 ,
+       0.0424, 0.0438, 0.0452, 0.0466, 0.048 , 0.0494, 0.0508, 0.0522,
+       0.0536, 0.055 , 0.0564, 0.0578, 0.0592, 0.0606, 0.062 , 0.0634,
+       0.0648, 0.0662, 0.0676, 0.069 , 0.0704, 0.0718, 0.0732, 0.0746,
+       0.076 , 0.0774, 0.0788, 0.0802, 0.0816, 0.083 , 0.0844, 0.0858,
+       0.0872, 0.0886, 0.09  , 0.0914, 0.0928, 0.0942, 0.0956, 0.097 ,
+       0.0984, 0.0998, 0.1012, 0.1026, 0.104 , 0.1054, 0.1068, 0.1082,
+       0.1096, 0.111 , 0.1124, 0.1138, 0.1152, 0.1166, 0.118 , 0.1194,
+       0.1208, 0.1222, 0.1236, 0.125 , 0.1264, 0.1278, 0.1292, 0.1306,
+       0.132 , 0.1334, 0.1348, 0.1362, 0.1376, 0.139 , 0.1404, 0.1418,
+       0.1432, 0.1446, 0.146 , 0.1474, 0.1488, 0.1502, 0.1516, 0.153 ,
+       0.1544, 0.1558, 0.1572, 0.1586, 0.16  ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Write a function that takes an array of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>, a single value for <code class="docutils literal notranslate"><span class="pre">mu</span></code>, and an update function.</p>
+<p>For each value of <code class="docutils literal notranslate"><span class="pre">lam</span></code>, it should run a simulation, compute <code class="docutils literal notranslate"><span class="pre">L</span></code> and <code class="docutils literal notranslate"><span class="pre">W</span></code>, and store the value of <code class="docutils literal notranslate"><span class="pre">W</span></code> in a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+<p>It should return the <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">sweep_lam</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run simulations with a range of values for `lam`</span>
+<span class="sd">    </span>
+<span class="sd">    lam_array: array of values for `lam`</span>
+<span class="sd">    mu: probability of finishing a checkout</span>
+<span class="sd">    update_func: passed along to run_simulation</span>
+<span class="sd">    </span>
+<span class="sd">    returns: SweepSeries of average wait time vs lam</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">lam</span> <span class="ow">in</span> <span class="n">lam_array</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">)</span>
+        <span class="n">L</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">sweep</span><span class="p">[</span><span class="n">lam</span><span class="p">]</span> <span class="o">=</span> <span class="n">W</span>
+        
+    <span class="k">return</span> <span class="n">sweep</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Call your function to generate a <code class="docutils literal notranslate"><span class="pre">SweepSeries</span></code>, and plot it.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">sweep_lam</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">update_func1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Single server, single queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/queue_27_0.png" src="_images/queue_27_0.png" />
+</div>
+</div>
+<p>If we imagine that this range of values represents arrival rates on different days, we can use the average value of <code class="docutils literal notranslate"><span class="pre">W</span></code>, for a range of values of <code class="docutils literal notranslate"><span class="pre">lam</span></code>, to compare different queueing strategies.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">W_avg</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">W_avg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.9408555214658
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h3>
+<p>The model I chose for this system is a common model in queueing theory, in part because many of its properties can be derived analytically.</p>
+<p>In particular, we can derive the average time in the store as a function of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(W = 1 / (\mu - \lambda)\)</span></p>
+<p>The following function plots the theoretical value of <span class="math notranslate nohighlight">\(W\)</span> as a function of <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_W</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the theoretical mean wait time.</span>
+<span class="sd">    </span>
+<span class="sd">    lam_array: array of values for `lam`</span>
+<span class="sd">    mu: probability of finishing a checkout</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">W_array</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">lam_array</span><span class="p">)</span>
+    <span class="n">W_series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">W_array</span><span class="p">)</span>
+    <span class="n">W_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;analysis&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use this function to plot the theoretical results, then plot your simulation results again on the same graph.  How do they compare?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+<span class="n">plot_W</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Single server, single queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/queue_33_0.png" src="_images/queue_33_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="multiple-servers">
+<h2>Multiple servers<a class="headerlink" href="#multiple-servers" title="Permalink to this headline">#</a></h2>
+<p>Now let’s try the other two queueing strategies:</p>
+<ol class="simple">
+<li><p>One queue with two checkout counters.</p></li>
+<li><p>Two queues, one for each counter.</p></li>
+</ol>
+<p>The following figure shows the three scenarios:</p>
+<p><img alt="" src="https://github.com/AllenDowney/ModSim/raw/main/figs/queue.png" /></p>
+<p>Write an update function for one queue with two servers.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">update_func2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate a single queue with two servers.</span>
+<span class="sd">    </span>
+<span class="sd">    system: System object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if both servers are busy, check whether the</span>
+    <span class="c1"># second is complete</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+            
+    <span class="c1"># check whether the first is complete</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+    
+    <span class="c1"># check for an arrival</span>
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">lam</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use this update function to simulate the system, plot the results, and print the metrics.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+<span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func2</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Customers&#39;</span><span class="p">)</span>
+<span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.669435215946844, 13.355481727574752)
+</pre></div>
+</div>
+<img alt="_images/queue_37_1.png" src="_images/queue_37_1.png" />
+</div>
+</div>
+<p>Since we have two checkout counters now, we can consider values for <span class="math notranslate nohighlight">\(\lambda\)</span> that exceed <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+<p>Create a new array of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code> from 10% to 160% of <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">lam_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="mf">1.6</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="n">num_vals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use your sweep function to simulate the two server, one queue scenario with a range of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
+<p>Plot the results and print the average value of <code class="docutils literal notranslate"><span class="pre">W</span></code> across all values of <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">sweep_lam</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">update_func2</span><span class="p">)</span>
+<span class="n">W_avg</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average of averages = &#39;</span><span class="p">,</span> <span class="n">W_avg</span><span class="p">,</span> <span class="s1">&#39;minutes&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Multiple server, single queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-queues">
+<h2>Multiple queues<a class="headerlink" href="#multiple-queues" title="Permalink to this headline">#</a></h2>
+<p>To simulate the scenario with two separate queues, we need two state variables to keep track of customers in each queue.</p>
+<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters and returns <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> as return values.  f you are not sure how to return more than one return value, see <code class="docutils literal notranslate"><span class="pre">compute_metrics</span></code>.</p>
+<p>When a customer arrives, which queue do they join?</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">update_func3</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate two queues with one server each.</span>
+<span class="sd">    </span>
+<span class="sd">    x1: number of customers in queue 1</span>
+<span class="sd">    x2: number of customers in queue 2</span>
+<span class="sd">    t: time step</span>
+<span class="sd">    system: System object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if the first servers is busy, check it it&#39;s done</span>
+    <span class="k">if</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+        <span class="n">x1</span> <span class="o">-=</span> <span class="mi">1</span>
+            
+    <span class="c1"># if the second queue is busy, check if it&#39;s done</span>
+    <span class="k">if</span> <span class="n">x2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+        <span class="n">x2</span> <span class="o">-=</span> <span class="mi">1</span>
+            
+    <span class="c1"># check for an arrival</span>
+    <span class="k">if</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">lam</span><span class="p">):</span>
+        <span class="c1"># join whichever queue is shorter</span>
+        <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x2</span><span class="p">:</span>
+            <span class="n">x1</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x2</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+    <span class="k">return</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Write a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that works with this update function.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate a queueing system.</span>
+<span class="sd">    </span>
+<span class="sd">    system: System object</span>
+<span class="sd">    update_func: function object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">linrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">duration</span><span class="p">):</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test your functions by running a simulation with a single value of <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+<span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func3</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Customers&#39;</span><span class="p">)</span>
+<span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sweep a range of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>, plot the results, and print the average wait time across all values of <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
+<p>How do the results compare to the scenario with two servers and one queue.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">sweep_lam</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">update_func3</span><span class="p">)</span>
+<span class="n">W_avg</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average of averages = &#39;</span><span class="p">,</span> <span class="n">W_avg</span><span class="p">,</span> <span class="s1">&#39;minutes&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Multiple server, multiple queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">With two queues, the average of averages is slightly higher, </span>
+<span class="sd">most of the time.  But the difference is small.</span>
+
+<span class="sd">The two configurations are equally good as long as both servers </span>
+<span class="sd">are busy; the only time two lines is worse is if one queue is </span>
+<span class="sd">empty and the other contains more than one customer.  </span>
+<span class="sd">In real life, if we allow customers to change lanes, </span>
+<span class="sd">that disadvantage can be eliminated.</span>
+
+<span class="sd">From a theoretical point of view, one line is better.  </span>
+<span class="sd">From a practical point of view, the difference is small </span>
+<span class="sd">and can be mitigated.  So the best choice depends on </span>
+<span class="sd">practical considerations.</span>
+
+<span class="sd">On the other hand, you can do substantially better with </span>
+<span class="sd">an express line for customers with short service times.  </span>
+<span class="sd">But that&#39;s a topic for another notebook.</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Modeling and Simulation in Python</em></p>
+<p>Copyright 2021 Allen Downey</p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="chap27.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Under the Hood</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Allen B. Downey<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

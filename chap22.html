@@ -110,7 +110,12 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Chapters
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -249,6 +254,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="chap27.html">
    Under the Hood
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="queue.html">
+   One Queue or Two
   </a>
  </li>
 </ul>
@@ -1015,7 +1032,7 @@ As usual, <code class="docutils literal notranslate"><span class="pre">g</span><
 
 <span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
     
-    <span class="c1"># convert angle to degrees</span>
+    <span class="c1"># convert angle to radians</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
     
     <span class="c1"># compute x and y components of velocity</span>
@@ -1042,7 +1059,7 @@ velocity.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are the components of position.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> are the components of velocity.</p></li>
 </ul>
-<p>When we call <code class="docutils literal notranslate"><span class="pre">System</span></code>, we pass <code class="docutils literal notranslate"><span class="pre">Params</span></code> as the first argument, which means that the variables in <code class="docutils literal notranslate"><span class="pre">Params</span></code> are copied to the new <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
+<p>When we call <code class="docutils literal notranslate"><span class="pre">System</span></code>, we pass <code class="docutils literal notranslate"><span class="pre">params</span></code> as the first argument, which means that the variables in <code class="docutils literal notranslate"><span class="pre">params</span></code> are copied to the new <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <p>Here’s how we make the <code class="docutils literal notranslate"><span class="pre">System</span></code> object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1193,7 +1210,7 @@ and the drag equation to compute the magnitude of the drag force, <code class="d
 <p>As usual, the parameters of the slope function are a time stamp, a <code class="docutils literal notranslate"><span class="pre">State</span></code> object, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object.
 We don’t use <code class="docutils literal notranslate"><span class="pre">t</span></code> in this example, but we can’t leave it out because when <code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> calls the slope function, it always provides the same arguments, whether they are needed or not.</p>
 <p><code class="docutils literal notranslate"><span class="pre">slope_func</span></code> unpacks the <code class="docutils literal notranslate"><span class="pre">State</span></code> object into variables <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">vx</span></code>, and <code class="docutils literal notranslate"><span class="pre">vy</span></code>.
-Then it packs <code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> into a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>, which it uses to compute drag force, <code class="docutils literal notranslate"><span class="pre">f_drag</span></code>,  and acceleration due to drag, <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>.</p>
+Then it packs <code class="docutils literal notranslate"><span class="pre">vx</span></code> and <code class="docutils literal notranslate"><span class="pre">vy</span></code> into a <code class="docutils literal notranslate"><span class="pre">Vector</span></code>, which it uses to compute acceleration due to drag, <code class="docutils literal notranslate"><span class="pre">a_drag</span></code>.</p>
 <p>To represent acceleration due to gravity, it makes a <code class="docutils literal notranslate"><span class="pre">Vector</span></code> with magnitude <code class="docutils literal notranslate"><span class="pre">g</span></code> in the negative <span class="math notranslate nohighlight">\(y\)</span> direction.</p>
 <p>The total acceleration of the baseball, <code class="docutils literal notranslate"><span class="pre">A</span></code>, is the sum of accelerations due to gravity and drag.</p>
 <p>The return value is a sequence that contains:</p>
@@ -1298,35 +1315,35 @@ Here are the last few rows.</p>
     <tr>
       <th>4.804692</th>
       <td>96.438515</td>
-      <td>4.284486e+00</td>
+      <td>4.284486</td>
       <td>14.590855</td>
       <td>-20.726780</td>
     </tr>
     <tr>
       <th>4.854740</th>
       <td>97.166460</td>
-      <td>3.238415e+00</td>
+      <td>3.238415</td>
       <td>14.484772</td>
       <td>-21.065476</td>
     </tr>
     <tr>
       <th>4.904789</th>
       <td>97.889087</td>
-      <td>2.175515e+00</td>
+      <td>2.175515</td>
       <td>14.378566</td>
       <td>-21.400392</td>
     </tr>
     <tr>
       <th>4.954838</th>
       <td>98.606374</td>
-      <td>1.095978e+00</td>
+      <td>1.095978</td>
       <td>14.272264</td>
       <td>-21.731499</td>
     </tr>
     <tr>
       <th>5.004887</th>
       <td>99.318296</td>
-      <td>-7.105427e-15</td>
+      <td>0.000000</td>
       <td>14.165894</td>
       <td>-22.058763</td>
     </tr>
@@ -1343,7 +1360,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.004887034868351
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.004887034868346
 </pre></div>
 </div>
 </div>
@@ -1381,19 +1398,19 @@ Here are the last few rows.</p>
   <tbody>
     <tr>
       <th>x</th>
-      <td>9.931830e+01</td>
+      <td>99.318296</td>
     </tr>
     <tr>
       <th>y</th>
-      <td>-7.105427e-15</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>vx</th>
-      <td>1.416589e+01</td>
+      <td>14.165894</td>
     </tr>
     <tr>
       <th>vy</th>
-      <td>-2.205876e+01</td>
+      <td>-22.058763</td>
     </tr>
   </tbody>
 </table>
@@ -1408,7 +1425,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99.31829628352206
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99.31829628352207
 </pre></div>
 </div>
 </div>
@@ -1464,7 +1481,7 @@ Here are the last few rows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.215674453237636
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.215674453237572
 </pre></div>
 </div>
 </div>
@@ -1523,7 +1540,7 @@ With a launch angle of 45°, the landing angle is closer to vertical, about 57°
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-57.2918709782124
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-57.29187097821225
 </pre></div>
 </div>
 </div>
@@ -1630,7 +1647,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>164.25925502413202
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>164.2592550241319
 </pre></div>
 </div>
 </div>
@@ -1644,7 +1661,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64.94095874060996
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64.94095874060983
 </pre></div>
 </div>
 </div>
@@ -1675,7 +1692,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>105.78838005859807
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>105.78838005859785
 </pre></div>
 </div>
 </div>
@@ -1689,7 +1706,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.470083775076006
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.4700837750757785
 </pre></div>
 </div>
 </div>
@@ -1700,6 +1717,19 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <p>The model so far is based on the assumption that coefficient of drag does not depend on velocity, but in reality it does.  The following figure, from Adair, <em>The Physics of Baseball</em>, shows coefficient of drag as a function of velocity (see <a class="reference external" href="https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC">https://books.google.com/books/about/The_Physics_of_Baseball.html?id=4xE4Ngpk_2EC</a>).</p>
 <p><img alt="Graph of drag coefficient versus velocity" src="https://github.com/AllenDowney/ModSimPy/raw/master/figs/baseball_drag.png" /></p>
 <p>I used an online graph digitizer (<a class="reference external" href="https://automeris.io/WebPlotDigitizer">https://automeris.io/WebPlotDigitizer</a>) to extract the data and save it in a CSV file.</p>
+<p>Here’s what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C_d_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;$C_d$&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Speed (m/s)&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Coefficient of drag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chap22_106_0.png" src="_images/chap22_106_0.png" />
+</div>
+</div>
 <p>Modify the model to include the dependence of <code class="docutils literal notranslate"><span class="pre">C_d</span></code> on velocity, and see how much it affects the results.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -1920,7 +1950,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289012
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.111649717289026
 </pre></div>
 </div>
 </div>

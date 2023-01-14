@@ -110,7 +110,12 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Chapters
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -249,6 +254,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="chap27.html">
    Under the Hood
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="queue.html">
+   One Queue or Two
   </a>
  </li>
 </ul>
@@ -817,7 +834,7 @@ The <code class="docutils literal notranslate"><span class="pre">label</span></c
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_estimates</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;World Population Estimates&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;World population estimates&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1133,7 +1150,7 @@ and add <code class="docutils literal notranslate"><span class="pre">annual_grow
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
 <span class="n">plot_estimates</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant growth model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1210,7 +1227,7 @@ The model fits recent data pretty well; nevertheless, there are two reasons we s
 
 <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
 <span class="n">plot_estimates</span><span class="p">()</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant Growth Model, t1=1970&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Constant growth model, t1=1970&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

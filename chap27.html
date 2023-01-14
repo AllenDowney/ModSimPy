@@ -54,6 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="One Queue or Two" href="queue.html" />
     <link rel="prev" title="Case Studies Part 3" href="chap26.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -109,7 +110,12 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Chapters
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="preface.html">
    Preface
@@ -248,6 +254,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Under the Hood
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="queue.html">
+   One Queue or Two
   </a>
  </li>
 </ul>
@@ -497,7 +515,7 @@ If you know how they work, at least in a general sense, you might find it easier
 <p>And if nothing else, I have found that I can remember how to use these tools more easily because I know something about how they work.</p>
 <section id="how-run-solve-ivp-works">
 <h2>How run_solve_ivp Works<a class="headerlink" href="#how-run-solve-ivp-works" title="Permalink to this headline">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is a function in the ModSimPy library that checks for common errors in the parameters and then calls <code class="docutils literal notranslate"><span class="pre">solve_ip</span></code>, which is the function in the SciPy library that does the actual work.</p>
+<p><code class="docutils literal notranslate"><span class="pre">run_solve_ivp</span></code> is a function in the ModSimPy library that checks for common errors in the parameters and then calls <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code>, which is the function in the SciPy library that does the actual work.</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> uses the <em>Dormand-Prince method</em>, which is a kind of <em>Runge-Kutta method</em>. You can read about it at
 <a class="reference external" href="https://en.wikipedia.org/wiki/Dormand-Prince_method">https://en.wikipedia.org/wiki/Dormand-Prince_method</a>, but I’ll give you a sense of
 it here.</p>
@@ -865,6 +883,13 @@ read about a better option at <a class="reference external" href="https://greent
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Case Studies Part 3</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="queue.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">One Queue or Two</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
