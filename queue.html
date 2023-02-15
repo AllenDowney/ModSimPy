@@ -617,7 +617,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
@@ -689,7 +689,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.669435215946844, 13.355481727574752)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
 </pre></div>
 </div>
 </div>
@@ -771,7 +771,7 @@ title="Print to PDF"
 
 <span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival rate, lambda (per min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Single server, single queue&#39;</span><span class="p">)</span>
 </pre></div>
@@ -792,7 +792,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.9408555214658
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.813268411321534
 </pre></div>
 </div>
 </div>
@@ -827,7 +827,7 @@ title="Print to PDF"
 <span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
 <span class="n">plot_W</span><span class="p">(</span><span class="n">lam_array</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
 
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival rate, lambda (per min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Single server, single queue&#39;</span><span class="p">)</span>
 </pre></div>
@@ -890,7 +890,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.669435215946844, 13.355481727574752)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
 </pre></div>
 </div>
 <img alt="_images/queue_37_1.png" src="_images/queue_37_1.png" />
@@ -919,17 +919,25 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.326606263998706 minutes
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival rate, lambda (per min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Multiple server, single queue&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/queue_42_0.png" src="_images/queue_42_0.png" />
 </div>
 </div>
 </section>
@@ -1008,6 +1016,12 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
+</pre></div>
+</div>
+<img alt="_images/queue_48_1.png" src="_images/queue_48_1.png" />
+</div>
 </div>
 <p>Sweep a range of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>, plot the results, and print the average wait time across all values of <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
 <p>How do the results compare to the scenario with two servers and one queue.</p>
@@ -1021,17 +1035,25 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.638371020327574 minutes
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">sweep</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;simulation&#39;</span><span class="p">)</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival late, lambda (per min)&#39;</span><span class="p">,</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Arrival rate, lambda (per min)&#39;</span><span class="p">,</span>
          <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Average time in system&#39;</span><span class="p">,</span>
          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Multiple server, multiple queue&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/queue_51_0.png" src="_images/queue_51_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-cell docutils container">
