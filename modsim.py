@@ -609,7 +609,7 @@ def remove_units(namespace):
     return res
 
 
-def remove_units_series(series):
+def remove_units_series(series: pd.Series):
     """Removes units from the values in a Series.
 
     Only removes units from top-level values;
@@ -618,7 +618,7 @@ def remove_units_series(series):
     returns: new Series object
     """
     res = copy(series)
-    for label, value in res.iteritems():
+    for label, value in res.items():
         res[label] = magnitude(value)
     return res
 
