@@ -618,7 +618,7 @@ def remove_units_series(series):
     returns: new Series object
     """
     res = copy(series)
-    for label, value in res.iteritems():
+    for label, value in res.items():
         res[label] = magnitude(value)
     return res
 
