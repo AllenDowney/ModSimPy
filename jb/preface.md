@@ -75,7 +75,7 @@ Some features in the ModSim library are like training wheels; at some
 point you will probably stop using them and start working with the
 underlying libraries directly. Other features you might find useful the whole time you are working through the book, and later.
 
-I encourage you to read the the ModSim library code. Most of it is not
+I encourage you to read the ModSim library code. Most of it is not
 complicated, and I tried to make it readable. Particularly if you have
 some programming experience, you might learn something by reverse
 engineering my design decisions.

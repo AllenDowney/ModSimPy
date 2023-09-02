@@ -1,8 +1,8 @@
 # Modeling and Simulation in Python
 
-[Read the book and run the code](https://allendowney.github.io/ModSimPy/).
+Order the book from [No Starch Press](https://nostarch.com/modeling-and-simulation-python) or [Amazon](https://amzn.to/3y9UxNb).
 
-[Pre-order the book from No Starch Press](https://nostarch.com/modeling-and-simulation-python).
+[Read the book and run the code](https://allendowney.github.io/ModSimPy/).
 
 *Modeling and Simulation in Python* is an introduction to physical modeling using a computational approach.  It is organized in three parts:
 
