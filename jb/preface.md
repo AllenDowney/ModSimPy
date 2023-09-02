@@ -156,7 +156,7 @@ typos):
 ```
 conda install jupyter pandas sympy
 conda install beautifulsoup4 lxml html5lib
-conda install -c unidata pint
+conda install pint
 ```
 
 That should be everything you need.
