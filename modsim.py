@@ -105,37 +105,41 @@ def linrange(start, stop=None, step=1):
     return linspace(start, stop, n+1)
 
 
+def __check_kwargs(kwargs, param_name, param_len, func, func_name):
+    """Check if `kwargs` has a parameter that is a sequence of a particular length
+       param_len: sequence enumerating possible lengths
+    """
+    param_val = kwargs.get(param_name, None)
+    if param_val is None or len(param_val) not in param_len:
+        msg = ("To run `{}`, you have to provide a "
+               "`{}` keyword argument with a sequence of length {}.")
+        raise ValueError(msg.format(func_name, param_name, ' or '.join(map(str, param_len))))
+
+    try:
+        func(param_val[0])
+    except Exception as e:
+        msg = ("In `{}` I tried running the function you provided "
+               "with `{}[0]`, and I got the following error:")
+        logger.error(msg.format(func_name, param_name))
+        raise (e)
+
 def root_scalar(func, *args, **kwargs):
-    """Finds the input value that minimizes `min_func`.
+    """Find the input value that is a root of `func`.
 
     Wrapper for
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html
 
-    func: computes the function to be minimized
+    func: computes the function to find a root of
     bracket: sequence of two values, lower and upper bounds of the range to be searched
-    args: any additional positional arguments are passed to func
-    kwargs: any keyword arguments are passed to root_scalar
+    args: any additional positional arguments are passed to `func`
+    kwargs: any keyword arguments are passed to `root_scalar`
 
     returns: RootResults object
     """
-    bracket = kwargs.get('bracket', None)
-    if bracket is None or len(bracket) != 2:
-        msg = ("To run root_scalar, you have to provide a "
-               "`bracket` keyword argument with a sequence "
-               "of length 2.")
-        raise ValueError(msg)
-
-    try:
-        func(bracket[0], *args)
-    except Exception as e:
-        msg = ("Before running scipy.integrate.root_scalar "
-               "I tried running the function you provided "
-               "with `bracket[0]`, "
-               "and I got the following error:")
-        logger.error(msg)
-        raise (e)
 
     underride(kwargs, rtol=1e-4)
+
+    __check_kwargs(kwargs, 'bracket', [2], lambda x: func(x, *args), 'root_scalar')
 
     res = spo.root_scalar(func, *args, **kwargs)
 
@@ -148,37 +152,36 @@ def root_scalar(func, *args, **kwargs):
 
 
 def minimize_scalar(func, *args, **kwargs):
-    """Finds the input value that minimizes `func`.
+    """Find the input value that minimizes `func`.
 
     Wrapper for
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
     func: computes the function to be minimized
-    args: any additional positional arguments are passed to func
-    kwargs: any keyword arguments are passed to minimize_scalar
+    bracket: (`method` is `brent` or `golden`) sequence of two or three values, the range to be searched
+    bounds: (`method` is `bounded`) sequence of two values, the range to be searched
+    args: any additional positional arguments are passed to `func`
+    kwargs: any keyword arguments are passed to `minimize_scalar`
 
     returns: OptimizeResult object
     """
-    bounds = kwargs.get('bounds', None)
 
-    if bounds is None or len(bounds) != 2:
-        msg = ("To run maximize_scalar or minimize_scalar, "
-               "you have to provide a `bounds` "
-               "keyword argument with a sequence "
-               "of length 2.")
-        raise ValueError(msg)
+    underride(kwargs, __func_name='minimize_scalar')
 
-    try:
-        func(bounds[0], *args)
-    except Exception as e:
-        msg = ("Before running scipy.integrate.minimize_scalar, "
-               "I tried running the function you provided "
-               "with the lower bound, "
-               "and I got the following error:")
-        logger.error(msg)
-        raise (e)
+    method = kwargs.get('method', None)
+    if method is None:
+        method = 'bounded' if kwargs.get('bounds', None) else 'brent'
+        kwargs['method'] = method
 
-    underride(kwargs, method='bounded')
+    if method == 'bounded':
+        param_name = 'bounds'
+        param_len = [2]
+    else:
+        param_name = 'bracket'
+        param_len = [2, 3]
+
+    func_name = kwargs.pop('__func_name')
+    __check_kwargs(kwargs, param_name, param_len, lambda x: func(x, *args), func_name)
 
     res = spo.minimize_scalar(func, args=args, **kwargs)
 
@@ -191,19 +194,23 @@ def minimize_scalar(func, *args, **kwargs):
     return res
 
 
-def maximize_scalar(max_func, *args, **kwargs):
-    """Finds the input value that maximizes `max_func`.
+def maximize_scalar(func, *args, **kwargs):
+    """Find the input value that maximizes `func`.
 
     Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
-    min_func: computes the function to be maximized
-    args: any additional positional arguments are passed to max_func
-    options: any keyword arguments are passed as options to minimize_scalar
+    func: computes the function to be maximized
+    bracket: (`method` is `brent` or `golden`) sequence of two or three values, the range to be searched
+    bounds: (`method` is `bounded`) sequence of two values, the range to be searched
+    args: any additional positional arguments are passed to `func`
+    kwargs: any keyword arguments are passed as options to `minimize_scalar`
 
-    returns: ModSimSeries object
+    returns: OptimizeResult object
     """
     def min_func(*args):
-        return -max_func(*args)
+        return -func(*args)
+
+    underride(kwargs, __func_name='maximize_scalar')
 
     res = minimize_scalar(min_func, *args, **kwargs)
 
