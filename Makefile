@@ -1,5 +1,5 @@
 PROJECT_NAME = ModSimPy
-PYTHON_VERSION = 3.8
+PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
 
@@ -29,4 +29,5 @@ clean:
 
 
 tests:
-	cd chapters; pytest --nbmake chap01.ipynb
+	cd chapters; pytest --nbmake chap*.ipynb
+	cd examples; pytest --nbmake *.ipynb
