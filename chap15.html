@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Cooling Coffee &#8212; Modeling and Simulation in Python</title>
   
@@ -15,52 +14,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chap15';</script>
@@ -77,19 +73,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -111,12 +111,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -131,6 +139,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -139,10 +150,22 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     <p class="title logo__title">Modeling and Simulation in Python</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -201,7 +224,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -210,14 +233,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -307,26 +330,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -369,15 +394,16 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="cooling-coffee">
-<h1>Cooling Coffee<a class="headerlink" href="#cooling-coffee" title="Permalink to this heading">#</a></h1>
+  <p>Printed and electronic copies of <em>Modeling and Simulation in Python</em> are available from <a class="reference external" href="https://nostarch.com/modeling-and-simulation-python">No Starch Press</a> and <a class="reference external" href="https://bookshop.org/p/books/modeling-and-simulation-in-python-allen-b-downey/17836697?ean=9781718502161">Bookshop.org</a> and <a class="reference external" href="https://amzn.to/3y9UxNb">Amazon</a>.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="cooling-coffee">
+<h1>Cooling Coffee<a class="headerlink" href="#cooling-coffee" title="Link to this heading">#</a></h1>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>So far the systems we have studied have been physical in the sense that they exist in the world, but they have not been physics in the sense of what physics classes are usually about. In the next few chapters, we’ll do some physics, starting with <em>thermal systems</em>, that is, systems where the temperature of objects changes as heat transfers from one to another.</p>
 <section id="the-coffee-cooling-problem">
-<h2>The Coffee Cooling Problem<a class="headerlink" href="#the-coffee-cooling-problem" title="Permalink to this heading">#</a></h2>
+<h2>The Coffee Cooling Problem<a class="headerlink" href="#the-coffee-cooling-problem" title="Link to this heading">#</a></h2>
 <p>The coffee cooling problem was discussed by Jearl Walker in
 “The Amateur Scientist”, <em>Scientific American</em>, Volume 237, Issue 5, November 1977. Since then it has become a standard example of modeling and simulation.</p>
 <p>Here is my version of the problem:</p>
@@ -400,7 +426,7 @@ warms up to 20 °C, nearly the ambient temperature.</p></li>
 about temperature and heat, and we have to make some modeling decisions.</p>
 </section>
 <section id="temperature-and-heat">
-<h2>Temperature and Heat<a class="headerlink" href="#temperature-and-heat" title="Permalink to this heading">#</a></h2>
+<h2>Temperature and Heat<a class="headerlink" href="#temperature-and-heat" title="Link to this heading">#</a></h2>
 <p>To understand how coffee cools (and milk warms), we need a model of
 temperature and heat. <em>Temperature</em> is a property of an object or a
 system; in SI units it is measured in degrees Celsius (°C). Temperature quantifies how hot or cold the object is, which is related to the average velocity of the particles that make it up.</p>
@@ -431,7 +457,7 @@ harness all of that heat to do work (which you cannot), you could
 use it to lift a cup of coffee from sea level to 8571 m, just shy of the height of Mount Everest, 8848 m.</p>
 </section>
 <section id="heat-transfer">
-<h2>Heat Transfer<a class="headerlink" href="#heat-transfer" title="Permalink to this heading">#</a></h2>
+<h2>Heat Transfer<a class="headerlink" href="#heat-transfer" title="Link to this heading">#</a></h2>
 <p>In a situation like the coffee cooling problem, there are three ways
 heat transfers from one object to another (see <a class="reference external" href="http://modsimpy.com/transfer">http://modsimpy.com/transfer</a>):</p>
 <ul class="simple">
@@ -453,12 +479,12 @@ smaller than the effects of conduction and convection, so we will ignore it.</p>
 <p>Convection can be a complex topic, since it often depends on details of fluid flow in three dimensions. But for this problem we will be able to get away with a simple model called “Newton’s law of cooling”.</p>
 </section>
 <section id="newton-s-law-of-cooling">
-<h2>Newton’s Law of Cooling<a class="headerlink" href="#newton-s-law-of-cooling" title="Permalink to this heading">#</a></h2>
+<h2>Newton’s Law of Cooling<a class="headerlink" href="#newton-s-law-of-cooling" title="Link to this heading">#</a></h2>
 <p><em>Newton’s law of cooling</em> asserts that the temperature rate of change for an object is proportional to the difference in temperature between the object and the surrounding environment:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dT}{dt} = -r (T - T_{env})\]</div>
 <p>where <span class="math notranslate nohighlight">\(t\)</span> is time, <span class="math notranslate nohighlight">\(T\)</span> is the temperature of the object, <span class="math notranslate nohighlight">\(T_{env}\)</span> is the temperature of the environment, and <span class="math notranslate nohighlight">\(r\)</span> is a constant that characterizes how quickly heat is transferred between the object and the environment.</p>
-<p>Newton’s so-called “law ” is really a model: it is a good approximation in some conditions and less good in others.</p>
+<p>Newton’s so-called “law “ is really a model: it is a good approximation in some conditions and less good in others.</p>
 <p>For example, if the primary mechanism of heat transfer is conduction,
 Newton’s law is “true”, which is to say that <span class="math notranslate nohighlight">\(r\)</span> is constant over a
 wide range of temperatures. And sometimes we can estimate <span class="math notranslate nohighlight">\(r\)</span> based on
@@ -471,7 +497,7 @@ hundred degrees Celsius, say).</p>
 <p>With that, we have just one more modeling decision to make: whether to treat the coffee and the cup as separate objects or a single object. If the cup is made of paper, it has less mass than the coffee, and the specific heat capacity of paper is lower, too. In that case, it would be reasonable to treat the cup and coffee as a single object. For a cup with substantial thermal mass, like a ceramic mug, we might consider a model that computes the temperature of coffee and cup separately.</p>
 </section>
 <section id="implementing-newtonian-cooling">
-<h2>Implementing Newtonian Cooling<a class="headerlink" href="#implementing-newtonian-cooling" title="Permalink to this heading">#</a></h2>
+<h2>Implementing Newtonian Cooling<a class="headerlink" href="#implementing-newtonian-cooling" title="Link to this heading">#</a></h2>
 <p>To get started, we’ll focus on the coffee. Then, as an exercise, you can simulate the milk. In the next chapter, we’ll put them together, literally.</p>
 <p>Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
 <div class="cell tag_export docutils container">
@@ -723,7 +749,7 @@ Here are the first few rows:</p>
 <p>To find the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> where the final temperature is precisely 70 °C, we could proceed by trial and error, but it is more efficient to use a root-finding algorithm.</p>
 </section>
 <section id="finding-roots">
-<h2>Finding Roots<a class="headerlink" href="#finding-roots" title="Permalink to this heading">#</a></h2>
+<h2>Finding Roots<a class="headerlink" href="#finding-roots" title="Link to this heading">#</a></h2>
 <p>The ModSim library provides a function called <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> that finds the roots of non-linear equations. As an example, suppose you want to find the roots of the polynomial</p>
 <div class="math notranslate nohighlight">
 \[f(x) = (x - 1)(x - 2)(x - 3)\]</div>
@@ -788,7 +814,7 @@ argument is an interval that contains or <em>brackets</em> a root. The result is
 <p>Now we can use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to estimate <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
 </section>
 <section id="estimating-r">
-<h2>Estimating r<a class="headerlink" href="#estimating-r" title="Permalink to this heading">#</a></h2>
+<h2>Estimating r<a class="headerlink" href="#estimating-r" title="Link to this heading">#</a></h2>
 <p>What we want is the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> that yields a final temperature of
 70 °C. To use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, we need a function that takes <code class="docutils literal notranslate"><span class="pre">r</span></code> as a parameter and returns the difference between the final temperature and the goal:</p>
 <div class="cell docutils container">
@@ -886,17 +912,17 @@ We can confirm that this value is correct by setting <code class="docutils liter
 <p>The final temperature is very close to 70 °C.</p>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>This chapter presents the basics of heat, temperature, and Newton’s law of cooling, which is a model that is accurate when most heat transfer is by conduction and convection, not radiation.</p>
 <p>To simulate a hot cup of coffee, we wrote Newton’s law as a difference equation, then wrote a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that implements it. Then we used <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> to find the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> that matches the measurement from my hypothetical experiment.</p>
 <p>All that is the first step toward solving the coffee cooling problem I posed at the beginning of the chapter. As an exercise, you’ll do the next step, which is simulating the milk. In the next chapter, we’ll model the mixing process and finish off the problem.</p>
 </section>
 <section id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <p>This chapter is available as a Jupyter notebook where you can read the text, run the code, and work on the exercises.
 You can access the notebooks at <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <section id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this heading">#</a></h3>
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h3>
 <p>Simulate the temperature of 50 mL of milk with a starting temperature of 5 °C, in a vessel with <code class="docutils literal notranslate"><span class="pre">r=0.1</span></code>, for 15 minutes, and plot the results. Use <code class="docutils literal notranslate"><span class="pre">make_system</span></code> to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the milk, and use <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> to simulate it.
 By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
 <div class="cell tag_hide-cell docutils container">
@@ -944,7 +970,7 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 </div>
 </section>
 <section id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this heading">#</a></h3>
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h3>
 <p>Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="hide above-input">
@@ -1039,11 +1065,10 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="chap14.html"
@@ -1063,10 +1088,7 @@ By trial and error, find a value for <code class="docutils literal notranslate">
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1074,6 +1096,7 @@ By trial and error, find a value for <code class="docutils literal notranslate">
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1115,9 +1138,10 @@ By Allen B. Downey
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -1141,8 +1165,8 @@ By Allen B. Downey
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

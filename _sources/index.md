@@ -2,9 +2,12 @@
 
 by Allen B. Downey
 
-*Modeling and Simulation in Python* is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy and modify it, as long as you attribute the work and don’t use it for commercial purposes.
+*Modeling and Simulation in Python* is an introduction to physical modeling in Python, suitable for people with no programming experience.
 
-Other Free Books by Allen Downey are available from [Green Tea Press](https://greenteapress.com/wp/).
+Here is the [home page for this book at Green Tea Press](https://greenteapress.com/wp/modsimpy/).
+
+Printed and electronic copies of the book are available from [No Starch Press](https://nostarch.com/modeling-and-simulation-python) and [Bookshop.org](https://bookshop.org/p/books/modeling-and-simulation-in-python-allen-b-downey/17836697?ean=9781718502161) and [Amazon](https://amzn.to/3y9UxNb).
+
 
 **Run the notebooks**
 
@@ -63,3 +66,8 @@ Or use these links to run the notebooks on Colab:
 * [Chapter 25](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap25.ipynb)
 
 * [Chapter 26](https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap26.ipynb)
+
+
+*Modeling and Simulation in Python* a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy and modify it, as long as you attribute the work and don’t use it for commercial purposes.
+
+Other Free Books by Allen Downey are available from [Green Tea Press](https://greenteapress.com/wp/).
