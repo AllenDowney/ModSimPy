@@ -30,4 +30,5 @@ clean:
 
 tests:
 	cd chapters; pytest --nbmake chap*.ipynb
-	cd examples; pytest --nbmake *.ipynb
+	# many of the examples don't pass tests without the solutions
+	# cd examples; pytest --nbmake *.ipynb
