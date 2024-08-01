@@ -21,7 +21,7 @@ from numpy import pi, deg2rad
 
 def make_system(params):
     
-    # convert angle to degrees
+    # convert angle to radians
     theta = deg2rad(params.angle)
     
     # compute x and y components of velocity

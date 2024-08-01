@@ -26,7 +26,7 @@ from modsim import *
 def plot_results(S, I, R):
     S.plot(style='--', label='Susceptible')
     I.plot(style='-', label='Infected')
-    R.plot(style=':', label='Resistant')
+    R.plot(style=':', label='Recovered')
     decorate(xlabel='Time (days)',
              ylabel='Fraction of population')
 
