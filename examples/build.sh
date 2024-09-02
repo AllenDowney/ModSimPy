@@ -12,6 +12,7 @@ header.ipynb \
 insulin.ipynb \
 plague.ipynb \
 queue.ipynb \
+# salmon.ipynb \ does not run without solutions
 spiderman.ipynb \
 throwingaxe.ipynb \
 trees.ipynb \
