@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Modeling and Simulation in Python &#8212; Modeling and Simulation in Python</title>
+    <title>API Reference &#8212; Modeling and Simulation in Python</title>
   
   
   
@@ -57,12 +57,10 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Preface" href="preface.html" />
+    <link rel="prev" title="One Queue or Two" href="queue.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +123,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -145,7 +141,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -170,8 +166,8 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
                     Modeling and Simulation in Python
                 </a>
             </li>
@@ -212,8 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="queue.html">One Queue or Two</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference</a></li>
 </ul>
 
     </div>
@@ -283,7 +279,7 @@
       
       
       
-      <li><a href="_sources/index.md" target="_blank"
+      <li><a href="_sources/api.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -365,7 +361,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Modeling and Simulation in Python</h1>
+    <h1>API Reference</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -379,51 +375,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="modeling-and-simulation-in-python">
-<h1>Modeling and Simulation in Python<a class="headerlink" href="#modeling-and-simulation-in-python" title="Link to this heading">#</a></h1>
-<p>by Allen B. Downey</p>
-<p><em>Modeling and Simulation in Python</em> is an introduction to physical modeling in Python, suitable for people with no programming experience.</p>
-<p>Here is the <a class="reference external" href="https://greenteapress.com/wp/modsimpy/">home page for this book at Green Tea Press</a>.</p>
-<p>Printed and electronic copies of the book are available from <a class="reference external" href="https://nostarch.com/modeling-and-simulation-python">No Starch Press</a> and <a class="reference external" href="https://bookshop.org/p/books/modeling-and-simulation-in-python-allen-b-downey/17836697?ean=9781718502161">Bookshop.org</a> and <a class="reference external" href="https://amzn.to/3y9UxNb">Amazon</a>.</p>
-<p><strong>Run the notebooks</strong></p>
-<p><a class="reference external" href="https://github.com/AllenDowney/ModSimPy/raw/master/ModSimPyNotebooks.zip">Download the notebooks as a Zip file</a></p>
-<p>Or use these links to run the notebooks on Colab:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap01.ipynb">Chapter 1</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap02.ipynb">Chapter 2</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap03.ipynb">Chapter 3</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap04.ipynb">Chapter 4</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap05.ipynb">Chapter 5</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap06.ipynb">Chapter 6</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap07.ipynb">Chapter 7</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap08.ipynb">Chapter 8</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap09.ipynb">Chapter 9</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap10.ipynb">Chapter 10</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap11.ipynb">Chapter 11</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap12.ipynb">Chapter 12</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap13.ipynb">Chapter 13</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap14.ipynb">Chapter 14</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap15.ipynb">Chapter 15</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap16.ipynb">Chapter 16</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap17.ipynb">Chapter 17</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap18.ipynb">Chapter 18</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap19.ipynb">Chapter 19</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap20.ipynb">Chapter 20</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap21.ipynb">Chapter 21</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap22.ipynb">Chapter 22</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap23.ipynb">Chapter 23</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap24.ipynb">Chapter 24</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap25.ipynb">Chapter 25</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ModSimPy/blob/master/chapters/chap26.ipynb">Chapter 26</a></p></li>
-</ul>
-<p><em>Modeling and Simulation in Python</em> a Free Book. It is available under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a>, which means that you are free to copy and modify it, as long as you attribute the work and don’t use it for commercial purposes.</p>
-<p>Other Free Books by Allen Downey are available from <a class="reference external" href="https://greenteapress.com/wp/">Green Tea Press</a>.</p>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<p>The complete API documentation is available <a class="reference internal" href="#api/index.html"><span class="xref myst">here</span></a>.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -456,14 +410,14 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="right-next"
-       href="preface.html"
-       title="next page">
+    <a class="left-prev"
+       href="queue.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Preface</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">One Queue or Two</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
