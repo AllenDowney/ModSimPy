@@ -1,9 +1,33 @@
 """
+A collection of functions and classes for modeling and simulation in Python.
+
 Code from Modeling and Simulation in Python.
-
-Copyright 2020 Allen Downey
-
+Copyright 2020-2025 Allen Downey
 MIT License: https://opensource.org/licenses/MIT
+
+This module provides a simplified interface for modeling and simulation tasks,
+built on top of NumPy, SciPy, and Pandas. It is designed to be beginner-friendly
+and includes comprehensive input validation to help catch common errors.
+
+The module includes utilities for:
+
+    - Mathematical operations (coordinate conversions, vector operations)
+    - Numerical methods (root finding, optimization, integration)
+    - Data manipulation and analysis
+    - Visualization and plotting
+    - System modeling and simulation
+
+Key features:
+
+    - Vector operations in 2D and 3D
+    - Time series and sweep series data structures
+    - System and parameter management
+    - Numerical methods for solving equations and optimization
+    - Plotting and visualization utilities
+    - Unit handling and conversion
+
+This module is designed to be used in conjunction with the book "Modeling and 
+Simulation in Python" by Allen Downey.
 """
 
 import logging
@@ -38,13 +62,30 @@ from scipy.integrate import solve_ivp
 from types import SimpleNamespace
 from copy import copy
 
+# Input validation helpers
+def validate_numeric(value, name):
+    """Validate that a value is numeric."""
+    if not isinstance(value, (int, float)):
+        raise ValueError(f"{name} must be numeric, got {type(value)}")
+
+def validate_array_like(value, name):
+    """Validate that a value is array-like."""
+    if not isinstance(value, (list, tuple, np.ndarray, pd.Series)):
+        raise ValueError(f"{name} must be array-like, got {type(value)}")
+
+def validate_positive(value, name):
+    """Validate that a value is positive."""
+    if value <= 0:
+        raise ValueError(f"{name} must be positive, got {value}")
 
 def flip(p=0.5):
     """Flips a coin with the given probability.
 
-    p: float 0-1
+    Args:
+        p (float): Probability between 0 and 1.
 
-    returns: boolean (True or False)
+    Returns:
+        bool: True or False.
     """
     return np.random.random() < p
 
@@ -52,18 +93,27 @@ def flip(p=0.5):
 def cart2pol(x, y, z=None):
     """Convert Cartesian coordinates to polar.
 
-    x: number or sequence
-    y: number or sequence
-    z: number or sequence (optional)
+    Args:
+        x (number or sequence): x coordinate.
+        y (number or sequence): y coordinate.
+        z (number or sequence, optional): z coordinate. Defaults to None.
 
-    returns: theta, rho OR theta, rho, z
+    Returns:
+        tuple: (theta, rho) or (theta, rho, z).
+        
+    Raises:
+        ValueError: If x or y are not numeric or array-like, or if z is provided but not numeric or array-like
     """
+    if not isinstance(x, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("x must be numeric or array-like")
+    if not isinstance(y, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("y must be numeric or array-like")
+    if z is not None and not isinstance(z, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("z must be numeric or array-like")
     x = np.asarray(x)
     y = np.asarray(y)
-
     rho = np.hypot(x, y)
     theta = np.arctan2(y, x)
-
     if z is None:
         return theta, rho
     else:
@@ -73,15 +123,25 @@ def cart2pol(x, y, z=None):
 def pol2cart(theta, rho, z=None):
     """Convert polar coordinates to Cartesian.
 
-    theta: number or sequence in radians
-    rho: number or sequence
-    z: number or sequence (optional)
+    Args:
+        theta (number or sequence): Angle in radians.
+        rho (number or sequence): Radius.
+        z (number or sequence, optional): z coordinate. Defaults to None.
 
-    returns: x, y OR x, y, z
+    Returns:
+        tuple: (x, y) or (x, y, z).
+        
+    Raises:
+        ValueError: If theta or rho are not numeric or array-like, or if z is provided but not numeric or array-like
     """
+    if not isinstance(theta, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("theta must be numeric or array-like")
+    if not isinstance(rho, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("rho must be numeric or array-like")
+    if z is not None and not isinstance(z, (int, float, list, tuple, np.ndarray, pd.Series)):
+        raise ValueError("z must be numeric or array-like")
     x = rho * np.cos(theta)
     y = rho * np.sin(theta)
-
     if z is None:
         return x, y
     else:
@@ -92,11 +152,13 @@ from numpy import linspace
 def linrange(start, stop=None, step=1):
     """Make an array of equally spaced values.
 
-    start: first value
-    stop: last value (might be approximate)
-    step: difference between elements (should be consistent)
+    Args:
+        start (float): First value.
+        stop (float, optional): Last value (might be approximate). Defaults to None.
+        step (float, optional): Difference between elements. Defaults to 1.
 
-    returns: NumPy array
+    Returns:
+        np.ndarray: Array of equally spaced values.
     """
     if stop is None:
         stop = start
@@ -106,8 +168,18 @@ def linrange(start, stop=None, step=1):
 
 
 def __check_kwargs(kwargs, param_name, param_len, func, func_name):
-    """Check if `kwargs` has a parameter that is a sequence of a particular length
-       param_len: sequence enumerating possible lengths
+    """Check if `kwargs` has a parameter that is a sequence of a particular length.
+
+    Args:
+        kwargs (dict): Dictionary of keyword arguments.
+        param_name (str): Name of the parameter to check.
+        param_len (list): List of valid lengths for the parameter.
+        func (callable): Function to test the parameter value.
+        func_name (str): Name of the function for error messages.
+
+    Raises:
+        ValueError: If the parameter is missing or has an invalid length.
+        Exception: If the function call fails on the parameter value.
     """
     param_val = kwargs.get(param_name, None)
     if param_val is None or len(param_val) not in param_len:
@@ -129,14 +201,17 @@ def root_scalar(func, *args, **kwargs):
     Wrapper for
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html
 
-    func: computes the function to find a root of
-    bracket: sequence of two values, lower and upper bounds of the range to be searched
-    args: any additional positional arguments are passed to `func`
-    kwargs: any keyword arguments are passed to `root_scalar`
+    Args:
+        func (callable): Function to find a root of.
+        *args: Additional positional arguments passed to `func`.
+        **kwargs: Additional keyword arguments passed to `root_scalar`.
 
-    returns: RootResults object
+    Returns:
+        RootResults: Object containing the root and convergence information.
+
+    Raises:
+        ValueError: If the solver does not converge.
     """
-
     underride(kwargs, rtol=1e-4)
 
     __check_kwargs(kwargs, 'bracket', [2], lambda x: func(x, *args), 'root_scalar')
@@ -157,15 +232,17 @@ def minimize_scalar(func, *args, **kwargs):
     Wrapper for
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
-    func: computes the function to be minimized
-    bracket: (`method` is `brent` or `golden`) sequence of two or three values, the range to be searched
-    bounds: (`method` is `bounded`) sequence of two values, the range to be searched
-    args: any additional positional arguments are passed to `func`
-    kwargs: any keyword arguments are passed to `minimize_scalar`
+    Args:
+        func (callable): Function to be minimized.
+        *args: Additional positional arguments passed to `func`.
+        **kwargs: Additional keyword arguments passed to `minimize_scalar`.
 
-    returns: OptimizeResult object
+    Returns:
+        OptimizeResult: Object containing the minimum and optimization details.
+
+    Raises:
+        Exception: If the optimization does not succeed.
     """
-
     underride(kwargs, __func_name='minimize_scalar')
 
     method = kwargs.get('method', None)
@@ -199,13 +276,16 @@ def maximize_scalar(func, *args, **kwargs):
 
     Wrapper for https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html
 
-    func: computes the function to be maximized
-    bracket: (`method` is `brent` or `golden`) sequence of two or three values, the range to be searched
-    bounds: (`method` is `bounded`) sequence of two values, the range to be searched
-    args: any additional positional arguments are passed to `func`
-    kwargs: any keyword arguments are passed as options to `minimize_scalar`
+    Args:
+        func (callable): Function to be maximized.
+        *args: Additional positional arguments passed to `func`.
+        **kwargs: Additional keyword arguments passed to `minimize_scalar`.
 
-    returns: OptimizeResult object
+    Returns:
+        OptimizeResult: Object containing the maximum and optimization details.
+
+    Raises:
+        Exception: If the optimization does not succeed.
     """
     def min_func(*args):
         return -func(*args)
@@ -220,21 +300,18 @@ def maximize_scalar(func, *args, **kwargs):
 
 
 def run_solve_ivp(system, slope_func, **options):
-    """Computes a numerical solution to a differential equation.
+    """Compute a numerical solution to a differential equation using solve_ivp.
 
-    `system` must contain `init` with initial conditions,
-    `t_end` with the end time.  Optionally, it can contain
-    `t_0` with the start time.
+    Args:
+        system (System): System object containing 'init', 't_end', and optionally 't_0'.
+        slope_func (callable): Function that computes slopes.
+        **options: Additional keyword arguments for scipy.integrate.solve_ivp.
 
-    It should contain any other parameters required by the
-    slope function.
+    Returns:
+        tuple: (TimeFrame of results, details from solve_ivp)
 
-    `options` can be any legal options of `scipy.integrate.solve_ivp`
-
-    system: System object
-    slope_func: function that computes slopes
-
-    returns: TimeFrame
+    Raises:
+        ValueError: If required system attributes are missing or if the solver fails.
     """
     system = remove_units(system)
 
@@ -330,20 +407,18 @@ def run_solve_ivp(system, slope_func, **options):
 
 
 def leastsq(error_func, x0, *args, **options):
-    """Find the parameters that yield the best fit for the data.
+    """Find the parameters that yield the best fit for the data using least squares.
 
-    `x0` can be a sequence, array, Series, or Params
+    Args:
+        error_func (callable): Function that computes a sequence of errors.
+        x0 (array-like): Initial guess for the best parameters.
+        *args: Additional positional arguments passed to error_func.
+        **options: Additional keyword arguments passed to scipy.optimize.leastsq.
 
-    Positional arguments are passed along to `error_func`.
-
-    Keyword arguments are passed to `scipy.optimize.leastsq`
-
-    error_func: function that computes a sequence of errors
-    x0: initial guess for the best parameters
-    args: passed to error_func
-    options: passed to leastsq
-
-    :returns: Params object with best_params and ModSimSeries with details
+    Returns:
+        tuple: (best_params, details)
+            best_params: Best-fit parameters (same type as x0 if possible).
+            details: SimpleNamespace with fit details and success flag.
     """
     # override `full_output` so we get a message if something goes wrong
     options["full_output"] = True
@@ -368,14 +443,14 @@ def leastsq(error_func, x0, *args, **options):
 
 
 def crossings(series, value):
-    """Find the labels where the series passes through value.
+    """Find the labels where the series passes through a given value.
 
-    The labels in series must be increasing numerical values.
+    Args:
+        series (pd.Series): Series with increasing numerical index.
+        value (float): Value to find crossings for.
 
-    series: Series
-    value: number
-
-    returns: sequence of labels
+    Returns:
+        np.ndarray: Array of labels where the series crosses the value.
     """
     values = series.values - value
     interp = InterpolatedUnivariateSpline(series.index, values)
@@ -383,30 +458,41 @@ def crossings(series, value):
 
 
 def has_nan(a):
-    """Checks whether the an array contains any NaNs.
+    """Check whether an array or Series contains any NaNs.
 
-    :param a: NumPy array or Pandas Series
-    :return: boolean
+    Args:
+        a (array-like): NumPy array or Pandas Series.
+
+    Returns:
+        bool: True if any NaNs are present, False otherwise.
     """
     return np.any(np.isnan(a))
 
 
 def is_strictly_increasing(a):
-    """Checks whether the elements of an array are strictly increasing.
+    """Check whether the elements of an array are strictly increasing.
 
-    :param a: NumPy array or Pandas Series
-    :return: boolean
+    Args:
+        a (array-like): NumPy array or Pandas Series.
+
+    Returns:
+        bool: True if strictly increasing, False otherwise.
     """
     return np.all(np.diff(a) > 0)
 
 
 def interpolate(series, **options):
-    """Creates an interpolation function.
+    """Create an interpolation function from a Series.
 
-    series: Series object
-    options: any legal options to scipy.interpolate.interp1d
+    Args:
+        series (pd.Series): Series object with strictly increasing index.
+        **options: Additional keyword arguments for scipy.interpolate.interp1d.
 
-    returns: function that maps from the index to the values
+    Returns:
+        callable: Function that maps from the index to the values.
+
+    Raises:
+        ValueError: If the index contains NaNs or is not strictly increasing.
     """
     if has_nan(series.index):
         msg = """The Series you passed to interpolate contains
@@ -434,11 +520,12 @@ def interpolate(series, **options):
 def interpolate_inverse(series, **options):
     """Interpolate the inverse function of a Series.
 
-    series: Series object, represents a mapping from `a` to `b`
-    options: any legal options to scipy.interpolate.interp1d
+    Args:
+        series (pd.Series): Series representing a mapping from a to b.
+        **options: Additional keyword arguments for scipy.interpolate.interp1d.
 
-    returns: interpolation object, can be used as a function
-             from `b` to `a`
+    Returns:
+        callable: Interpolation object, can be used as a function from b to a.
     """
     inverse = pd.Series(series.index, index=series.values)
     interp_func = interpolate(inverse, **options)
@@ -450,22 +537,29 @@ def gradient(series, **options):
 
     If the elements of series have units, they are dropped.
 
-    series: Series object
-    options: any legal options to np.gradient
+    Args:
+        series (pd.Series): Series object.
+        **options: Additional keyword arguments for np.gradient.
 
-    returns: Series, same subclass as series
+    Returns:
+        pd.Series: Series with the same subclass as the input.
+        
+    Raises:
+        ValueError: If series is not a pandas Series
     """
+    if not isinstance(series, pd.Series):
+        raise ValueError("series must be a pandas Series")
     x = series.index
     y = series.values
-
     a = np.gradient(y, x, **options)
     return series.__class__(a, series.index)
 
 
 def source_code(obj):
-    """Prints the source code for a given object.
+    """Print the source code for a given object.
 
-    obj: function or method object
+    Args:
+        obj (object): Function or method object to print source for.
     """
     print(inspect.getsource(obj))
 
@@ -475,8 +569,12 @@ def underride(d, **options):
 
     If d is None, create a new dictionary.
 
-    d: dictionary
-    options: keyword args to add to d
+    Args:
+        d (dict): Dictionary to update.
+        **options: Keyword arguments to add to d.
+
+    Returns:
+        dict: Updated dictionary.
     """
     if d is None:
         d = {}
@@ -495,8 +593,9 @@ def contour(df, **options):
 
     Note: columns and index must be numerical
 
-    df: DataFrame
-    options: passed to plt.contour
+    Args:
+        df (pd.DataFrame): DataFrame to plot.
+        **options: Additional keyword arguments for plt.contour.
     """
     fontsize = options.pop("fontsize", 12)
     underride(options, cmap="viridis")
@@ -514,7 +613,9 @@ def savefig(filename, **options):
 
     https://matplotlib.org/api/_as_gen/matplotlib.pyplot.savefig.html
 
-    filename: string
+    Args:
+        filename (str): Name of the file to save the figure to.
+        **options: Additional keyword arguments for plt.savefig.
     """
     print("Saving figure to file", filename)
     plt.savefig(filename, **options)
@@ -530,6 +631,9 @@ def decorate(**options):
 
     The keyword arguments can be any of the axis properties
     https://matplotlib.org/api/axes_api.html
+
+    Args:
+        **options: Keyword arguments for axis properties.
     """
     ax = plt.gca()
     ax.set(**options)
@@ -542,9 +646,10 @@ def decorate(**options):
 
 
 def remove_from_legend(bad_labels):
-    """Removes some labels from the legend.
+    """Remove specified labels from the current plot legend.
 
-    bad_labels: sequence of strings
+    Args:
+        bad_labels (list): Sequence of label strings to remove from the legend.
     """
     ax = plt.gca()
     handles, labels = ax.get_legend_handles_labels()
@@ -564,6 +669,12 @@ class SettableNamespace(SimpleNamespace):
     Takes keyword arguments and stores them as attributes.
     """
     def __init__(self, namespace=None, **kwargs):
+        """Initialize a SettableNamespace.
+
+        Args:
+            namespace (SettableNamespace, optional): Namespace to copy. Defaults to None.
+            **kwargs: Keyword arguments to store as attributes.
+        """
         super().__init__()
         if namespace:
             self.__dict__.update(namespace.__dict__)
@@ -572,8 +683,12 @@ class SettableNamespace(SimpleNamespace):
     def get(self, name, default=None):
         """Look up a variable.
 
-        name: string varname
-        default: value returned if `name` is not present
+        Args:
+            name (str): Name of the variable to look up.
+            default (any, optional): Value returned if `name` is not present. Defaults to None.
+
+        Returns:
+            any: Value of the variable or default.
         """
         try:
             return self.__getattribute__(name, default)
@@ -583,7 +698,11 @@ class SettableNamespace(SimpleNamespace):
     def set(self, **variables):
         """Make a copy and update the given variables.
 
-        returns: Params
+        Args:
+            **variables: Keyword arguments to update.
+
+        Returns:
+            Params: New Params object with updated variables.
         """
         new = copy(self)
         new.__dict__.update(variables)
@@ -591,22 +710,25 @@ class SettableNamespace(SimpleNamespace):
 
 
 def magnitude(x):
-    """Returns the magnitude of a Quantity or number.
+    """Return the magnitude of a Quantity or number.
 
-    x: Quantity or number
+    Args:
+        x (object): Quantity or number.
 
-    returns: number
+    Returns:
+        float: Magnitude as a plain number.
     """
     return x.magnitude if hasattr(x, 'magnitude') else x
 
 
 def remove_units(namespace):
-    """Removes units from the values in a Namespace.
+    """Remove units from the values in a Namespace (top-level only).
 
-    Only removes units from top-level values;
-    does not traverse nested values.
+    Args:
+        namespace (object): Namespace with attributes.
 
-    returns: new Namespace object
+    Returns:
+        object: New Namespace object with units removed from values.
     """
     res = copy(namespace)
     for label, value in res.__dict__.items():
@@ -617,12 +739,13 @@ def remove_units(namespace):
 
 
 def remove_units_series(series):
-    """Removes units from the values in a Series.
+    """Remove units from the values in a Series (top-level only).
 
-    Only removes units from top-level values;
-    does not traverse nested values.
+    Args:
+        series (pd.Series): Series with possible units.
 
-    returns: new Series object
+    Returns:
+        pd.Series: New Series object with units removed from values.
     """
     res = copy(series)
     for label, value in res.items():
@@ -647,18 +770,35 @@ class Params(SettableNamespace):
 
 
 def State(**variables):
-    """Contains the values of state variables."""
+    """Contains the values of state variables.
+
+    Args:
+        **variables: Keyword arguments to store as state variables.
+
+    Returns:
+        pd.Series: Series with the state variables.
+    """
     return pd.Series(variables, name='state')
 
 
 def make_series(x, y, **options):
     """Make a Pandas Series.
 
-    x: sequence used as the index
-    y: sequence used as the values
+    Args:
+        x (sequence): Sequence used as the index.
+        y (sequence): Sequence used as the values.
+        **options: Additional keyword arguments for pd.Series.
 
-    returns: Pandas Series
+    Returns:
+        pd.Series: Pandas Series.
+        
+    Raises:
+        ValueError: If x or y are not array-like or have different lengths
     """
+    validate_array_like(x, "x")
+    validate_array_like(y, "y")
+    if len(x) != len(y):
+        raise ValueError("x and y must have the same length")
     underride(options, name='values')
     if isinstance(y, pd.Series):
         y = y.values
@@ -669,6 +809,13 @@ def make_series(x, y, **options):
 
 def TimeSeries(*args, **kwargs):
     """Make a pd.Series object to represent a time series.
+
+    Args:
+        *args: Arguments passed to pd.Series.
+        **kwargs: Keyword arguments passed to pd.Series.
+
+    Returns:
+        pd.Series: Series with index name 'Time' and name 'Quantity'.
     """
     if args or kwargs:
         underride(kwargs, dtype=float)
@@ -684,6 +831,13 @@ def TimeSeries(*args, **kwargs):
 
 def SweepSeries(*args, **kwargs):
     """Make a pd.Series object to store results from a parameter sweep.
+
+    Args:
+        *args: Arguments passed to pd.Series.
+        **kwargs: Keyword arguments passed to pd.Series.
+
+    Returns:
+        pd.Series: Series with index name 'Parameter' and name 'Metric'.
     """
     if args or kwargs:
         underride(kwargs, dtype=float)
@@ -698,7 +852,14 @@ def SweepSeries(*args, **kwargs):
 
 
 def show(obj):
-    """Display a Series or Namespace as a DataFrame."""
+    """Display a Series or Namespace as a DataFrame.
+
+    Args:
+        obj (object): Series or Namespace to display.
+
+    Returns:
+        pd.DataFrame: DataFrame representation of the object.
+    """
     if isinstance(obj, pd.Series):
         df = pd.DataFrame(obj)
         return df
@@ -710,21 +871,44 @@ def show(obj):
 
 
 def TimeFrame(*args, **kwargs):
-    """DataFrame that maps from time to State.
+    """Create a DataFrame that maps from time to State.
+
+    Args:
+        *args: Arguments passed to pd.DataFrame.
+        **kwargs: Keyword arguments passed to pd.DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame indexed by time.
     """
     underride(kwargs, dtype=float)
     return pd.DataFrame(*args, **kwargs)
 
 
 def SweepFrame(*args, **kwargs):
-    """DataFrame that maps from parameter value to SweepSeries.
+    """Create a DataFrame that maps from parameter value to SweepSeries.
+
+    Args:
+        *args: Arguments passed to pd.DataFrame.
+        **kwargs: Keyword arguments passed to pd.DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame indexed by parameter value.
     """
     underride(kwargs, dtype=float)
     return pd.DataFrame(*args, **kwargs)
 
 
 def Vector(x, y, z=None, **options):
-    """
+    """Create a 2D or 3D vector as a pandas Series.
+
+    Args:
+        x (float): x component.
+        y (float): y component.
+        z (float, optional): z component. Defaults to None.
+        **options: Additional keyword arguments for pandas.Series.
+
+    Returns:
+        pd.Series: Series with keys 'x', 'y', and optionally 'z'.
     """
     underride(options, name='component')
     if z is None:
@@ -736,12 +920,38 @@ def Vector(x, y, z=None, **options):
 ## Vector functions (should work with any sequence)
 
 def vector_mag(v):
-    """Vector magnitude."""
+    """Vector magnitude.
+
+    Args:
+        v (array-like): Vector.
+
+    Returns:
+        float: Magnitude of the vector.
+        
+    Raises:
+        ValueError: If v is not array-like or is empty
+    """
+    validate_array_like(v, "v")
+    if len(v) == 0:
+        raise ValueError("Vector cannot be empty")
     return np.sqrt(np.dot(v, v))
 
 
 def vector_mag2(v):
-    """Vector magnitude squared."""
+    """Vector magnitude squared.
+
+    Args:
+        v (array-like): Vector.
+
+    Returns:
+        float: Magnitude squared of the vector.
+        
+    Raises:
+        ValueError: If v is not array-like or is empty
+    """
+    validate_array_like(v, "v")
+    if len(v) == 0:
+        raise ValueError("Vector cannot be empty")
     return np.dot(v, v)
 
 
@@ -750,9 +960,18 @@ def vector_angle(v):
 
     Only works with 2-D vectors.
 
-    returns: angle in radians
+    Args:
+        v (array-like): 2-D vector.
+
+    Returns:
+        float: Angle in radians.
+        
+    Raises:
+        ValueError: If v is not array-like or is not 2D
     """
-    assert len(v) == 2
+    validate_array_like(v, "v")
+    if len(v) != 2:
+        raise ValueError("vector_angle only works with 2D vectors")
     x, y = v
     return np.arctan2(y, x)
 
@@ -760,16 +979,32 @@ def vector_angle(v):
 def vector_polar(v):
     """Vector magnitude and angle.
 
-    returns: (number, angle in radians)
+    Args:
+        v (array-like): Vector.
+
+    Returns:
+        tuple: (magnitude, angle in radians).
+        
+    Raises:
+        ValueError: If v is not array-like
     """
+    validate_array_like(v, "v")
     return vector_mag(v), vector_angle(v)
 
 
 def vector_hat(v):
     """Unit vector in the direction of v.
 
-    returns: Vector or array
+    Args:
+        v (array-like): Vector.
+
+    Returns:
+        array-like: Unit vector in the direction of v.
+        
+    Raises:
+        ValueError: If v is not array-like
     """
+    validate_array_like(v, "v")
     # check if the magnitude of the Quantity is 0
     mag = vector_mag(v)
     if mag == 0:
@@ -783,9 +1018,18 @@ def vector_perp(v):
 
     Only works with 2-D Vectors.
 
-    returns: Vector
+    Args:
+        v (array-like): 2-D vector.
+
+    Returns:
+        Vector: Perpendicular vector.
+        
+    Raises:
+        ValueError: If v is not array-like or is not 2D
     """
-    assert len(v) == 2
+    validate_array_like(v, "v")
+    if len(v) != 2:
+        raise ValueError("vector_perp only works with 2D vectors")
     x, y = v
     return Vector(-y, x)
 
@@ -793,18 +1037,43 @@ def vector_perp(v):
 def vector_dot(v, w):
     """Dot product of v and w.
 
-    returns: number or Quantity
+    Args:
+        v (array-like): First vector.
+        w (array-like): Second vector.
+
+    Returns:
+        float: Dot product of v and w.
+        
+    Raises:
+        ValueError: If v or w are not array-like or have different lengths
     """
+    validate_array_like(v, "v")
+    validate_array_like(w, "w")
+    if len(v) != len(w):
+        raise ValueError("Vectors must have the same length")
     return np.dot(v, w)
 
 
 def vector_cross(v, w):
     """Cross product of v and w.
 
-    returns: number or Quantity for 2-D, Vector for 3-D
-    """
-    res = np.cross(v, w)
+    Args:
+        v (array-like): First vector.
+        w (array-like): Second vector.
 
+    Returns:
+        array-like: Cross product of v and w.
+        
+    Raises:
+        ValueError: If v or w are not array-like, or not both 2D or 3D, or not same length
+    """
+    validate_array_like(v, "v")
+    validate_array_like(w, "w")
+    if len(v) != len(w):
+        raise ValueError("Vectors must have the same length for cross product")
+    if len(v) not in (2, 3):
+        raise ValueError("Cross product only defined for 2D or 3D vectors")
+    res = np.cross(v, w)
     if len(v) == 3:
         return Vector(*res)
     else:
@@ -814,8 +1083,20 @@ def vector_cross(v, w):
 def vector_proj(v, w):
     """Projection of v onto w.
 
-    returns: array or Vector with direction of w and units of v.
+    Args:
+        v (array-like): Vector to project.
+        w (array-like): Vector to project onto.
+
+    Returns:
+        array-like: Projection of v onto w.
+        
+    Raises:
+        ValueError: If v or w are not array-like or not same length
     """
+    validate_array_like(v, "v")
+    validate_array_like(w, "w")
+    if len(v) != len(w):
+        raise ValueError("Vectors must have the same length for projection")
     w_hat = vector_hat(w)
     return vector_dot(v, w_hat) * w_hat
 
@@ -825,13 +1106,33 @@ def scalar_proj(v, w):
 
     Which is the magnitude of the projection of v onto w.
 
-    returns: scalar with units of v.
+    Args:
+        v (array-like): Vector to project.
+        w (array-like): Vector to project onto.
+
+    Returns:
+        float: Scalar projection of v onto w.
     """
     return vector_dot(v, vector_hat(w))
 
 
 def vector_dist(v, w):
-    """Euclidean distance from v to w, with units."""
+    """Euclidean distance from v to w, with units.
+
+    Args:
+        v (array-like): First vector.
+        w (array-like): Second vector.
+
+    Returns:
+        float: Euclidean distance from v to w.
+        
+    Raises:
+        ValueError: If v or w are not array-like or not same length
+    """
+    validate_array_like(v, "v")
+    validate_array_like(w, "w")
+    if len(v) != len(w):
+        raise ValueError("Vectors must have the same length for distance calculation")
     if isinstance(v, list):
         v = np.asarray(v)
     return vector_mag(v - w)
@@ -839,7 +1140,22 @@ def vector_dist(v, w):
 
 def vector_diff_angle(v, w):
     """Angular difference between two vectors, in radians.
+
+    Args:
+        v (array-like): First vector.
+        w (array-like): Second vector.
+
+    Returns:
+        float: Angular difference in radians.
+
+    Raises:
+        ValueError: If v or w are not array-like or not same length
+        NotImplementedError: If the vectors are not 2-D.
     """
+    validate_array_like(v, "v")
+    validate_array_like(w, "w")
+    if len(v) != len(w):
+        raise ValueError("Vectors must have the same length for angle difference")
     if len(v) == 2:
         return vector_angle(v) - vector_angle(w)
     else:
@@ -855,9 +1171,16 @@ def plot_segment(A, B, **options):
 
     Additional options are passed along to plot().
 
-    A: Vector
-    B: Vector
+    Args:
+        A (Vector): First vector.
+        B (Vector): Second vector.
+        **options: Additional keyword arguments for plt.plot.
+        
+    Raises:
+        ValueError: If A or B are not Vector objects
     """
+    if not isinstance(A, pd.Series) or not isinstance(B, pd.Series):
+        raise ValueError("A and B must be Vector objects")
     xs = A.x, B.x
     ys = A.y, B.y
     plt.plot(xs, ys, **options)
@@ -869,10 +1192,19 @@ from IPython.display import clear_output
 def animate(results, draw_func, *args, interval=None):
     """Animate results from a simulation.
 
-    results: TimeFrame
-    draw_func: function that draws state
-    interval: time between frames in seconds
+    Args:
+        results (TimeFrame): Results to animate.
+        draw_func (callable): Function that draws state.
+        *args: Additional positional arguments passed to draw_func.
+        interval (float, optional): Time between frames in seconds. Defaults to None.
+        
+    Raises:
+        ValueError: If results is not a TimeFrame or draw_func is not callable
     """
+    if not isinstance(results, pd.DataFrame):
+        raise ValueError("results must be a TimeFrame")
+    if not callable(draw_func):
+        raise ValueError("draw_func must be callable")
     plt.figure()
     try:
         for t, state in results.iterrows():
