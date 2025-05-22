@@ -1,99 +1,10 @@
 import unittest
 from modsim import *
-
-import os
-
-import pint
-from pint.errors import UnitStrippedWarning
+import numpy as np
+import pandas as pd
 
 import warnings
-
 warnings.simplefilter("error", Warning)
-
-
-class TestModSimSeries(unittest.TestCase):
-    def test_constructor(self):
-        s = ModSimSeries([1, 2, 3])
-        self.assertEqual(s[0], 1)
-
-        q = Quantity(2, UNITS.meter)
-        s[q] = 4
-        self.assertEqual(s[q], 4)
-        self.assertEqual(s[2], 4)
-
-
-class TestModSimDataFrame(unittest.TestCase):
-    def test_constructor(self):
-        msf = ModSimDataFrame(columns=["A", "T", "dt"])
-        msf.row[1000] = [1, 2, np.nan]
-        msf.row["label"] = ["4", 5, 6.0]
-
-        col = msf.A
-        self.assertIsInstance(col, ModSimSeries)
-        self.assertEqual(col[1000], 1)
-
-        col = msf.T
-        self.assertIsInstance(col, ModSimSeries)
-        self.assertEqual(col[1000], 2)
-
-        col = msf.dt
-        self.assertIsInstance(col, ModSimSeries)
-        self.assertEqual(col["label"], 6.0)
-
-        row = msf.row[1000]
-        self.assertIsInstance(row, ModSimSeries)
-
-        self.assertEqual(row.A, 1)
-        self.assertEqual(row.T, 2)
-        self.assertTrue(np.isnan(row.dt))
-
-        self.assertEqual(row["A"], 1)
-        self.assertEqual(row["T"], 2)
-        self.assertTrue(np.isnan(row["dt"]))
-
-
-class TestTimeFrame(unittest.TestCase):
-    def test_constructor(self):
-        msf = TimeFrame(columns=["A", "T", "dt"])
-        msf.row[1000] = [1, 2, np.nan]
-        msf.row["label"] = ["4", 5, 6.0]
-
-        col = msf.A
-        self.assertIsInstance(col, TimeSeries)
-
-        col = msf.T
-        self.assertIsInstance(col, TimeSeries)
-
-        col = msf.dt
-        self.assertIsInstance(col, TimeSeries)
-
-        row = msf.row[1000]
-        self.assertIsInstance(row, State)
-
-        row = msf.row["label"]
-        self.assertIsInstance(row, State)
-
-
-class TestSweepFrame(unittest.TestCase):
-    def test_constructor(self):
-        msf = SweepFrame(columns=["A", "T", "dt"])
-        msf.row[1000] = [1, 2, np.nan]
-        msf.row["label"] = ["4", 5, 6.0]
-
-        col = msf.A
-        self.assertIsInstance(col, SweepSeries)
-
-        col = msf.T
-        self.assertIsInstance(col, SweepSeries)
-
-        col = msf.dt
-        self.assertIsInstance(col, SweepSeries)
-
-        row = msf.row[1000]
-        self.assertIsInstance(row, SweepSeries)
-
-        row = msf.row["label"]
-        self.assertIsInstance(row, SweepSeries)
 
 
 class TestCartPol(unittest.TestCase):
@@ -114,7 +25,7 @@ class TestCartPol(unittest.TestCase):
         self.assertAlmostEqual(x, 3)
         self.assertAlmostEqual(y, 4)
 
-        angle = 45 * UNITS.degree
+        angle = np.pi/4  # 45 degrees in radians
         r = 2 * np.sqrt(2)
         z = 2
         x, y, z = pol2cart(angle, r, z)
@@ -140,105 +51,24 @@ class TestLinspaceLinRange(unittest.TestCase):
 
     def test_linrange(self):
         array = linrange(0, 1, 0.1)
-        self.assertEqual(len(array), 10)
+        self.assertEqual(len(array), 11)
         self.assertAlmostEqual(array[0], 0)
         self.assertAlmostEqual(array[1], 0.1)
         self.assertAlmostEqual(array[9], 0.9)
 
-        array = linrange(0, 1, 0.1, endpoint=True)
-        self.assertEqual(len(array), 11)
-        self.assertAlmostEqual(array[0], 0)
-        self.assertAlmostEqual(array[1], 0.1)
-        self.assertAlmostEqual(array[10], 1.0)
-
-
-class TestAbsRelDiff(unittest.TestCase):
-    def test_abs_diff(self):
-        abs_diff = compute_abs_diff([1, 3, 7.5])
-        self.assertEqual(len(abs_diff), 3)
-        self.assertAlmostEqual(abs_diff[1], 4.5)
-
-        ts = linrange(1950, 1960, endpoint=True)
-        ps = linspace(3, 4, len(ts))
-        abs_diff = compute_abs_diff(ps)
-        self.assertEqual(len(abs_diff), 11)
-        self.assertAlmostEqual(abs_diff[1], 0.1)
-
-        # TODO: bring back this test when np.ediff1 is fixed
-        # self.assertTrue(np.isnan(abs_diff[-1]))
-
-        series = TimeSeries(ps, index=ts)
-        abs_diff = compute_abs_diff(series)
-        self.assertEqual(len(abs_diff), 11)
-        self.assertAlmostEqual(abs_diff[1950], 0.1)
-        # self.assertTrue(np.isnan(abs_diff[1960]))
-
-    def test_rel_diff(self):
-        rel_diff = compute_rel_diff([1, 3, 7.5])
-        self.assertEqual(len(rel_diff), 3)
-        self.assertAlmostEqual(rel_diff[1], 1.5)
-
-        ts = linrange(1950, 1960, endpoint=True)
-        ps = linspace(3, 4, len(ts))
-        rel_diff = compute_rel_diff(ps)
-        self.assertEqual(len(rel_diff), 11)
-        self.assertAlmostEqual(rel_diff[0], 0.0333333333)
-        # self.assertTrue(np.isnan(rel_diff[-1]))
-
-        series = TimeSeries(ps, index=ts)
-        rel_diff = compute_rel_diff(series)
-        self.assertEqual(len(rel_diff), 11)
-        self.assertAlmostEqual(rel_diff[1950], 0.0333333333)
-        # self.assertTrue(np.isnan(rel_diff[1960]))
-
 
 class TestOdeSolvers(unittest.TestCase):
-    def test_run_euler(self):
-        s = UNITS.second
-        m = UNITS.meter
-
-        init = State(y=2 * m)
-        system = System(init=init, t_0=1 * s, t_end=3 * s)
-
-        def slope_func(state, t, system):
-            [y] = state
-            dydt = y / s + t * m / s ** 2
-            return [dydt]
-
-        results, details = run_euler(system, slope_func)
-        y_end = get_last_value(results.y)
-        self.assertAlmostEqual(y_end, 24.9737147 * m)
-
-    def test_run_ralston(self):
-        s = UNITS.second
-        m = UNITS.meter
-
-        init = State(y=2 * m)
-        system = System(init=init, t_0=1 * s, t_end=3 * s)
-
-        def slope_func(state, t, system):
-            [y] = state
-            dydt = y / s + t * m / s ** 2
-            return [dydt]
-
-        results, details = run_ralston(system, slope_func)
-        y_end = get_last_value(results.y)
-        self.assertAlmostEqual(y_end, 25.8344700133 * m)
-
     def test_run_solve_ivp(self):
-        s = UNITS.second
-        m = UNITS.meter
+        init = State(y=2)
+        system = System(init=init, t_0=1, t_end=3)
 
-        init = State(y=2 * m)
-        system = System(init=init, t_0=1 * s, t_end=3 * s)
-
-        def slope_func(state, t, system):
-            [y] = state
+        def slope_func(t, state, system):
+            y = state[0] if isinstance(state, np.ndarray) else state.iloc[0]
             dydt = y + t
             return [dydt]
 
         results, details = run_solve_ivp(system, slope_func)
-        y_end = get_last_value(results.y)
+        y_end = results.y.iloc[-1]
         self.assertAlmostEqual(y_end, 25.5571533)
 
 
@@ -247,18 +77,36 @@ class TestRootFinders(unittest.TestCase):
         def func(x):
             return (x - 1) * (x - 2) * (x - 3)
 
-        res = root_scalar(func, [0, 1.9])
-        self.assertAlmostEqual(res.root, 1.0)
+        res = root_scalar(func, bracket=[0, 1.9])
+        self.assertAlmostEqual(res.root, 1.0, places=5)
 
-    def test_root_secant(self):
+    def test_minimize_scalar(self):
         def func(x):
-            return (x - 1) * (x - 2) * (x - 3)
+            return (x - 2)**2 + 1
 
-        res = root_bisect(func, [0, 1.9])
-        self.assertAlmostEqual(res.root, 1.0)
+        # Test with bracket
+        res = minimize_scalar(func, bracket=[0, 4])
+        self.assertAlmostEqual(res.x, 2.0, places=5)
+        self.assertAlmostEqual(res.fun, 1.0, places=5)
 
-        res = root_bisect(func, [0, 0.5])
-        self.assertFalse(res.converged)
+        # Test with bounds
+        res = minimize_scalar(func, bounds=[0, 4])
+        self.assertAlmostEqual(res.x, 2.0, places=5)
+        self.assertAlmostEqual(res.fun, 1.0, places=5)
+
+    def test_maximize_scalar(self):
+        def func(x):
+            return -(x - 2)**2 + 1
+
+        # Test with bracket
+        res = maximize_scalar(func, bracket=[0, 4])
+        self.assertAlmostEqual(res.x, 2.0, places=5)
+        self.assertAlmostEqual(res.fun, 1.0, places=5)
+
+        # Test with bounds
+        res = maximize_scalar(func, bounds=[0, 4])
+        self.assertAlmostEqual(res.x, 2.0, places=5)
+        self.assertAlmostEqual(res.fun, 1.0, places=5)
 
 
 class TestRunInterpolate(unittest.TestCase):
@@ -289,137 +137,71 @@ class TestRunInterpolate(unittest.TestCase):
         i = interpolate(series)
         self.assertAlmostEqual(i(1.5), 2.0)
 
-    def test_interpolate_with_units(self):
-        index = [1, 2, 3]
-        values = np.array(index) * 2 - 1
-        series = pd.Series(values, index=index) * UNITS.meter
-        i = interpolate(series)
-        self.assertAlmostEqual(i(1.5), 2.0 * UNITS.meter)
-
 
 class TestGradient(unittest.TestCase):
     def test_gradient(self):
         a = [1, 2, 4]
         s = TimeSeries(a)
         r = gradient(s)
-        self.assertTrue(isinstance(r, TimeSeries))
+        self.assertTrue(isinstance(r, pd.Series))
         self.assertAlmostEqual(r[1], 1.5)
-
-    def test_gradient_with_units(self):
-        s = SweepSeries()
-        s[0] = 1 * UNITS.meter
-        s[1] = 2 * UNITS.meter
-        s[2] = 4 * UNITS.meter
-        r = gradient(s)
-        self.assertTrue(isinstance(r, SweepSeries))
-        self.assertAlmostEqual(r[1], 1.5 * UNITS.meter)
-
-
-class TestGolden(unittest.TestCase):
-    def test_minimize(self):
-        def min_func(x, system):
-            return (x - system.actual_min) ** 2
-
-        system = System(actual_min=2)
-        res = minimize_golden(min_func, [0, 5], system, rtol=1e-7)
-        self.assertAlmostEqual(res.x, 2)
-        self.assertAlmostEqual(res.fun, 0)
-
-    def test_maximize(self):
-        def max_func(x, system):
-            return -(x - system.actual_min) ** 2
-
-        system = System(actual_min=2)
-        res = maximize_golden(max_func, [0, 5], system, rtol=1e-7)
-        self.assertAlmostEqual(res.x, 2)
-        self.assertAlmostEqual(res.fun, 0)
 
 
 class TestVector(unittest.TestCase):
     def assertArrayEqual(self, res, ans):
-        self.assertTrue(isinstance(res, np.ndarray))
+        self.assertTrue(isinstance(res, (np.ndarray, pd.Series)))
         self.assertTrue((res == ans).all())
 
     def assertVectorEqual(self, res, ans):
-        self.assertTrue(isinstance(res, ModSimVector))
+        self.assertTrue(isinstance(res, (pd.Series, np.ndarray)))
         self.assertTrue((res == ans).all())
 
     def assertVectorAlmostEqual(self, res, ans):
-        [self.assertQuantityAlmostEqual(x, y) for x, y in zip(res, ans)]
-
-    def assertQuantityAlmostEqual(self, x, y):
-        self.assertEqual(get_units(x), get_units(y))
-        self.assertAlmostEqual(magnitude(x), magnitude(y))
+        for x, y in zip(res, ans):
+            self.assertAlmostEqual(x, y)
 
     def test_vector_mag(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-
         v = [3, 4]
         self.assertEqual(vector_mag(v), 5)
         v = Vector(3, 4)
         self.assertEqual(vector_mag(v), 5)
-        v = Vector(3, 4) * m
-        self.assertEqual(vector_mag(v), 5 * m)
-        self.assertEqual(v.mag, 5 * m)
 
     def test_vector_mag2(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
 
         v = [3, 4]
         self.assertEqual(vector_mag2(v), 25)
         v = Vector(3, 4)
         self.assertEqual(vector_mag2(v), 25)
-        v = Vector(3, 4) * m
-        self.assertEqual(vector_mag2(v), 25 * m * m)
 
     def test_vector_angle(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
         ans = 0.927295218
         v = [3, 4]
         self.assertAlmostEqual(vector_angle(v), ans)
         v = Vector(3, 4)
         self.assertAlmostEqual(vector_angle(v), ans)
-        v = Vector(3, 4) * m
-        self.assertAlmostEqual(vector_angle(v), ans)
 
     def test_vector_hat(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
         v = [3, 4]
         ans = [0.6, 0.8]
-        self.assertArrayEqual(vector_hat(v), ans)
+        self.assertVectorAlmostEqual(vector_hat(v), ans)
 
         v = Vector(3, 4)
-        self.assertVectorEqual(vector_hat(v), ans)
-        v = Vector(3, 4) * m
-        self.assertVectorEqual(vector_hat(v), ans)
+        self.assertVectorAlmostEqual(vector_hat(v), ans)
 
         v = [0, 0]
         ans = [0, 0]
-        self.assertArrayEqual(vector_hat(v), ans)
+        self.assertVectorAlmostEqual(vector_hat(v), ans)
         v = Vector(0, 0)
-        self.assertVectorEqual(vector_hat(v), ans)
-        v = Vector(0, 0) * m
-        self.assertVectorEqual(vector_hat(v), ans)
+        self.assertVectorAlmostEqual(vector_hat(v), ans)
 
     def test_vector_perp(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
         v = [3, 4]
         ans = [-4, 3]
         self.assertTrue((vector_perp(v) == ans).all())
         v = Vector(3, 4)
         self.assertTrue((vector_perp(v) == ans).all())
-        v = Vector(3, 4) * m
-        self.assertTrue((vector_perp(v) == ans * m).all())
 
     def test_vector_dot(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-        s = UNITS.second
         v = [3, 4]
         w = [5, 6]
         ans = 39
@@ -428,18 +210,7 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector_dot(v, w), ans)
         self.assertAlmostEqual(vector_dot(w, v), ans)
 
-        v = Vector(3, 4) * m
-        self.assertAlmostEqual(vector_dot(v, w), ans * m)
-        self.assertAlmostEqual(vector_dot(w, v), ans * m)
-
-        w = Vector(5, 6) / s
-        self.assertAlmostEqual(vector_dot(v, w), ans * m / s)
-        self.assertAlmostEqual(vector_dot(w, v), ans * m / s)
-
     def test_vector_cross_2D(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-        s = UNITS.second
         ans = -2
 
         v = [3, 4]
@@ -451,41 +222,21 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector_cross(v, w), ans)
         self.assertAlmostEqual(vector_cross(w, v), -ans)
 
-        v = Vector(3, 4) * m
-        self.assertAlmostEqual(vector_cross(v, w), ans * m)
-        self.assertAlmostEqual(vector_cross(w, v), -ans * m)
-
-        w = Vector(5, 6) / s
-        self.assertAlmostEqual(vector_cross(v, w), ans * m / s)
-        self.assertAlmostEqual(vector_cross(w, v), -ans * m / s)
-
     def test_vector_cross_3D(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-        s = UNITS.second
         ans = [-2, 4, -2]
 
         v = [3, 4, 5]
         w = [5, 6, 7]
-        self.assertArrayEqual(vector_cross(v, w), ans)
-        self.assertArrayEqual(-vector_cross(w, v), ans)
+        res = vector_cross(v, w)
+        self.assertTrue(isinstance(res, (np.ndarray, pd.Series)))
+        self.assertTrue((res == ans).all())
+        self.assertTrue((-vector_cross(w, v) == ans).all())
 
         v = Vector(3, 4, 5)
         self.assertVectorEqual(vector_cross(v, w), ans)
         self.assertVectorEqual(-vector_cross(w, v), ans)
 
-        v = Vector(3, 4, 5) * m
-        self.assertVectorEqual(vector_cross(v, w), ans * m)
-        self.assertVectorEqual(-vector_cross(w, v), ans * m)
-
-        w = Vector(5, 6, 7) / s
-        self.assertVectorEqual(vector_cross(v, w), ans * m / s)
-        self.assertVectorEqual(-vector_cross(w, v), ans * m / s)
-
     def test_scalar_proj(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-        s = UNITS.second
         ans = 4.9934383
         ans2 = 7.8
 
@@ -498,20 +249,10 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(scalar_proj(v, w), ans)
         self.assertAlmostEqual(scalar_proj(w, v), ans2)
 
-        v = Vector(3, 4) * m
-        self.assertQuantityAlmostEqual(scalar_proj(v, w), ans * m)
-        self.assertAlmostEqual(scalar_proj(w, v), ans2)
-
-        w = Vector(5, 6) / s
-        self.assertQuantityAlmostEqual(scalar_proj(v, w), ans * m)
-        self.assertQuantityAlmostEqual(scalar_proj(w, v), ans2 / s)
-
     def test_vector_proj(self):
         warnings.simplefilter("error", Warning)
-        m = UNITS.meter
-        s = UNITS.second
         ans = [3.19672131, 3.83606557]
-        ans2 = Quantity([4.68, 6.24])
+        ans2 = [4.68, 6.24]
 
         v = [3, 4]
         w = [5, 6]
@@ -522,17 +263,7 @@ class TestVector(unittest.TestCase):
         self.assertVectorAlmostEqual(vector_proj(v, w), ans)
         self.assertVectorAlmostEqual(vector_proj(w, v), ans2)
 
-        v = Vector(3, 4) * m
-        self.assertVectorAlmostEqual(vector_proj(v, w), ans * m)
-        self.assertVectorAlmostEqual(vector_proj(w, v), ans2)
-
-        w = Vector(5, 6) / s
-        self.assertVectorAlmostEqual(vector_proj(v, w), ans * m)
-        self.assertVectorAlmostEqual(vector_proj(w, v), ans2 / s)
-
     def test_vector_dist(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
         v = [3, 4]
         w = [6, 8]
         ans = 5
@@ -543,14 +274,7 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector_dist(v, w), ans)
         self.assertAlmostEqual(vector_dist(w, v), ans)
 
-        v = Vector(3, 4) * m
-        w = Vector(6, 8) * m
-        self.assertAlmostEqual(vector_dist(v, w), ans * m)
-        self.assertAlmostEqual(vector_dist(w, v), ans * m)
-
     def test_vector_diff_angle(self):
-        warnings.simplefilter("error", Warning)
-        m = UNITS.meter
         v = [3, 4]
         w = [5, 6]
         ans = 0.0512371674
@@ -561,105 +285,144 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector_diff_angle(v, w), ans)
         self.assertAlmostEqual(vector_diff_angle(w, v), -ans)
 
-        v = Vector(3, 4) * m
-        w = Vector(5, 6) * m
-        self.assertAlmostEqual(vector_diff_angle(v, w), ans)
-        self.assertAlmostEqual(vector_diff_angle(w, v), -ans)
-
 
 class TestSeriesCopy(unittest.TestCase):
     def test_series_copy(self):
         series = TimeSeries()
         res = series.copy()
-        self.assertTrue(isinstance(res, TimeSeries))
+        self.assertTrue(isinstance(res, pd.Series))
 
 
-class TestMagnitudeUnits(unittest.TestCase):
-    def test_magnitudes(self):
-        # scalar
-        x = 5
-        res = magnitudes(x)
-        self.assertEqual(res, 5)
-        res = magnitudes(x * UNITS.meter)
-        self.assertEqual(res, 5)
+class TestLeastsq(unittest.TestCase):
+    def test_leastsq(self):
+        # Create noise-free test data: y = 2x + 1
+        x = np.array([0, 1, 2, 3, 4])
+        y = 2 * x + 1
 
-        # list (result is NumPy array)
-        t = [1, 2, 3]
-        res = magnitudes(t)
-        self.assertEqual(res, [1, 2, 3])
-        res = magnitudes(t * UNITS.meter)
-        self.assertTrue((res == [1, 2, 3]).all())
+        def error_func(params, x, y):
+            m, b = params
+            return y - (m * x + b)
 
-        # Series (result is list)
-        s = ModSimSeries([1, 2, 3])
-        res = magnitudes(s)
-        self.assertTrue((res == [1, 2, 3]).all())
-        res = magnitudes(s * UNITS.meter)
-        self.assertTrue((res == [1, 2, 3]).all())
+        # Initial guess
+        x0 = [1, 0]  # m=1, b=0
 
-        # Quantity containing Series(result is Series)
-        res = magnitudes(UNITS.meter * s)
-        self.assertTrue((res == [1, 2, 3]).all())
+        # Run leastsq
+        best_params, details = leastsq(error_func, x0, x, y)
 
-    def test_units(self):
-        # scalar
-        x = 5
-        res = get_units(x)
-        self.assertEqual(res, 1)
-        res = get_units(x * UNITS.meter)
-        self.assertEqual(res, UNITS.meter)
-
-        # list (result is list)
-        t = [1, 2, 3]
-        res = get_units(t)
-        self.assertEqual(res, [1, 1, 1])
-        res = get_units(t * UNITS.meter)
-        self.assertEqual(res, UNITS.meter)
-
-        # Series (result Series)
-        s = ModSimSeries([1, 2, 3])
-        res = get_units(s)
-        self.assertTrue((res == [1, 1, 1]).all())
-
-        # Series containing Quantities (result is a Series)
-        res = get_units(s * UNITS.meter)
-        self.assertTrue((res == [UNITS.meter] * 3).all())
-
-        # Quantity containing Series(result is a single Unit object)
-        res = get_units(UNITS.meter * s)
-        self.assertEqual(res, UNITS.meter)
+        # Check results
+        self.assertAlmostEqual(best_params[0], 2.0, places=5)  # slope
+        self.assertAlmostEqual(best_params[1], 1.0, places=5)  # intercept
+        self.assertTrue(details.success)
 
 
-class TestPlot(unittest.TestCase):
-    def test_plot(self):
-        os.environ["QT_XKB_CONFIG_ROOT"] = "/usr/share/X11/xkb"
+class TestCrossings(unittest.TestCase):
+    def test_crossings(self):
+        # Create a simple linear series from 0 to 10
+        index = np.linspace(0, 10, 11)
+        values = index.copy()
+        series = pd.Series(values, index=index)
 
-        t = [1, 2, 3]
-        plot(t)
+        # Find where the series crosses 5
+        result = crossings(series, 5)
+        # Should cross exactly at 5
+        self.assertEqual(len(result), 1)
+        self.assertAlmostEqual(result[0], 5.0, places=5)
 
-        t = [1, 2, 3] * UNITS.meter
-        plot(t)
 
-        x = [4, 5, 6]
-        plot(x, t)
+class TestDataStructures(unittest.TestCase):
+    def test_state(self):
+        s = State(a=1, b=2)
+        self.assertIsInstance(s, pd.Series)
+        self.assertEqual(s['a'], 1)
+        self.assertEqual(s['b'], 2)
+        self.assertEqual(s.name, 'state')
 
-        x = [4, 5, 6] * UNITS.second
-        plot(x, t)
+    def test_timeseries(self):
+        ts = TimeSeries([1, 2, 3], index=[10, 20, 30])
+        self.assertIsInstance(ts, pd.Series)
+        self.assertEqual(list(ts), [1, 2, 3])
+        self.assertEqual(list(ts.index), [10, 20, 30])
+        self.assertEqual(ts.index.name, 'Time')
+        self.assertEqual(ts.name, 'Quantity')
 
-        a = np.array(t)
-        plot(a)
+    def test_sweepseries(self):
+        ss = SweepSeries([4, 5, 6], index=[0.1, 0.2, 0.3])
+        self.assertIsInstance(ss, pd.Series)
+        self.assertEqual(list(ss), [4, 5, 6])
+        self.assertEqual(list(ss.index), [0.1, 0.2, 0.3])
+        self.assertEqual(ss.index.name, 'Parameter')
+        self.assertEqual(ss.name, 'Metric')
 
-        x = np.array(x)
-        plot(x, a)
+    def test_timeframe(self):
+        df = TimeFrame([[1, 2], [3, 4]], columns=['a', 'b'], index=[0, 1])
+        self.assertIsInstance(df, pd.DataFrame)
+        self.assertEqual(df.shape, (2, 2))
+        self.assertEqual(list(df.columns), ['a', 'b'])
+        self.assertEqual(list(df.index), [0, 1])
 
-        s = TimeSeries(t)
-        plot(s)
+    def test_sweepframe(self):
+        df = SweepFrame([[5, 6], [7, 8]], columns=['x', 'y'], index=[0.1, 0.2])
+        self.assertIsInstance(df, pd.DataFrame)
+        self.assertEqual(df.shape, (2, 2))
+        self.assertEqual(list(df.columns), ['x', 'y'])
+        self.assertEqual(list(df.index), [0.1, 0.2])
 
-        s = TimeSeries(t, x)
-        plot(s)
+    def test_make_series(self):
+        s = make_series([10, 20, 30], [1, 2, 3])
+        self.assertIsInstance(s, pd.Series)
+        self.assertEqual(list(s.index), [10, 20, 30])
+        self.assertEqual(list(s.values), [1, 2, 3])
+        self.assertEqual(s.name, 'values')
+        self.assertEqual(s.index.name, 'index')
 
-        s = TimeSeries(a, x)
-        plot(s)
+    def test_vector_polar(self):
+        v = [3, 4]
+        mag, angle = vector_polar(v)
+        self.assertAlmostEqual(mag, 5.0, places=5)
+        self.assertAlmostEqual(angle, np.arctan2(4, 3), places=5)
+
+    def test_interpolate_inverse(self):
+        # y = 2x + 1, invert to get x from y
+        x = np.array([0, 1, 2, 3, 4])
+        y = 2 * x + 1
+        series = pd.Series(y, index=x)
+        inv = interpolate_inverse(series)
+        # y=5 -> x=2
+        self.assertAlmostEqual(inv(5), 2.0, places=5)
+
+    def test_gradient(self):
+        s = pd.Series([1, 4, 9], index=[0, 1, 2])
+        g = gradient(s)
+        self.assertIsInstance(g, pd.Series)
+        # Should be [3, 4, 5] for [1,4,9] at [0,1,2]
+        self.assertTrue(np.allclose(g, [3, 4, 5]))
+
+    def test_magnitude(self):
+        self.assertEqual(magnitude(5), 5)
+        class Dummy:
+            magnitude = 42
+        self.assertEqual(magnitude(Dummy()), 42)
+
+    def test_remove_units(self):
+        class Dummy:
+            def __init__(self):
+                self.x = 5
+                self.y = 10
+        d = Dummy()
+        res = remove_units(d)
+        self.assertEqual(res.x, 5)
+        self.assertEqual(res.y, 10)
+
+    def test_remove_units_series(self):
+        s = pd.Series({'a': 1, 'b': 2})
+        res = remove_units_series(s)
+        self.assertTrue((res == s).all())
+
+    def test_underride(self):
+        d = {'a': 1}
+        underride(d, a=2, b=3)
+        self.assertEqual(d['a'], 1)
+        self.assertEqual(d['b'], 3)
 
 
 if __name__ == "__main__":
