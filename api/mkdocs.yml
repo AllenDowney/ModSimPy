@@ -1,0 +1,11 @@
+site_name: ModSimPy Documentation
+site_description: Documentation for Modeling and Simulation in Python
+docs_dir: docs
+site_dir: site
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python 

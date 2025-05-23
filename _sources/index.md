@@ -4,9 +4,14 @@ by Allen B. Downey
 
 *Modeling and Simulation in Python* is an introduction to physical modeling in Python, suitable for people with no programming experience.
 
+Printed and electronic copies of the book are available from [No Starch Press](https://nostarch.com/modeling-and-simulation-python) and [Bookshop.org](https://bookshop.org/p/books/modeling-and-simulation-in-python-allen-b-downey/17836697?ean=9781718502161) and [Amazon](https://amzn.to/3y9UxNb).
+
 Here is the [home page for this book at Green Tea Press](https://greenteapress.com/wp/modsimpy/).
 
-Printed and electronic copies of the book are available from [No Starch Press](https://nostarch.com/modeling-and-simulation-python) and [Bookshop.org](https://bookshop.org/p/books/modeling-and-simulation-in-python-allen-b-downey/17836697?ean=9781718502161) and [Amazon](https://amzn.to/3y9UxNb).
+[Documentation of the `modsim.py` module is here](https://allendowney.github.io/ModSimPy/api/index.html)
+
+Note that `modsim.py` is just a module, not a Python package, which means you only have to download the file; you don't have to install it.
+And if you run the Jupyter notebooks, they download `modsim.py` for you.
 
 
 **Run the notebooks**
