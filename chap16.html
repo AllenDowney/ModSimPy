@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -437,7 +437,7 @@ The following function takes two <code class="docutils literal notranslate"><spa
 coffee and milk, and creates a new <code class="docutils literal notranslate"><span class="pre">System</span></code> to represent the mixture:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mix</span><span class="p">(</span><span class="n">system1</span><span class="p">,</span> <span class="n">system2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mix</span><span class="p">(</span><span class="n">system1</span><span class="p">,</span> <span class="n">system2</span><span class="p">):</span>
     
     <span class="n">V1</span><span class="p">,</span> <span class="n">V2</span> <span class="o">=</span> <span class="n">system1</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">system2</span><span class="o">.</span><span class="n">volume</span>
     <span class="n">T1</span><span class="p">,</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">system1</span><span class="o">.</span><span class="n">T_final</span><span class="p">,</span> <span class="n">system2</span><span class="o">.</span><span class="n">T_final</span>
@@ -526,7 +526,7 @@ But is that the best we can do?</p>
 <p>Adding the milk after 30 minutes is better than adding it immediately, but maybe there’s something in between that’s even better. To find out, I’ll use the following function, which takes the time to add the milk, <code class="docutils literal notranslate"><span class="pre">t_add</span></code>, as a parameter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_and_mix</span><span class="p">(</span><span class="n">t_add</span><span class="p">,</span> <span class="n">t_total</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_and_mix</span><span class="p">(</span><span class="n">t_add</span><span class="p">,</span> <span class="n">t_total</span><span class="p">):</span>
     <span class="n">coffee</span><span class="o">.</span><span class="n">t_end</span> <span class="o">=</span> <span class="n">t_add</span>
     <span class="n">coffee_results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">coffee</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
     
@@ -591,9 +591,9 @@ observe the that the temperature at <span class="math notranslate nohighlight">\
 <p>The following function takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and computes <code class="docutils literal notranslate"><span class="pre">r</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">log</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
 
-<span class="k">def</span> <span class="nf">compute_r</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_r</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">t_end</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span>
     <span class="n">T_init</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">T_init</span>
     <span class="n">T_final</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">T_final</span>
@@ -627,9 +627,9 @@ That’s because the simulations use discrete time steps, and the analysis uses 
 To check, we’ll use the following function, which takes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object and uses the analytic result to compute a time series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">exp</span>
 
-<span class="k">def</span> <span class="nf">run_analysis</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_analysis</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">T_env</span><span class="p">,</span> <span class="n">T_init</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_init</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span>
     
     <span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>    
@@ -680,10 +680,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h3>
 <p>Use <code class="docutils literal notranslate"><span class="pre">compute_r</span></code> to compute <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> according to the analytic solution.  Run the analysis with this value of <code class="docutils literal notranslate"><span class="pre">r_milk</span></code> and confirm that the results are consistent with the simulation.</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -703,10 +703,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -725,10 +725,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -741,15 +741,15 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">allclose</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">allclose</span>
 
 <span class="n">allclose</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">results2</span><span class="p">)</span>
 </pre></div>
@@ -768,10 +768,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <p>Suppose the coffee shop won’t let me take milk in a separate container, but I keep a bottle of milk in the refrigerator at my office.  In that case is it better to add the milk at the coffee shop, or wait until I get to the office?</p>
 <p>Hint: Think about the simplest way to represent the behavior of a refrigerator in this model.  The change you make to test this variation of the problem should be very small!</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>

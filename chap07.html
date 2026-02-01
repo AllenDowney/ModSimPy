@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -424,7 +424,7 @@ In the exercises, you will have a chance to try the second.</p>
 <p>We can test that conjecture with a new update function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth_func_quad</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">growth_func_quad</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">+</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">pop</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
@@ -493,7 +493,7 @@ population to have this form.</p>
 I’ll use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> to make an array of 101 populations from 0 to 15 billion.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linspace</span>
 
 <span class="n">pop_array</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 </pre></div>
@@ -513,7 +513,7 @@ I’ll use <code class="docutils literal notranslate"><span class="pre">linspace
 First we have to import it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">plot</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot</span>
 </pre></div>
 </div>
 </div>
@@ -604,7 +604,7 @@ carrying capacity, <code class="docutils literal notranslate"><span class="pre">
 Here’s a good solution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
     <span class="k">return</span> <span class="n">K</span>
     
@@ -624,7 +624,7 @@ Here’s a good solution:</p>
 <p><em>Dysfunction #1:</em> Not using parameters. In the following version, the function doesn’t take any parameters; when <code class="docutils literal notranslate"><span class="pre">sys1</span></code> appears inside the function, it refers to the object we create outside the function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">carrying_capacity</span><span class="p">():</span>
     <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">sys1</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">sys1</span><span class="o">.</span><span class="n">beta</span>
     <span class="k">return</span> <span class="n">K</span>
     
@@ -647,7 +647,7 @@ about parameters, they often write functions like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># WRONG</span>
-<span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">system</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
     <span class="k">return</span> <span class="n">K</span>
@@ -677,7 +677,7 @@ defeat the whole purpose of functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># WRONG</span>
-<span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
     
 <span class="n">sys1</span> <span class="o">=</span> <span class="n">System</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mf">0.0018</span><span class="p">)</span>
@@ -694,7 +694,7 @@ defeat the whole purpose of functions.</p>
 </div>
 <p>A function that doesn’t have a return statement actually returns a special value called <code class="docutils literal notranslate"><span class="pre">None</span></code>, so in this example the value of <code class="docutils literal notranslate"><span class="pre">pop</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>. If you are debugging a program and find that the value of a variable is <code class="docutils literal notranslate"><span class="pre">None</span></code> when it shouldn’t be, a function without a return statement is a likely cause.</p>
 <p><em>Dysfunction #4:</em> Ignoring the return value. Finally, here’s a version where the function is correct, but the way it’s used is not.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">carrying_capacity</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
     <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="n">system</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">beta</span>
     <span class="k">return</span> <span class="n">K</span>
     
@@ -719,10 +719,10 @@ with the result.</p>
 <p>where <span class="math notranslate nohighlight">\(r=\alpha\)</span> and <span class="math notranslate nohighlight">\(K=-\alpha/\beta\)</span>.</p>
 <p>Write a version of <code class="docutils literal notranslate"><span class="pre">growth_func</span></code> that implements this version of the model.  Test it by computing the values of <code class="docutils literal notranslate"><span class="pre">r</span></code> and <code class="docutils literal notranslate"><span class="pre">K</span></code> that correspond to <code class="docutils literal notranslate"><span class="pre">alpha=0.025</span></code> and <code class="docutils literal notranslate"><span class="pre">beta=-0.0018</span></code>, and confirm that you get the same results.</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -742,15 +742,15 @@ with the result.</p>
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">growth_func_quad2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">growth_func_quad2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pop</span> <span class="o">/</span> <span class="n">system</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -758,10 +758,10 @@ with the result.</p>
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -787,10 +787,10 @@ with the result.</p>
 </pre></div>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>

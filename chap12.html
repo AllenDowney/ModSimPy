@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -410,7 +410,7 @@ recovered without going through infectious. We can implement this
 feature like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_immunization</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_immunization</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
     <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">s</span> <span class="o">-=</span> <span class="n">fraction</span>
     <span class="n">system</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">r</span> <span class="o">+=</span> <span class="n">fraction</span>
 </pre></div>
@@ -484,7 +484,7 @@ students who will still be sick at the end of the semester, or the total number 
 <p>We can get the total number of infections by computing the difference in <code class="docutils literal notranslate"><span class="pre">s</span></code> at the beginning and the end of the simulation.</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calc_total_infected</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">s_0</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">s_end</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">s_0</span> <span class="o">-</span> <span class="n">s_end</span>
@@ -525,7 +525,7 @@ students who will still be sick at the end of the semester, or the total number 
 following function sweeps a range of immunization rates:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_immunity</span><span class="p">(</span><span class="n">fraction_array</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sweep_immunity</span><span class="p">(</span><span class="n">fraction_array</span><span class="p">):</span>
     <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">fraction</span> <span class="ow">in</span> <span class="n">fraction_array</span><span class="p">:</span>
@@ -597,10 +597,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <p>Suppose we have the option to quarantine infected students.  For example, a student who feels ill might be moved to an infirmary or a private dorm room until they are no longer infectious.</p>
 <p>How might you incorporate the effect of quarantine in the SIR model?</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -629,7 +629,7 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <span class="sd">are quarantined as soon as they are identified.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="k">def</span> <span class="nf">add_quarantine</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_quarantine</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">fraction</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Model the effect of quarantine by adjusting gamma.</span>
 <span class="sd">    </span>
 <span class="sd">    system: System object</span>
@@ -649,15 +649,15 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">sweep_quarantine</span><span class="p">(</span><span class="n">fraction_array</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sweep_quarantine</span><span class="p">(</span><span class="n">fraction_array</span><span class="p">):</span>
     <span class="n">sweep</span> <span class="o">=</span> <span class="n">SweepSeries</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">fraction</span> <span class="ow">in</span> <span class="n">fraction_array</span><span class="p">:</span>
@@ -673,10 +673,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -689,10 +689,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>

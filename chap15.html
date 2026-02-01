@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -506,7 +506,7 @@ hundred degrees Celsius, say).</p>
 <p>Here’s a function that takes the parameters of the system and makes a <code class="docutils literal notranslate"><span class="pre">System</span></code> object:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_system</span><span class="p">(</span><span class="n">T_init</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t_end</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">T_init</span><span class="o">=</span><span class="n">T_init</span><span class="p">,</span>
                   <span class="n">T_final</span><span class="o">=</span><span class="n">T_init</span><span class="p">,</span>
                   <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">,</span>
@@ -540,7 +540,7 @@ use.</p>
 <p>The following function takes the current time <code class="docutils literal notranslate"><span class="pre">t</span></code>, the current temperature, <code class="docutils literal notranslate"><span class="pre">T</span></code>, and a <code class="docutils literal notranslate"><span class="pre">System</span></code> object, and computes the change in temperature during a time step:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">change_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">r</span><span class="p">,</span> <span class="n">T_env</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">T_env</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span>    
     <span class="k">return</span> <span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">T_env</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
 </pre></div>
@@ -564,7 +564,7 @@ use.</p>
 <p>Now here’s a version of <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> that simulates a series of time steps from <code class="docutils literal notranslate"><span class="pre">t_0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_end</span></code>:</p>
 <div class="cell tag_export docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">):</span>
     <span class="n">t_array</span> <span class="o">=</span> <span class="n">linrange</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">t_0</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">t_end</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">)</span>
     
@@ -762,7 +762,7 @@ Here are the first few rows:</p>
 write a function that evaluates <span class="math notranslate nohighlight">\(f\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -823,7 +823,7 @@ argument is an interval that contains or <em>brackets</em> a root. The result is
 70 °C. To use <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code>, we need a function that takes <code class="docutils literal notranslate"><span class="pre">r</span></code> as a parameter and returns the difference between the final temperature and the goal:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">error_func</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">error_func</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">system</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">-</span> <span class="mi">70</span>
@@ -930,10 +930,10 @@ You can access the notebooks at <a class="reference external" href="https://alle
 <p>Simulate the temperature of 50 mL of milk with a starting temperature of 5 °C, in a vessel with <code class="docutils literal notranslate"><span class="pre">r=0.1</span></code>, for 15 minutes, and plot the results. Use <code class="docutils literal notranslate"><span class="pre">make_system</span></code> to make a <code class="docutils literal notranslate"><span class="pre">System</span></code> object that represents the milk, and use <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> to simulate it.
 By trial and error, find a value for <code class="docutils literal notranslate"><span class="pre">r</span></code> that makes the final temperature close to 20 °C.</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -952,10 +952,10 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -977,15 +977,15 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 <h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h3>
 <p>Write an error function that simulates the temperature of the milk and returns the difference between the final temperature and 20 °C.  Use it to estimate the value of <code class="docutils literal notranslate"><span class="pre">r</span></code> for the milk.</p>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
-<span class="k">def</span> <span class="nf">error_func2</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">error_func2</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
     <span class="n">system</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">change_func</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">T_final</span> <span class="o">-</span> <span class="mi">20</span>
@@ -995,10 +995,10 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
@@ -1020,10 +1020,10 @@ By trial and error, find a value for <code class="docutils literal notranslate">
 </details>
 </div>
 <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
