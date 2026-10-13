@@ -203,7 +203,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap09 | done (ModSimPySolutions `7cf4af4` and the next commit) |
 | chap10 | done (ModSimPySolutions `199fc93` and the next commit; re-executed) |
 | chap11 | done (ModSimPySolutions `149cee0`, `6490eb4`) |
-| chap12–chap27 | not started |
+| chap12 | done (ModSimPySolutions `d06ddb3`, `690f145`) |
+| chap13–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -254,6 +255,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 2. **approved: fix all three** · `run_simulation1` named as `run_simulation`, and "values of `0` and `t_end`".
 3. **approved: add the count** · Exercise 1 asks how many students; the solution gave a fraction.
 4. **done** · <http://modsimpy.com/sir> redirected to maa.org, which returns 403 Forbidden (at least to scripts). Now points to <https://sites.math.duke.edu/education/postcalc/sir/index.html> (same article). Deployed 2026-10-13, GreenTeaPress `241076f`.
+
+**chap12**
+
+1. **approved: increase in gamma, with the mechanism explained** · The quarantine solution said "reduction in gamma" but the code raises gamma. Discussed lowering beta instead: that models fewer contacts for every infected student (distancing), not isolating identified cases; for the total-infected metric both give the same result when beta/gamma is the same.
 
 ### Errata (changes relative to the published text)
 
@@ -340,6 +345,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Running the Simulation* (content): "The parameters of `run_simulation` are..." → "`run_simulation1`"; "initial conditions, and values of `0` and `t_end`" → "initial conditions, and `t_end`"; "We can call `run_simulation` like this" → "`run_simulation1`"
 - *Collecting the Results* (content): "about five weeks (35 days) to peak" → "about four weeks (30 days) to peak" (the infected fraction peaks on day 30)
 - Exercise 1 solution (content; not in the printed book): added "About 38% of the class, or 34 of the 90 students, get infected."
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap12**
+
+- *Sweeping Immunization*: "This following function" → "The following function"
+- Exercise 1 solution (content; not in the printed book): "model quarantine as an effective reduction in gamma" → "an effective increase in gamma", with an explanation: R means "removed", quarantined students can't infect anyone, so a shorter time in the infectious compartment is a shorter recovery time and a higher `gamma = 1/tr`
 - Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
 
 ## Notes
