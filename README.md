@@ -80,6 +80,7 @@ The development environment includes all user dependencies plus:
 - Testing tools (pytest, nbmake)
 - Documentation tools (mkdocs, mkdocstrings, jupyter-book)
 - Build tools (ghp-import)
+- Notebook editing (jupytext)
 
 ### Updating Environments
 

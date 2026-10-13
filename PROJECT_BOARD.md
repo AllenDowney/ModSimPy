@@ -9,6 +9,7 @@ This is the public repo for *Modeling and Simulation in Python* (No Starch, 2023
 Tasks 1–4 (cleanup) and Task 6 (CI and build fixes) done 2026-10-13. Still open:
 
 - **Task 3:** delete `~/ModSimPy-attic/` once nothing has been missed
+- **Task 7:** proofreading pass through the book (next)
 
 ---
 
@@ -130,6 +131,62 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 - Build scripts only commit; `make build` pushes ModSimPy once, so CI runs once on the finished state instead of three times on partial ones
 - `make build` runs `examples` before `chapters`: `chapters/build.sh` builds `ModSimPyNotebooks.zip`, which includes the examples, and used to zip the previous versions
 - CI in both repos: one Python version, the current Colab one (3.13; check `googlecolab/backend-info`, `os-info.txt`), on Ubuntu and Windows; `actions/checkout@v5`, `actions/setup-python@v6`
+
+## Task 7: Proofreading pass through the book
+
+**Status:** Planned (added 2026-10-13)
+
+**Goal:** Read every notebook in the book for typos and for content issues, and fix them in the source notebooks in ModSimPySolutions.
+
+**Scope:** the source notebooks in `ModSimPySolutions/`, never the student copies in `chapters/` and `examples/` here (the build regenerates those).
+
+- `chapters/chap01`–`chap27` (about 49,000 words)
+- `examples/`: 16 notebooks (about 13,000 words); `queue` is in the Jupyter Book, the rest are linked from the chapters
+- Not `header.ipynb` and `link_header.ipynb` (boilerplate), except where a fix belongs there
+
+### What to check
+
+- **Typos and grammar:** spelling, repeated words, punctuation, inconsistent terms or capitalization
+- **Text vs output:** numbers and descriptions in the prose that no longer match what the code produces (pandas 3, NumPy 2 and SciPy changes since 2023)
+- **Code that still runs but is dated:** deprecated calls and warnings, things the text says about library behavior that are no longer true
+- **Links:** dead or redirected URLs, and data and figure URLs (ModSim repo, `raw/master/...` here)
+- **Exercises:** clear instructions; the solution matches what the exercise asks
+- **Cross-references:** chapter and section numbers, "in the previous chapter" and similar
+
+### Workflow (per notebook)
+
+The `.ipynb` is the source; there is no jupytext pairing and no `.md` copies in the repo (same pattern as ElementsOfDataScience):
+
+```bash
+S=<scratchpad>
+jupytext --to md -o $S/chap05.md ModSimPySolutions/chapters/chap05.ipynb
+# edit $S/chap05.md
+jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap05.md
+```
+
+- `--update` keeps the outputs and metadata (cell tags, which hide solutions in the Jupyter Book). **Never run plain `jupytext --to ipynb`**: it discards every output
+- Markdown-only changes: no re-execution, so outputs and figures stay as they are
+- If a code cell changes, re-execute (`jupyter nbconvert --to notebook --execute --inplace ...`), strip the `execution` timestamps nbconvert adds, and check that no output recorded a local path
+- Check each round trip: only the edited cells differ (compare cell sources before and after), and the number of outputs is unchanged
+- Run `pytest --nbmake` on the notebook before committing
+
+`jupytext` is in `environment-dev.yml` (added 2026-10-13; 1.19.6 installed locally).
+
+### Commits and pushes
+
+- One commit per notebook in ModSimPySolutions, listing what changed and any content issues left for the author
+- Push rarely (each push runs CI); rebuild the student notebooks and the site with `make build` at the end, or at milestones
+
+### Progress
+
+| Notebooks | Status |
+|---|---|
+| chap01–chap27 | not started |
+| examples (16) | not started |
+
+### Content issues for the author
+
+(None yet: items that need a decision rather than an obvious fix go here.)
 
 ## Notes
 

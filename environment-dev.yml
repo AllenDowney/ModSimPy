@@ -24,5 +24,6 @@ dependencies:
   - mkdocstrings-python
   - jupyter-book<2.0
   - ghp-import
+  - jupytext
   - pip
 
