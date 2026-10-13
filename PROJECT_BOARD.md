@@ -195,7 +195,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap05 | done (ModSimPySolutions `775a602`); no content issues |
 | chap06 | done (ModSimPySolutions `42c70f0`, `792001b`) |
 | chap07 | done (ModSimPySolutions `1385073` and the next commit) |
-| chap08–chap27 | not started |
+| chap08 | done (ModSimPySolutions `3ea71b0` and the next commit) |
+| chap09–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -226,6 +227,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: drop the sentence** · The introduction promised an exercise on a time-varying growth rate that isn't in this chapter.
 2. **approved: change the text** · Exercise 2 said 1 to 20 billion; the solution uses 1 to 25.
+
+**chap08**
+
+1. **approved: move it** · The notebook notice was in the Exercises section instead of after the introduction.
 
 ### Errata (changes relative to the published text)
 
@@ -283,6 +288,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Net Growth*: "To plot growth rate versus population" → "To plot net growth versus population"
 - Introduction (content): removed "In the exercises, you will have a chance to try the second." (this chapter's exercises don't try a time-varying growth rate)
 - Exercise 2 (content): "initial populations between 1 and 20 billion" → "between 1 and 25 billion" (matches the solution)
+
+**chap08**
+
+- *Summary*: "In this chapter we use the quadratic growth model" → "we used"
+- Exercise 1: "time stamp" → "timestamp" (twice)
+- Layout (content): the "This chapter is available as a Jupyter notebook" note moved from the start of Exercises to after the introduction, with the same wording as the other chapters
 
 ## Notes
 
