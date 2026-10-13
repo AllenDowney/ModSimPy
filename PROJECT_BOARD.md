@@ -189,7 +189,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | Notebooks | Status |
 |---|---|
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
-| chap02–chap27 | not started |
+| chap02 | done (ModSimPySolutions `8303751`); 1 content issue open |
+| chap03–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -202,6 +203,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 2. **approved: CC BY-NC-SA 4.0** (README fixed; it now also says the code is MIT, as `LICENSE` says) · License: the notebook header says CC BY-NC-SA 4.0; the README says CC BY-NC 4.0. Probably shared by every notebook's header, so decide once for the whole book.
 3. **approved: rewritten for Colab and JupyterLab** · *More Jupyter* (hidden in the book, shown to students): the instructions are for the classic Notebook interface ("Insert cell below" in the Insert menu, "Close and Halt", "Restart & Run All"), which Notebook 7, JupyterLab and Colab don't have. Proposed: rewrite briefly so it works for Colab and JupyterLab.
 4. **declined** · Exercise 8 solution uses `round` to split the pace into minutes and seconds. That works for 7.22 min/mile but would give a negative remainder for, say, 7.6. Proposed: `floor` instead of `round` (and import `floor` from NumPy rather than shadowing the built-in `round`).
+
+**chap02**
+
+1. **open** · *Modeling a Bike Share System*: the same point is made twice in a row. "...in a `State` object, which gets assigned to a new variable named `bikeshare`." and, two sentences later, "The `State` object is assigned to a new variable named `bikeshare`." Proposed: delete the second sentence.
 
 ### Errata (changes relative to the published text)
 
@@ -218,6 +223,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Exercise 6, step 1: "...with constant acceleration `a`." → "...with constant acceleration `a`?"
 - *The Falling Penny Myth* (content): "The television show *Mythbusters* has tested the myth ... and a physical model of a human head." → "The science video channel *Veritasium* tested the myth of the falling penny more carefully, with help from Adam Savage of *Mythbusters* ... measurements of a penny falling at terminal velocity in a vertical wind tunnel, and research on how much force it takes to fracture a skull." (the link always went to the Veritasium video)
 - *More Jupyter* (content; not in the printed book): classic-Notebook menu steps replaced with Colab and JupyterLab steps
+
+**chap02**
+
+- Exercise 3, steps 4–5: "it should plot the results and / 5. Decorate the axes." → "it should plot the results. / 5. Then it should decorate the axes."
+- Exercise 3, testing step 2: "Call `run_simulation` with parameters" → "with arguments" (the chapter defines the difference)
+- *Under the Hood*: Matplotlib docs link from version 3.2.2 to the current docs (<https://matplotlib.org/stable/api/axes_api.html>)
 
 ## Notes
 
