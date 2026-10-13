@@ -20,4 +20,13 @@ html:
   use_repository_button: true
 
 parse:
-  myst_extended_syntax: true
+  # Replaces the deprecated myst_extended_syntax (broken in current Jupyter Book):
+  # the same extensions, listed individually, plus linkify for bare URLs.
+  # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html
+  myst_enable_extensions:
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    - html_image
+    - linkify

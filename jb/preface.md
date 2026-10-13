@@ -121,7 +121,7 @@ To run the notebooks on your computer, there are three steps:
 
 3.  Run Jupyter and open the notebooks.
 
-To get the notebooks, download [this Zip archive](http://modsimpy.com/zip). You will need a program like
+To get the notebooks, download [this Zip archive](https://github.com/AllenDowney/ModSimPy/raw/refs/heads/master/ModSimPyNotebooks.zip). You will need a program like
 WinZip or gzip to unpack the Zip file. Make a note of the location of
 the files you download.
 
