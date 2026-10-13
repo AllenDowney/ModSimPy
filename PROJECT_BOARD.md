@@ -192,7 +192,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap02 | done (ModSimPySolutions `8303751`); content fix in the next commit |
 | chap03 | done (ModSimPySolutions `4a487e4`); no content issues |
 | chap04 | done (ModSimPySolutions `09930a8` and the next commit) |
-| chap05–chap27 | not started |
+| chap05 | done (ModSimPySolutions `775a602`); no content issues |
+| chap06–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -251,6 +252,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Sweeping Parameters* and *Under the Hood*: Matplotlib colors links (one moved, one to version 3.3.2) → <https://matplotlib.org/stable/users/explain/colors/colors.html>
 - Exercise 6 (content): "with a range of values for `p1` and `p2`." → "with a range of values for `p1` and these parameters:" (only `p1` is swept)
 - Exercise 6 solution (content; solutions aren't in the printed book): added the answer, "The minimum is near p1 = 0.35, close to p2 = 0.3."
+
+**chap05**
+
+- Introduction: "Paul Erlich" → "Paul Ehrlich"
+- *Absolute and Relative Errors*: "counting everyone is the world is hard" → "counting everyone in the world is hard"
+- *Modeling Population Growth*: "the second to last element" → "the second-to-last element"
 
 ## Notes
 
