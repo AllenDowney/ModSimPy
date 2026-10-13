@@ -207,7 +207,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap13 | done (ModSimPySolutions `dee3e7f`); no content issues |
 | chap14 | done (ModSimPySolutions `6bfcf9f`, `4a65094`, and the next commit) |
 | chap15 | done (ModSimPySolutions `c4c9907`, `335dcdb`; re-executed) |
-| chap16–chap27 | not started |
+| chap16 | done (ModSimPySolutions `94a41db`, `8321b6d`; re-executed) |
+| chap17–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -274,6 +275,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 2. **approved: fix and re-execute** · Exercise 2 solution didn't assign the `root_scalar` result.
 3. **approved: drop the Exercises copy** · Chapters 15–27 have the notebook notice twice; keep only the one after the introduction (applies to every remaining chapter).
 4. **approved** · NumPy 2 scalar display: `np.set_printoptions(legacy="1.25")` in `modsim.py`.
+
+**chap16**
+
+1. **approved** · Mix last now simulates the milk for 30 minutes: 62.9 → 63.2 °C.
+2. **declined** · "identical ... with a small difference due to rounding" kept as is.
 
 ### Errata (changes relative to the published text)
 
@@ -390,6 +396,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Estimating r*: "about -11°C" → "about -11 °C"
 - Exercise 2 solution (content; not in the printed book): `root_scalar(...)` → `res = root_scalar(...)`; the displayed `res` had been the coffee result. Re-executed: `res.root` is 0.133 for the milk
 - Layout: the second notebook notice (in Exercises) removed; chapters 15–27 have one after the introduction (tagged `remove-print`) and one in Exercises
+
+**chap16**
+
+- Introduction: "root finding algorithm" → "root-finding algorithm"
+- *Mix First or Last?*: "61.5 °C which is still" → "61.5 °C, which is still"
+- *Mix First or Last?* (content): the mix-last case simulated the coffee for 30 minutes but the milk for only 15 (its `t_end` from the measurement). Now both run 30 minutes (`milk.t_end = 30`), and "the temperature is 62.9 °C" → "63.2 °C", which matches the end of the sweep. Re-executed
+- *Analytic Solution*: "If we observe the that the temperature" → "If we observe that the temperature"; "the value of `r` we computed in the previous chapter, `0.115`" → "`0.0115`"; "time stamps" → "timestamps"
+- Layout: duplicate notebook notice removed from Exercises
 
 **Book-wide: NumPy 2 scalar display** (ModSimPy `c91e8e1`)
 
