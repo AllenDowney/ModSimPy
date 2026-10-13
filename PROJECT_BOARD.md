@@ -204,7 +204,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap10 | done (ModSimPySolutions `199fc93` and the next commit; re-executed) |
 | chap11 | done (ModSimPySolutions `149cee0`, `6490eb4`) |
 | chap12 | done (ModSimPySolutions `d06ddb3`, `690f145`) |
-| chap13–chap27 | not started |
+| chap13 | done (ModSimPySolutions `dee3e7f`); no content issues |
+| chap14–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -351,6 +352,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - *Sweeping Immunization*: "This following function" → "The following function"
 - Exercise 1 solution (content; not in the printed book): "model quarantine as an effective reduction in gamma" → "an effective increase in gamma", with an explanation: R means "removed", quarantined students can't infect anyone, so a shorter time in the infectious compartment is a shorter recovery time and a higher `gamma = 1/tr`
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap13**
+
+- *Sweeping Beta*: "also called an *f-string* to assemble a label" → "also called an *f-string*, to assemble a label"
 - Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
 
 ## Notes
