@@ -1091,11 +1091,12 @@ def vector_cross(v, w):
         raise ValueError("Vectors must have the same length for cross product")
     if len(v) not in (2, 3):
         raise ValueError("Cross product only defined for 2D or 3D vectors")
-    res = np.cross(v, w)
     if len(v) == 3:
-        return Vector(*res)
+        return Vector(*np.cross(v, w))
     else:
-        return res
+        # NumPy 2.x no longer supports np.cross for 2D vectors
+        v, w = np.asarray(v), np.asarray(w)
+        return v[0] * w[1] - v[1] * w[0]
 
 
 def vector_proj(v, w):
