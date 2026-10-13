@@ -186,6 +186,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 
 ### Progress
 
+Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks and the site not rebuilt yet.
+
 | Notebooks | Status |
 |---|---|
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
@@ -197,7 +199,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap07 | done (ModSimPySolutions `1385073` and the next commit) |
 | chap08 | done (ModSimPySolutions `3ea71b0` and the next commit) |
 | chap09 | done (ModSimPySolutions `7cf4af4` and the next commit) |
-| chap10–chap27 | not started |
+| chap10 | done (ModSimPySolutions `199fc93` and the next commit; re-executed) |
+| chap11–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -237,6 +240,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: "previous chapters"** · "The population models in the previous chapter and this one" (this chapter has no new model).
 2. Notebook notice moved, applying the chap08 decision.
+
+**chap10**
+
+1. **approved: fix and re-execute** · Wrong title on the 1940-present solution plot.
 
 ### Errata (changes relative to the published text)
 
@@ -308,6 +315,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Solving the Quadratic Growth Model*: added the missing period after the Khan Academy link
 - *Summary*: $f(t) = p_0 \exp{\alpha t}$ → $f(t) = p_0 \exp(\alpha t)$ (the braces rendered without parentheses)
 - Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap10**
+
+- *Historical World Population*: broken Wikipedia link (`.../World_population_estimates.html`, 404) → <https://en.wikipedia.org/wiki/World_population_estimates>
+- Solution plot (content; not in the printed book): the 1940-present plot was titled "Prehistoric population estimates" → "Model vs. estimates since 1940". Notebook re-executed; the other three figures were re-rendered by current Matplotlib with no visible change
 
 ## Notes
 
