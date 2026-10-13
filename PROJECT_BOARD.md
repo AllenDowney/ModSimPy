@@ -6,10 +6,9 @@ This is the public repo for *Modeling and Simulation in Python* (No Starch, 2023
 
 ### Current focus (2026-10-13)
 
-Tasks 1–4 (cleanup) done 2026-10-13, except two open decisions:
+Tasks 1–4 (cleanup) and Task 6 (CI and build fixes) done 2026-10-13. Still open:
 
 - **Task 3:** delete `~/ModSimPy-attic/` once nothing has been missed
-- **Task 4:** retire or revive the `modsimpy` PyPI package
 
 ---
 
@@ -57,7 +56,7 @@ So `make build` copies from `modsim/` outward and then, in the API-docs step, ba
 - [x] `notes.txt` and `plan.md` merged into the README's "Development" section (three repos, canonical `modsim.py`, files that must stay put, update steps, testing); `notes.txt` removed, `plan.md` in the attic
 - [x] `Makefile`: `lint` and `format` removed
 
-Note: `make build` pushes several times (ModSimPySolutions, ModSimPy chapters and examples, `gh-pages`), and each push to `master` runs CI.
+Note: `make build` pushes ModSimPySolutions once, ModSimPy once (at the end of the notebook steps) and `gh-pages`; only the `master` pushes run CI (Task 6).
 
 ## Task 3: Clear the untracked junk out of the working tree
 
@@ -88,13 +87,13 @@ Note: `make build` pushes several times (ModSimPySolutions, ModSimPy chapters an
 - [x] Legacy folders and stray files moved to `~/ModSimPy-attic/` (also `modsim/solvers/` and `modsim/docs/` from 2019). Checked without pushing: MkDocs API docs build, `modsim` tests pass (40), Jupyter Book builds
 - [ ] Delete `~/ModSimPy-attic/` once nothing has been missed
 - [x] `.gitignore` extended; `git status` is clean. `chapters/chapNN.py` stay tracked (`chapters/build.sh` commits them)
-- [x] Local branches `main` and `version3` deleted (`version3` is still on GitHub); `git gc` run (pack now 114 MB, mostly recent unreachable objects that later gc runs will prune)
+- [x] Local branches `main` and `version3` deleted (`version3`, merged as PR #42 in 2019, also deleted on GitHub); `git gc` run (pack now 114 MB, mostly recent unreachable objects that later gc runs will prune)
 
 Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports the `modsim/` package.
 
 ## Task 4: Remove tracked files nothing uses
 
-**Status:** Done except the packaging decision (2026-10-13, `b66332c`)
+**Status:** Done (2026-10-13)
 
 **Background:** These are in git and on GitHub but nothing in the build or the notebooks uses them (checked against every `raw/master/…` URL in the ModSimPySolutions notebooks, 2026-10-13). Removing them from `master` doesn't shrink history; that would need a rewrite, which isn't worth it at 34 MB.
 
@@ -108,7 +107,7 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 ### Checklist
 
 - [x] Remove `papers/`
-- [ ] Packaging decision (retire or revive). If retiring, remove `setup.py` and `README.rst` (the only Binder mention) but keep `modsim/__init__.py` (see Task 3)
+- [x] Packaging: **retired**. Removed `setup.py` and `README.rst`; the README says the PyPI `modsimpy` package is outdated. `modsim/__init__.py` kept (see Task 3)
 - [x] Removed `_config.yml` and `apt.txt` (nothing links to Binder)
 - [x] `data/`: kept. Old notebook versions in history download `baseball_drag.csv`, `glucose_insulin.csv`, `World_population_estimates2/3.csv` and `.html` from it. `figs/`: removed `golden*` and `secant*`; only `baseball_drag.png` was ever downloaded
 - [x] Root `chap18.py` kept
@@ -122,6 +121,15 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 - Building the site: `make build`, or `cd jb && bash build.sh` (copies the chapters from `../ModSimPySolutions`, the API docs from `../site`, builds and pushes `gh-pages`). Jupyter Book 1.0.4.post1 is the last 1.x release; the environment pins `jupyter-book<2.0`.
 
 ---
+
+## Task 6: CI and build fixes
+
+**Status:** Done (2026-10-13)
+
+- The first CI run with the `modsim` unit tests in `make tests` failed: `vector_cross` on 2D vectors raised `ValueError` under NumPy 2.x (`np.cross` dropped 2D support), and `Vector` is label-indexed under pandas 3. Fixed in `modsim/modsim.py` and copied everywhere. No notebook calls `vector_cross`
+- Build scripts only commit; `make build` pushes ModSimPy once, so CI runs once on the finished state instead of three times on partial ones
+- `make build` runs `examples` before `chapters`: `chapters/build.sh` builds `ModSimPyNotebooks.zip`, which includes the examples, and used to zip the previous versions
+- CI in both repos: one Python version, the current Colab one (3.13; check `googlecolab/backend-info`, `os-info.txt`), on Ubuntu and Windows; `actions/checkout@v5`, `actions/setup-python@v6`
 
 ## Notes
 

@@ -10,6 +10,8 @@ Here is the [home page for this book at Green Tea Press](https://greenteapress.c
 
 [Read documentation of the `modsim.py` module](https://allendowney.github.io/ModSimPy/api/index.html)
 
+The notebooks download `modsim.py` from this repository, so there is nothing to install. The `modsimpy` package on PyPI (last released in 2020) is outdated and no longer maintained.
+
 
 ## Outline
 
