@@ -142,7 +142,7 @@ Some of the examples don't run without their solutions, so they aren't tested he
 
 ## License
 
-This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 Unported License](https://creativecommons.org/licenses/by-nc/4.0/).
+The text of the book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). The code, including `modsim.py`, is under the MIT License (see `LICENSE`).
 
 This and other Free Books by Allen Downey are available from [Green Tea Press](http://greenteapress.com/wp).
 

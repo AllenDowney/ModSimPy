@@ -188,7 +188,7 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 
 | Notebooks | Status |
 |---|---|
-| chap01 | done (ModSimPySolutions `32a51be`); 4 content issues open |
+| chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
 | chap02–chap27 | not started |
 | examples (16) | not started |
 
@@ -198,10 +198,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 **chap01**
 
-1. **open** · *The Falling Penny Myth*: the text says Mythbusters tested the myth and gives <https://modsimpy.com/myth/> for "the results", but that short link redirects to a Veritasium video ("How Dangerous is a Penny Dropped From a Skyscraper?"). Either point the link at the Mythbusters segment or change the text to describe the Veritasium video. The short link is on modsimpy.com, so it can be fixed without changing the notebook. (The 29 m/s terminal velocity matches the 64.4 mph Mythbusters estimate.)
-2. **open** · License: the notebook header says CC BY-NC-SA 4.0; the README says CC BY-NC 4.0. Probably shared by every notebook's header, so decide once for the whole book.
-3. **open** · *More Jupyter* (hidden in the book, shown to students): the instructions are for the classic Notebook interface ("Insert cell below" in the Insert menu, "Close and Halt", "Restart & Run All"), which Notebook 7, JupyterLab and Colab don't have. Proposed: rewrite briefly so it works for Colab and JupyterLab.
-4. **open** · Exercise 8 solution uses `round` to split the pace into minutes and seconds. That works for 7.22 min/mile but would give a negative remainder for, say, 7.6. Proposed: `floor` instead of `round` (and import `floor` from NumPy rather than shadowing the built-in `round`).
+1. **approved: describe Veritasium** · *The Falling Penny Myth*: the text says Mythbusters tested the myth and gives <https://modsimpy.com/myth/> for "the results", but that short link redirects to a Veritasium video ("How Dangerous is a Penny Dropped From a Skyscraper?"). Either point the link at the Mythbusters segment or change the text to describe the Veritasium video. The short link is on modsimpy.com, so it can be fixed without changing the notebook. (The 29 m/s terminal velocity matches the 64.4 mph Mythbusters estimate.)
+2. **approved: CC BY-NC-SA 4.0** (README fixed; it now also says the code is MIT, as `LICENSE` says) · License: the notebook header says CC BY-NC-SA 4.0; the README says CC BY-NC 4.0. Probably shared by every notebook's header, so decide once for the whole book.
+3. **approved: rewritten for Colab and JupyterLab** · *More Jupyter* (hidden in the book, shown to students): the instructions are for the classic Notebook interface ("Insert cell below" in the Insert menu, "Close and Halt", "Restart & Run All"), which Notebook 7, JupyterLab and Colab don't have. Proposed: rewrite briefly so it works for Colab and JupyterLab.
+4. **declined** · Exercise 8 solution uses `round` to split the pace into minutes and seconds. That works for 7.22 min/mile but would give a negative remainder for, say, 7.6. Proposed: `floor` instead of `round` (and import `floor` from NumPy rather than shadowing the built-in `round`).
 
 ### Errata (changes relative to the published text)
 
@@ -216,6 +216,8 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Exercise 3: "a 10 foot pole" → "a 10-foot pole"
 - Exercise 6: heading "Exercise 6:" → "Exercise 6"
 - Exercise 6, step 1: "...with constant acceleration `a`." → "...with constant acceleration `a`?"
+- *The Falling Penny Myth* (content): "The television show *Mythbusters* has tested the myth ... and a physical model of a human head." → "The science video channel *Veritasium* tested the myth of the falling penny more carefully, with help from Adam Savage of *Mythbusters* ... measurements of a penny falling at terminal velocity in a vertical wind tunnel, and research on how much force it takes to fracture a skull." (the link always went to the Veritasium video)
+- *More Jupyter* (content; not in the printed book): classic-Notebook menu steps replaced with Colab and JupyterLab steps
 
 ## Notes
 
