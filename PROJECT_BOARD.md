@@ -189,7 +189,7 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | Notebooks | Status |
 |---|---|
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
-| chap02 | done (ModSimPySolutions `8303751`); 1 content issue open |
+| chap02 | done (ModSimPySolutions `8303751`); content fix in the next commit |
 | chap03–chap27 | not started |
 | examples (16) | not started |
 
@@ -206,7 +206,7 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 **chap02**
 
-1. **open** · *Modeling a Bike Share System*: the same point is made twice in a row. "...in a `State` object, which gets assigned to a new variable named `bikeshare`." and, two sentences later, "The `State` object is assigned to a new variable named `bikeshare`." Proposed: delete the second sentence.
+1. **approved: delete the second** · *Modeling a Bike Share System*: the same point is made twice in a row. "...in a `State` object, which gets assigned to a new variable named `bikeshare`." and, two sentences later, "The `State` object is assigned to a new variable named `bikeshare`." Proposed: delete the second sentence.
 
 ### Errata (changes relative to the published text)
 
@@ -229,6 +229,7 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Exercise 3, steps 4–5: "it should plot the results and / 5. Decorate the axes." → "it should plot the results. / 5. Then it should decorate the axes."
 - Exercise 3, testing step 2: "Call `run_simulation` with parameters" → "with arguments" (the chapter defines the difference)
 - *Under the Hood*: Matplotlib docs link from version 3.2.2 to the current docs (<https://matplotlib.org/stable/api/axes_api.html>)
+- *Modeling a Bike Share System* (content): removed the repeated sentence "The `State` object is assigned to a new variable named `bikeshare`."
 
 ## Notes
 
