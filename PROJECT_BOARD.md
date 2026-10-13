@@ -211,7 +211,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links committed in GreenTeaPress `a63e09c`, **not deployed yet** |
 | chap18 | done (ModSimPySolutions `866e2ce`, `22bdca1`; re-executed) |
 | chap19 | done (ModSimPySolutions `4ce0858`); no content issues |
-| chap20–chap27 | not started |
+| chap20 | done (ModSimPySolutions `fa03e2c`, `8a36d9e`; re-executed) |
+| chap21–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -295,6 +296,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved** · `X` declines with blood insulin, not glucose.
 2. **approved: drop it** · The hidden G-minus-X comparison cell (a relative comparison of `X` is meaningless because `X` starts at 0).
+
+**chap20**
+
+1. **approved** · Exercise 1 solution computed the answer in days but didn't display it.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -454,6 +459,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *The Glucose Minimal Model*: `"least squares"; so-named because` → `"least squares", so named because`
 - *The Insulin Minimal Model*: "Berman et al." → "Bergman et al."
 - *HIV*: the link to Phillips (1996) was dead (404) → <https://doi.org/10.1126/science.271.5248.497> (the journal's page; the old link was a free copy); also removed a stray ")" and added "*Science*, 1996"
+
+**chap20**
+
+- *Newton's Second Law of Motion*: $H(x, y, \frac{dy}{dt})$ → $H(x, y, \frac{dy}{dx})$
+- *Dropping Pennies*: "time stamp" → "timestamp"
+- Exercise 1: "meters, kilograms, and Newtons" → "newtons"; the *Ask an Astronomer* link (dead, 404) → its Wayback Machine copy from 2018 (as `greenteapress.com/matlab/astro` already does)
+- Exercise 1 solution (content; not in the printed book): now displays the answer in days, 64.8; re-executed
+- Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
 
