@@ -205,7 +205,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap11 | done (ModSimPySolutions `149cee0`, `6490eb4`) |
 | chap12 | done (ModSimPySolutions `d06ddb3`, `690f145`) |
 | chap13 | done (ModSimPySolutions `dee3e7f`); no content issues |
-| chap14–chap27 | not started |
+| chap14 | done (ModSimPySolutions `6bfcf9f`, `4a65094`, and the next commit) |
+| chap15–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -260,6 +261,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap12**
 
 1. **approved: increase in gamma, with the mechanism explained** · The quarantine solution said "reduction in gamma" but the code raises gamma. Discussed lowering beta instead: that models fewer contacts for every infected student (distancing), not isolating identified cases; for the total-infected metric both give the same result when beta/gamma is the same.
+
+**chap14**
+
+1. **approved after discussion** · The $c < 1$ discrepancy is due to the size of the initial infection, not discrete time; reworded as above.
+2. **approved after discussion** · The steep-curve example: 25%–60% infected → $c$ near 1.3. The bullet shows that in the steep part, a wide (noisy) range of observations still gives about the same $c$; the flat part (second bullet) is where $c$ is hard to estimate.
 
 ### Errata (changes relative to the published text)
 
@@ -357,6 +363,15 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 **chap13**
 
 - *Sweeping Beta*: "also called an *f-string* to assemble a label" → "also called an *f-string*, to assemble a label"
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap14**
+
+- Introduction: "Let's think what that relationship might be" → "Let's think about what that relationship might be"
+- *Contact Number*: "we divided the contact rate by the infection rate to get $c$" → "by the recovery rate"
+- *Exploring the Results*: `--` → `---` around the aside about `metric`
+- *Analysis and Simulation* (content): the explanation of why simulation and analysis disagree when $c < 1$ was "the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity." Now: the analysis assumes the initial number of infections is negligible (like a very large population); the simulation starts with one student, about 1% of the class, who infects a few others before recovering; when $c > 1$ these few are negligible compared to the outbreak. (A continuous-time model with the same start gives the same small totals, so discrete time is not the cause.)
+- *Estimating Contact Number* (content): "anywhere from 20% to 80%, we would conclude that $c$ is near 2" → "anywhere from 25% to 60%, we would conclude that $c$ is near 1.3" (by the chapter's formula, 20%–80% is $c$ from 1.1 to 2.0; 25%–60% is 1.15 to 1.5, in the steep part of the curve)
 - Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
 
 ## Notes
