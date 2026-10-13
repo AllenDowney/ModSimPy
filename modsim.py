@@ -59,6 +59,10 @@ import scipy.optimize as spo
 from scipy.integrate import solve_ivp
 from scipy.interpolate import InterpolatedUnivariateSpline, interp1d
 
+# NumPy 2 displays scalars like np.float64(1.5); show them as 1.5,
+# as in the book
+np.set_printoptions(legacy="1.25")
+
 # Input validation helpers
 
 
