@@ -191,7 +191,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
 | chap02 | done (ModSimPySolutions `8303751`); content fix in the next commit |
 | chap03 | done (ModSimPySolutions `4a487e4`); no content issues |
-| chap04–chap27 | not started |
+| chap04 | done (ModSimPySolutions `09930a8` and the next commit) |
+| chap05–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -208,6 +209,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap02**
 
 1. **approved: delete the second** · *Modeling a Bike Share System*: the same point is made twice in a row. "...in a `State` object, which gets assigned to a new variable named `bikeshare`." and, two sentences later, "The `State` object is assigned to a new variable named `bikeshare`." Proposed: delete the second sentence.
+
+**chap04**
+
+1. **approved: reword** · Exercise 6 asked for "a range of values for `p1` and `p2`" but only sweeps `p1`.
+2. **approved: short answer** · Exercise 6's solution didn't answer "What value of `p1` minimizes...?"
 
 ### Errata (changes relative to the published text)
 
@@ -237,6 +243,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Metrics*: "system-owner's point of view" → "system owner's point of view"
 - *Summary*: "We used a conditional operator, `==`" → "We used a comparison operator, `==`" (the chapter calls them comparison operators)
 - Exercise 2: "run the simulation with parameters `p1=0.3`..." → "with arguments"
+
+**chap04**
+
+- Introduction: "bike sharing system" → "bike share system"
+- *Loops and Arrays*: "equally-spaced" → "equally spaced"
+- *Sweeping Parameters* and *Under the Hood*: Matplotlib colors links (one moved, one to version 3.3.2) → <https://matplotlib.org/stable/users/explain/colors/colors.html>
+- Exercise 6 (content): "with a range of values for `p1` and `p2`." → "with a range of values for `p1` and these parameters:" (only `p1` is swept)
+- Exercise 6 solution (content; solutions aren't in the printed book): added the answer, "The minimum is near p1 = 0.35, close to p2 = 0.3."
 
 ## Notes
 
