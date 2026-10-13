@@ -213,7 +213,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap19 | done (ModSimPySolutions `4ce0858`); no content issues |
 | chap20 | done (ModSimPySolutions `fa03e2c`, `8a36d9e`; re-executed) |
 | chap21 | done (ModSimPySolutions `170aa03`, `9220418`; re-executed) |
-| chap22–chap27 | not started |
+| chap22 | done (ModSimPySolutions `2200872`, `5fe402d`; re-executed) |
+| chap23–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -307,6 +308,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 1. **approved: fix and re-execute** · `params` overwritten in Exercise 1, leaking `v_init=-30` into Exercise 2.
 2. **approved** · `error_func` docstring.
 3. **approved: "near the low end"** · 40 mph is not the low end of 35–65 mph.
+
+**chap22**
+
+1. **approved: fix all and re-execute** · Three slips in the solution code (`details` for `details2`; old functions tested in Exercise 3).
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -482,6 +487,16 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Simulating the Penny Drop*: "time stamp" → "timestamp"
 - Exercise 1 solution (content; not in the printed book): `params = params.set(v_init=-30)` overwrote `params`, so in Exercise 2 the quarter was thrown down at 30 m/s. Now `params2 = ...`. Exercise 2's answer changes from v_term = 19.5 m/s, C_d = 0.54 to v_term = 21.7 m/s, C_d = 0.44 (the same as the penny). Re-executed
 - Exercise 2 solution (content; not in the printed book): `error_func` docstring said "Final height as a function of C_d ... returns: height in m" → "Error in flight time as a function of v_term ... returns: difference between simulated and measured flight time in s"
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap22**
+
+- *Vectors*: "the same angle and magnitude of `A`" → "as `A`"
+- *Simulating Baseball Flight*: a colon after the *Physics of Baseball* link → period
+- *Drag Force*: "in Newtons" → "in newtons"; "time stamp" → "timestamp" (twice)
+- *Visualizing Trajectories*: "about 57° degrees" → "about 57°"
+- *Animating the Baseball*: `animate` "takes ... a `TimeSeries`" → "a `TimeFrame`"
+- Solutions (content; not in the printed book): Exercise 1 displayed `details.message` → `details2.message`; Exercise 3's test cells called `drag_force` and `slope_func` → `drag_force2` and `slope_func2`. Re-executed; the stored outputs had been made under NumPy 2 before the `modsim.py` fix and showed `np.float64(...)`
 - Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
