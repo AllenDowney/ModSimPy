@@ -210,7 +210,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap16 | done (ModSimPySolutions `94a41db`, `8321b6d`; re-executed) |
 | chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links committed in GreenTeaPress `a63e09c`, **not deployed yet** |
 | chap18 | done (ModSimPySolutions `866e2ce`, `22bdca1`; re-executed) |
-| chap19–chap27 | not started |
+| chap19 | done (ModSimPySolutions `4ce0858`); no content issues |
+| chap20–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -447,6 +448,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Running the Simulation* (content): "`X` ... then declines as the concentration of glucose declines" → "as the concentration of insulin in the blood declines" (in the model, `X` is driven by `I`, not `G`)
 - Hidden cell (content; not in the printed book): removed a comparison that computed `results.G - results2.X` (mean `inf`); re-executed
 - Layout: duplicate notebook notice removed from Exercises
+
+**chap19**
+
+- *The Glucose Minimal Model*: `"least squares"; so-named because` → `"least squares", so named because`
+- *The Insulin Minimal Model*: "Berman et al." → "Bergman et al."
+- *HIV*: the link to Phillips (1996) was dead (404) → <https://doi.org/10.1126/science.271.5248.497> (the journal's page; the old link was a free copy); also removed a stray ")" and added "*Science*, 1996"
 
 ## Notes
 
