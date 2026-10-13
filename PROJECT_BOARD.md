@@ -217,7 +217,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link in GreenTeaPress, **not deployed yet** |
 | chap24 | done (ModSimPySolutions `11c6cc2`, `4c8c42c`) |
 | chap25 | done (ModSimPySolutions `2d5c3d6`, `1e3b20d`) |
-| chap26–chap27 | not started |
+| chap26 | done (ModSimPySolutions `6520729`); no content questions |
+| chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -541,6 +542,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Heading "Two Phase Simulation" → "Two-Phase Simulation"
 - *Estimating Friction* (content): "0.333 N m, a little less than the initial guess" → "a little more" (the guess was 0.3)
 - Layout: duplicate notebook notice removed from Exercises
+
+**chap26**
+
+- *Bungee Dunk Revisited*: "In the previous case study, we assume" → "we assumed"; a stray "." before ")" in the Heck et al. citation
+- Heading "Spider-man" → "Spider-Man"; "Spider-Man weighs 76 kg" → "has a mass of 76 kg" (as in chap25)
+- *Simulating a Yo-yo*: "rolled up string" → "rolled-up string"; "counter-clockwise" → "counterclockwise" (twice); an empty last row (`\\` before `\end{aligned}`) removed from the results
 
 ## Notes
 
