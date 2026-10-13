@@ -224,7 +224,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap26 | done (ModSimPySolutions `6520729`); no content questions |
 | chap27 | done (ModSimPySolutions `24d8087`) |
 | examples/bungee1 | done (ModSimPySolutions `cd4a948`, `4fdb76f`) |
-| examples (15 more) | not started |
+| examples/bungee2 | done (ModSimPySolutions `b1217d5`, `2463673`; re-executed) |
+| examples (14 more) | not started |
 
 ### Content issues for the author
 
@@ -345,6 +346,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: match the code** · Parameter list had L = 40 m, k = 20 N/m.
 2. **approved: replace** · Obsolete note about `zero_force` and units.
+
+**examples/bungee2**
+
+1. **approved: test at 54** · Spring-force test didn't match the text.
+2. **approved** · Stale note about an event function in Phase 2.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -575,6 +581,13 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - `event_func.direction = 10` → `1`, matching the text ("The value 1 (or any positive value)")
 - (content) The parameter list said `L = 40 m` and `k = 20 N / m`; the code uses 25 m and 40 N/m → list matches the code; "With a terminal velocity of 60 m/s." → "Let's assume the jumper's terminal velocity is 60 m/s."
 - (content) Removed "returns `zero_force`, which is either 0 Newtons or 0, depending on whether the `System` object has units..." → "If the cord is not extended, it returns 0."
+
+**examples/bungee2** (not in the printed book)
+
+- Same slips as bungee1: "in the opposite of their direction" → "opposite to"; "`Param`" → "`Params`"; missing period; also "The jumpers's" → "The jumper's"
+- `cord_acc` docstring: "Computes the force of the bungee cord ... velocity of the jumpter ... acceleration in m/s" → "Computes the acceleration of the jumper due to the cord ... velocity of the jumper ... acceleration in m/s**2"
+- (content) The spring-force test used `spring_force(56)` (1 m above full extension, giving -40) under text that says 1 m of extension gives 40 N → `spring_force(54)`. Re-executed
+- (content) "Here's how we run Phase 2, setting the direction of the event function so it doesn't stop the simulation immediately." → "Here's how we run Phase 2." (Phase 2 has no event function)
 
 ## Notes
 
