@@ -214,7 +214,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap20 | done (ModSimPySolutions `fa03e2c`, `8a36d9e`; re-executed) |
 | chap21 | done (ModSimPySolutions `170aa03`, `9220418`; re-executed) |
 | chap22 | done (ModSimPySolutions `2200872`, `5fe402d`; re-executed) |
-| chap23–chap27 | not started |
+| chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link in GreenTeaPress, **not deployed yet** |
+| chap24–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -312,6 +313,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap22**
 
 1. **approved: fix all and re-execute** · Three slips in the solution code (`details` for `details2`; old functions tested in Exercise 3).
+
+**chap23**
+
+1. **approved** · The arguments of `maximize_scalar` were described wrongly.
+2. **approved: Brent's method** · `/minimize` → <https://en.wikipedia.org/wiki/Brent_method> (redirects to "Brent's method"; ASCII-only, to keep `%27` out of the `.htaccess`).
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -497,6 +503,15 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Visualizing Trajectories*: "about 57° degrees" → "about 57°"
 - *Animating the Baseball*: `animate` "takes ... a `TimeSeries`" → "a `TimeFrame`"
 - Solutions (content; not in the printed book): Exercise 1 displayed `details.message` → `details2.message`; Exercise 3's test cells called `drag_force` and `slope_func` → `drag_force2` and `slope_func2`. Re-executed; the stored outputs had been made under NumPy 2 before the `modsim.py` fix and showed `np.float64(...)`
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap23**
+
+- Introduction: "the angle you should hit a baseball" → "the angle at which you should hit a baseball"; "called `maximize_scalar` that searches" → "called `maximize_scalar`, that searches"
+- *The Manny Ramirez Problem*: "the angle the ball should leave home plate" → "the angle at which the ball should leave home plate"
+- *Finding the Range* (content): "The first parameter is the function we want to maximize. The second is the range of values we want to search" → "The first argument is the function we want to maximize. The second is `params`, which `maximize_scalar` passes along to `range_func`. The keyword argument `bounds` is the range of values we want to search"
+- Exercise 1: the error function "takes a speed and a `System` object" → "a `Params` object"
+- *Under the Hood*: stray ")" after the link; `/minimize` (Golden-section search) now goes to Brent's method, which the text describes
 - Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
