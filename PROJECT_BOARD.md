@@ -209,7 +209,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap15 | done (ModSimPySolutions `c4c9907`, `335dcdb`; re-executed) |
 | chap16 | done (ModSimPySolutions `94a41db`, `8321b6d`; re-executed) |
 | chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links committed in GreenTeaPress `a63e09c`, **not deployed yet** |
-| chap18–chap27 | not started |
+| chap18 | done (ModSimPySolutions `866e2ce`, `22bdca1`; re-executed) |
+| chap19–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -288,6 +289,12 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 2. **approved: drop "PDF at"** · Dead PDF link; `/minmod` redirected to the abstract.
 3. **approved: PubMed** · The MINMOD citation linked a different paper.
 4. **approved: update both** · Diabetes prevalence 10% → 12%; `/cdc` redirected to the current report.
+
+**Book-wide: display math format** (ModSimPySolutions `6ffa856`)
+
+- VS Code showed a KaTeX ParseError in chapter 18 (*The Update Function*). Rather than depend on each reader's setup, every `$$...$$` block now has the delimiters on their own lines, with no trailing spaces. Markup only (57 cells in 19 notebooks). The two `\label{}` in chap24 (unreferenced; unsupported by KaTeX) are removed
+- Checked by rendering every markdown cell with VS Code's notebook renderer settings (`@vscode/markdown-it-katex`, KaTeX 0.16.21, `throwOnError`, bare and fenced blocks): 0 errors (was 2, in chap24). Jupyter Book (MathJax) builds with all math rendered. Confirmed working in VS Code
+- **Jupyter Book chapter numbers** (ModSimPy `6d58752`): `numbered: True` on the Chapters part of `jb/_toc.yml`, preface in its own Front Matter part (as in ThinkBayes2). Test build shows "18. Glucose and Insulin", sections 18.1, ...; live on the next site build
 
 ### Errata (changes relative to the published text)
 
