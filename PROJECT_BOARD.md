@@ -218,7 +218,7 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap24 | done (ModSimPySolutions `11c6cc2`, `4c8c42c`) |
 | chap25 | done (ModSimPySolutions `2d5c3d6`, `1e3b20d`) |
 | chap26 | done (ModSimPySolutions `6520729`); no content questions |
-| chap27 | not started |
+| chap27 | done (ModSimPySolutions `24d8087`) |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -331,6 +331,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved** · 0.333 is a little more than the guess of 0.3.
 2. **approved: say "mass"** · Masses in kg were called weights.
+
+**chap27**
+
+1. **declined** · "evaluates the slope function seven times" per step (six new evaluations, since the last is reused); kept as a fair simplification.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -548,6 +552,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Bungee Dunk Revisited*: "In the previous case study, we assume" → "we assumed"; a stray "." before ")" in the Heck et al. citation
 - Heading "Spider-man" → "Spider-Man"; "Spider-Man weighs 76 kg" → "has a mass of 76 kg" (as in chap25)
 - *Simulating a Yo-yo*: "rolled up string" → "rolled-up string"; "counter-clockwise" → "counterclockwise" (twice); an empty last row (`\\` before `\end{aligned}`) removed from the results
+
+**chap27**
+
+- Introduction: "Most of the time you don't need to know, you can use" → "you don't need to know; you can use"
+- *How root_scalar Works*: missing period after the SciPy link; a stray backtick before "You just invented a numerical method called *bisection*"
+- *How maximize_scalar Works*: alt text for the second golden-section figure (was empty)
 
 ## Notes
 
