@@ -200,7 +200,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap08 | done (ModSimPySolutions `3ea71b0` and the next commit) |
 | chap09 | done (ModSimPySolutions `7cf4af4` and the next commit) |
 | chap10 | done (ModSimPySolutions `199fc93` and the next commit; re-executed) |
-| chap11–chap27 | not started |
+| chap11 | done (ModSimPySolutions `149cee0`, `6490eb4`); **you:** point modsimpy.com/sir at the Duke page |
+| chap12–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -244,6 +245,13 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap10**
 
 1. **approved: fix and re-execute** · Wrong title on the 1940-present solution plot.
+
+**chap11**
+
+1. **approved** · Peak timing: 35 days → 30 days.
+2. **approved: fix all three** · `run_simulation1` named as `run_simulation`, and "values of `0` and `t_end`".
+3. **approved: add the count** · Exercise 1 asks how many students; the solution gave a fraction.
+4. **approved: point to Duke; for you to do** · <http://modsimpy.com/sir> redirects to maa.org, which returns 403 Forbidden (at least to scripts). Point the redirect at <https://sites.math.duke.edu/education/postcalc/sir/index.html> (same article, Smith and Moore, checked 2026-10-13).
 
 ### Errata (changes relative to the published text)
 
@@ -320,6 +328,17 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - *Historical World Population*: broken Wikipedia link (`.../World_population_estimates.html`, 404) → <https://en.wikipedia.org/wiki/World_population_estimates>
 - Solution plot (content; not in the printed book): the 1940-present plot was titled "Prehistoric population estimates" → "Model vs. estimates since 1940". Notebook re-executed; the other three figures were re-rendered by current Matplotlib with no visible change
+
+**chap11**
+
+- *The Kermack-McKendrick Model*: "or the variables name `beta`" → "or the variable name `beta`"
+- Heading "Implementing the KM model" → "Implementing the KM Model"
+- *Implementing the KM Model*: "Now that we have object to represent" → "Now that we have objects to represent"
+- *Now With a TimeFrame*: "a kind of a `DataFrame`" → "a kind of `DataFrame`"
+- *Running the Simulation* (content): "The parameters of `run_simulation` are..." → "`run_simulation1`"; "initial conditions, and values of `0` and `t_end`" → "initial conditions, and `t_end`"; "We can call `run_simulation` like this" → "`run_simulation1`"
+- *Collecting the Results* (content): "about five weeks (35 days) to peak" → "about four weeks (30 days) to peak" (the infected fraction peaks on day 30)
+- Exercise 1 solution (content; not in the printed book): added "About 38% of the class, or 34 of the 90 students, get infected."
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
 
 ## Notes
 
