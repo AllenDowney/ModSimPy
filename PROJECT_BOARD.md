@@ -194,7 +194,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap04 | done (ModSimPySolutions `09930a8` and the next commit) |
 | chap05 | done (ModSimPySolutions `775a602`); no content issues |
 | chap06 | done (ModSimPySolutions `42c70f0`, `792001b`) |
-| chap07–chap27 | not started |
+| chap07 | done (ModSimPySolutions `1385073` and the next commit) |
+| chap08–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -220,6 +221,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap06**
 
 1. **approved: fix both** · The text and the Exercise 1 solution docstring said the growth function computes next year's population; it returns the net growth.
+
+**chap07**
+
+1. **approved: drop the sentence** · The introduction promised an exercise on a time-varying growth rate that isn't in this chapter.
+2. **approved: change the text** · Exercise 2 said 1 to 20 billion; the solution uses 1 to 25.
 
 ### Errata (changes relative to the published text)
 
@@ -270,6 +276,13 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Under the Hood*: "defined in the ModSim library, is based on" → "defined in the ModSim library is based on"; Python docs link from 3.7 to the current version
 - *Factoring Out the Update Function* (content): "the second parameter is a function, like `growth_func1`, that computes the population for the next year" → "the second argument is a function, like `growth_func1`, that computes the net growth during the current year"
 - Exercise 1 solution docstring (content; not in the printed book): "Compute the population next year ... returns: population next year" → "Compute the net growth during the current year ... returns: net growth"
+
+**chap07**
+
+- *Quadratic Growth*: "the parameters `alpha` and `beta` ." → "the parameters `alpha` and `beta`."
+- *Net Growth*: "To plot growth rate versus population" → "To plot net growth versus population"
+- Introduction (content): removed "In the exercises, you will have a chance to try the second." (this chapter's exercises don't try a time-varying growth rate)
+- Exercise 2 (content): "initial populations between 1 and 20 billion" → "between 1 and 25 billion" (matches the solution)
 
 ## Notes
 
