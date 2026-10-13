@@ -190,6 +190,10 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 
 Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks and the site not rebuilt yet.
 
+**Released after chap27 (2026-10-13):** ModSimPySolutions and ModSimPy pushed (CI passed on both); student chapters and examples, the notebook zip and `modsim.py` regenerated; site rebuilt and published (chapter numbers, all fixes; Pages deploy checked live); short links `/minmod`, `/cdc`, `/minimize` deployed (GreenTeaPress `2f9dd77`). All 44 solution notebooks passed nbmake locally first.
+
+**Build snag:** `make build` stops when a build script has nothing new to commit (the scripts run `git commit` unconditionally and exit with its status), e.g. when the exported `chapNN.py` are unchanged. This time the steps were run by hand in the Makefile's order. Fix: make those commits conditional (`git diff --cached --quiet || git commit ...`).
+
 | Notebooks | Status |
 |---|---|
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
@@ -208,13 +212,13 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap14 | done (ModSimPySolutions `6bfcf9f`, `4a65094`, and the next commit) |
 | chap15 | done (ModSimPySolutions `c4c9907`, `335dcdb`; re-executed) |
 | chap16 | done (ModSimPySolutions `94a41db`, `8321b6d`; re-executed) |
-| chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links committed in GreenTeaPress `a63e09c`, **not deployed yet** |
+| chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links deployed |
 | chap18 | done (ModSimPySolutions `866e2ce`, `22bdca1`; re-executed) |
 | chap19 | done (ModSimPySolutions `4ce0858`); no content issues |
 | chap20 | done (ModSimPySolutions `fa03e2c`, `8a36d9e`; re-executed) |
 | chap21 | done (ModSimPySolutions `170aa03`, `9220418`; re-executed) |
 | chap22 | done (ModSimPySolutions `2200872`, `5fe402d`; re-executed) |
-| chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link in GreenTeaPress, **not deployed yet** |
+| chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link deployed |
 | chap24 | done (ModSimPySolutions `11c6cc2`, `4c8c42c`) |
 | chap25 | done (ModSimPySolutions `2d5c3d6`, `1e3b20d`) |
 | chap26 | done (ModSimPySolutions `6520729`); no content questions |
