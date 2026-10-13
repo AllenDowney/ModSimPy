@@ -17,5 +17,3 @@ cd ModSimPy
 
 git add ModSimPyNotebooks.zip
 git commit -m "Updating the notebook zip file"
-
-git push

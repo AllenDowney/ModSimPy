@@ -113,15 +113,16 @@ The canonical copy of `modsim.py` is `modsim/modsim.py`, next to its tests (`mod
 2. Run the whole pipeline with `make build`, or the steps one at a time:
    ```bash
    cd modsim && sh build.sh                   # copy modsim.py to all locations
-   cd ModSimPySolutions/chapters && sh build.sh  # commit and push solutions; export chapNN.py to ModSimPy
+   cd ModSimPySolutions/chapters && sh build.sh  # commit and push solutions; export and commit chapNN.py in ModSimPy
    cd ModSimPySolutions && sh build.sh        # zip of the solution notebooks
-   cd chapters && sh build.sh                 # copy notebooks, remove solutions, commit, rebuild the zip, push
-   cd examples && sh build.sh                 # same for the examples
+   cd examples && sh build.sh                 # copy notebooks, remove solutions, commit
+   cd chapters && sh build.sh                 # same for the chapters, then rebuild the notebook zip
+   git push                                   # push ModSimPy once
    sh build.sh                                # MkDocs API docs into site/
    cd jb && sh build.sh                       # build the Jupyter Book and push gh-pages
    ```
 
-Each `build.sh` that commits also pushes, and every push to `master` runs CI, so `make build` triggers several CI runs.
+The ModSimPy scripts only commit; push once at the end, since every push to `master` runs CI. Run `examples` before `chapters`, because the notebook zip includes both.
 
 ### Testing
 

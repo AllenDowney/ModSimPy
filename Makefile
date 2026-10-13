@@ -13,8 +13,10 @@ build:
 	cd ModSimPySolutions/chapters && sh build.sh
 	cd ModSimPySolutions && sh build.sh
 	@echo "Building notebooks..."
-	cd chapters && sh build.sh
 	cd examples && sh build.sh
+	cd chapters && sh build.sh
+	@echo "Pushing ModSimPy (one push, one CI run)..."
+	git push
 	@echo "Building API documentation..."
 	sh build.sh
 	@echo "Building Jupyter Book..."
