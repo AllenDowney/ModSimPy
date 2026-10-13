@@ -6,18 +6,16 @@ This is the public repo for *Modeling and Simulation in Python* (No Starch, 2023
 
 ### Current focus (2026-10-13)
 
-- **Task 1:** Commit the February 2026 build-system work that is still only local (here and in ModSimPySolutions)
-- **Task 2:** One canonical `modsim.py`, one written workflow
-- **Task 3:** Clear the untracked junk out of the working tree (~230 MB)
-- **Task 4:** Remove tracked files nothing uses (incl. 26 MB of journal PDFs)
+Tasks 1–4 (cleanup) done 2026-10-13, except two open decisions:
 
-Tasks 1 → 2 → 3 → 4 is the suggested order: commit what's real before deleting anything.
+- **Task 3:** delete `~/ModSimPy-attic/` once nothing has been missed
+- **Task 4:** retire or revive the `modsimpy` PyPI package
 
 ---
 
 ## Task 1: Commit the February 2026 build-system work
 
-**Status:** Open (added 2026-10-13)
+**Status:** Done (2026-10-13)
 
 **Background:** On 2026-02-01 the build was reworked for Python 3.13 / pandas 3 (`plan.md`): mamba environments, testing split from building, MkDocs API docs, Jupyter Book pinned below 2.0. The notebooks and the root `modsim.py` were pushed that day, but much of the tooling never was. Anyone working from GitHub (including CI) gets the old setup.
 
@@ -32,15 +30,14 @@ Untracked **in ModSimPySolutions** (38 files): the build scripts themselves — 
 ### Checklist
 
 - [x] `jb/` sources that built the live site (`_toc.yml`, `index.md`, `preface.md`, `build.sh`) and a working `jb/_config.yml` — committed 2026-10-13 (`c264192`). `myst_extended_syntax` (broken in Jupyter Book 1.0.4) replaced by an explicit `myst_enable_extensions` list; test builds with and without it were identical
-- [ ] Review the local diffs above (`git diff --no-ext-diff`; plain `git diff` fails on notebooks here because `nbdime` isn't installed) and commit them
-- [ ] Commit `environment-dev.yml`, `build.sh`, `mkdocs.yml`, `docs/`
-- [ ] Decide `nbextensions` in `requirements.txt`: it's the Jupyter classic-notebook extension package, not needed for JupyterLab / Notebook 7 and not in `environment.yml`; probably drop it
-- [ ] ModSimPySolutions: commit the build scripts; gitignore the generated files
-- [ ] Check the CI run triggered by `c264192` (it was still running when this board was written); `gh run list -R AllenDowney/ModSimPy -L 3`
+- [x] Review the local diffs above and commit them, with `environment-dev.yml`, `build.sh`, `mkdocs.yml`, `docs/index.md`, `chapters/test_run.sh` and the two `remove_soln.py` (`d0a3e79`). `docs/mkdocs.yml` (empty duplicate) and `chapters/push.sh` (repeats the end of `chapters/build.sh`) went to the attic
+- [x] `nbextensions`: dropped (local change reverted)
+- [x] ModSimPySolutions: committed `build.sh`, `chapters/build.sh`, `chapters/export_funcs.py`, the two `test.sh`, `.gitattributes`, `pyproject.toml`; generated files gitignored (`736489a`). The 2021 one-off notebook-editing scripts (`add_header.py`, `cap_titles.py`, `resub_all.py`, `remove_savefig.py`, `rename.py`), `glucose.md/.tex` and a stray `chapter` file went to the attic; `chapters/jntools.py` (2024 notebook utility, needs `astor` and `typer`) left untracked
+- [x] CI for `c264192` and `3d82e97` passed
 
 ## Task 2: One canonical `modsim.py`, one written workflow
 
-**Status:** Open (added 2026-10-13)
+**Status:** Done (2026-10-13, `6143178`)
 
 **Background:** There are 12 copies of `modsim.py` in the working tree. The six current ones are identical (root, `modsim/`, `chapters/`, `examples/`, `ModSimPySolutions/chapters/`, `ModSimPySolutions/examples/`); six older ones sit in `ModSimPyBook/` and `old_code/`. But the notes disagree about which copy is the source:
 
@@ -56,13 +53,15 @@ So `make build` copies from `modsim/` outward and then, in the API-docs step, ba
 
 ### Checklist
 
-- [ ] Pick the canonical copy (suggest `modsim/modsim.py`, next to `test_modsim.py`, as `plan.md` says) and make every script copy *from* it; drop the reverse copy in root `build.sh`
-- [ ] Merge `notes.txt` (the three-repo overview) and `plan.md` (the update workflow) into one "Development" section of `README.md`, then delete both; record here
-- [ ] `Makefile`: the `lint` and `format` targets point at `pacs` (copied from another project) and a `pyproject.toml` that doesn't exist; fix or remove them
+- [x] Canonical copy is `modsim/modsim.py`; the reverse copy in root `build.sh` is gone
+- [x] `notes.txt` and `plan.md` merged into the README's "Development" section (three repos, canonical `modsim.py`, files that must stay put, update steps, testing); `notes.txt` removed, `plan.md` in the attic
+- [x] `Makefile`: `lint` and `format` removed
+
+Note: `make build` pushes several times (ModSimPySolutions, ModSimPy chapters and examples, `gh-pages`), and each push to `master` runs CI.
 
 ## Task 3: Clear the untracked junk out of the working tree
 
-**Status:** Open (added 2026-10-13)
+**Status:** Done except deleting the attic (2026-10-13)
 
 **Background:** None of this is in git; it only clutters the local copy (and makes `git status` unreadable: 74 untracked entries). Sizes as of 2026-10-13.
 
@@ -86,13 +85,16 @@ So `make build` copies from `modsim/` outward and then, in the API-docs step, ba
 
 ### Checklist
 
-- [ ] Move the legacy folders and stray files to `~/ModSimPy-attic/` (not deleted yet), check that `make build` still works, then delete the attic
-- [ ] `.gitignore`: add `ModSimPySolutions/`, `jb/_build/`, `jb/*.ipynb`, `jupyter_execute/`, `site/`, `.pytest_cache/`, `.vscode/`, and the notebook download outputs in `chapters/` and `examples/` (`*.csv`, `*.html`, `chap[0-9][0-9].py`, `modsim.py`), so `git status` shows only real changes
-- [ ] Git housekeeping: delete the local branches `main` (2023) and `version3` (2019; also on GitHub) — both fully merged into `master`; `git gc` (145 MB of loose objects vs a 34 MB pack)
+- [x] Legacy folders and stray files moved to `~/ModSimPy-attic/` (also `modsim/solvers/` and `modsim/docs/` from 2019). Checked without pushing: MkDocs API docs build, `modsim` tests pass (40), Jupyter Book builds
+- [ ] Delete `~/ModSimPy-attic/` once nothing has been missed
+- [x] `.gitignore` extended; `git status` is clean. `chapters/chapNN.py` stay tracked (`chapters/build.sh` commits them)
+- [x] Local branches `main` and `version3` deleted (`version3` is still on GitHub); `git gc` run (pack now 114 MB, mostly recent unreachable objects that later gc runs will prune)
+
+Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports the `modsim/` package.
 
 ## Task 4: Remove tracked files nothing uses
 
-**Status:** Open (added 2026-10-13)
+**Status:** Done except the packaging decision (2026-10-13, `b66332c`)
 
 **Background:** These are in git and on GitHub but nothing in the build or the notebooks uses them (checked against every `raw/master/…` URL in the ModSimPySolutions notebooks, 2026-10-13). Removing them from `master` doesn't shrink history; that would need a rewrite, which isn't worth it at 34 MB.
 
@@ -105,10 +107,11 @@ So `make build` copies from `modsim/` outward and then, in the API-docs step, ba
 
 ### Checklist
 
-- [ ] Remove `papers/`
-- [ ] Packaging decision (retire or revive)
-- [ ] Remove `_config.yml`; check and probably remove `apt.txt`
-- [ ] Check the remaining `data/` and `figs/` files against old notebook versions, then remove
+- [x] Remove `papers/`
+- [ ] Packaging decision (retire or revive). If retiring, remove `setup.py` and `README.rst` (the only Binder mention) but keep `modsim/__init__.py` (see Task 3)
+- [x] Removed `_config.yml` and `apt.txt` (nothing links to Binder)
+- [x] `data/`: kept. Old notebook versions in history download `baseball_drag.csv`, `glucose_insulin.csv`, `World_population_estimates2/3.csv` and `.html` from it. `figs/`: removed `golden*` and `secant*`; only `baseball_drag.png` was ever downloaded
+- [x] Root `chap18.py` kept
 
 ## Task 5: Page-view counter and Jupyter Book config
 
