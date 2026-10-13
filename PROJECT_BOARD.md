@@ -206,7 +206,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap12 | done (ModSimPySolutions `d06ddb3`, `690f145`) |
 | chap13 | done (ModSimPySolutions `dee3e7f`); no content issues |
 | chap14 | done (ModSimPySolutions `6bfcf9f`, `4a65094`, and the next commit) |
-| chap15–chap27 | not started |
+| chap15 | done (ModSimPySolutions `c4c9907`, `335dcdb`; re-executed) |
+| chap16–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -266,6 +267,13 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved after discussion** · The $c < 1$ discrepancy is due to the size of the initial infection, not discrete time; reworded as above.
 2. **approved after discussion** · The steep-curve example: 25%–60% infected → $c$ near 1.3. The bullet shows that in the steep part, a wide (noisy) range of observations still gives about the same $c$; the flat part (second bullet) is where $c$ is hard to estimate.
+
+**chap15**
+
+1. **approved** · Temperature relates to average kinetic energy, not average velocity.
+2. **approved: fix and re-execute** · Exercise 2 solution didn't assign the `root_scalar` result.
+3. **approved: drop the Exercises copy** · Chapters 15–27 have the notebook notice twice; keep only the one after the introduction (applies to every remaining chapter).
+4. **approved** · NumPy 2 scalar display: `np.set_printoptions(legacy="1.25")` in `modsim.py`.
 
 ### Errata (changes relative to the published text)
 
@@ -373,6 +381,20 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Analysis and Simulation* (content): the explanation of why simulation and analysis disagree when $c < 1$ was "the simulation divides time into a discrete series of days, whereas the analysis treats time as a continuous quantity." Now: the analysis assumes the initial number of infections is negligible (like a very large population); the simulation starts with one student, about 1% of the class, who infects a few others before recovering; when $c > 1$ these few are negligible compared to the outbreak. (A continuous-time model with the same start gives the same small totals, so discrete time is not the cause.)
 - *Estimating Contact Number* (content): "anywhere from 20% to 80%, we would conclude that $c$ is near 2" → "anywhere from 25% to 60%, we would conclude that $c$ is near 1.3" (by the chapter's formula, 20%–80% is $c$ from 1.1 to 2.0; 25%–60% is 1.15 to 1.5, in the steep part of the curve)
 - Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap15**
+
+- *Temperature and Heat* (content): "related to the average velocity of the particles" → "related to the average kinetic energy of the particles"
+- *Newton's Law of Cooling*: `"law "` → `"law"`
+- *Implementing Newtonian Cooling*: "time stamp" → "timestamp" (three places); the `loc` example said the world population labels start in 1960 → 1950
+- *Estimating r*: "about -11°C" → "about -11 °C"
+- Exercise 2 solution (content; not in the printed book): `root_scalar(...)` → `res = root_scalar(...)`; the displayed `res` had been the coffee result. Re-executed: `res.root` is 0.133 for the milk
+- Layout: the second notebook notice (in Exercises) removed; chapters 15–27 have one after the introduction (tagged `remove-print`) and one in Exercises
+
+**Book-wide: NumPy 2 scalar display** (ModSimPy `c91e8e1`)
+
+- NumPy 2 shows scalars as `np.float64(72.3)` where the book shows `72.3`, for every reader with current NumPy (Colab included). `modsim.py` now calls `np.set_printoptions(legacy="1.25")`. Readers get it once ModSimPy is pushed (the notebooks download `modsim.py` from `master`)
+- Re-executed notebooks now match the book; SciPy's `root_scalar` result also prints slightly differently now (`flag: converged`, plus `method: brentq`)
 
 ## Notes
 
