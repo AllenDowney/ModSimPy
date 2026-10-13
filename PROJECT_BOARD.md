@@ -215,7 +215,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap21 | done (ModSimPySolutions `170aa03`, `9220418`; re-executed) |
 | chap22 | done (ModSimPySolutions `2200872`, `5fe402d`; re-executed) |
 | chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link in GreenTeaPress, **not deployed yet** |
-| chap24–chap27 | not started |
+| chap24 | done (ModSimPySolutions `11c6cc2`, `4c8c42c`) |
+| chap25–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -318,6 +319,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved** · The arguments of `maximize_scalar` were described wrongly.
 2. **approved: Brent's method** · `/minimize` → <https://en.wikipedia.org/wiki/Brent_method> (redirects to "Brent's method"; ASCII-only, to keep `%27` out of the `.htaccess`).
+
+**chap24**
+
+1. **approved: "earlier in the chapter"** · "Section xxx" placeholder.
+2. **approved: renumber** · "Dividing Equations 1 and 2" referred to the wrong Equation 1.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -512,6 +518,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Finding the Range* (content): "The first parameter is the function we want to maximize. The second is the range of values we want to search" → "The first argument is the function we want to maximize. The second is `params`, which `maximize_scalar` passes along to `range_func`. The keyword argument `bounds` is the range of values we want to search"
 - Exercise 1: the error function "takes a speed and a `System` object" → "a `Params` object"
 - *Under the Hood*: stray ")" after the link; `/minimize` (Golden-section search) now goes to Brent's method, which the text describes
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap24**
+
+- *Simulating the System*: "time stamp" → "timestamp"; "The final value of `r` is 0.55 m" → "0.055 m"
+- *Analytic Solution* (content): the label "(1)" moved from $d\theta/dt = \omega$ to $dr/dt = k \omega$, so "Dividing Equations 1 and 2 yields $dr/dy = k/r$" is correct (dividing $d\theta/dt$ by $dy/dt$ gives $d\theta/dy = 1/r$)
+- *Analytic Solution* (content): "the same as the "estimate" we computed in Section xxx" → "earlier in the chapter"
+- Display math: the two unused `\label{}` removed (book-wide math change)
 - Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
