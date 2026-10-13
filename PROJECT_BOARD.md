@@ -223,7 +223,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap25 | done (ModSimPySolutions `2d5c3d6`, `1e3b20d`) |
 | chap26 | done (ModSimPySolutions `6520729`); no content questions |
 | chap27 | done (ModSimPySolutions `24d8087`) |
-| examples (16) | not started |
+| examples/bungee1 | done (ModSimPySolutions `cd4a948`, `4fdb76f`) |
+| examples (15 more) | not started |
 
 ### Content issues for the author
 
@@ -339,6 +340,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap27**
 
 1. **declined** · "evaluates the slope function seven times" per step (six new evaluations, since the last is reused); kept as a fair simplification.
+
+**examples/bungee1**
+
+1. **approved: match the code** · Parameter list had L = 40 m, k = 20 N/m.
+2. **approved: replace** · Obsolete note about `zero_force` and units.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -562,6 +568,13 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Introduction: "Most of the time you don't need to know, you can use" → "you don't need to know; you can use"
 - *How root_scalar Works*: missing period after the SciPy link; a stray backtick before "You just invented a numerical method called *bisection*"
 - *How maximize_scalar Works*: alt text for the second golden-section figure (was empty)
+
+**examples/bungee1** (not in the printed book)
+
+- "in the opposite of their direction of motion" → "opposite to their direction of motion"; "a `Param` object" → "a `Params` object"; "springs back almost to almost 70 m" → "almost to 70 m"; "more oscillation that we expect" → "than we expect"; "the numerical derivative of `ys`" → "of `results.v`"; docstring "from system|" → "from system:"
+- `event_func.direction = 10` → `1`, matching the text ("The value 1 (or any positive value)")
+- (content) The parameter list said `L = 40 m` and `k = 20 N / m`; the code uses 25 m and 40 N/m → list matches the code; "With a terminal velocity of 60 m/s." → "Let's assume the jumper's terminal velocity is 60 m/s."
+- (content) Removed "returns `zero_force`, which is either 0 Newtons or 0, depending on whether the `System` object has units..." → "If the cord is not extended, it returns 0."
 
 ## Notes
 
