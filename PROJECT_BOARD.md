@@ -193,7 +193,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap03 | done (ModSimPySolutions `4a487e4`); no content issues |
 | chap04 | done (ModSimPySolutions `09930a8` and the next commit) |
 | chap05 | done (ModSimPySolutions `775a602`); no content issues |
-| chap06–chap27 | not started |
+| chap06 | done (ModSimPySolutions `42c70f0`, `792001b`) |
+| chap07–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -215,6 +216,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: reword** · Exercise 6 asked for "a range of values for `p1` and `p2`" but only sweeps `p1`.
 2. **approved: short answer** · Exercise 6's solution didn't answer "What value of `p1` minimizes...?"
+
+**chap06**
+
+1. **approved: fix both** · The text and the Exercise 1 solution docstring said the growth function computes next year's population; it returns the net growth.
 
 ### Errata (changes relative to the published text)
 
@@ -258,6 +263,13 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Introduction: "Paul Erlich" → "Paul Ehrlich"
 - *Absolute and Relative Errors*: "counting everyone is the world is hard" → "counting everyone in the world is hard"
 - *Modeling Population Growth*: "the second to last element" → "the second-to-last element"
+
+**chap06**
+
+- *System Objects*: "`t0` and `t_end` are the first and last years" → "`t_0` and `t_end`..."
+- *Under the Hood*: "defined in the ModSim library, is based on" → "defined in the ModSim library is based on"; Python docs link from 3.7 to the current version
+- *Factoring Out the Update Function* (content): "the second parameter is a function, like `growth_func1`, that computes the population for the next year" → "the second argument is a function, like `growth_func1`, that computes the net growth during the current year"
+- Exercise 1 solution docstring (content; not in the printed book): "Compute the population next year ... returns: population next year" → "Compute the net growth during the current year ... returns: net growth"
 
 ## Notes
 
