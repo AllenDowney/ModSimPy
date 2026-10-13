@@ -190,7 +190,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 |---|---|
 | chap01 | done (ModSimPySolutions `32a51be`, content fixes in the next commit) |
 | chap02 | done (ModSimPySolutions `8303751`); content fix in the next commit |
-| chap03–chap27 | not started |
+| chap03 | done (ModSimPySolutions `4a487e4`); no content issues |
+| chap04–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -230,6 +231,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Exercise 3, testing step 2: "Call `run_simulation` with parameters" → "with arguments" (the chapter defines the difference)
 - *Under the Hood*: Matplotlib docs link from version 3.2.2 to the current docs (<https://matplotlib.org/stable/api/axes_api.html>)
 - *Modeling a Bike Share System* (content): removed the repeated sentence "The `State` object is assigned to a new variable named `bikeshare`."
+
+**chap03**
+
+- *Metrics*: "system-owner's point of view" → "system owner's point of view"
+- *Summary*: "We used a conditional operator, `==`" → "We used a comparison operator, `==`" (the chapter calls them comparison operators)
+- Exercise 2: "run the simulation with parameters `p1=0.3`..." → "with arguments"
 
 ## Notes
 
