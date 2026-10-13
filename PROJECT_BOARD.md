@@ -196,7 +196,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 | chap06 | done (ModSimPySolutions `42c70f0`, `792001b`) |
 | chap07 | done (ModSimPySolutions `1385073` and the next commit) |
 | chap08 | done (ModSimPySolutions `3ea71b0` and the next commit) |
-| chap09–chap27 | not started |
+| chap09 | done (ModSimPySolutions `7cf4af4` and the next commit) |
+| chap10–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -231,6 +232,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **chap08**
 
 1. **approved: move it** · The notebook notice was in the Exercises section instead of after the introduction.
+
+**chap09**
+
+1. **approved: "previous chapters"** · "The population models in the previous chapter and this one" (this chapter has no new model).
+2. Notebook notice moved, applying the chap08 decision.
 
 ### Errata (changes relative to the published text)
 
@@ -294,6 +300,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Summary*: "In this chapter we use the quadratic growth model" → "we used"
 - Exercise 1: "time stamp" → "timestamp" (twice)
 - Layout (content): the "This chapter is available as a Jupyter notebook" note moved from the start of Exercises to after the introduction, with the same wording as the other chapters
+
+**chap09**
+
+- *Difference Equations* (content): "The population models in the previous chapter and this one" → "The population models in the previous chapters"
+- *Analysis and Simulation*: "see <http://modsimpy.com/plato>.)." → "see <http://modsimpy.com/plato>)."
+- *Solving the Quadratic Growth Model*: added the missing period after the Khan Academy link
+- *Summary*: $f(t) = p_0 \exp{\alpha t}$ → $f(t) = p_0 \exp(\alpha t)$ (the braces rendered without parentheses)
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
 
 ## Notes
 
