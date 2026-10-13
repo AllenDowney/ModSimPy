@@ -97,11 +97,43 @@ mamba env update -f environment-dev.yml --prune
 make update_environment_dev
 ```
 
-## Repository Structure
+## Development
 
-- chapters/: Contains Jupyter notebooks for the chapter
-- examples/: Contains the notebooks for additional examples
-- `modsim/`: Contains the Python module source code
+Three repositories are involved:
+
+- **ModSimPy** (this one, public, branch `master`): the notebooks without solutions (`chapters/`, `examples/`), the `modsim.py` library, and the Jupyter Book site, published on the `gh-pages` branch.
+- **ModSimPySolutions** (private, branch `master`): where development happens and the solutions live. It is cloned inside this working tree as `ModSimPySolutions/` (gitignored here). Its GitHub Actions run the notebooks on every push and once a month.
+- **ModSim** (`AllenDowney/ModSim`, branch `main`): figures and data shared with the MATLAB version.
+
+The canonical copy of `modsim.py` is `modsim/modsim.py`, next to its tests (`modsim/test_modsim.py`). `modsim/build.sh` copies it everywhere else; edit only that copy. The top-level `modsim.py` and `chapNN.py` files, `data/World_population_estimates.html`, and `figs/baseball_drag.png` must stay where they are: the notebooks download them from `github.com/AllenDowney/ModSimPy/raw/master/...`.
+
+### Updating a notebook
+
+1. Edit the notebook in `ModSimPySolutions/chapters/` or `ModSimPySolutions/examples/`.
+2. Run the whole pipeline with `make build`, or the steps one at a time:
+   ```bash
+   cd modsim && sh build.sh                   # copy modsim.py to all locations
+   cd ModSimPySolutions/chapters && sh build.sh  # commit and push solutions; export chapNN.py to ModSimPy
+   cd ModSimPySolutions && sh build.sh        # zip of the solution notebooks
+   cd chapters && sh build.sh                 # copy notebooks, remove solutions, commit, rebuild the zip, push
+   cd examples && sh build.sh                 # same for the examples
+   sh build.sh                                # MkDocs API docs into site/
+   cd jb && sh build.sh                       # build the Jupyter Book and push gh-pages
+   ```
+
+Each `build.sh` that commits also pushes, and every push to `master` runs CI, so `make build` triggers several CI runs.
+
+### Testing
+
+Testing is a separate step from building:
+
+```bash
+make tests                                   # modsim unit tests and the chapter notebooks
+cd ModSimPySolutions && make tests           # all notebooks, with solutions
+cd chapters && sh test_run.sh                # refresh the chapters from ModSimPySolutions and test them
+```
+
+Some of the examples don't run without their solutions, so they aren't tested here.
 
 
 ## License

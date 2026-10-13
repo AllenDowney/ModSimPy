@@ -2,7 +2,7 @@ PROJECT_NAME = ModSimPy
 PYTHON_VERSION = 3.13
 PYTHON_INTERPRETER = python
 
-.PHONY: all create_environment create_environment_dev update_environment update_environment_dev lint format clean tests build
+.PHONY: all create_environment create_environment_dev update_environment update_environment_dev clean tests build
 
 all: build
 
@@ -34,15 +34,6 @@ update_environment:
 
 update_environment_dev:
 	mamba env update -f environment-dev.yml --prune
-
-
-lint:
-	flake8 pacs
-	black --check --config pyproject.toml pacs
-
-
-format:
-	black --config pyproject.toml pacs
 
 
 ## Delete all compiled Python files
