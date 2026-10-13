@@ -93,3 +93,25 @@ ENV/
 
 Untitled*
 *~
+
+# Private development repo, cloned inside this working tree
+ModSimPySolutions/
+
+# Build outputs
+site/
+jb/_build/
+jb/*.ipynb
+jupyter_execute/
+
+# Editor and test caches
+.vscode/
+.pytest_cache/
+
+# Files the notebooks download when run locally
+chapters/*.csv
+chapters/*.html
+chapters/modsim.py
+examples/*.csv
+examples/*.html
+examples/chap[0-9][0-9].py
+examples/modsim.py
