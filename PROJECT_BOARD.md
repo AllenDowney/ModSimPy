@@ -290,6 +290,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 3. **approved: PubMed** · The MINMOD citation linked a different paper.
 4. **approved: update both** · Diabetes prevalence 10% → 12%; `/cdc` redirected to the current report.
 
+**chap18**
+
+1. **approved** · `X` declines with blood insulin, not glucose.
+2. **approved: drop it** · The hidden G-minus-X comparison cell (a relative comparison of `X` is meaningless because `X` starts at 0).
+
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
 - VS Code showed a KaTeX ParseError in chapter 18 (*The Update Function*). Rather than depend on each reader's setup, every `$$...$$` block now has the delimiters on their own lines, with no trailing spaces. Markup only (57 cells in 19 notebooks). The two `\label{}` in chap24 (unreferenced; unsupported by KaTeX) are removed
@@ -434,6 +439,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - NumPy 2 shows scalars as `np.float64(72.3)` where the book shows `72.3`, for every reader with current NumPy (Colab included). `modsim.py` now calls `np.set_printoptions(legacy="1.25")`. Readers get it once ModSimPy is pushed (the notebooks download `modsim.py` from `master`)
 - Re-executed notebooks now match the book; SciPy's `root_scalar` result also prints slightly differently now (`flag: converged`, plus `method: brentq`)
+
+**chap18**
+
+- Introduction: "to solve the differential equation using a better algorithm" → "differential equations"
+- "time stamp" → "timestamp" (three places)
+- *Running the Simulation* (content): "`X` ... then declines as the concentration of glucose declines" → "as the concentration of insulin in the blood declines" (in the model, `X` is driven by `I`, not `G`)
+- Hidden cell (content; not in the printed book): removed a comparison that computed `results.G - results2.X` (mean `inf`); re-executed
+- Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
 
