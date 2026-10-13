@@ -216,7 +216,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap22 | done (ModSimPySolutions `2200872`, `5fe402d`; re-executed) |
 | chap23 | done (ModSimPySolutions `6fa5b26`, `a4d94c3`); short link in GreenTeaPress, **not deployed yet** |
 | chap24 | done (ModSimPySolutions `11c6cc2`, `4c8c42c`) |
-| chap25–chap27 | not started |
+| chap25 | done (ModSimPySolutions `2d5c3d6`, `1e3b20d`) |
+| chap26–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -324,6 +325,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: "earlier in the chapter"** · "Section xxx" placeholder.
 2. **approved: renumber** · "Dividing Equations 1 and 2" referred to the wrong Equation 1.
+
+**chap25**
+
+1. **approved** · 0.333 is a little more than the guess of 0.3.
+2. **approved: say "mass"** · Masses in kg were called weights.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -526,6 +532,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Analytic Solution* (content): the label "(1)" moved from $d\theta/dt = \omega$ to $dr/dt = k \omega$, so "Dividing Equations 1 and 2 yields $dr/dy = k/r$" is correct (dividing $d\theta/dt$ by $dy/dt$ gives $d\theta/dy = 1/r$)
 - *Analytic Solution* (content): "the same as the "estimate" we computed in Section xxx" → "earlier in the chapter"
 - Display math: the two unused `\label{}` removed (book-wide math change)
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap25**
+
+- *Angular Acceleration*: "newton meters (Nm)" → "newton meters (N m)"
+- *Teapots and Turntables* (content): "its weight is 7 kg" → "its mass is 7 kg"; "The teapot weights 0.3 kg" → "The mass of the teapot is 0.3 kg"
+- Heading "Two Phase Simulation" → "Two-Phase Simulation"
+- *Estimating Friction* (content): "0.333 N m, a little less than the initial guess" → "a little more" (the guess was 0.3)
 - Layout: duplicate notebook notice removed from Exercises
 
 ## Notes
