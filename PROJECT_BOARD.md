@@ -107,7 +107,7 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 
 ### Checklist
 
-- [x] Remove `papers/`
+- [x] Remove `papers/` from git. Restored to the working tree on 2026-10-13 and gitignored, so the PDFs stay available locally as references
 - [x] Packaging: **retired**. Removed `setup.py` and `README.rst`; the README says the PyPI `modsimpy` package is outdated. `modsim/__init__.py` kept (see Task 3)
 - [x] Removed `_config.yml` and `apt.txt` (nothing links to Binder)
 - [x] `data/`: kept. Old notebook versions in history download `baseball_drag.csv`, `glucose_insulin.csv`, `World_population_estimates2/3.csv` and `.html` from it. `figs/`: removed `golden*` and `secant*`; only `baseball_drag.png` was ever downloaded
