@@ -208,7 +208,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap14 | done (ModSimPySolutions `6bfcf9f`, `4a65094`, and the next commit) |
 | chap15 | done (ModSimPySolutions `c4c9907`, `335dcdb`; re-executed) |
 | chap16 | done (ModSimPySolutions `94a41db`, `8321b6d`; re-executed) |
-| chap17–chap27 | not started |
+| chap17 | done (ModSimPySolutions `97c752b`, `adeda99`); short links committed in GreenTeaPress `a63e09c`, **not deployed yet** |
+| chap18–chap27 | not started |
 | examples (16) | not started |
 
 ### Content issues for the author
@@ -280,6 +281,13 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved** · Mix last now simulates the milk for 30 minutes: 62.9 → 63.2 °C.
 2. **declined** · "identical ... with a small difference due to rounding" kept as is.
+
+**chap17**
+
+1. **approved** · $X(0) = I_b$ → $X(0) = 0$.
+2. **approved: drop "PDF at"** · Dead PDF link; `/minmod` redirected to the abstract.
+3. **approved: PubMed** · The MINMOD citation linked a different paper.
+4. **approved: update both** · Diabetes prevalence 10% → 12%; `/cdc` redirected to the current report.
 
 ### Errata (changes relative to the published text)
 
@@ -403,6 +411,16 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - *Mix First or Last?*: "61.5 °C which is still" → "61.5 °C, which is still"
 - *Mix First or Last?* (content): the mix-last case simulated the coffee for 30 minutes but the milk for only 15 (its `t_end` from the measurement). Now both run 30 minutes (`milk.t_end = 30`), and "the temperature is 62.9 °C" → "63.2 °C", which matches the end of the sweep. Re-executed
 - *Analytic Solution*: "If we observe the that the temperature" → "If we observe that the temperature"; "the value of `r` we computed in the previous chapter, `0.115`" → "`0.0115`"; "time stamps" → "timestamps"
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap17**
+
+- Introduction (content): dropped the dead "PDF at <http://modsimpy.com/minmod>" (the redirect went to an unrelated homepage; no free PDF found); `/minmod` now goes to the abstract, like `/bergman`
+- *The Minimal Model*: "neither too high or too low" → "neither too high nor too low"; "Long term, severe hyperglycemia" → "Long-term, severe hyperglycemia"; "2--10 minutes" → "2–10 minutes"
+- *The Minimal Model* (content): "affects almost 10% of the population in the U.S." → "about 12%" (CDC, 2023 data); `/cdc` now goes to the CDC's current report page
+- *The Glucose Minimal Model* (content): "The initial state of the model is $X(0) = I_b$" → "$X(0) = 0$" (as in chapter 18's code and Bergman's model)
+- *Getting the Data* (content): the Pacini and Bergman (1986) citation linked a different paper on ResearchGate → <https://pubmed.ncbi.nlm.nih.gov/3640682/>
+- *Interpolation*: "equally-spaced" → "equally spaced"
 - Layout: duplicate notebook notice removed from Exercises
 
 **Book-wide: NumPy 2 scalar display** (ModSimPy `c91e8e1`)
