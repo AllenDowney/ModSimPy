@@ -1,0 +1,28 @@
+name: ModSimPy
+channels:
+  - conda-forge
+dependencies:
+  # Include all user dependencies
+  - python=3.13
+  - jupyter
+  - numpy
+  - matplotlib
+  - pandas
+  - scipy
+  - pint
+  - sympy
+  - lxml
+  - html5lib
+  - beautifulsoup4
+  - pytables
+  # Development dependencies
+  - pytest
+  - nbmake
+  - mkdocs
+  - mkdocs-material
+  - mkdocstrings
+  - mkdocstrings-python
+  - jupyter-book<2.0
+  - ghp-import
+  - pip
+
