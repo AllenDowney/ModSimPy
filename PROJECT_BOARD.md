@@ -144,6 +144,13 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 - `examples/`: 16 notebooks (about 13,000 words); `queue` is in the Jupyter Book, the rest are linked from the chapters
 - Not `header.ipynb` and `link_header.ipynb` (boilerplate), except where a fix belongs there
 
+### Decisions (2026-10-13)
+
+- **Fixes:** typos, grammar and dead links are fixed directly. Content issues (prose vs output, dated claims, exercise problems) are listed under "Content issues for the author" with a proposed fix, and changed only after approval
+- **Pace:** one notebook at a time: commit, then a summary of changes and open questions for review before the next
+- **Order:** chap01–chap27, then the examples
+- **Errata:** every change, typos included, goes in the errata list below; the printed edition (No Starch, 2023) doesn't have them
+
 ### What to check
 
 - **Typos and grammar:** spelling, repeated words, punctuation, inconsistent terms or capitalization
@@ -187,6 +194,12 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 ### Content issues for the author
 
 (None yet: items that need a decision rather than an obvious fix go here.)
+
+### Errata (changes relative to the published text)
+
+One entry per change: notebook, section, old text → new text. Content fixes are marked as such.
+
+(None yet.)
 
 ## Notes
 
