@@ -140,7 +140,7 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 Typos, grammar, dead links and content issues fixed in the source notebooks in ModSimPySolutions; content fixes were approved one by one. Book-wide: display math reformatted for KaTeX, and `modsim.py` prints NumPy 2 scalars as plain numbers.
 
 - Decisions, method, progress and the content issues: [proofreading.md](proofreading.md)
-- Every change, marked by whether it affects the printed book: [errata.md](errata.md)
+- Changes that affect the printed book: [errata.md](errata.md)
 - Notebook editing workflow and conventions: [CLAUDE.md](CLAUDE.md)
 
 ## Notes

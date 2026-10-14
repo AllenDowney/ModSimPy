@@ -275,3 +275,170 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 - VS Code showed a KaTeX ParseError in chapter 18 (*The Update Function*). Rather than depend on each reader's setup, every `$$...$$` block now has the delimiters on their own lines, with no trailing spaces. Markup only (57 cells in 19 notebooks). The two `\label{}` in chap24 (unreferenced; unsupported by KaTeX) are removed
 - Checked by rendering every markdown cell with VS Code's notebook renderer settings (`@vscode/markdown-it-katex`, KaTeX 0.16.21, `throwOnError`, bare and fenced blocks): 0 errors (was 2, in chap24). Jupyter Book (MathJax) builds with all math rendered. Confirmed working in VS Code
 - **Jupyter Book chapter numbers** (ModSimPy `6d58752`): `numbered: True` on the Chapters part of `jb/_toc.yml`, preface in its own Front Matter part (as in ThinkBayes2). Test build shows "18. Glucose and Insulin", sections 18.1, ...; live on the next site build
+
+## Notebook-only changes
+
+Changes that don't affect the printed book, so they are not in [errata.md](errata.md): solutions, hidden cells, notebook layout, `modsim.py`, and the examples.
+
+**chap01**
+- *More Jupyter* (content; not in the printed book): classic-Notebook menu steps replaced with Colab and JupyterLab steps
+
+**chap04**
+- Exercise 6 solution (content; solutions aren't in the printed book): added the answer, "The minimum is near p1 = 0.35, close to p2 = 0.3."
+
+**chap06**
+- Exercise 1 solution docstring (content; not in the printed book): "Compute the population next year ... returns: population next year" → "Compute the net growth during the current year ... returns: net growth"
+
+**chap08**
+- Layout (content): the "This chapter is available as a Jupyter notebook" note moved from the start of Exercises to after the introduction, with the same wording as the other chapters
+
+**chap09**
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap10**
+- Solution plot (content; not in the printed book): the 1940-present plot was titled "Prehistoric population estimates" → "Model vs. estimates since 1940". Notebook re-executed; the other three figures were re-rendered by current Matplotlib with no visible change
+
+**chap11**
+- Exercise 1 solution (content; not in the printed book): added "About 38% of the class, or 34 of the 90 students, get infected."
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap12**
+- Exercise 1 solution (content; not in the printed book): "model quarantine as an effective reduction in gamma" → "an effective increase in gamma", with an explanation: R means "removed", quarantined students can't infect anyone, so a shorter time in the infectious compartment is a shorter recovery time and a higher `gamma = 1/tr`
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap13**
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap14**
+- Layout (content): notebook notice moved from Exercises to after the introduction (same as chap08)
+
+**chap15**
+- Exercise 2 solution (content; not in the printed book): `root_scalar(...)` → `res = root_scalar(...)`; the displayed `res` had been the coffee result. Re-executed: `res.root` is 0.133 for the milk
+- Layout: the second notebook notice (in Exercises) removed; chapters 15–27 have one after the introduction (tagged `remove-print`) and one in Exercises
+
+**chap16**
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap17**
+- Layout: duplicate notebook notice removed from Exercises
+
+**Book-wide: NumPy 2 scalar display** (ModSimPy `c91e8e1`)
+
+- NumPy 2 shows scalars as `np.float64(72.3)` where the book shows `72.3`, for every reader with current NumPy (Colab included). `modsim.py` now calls `np.set_printoptions(legacy="1.25")`. Readers get it once ModSimPy is pushed (the notebooks download `modsim.py` from `master`)
+- Re-executed notebooks now match the book; SciPy's `root_scalar` result also prints slightly differently now (`flag: converged`, plus `method: brentq`)
+
+**chap18**
+- Hidden cell (content; not in the printed book): removed a comparison that computed `results.G - results2.X` (mean `inf`); re-executed
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap20**
+- Exercise 1 solution (content; not in the printed book): now displays the answer in days, 64.8; re-executed
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap21**
+- Exercise 1 solution (content; not in the printed book): `params = params.set(v_init=-30)` overwrote `params`, so in Exercise 2 the quarter was thrown down at 30 m/s. Now `params2 = ...`. Exercise 2's answer changes from v_term = 19.5 m/s, C_d = 0.54 to v_term = 21.7 m/s, C_d = 0.44 (the same as the penny). Re-executed
+- Exercise 2 solution (content; not in the printed book): `error_func` docstring said "Final height as a function of C_d ... returns: height in m" → "Error in flight time as a function of v_term ... returns: difference between simulated and measured flight time in s"
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap22**
+- Solutions (content; not in the printed book): Exercise 1 displayed `details.message` → `details2.message`; Exercise 3's test cells called `drag_force` and `slope_func` → `drag_force2` and `slope_func2`. Re-executed; the stored outputs had been made under NumPy 2 before the `modsim.py` fix and showed `np.float64(...)`
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap23**
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap24**
+- Display math: the two unused `\label{}` removed (book-wide math change)
+- Layout: duplicate notebook notice removed from Exercises
+
+**chap25**
+- Layout: duplicate notebook notice removed from Exercises
+
+**examples/bungee1** (not in the printed book)
+
+- "in the opposite of their direction of motion" → "opposite to their direction of motion"; "a `Param` object" → "a `Params` object"; "springs back almost to almost 70 m" → "almost to 70 m"; "more oscillation that we expect" → "than we expect"; "the numerical derivative of `ys`" → "of `results.v`"; docstring "from system|" → "from system:"
+- `event_func.direction = 10` → `1`, matching the text ("The value 1 (or any positive value)")
+- (content) The parameter list said `L = 40 m` and `k = 20 N / m`; the code uses 25 m and 40 N/m → list matches the code; "With a terminal velocity of 60 m/s." → "Let's assume the jumper's terminal velocity is 60 m/s."
+- (content) Removed "returns `zero_force`, which is either 0 Newtons or 0, depending on whether the `System` object has units..." → "If the cord is not extended, it returns 0."
+
+**examples/bungee2** (not in the printed book)
+
+- Same slips as bungee1: "in the opposite of their direction" → "opposite to"; "`Param`" → "`Params`"; missing period; also "The jumpers's" → "The jumper's"
+- `cord_acc` docstring: "Computes the force of the bungee cord ... velocity of the jumpter ... acceleration in m/s" → "Computes the acceleration of the jumper due to the cord ... velocity of the jumper ... acceleration in m/s**2"
+- (content) The spring-force test used `spring_force(56)` (1 m above full extension, giving -40) under text that says 1 m of extension gives 40 N → `spring_force(54)`. Re-executed
+- (content) "Here's how we run Phase 2, setting the direction of the event function so it doesn't stop the simulation immediately." → "Here's how we run Phase 2." (Phase 2 has no event function)
+
+**examples/filter** (not in the printed book)
+
+- "a circuit takes a signal" → "a circuit that takes a signal"; "audio signal" → "audio signals"; "pass the `Params` object `make_system` which" → "to `make_system`, which"; missing period; "is call" → "is called"; "functions that ... returns" → "return"; `estimate_offset` docstring "returns: amplitude ratio" → "phase offset in degrees"
+- (content) The `tau` bullet stopped mid-sentence → "which determines how long the initial startup phase lasts."
+- (content) Dropped "I suggest using `t_eval=ts`..." (no `ts`; the notebook uses `num=401`)
+- (content) "For high frequencies, it approaches 90 degrees" → "-90 degrees"
+- The two electronics-tutorials.ws links couldn't be checked (the site hangs for scripts)
+
+**examples/glucose** (not in the printed book)
+
+- "In the previous chapter" → "In Chapter 18"; "Levenberg-Marquart" → "Levenberg–Marquardt"; "at the some time stamps" → "at the same timestamps"; pandas `iloc` link → <https://pandas.pydata.org/docs/user_guide/indexing.html#selection-by-position> (the old anchor is gone)
+- (content) The plot after fitting showed `results.G` (the starting parameters) → `results2.G` (the best fit). Re-executed; `leastsq` under current SciPy gives the same fit to about five significant digits (SSE 318.15 vs 318.13)
+
+**examples/hiv_model** (not in the printed book)
+
+- Phillips (1996) link (dead, as in chap19) → <https://doi.org/10.1126/science.271.5248.497>; the response letter's old sciencemag.org PDF link → <https://doi.org/10.1126/science.272.5270.1960>
+- "the initial conditional" → "the initial conditions"; "Exericise" → "Exercise"; "What do you think of the arguments on both sides." → "?"
+
+**examples/insulin** (not in the printed book)
+
+- "In Chapter 17 I present" → "I presented"; "time stamp" → "timestamp" (twice; "evaluated as the same" → "at the same"); `error_func` docstring "actual: array of values" → "data: DataFrame of values"; "For $I_{max}$ is the maximum" → "$I_{max}$ is the maximum"
+
+**examples/kitten** (not in the printed book)
+
+- "`Mcore` is the weight of the core ... `Mroll` is the total weight" → "mass" (as in chap25)
+- (content) "$r_2$ is the outer diameter, and $r_1$ is the inner diameter" → "radius" (the formula uses $r^4$ with radii); "Since the outer diameter changes" → "outer radius"
+
+**examples/orbit** (not in the printed book)
+
+- `universal_gravitation` docstring "State object with distance r" → "with x, y, vx, and vy"; "the earth" → "the Earth"; 'DOP853' → `DOP853`
+
+**examples/plague** (not in the printed book)
+
+- `logistic` docstring "generalize" → "generalized"; "`fraction` and the remaining" → "`fraction`, and the remaining"; "$50" → "\$50" (escaped, like the other amounts)
+
+**examples/queue** (in the Jupyter Book, not in the printed book)
+
+- "the bikeshare model ... any timestep" → "the bike share model ... any time step"; alt text for the scenarios figure (was empty); "f you are not sure" → "If you are not sure"; `update_func3` comments "the first servers is busy, check it it's done" → "the first server is busy, check if it's done", "the second queue is busy" → "the second server"; a missing "?"
+- (content) The two-server and two-queue test cells called `run_simulation(...)` without assigning `results`, so they plotted and measured the single-server run → `results = run_simulation(...)`. Re-executed (no random seed, so all random outputs changed; the conclusion holds: two queues 6.53 min vs one queue 6.34 min, "slightly higher")
+
+**examples/salmon** (not in the printed book)
+
+- Plot title 'Narraguacus River' → 'Narraguagus River'; "from year-to-year" → "from year to year"; "functon" → "function"; missing period; "to run generate" → "to generate"; "substract" → "subtract"; "The plot option `alpha=0.1`" → "`alpha=0.3`" (as in the code); `run_simulation` docstring "Simulate a queueing system" → "Simulate the population over time"
+- The USASAC report link (dead; redirected to a generic NOAA page) → NOAA's Atlantic Salmon Assessments page, <https://www.fisheries.noaa.gov/resource/document/atlantic-salmon-assessments> (the 2017 report itself is probably in the NOAA repository, which blocks scripts; a copy is in `~/ModSimPy-attic/data/`); NumPy `random.choice` docs link (404) → current location
+- Re-executed for the title fix (no random seed; the claims hold: median net change negative, decline vs growth 0.64 vs 0.36, "about 2:1")
+
+**examples/spiderman** (not in the printed book)
+
+- Spider-Man wiki link wikia.com → fandom.com; missing periods; `spring_force` docstring "Compute drag force" → "Compute spring force"; "a function that takes `t_release` and `V_0`" → "and `params`"
+- (content) "Spider-Man weighs 76 kg" but `mass = 75` in the code → "has a mass of 76 kg" and `mass = 76` (as in chapter 26). Re-executed; the best range changes from 149.5 m to 149.4 m
+- (content) "We saw the 1-D version in Chapter 21" → "in the bungee jumping case studies"
+- (content) Removed an orphan sentence, "We can extract the x and y components as `Series` objects."
+
+**examples/throwingaxe** (not in the printed book)
+
+- State variables listed in code order (x, y, vx, vy, theta, omega); a doubled slash in a figure URL
+- (content) "Here's a version of `make_system` that sets the initial conditions" (there is none) → "Here are the parameters and initial conditions."
+- (content) "Here's the final state of the axe at the point of impact" drew `system.init` → draws `results.iloc[-1]` at `t_end`. Re-executed
+
+**examples/trees** (not in the printed book)
+
+- Dead links: the Flewelling et al. working paper (UW, 404) → Wayback copy from 2015 (the 2022 snapshot is a captured 404); Garcia (1983), citeseerx (404) → <https://doi.org/10.2307/2531339>; EasySDE site (forestgrowth.unbc.ca, no longer resolves) → Wayback copy from 2021
+- `run_simulation` docstring "computes the population next year" → "the height next year"; "logisitic" → "logistic"; a missing colon; "**Open Exercise**" → "**Open Exercise:**"
+- Checked: fitted dimension 3.11 (Model 2) and 2.64 (Model 3, "about 2.6") match the text; the analysis derivations check out
+
+**examples/wall** (not in the printed book)
+
+- "[which I downloaded here]" → "[available here]"; "timesteps" → "time steps"; "packs the parameters into `Series` objects" → "into tuples"; docstrings copied from other examples ("state: position, velocity", "returns: derivatives of y and v", "params: Params object") → describe this code; missing periods
+- (content) Removed an obsolete paragraph about units and `require_units` (nothing in the notebook uses units)
+
+**examples/yoyo** (not in the printed book)
+
+- "rolled up string" → "rolled-up string"; "counter-clockwise" → "counterclockwise" (twice), as in chapter 26
+- Checked: inline math written with spaces inside the delimiters (`$ a = -r \alpha $`) renders in VS Code's KaTeX, so it was left as is
