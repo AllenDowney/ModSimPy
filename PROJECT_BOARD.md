@@ -228,7 +228,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/filter | done (ModSimPySolutions `bbb9eb9`, `4c71f98`) |
 | examples/glucose | done (ModSimPySolutions `1bcc911`, `64698f9`; re-executed) |
 | examples/hiv_model | done (ModSimPySolutions `a47420c`); no content questions |
-| examples (11 more) | not started |
+| examples/insulin | done (ModSimPySolutions `f8e8983`) |
+| examples (10 more) | not started |
 
 ### Content issues for the author
 
@@ -365,6 +366,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved** · Fit plot showed the starting parameters.
 2. **declined** · Minus sign in $S \equiv -\delta E / \delta I$ kept as is.
+
+**examples/insulin**
+
+1. **declined** · The normal-range citation ("Pacini and Bergman") links a ResearchGate paper with a different title; kept as is.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -620,6 +625,10 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - Phillips (1996) link (dead, as in chap19) → <https://doi.org/10.1126/science.271.5248.497>; the response letter's old sciencemag.org PDF link → <https://doi.org/10.1126/science.272.5270.1960>
 - "the initial conditional" → "the initial conditions"; "Exericise" → "Exercise"; "What do you think of the arguments on both sides." → "?"
+
+**examples/insulin** (not in the printed book)
+
+- "In Chapter 17 I present" → "I presented"; "time stamp" → "timestamp" (twice; "evaluated as the same" → "at the same"); `error_func` docstring "actual: array of values" → "data: DataFrame of values"; "For $I_{max}$ is the maximum" → "$I_{max}$ is the maximum"
 
 ## Notes
 
