@@ -232,7 +232,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/kitten | done (ModSimPySolutions `eac904a`); no content questions |
 | examples/orbit | done (ModSimPySolutions `3f8cf4e`); no content questions |
 | examples/plague | done (ModSimPySolutions `5fb8d84`); no content questions |
-| examples (7 more) | not started |
+| examples/queue | done (ModSimPySolutions `aea2509`, `2182ff9`; re-executed) |
+| examples (6 more) | not started |
 
 ### Content issues for the author
 
@@ -373,6 +374,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **examples/insulin**
 
 1. **declined** · The normal-range citation ("Pacini and Bergman") links a ResearchGate paper with a different title; kept as is.
+
+**examples/queue**
+
+1. **approved: fix and re-execute** · Test runs reused stale `results`.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -645,6 +650,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 **examples/plague** (not in the printed book)
 
 - `logistic` docstring "generalize" → "generalized"; "`fraction` and the remaining" → "`fraction`, and the remaining"; "$50" → "\$50" (escaped, like the other amounts)
+
+**examples/queue** (in the Jupyter Book, not in the printed book)
+
+- "the bikeshare model ... any timestep" → "the bike share model ... any time step"; alt text for the scenarios figure (was empty); "f you are not sure" → "If you are not sure"; `update_func3` comments "the first servers is busy, check it it's done" → "the first server is busy, check if it's done", "the second queue is busy" → "the second server"; a missing "?"
+- (content) The two-server and two-queue test cells called `run_simulation(...)` without assigning `results`, so they plotted and measured the single-server run → `results = run_simulation(...)`. Re-executed (no random seed, so all random outputs changed; the conclusion holds: two queues 6.53 min vs one queue 6.34 min, "slightly higher")
 
 ## Notes
 
