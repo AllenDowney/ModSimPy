@@ -236,7 +236,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/salmon | done (ModSimPySolutions `4e6abd1`; re-executed); no content questions |
 | examples/spiderman | done (ModSimPySolutions `a5c25ba`, `64364b5`; re-executed) |
 | examples/throwingaxe | done (ModSimPySolutions `cd5a64a`, `959405d`; re-executed) |
-| examples (3 more) | not started |
+| examples/trees | done (ModSimPySolutions `086c633`); no content questions |
+| examples (2 more) | not started |
 
 ### Content issues for the author
 
@@ -689,6 +690,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - State variables listed in code order (x, y, vx, vy, theta, omega); a doubled slash in a figure URL
 - (content) "Here's a version of `make_system` that sets the initial conditions" (there is none) → "Here are the parameters and initial conditions."
 - (content) "Here's the final state of the axe at the point of impact" drew `system.init` → draws `results.iloc[-1]` at `t_end`. Re-executed
+
+**examples/trees** (not in the printed book)
+
+- Dead links: the Flewelling et al. working paper (UW, 404) → Wayback copy from 2015 (the 2022 snapshot is a captured 404); Garcia (1983), citeseerx (404) → <https://doi.org/10.2307/2531339>; EasySDE site (forestgrowth.unbc.ca, no longer resolves) → Wayback copy from 2021
+- `run_simulation` docstring "computes the population next year" → "the height next year"; "logisitic" → "logistic"; a missing colon; "**Open Exercise**" → "**Open Exercise:**"
+- Checked: fitted dimension 3.11 (Model 2) and 2.64 (Model 3, "about 2.6") match the text; the analysis derivations check out
 
 ## Notes
 
