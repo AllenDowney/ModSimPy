@@ -226,7 +226,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/bungee1 | done (ModSimPySolutions `cd4a948`, `4fdb76f`) |
 | examples/bungee2 | done (ModSimPySolutions `b1217d5`, `2463673`; re-executed) |
 | examples/filter | done (ModSimPySolutions `bbb9eb9`, `4c71f98`) |
-| examples (13 more) | not started |
+| examples/glucose | done (ModSimPySolutions `1bcc911`, `64698f9`; re-executed) |
+| examples (12 more) | not started |
 
 ### Content issues for the author
 
@@ -358,6 +359,11 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 1. **approved: simpler** · Unfinished `tau` bullet.
 2. **approved** · Stale `t_eval=ts` suggestion.
 3. **approved** · Offset approaches -90 degrees.
+
+**examples/glucose**
+
+1. **approved** · Fit plot showed the starting parameters.
+2. **declined** · Minus sign in $S \equiv -\delta E / \delta I$ kept as is.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -603,6 +609,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - (content) Dropped "I suggest using `t_eval=ts`..." (no `ts`; the notebook uses `num=401`)
 - (content) "For high frequencies, it approaches 90 degrees" → "-90 degrees"
 - The two electronics-tutorials.ws links couldn't be checked (the site hangs for scripts)
+
+**examples/glucose** (not in the printed book)
+
+- "In the previous chapter" → "In Chapter 18"; "Levenberg-Marquart" → "Levenberg–Marquardt"; "at the some time stamps" → "at the same timestamps"; pandas `iloc` link → <https://pandas.pydata.org/docs/user_guide/indexing.html#selection-by-position> (the old anchor is gone)
+- (content) The plot after fitting showed `results.G` (the starting parameters) → `results2.G` (the best fit). Re-executed; `leastsq` under current SciPy gives the same fit to about five significant digits (SSE 318.15 vs 318.13)
 
 ## Notes
 
