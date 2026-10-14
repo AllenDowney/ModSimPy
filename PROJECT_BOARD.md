@@ -231,7 +231,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/insulin | done (ModSimPySolutions `f8e8983`) |
 | examples/kitten | done (ModSimPySolutions `eac904a`); no content questions |
 | examples/orbit | done (ModSimPySolutions `3f8cf4e`); no content questions |
-| examples (8 more) | not started |
+| examples/plague | done (ModSimPySolutions `5fb8d84`); no content questions |
+| examples (7 more) | not started |
 
 ### Content issues for the author
 
@@ -640,6 +641,10 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 **examples/orbit** (not in the printed book)
 
 - `universal_gravitation` docstring "State object with distance r" → "with x, y, vx, and vy"; "the earth" → "the Earth"; 'DOP853' → `DOP853`
+
+**examples/plague** (not in the printed book)
+
+- `logistic` docstring "generalize" → "generalized"; "`fraction` and the remaining" → "`fraction`, and the remaining"; "$50" → "\$50" (escaped, like the other amounts)
 
 ## Notes
 
