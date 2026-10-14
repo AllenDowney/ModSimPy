@@ -235,7 +235,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/queue | done (ModSimPySolutions `aea2509`, `2182ff9`; re-executed) |
 | examples/salmon | done (ModSimPySolutions `4e6abd1`; re-executed); no content questions |
 | examples/spiderman | done (ModSimPySolutions `a5c25ba`, `64364b5`; re-executed) |
-| examples (4 more) | not started |
+| examples/throwingaxe | done (ModSimPySolutions `cd5a64a`, `959405d`; re-executed) |
+| examples (3 more) | not started |
 
 ### Content issues for the author
 
@@ -386,6 +387,12 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 1. **approved: code to 76** · Mass 75 kg in the code vs 76 kg in the text.
 2. **approved** · The 1-D spring force is in the bungee case studies, not Chapter 21.
 3. **approved: drop it** · Orphan sentence.
+
+**examples/throwingaxe**
+
+1. **approved** · The "final state" figure drew the initial state.
+2. **approved: reword** · No `make_system` in this notebook.
+3. **declined** · Target "typically 6 m away" vs 8 m in the simulation; left as is (open-ended exercise).
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -676,6 +683,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - (content) "Spider-Man weighs 76 kg" but `mass = 75` in the code → "has a mass of 76 kg" and `mass = 76` (as in chapter 26). Re-executed; the best range changes from 149.5 m to 149.4 m
 - (content) "We saw the 1-D version in Chapter 21" → "in the bungee jumping case studies"
 - (content) Removed an orphan sentence, "We can extract the x and y components as `Series` objects."
+
+**examples/throwingaxe** (not in the printed book)
+
+- State variables listed in code order (x, y, vx, vy, theta, omega); a doubled slash in a figure URL
+- (content) "Here's a version of `make_system` that sets the initial conditions" (there is none) → "Here are the parameters and initial conditions."
+- (content) "Here's the final state of the axe at the point of impact" drew `system.init` → draws `results.iloc[-1]` at `t_end`. Re-executed
 
 ## Notes
 
