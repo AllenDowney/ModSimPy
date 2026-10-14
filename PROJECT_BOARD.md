@@ -237,7 +237,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/spiderman | done (ModSimPySolutions `a5c25ba`, `64364b5`; re-executed) |
 | examples/throwingaxe | done (ModSimPySolutions `cd5a64a`, `959405d`; re-executed) |
 | examples/trees | done (ModSimPySolutions `086c633`); no content questions |
-| examples (2 more) | not started |
+| examples/wall | done (ModSimPySolutions `b205eeb`, `082cf55`) |
+| examples (1 more) | not started |
 
 ### Content issues for the author
 
@@ -394,6 +395,10 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 1. **approved** · The "final state" figure drew the initial state.
 2. **approved: reword** · No `make_system` in this notebook.
 3. **declined** · Target "typically 6 m away" vs 8 m in the simulation; left as is (open-ended exercise).
+
+**examples/wall**
+
+1. **approved: remove** · Obsolete paragraph about units.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -696,6 +701,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Dead links: the Flewelling et al. working paper (UW, 404) → Wayback copy from 2015 (the 2022 snapshot is a captured 404); Garcia (1983), citeseerx (404) → <https://doi.org/10.2307/2531339>; EasySDE site (forestgrowth.unbc.ca, no longer resolves) → Wayback copy from 2021
 - `run_simulation` docstring "computes the population next year" → "the height next year"; "logisitic" → "logistic"; a missing colon; "**Open Exercise**" → "**Open Exercise:**"
 - Checked: fitted dimension 3.11 (Model 2) and 2.64 (Model 3, "about 2.6") match the text; the analysis derivations check out
+
+**examples/wall** (not in the printed book)
+
+- "[which I downloaded here]" → "[available here]"; "timesteps" → "time steps"; "packs the parameters into `Series` objects" → "into tuples"; docstrings copied from other examples ("state: position, velocity", "returns: derivatives of y and v", "params: Params object") → describe this code; missing periods
+- (content) Removed an obsolete paragraph about units and `require_units` (nothing in the notebook uses units)
 
 ## Notes
 
