@@ -234,7 +234,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/plague | done (ModSimPySolutions `5fb8d84`); no content questions |
 | examples/queue | done (ModSimPySolutions `aea2509`, `2182ff9`; re-executed) |
 | examples/salmon | done (ModSimPySolutions `4e6abd1`; re-executed); no content questions |
-| examples (5 more) | not started |
+| examples/spiderman | done (ModSimPySolutions `a5c25ba`, `64364b5`; re-executed) |
+| examples (4 more) | not started |
 
 ### Content issues for the author
 
@@ -379,6 +380,12 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 **examples/queue**
 
 1. **approved: fix and re-execute** · Test runs reused stale `results`.
+
+**examples/spiderman**
+
+1. **approved: code to 76** · Mass 75 kg in the code vs 76 kg in the text.
+2. **approved** · The 1-D spring force is in the bungee case studies, not Chapter 21.
+3. **approved: drop it** · Orphan sentence.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -662,6 +669,13 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - Plot title 'Narraguacus River' → 'Narraguagus River'; "from year-to-year" → "from year to year"; "functon" → "function"; missing period; "to run generate" → "to generate"; "substract" → "subtract"; "The plot option `alpha=0.1`" → "`alpha=0.3`" (as in the code); `run_simulation` docstring "Simulate a queueing system" → "Simulate the population over time"
 - The USASAC report link (dead; redirected to a generic NOAA page) → NOAA's Atlantic Salmon Assessments page, <https://www.fisheries.noaa.gov/resource/document/atlantic-salmon-assessments> (the 2017 report itself is probably in the NOAA repository, which blocks scripts; a copy is in `~/ModSimPy-attic/data/`); NumPy `random.choice` docs link (404) → current location
 - Re-executed for the title fix (no random seed; the claims hold: median net change negative, decline vs growth 0.64 vs 0.36, "about 2:1")
+
+**examples/spiderman** (not in the printed book)
+
+- Spider-Man wiki link wikia.com → fandom.com; missing periods; `spring_force` docstring "Compute drag force" → "Compute spring force"; "a function that takes `t_release` and `V_0`" → "and `params`"
+- (content) "Spider-Man weighs 76 kg" but `mass = 75` in the code → "has a mass of 76 kg" and `mass = 76` (as in chapter 26). Re-executed; the best range changes from 149.5 m to 149.4 m
+- (content) "We saw the 1-D version in Chapter 21" → "in the bungee jumping case studies"
+- (content) Removed an orphan sentence, "We can extract the x and y components as `Series` objects."
 
 ## Notes
 
