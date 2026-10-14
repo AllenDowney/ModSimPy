@@ -9,7 +9,7 @@ This is the public repo for *Modeling and Simulation in Python* (No Starch, 2023
 Tasks 1–4 (cleanup) and Task 6 (CI and build fixes) done 2026-10-13. Still open:
 
 - **Task 3:** delete `~/ModSimPy-attic/` once nothing has been missed
-- **Task 7:** proofreading pass through the book (next)
+- **Task 7:** proofreading pass, done 2026-10-13 (chapters and examples released)
 
 ---
 
@@ -134,7 +134,7 @@ Keep `modsim/__init__.py`: `mkdocs.yml` documents `::: modsim`, which imports th
 
 ## Task 7: Proofreading pass through the book
 
-**Status:** Planned (added 2026-10-13)
+**Status:** Done (2026-10-13): all 27 chapters and 16 examples proofread and released
 
 **Goal:** Read every notebook in the book for typos and for content issues, and fix them in the source notebooks in ModSimPySolutions.
 
@@ -191,6 +191,8 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb $S/chap0
 Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks and the site not rebuilt yet.
 
 **Released after chap27 (2026-10-13):** ModSimPySolutions and ModSimPy pushed (CI passed on both); student chapters and examples, the notebook zip and `modsim.py` regenerated; site rebuilt and published (chapter numbers, all fixes; Pages deploy checked live); short links `/minmod`, `/cdc`, `/minimize` deployed (GreenTeaPress `2f9dd77`). All 44 solution notebooks passed nbmake locally first.
+
+**Released after the examples (2026-10-13):** `make build` end to end (with the build-script fix, it skipped the empty commits instead of stopping): ModSimPySolutions and ModSimPy pushed once each, CI passed on both; student examples regenerated (no solutions, no outputs); site rebuilt and checked live (e.g. `queue`). All 44 solution notebooks passed nbmake locally first.
 
 **Build snag:** `make build` stops when a build script has nothing new to commit (the scripts run `git commit` unconditionally and exit with its status), e.g. when the exported `chapNN.py` are unchanged. This time the steps were run by hand in the Makefile's order. Fix: make those commits conditional (`git diff --cached --quiet || git commit ...`). **Fixed 2026-10-13** in `chapters/build.sh`, `examples/build.sh` and `ModSimPySolutions/chapters/build.sh`.
 
