@@ -238,7 +238,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/throwingaxe | done (ModSimPySolutions `cd5a64a`, `959405d`; re-executed) |
 | examples/trees | done (ModSimPySolutions `086c633`); no content questions |
 | examples/wall | done (ModSimPySolutions `b205eeb`, `082cf55`) |
-| examples (1 more) | not started |
+| examples/yoyo | done (ModSimPySolutions `479920f`); no content questions |
+| **all chapters and examples** | **done** (2026-10-13); `header.ipynb` skipped (boilerplate) |
 
 ### Content issues for the author
 
@@ -706,6 +707,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - "[which I downloaded here]" → "[available here]"; "timesteps" → "time steps"; "packs the parameters into `Series` objects" → "into tuples"; docstrings copied from other examples ("state: position, velocity", "returns: derivatives of y and v", "params: Params object") → describe this code; missing periods
 - (content) Removed an obsolete paragraph about units and `require_units` (nothing in the notebook uses units)
+
+**examples/yoyo** (not in the printed book)
+
+- "rolled up string" → "rolled-up string"; "counter-clockwise" → "counterclockwise" (twice), as in chapter 26
+- Checked: inline math written with spaces inside the delimiters (`$ a = -r \alpha $`) renders in VS Code's KaTeX, so it was left as is
 
 ## Notes
 
