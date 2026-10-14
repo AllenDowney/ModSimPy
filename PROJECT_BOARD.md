@@ -229,7 +229,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/glucose | done (ModSimPySolutions `1bcc911`, `64698f9`; re-executed) |
 | examples/hiv_model | done (ModSimPySolutions `a47420c`); no content questions |
 | examples/insulin | done (ModSimPySolutions `f8e8983`) |
-| examples (10 more) | not started |
+| examples/kitten | done (ModSimPySolutions `eac904a`); no content questions |
+| examples (9 more) | not started |
 
 ### Content issues for the author
 
@@ -629,6 +630,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 **examples/insulin** (not in the printed book)
 
 - "In Chapter 17 I present" → "I presented"; "time stamp" → "timestamp" (twice; "evaluated as the same" → "at the same"); `error_func` docstring "actual: array of values" → "data: DataFrame of values"; "For $I_{max}$ is the maximum" → "$I_{max}$ is the maximum"
+
+**examples/kitten** (not in the printed book)
+
+- "`Mcore` is the weight of the core ... `Mroll` is the total weight" → "mass" (as in chap25)
+- (content) "$r_2$ is the outer diameter, and $r_1$ is the inner diameter" → "radius" (the formula uses $r^4$ with radii); "Since the outer diameter changes" → "outer radius"
 
 ## Notes
 
