@@ -30,7 +30,7 @@ jupytext --to ipynb --update -o ModSimPySolutions/chapters/chap05.ipynb /tmp/cha
 
 - **Display math:** `$$` on its own line above and below the formula, no trailing spaces, no `\label` (KaTeX in VS Code and Colab doesn't support it). This form works in VS Code, Colab, Jupyter and Jupyter Book.
 - **`modsim.py` calls `np.set_printoptions(legacy="1.25")`** so NumPy 2 scalars print as `72.3`, not `np.float64(72.3)`, as in the book.
-- Spelling as settled in the proofreading pass (Task 7): "timestamp", "time step", "newtons", "bike share", "counterclockwise"; masses in kg are "mass", not "weight".
+- Spelling as settled in the proofreading pass ([proofreading.md](proofreading.md); every change is in [errata.md](errata.md)): "timestamp", "time step", "newtons", "bike share", "counterclockwise"; masses in kg are "mass", not "weight".
 - Chapters have one "This chapter is available as a Jupyter notebook" notice, after the introduction.
 
 ## Short links
