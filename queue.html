@@ -402,7 +402,7 @@ document.write(`
 <p>Suppose you are designing the checkout area for a new store.  There is room for two checkout counters and a waiting area for customers.  You can make two lines, one for each counter, or one line that serves both counters.</p>
 <p>In theory, you might expect a single line to be better, but it has some practical drawbacks: in order to maintain a single line, you would have to install rope barriers, and customers might be put off by what seems to be a longer line, even if it moves faster.</p>
 <p>So you’d like to check whether the single line is really better and by how much.  Simulation can help answer this question.</p>
-<p>As we did in the bikeshare model, we’ll assume that a customer is equally likely to arrive during any timestep.  I’ll denote this probability using the Greek letter lambda, <span class="math notranslate nohighlight">\(\lambda\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">lam</span></code>.  The value of <span class="math notranslate nohighlight">\(\lambda\)</span> probably varies from day to day, so we’ll have to consider a range of possibilities.</p>
+<p>As we did in the bike share model, we’ll assume that a customer is equally likely to arrive during any time step.  I’ll denote this probability using the Greek letter lambda, <span class="math notranslate nohighlight">\(\lambda\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">lam</span></code>.  The value of <span class="math notranslate nohighlight">\(\lambda\)</span> probably varies from day to day, so we’ll have to consider a range of possibilities.</p>
 <p>Based on data from other stores, you know that it takes 5 minutes for a customer to check out, on average.  But checkout times are highly variable: most customers take less than 5 minutes, but some take substantially more.  A simple way to model this variability is to assume that when a customer is checking out, they have the same probability of finishing up during each time step.  I’ll denote this probability using the Greek letter mu, <span class="math notranslate nohighlight">\(\mu\)</span>, or the variable name <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
 <p>If we choose <span class="math notranslate nohighlight">\(\mu=1/5\)</span>, the average number of time steps for each checkout will be 5 minutes, which is consistent with the data.</p>
 <section id="one-server-one-queue">
@@ -557,7 +557,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" src="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" />
+<img alt="_images/768cd8d80502b453e34adf24118fc0956ae36974e8d80eef9796757258722b9d.png" src="_images/768cd8d80502b453e34adf24118fc0956ae36974e8d80eef9796757258722b9d.png" />
 </div>
 </details>
 </div>
@@ -596,7 +596,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.9485049833887044, 7.588039867109635)
 </pre></div>
 </div>
 </div>
@@ -709,7 +709,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/40666b7afc7e1a3d0c509b0692efa2f0d0af99631bed59aaabacf0bc15c21be0.png" src="_images/40666b7afc7e1a3d0c509b0692efa2f0d0af99631bed59aaabacf0bc15c21be0.png" />
+<img alt="_images/9437821c5c733b3896f9d8ebcacf71fd0a01df0a0fa425553fcb4e51e06834e5.png" src="_images/9437821c5c733b3896f9d8ebcacf71fd0a01df0a0fa425553fcb4e51e06834e5.png" />
 </div>
 </details>
 </div>
@@ -729,7 +729,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.813268411321534
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.854649429496991
 </pre></div>
 </div>
 </div>
@@ -777,7 +777,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e52f320049519d2ec5e67551152b9c99afa8cc5b7579df10cf584d5861b01a1.png" src="_images/1e52f320049519d2ec5e67551152b9c99afa8cc5b7579df10cf584d5861b01a1.png" />
+<img alt="_images/c984c3c8e8048f99b3d28bab5b6de87e1cba4963806d8d61de820dd832463d6a.png" src="_images/c984c3c8e8048f99b3d28bab5b6de87e1cba4963806d8d61de820dd832463d6a.png" />
 </div>
 </details>
 </div>
@@ -791,7 +791,7 @@ document.write(`
 <li><p>Two queues, one for each counter.</p></li>
 </ol>
 <p>The following figure shows the three scenarios:</p>
-<p><img alt="" src="https://github.com/AllenDowney/ModSim/raw/main/figs/queue.png" /></p>
+<p><img alt="One queue, one server (left), one queue, two servers (middle), two queues, two servers (right)." src="https://github.com/AllenDowney/ModSim/raw/main/figs/queue.png" /></p>
 <p>Write an update function for one queue with two servers.</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="admonition hide above-input">
@@ -837,7 +837,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func2</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func2</span><span class="p">)</span>
 <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Customers&#39;</span><span class="p">)</span>
 <span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
@@ -845,10 +845,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7425249169435216, 5.940199335548173)
 </pre></div>
 </div>
-<img alt="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" src="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" />
+<img alt="_images/80a0c86cae8accb0f44688ce4f3fb896fa41d64480265a8ceb92603d5f731146.png" src="_images/80a0c86cae8accb0f44688ce4f3fb896fa41d64480265a8ceb92603d5f731146.png" />
 </div>
 </details>
 </div>
@@ -887,7 +887,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.326606263998706 minutes
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.344447716901762 minutes
 </pre></div>
 </div>
 </div>
@@ -910,7 +910,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/787ddf6f905d304ed39f19b13356685a2e60bc579a17f93d8228ca486be4f438.png" src="_images/787ddf6f905d304ed39f19b13356685a2e60bc579a17f93d8228ca486be4f438.png" />
+<img alt="_images/2dcb6a5688789cac4827a62665a5df1d7ee6b3279b82d02d3b1d147f9224f46a.png" src="_images/2dcb6a5688789cac4827a62665a5df1d7ee6b3279b82d02d3b1d147f9224f46a.png" />
 </div>
 </details>
 </div>
@@ -918,7 +918,7 @@ document.write(`
 <section id="multiple-queues">
 <h2>Multiple queues<a class="headerlink" href="#multiple-queues" title="Link to this heading">#</a></h2>
 <p>To simulate the scenario with two separate queues, we need two state variables to keep track of customers in each queue.</p>
-<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters and returns <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> as return values.  f you are not sure how to return more than one return value, see <code class="docutils literal notranslate"><span class="pre">compute_metrics</span></code>.</p>
+<p>Write an update function that takes <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, and <code class="docutils literal notranslate"><span class="pre">system</span></code> as parameters and returns <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> as return values.  If you are not sure how to return more than one return value, see <code class="docutils literal notranslate"><span class="pre">compute_metrics</span></code>.</p>
 <p>When a customer arrives, which queue do they join?</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="admonition hide above-input">
@@ -937,11 +937,11 @@ document.write(`
 <span class="sd">    t: time step</span>
 <span class="sd">    system: System object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># if the first servers is busy, check it it&#39;s done</span>
+    <span class="c1"># if the first server is busy, check if it&#39;s done</span>
     <span class="k">if</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
         <span class="n">x1</span> <span class="o">-=</span> <span class="mi">1</span>
             
-    <span class="c1"># if the second queue is busy, check if it&#39;s done</span>
+    <span class="c1"># if the second server is busy, check if it&#39;s done</span>
     <span class="k">if</span> <span class="n">x2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flip</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
         <span class="n">x2</span> <span class="o">-=</span> <span class="mi">1</span>
             
@@ -1000,7 +1000,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 
 <span class="n">system</span> <span class="o">=</span> <span class="n">make_system</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func3</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">update_func3</span><span class="p">)</span>
 <span class="n">results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (min)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Customers&#39;</span><span class="p">)</span>
 <span class="n">compute_metrics</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
@@ -1008,15 +1008,15 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.920265780730897, 7.362126245847176)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.8272425249169435, 6.617940199335548)
 </pre></div>
 </div>
-<img alt="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" src="_images/269ab2747d3af4ce5ce6b2d6fef81dc554cedd4ae9d4c1d9456cc75febdca3b2.png" />
+<img alt="_images/2413119d89fe87bfcd1a27bf3886ef65c9604a49a0c723e4ceb84f289a25bd53.png" src="_images/2413119d89fe87bfcd1a27bf3886ef65c9604a49a0c723e4ceb84f289a25bd53.png" />
 </div>
 </details>
 </div>
 <p>Sweep a range of values for <code class="docutils literal notranslate"><span class="pre">lam</span></code>, plot the results, and print the average wait time across all values of <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p>
-<p>How do the results compare to the scenario with two servers and one queue.</p>
+<p>How do the results compare to the scenario with two servers and one queue?</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1033,7 +1033,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.638371020327574 minutes
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average of averages =  6.527918009440756 minutes
 </pre></div>
 </div>
 </div>
@@ -1056,7 +1056,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/457853d06e16a58e214628fe04a7739d989fe4e00a72d047c290c29146b75dfb.png" src="_images/457853d06e16a58e214628fe04a7739d989fe4e00a72d047c290c29146b75dfb.png" />
+<img alt="_images/414ec5a49e0569ef517807c39d9324198164d5989bb5b7b4f5e61dae1ae85db2.png" src="_images/414ec5a49e0569ef517807c39d9324198164d5989bb5b7b4f5e61dae1ae85db2.png" />
 </div>
 </details>
 </div>
