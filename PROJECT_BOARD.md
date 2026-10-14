@@ -233,7 +233,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/orbit | done (ModSimPySolutions `3f8cf4e`); no content questions |
 | examples/plague | done (ModSimPySolutions `5fb8d84`); no content questions |
 | examples/queue | done (ModSimPySolutions `aea2509`, `2182ff9`; re-executed) |
-| examples (6 more) | not started |
+| examples/salmon | done (ModSimPySolutions `4e6abd1`; re-executed); no content questions |
+| examples (5 more) | not started |
 
 ### Content issues for the author
 
@@ -655,6 +656,12 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - "the bikeshare model ... any timestep" → "the bike share model ... any time step"; alt text for the scenarios figure (was empty); "f you are not sure" → "If you are not sure"; `update_func3` comments "the first servers is busy, check it it's done" → "the first server is busy, check if it's done", "the second queue is busy" → "the second server"; a missing "?"
 - (content) The two-server and two-queue test cells called `run_simulation(...)` without assigning `results`, so they plotted and measured the single-server run → `results = run_simulation(...)`. Re-executed (no random seed, so all random outputs changed; the conclusion holds: two queues 6.53 min vs one queue 6.34 min, "slightly higher")
+
+**examples/salmon** (not in the printed book)
+
+- Plot title 'Narraguacus River' → 'Narraguagus River'; "from year-to-year" → "from year to year"; "functon" → "function"; missing period; "to run generate" → "to generate"; "substract" → "subtract"; "The plot option `alpha=0.1`" → "`alpha=0.3`" (as in the code); `run_simulation` docstring "Simulate a queueing system" → "Simulate the population over time"
+- The USASAC report link (dead; redirected to a generic NOAA page) → NOAA's Atlantic Salmon Assessments page, <https://www.fisheries.noaa.gov/resource/document/atlantic-salmon-assessments> (the 2017 report itself is probably in the NOAA repository, which blocks scripts; a copy is in `~/ModSimPy-attic/data/`); NumPy `random.choice` docs link (404) → current location
+- Re-executed for the title fix (no random seed; the claims hold: median net change negative, decline vs growth 0.64 vs 0.36, "about 2:1")
 
 ## Notes
 
