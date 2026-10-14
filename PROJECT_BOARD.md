@@ -230,7 +230,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/hiv_model | done (ModSimPySolutions `a47420c`); no content questions |
 | examples/insulin | done (ModSimPySolutions `f8e8983`) |
 | examples/kitten | done (ModSimPySolutions `eac904a`); no content questions |
-| examples (9 more) | not started |
+| examples/orbit | done (ModSimPySolutions `3f8cf4e`); no content questions |
+| examples (8 more) | not started |
 
 ### Content issues for the author
 
@@ -635,6 +636,10 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - "`Mcore` is the weight of the core ... `Mroll` is the total weight" → "mass" (as in chap25)
 - (content) "$r_2$ is the outer diameter, and $r_1$ is the inner diameter" → "radius" (the formula uses $r^4$ with radii); "Since the outer diameter changes" → "outer radius"
+
+**examples/orbit** (not in the printed book)
+
+- `universal_gravitation` docstring "State object with distance r" → "with x, y, vx, and vy"; "the earth" → "the Earth"; 'DOP853' → `DOP853`
 
 ## Notes
 
