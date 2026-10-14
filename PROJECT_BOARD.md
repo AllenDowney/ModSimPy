@@ -192,7 +192,7 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 
 **Released after chap27 (2026-10-13):** ModSimPySolutions and ModSimPy pushed (CI passed on both); student chapters and examples, the notebook zip and `modsim.py` regenerated; site rebuilt and published (chapter numbers, all fixes; Pages deploy checked live); short links `/minmod`, `/cdc`, `/minimize` deployed (GreenTeaPress `2f9dd77`). All 44 solution notebooks passed nbmake locally first.
 
-**Build snag:** `make build` stops when a build script has nothing new to commit (the scripts run `git commit` unconditionally and exit with its status), e.g. when the exported `chapNN.py` are unchanged. This time the steps were run by hand in the Makefile's order. Fix: make those commits conditional (`git diff --cached --quiet || git commit ...`).
+**Build snag:** `make build` stops when a build script has nothing new to commit (the scripts run `git commit` unconditionally and exit with its status), e.g. when the exported `chapNN.py` are unchanged. This time the steps were run by hand in the Makefile's order. Fix: make those commits conditional (`git diff --cached --quiet || git commit ...`). **Fixed 2026-10-13** in `chapters/build.sh`, `examples/build.sh` and `ModSimPySolutions/chapters/build.sh`.
 
 | Notebooks | Status |
 |---|---|

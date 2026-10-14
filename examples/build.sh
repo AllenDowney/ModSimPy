@@ -4,4 +4,4 @@ python remove_soln.py
 
 # add and commit
 git add *.ipynb
-git commit -m "Updating examples"
+git diff --cached --quiet || git commit -m "Updating examples"
