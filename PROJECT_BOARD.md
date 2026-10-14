@@ -227,7 +227,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | examples/bungee2 | done (ModSimPySolutions `b1217d5`, `2463673`; re-executed) |
 | examples/filter | done (ModSimPySolutions `bbb9eb9`, `4c71f98`) |
 | examples/glucose | done (ModSimPySolutions `1bcc911`, `64698f9`; re-executed) |
-| examples (12 more) | not started |
+| examples/hiv_model | done (ModSimPySolutions `a47420c`); no content questions |
+| examples (11 more) | not started |
 
 ### Content issues for the author
 
@@ -614,6 +615,11 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 
 - "In the previous chapter" → "In Chapter 18"; "Levenberg-Marquart" → "Levenberg–Marquardt"; "at the some time stamps" → "at the same timestamps"; pandas `iloc` link → <https://pandas.pydata.org/docs/user_guide/indexing.html#selection-by-position> (the old anchor is gone)
 - (content) The plot after fitting showed `results.G` (the starting parameters) → `results2.G` (the best fit). Re-executed; `leastsq` under current SciPy gives the same fit to about five significant digits (SSE 318.15 vs 318.13)
+
+**examples/hiv_model** (not in the printed book)
+
+- Phillips (1996) link (dead, as in chap19) → <https://doi.org/10.1126/science.271.5248.497>; the response letter's old sciencemag.org PDF link → <https://doi.org/10.1126/science.272.5270.1960>
+- "the initial conditional" → "the initial conditions"; "Exericise" → "Exercise"; "What do you think of the arguments on both sides." → "?"
 
 ## Notes
 
