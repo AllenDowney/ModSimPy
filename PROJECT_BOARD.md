@@ -225,7 +225,8 @@ Pushed after chap10 (2026-10-13): both repos, one push each; student notebooks a
 | chap27 | done (ModSimPySolutions `24d8087`) |
 | examples/bungee1 | done (ModSimPySolutions `cd4a948`, `4fdb76f`) |
 | examples/bungee2 | done (ModSimPySolutions `b1217d5`, `2463673`; re-executed) |
-| examples (14 more) | not started |
+| examples/filter | done (ModSimPySolutions `bbb9eb9`, `4c71f98`) |
+| examples (13 more) | not started |
 
 ### Content issues for the author
 
@@ -351,6 +352,12 @@ Items that need a decision rather than an obvious fix. Mark each **open**, **app
 
 1. **approved: test at 54** · Spring-force test didn't match the text.
 2. **approved** · Stale note about an event function in Phase 2.
+
+**examples/filter**
+
+1. **approved: simpler** · Unfinished `tau` bullet.
+2. **approved** · Stale `t_eval=ts` suggestion.
+3. **approved** · Offset approaches -90 degrees.
 
 **Book-wide: display math format** (ModSimPySolutions `6ffa856`)
 
@@ -588,6 +595,14 @@ One entry per change: notebook, section, old text → new text. Content fixes ar
 - `cord_acc` docstring: "Computes the force of the bungee cord ... velocity of the jumpter ... acceleration in m/s" → "Computes the acceleration of the jumper due to the cord ... velocity of the jumper ... acceleration in m/s**2"
 - (content) The spring-force test used `spring_force(56)` (1 m above full extension, giving -40) under text that says 1 m of extension gives 40 N → `spring_force(54)`. Re-executed
 - (content) "Here's how we run Phase 2, setting the direction of the event function so it doesn't stop the simulation immediately." → "Here's how we run Phase 2." (Phase 2 has no event function)
+
+**examples/filter** (not in the printed book)
+
+- "a circuit takes a signal" → "a circuit that takes a signal"; "audio signal" → "audio signals"; "pass the `Params` object `make_system` which" → "to `make_system`, which"; missing period; "is call" → "is called"; "functions that ... returns" → "return"; `estimate_offset` docstring "returns: amplitude ratio" → "phase offset in degrees"
+- (content) The `tau` bullet stopped mid-sentence → "which determines how long the initial startup phase lasts."
+- (content) Dropped "I suggest using `t_eval=ts`..." (no `ts`; the notebook uses `num=401`)
+- (content) "For high frequencies, it approaches 90 degrees" → "-90 degrees"
+- The two electronics-tutorials.ws links couldn't be checked (the site hangs for scripts)
 
 ## Notes
 
