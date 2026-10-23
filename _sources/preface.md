@@ -1,3 +1,10 @@
+---
+myst:
+  html_meta:
+    description: "Preface to Modeling and Simulation in Python: how much programming, math, and science you need, and how to get started with Python, Jupyter, or Colab."
+og:description: "Preface to Modeling and Simulation in Python: how much programming, math, and science you need, and how to get started with Python, Jupyter, or Colab."
+---
+
 # Preface
 
 The essential skills of modeling — abstraction, analysis, simulation,

@@ -7,6 +7,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Optimization in Python: the Manny Ramirez problem, finding the launch angle that maximizes the range of a baseball with drag." name="description" />
+<meta property="og:title" content="23. Optimal Baseball" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/ModSimPy/chap23.html" />
+<meta property="og:site_name" content="Modeling and Simulation in Python" />
+<meta property="og:description" content="Optimization in Python: the Manny Ramirez problem, finding the launch angle that maximizes the range of a baseball with drag." />
+<meta property="og:image" content="https://raw.githubusercontent.com/AllenDowney/ModSimPy/master/modsimpy_cover.png" />
+<meta property="og:image:alt" content="Cover of Modeling and Simulation in Python by Allen B. Downey" />
 
     <title>23. Optimal Baseball &#8212; Modeling and Simulation in Python</title>
   
@@ -60,6 +68,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chap23';</script>
+    <link rel="canonical" href="https://allendowney.github.io/ModSimPy/chap23.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="24. Rotation" href="chap24.html" />
@@ -171,7 +180,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="index.html">
-                    Modeling and Simulation in Python
+                    ModSimPy: Free Online Book with Jupyter Notebooks
                 </a>
             </li>
         </ul>
@@ -405,7 +414,7 @@ document.write(`
 Click here to access the notebooks: <a class="reference external" href="https://allendowney.github.io/ModSimPy/">https://allendowney.github.io/ModSimPy/</a>.</p>
 <p>In the previous chapter we developed a model of the flight of a
 baseball, including gravity and a simple version of drag, but neglecting spin, Magnus force, and the dependence of the coefficient of drag on velocity.</p>
-<p>In this chapter we apply that model to an optimization problem. In general, <em>optimization</em> is a process for improving a design by searching for the parameters that maximize a benefit or minimize a cost. For example, in this chapter we’ll find the angle at which you should hit a baseball to maximize the distance it travels. And we’ll use a new function, called <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, that searches for this angle efficiently.</p>
+<p>In this chapter we apply that model to an optimization problem. In general, <em>optimization</em> is a process for improving a design by searching for the parameters that maximize a benefit or minimize a cost. For example, in this chapter we’ll find the angle you should hit a baseball to maximize the distance it travels. And we’ll use a new function, called <code class="docutils literal notranslate"><span class="pre">maximize_scalar</span></code>, that searches for this angle efficiently.</p>
 <section id="the-manny-ramirez-problem">
 <h2><span class="section-number">23.1. </span>The Manny Ramirez Problem<a class="headerlink" href="#the-manny-ramirez-problem" title="Link to this heading">#</a></h2>
 <p>Manny Ramirez is a former member of the Boston Red Sox (an American
@@ -510,7 +519,7 @@ feet (see <a class="reference external" href="http://modsimpy.com/wally">http://
 <p>The answer we want is the minimum speed at which a ball can leave home plate and still go over the Green Monster. We’ll proceed in the
 following steps:</p>
 <ol class="arabic simple">
-<li><p>For a given speed, we’ll find the optimal <em>launch angle</em>, that is, the angle at which the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
+<li><p>For a given speed, we’ll find the optimal <em>launch angle</em>, that is, the angle the ball should leave home plate to maximize its height when it reaches the wall.</p></li>
 <li><p>Then we’ll find the minimum speed that clears the wall, given
 that it has the optimal launch angle.</p></li>
 </ol>

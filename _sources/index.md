@@ -1,4 +1,11 @@
-# Modeling and Simulation in Python
+---
+myst:
+  html_meta:
+    description: "Modeling and Simulation in Python, free online: physical modeling for people with no programming experience, as Jupyter notebooks you can run on Colab."
+og:description: "Modeling and Simulation in Python, free online: physical modeling for people with no programming experience, as Jupyter notebooks you can run on Colab."
+---
+
+# ModSimPy: Free Online Book with Jupyter Notebooks
 
 by Allen B. Downey
 
